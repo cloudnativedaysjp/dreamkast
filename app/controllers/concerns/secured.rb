@@ -8,4 +8,4 @@ module Secured
     def logged_in_using_omniauth?
       redirect_to '/' unless session[:userinfo].present?
     end
-  end
+end

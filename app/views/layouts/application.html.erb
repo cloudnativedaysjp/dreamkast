@@ -20,8 +20,10 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Booth</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Sponsors</a></li>
                         <li class="nav-item">
+                          <% if @user %>
                           <img class="thumbnail img-circle" src="<%= @user[:info][:image] %>"/>
                           <%= @user[:info][:nickname] %>
+                          <% end %>
                         </li>
                     </ul>
                 </div>

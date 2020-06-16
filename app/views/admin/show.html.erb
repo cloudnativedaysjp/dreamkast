@@ -1,0 +1,17 @@
+<h1>Access logs</h1>
+<table>
+<tr>
+<th>Date</th>
+<th>User</th>
+<th>Page</th>
+<th>IP</th>
+</tr>
+<% @logs.each do |log| %>
+<tr>
+<td><%= log.updated_at %></td>
+<td><%= log.name %></td>
+<td><%= log.page %></td>
+<td><%= log.ip %></td>
+</tr>
+<% end %>
+</table>

@@ -16,6 +16,5 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y nodejs yarn
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 COPY . .
-RUN rails db:migrate RAILS_ENV=development
 EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+ENTRYPOINT ["./entrypoint.sh"]

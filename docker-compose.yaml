@@ -3,12 +3,11 @@ services:
   app:
     build: .
     volumes:
-        - .:/app
+    - .:/app
     ports:
-        - "3000:3000"
+    - "3000:3000"
   db:
     image: mysql:5.7
-    container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: cndtattend
@@ -19,6 +18,6 @@ services:
     volumes:
     - mysql-data:/var/lib/mysql
     ports:
-    - 3306:3306
+    - "3306:3306"
 volumes:
   mysql-data:

@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_06_16_110507) do
 
-  create_table "access_logs", force: :cascade do |t|
+  create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "page"

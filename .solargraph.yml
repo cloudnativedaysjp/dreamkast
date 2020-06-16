@@ -1,0 +1,13 @@
+include:
+  - "app/**/*.rb"
+  - "config/**/*.rb"
+require: 
+  - actioncable
+  - actionmailer
+  - actionpack
+  - actionview
+  - activejob
+  - activemodel
+  - activerecord
+  - activestorage
+  - activesupport

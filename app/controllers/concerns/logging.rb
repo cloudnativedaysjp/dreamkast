@@ -9,6 +9,6 @@ module Logging
         @user = session[:userinfo]
         AccessLog.create(name: @user[:info][:name],
                          sub: @user[:extra][:raw_info][:sub],
-                         page: controller_name + "/" + action_name)
+                         page: controller_name + "/" + action_name + "/" + params[:id].to_s)
     end
 end

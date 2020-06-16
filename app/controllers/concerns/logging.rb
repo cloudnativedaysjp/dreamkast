@@ -6,9 +6,8 @@ module Logging
     end
 
     def write_accesslog
-        @user = session[:userinfo]
-        AccessLog.create(name: @user[:info][:name],
-                         sub: @user[:extra][:raw_info][:sub],
+        AccessLog.create(name: @current_user[:info][:name],
+                         sub: @current_user[:extra][:raw_info][:sub],
                          page: controller_name + "/" + action_name + "/" + params[:id].to_s)
     end
 end

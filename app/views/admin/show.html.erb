@@ -1,11 +1,18 @@
+<div class="container">
+<div class="row">
 <h1>Access logs</h1>
-<table>
+</div>
+<div class="row">
+<table class="table table-striped">
+<thead>
 <tr>
-<th>Date</th>
-<th>User</th>
-<th>Page</th>
-<th>IP</th>
+<th scope="col">Date</th>
+<th scope="col">User</th>
+<th scope="col">Page</th>
+<th scope="col">IP</th>
 </tr>
+</thead>
+<tbody>
 <% @logs.each do |log| %>
 <tr>
 <td><%= log.updated_at %></td>
@@ -14,4 +21,7 @@
 <td><%= log.ip %></td>
 </tr>
 <% end %>
+</tbody>
 </table>
+</div>
+</div>

@@ -1,24 +1,19 @@
-# README
+# cndtattend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+例のアレ
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+- Docker Compose
 
-* System dependencies
+## How to run
 
-* Configuration
+```
+$ docker-compose up -d
+```
 
-* Database creation
+## DB migration
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ docker-compose run --rm app rails db:migrate
+```

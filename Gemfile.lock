@@ -114,6 +114,7 @@ GEM
     multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    mysql2 (0.5.3)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -233,7 +234,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -274,6 +274,7 @@ DEPENDENCIES
   debase
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  mysql2 (~> 0.5.3)
   omniauth-auth0 (~> 2.2)
   omniauth-rails_csrf_protection (~> 0.1)
   puma (~> 4.1)
@@ -284,7 +285,6 @@ DEPENDENCIES
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

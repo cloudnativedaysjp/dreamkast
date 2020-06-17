@@ -14,6 +14,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       TZ: 'Asia/Tokyo'
+      RAILS_ENV: development
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
     - mysql-data:/var/lib/mysql

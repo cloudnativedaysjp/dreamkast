@@ -10,13 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_110507) do
+ActiveRecord::Schema.define(version: 2020_06_18_070355) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "page"
     t.string "ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "sub"
+    t.string "email"
+    t.string "last_name"
+    t.string "first_name"
+    t.integer "industry_id"
+    t.string "occupation"
+    t.string "company_name"
+    t.string "company_email"
+    t.string "company_address"
+    t.string "company_tel"
+    t.string "department"
+    t.string "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

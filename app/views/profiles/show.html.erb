@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <%= form_with model: @profile do |form| %>
+        <%= form.text_field :last_name %>
+        <%= form.text_field :first_name %>
+        <%= form.text_field :occupation %>
+        <%= form.text_field :company_name %>
+        <%= form.text_field :company_email %>
+        <%= form.text_field :company_address %>
+        <%= form.text_field :company_tel %>
+        <%= form.text_field :department %>
+        <%= form.text_field :position %>
+        <%= form.submit %>
+        <% end %>
+    </div>
+</div>

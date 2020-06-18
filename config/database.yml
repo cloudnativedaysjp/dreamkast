@@ -6,7 +6,7 @@
 #
 default: &default
   adapter: mysql2
-  database: cndtattend
+  database: dreamkast
   username: user
   password: password
   host: db

@@ -6,10 +6,10 @@
 #
 default: &default
   adapter: mysql2
-  database: cndtattend
-  username: user
-  password: password
-  host: db
+  database: dreamkast
+  username: <%= ENV['MYSQL_USER'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+  host: <%= ENV['MYSQL_HOST'] %>
   encoding: utf8
 
 development:

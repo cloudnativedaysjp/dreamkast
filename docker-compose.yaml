@@ -1,19 +1,42 @@
 version: "3.8"
 services:
-  app:
+  app: &app_base
     build: .
+    command: /bin/sh -c "bundle install && yarn install --check-files && bundle exec rails s -b 0.0.0.0 --dev-caching"
     environment:
       RAILS_ENV: development
+      NODE_ENV: development
       AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
       AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       MYSQL_HOST: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+    tty: true
+    stdin_open: true
     volumes:
-    - .:/app
+      - .:/app
+      - bundle:/app/vendor/bundle
+      - node-modules:/app/node_modules
+      - packs:/app/public/packs
     ports:
-    - "3000:3000"
+      - "3000:3000"
+    depends_on:
+      - db
+  webpack:
+    <<: *app_base
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bundle install && yarn install --check-files && bin/webpack-dev-server"
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+      BUNDLE_APP_CONFIG: ./.bundle
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+    ports:
+      - 3035:3035
+    tty: true
+    stdin_open: true
+    depends_on:
+      - app
   db:
     image: mysql:5.7
     environment:
@@ -29,3 +52,6 @@ services:
     - "3306:3306"
 volumes:
   mysql-data:
+  bundle:
+  node-modules:
+  packs:

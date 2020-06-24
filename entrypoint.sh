@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -f tmp/pids/server.pid
 bundle install
-rails webpacker:install 
+yarn install --check-files
 rails db:migrate
-rails s -b 0.0.0.0
+rails s -b 0.0.0.0 --dev-caching

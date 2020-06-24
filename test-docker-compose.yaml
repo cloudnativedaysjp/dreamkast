@@ -10,4 +10,8 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - rails test
+      - |
+        yarn
+        rails assets:precompile
+        rails db:environment:set RAILS_ENV=test
+        rails test

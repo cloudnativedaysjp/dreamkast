@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   get 'dashboard' => 'dashboard#show'
   get '/logout' => 'logout#logout'
   get 'registration' => 'profiles#new'
-  resources :profiles
+  resources :profiles, only: [:new, :edit, :update, :destroy, :create]
+  get 'profiles/edit', 'profiles#edit'
 end

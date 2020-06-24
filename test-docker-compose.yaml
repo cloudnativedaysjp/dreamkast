@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    environment:
+      RAILS_ENV: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+      - rails test

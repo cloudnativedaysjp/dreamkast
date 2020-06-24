@@ -19,6 +19,7 @@ services:
       - bundle:/app/vendor/bundle
       - node-modules:/app/node_modules
       - packs:/app/public/packs
+      - tmp:/app/tmp/pids/server.pid
     ports:
       - "3000:3000"
     depends_on:
@@ -55,3 +56,4 @@ volumes:
   bundle:
   node-modules:
   packs:
+  tmp:

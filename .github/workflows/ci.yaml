@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run tests
+      shell: bash
+      run: |
+        docker-compose -f docker-compose.yaml -f test-docker-compose.yaml up --exit-code-from app

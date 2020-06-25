@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    environment:
+      RAILS_ENV: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        yarn
+        rails assets:precompile
+        rails db:environment:set RAILS_ENV=test
+        rails test

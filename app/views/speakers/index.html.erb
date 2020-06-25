@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <h1>Speakers</h1>
+  <div class="card-deck">
+    <% @speakers.each_slice(3) do |sliced_speakers| %>
+      <div class="row py-3">
+        <% sliced_speakers.each do |speaker| %>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= speaker.name %></h5>
+              <p class="card-text">Profile: <%= speaker.profile %></p>
+              <p class="card-text">Company: <%= speaker.company %></p>
+              <p class="card-text">Job Title: <%= speaker.job_title %></p>
+              <p class="card-text">Twitter: <%= speaker.twitter_id %></p>
+              <p class="card-text">Github: <%= speaker.github_id %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

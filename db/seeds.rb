@@ -152,4 +152,29 @@ if Rails.env.development? && Talk.all.length == 0
   )
 end
 
+if Rails.env.development? && Speaker.all.length == 0
+  Speaker.create!(
+    [
+      {
+        id: 1,
+        name: "高石 諒",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "GMO Pepabo, inc.",
+        job_title: "Software Engineer",
+        twitter_id: "r_takaishi",
+        github_id: "takaishi",
+      }
+    ]
+  )
+end
 
+if Rails.env.development? && TalksSpeaker.all.length == 0
+  TalksSpeaker.create!(
+    [
+      {
+        talk_id: 50,
+        speaker_id: 1
+      }
+    ]
+  )
+end

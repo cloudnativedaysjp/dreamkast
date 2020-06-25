@@ -1,0 +1,47 @@
+<%= form_with(model: speaker, local: true) do |form| %>
+  <% if speaker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(speaker.errors.count, "error") %> prohibited this speaker from being saved:</h2>
+
+      <ul>
+        <% speaker.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :profile %>
+    <%= form.text_area :profile %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company %>
+    <%= form.text_field :company %>
+  </div>
+
+  <div class="field">
+    <%= form.label :job_title %>
+    <%= form.text_field :job_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :twitter_id %>
+    <%= form.text_field :twitter_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :github_id %>
+    <%= form.text_field :github_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

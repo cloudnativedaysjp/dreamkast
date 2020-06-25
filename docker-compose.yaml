@@ -12,6 +12,7 @@ services:
       MYSQL_HOST: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dreamkast
     tty: true
     stdin_open: true
     volumes:

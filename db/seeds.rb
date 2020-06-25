@@ -102,3 +102,54 @@ if TalkDifficulty.all.length == 0
     ]
   )
 end
+
+if Rails.env.development? && Talk.all.length == 0
+  Talk.create!(
+    [
+      {
+        title: "CI/CDに関する発表",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "IoT/Edgeに関する10の知見",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "CloudNative Networking",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Kubernetes Security Tips",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "最強のCloudNative Architecture Design",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Container Runtime徹底比較",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Storageに関するあれこれ",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+    ]
+  )
+end
+
+

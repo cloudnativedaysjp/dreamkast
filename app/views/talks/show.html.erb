@@ -1,44 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @talk.title %>
-</p>
-
-<p>
-  <strong>Abstract:</strong>
-  <%= @talk.abstract %>
-</p>
-
-<p>
-  <strong>Movie url:</strong>
-  <%= @talk.movie_url %>
-</p>
-
-<p>
-  <strong>Track:</strong>
-  <%= @talk.track %>
-</p>
-
-<p>
-  <strong>Start time:</strong>
-  <%= @talk.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @talk.end_time %>
-</p>
-
-<p>
-  <strong>Difficulty:</strong>
-  <%= @talk.difficulty_id %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @talk.category_id %>
-</p>
-
-<%= link_to 'Edit', edit_talk_path(@talk) %> |
-<%= link_to 'Back', talks_path %>
+<div class="container py-3">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= @talk.title %></h5>
+      <p class="card-text">hogehogehogeoh</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+</div>

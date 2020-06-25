@@ -3,6 +3,7 @@ class TrackController < ApplicationController
   include Logging
   
   def show
+    @new_user = new_user?.to_s
     case params[:id]
     when "1" then
       @movie_url = "https://www.youtube.com/embed/QJSo8BZlbeI?autoplay=1"

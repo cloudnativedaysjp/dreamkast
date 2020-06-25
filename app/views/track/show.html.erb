@@ -19,3 +19,7 @@
         </div>
     </div>
 </div>
+
+<pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
+<pre><%= JSON.pretty_generate(@current_user[:extra][:raw_info]) %></pre>
+<pre><%= @new_user %></pre>

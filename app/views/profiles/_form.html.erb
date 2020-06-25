@@ -1,0 +1,71 @@
+<%= form_with(model: profile, local: true) do |form| %>
+  <% if profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+        <% profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-row form-group">
+    <div class="col-md-6 mb-3">
+      <%= form.label :last_name, "姓" %>
+      <%= form.text_field :last_name, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= form.label :first_name, "名" %>
+      <%= form.text_field :first_name, class: "form-control" %>
+    </div>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :industry_id, "業種" %>
+    <%= form.collection_select :industry_id, Industry.all, :id, :name, {prompt: ""}, {class: "form-control"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :occupation, "職種" %>
+    <%= form.text_field :occupation, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_name, "勤務先名/学校名" %>
+    <%= form.text_field :company_name, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_email, "勤務先メールアドレス" %>
+    <%= form.email_field :company_email, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_address, "勤務先住所" %>
+    <%= form.text_field :company_address, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_tel, "勤務先電話番号" %>
+    <%= form.text_field :company_tel, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年" %>
+    <%= form.text_field :department, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :position, "勤務先役職" %>
+    <%= form.text_field :position, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "登録" %>
+  </div>
+<% end %>

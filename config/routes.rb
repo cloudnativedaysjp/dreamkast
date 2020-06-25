@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'dashboard' => 'dashboard#show'
   get '/logout' => 'logout#logout'
+  get 'registration' => 'profiles#new'
+  resources :profiles, only: [:new, :edit, :update, :destroy, :create]
+  get 'profiles/edit', 'profiles#edit'
 end

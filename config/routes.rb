@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :talks
   get 'track/:id' => 'track#show'
   get 'dashboard/show'
   root 'home#show'

@@ -4,6 +4,10 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= @talk.title %></h5>
+      <p class="card-text"><%= @talk.abstract %></p>
+      <p class="card-text">Main Category: <%= @talk.talk_category.name %></p>
+      <p class="card-text">Audience Experience Level: <%= @talk.talk_difficulty.name %></p>
     </div>
   </div>
 </div>
+

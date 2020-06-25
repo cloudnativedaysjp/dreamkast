@@ -42,13 +42,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :difficulty_id %>
-    <%= form.collection_select :difficulty_id, TalkDifficulty.all, :id, :name, class: "form-control"  %>
+    <%= form.label :talk_difficulty_id %>
+    <%= form.collection_select :talk_difficulty_id, TalkDifficulty.all, :id, :name, class: "form-control"  %>
   </div>
 
   <div class="field">
-    <%= form.label :category_id %>
-    <%= form.collection_select :category_id, TalkCategory.all, :id, :name, class: "form-control"  %>
+    <%= form.label :talk_category_id %>
+    <%= form.collection_select :talk_category_id, TalkCategory.all, :id, :name, class: "form-control"  %>
   </div>
 
   <div class="actions">

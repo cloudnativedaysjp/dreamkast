@@ -1,4 +1,4 @@
 class Talk < ApplicationRecord
-  has_one :talk_category
-  has_one :talk_difficulty
+  belongs_to :talk_category
+  belongs_to :talk_difficulty
 end

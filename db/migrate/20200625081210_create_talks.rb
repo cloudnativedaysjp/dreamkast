@@ -7,8 +7,8 @@ class CreateTalks < ActiveRecord::Migration[6.0]
       t.string :track
       t.time :start_time
       t.time :end_time
-      t.int :difficulty_id
-      t.int :category_id
+      t.integer :difficulty_id
+      t.integer :category_id
 
       t.timestamps
     end

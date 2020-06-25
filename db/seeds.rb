@@ -68,3 +68,37 @@ if Industry.all.length == 0
     ]
   )
 end
+
+if TalkCategory.all.length == 0
+  puts "Adding talk category list"
+  TalkCategory.create!(
+    [
+      { name: "CI / CD"},
+      { name: "Customizing / Extending"},
+      { name: "IoT / Edge"},
+      { name: "Microservices / Services Mesh"},
+      { name: "ML / GPGPU / HPC"},
+      { name: "Networking"},
+      { name: "Operation / Monitoring / Logging"},
+      { name: "Orchestration"},
+      { name: "Runtime"},
+      { name: "Security"},
+      { name: "Serveless / FaaS"},
+      { name: "Storage / Database"},
+      { name: "Architecture Design"},
+      { name: "Hybrid Cloud / Multi Cloud"},
+      { name: "NFV / Edge"},
+    ]
+  )
+end
+
+if TalkDifficulty.all.length == 0
+  puts "Adding talk difficulty list"
+  TalkDifficulty.create!(
+    [
+      { name: "Beginner - 初級者"},
+      { name: "Intermediate - 中級者"},
+      { name: "Advanced - 上級者"},
+    ]
+  )
+end

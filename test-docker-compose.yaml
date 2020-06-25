@@ -15,4 +15,4 @@ services:
         yarn
         rails assets:precompile
         rails db:environment:set RAILS_ENV=test
-        rails test
+        rspec

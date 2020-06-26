@@ -7,8 +7,8 @@
       <p class="card-text">Profile: <%= @speaker.profile %></p>
       <p class="card-text">Company: <%= @speaker.company %></p>
       <p class="card-text">Job Title: <%= @speaker.job_title %></p>
-      <p class="card-text">Twitter: <%= @speaker.twitter_id %></p>
-      <p class="card-text">Github: <%= @speaker.github_id %></p>
+      <p class="card-text">Twitter: <a href="https://twitter.com/<%= @speaker.twitter_id %>"><%= @speaker.twitter_id %></a></p>
+      <p class="card-text">Github: <a href="https://github.com/<%= @speaker.github_id %>"><%= @speaker.github_id %></a></p>
     </div>
   </div>
 </div>

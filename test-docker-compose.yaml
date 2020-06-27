@@ -11,8 +11,5 @@ services:
       - /bin/bash
       - -c
       - |
-        bundle install
-        yarn
-        rails assets:precompile
         rails db:environment:set RAILS_ENV=test
         rspec

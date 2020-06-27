@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   root 'home#show'
   get 'home/show'
   get 'admin' => 'admin#show'
+  get 'admin/accesslog' => 'admin#accesslog'
+  delete 'admin/destroy_user' => 'admin#destroy_user'
   get 'auth/auth0/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
   get 'dashboard' => 'dashboard#show'

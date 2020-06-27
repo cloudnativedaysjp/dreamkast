@@ -1,34 +1,17 @@
 <div class="container">
+    <%= render 'navigator' %>
+
+    <h2>Current user</h2>
     <div class="row">
-        <h1>Access logs</h1>
-    </div>
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">User</th>
-                    <th scope="col">Page</th>
-                    <th scope="col">IP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @logs.each do |log| %>
-                <tr>
-                    <td><%= log.updated_at %></td>
-                    <td><%= log.name %></td>
-                    <td><%= log.page %></td>
-                    <td><%= log.ip %></td>
-                </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </div>
-    <h2>Debug</h2>
-    <div class="row">
-        
+        <div class="col-6">
         <pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
         <pre><%= JSON.pretty_generate(@current_user[:extra][:raw_info]) %></pre>
         <pre><%= @new_user %></pre>
+        <%= form_with url: 'admin/destroy_user', method: 'delete' do |form| %>
+            <%= form.submit "ログインユーザーを削除", class: "btn btn-primary form-control" %>
+        <% end %>
+        </div>
     </div>
+
+    
 </div>

@@ -1,17 +1,17 @@
 <div class="container">
-        <div class="btn-group  track-button  d-flex row" role="group">
-            <%= link_to "Track1", "/track/1", { class: "btn btn-outline-secondary #{'active' if params[:id] == '1'}" } %>
-            <%= link_to "Track2", "/track/2", { class: "btn btn-outline-secondary #{'active' if params[:id] == '2'}" } %>
-            <%= link_to "Track3", "/track/3", { class: "btn btn-outline-secondary #{'active' if params[:id] == '3'}" } %>
-            <%= link_to "Track4", "/track/4", { class: "btn btn-outline-secondary #{'active' if params[:id] == '4'}" } %>
-            <%= link_to "Track5", "/track/5", { class: "btn btn-outline-secondary #{'active' if params[:id] == '5'}" } %>
-            <%= link_to "Track6", "/track/6", { class: "btn btn-outline-secondary #{'active' if params[:id] == '6'}" } %>
-        </div>
+    <div class="btn-group track-button d-flex row" role="group">
+        <%= link_to "Track1", "/track/1", { class: "btn btn-outline-secondary #{'active' if params[:id] == '1'}" } %>
+        <%= link_to "Track2", "/track/2", { class: "btn btn-outline-secondary #{'active' if params[:id] == '2'}" } %>
+        <%= link_to "Track3", "/track/3", { class: "btn btn-outline-secondary #{'active' if params[:id] == '3'}" } %>
+        <%= link_to "Track4", "/track/4", { class: "btn btn-outline-secondary #{'active' if params[:id] == '4'}" } %>
+        <%= link_to "Track5", "/track/5", { class: "btn btn-outline-secondary #{'active' if params[:id] == '5'}" } %>
+        <%= link_to "Track6", "/track/6", { class: "btn btn-outline-secondary #{'active' if params[:id] == '6'}" } %>
+    </div>
     <div class="row">
-        <div class="col-8 movie-wrap">
+        <div class="col-12 col-md-8 movie-wrap">
             <iframe src="<%= @movie_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-md-4 ">
             <a href="https://twitter.com/intent/tweet?button_hashtag=CNDT2020&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #CNDT2020</a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             <br />
@@ -19,7 +19,3 @@
         </div>
     </div>
 </div>
-
-<pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
-<pre><%= JSON.pretty_generate(@current_user[:extra][:raw_info]) %></pre>
-<pre><%= @new_user %></pre>

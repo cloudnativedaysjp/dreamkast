@@ -6,7 +6,7 @@ class TrackController < ApplicationController
     @new_user = new_user?.to_s
     case params[:id]
     when "1" then
-      @movie_url = "https://www.youtube.com/embed/QJSo8BZlbeI?autoplay=1"
+      @movie_url = "https://www.youtube.com/embed/QJSo8BZlbeI"
     when "2" then
       @movie_url = "https://www.youtube.com/embed/i28YOIui1bc?autoplay=1"
     when "3" then

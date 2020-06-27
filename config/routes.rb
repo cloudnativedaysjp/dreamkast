@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   post 'profiles', to: 'profiles#create'
   put 'profiles', to: 'profiles#update'
   get 'profiles', to: 'profiles#edit'
+  get 'profiles/edit', to: 'profiles#edit'
 end

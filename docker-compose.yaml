@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app: &app_base
     build: .
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && ./entrypoint.sh"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && ./entrypoint.sh"
     environment:
       RAILS_ENV: development
       NODE_ENV: development

@@ -17,4 +17,8 @@ class AdminController < ApplicationController
         reset_session
         redirect_to logout_url.to_s
     end
+
+    def users
+        @profiles = Profile.all
+    end
 end

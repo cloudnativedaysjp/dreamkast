@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app: &app_base
     build: .
-    command: /bin/sh -c "bundle install && yarn install --check-files && bundle exec rails s -b 0.0.0.0 --dev-caching"
+    command: /bin/sh -c "bundle install && bundle exec rails s -b 0.0.0.0 --dev-caching"
     environment:
       RAILS_ENV: development
       NODE_ENV: development
@@ -17,17 +17,20 @@ services:
     stdin_open: true
     volumes:
       - .:/app
-      - bundle:/app/vendor/bundle
-      - node-modules:/app/node_modules
-      - packs:/app/public/packs
-      - tmp:/app/tmp
+      - /usr/local/bundle
+      - /app/.git
+      - /app/log
+      - /app/node_modules
+      - /app/public/packs
+      - /app/tmp
+      - /app/vendor
     ports:
       - "3000:3000"
     depends_on:
       - db
   webpack:
     <<: *app_base
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bundle install && yarn install --check-files && bin/webpack-dev-server"
+    command: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bundle install && bin/webpack-dev-server"
     environment:
       RAILS_ENV: development
       NODE_ENV: development

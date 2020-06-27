@@ -1,22 +1,25 @@
-FROM node:lts as front
+FROM node:12.18.1-slim as front
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn install --check-files
 
 FROM ruby:2.7.1 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
 RUN bundle install
 
-FROM ruby:2.7.1
+FROM ruby:2.7.1-slim
+
+ENV YARN_VERSION 1.22.4
+COPY --from=front /opt/yarn-v$YARN_VERSION /opt/yarn
+COPY --from=front /usr/local/bin/node /usr/local/bin/
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
+
 ENV RAILS_ENV=development, RAILS_LOG_TO_STDOUT=ON
 WORKDIR /app
-RUN apt-get update && apt-get install -y curl
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y nodejs yarn
-RUN yarn install --check-files
+COPY --from=front /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 COPY . .
 EXPOSE 3000
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["./entrypoint.sh"]

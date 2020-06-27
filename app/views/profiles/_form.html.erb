@@ -1,8 +1,7 @@
-<%= form_with(model: profile, local: true) do |form| %>
+<%= form_with(model: profile, local: true, class: "needs-validation") do |form| %>
   <% if profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h5>入力内容にエラーがあります:</h5>
       <ul>
         <% profile.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -13,56 +12,56 @@
 
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
-      <%= form.label :last_name, "姓" %>
-      <%= form.text_field :last_name, class: "form-control" %>
+      <%= form.label :last_name, "姓" %>*
+      <%= form.text_field :last_name, requierd: true, class: "form-control" %>
     </div>
 
     <div class="col-12 col-md-6">
-      <%= form.label :first_name, "名" %>
-      <%= form.text_field :first_name, class: "form-control" %>
+      <%= form.label :first_name, "名" %>*
+      <%= form.text_field :first_name, requierd: true, class: "form-control" %>
     </div>
   </div>
 
 
 
   <div class="form-row form-group">
-    <%= form.label :industry_id, "業種" %>
-    <%= form.collection_select :industry_id, Industry.all, :id, :name, {prompt: ""}, {class: "form-control"} %>
+    <%= form.label :industry_id, "業種" %>*
+    <%= form.collection_select :industry_id, Industry.all, :id, :name, {prompt: ""}, {class: "form-control", requierd: true} %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :occupation, "職種" %>
-    <%= form.text_field :occupation, class: "form-control" %>
+    <%= form.label :occupation, "職種" %>*
+    <%= form.text_field :occupation, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_name, "勤務先名/学校名" %>
-    <%= form.text_field :company_name, class: "form-control" %>
+    <%= form.label :company_name, "勤務先名/学校名" %>*
+    <%= form.text_field :company_name, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_email, "勤務先メールアドレス" %>
-    <%= form.email_field :company_email, class: "form-control" %>
+    <%= form.label :company_email, "勤務先メールアドレス" %>*
+    <%= form.email_field :company_email, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_address, "勤務先住所" %>
-    <%= form.text_field :company_address, class: "form-control" %>
+    <%= form.label :company_address, "勤務先住所" %>*
+    <%= form.text_field :company_address, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_tel, "勤務先電話番号" %>
-    <%= form.text_field :company_tel, class: "form-control" %>
+    <%= form.label :company_tel, "勤務先電話番号" %>*
+    <%= form.text_field :company_tel, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年" %>
-    <%= form.text_field :department, class: "form-control" %>
+    <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年" %>*
+    <%= form.text_field :department, requierd: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :position, "勤務先役職" %>
-    <%= form.text_field :position, class: "form-control" %>
+    <%= form.label :position, "勤務先役職" %>*
+    <%= form.text_field :position, required: true, class: "form-control" %>
   </div>
 
   <div class="form-row form-group justify-content-md-center">

@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app: &app_base
     build: .
-    command: /bin/sh -c "bundle exec rails s -b 0.0.0.0 --dev-caching"
+    command: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bundle exec rails s -b 0.0.0.0 --dev-caching"
     environment:
       RAILS_ENV: development
       NODE_ENV: development

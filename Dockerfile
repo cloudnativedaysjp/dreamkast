@@ -22,4 +22,4 @@ COPY --from=front /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 COPY . .
 EXPOSE 3000
-ENTRYPOINT  ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

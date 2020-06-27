@@ -7,8 +7,11 @@ Rails.application.routes.draw do
   get 'auth/auth0/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
   get 'dashboard' => 'dashboard#show'
-  get '/logout' => 'logout#logout'
+  get 'logout' => 'logout#logout'
   get 'registration' => 'profiles#new'
   resources :profiles, only: [:new, :edit, :update, :destroy, :create]
-  get 'profiles/edit', 'profiles#edit'
+  get 'profiles/new', to: 'profiles#new'
+  post 'profiles', to: 'profiles#create'
+  put 'profiles', to: 'profiles#update'
+  get 'profiles', to: 'profiles#edit'
 end

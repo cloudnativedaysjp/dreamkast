@@ -1,4 +1,4 @@
-FROM node:12.18.1-slim as front
+FROM node:12.18.1 as front
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY Gemfile* ./
 RUN bundle install
 
-FROM ruby:2.7.1-slim
+FROM ruby:2.7.1
 
 ENV YARN_VERSION 1.22.4
 COPY --from=front /opt/yarn-v$YARN_VERSION /opt/yarn

@@ -17,5 +17,8 @@ jobs:
 
     - name: Run tests
       shell: bash
+      env:
+        DOCKER_BUILDKIT: 1
+        COMPOSE_DOCKER_CLI_BUILD: 1
       run: |
         docker-compose -f docker-compose.yaml -f test-docker-compose.yaml up --exit-code-from app

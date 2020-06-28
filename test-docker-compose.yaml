@@ -8,11 +8,9 @@ services:
       MYSQL_PASSWORD: root
     tty: true
     entrypoint:
-      - /bin/bash
+      - /bin/sh
       - -c
       - |
-        bundle install
-        yarn
-        rails assets:precompile
+        docker/wait-for-it.sh db:3306
         rails db:environment:set RAILS_ENV=test
         rspec

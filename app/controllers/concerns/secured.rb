@@ -3,6 +3,7 @@ module Secured
   
     included do
       before_action :logged_in_using_omniauth?, :new_user?
+      helper_method :admin?, :speaker?
     end
   
     def logged_in_using_omniauth?
@@ -19,5 +20,20 @@ module Secured
           redirect_to '/registration'
         end
       end
+    end
+
+    def admin?
+      @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("CNDT2020-Admin")
+    end
+
+    def speaker?
+      @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("CNDT2020-Speaker")
+    end
+
+    def is_admin?
+      # respond_to do |format|
+      #   format.html { redirect_to controller: "track", action: "show", id: 1 }
+      #   format.json { render json: "Forbidden", status: :forbidden }
+      # end
     end
 end

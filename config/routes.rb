@@ -23,15 +23,16 @@ Rails.application.routes.draw do
   get 'auth/auth0/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
 
-  get 'dashboard' => 'dashboard#show'
-  get 'logout' => 'logout#logout'
-  get 'registration' => 'profiles#new'
+  get 'dashboard', to: 'dashboard#show'
+  get 'logout', to: 'logout#logout'
+  get 'registration', to: 'profiles#new'
 
   # Profile
   resources :profiles, only: [:new, :edit, :update, :destroy, :create]
   get 'profiles/new', to: 'profiles#new'
   post 'profiles', to: 'profiles#create'
   put 'profiles', to: 'profiles#update'
+  delete 'profiles', to: 'profiles#destroy'
   get 'profiles', to: 'profiles#edit'
   get 'profiles/edit', to: 'profiles#edit'
 
@@ -42,4 +43,7 @@ Rails.application.routes.draw do
     get 'talks', to: 'talks#show'
     post 'talks', to: 'talks#create'
   end
+  delete 'profiles/:id', to: 'profiles#destroy_id'
+  put 'profiles/:id/role', to: 'profiles#set_role'
+
 end

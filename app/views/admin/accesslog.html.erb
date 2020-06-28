@@ -1,0 +1,29 @@
+<div class="container">
+    <%= render 'navigator' %>
+
+    <div class="row">
+        <h2>Access logs</h2>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Page</th>
+                    <th scope="col">IP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @logs.each do |log| %>
+                <tr>
+                    <td><%= log.updated_at %></td>
+                    <td><%= log.name %></td>
+                    <td><%= log.page %></td>
+                    <td><%= log.ip %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

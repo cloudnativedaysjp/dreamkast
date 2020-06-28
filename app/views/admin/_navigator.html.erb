@@ -1,0 +1,5 @@
+<div class="btn-group track-button d-flex row" role="group">
+    <%= link_to "Debug", "/admin", { class: "btn btn-outline-secondary #{'active' if action_name == 'show'}" } %>
+    <%= link_to "View accesslog", "/admin/accesslog", { class: "btn btn-outline-secondary #{'active' if action_name == 'accesslog'}" } %>
+    <%= link_to "Users", "/admin/users", { class: "btn btn-outline-secondary #{'active' if action_name == 'users'}" } %>
+</div>

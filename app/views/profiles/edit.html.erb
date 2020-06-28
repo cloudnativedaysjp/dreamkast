@@ -1,6 +1,9 @@
-<h1>Editing Profile</h1>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-12 col-md-6 registration-form py-3 px-md-5">
 
-<%= render 'form', profile: @profile %>
-
-<%= link_to 'Show', @profile %> |
-<%= link_to 'Back', profiles_path %>
+            <h2>登録情報変更</h2>
+            <%= render 'form', profile: @profile %>
+        </div>
+    </div>
+</div>

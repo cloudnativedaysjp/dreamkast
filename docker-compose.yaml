@@ -2,31 +2,37 @@ version: "3.8"
 services:
   app: &app_base
     build: .
-    command: /bin/sh -c "bundle install && yarn install --check-files && bundle exec rails s -b 0.0.0.0 --dev-caching"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && ./entrypoint.sh"
     environment:
       RAILS_ENV: development
       NODE_ENV: development
+      SENTRY_DSN: ${SENTRY_DSN}
       AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
       AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       MYSQL_HOST: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dreamkast
     tty: true
     stdin_open: true
     volumes:
       - .:/app
+      - /app/.git
+      - /app/log
       - bundle:/app/vendor/bundle
       - node-modules:/app/node_modules
       - packs:/app/public/packs
-      - tmp:/app/tmp
+      - vendor:/app/vendor
+    tmpfs:
+      - /app/tmp
     ports:
       - "3000:3000"
     depends_on:
       - db
   webpack:
     <<: *app_base
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bundle install && yarn install --check-files && bin/webpack-dev-server"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bin/webpack-dev-server"
     environment:
       RAILS_ENV: development
       NODE_ENV: development
@@ -56,4 +62,4 @@ volumes:
   bundle:
   node-modules:
   packs:
-  tmp:
+  vendor:

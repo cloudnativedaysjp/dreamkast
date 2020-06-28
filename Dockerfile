@@ -9,7 +9,7 @@ COPY Gemfile* ./
 RUN bundle install
 
 FROM ruby:2.7.1
-ENV RAILS_ENV=development, RAILS_LOG_TO_STDOUT=ON, SENTRY_DSN=""
+ENV RAILS_ENV=development, RAILS_LOG_TO_STDOUT=ON
 WORKDIR /app
 RUN apt-get update && apt-get install -y curl
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -

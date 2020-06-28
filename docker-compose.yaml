@@ -17,12 +17,12 @@ services:
     stdin_open: true
     volumes:
       - .:/app
-      - /usr/local/bundle
       - /app/.git
       - /app/log
-      - /app/node_modules
-      - /app/public/packs
-      - /app/vendor
+      - bundle:/app/vendor/bundle
+      - node-modules:/app/node_modules
+      - packs:/app/public/packs
+      - vendor:/app/vendor
     tmpfs:
       - /app/tmp
     ports:
@@ -61,4 +61,4 @@ volumes:
   bundle:
   node-modules:
   packs:
-  tmp:
+  vendor:

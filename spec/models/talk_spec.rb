@@ -4,28 +4,28 @@ RSpec.describe Talk, type: :model do
   before do
     TalkCategory.create!(
     [
-      { name: "CI / CD"},
-      { name: "Customizing / Extending"},
-      { name: "IoT / Edge"},
-      { name: "Microservices / Services Mesh"},
-      { name: "ML / GPGPU / HPC"},
-      { name: "Networking"},
-      { name: "Operation / Monitoring / Logging"},
-      { name: "Orchestration"},
-      { name: "Runtime"},
-      { name: "Security"},
-      { name: "Serveless / FaaS"},
-      { name: "Storage / Database"},
-      { name: "Architecture Design"},
-      { name: "Hybrid Cloud / Multi Cloud"},
-      { name: "NFV / Edge"},
+      { id: 1, name: "CI / CD"},
+      { id: 2, name: "Customizing / Extending"},
+      { id: 3, name: "IoT / Edge"},
+      { id: 4, name: "Microservices / Services Mesh"},
+      { id: 5, name: "ML / GPGPU / HPC"},
+      { id: 6, name: "Networking"},
+      { id: 7, name: "Operation / Monitoring / Logging"},
+      { id: 8, name: "Orchestration"},
+      { id: 9, name: "Runtime"},
+      { id: 10, name: "Security"},
+      { id: 11, name: "Serveless / FaaS"},
+      { id: 12, name: "Storage / Database"},
+      { id: 13, name: "Architecture Design"},
+      { id: 14, name: "Hybrid Cloud / Multi Cloud"},
+      { id: 15, name: "NFV / Edge"},
     ]
     )
     TalkDifficulty.create!(
     [
-      { name: "Beginner - 初級者"},
-      { name: "Intermediate - 中級者"},
-      { name: "Advanced - 上級者"},
+      { id: 1, name: "Beginner - 初級者"},
+      { id: 2, name: "Intermediate - 中級者"},
+      { id: 3, name: "Advanced - 上級者"},
     ]
     )
 

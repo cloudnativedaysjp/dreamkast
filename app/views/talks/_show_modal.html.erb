@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
       <p class="card-text"><%= @talk.abstract %></p>
-      <p class="card-text">Speaker: <% @talk.speakers.each do |speaker| %><%= link_to speaker.name, speaker %>,<% end %></p>
+      <p class="card-text">Speaker: <%= raw(@talk.speakers.map { |speaker| raw(link_to(speaker.name, speaker))}.join(', ')) %></p>
       <p class="card-text">Main Category: <%= @talk.talk_category.name %></p>
       <p class="card-text">Audience Experience Level: <%= @talk.talk_difficulty.name %></p>
     </div>

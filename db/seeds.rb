@@ -68,3 +68,139 @@ if Industry.all.length == 0
     ]
   )
 end
+
+if TalkCategory.all.length == 0
+  puts "Adding talk category list"
+  TalkCategory.create!(
+    [
+      { name: "CI / CD"},
+      { name: "Customizing / Extending"},
+      { name: "IoT / Edge"},
+      { name: "Microservices / Services Mesh"},
+      { name: "ML / GPGPU / HPC"},
+      { name: "Networking"},
+      { name: "Operation / Monitoring / Logging"},
+      { name: "Orchestration"},
+      { name: "Runtime"},
+      { name: "Security"},
+      { name: "Serveless / FaaS"},
+      { name: "Storage / Database"},
+      { name: "Architecture Design"},
+      { name: "Hybrid Cloud / Multi Cloud"},
+      { name: "NFV / Edge"},
+    ]
+  )
+end
+
+if TalkDifficulty.all.length == 0
+  puts "Adding talk difficulty list"
+  TalkDifficulty.create!(
+    [
+      { name: "Beginner - 初級者"},
+      { name: "Intermediate - 中級者"},
+      { name: "Advanced - 上級者"},
+    ]
+  )
+end
+
+if Rails.env.development? && Talk.all.length == 0
+  Talk.create!(
+    [
+      {
+        title: "CI/CDに関する発表",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "IoT/Edgeに関する10の知見",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "CloudNative Networking",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Kubernetes Security Tips",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "最強のCloudNative Architecture Design",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Container Runtime徹底比較",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+      {
+        title: "Storageに関するあれこれ",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+      },
+    ]
+  )
+end
+
+if Rails.env.development? && Speaker.all.length == 0
+  Speaker.create!(
+    [
+      {
+        id: 1,
+        name: "高石 諒",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "GMO Pepabo, inc.",
+        job_title: "Software Engineer",
+        twitter_id: "r_takaishi",
+        github_id: "takaishi",
+      },
+      {
+        id: 2,
+        name: "講演し太郎2",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "株式会社シー・エフ・ピー",
+        job_title: "Infrastructure Engineer",
+        twitter_id: "",
+        github_id: "",
+      },
+      {
+        id: 3,
+        name: "講演し太郎3",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "株式会社シー・エフ・ピー",
+        job_title: "Infrastructure Engineer",
+        twitter_id: "",
+        github_id: "",
+      }
+    ]
+  )
+end
+
+if Rails.env.development? && TalksSpeaker.all.length == 0
+  TalksSpeaker.create!(
+    [
+      {
+        talk_id: 1,
+        speaker_id: 1
+      },
+      {
+        talk_id: 2,
+        speaker_id: 2
+      },
+      {
+        talk_id: 3,
+        speaker_id: 3
+      }
+    ]
+  )
+end

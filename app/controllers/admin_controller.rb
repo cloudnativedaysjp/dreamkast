@@ -21,4 +21,27 @@ class AdminController < ApplicationController
     def users
         @profiles = Profile.all
     end
+
+    def talks
+        @talks = Talk.all
+    end
+
+    def bulk_insert_talks
+        Talk.import(params[:file])
+        redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
+    end
+
+    def speakers
+        @speakers = Speaker.all
+    end
+
+    def bulk_insert_speakers
+        Speaker.import(params[:file])
+        redirect_to '/admin/speakers', notice: 'CSVの読み込みが完了しました'
+    end
+
+    def bulk_insert_talks_speaker
+        TalksSpeaker.import(params[:file])
+        redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
+    end
 end

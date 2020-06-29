@@ -1,0 +1,61 @@
+<div class="container">
+    <%= render 'navigator' %>
+    <% flash.each do |message_type, message| %>
+        <div class="alert alert-info" role="alert">
+        <%= message %>
+        </div>
+    <% end %>
+    <div class="row">
+        <h2>Bulk insert TALKS from CSV</h2>
+        <div class="col-12 form-group">
+        
+        <%= form_with(url: '/admin/bulk_insert_talks', multipart: true) do |form| %>
+            <%= form.file_field :file %>
+            <%= form.submit "インポート" %>
+            ※ Bulk insertを行うと既存のレコードは全て削除されます。
+        <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Bulk insert TALKS-SPEAKER from CSV</h2>
+        <div class="col-12 form-group">
+        
+        <%= form_with(url: '/admin/bulk_insert_talks_speaker', multipart: true) do |form| %>
+            <%= form.file_field :file %>
+            <%= form.submit "インポート" %>
+            ※ Bulk insertを行うと既存のレコードは全て削除されます。
+        <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Talks</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Speakers</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Abstract</th>
+                    <th scope="col">Track</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @talks.each do |talk| %>
+                <tr>
+                    <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li><%= speaker.name %></li><% end %></ul></td>
+                    <td><%= talk.title %></td>
+                    <td><%= talk.abstract %></td>
+                    <td><%= talk.track %></td>
+                    <td><%= talk.talk_difficulty.name %></td>
+                    <td><%= talk.talk_category.name %></td>
+                    <td><%= talk.start_time %></td>
+                    <td><%= talk.end_time %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

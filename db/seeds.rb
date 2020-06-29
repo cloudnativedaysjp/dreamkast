@@ -163,6 +163,24 @@ if Rails.env.development? && Speaker.all.length == 0
         job_title: "Software Engineer",
         twitter_id: "r_takaishi",
         github_id: "takaishi",
+      },
+      {
+        id: 2,
+        name: "講演し太郎2",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "株式会社シー・エフ・ピー",
+        job_title: "Infrastructure Engineer",
+        twitter_id: "",
+        github_id: "",
+      },
+      {
+        id: 3,
+        name: "講演し太郎3",
+        profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        company: "株式会社シー・エフ・ピー",
+        job_title: "Infrastructure Engineer",
+        twitter_id: "",
+        github_id: "",
       }
     ]
   )
@@ -172,8 +190,16 @@ if Rails.env.development? && TalksSpeaker.all.length == 0
   TalksSpeaker.create!(
     [
       {
-        talk_id: 50,
+        talk_id: 1,
         speaker_id: 1
+      },
+      {
+        talk_id: 2,
+        speaker_id: 2
+      },
+      {
+        talk_id: 3,
+        speaker_id: 3
       }
     ]
   )

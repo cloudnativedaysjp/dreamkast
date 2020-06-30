@@ -30,6 +30,10 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Rails.logger = Logger.new(STDOUT) # Rails.loggerを出す
+ActiveRecord::Base.logger = Logger.new(STDOUT) # SQLログ出す
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

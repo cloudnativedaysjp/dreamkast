@@ -2,13 +2,16 @@
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-lg-10 align-self-end">
+            <div class="col-lg-12 align-self-end">
                 <h1 class="text-uppercase text-white font-weight-bold">CloudNative Days Tokyo 2020</h1>
                 <hr class="divider my-4" />
+                <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
             </div>
-            <div class="col-lg-8 align-self-baseline">
-                <p class="text-white-75 font-weight-light mb-5">+Native 〜ともに創るクラウドネイティブの世界〜</p>
-                <%= button_to 'Login', 'auth/auth0', {method: :post, class: "btn btn-primary btn-xl" } %>
+            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
+                <%= button_to 'Login', 'auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+            </div>
+            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
+                <%= button_to 'Timetable', 'talks', {method: :get, class: "btn btn-secondary btn-xl inline" } %>
             </div>
         </div>
     </div>

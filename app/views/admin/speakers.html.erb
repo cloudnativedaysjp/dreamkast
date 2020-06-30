@@ -1,0 +1,48 @@
+<div class="container">
+    <%= render 'navigator' %>
+    <% flash.each do |message_type, message| %>
+        <div class="alert alert-info" role="alert">
+        <%= message %>
+        </div>
+    <% end %>
+    <div class="row">
+        <h2>Bulk insert from CSV</h2>
+        <div class="col-12 form-group">
+        
+        <%= form_with(url: '/admin/bulk_insert_speakers', multipart: true) do |form| %>
+            <%= form.file_field :file %>
+            <%= form.submit "インポート" %>
+            ※ Bulk insertを行うと既存のレコードは全て削除されます。
+        <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Speakers</h2>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Job title</th>
+                    <th scope="col">Twitter</th>
+                    <th scope="col">GitHub</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @speakers.each do |speaker| %>
+                <tr>
+                    <td><%= speaker.name %></td>
+                    <td><%= speaker.profile %></td>
+                    <td><%= speaker.company %></td>
+                    <td><%= speaker.job_title %></td>
+                    <td><%= speaker.twitter_id %></td>
+                    <td><%= speaker.github_id %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

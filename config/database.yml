@@ -23,6 +23,8 @@ test:
   <<: *default
   # database: db/test.sqlite3
 
+  encoding: utf8
 production:
-  <<: *default
-  # database: db/production.sqlite3
+  url: <%= ENV.fetch('CLEARDB_DATABASE_URL', '').sub('mysql://', 'mysql2://') %>
+  encoding: utf8
+  adapter: mysql2

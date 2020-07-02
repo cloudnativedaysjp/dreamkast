@@ -1,0 +1,11 @@
+  {
+    "env": {
+      "HEROKU_APP_NAME": {
+        "required": true
+      }
+    },
+    "repository": "https://github.com/cloudnativedaysjp/dreamkast/",
+    "addons": [
+      "cleardb:ignite"
+    ]
+  }

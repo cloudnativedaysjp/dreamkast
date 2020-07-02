@@ -6,6 +6,7 @@
     },
     "repository": "https://github.com/cloudnativedaysjp/dreamkast/",
     "addons": [
-      "cleardb:ignite"
+      "cleardb:ignite",
+      "heroku-redis:hobby-dev"
     ]
   }

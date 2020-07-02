@@ -31,6 +31,12 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Sponsors</a></li>
                     <li class="nav-item dropdown">
                         <% if @current_user %>
+                        <script>
+                        tracker.user({
+                          user_id: "<%= @current_user[:extra][:raw_info][:sub] %>",
+                          event: "cndt2020",
+                        })
+                        </script>
                         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="thumbnail img-circle" src="<%= @current_user[:info][:image] %>" />
                             <%= @current_user[:info][:nickname] %>

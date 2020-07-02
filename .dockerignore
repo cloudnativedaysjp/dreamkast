@@ -1,4 +1,5 @@
 .git
+.github
 docker-compose.yaml
 Dockerfile
 log

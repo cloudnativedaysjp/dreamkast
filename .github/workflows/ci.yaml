@@ -14,7 +14,11 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
-
+    - uses: whoan/docker-build-with-cache-action@master
+      with:
+        username: inductor
+        password: "${{ secrets.DOCKER_HUB_PASSWORD }}"
+        image_name: dreamkast
     - name: Run tests
       shell: bash
       env:

@@ -198,6 +198,10 @@ if Rails.env.development? && TalksSpeaker.all.length == 0
         speaker_id: 2
       },
       {
+        talk_id: 2,
+        speaker_id: 3
+      },
+      {
         talk_id: 3,
         speaker_id: 3
       }

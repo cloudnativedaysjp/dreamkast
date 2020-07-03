@@ -46,6 +46,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'ruby-debug-ide'
   gem 'debase'
+  gem 'pry-rails'
 end
 
 group :test do

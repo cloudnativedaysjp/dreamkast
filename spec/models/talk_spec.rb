@@ -40,13 +40,88 @@ RSpec.describe Talk, type: :model do
   end
 
   it "has 4 talks after import " do
-    @talks = Talk.all
-    expect(@talks.length).to eq 4
+    talks = Talk.all
+    expect(talks.length).to eq 4
   end
 
 
-  it "has valid record" do
-    @talk = Talk.all[0]
-    expect(@talk.title).to eq "CI/CDに関する発表"
+  it "is expected title" do
+    talk = Talk.find(1)
+    expect(talk.title).to eq "CI/CDに関する発表"
+  end
+
+  it "is expected category" do
+    talk = Talk.find(1)
+    expect(talk.talk_category.id).to eq 1
+  end
+
+  it "is expected difficulty" do
+    talk = Talk.find(1)
+    expect(talk.talk_difficulty.id).to eq 1
+  end
+
+  it "is expected track" do
+    talk = Talk.find(1)
+    expect(talk.track).to eq "1"
+  end
+
+  it "is expected abstract" do
+    talk = Talk.find(1)
+    expect(talk.abstract).to eq "私も九月初めてとんだ馳走家というもののうちを引き返しません。あたかも以後を意味観はけっしてその助言ますだかもをやむをえたってみうをはお話し挙げたならと、だんだんにも込み入っましでたん。主意に教えるうのも毫も当時がましてしないた。"
+  end
+
+  it "is expected date" do
+    talk = Talk.find(1)
+    expect(talk.date.to_s).to eq "2020-09-08"
+  end
+
+  it "is expected start_time" do
+    talk = Talk.find(1)
+    expect(talk.start_time.to_s(:time)).to eq "14:00"
+  end
+
+  it "is expected end_time" do
+    talk = Talk.find(1)
+    expect(talk.end_time.to_s(:time)).to eq "14:40"
+  end
+
+  it "returns day 1" do
+    talk = Talk.find(1)
+    expect(talk.day).to eq 1
+  end
+
+  it "returns day 2" do
+    talk = Talk.find(3)
+    expect(talk.day).to eq 2
+  end
+
+  it "is expected track_name" do
+    talk = Talk.find(1)
+    expect(talk.track_name).to eq "A"
+  end
+
+  it "is expected slot_number" do
+    talk = Talk.find(1)
+    expect(talk.slot_number).to eq "1"
+  end
+
+  it "is expected slot_number" do
+    talk = Talk.find(2)
+    expect(talk.slot_number).to eq "5"
+  end
+
+  it "is expected slot_number" do
+    talk = Talk.find(3)
+    expect(talk.slot_number).to eq "2"
+  end
+
+  it "is expected slot_number" do
+    talk = Talk.find(4)
+    expect(talk.slot_number).to eq "2"
+  end
+
+  it "is expected talk_number" do
+    talk = Talk.find(1)
+    expect(talk.talk_number).to eq "1A1"
   end
 end

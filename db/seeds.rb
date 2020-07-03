@@ -107,47 +107,68 @@ if Rails.env.development? && Talk.all.length == 0
   Talk.create!(
     [
       {
+        title: "Keynote",
+        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
+        talk_category_id: 1,
+        talk_difficulty_id: 1,
+        track: "AllTrack",
+        start_time: Time.parse("10:00"),
+        end_time: Time.parse("10:40")
+      },
+      {
         title: "CI/CDに関する発表",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
+        track: "Track1",
+        start_time: Time.parse("11:00"),
+        end_time: Time.parse("11:40")
       },
       {
         title: "IoT/Edgeに関する10の知見",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
+        track: "Track1",
+        start_time: Time.parse("13:00"),
+        end_time: Time.parse("13:40")
       },
-      {
+    {
         title: "CloudNative Networking",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
+        track: "Track1",
+        start_time: Time.parse("14:00"),
+        end_time: Time.parse("14:20")
       },
       {
         title: "Kubernetes Security Tips",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
+        track: "Track1",
+        start_time: Time.parse("14:40"),
+        end_time: Time.parse("14:20")
       },
       {
         title: "最強のCloudNative Architecture Design",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
+        track: "Track3",
+        start_time: Time.parse("10:00"),
+        end_time: Time.parse("10:50")
       },
       {
         title: "Container Runtime徹底比較",
         abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
         talk_category_id: 1,
         talk_difficulty_id: 1,
-      },
-      {
-        title: "Storageに関するあれこれ",
-        abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas leo sit amet mauris placerat bibendum. Nulla egestas enim non eros mattis maximus. Curabitur faucibus sagittis condimentum. Nullam viverra accumsan tincidunt. Vivamus sollicitudin eros condimentum, mattis magna nec, mollis lorem. Vestibulum blandit facilisis fermentum. Nulla eget tortor in nibh rhoncus venenatis. Phasellus ipsum mauris, porttitor non varius sed, placerat sit amet lorem.",
-        talk_category_id: 1,
-        talk_difficulty_id: 1,
-      },
+        track: "Track3",
+        start_time: Time.parse("11:00"),
+        end_time: Time.parse("11:50")
+      }
     ]
   )
 end

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div class="container">
+  <h1>Timeline</h1>
+</div>
+
+<div id="container">
+  <% %w(10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00).each_with_index do |time, index| %>
+    <div style="--duration: 60; --row-start: <%= ((index+1) * 7) - index %>; --row-end: <%= ((index+2) * 7) - index - 1 %>;" class="slot"><%= time %></div>
+  <% end %>
+
+  <% 6.times.each do |n| %>
+    <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
+  <% end %>
+
+  <% @talks.each_with_index do |talk, index| %>
+    <% if talk.track == "AllTrack" %>
+      <div class="keynote" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+        <div class="content">
+          <h6 ><%= link_to talk.title, talk, remote: true %></h6>
+        </div>
+      </div>
+    <% else %>
+      <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+        <div class="content">
+          <h6 ><%= link_to talk.title, talk, remote: true %></h6>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

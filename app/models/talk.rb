@@ -17,4 +17,12 @@ class Talk < ApplicationRecord
   def self.updatable_attributes
     ["id","title","abstract","track","talk_category_id","talk_difficulty_id","start_time","end_time","movie_url"]
   end
+
+  def row_start
+    ((self.start_time.localtime - Time.parse("2000-01-01 10:00")) / 60 / 10).to_i + 7
+  end
+
+  def row_end
+    ((self.end_time - self.start_time).to_i / 60 / 10) + row_start
+  end
 end

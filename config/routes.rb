@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :speakers, only: [:index, :show]
   resources :talks, only: [:index, :show]
+  get 'timelines' => 'timeline#index'
   get 'track/:id' => 'track#show'
   get 'dashboard/show'
   root 'home#show'

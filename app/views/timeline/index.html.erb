@@ -5,28 +5,46 @@
   <h1>Timeline</h1>
 </div>
 
-<div id="container">
-  <% %w(10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00).each_with_index do |time, index| %>
-    <div style="--duration: 60; --row-start: <%= ((index+1) * 7) - index %>; --row-end: <%= ((index+2) * 7) - index - 1 %>;" class="slot"><%= time %></div>
-  <% end %>
-
-  <% 6.times.each do |n| %>
-    <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
-  <% end %>
-
-  <% @talks.each_with_index do |talk, index| %>
-    <% if talk.track == "AllTrack" %>
-      <div class="keynote" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
-        <div class="content">
-          <h6 ><%= link_to talk.title, talk, remote: true %></h6>
-        </div>
-      </div>
-    <% else %>
-      <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
-        <div class="content">
-          <h6 ><%= link_to talk.title, talk, remote: true %></h6>
-        </div>
-      </div>
+<section id="timetable">
+  <div id="container">
+    <% %w(10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00).each_with_index do |time, index| %>
+        <div style="--duration: 60; --row-start: <%= ((index+1) * 7) - index %>; --row-end: <%= ((index+2) * 7) - index - 1 %>;" class="slot"><%= time %></div>
     <% end %>
-  <% end %>
-</div>
+
+    <% 6.times.each do |n| %>
+      <% if n.zero? || n.even? %>
+        <div class="track even" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
+      <% else %>
+        <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
+      <% end %>
+    <% end %>
+
+    <% @talks.each_with_index do |talk, index| %>
+      <% if talk.track == "AllTrack" %>
+        <div class="keynote" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+          <div class="content">
+            <h6><%= link_to talk.title, talk, remote: true %></h6>
+            <hr>
+            <ul>
+              <% talk.speakers.each do |speaker| %>
+                <li><%= link_to speaker.name, speaker %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% else %>
+        <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+          <div class="content">
+            <h6><%= link_to talk.title, talk, remote: true %></h6>
+            <hr>
+            <ul>
+              <% talk.speakers.each do |speaker| %>
+                <li><%= link_to speaker.name, speaker %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>

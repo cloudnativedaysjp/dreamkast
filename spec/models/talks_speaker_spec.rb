@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TalksSpeaker, type: :model do
   before do
-    file_path = File.join(Rails.root, 'spec/fixtures/talks_speaker.csv')
+    file_path = File.join(Rails.root, 'spec/fixtures/talks_speakers.csv')
 
     @csv = ActionDispatch::Http::UploadedFile.new(
       filename: File.basename(file_path),

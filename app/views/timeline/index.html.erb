@@ -11,7 +11,7 @@
 <section id="timetable">
   <div id="container">
     <% (@conference.conference_days[0].start_time.hour...@conference.conference_days[0].end_time.hour).each_with_index do |time, index| %>
-      <div style="--duration: 60; --row-start: <%= ((index+1) * 7) - index %>; --row-end: <%= ((index+2) * 7) - index - 1 %>;" class="slot"><%=  "%02d:00" % time %></div>
+      <div style="--duration: 60; --row-start: <%= ((index) * 7) - index + 2%>; --row-end: <%= ((index+1) * 7 + 1) - index %>;" class="slot"><%=  "%02d:00" % time %></div>
     <% end %>
 
     <% 6.times.each do |n| %>

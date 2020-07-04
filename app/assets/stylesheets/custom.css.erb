@@ -64,11 +64,8 @@ body {
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / 2;
-  --start: calc(1 + var(--row-start));
-  --end: calc(1 + var(--row-end));
-  grid-row: var(--start)/var(--end);
+  grid-row: var(--row-start)/var(--row-end);
   background-color: rgb(248, 248, 255);
-/*  border: solid 1px;*/
 }
 
 .track {

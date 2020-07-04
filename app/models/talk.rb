@@ -42,10 +42,10 @@ class Talk < ApplicationRecord
   end
 
   def row_start
-    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 54 / 10).to_i + 7
+    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60 / 10).to_i + 1
   end
 
   def row_end
-    ((self.end_time - self.start_time).to_i / 54 / 10) + row_start
+    ((self.end_time - self.start_time).to_i / 60 / 10) + row_start
   end
 end

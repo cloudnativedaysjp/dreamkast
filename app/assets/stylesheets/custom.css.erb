@@ -52,7 +52,6 @@ body {
   grid-auto-columns: 100px;
 
   overflow-x: auto;  /* 横スクロールの指定 */
-  white-space: nowrap;  /* 横スクロールの指定 */
   overflow-scrolling: touch;  /* スクロールを滑らかにする */
   -webkit-overflow-scrolling: touch;  /* スクロールを滑らかにする */
   grid-gap: .125em .25em;
@@ -88,9 +87,6 @@ body {
   z-index: 1;
   background-color: #ffffff;
   border-radius: 5px;
-/*  display: flex;*/
-/*  align-items: start;*/
-/*  justify-content: center;*/
 }
 
 
@@ -99,8 +95,6 @@ body {
   --end: calc(2 + var(--track));
   grid-column: var(--start)/var(--end);
   grid-row: calc(1 + var(--row-start))/calc(1 + var(--row-end));
-/*  display: flex;*/
-/*  align-items: start;*/
   justify-content: center;
 }
 
@@ -110,8 +104,6 @@ body {
   height: 100%;
   border-radius: 5px;
   border: solid 1px;
-  text-align: center;
-
 }
 .content h6 {
   display: flex;
@@ -120,9 +112,10 @@ body {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   align-items: center;
-  word-wrap: break-word;
   font-size: 0.9rem;
   padding: 0.2rem;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .content p {
@@ -130,7 +123,7 @@ body {
 }
 
 .content hr {
-margin-top: 0.2rem;
+  margin-top: 0.2rem;
   margin-bottom: 0.2rem;
 }
 

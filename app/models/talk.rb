@@ -33,7 +33,7 @@ class Talk < ApplicationRecord
   end
 
   def slot_number
-    slot_map = {"12" => "K", "13" => "K", "14" => "1", "15" => "2", "16" => "3", "17" => "4", "18" => "5", "19" => "6"}
+    slot_map = {"12" => "1", "13" => "1", "14" => "2", "15" => "3", "16" => "4", "17" => "5", "18" => "6", "19" => "7"}
      return slot_map[self.start_time.to_time.hour.to_s]
   end
 

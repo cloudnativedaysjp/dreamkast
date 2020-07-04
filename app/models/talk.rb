@@ -40,4 +40,12 @@ class Talk < ApplicationRecord
   def talk_number
     return day.to_s + track_name + slot_number
   end
+
+  def row_start
+    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60 / 10).to_i + 1
+  end
+
+  def row_end
+    ((self.end_time - self.start_time).to_i / 60 / 10) + row_start
+  end
 end

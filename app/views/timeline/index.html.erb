@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div class="container">
+  <h1>Timeline</h1>
+  <% @conference.conference_days.each do |day| %>
+    <%= link_to day.date.strftime("%m/%d(%a)"), timelines_path(date: day.date.strftime("%Y-%m-%d")) %>
+  <% end %>
+</div>
+
+<section id="timetable">
+  <div id="container" style="--rows: <%= ((@conference_day.end_time.hour - @conference_day.start_time.hour) * 6) + 1 %>">
+    <% (@conference_day.start_time.hour...@conference_day.end_time.hour).each_with_index do |time, index| %>
+      <div style="--duration: 60; --row-start: <%= ((index) * 7) - index + 2%>; --row-end: <%= ((index+1) * 7 + 1) - index %>;" class="slot"><%=  "%02d:00" % time %></div>
+    <% end %>
+
+    <% 6.times.each do |n| %>
+      <% if n.zero? || n.even? %>
+        <div class="track even" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
+      <% else %>
+        <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
+      <% end %>
+    <% end %>
+
+    <% @talks.each_with_index do |talk, index| %>
+      <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+        <%= link_to talk, remote: true do %>
+          <div class="content">
+            <h6><%= talk.title %> / <%= talk.speakers.map { |speaker| speaker.name }.join(" / ") %></h6>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

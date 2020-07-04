@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :speakers, only: [:index, :show]
-  resources :talks, only: [:index, :show]
+  resources :talks, only: [:show]
+  get 'timelines' => 'timeline#index'
+  get 'timelines/:date' => 'timeline#index'
   get 'track/:id' => 'track#show'
   get 'dashboard/show'
   root 'home#show'
@@ -32,4 +34,6 @@ Rails.application.routes.draw do
   put 'profiles', to: 'profiles#update'
   get 'profiles', to: 'profiles#edit'
   get 'profiles/edit', to: 'profiles#edit'
+
+  get '*path', controller: 'application', action: 'render_404'
 end

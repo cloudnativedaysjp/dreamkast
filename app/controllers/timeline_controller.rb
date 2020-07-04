@@ -4,7 +4,7 @@ class TimelineController < ApplicationController
 
     @conference = Conference.find_by(name: "CloudNative Days Tokyo 2020")
     if date
-      @conference_day = @conference.conference_days.find_by(date: Time.parse(date))
+      @conference_day = @conference.conference_days.find_by!(date: Time.parse(date))
     else
       @conference_day = @conference.conference_days.sort {|a, b| a.date <=> b.date }.first
     end

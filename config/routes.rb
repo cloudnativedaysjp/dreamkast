@@ -34,4 +34,6 @@ Rails.application.routes.draw do
   put 'profiles', to: 'profiles#update'
   get 'profiles', to: 'profiles#edit'
   get 'profiles/edit', to: 'profiles#edit'
+
+  get '*path', controller: 'application', action: 'render_404'
 end

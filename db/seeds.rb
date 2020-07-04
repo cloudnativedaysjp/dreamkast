@@ -6,6 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+if Conference.all.length == 0
+  puts "Adding conference list"
+  Conference.create!(
+    [
+      {id: 1, name: "CloudNative Days Tokyo 2020"}
+    ]
+  )
+end
+
+if ConferenceDay.all.length == 0
+  puts "Adding conference_day list"
+  ConferenceDay.create!(
+    [
+      {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1},
+      {id: 2, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}
+    ]
+  )
+end
 
 if Industry.all.length == 0
   puts "Adding industry list"

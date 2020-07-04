@@ -102,26 +102,26 @@ RSpec.describe Talk, type: :model do
 
   it "is expected slot_number" do
     talk = Talk.find(1)
-    expect(talk.slot_number).to eq "1"
+    expect(talk.slot_number).to eq "2"
   end
 
   it "is expected slot_number" do
     talk = Talk.find(2)
-    expect(talk.slot_number).to eq "5"
+    expect(talk.slot_number).to eq "6"
   end
 
   it "is expected slot_number" do
     talk = Talk.find(3)
-    expect(talk.slot_number).to eq "2"
+    expect(talk.slot_number).to eq "3"
   end
 
   it "is expected slot_number" do
     talk = Talk.find(4)
-    expect(talk.slot_number).to eq "2"
+    expect(talk.slot_number).to eq "3"
   end
 
   it "is expected talk_number" do
     talk = Talk.find(1)
-    expect(talk.talk_number).to eq "1A1"
+    expect(talk.talk_number).to eq "1A2"
   end
 end

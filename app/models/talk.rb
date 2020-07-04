@@ -4,6 +4,7 @@ class Talk < ApplicationRecord
 
   has_many :talks_speakers
   has_many :speakers, through: :talks_speakers
+  has_many :profiles, through: :registered_talks
 
   def self.import(file)
     destroy_all

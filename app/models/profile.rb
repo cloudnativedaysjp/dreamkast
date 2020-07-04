@@ -15,6 +15,8 @@ class TelValidator < ActiveModel::EachValidator
 end
 
 class Profile < ApplicationRecord
+  has_many :talks, through: :registered_talks
+
   validates :sub, presence: true, uniqueness: { case_sensitive: true}, length: { maximum: 250 }
   validates :email, presence: true, uniqueness: { case_sensitive: true}, email: true
   validates :last_name, presence: true, length: { maximum: 50 }

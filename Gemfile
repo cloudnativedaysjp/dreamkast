@@ -46,6 +46,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'ruby-debug-ide'
   gem 'debase'
+  gem 'pry-rails'
 end
 
 group :test do
@@ -62,3 +63,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "mysql2", "~> 0.5.3"
 
 gem "sentry-raven"
+
+gem "redis-rails"

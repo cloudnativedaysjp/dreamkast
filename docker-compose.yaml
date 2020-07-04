@@ -14,6 +14,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: dreamkast
+      REDIS_URL: redis://redis:6379
     tty: true
     stdin_open: true
     volumes:
@@ -57,9 +58,14 @@ services:
     - mysql-data:/var/lib/mysql
     ports:
     - "3306:3306"
+  redis:
+    image: "redis:5"
+    volumes:
+      - redis-data:/data
 volumes:
   mysql-data:
   bundle:
   node-modules:
   packs:
   vendor:
+  redis-data:

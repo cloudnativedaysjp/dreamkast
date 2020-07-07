@@ -3,37 +3,48 @@
     <div class="modal-body">
       <div class="container">
         <div class="row py-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= @talk.title %></h5>
-              <p class="card-text"><%= @talk.abstract %></p>
-              <p class="card-text">Speaker: <%= raw(@talk.speakers.map { |speaker| raw(link_to(speaker.name, speaker))}.join(', ')) %></p>
-              <p class="card-text">Main Category: <%= @talk.talk_category.name %></p>
-              <p class="card-text">Audience Experience Level: <%= @talk.talk_difficulty.name %></p>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= @talk.title %></h5>
+                <p class="card-text"><%= @talk.abstract %></p>
+                <p class="card-text">Speaker: <%= raw(@talk.speakers.map { |speaker| raw(link_to(speaker.name, speaker))}.join(', ')) %></p>
+                <p class="card-text">Main Category: <%= @talk.talk_category.name %></p>
+                <p class="card-text">Audience Experience Level: <%= @talk.talk_difficulty.name %></p>
+              </div>
             </div>
           </div>
         </div>
 
         <% @talk.speakers.each do |speaker| %>
           <div class="row py-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><%= speaker.name %></h5>
-                <% if speaker.profile != "" %>
-                  <p class="card-text">Profile: <%= speaker.profile %></p>
-                <% end %>
-                <% if speaker.company != "" %>
-                  <p class="card-text">Company: <%= speaker.company %></p>
-                <% end %>
-                <% if speaker.job_title != "" %>
-                  <p class="card-text">Job Title: <%= speaker.job_title %></p>
-                <% end %>
-                <% if speaker.twitter_id != "" %>
-                  <p class="card-text">Twitter: <a href="https://twitter.com/<%= speaker.twitter_id %>"><%= speaker.twitter_id %></a></p>
-                <% end %>
-                <% if speaker.github_id != "" %>
-                  <p class="card-text">Github: <a href="https://github.com/<%= speaker.github_id %>"><%= speaker.github_id %></a></p>
-                <% end %>
+            <% if speaker.avatar.attached? %>
+              <div class="col col-md-auto">
+                <div class="avatar">
+                  <%= image_tag speaker.avatar, :size => '90x90' %>
+                </div>
+              </div>
+            <% end %>
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><%= speaker.name %></h5>
+                  <% if speaker.profile != "" %>
+                    <p class="card-text">Profile: <%= speaker.profile %></p>
+                  <% end %>
+                  <% if speaker.company != "" %>
+                    <p class="card-text">Company: <%= speaker.company %></p>
+                  <% end %>
+                  <% if speaker.job_title != "" %>
+                    <p class="card-text">Job Title: <%= speaker.job_title %></p>
+                  <% end %>
+                  <% if speaker.twitter_id != "" %>
+                    <p class="card-text">Twitter: <a href="https://twitter.com/<%= speaker.twitter_id %>"><%= speaker.twitter_id %></a></p>
+                  <% end %>
+                  <% if speaker.github_id != "" %>
+                    <p class="card-text">Github: <a href="https://github.com/<%= speaker.github_id %>"><%= speaker.github_id %></a></p>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>

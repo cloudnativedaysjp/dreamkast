@@ -35,5 +35,6 @@ Rails.application.routes.draw do
   get 'profiles', to: 'profiles#edit'
   get 'profiles/edit', to: 'profiles#edit'
 
-  get '*path', controller: 'application', action: 'render_404'
+  # TODO: この設定が有効だと画像が表示されないので一時的にコメントアウト
+  # get '*path', controller: 'application', action: 'render_404'
 end

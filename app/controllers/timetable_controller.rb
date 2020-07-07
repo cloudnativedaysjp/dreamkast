@@ -1,4 +1,4 @@
-class TimelineController < ApplicationController
+class TimetableController < ApplicationController
   def index
     date = params[:date]
 

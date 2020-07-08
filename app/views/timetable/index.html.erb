@@ -24,7 +24,7 @@
 
     <% @talks.each_with_index do |talk, index| %>
       <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
-        <%= link_to talk, remote: true do %>
+        <%= link_to talk_path(id: talk.id), remote: true do %>
           <div class="content">
             <h6><%= talk.title %> / <%= talk.speakers.map { |speaker| speaker.name }.join(" / ") %></h6>
           </div>

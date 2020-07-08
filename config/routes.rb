@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/' => redirect('/cndt2020')
+  get 'home/show' => redirect('/cndt2020')
   scope ":event" do
     resources :speakers, only: [:index, :show]
     resources :talks, only: [:show]
@@ -7,7 +9,6 @@ Rails.application.routes.draw do
     get 'track/:id' => 'track#show'
     get 'dashboard/show'
     root 'home#show'
-    get 'home/show'
   end
 
   # Admin

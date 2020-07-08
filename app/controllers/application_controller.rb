@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  # rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def render_404
     render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'

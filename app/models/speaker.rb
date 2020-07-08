@@ -1,6 +1,7 @@
 class Speaker < ApplicationRecord
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
+  has_one_attached :avatar
 
   def self.import(file)
     puts file.class

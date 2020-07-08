@@ -4,6 +4,9 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= @speaker.name %></h5>
+      <% if @speaker.avatar.attached? %>
+        <%= image_tag @speaker.avatar %>
+      <% end %>
       <% if @speaker.profile != "" %>
         <p class="card-text">Profile: <%= @speaker.profile %></p>
       <% end %>

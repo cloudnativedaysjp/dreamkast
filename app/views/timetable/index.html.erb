@@ -2,9 +2,9 @@
 <div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div class="container">
-  <h1>Timeline</h1>
+  <h1>Timetable</h1>
   <% @conference.conference_days.each do |day| %>
-    <%= link_to day.date.strftime("%m/%d(%a)"), timelines_path(date: day.date.strftime("%Y-%m-%d")) %>
+    <%= link_to day.date.strftime("%m/%d(%a)"), timetables_path(date: day.date.strftime("%Y-%m-%d")) %>
   <% end %>
 </div>
 

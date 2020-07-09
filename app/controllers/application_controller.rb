@@ -1,11 +1,15 @@
 class ApplicationController < ActionController::Base
   before_action :set_raven_context
 
-  def event_page?
-    controller_name == "event"
+  def home?
+    controller_name == "home"
   end
 
-  helper_method :event_page?
+  def admin?
+    controller_name == "admin"
+  end
+
+  helper_method :home?, :admin?
   private
 
   def set_raven_context

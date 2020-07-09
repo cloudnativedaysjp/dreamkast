@@ -5,6 +5,17 @@ Rails.application.routes.draw do
   get 'dashboard' => 'dashboard#show'
   get 'logout' => 'logout#logout'
 
+  # Admin
+  get 'admin' => 'admin#show'
+  get 'admin/accesslog' => 'admin#accesslog'
+  get 'admin/users' => 'admin#users'
+  get 'admin/talks' => 'admin#talks'
+  post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
+  get 'admin/speakers' => 'admin#speakers'
+  post 'admin/bulk_insert_speakers' => 'admin#bulk_insert_speakers'
+  post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
+  delete 'admin/destroy_user' => 'admin#destroy_user'
+
   scope ":event" do
     resources :speakers, only: [:index, :show]
     resources :talks, only: [:show]
@@ -16,16 +27,6 @@ Rails.application.routes.draw do
     get '/' => 'event#show'
   end
 
-  # Admin
-  get 'admin' => 'admin#show'
-  get 'admin/accesslog' => 'admin#accesslog'
-  get 'admin/users' => 'admin#users'
-  get 'admin/talks' => 'admin#talks'
-  post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
-  get 'admin/speakers' => 'admin#speakers'
-  post 'admin/bulk_insert_speakers' => 'admin#bulk_insert_speakers'
-  post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
-  delete 'admin/destroy_user' => 'admin#destroy_user'
 
   # Auth
   get 'auth/auth0/callback' => 'auth0#callback'

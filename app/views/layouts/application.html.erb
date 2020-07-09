@@ -17,7 +17,7 @@
 
 <body id="page-top">
 
-<% if event_page? %>
+<% unless home? || admin? %>
   <%= render partial: "layouts/event_header" %>
 <% end %>
 

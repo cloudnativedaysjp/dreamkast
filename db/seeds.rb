@@ -10,7 +10,7 @@ if Conference.all.length == 0
   puts "Adding conference list"
   Conference.create!(
     [
-      {id: 1, name: "CloudNative Days Tokyo 2020"}
+      {id: 1, name: "CloudNative Days Tokyo 2020", abbr: "cndt2020"}
     ]
   )
 end

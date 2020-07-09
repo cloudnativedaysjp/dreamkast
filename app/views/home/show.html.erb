@@ -1,13 +1,15 @@
-<!-- Masthead-->
+<!DOCTYPE html>
+<html>
+
 <header class="masthead">
   <div class="container h-100">
     <div class="row h-100 align-items-center justify-content-center text-center">
-      <%= link_to '/cndt2020' do %>
-        <div class="col-lg-12 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">CloudNative Days Tokyo 2020</h1>
-          <hr class="divider my-4" />
-          <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
-        </div>
+      <% @events.each do |event| %>
+        <%= link_to "/#{event.abbr}" do %>
+          <div class="col-lg-12 align-self-end">
+            <h1 class="text-uppercase text-white font-weight-bold"><%= event.name %></h1>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>

@@ -1,36 +1,14 @@
 <!-- Masthead-->
 <header class="masthead">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-lg-12 align-self-end">
-                <h1 class="text-uppercase text-white font-weight-bold">CloudNative Days Tokyo 2020</h1>
-                <hr class="divider my-4" />
-                <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
-            </div>
-            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
-                <%= button_to 'Login', 'auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
-            </div>
-            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
-                <%= button_to 'Timetable', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
-            </div>
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <%= link_to '/cndt2020' do %>
+        <div class="col-lg-12 align-self-end">
+          <h1 class="text-uppercase text-white font-weight-bold">CloudNative Days Tokyo 2020</h1>
+          <hr class="divider my-4" />
+          <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
         </div>
+      <% end %>
     </div>
+  </div>
 </header>
-<!-- About-->
-<section class="page-section bg-primary" id="about">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="text-white mt-0">About</h2>
-                <hr class="divider light my-4" />
-                <p class="text-white-50 mb-4 text-center">CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。</p>
-
-                <p class="text-white-50 mb-4 text-center">最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。</p>
-
-                <p class="text-white-50 mb-4 text-center">皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。</p>
-
-                <p class="text-white-50 mb-4 text-center">クラウドネイティブで、未来を共に創造しましょう。</p>
-            </div>
-        </div>
-    </div>
-</section>

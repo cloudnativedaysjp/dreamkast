@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get '/' => redirect('/cndt2020')
-  get 'home/show' => redirect('/cndt2020')
+  root 'home#show', event: 'cndt2020'
+  get '/home#show' => redirect('/cndt2020')
+
+  get 'dashboard' => 'dashboard#show'
+  get 'logout' => 'logout#logout'
+
   scope ":event" do
     resources :speakers, only: [:index, :show]
     resources :talks, only: [:show]
@@ -8,7 +12,8 @@ Rails.application.routes.draw do
     get 'timetables/:date' => 'timetable#index'
     get 'track/:id' => 'track#show'
     get 'dashboard/show'
-    root 'home#show'
+    get 'registration' => 'profiles#new'
+    get '/' => 'event#show'
   end
 
   # Admin
@@ -25,10 +30,6 @@ Rails.application.routes.draw do
   # Auth
   get 'auth/auth0/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
-
-  get 'dashboard' => 'dashboard#show'
-  get 'logout' => 'logout#logout'
-  get 'registration' => 'profiles#new'
 
   # Profile
   resources :profiles, only: [:new, :edit, :update, :destroy, :create]

@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
     @profile.sub = @current_user[:extra][:raw_info][:sub]
     @profile.email = @current_user[:info][:email]
     if @profile.save
-      redirect_to '/track/1'
+      redirect_to '/cndt2020/track/1'
     else
       respond_to do |format|
         format.html { render :new }

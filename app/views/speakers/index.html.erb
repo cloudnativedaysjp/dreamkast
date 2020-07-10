@@ -9,9 +9,9 @@
       <div class="row py-3">
         <% sliced_speakers.each do |speaker| %>
           <div class="card">
-            <% if speaker.avatar.attached? %>
+            <% unless speaker.avatar_url.nil? %>
               <div class="avatar text-center">
-                <%= image_tag speaker.avatar, :size => '90x90'  %>
+                <%= image_tag speaker.avatar_url, :size => '90x90'  %>
               </div>
             <% end %>
             <div class="card-body">

@@ -18,10 +18,10 @@
 
         <% @talk.speakers.each do |speaker| %>
           <div class="row py-3">
-            <% if speaker.avatar.attached? %>
+            <% unless speaker.avatar_url.nil? %>
               <div class="col col-md-auto">
                 <div class="avatar">
-                  <%= image_tag speaker.avatar, :size => '90x90' %>
+                    <%= image_tag speaker.avatar_url, :size => '90x90' %>
                 </div>
               </div>
             <% end %>

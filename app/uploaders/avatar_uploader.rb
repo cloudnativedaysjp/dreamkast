@@ -1,0 +1,3 @@
+class AvatarUploader < Shrine
+
+end

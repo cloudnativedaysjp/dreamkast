@@ -64,6 +64,7 @@
     <%= form.text_field :position, required: true, class: "form-control" %>
   </div>
 
+  <% if action_name == "new" %>
   <div class="privacy_policy">
     <h4>個人情報保護方針(プライバシー ポリシー)</h4>
     <p>
@@ -92,9 +93,23 @@
     <p>
     マーケティングに関する同意は、netsupp@us.ibm.com にEメールを送信していつでも取り消すことができます。また、該当のEメール内の、購読を中⽌するためのリンクをクリックすることで、マーケティングに関するEメールの受信を中⽌することができます。 処理に関する詳しい情報は、IBMプライバシー・ステートメントをご覧ください。このフォームを送信することで、私はIBMプライバシー・ステートメントを読み、これを理解したものとします。
     </p>
+    <div class="form-check">
+      <%= form.check_box :require_email, {class: "form-check-input"}, true, false %>
+      <label class="form-check-label" for="require_email">e-メールを希望する</label>
+    </div>
+    <div class="form-check">
+      <%= form.check_box :require_tel, {class: "form-check-input"}, true, false %>
+      <label class="form-check-label" for="require_tel">電話を希望する</label>
+    </div>
+    <div class="form-check">
+      <%= form.check_box :require_posting, {class: "form-check-input"}, true, false %>
+      <label class="form-check-label" for="require_posting">郵便を希望する</label>
+    </div>
+    <p></p>
   </div>
+  <% end %>
 
-  <div class="form-row form-group justify-content-md-center">
+  <div class="form-row form-group justify-content-md-center py-20">
     <%= form.submit "登録", class: "btn btn-primary form-control" %>
   </div>
 <% end %>

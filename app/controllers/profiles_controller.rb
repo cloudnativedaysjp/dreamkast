@@ -1,7 +1,8 @@
 class ProfilesController < ApplicationController
   include Secured
 
-  before_action :set_profile, only: [:edit, :update, :destroy]
+  before_action :set_current_profile, only: [:edit, :update, :destroy]
+  before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
 
   def new
     @profile = Profile.new
@@ -38,18 +39,34 @@ class ProfilesController < ApplicationController
 
   def destroy
     @profile.destroy
+    reset_session
+    redirect_to logout_url.to_s
+  end
+
+  def destroy_id
+    @found_profile.destroy
     respond_to do |format|
-      format.html { redirect_to profiles_url, notice: 'Profile was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
+  def set_role
+    puts params[:roles]
+  end
+
   private
-    def set_profile
+    def find_profile
+      @found_profile = Profile.find(parmas[:id])
+      unless @found_profile
+        format.json { render json: "Not found", status: :not_found }
+      end
+    end
+
+    def set_current_profile
       @profile = Profile.find_by(email: @current_user[:info][:email])
     end
 
     def profile_params
-      params.require(:profile).permit(:sub, :email, :last_name, :first_name, :industry_id, :occupation, :company_name, :company_email, :company_address, :company_tel, :department, :position)
+      params.require(:profile).permit(:sub, :email, :last_name, :first_name, :industry_id, :occupation, :company_name, :company_email, :company_address, :company_tel, :department, :position, :roles)
     end
 end

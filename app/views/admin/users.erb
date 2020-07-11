@@ -1,4 +1,5 @@
 <div class="container">
+    <%= render 'message' %>
     <%= render 'navigator' %>
 
     <div class="row">
@@ -15,11 +16,11 @@
             </thead>
             <tbody>
                 <% @profiles.each do |profile| %>
-                <tr>
-                    <td><%= profile.first_name %></td>
-                    <td><%= profile.last_name %></td>
-                    <td><%= profile.sub %></td>
-                </tr>
+                    <tr>
+                        <td><%= profile.first_name %></td>
+                        <td><%= profile.last_name %></td>
+                        <td><%= profile.sub %></td>
+                    </tr>
                 <% end %>
             </tbody>
         </table>

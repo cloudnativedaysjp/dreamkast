@@ -65,3 +65,7 @@ gem "mysql2", "~> 0.5.3"
 gem "sentry-raven"
 
 gem "redis-rails"
+
+gem "shrine", "~> 3.0"
+
+gem "aws-sdk-s3", "~> 1.14"

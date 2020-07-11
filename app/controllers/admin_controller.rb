@@ -3,11 +3,14 @@ class AdminController < ApplicationController
     include Logging
     include LogoutHelper
 
+    before_action :is_admin?
+
     def show
-        #TODO: pagenation入れる
+        @session = session
     end
 
     def accesslog
+        #TODO: pagenation入れる
         @logs = AccessLog.all.order(id: "DESC").limit(50)
     end
 
@@ -43,5 +46,12 @@ class AdminController < ApplicationController
     def bulk_insert_talks_speaker
         TalksSpeaker.import(params[:file])
         redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
+    end
+    
+    private
+    def is_admin?
+        # unless admin?
+        #     redirect_to controller: "track", action: "show", id: 1
+        # end
     end
 end

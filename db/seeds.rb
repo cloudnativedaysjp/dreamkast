@@ -152,6 +152,14 @@ if Rails.env.development? && TalksSpeaker.all.length == 0
   TalksSpeaker.import(@csv)
 end
 
+if Rails.env.development? && Profile.all.length == 0
+  Profile.create!(
+    [
+      {id: 1, first_name: "夢見", last_name: "太郎", industry_id: 1, sub: "a", occupation: "a", department: "a", email: "xxx@example.com", company_name: "aaa", company_address: "xxx", company_email: "yyy@example.com", company_tel: "123-456-7890", position: "president"}
+    ]
+  )
+end
+
 if Rails.env.development? && RegisteredTalk.all.length == 0
   RegisteredTalk.create!(
     [
@@ -162,6 +170,19 @@ if Rails.env.development? && RegisteredTalk.all.length == 0
       { talk_id: 28, profile_id: 1},
       { talk_id: 35, profile_id: 1},
       { talk_id: 42, profile_id: 1},
+    ]
+  )
+end
+
+if Rails.env.development? && Track.all.length == 0
+  Track.create!(
+    [
+      { id: 1, number: 1, name: "1", conference_id: 1, movie_url: "https://www.youtube.com/embed/QJSo8BZlbeI"},
+      { id: 2, number: 2, name: "2", conference_id: 1, movie_url: "https://www.youtube.com/embed/i28YOIui1bc?autoplay=1"},
+      { id: 3, number: 3, name: "3", conference_id: 1, movie_url: "https://www.youtube.com/embed/bqD9EwKaE90?autoplay=1"},
+      { id: 4, number: 4, name: "4", conference_id: 1, movie_url: "https://www.youtube.com/embed/hL07TE17rZ8?autoplay=1"},
+      { id: 5, number: 5, name: "5", conference_id: 1, movie_url: "https://www.youtube.com/embed/rD9czFIT4Iw?autoplay=1"},
+      { id: 6, number: 6, name: "6", conference_id: 1, movie_url: "https://www.youtube.com/embed/sSGVgLmZ8u0?autoplay=1"},
     ]
   )
 end

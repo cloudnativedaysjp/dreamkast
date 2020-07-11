@@ -21,7 +21,8 @@ Rails.application.routes.draw do
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    get 'track/:id' => 'track#show'
+    # get 'track/:id' => 'track#show'
+    resources :track, only: [:show]
     get 'dashboard/show'
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'

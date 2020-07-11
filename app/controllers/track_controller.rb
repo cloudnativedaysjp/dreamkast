@@ -3,6 +3,9 @@ class TrackController < ApplicationController
   include Logging
   
   def show
+    @tracks = Track.all
+    @event = params[:event]
+
     @new_user = new_user?.to_s
     case params[:id]
     when "1" then

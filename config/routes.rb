@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :speakers, only: [:index, :show]
+  resources :speakers
   resources :talks, only: [:show]
   get 'timetables' => 'timetable#index'
   get 'timetables/:date' => 'timetable#index'

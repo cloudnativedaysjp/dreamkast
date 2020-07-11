@@ -1,4 +1,6 @@
 class SpeakersController < ApplicationController
+  include Secured
+
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
 
   # GET /speakers

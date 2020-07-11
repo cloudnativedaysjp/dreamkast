@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_023015) do
+ActiveRecord::Schema.define(version: 2020_07_08_133901) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -82,6 +82,13 @@ ActiveRecord::Schema.define(version: 2020_07_09_023015) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "profile_id"
+    t.integer "talk_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "profile"
@@ -117,6 +124,8 @@ ActiveRecord::Schema.define(version: 2020_07_09_023015) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "date"
+    t.integer "conference_id"
+    t.integer "conference_day_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end

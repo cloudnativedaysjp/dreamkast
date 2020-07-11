@@ -16,7 +16,7 @@ module Secured
     def new_user?
       unless controller_name == "profiles"
         unless Profile.find_by(email: @current_user[:info][:email])
-          redirect_to '/registration'
+          redirect_to "/#{params[:event]}/registration"
         end
       end
     end

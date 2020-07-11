@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
     controller_name == "admin"
   end
 
-  helper_method :home?, :admin?
+  def event_name
+    params[:event]
+  end
+
+  helper_method :home?, :admin?, :event_name
+
   private
 
   def set_raven_context

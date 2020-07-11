@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root 'home#show', event: 'cndt2020'
   get '/home#show' => redirect('/cndt2020')
 
-  get 'dashboard' => 'dashboard#show'
+  # Auth
+  get 'auth/auth0/callback' => 'auth0#callback'
+  get 'auth/failure' => 'auth0#failure'
   get 'logout' => 'logout#logout'
 
   # Admin
@@ -21,35 +23,27 @@ Rails.application.routes.draw do
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    # get 'track/:id' => 'track#show'
     resources :track, only: [:show]
     get 'dashboard/show'
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'
+
+    # Profile
+    resources :profiles, only: [:new, :edit, :update, :destroy, :create]
+    get 'profiles/new', to: 'profiles#new'
+    post 'profiles', to: 'profiles#create'
+    put 'profiles', to: 'profiles#update'
+    delete 'profiles', to: 'profiles#destroy'
+    get 'profiles', to: 'profiles#edit'
+    get 'profiles/edit', to: 'profiles#edit'
+
+    namespace :profiles do
+      get 'talks', to: 'talks#show'
+      post 'talks', to: 'talks#create'
+    end
+    delete 'profiles/:id', to: 'profiles#destroy_id'
+    put 'profiles/:id/role', to: 'profiles#set_role'
   end
 
-
-  # Auth
-  get 'auth/auth0/callback' => 'auth0#callback'
-  get 'auth/failure' => 'auth0#failure'
-
-  # Profile
-  resources :profiles, only: [:new, :edit, :update, :destroy, :create]
-  get 'profiles/new', to: 'profiles#new'
-  post 'profiles', to: 'profiles#create'
-  put 'profiles', to: 'profiles#update'
-  delete 'profiles', to: 'profiles#destroy'
-  get 'profiles', to: 'profiles#edit'
-  get 'profiles/edit', to: 'profiles#edit'
-
-  # TODO: この設定が有効だと画像が表示されないので一時的にコメントアウト
-  # get '*path', controller: 'application', action: 'render_404'
   get '*path', controller: 'application', action: 'render_404'
-  namespace :profiles do
-    get 'talks', to: 'talks#show'
-    post 'talks', to: 'talks#create'
-  end
-  delete 'profiles/:id', to: 'profiles#destroy_id'
-  put 'profiles/:id/role', to: 'profiles#set_role'
-
 end

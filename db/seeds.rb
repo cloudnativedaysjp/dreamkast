@@ -151,3 +151,17 @@ if Rails.env.development? && TalksSpeaker.all.length == 0
   )
   TalksSpeaker.import(@csv)
 end
+
+if Rails.env.development? && RegisteredTalk.all.length == 0
+  RegisteredTalk.create!(
+    [
+      { talk_id: 1, profile_id: 1},
+      { talk_id: 7, profile_id: 1},
+      { talk_id: 14, profile_id: 1},
+      { talk_id: 21, profile_id: 1},
+      { talk_id: 28, profile_id: 1},
+      { talk_id: 35, profile_id: 1},
+      { talk_id: 42, profile_id: 1},
+    ]
+  )
+end

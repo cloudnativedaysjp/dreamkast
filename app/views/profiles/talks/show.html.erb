@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row">
+        <h2>Registered Talks</h2>
+        <ul>
+        <% @profile.talks.each do |talk| %>
+            <li><%= talk.title %></li>
+        <% end %>
+        </ul>
+    </div>
+</div>

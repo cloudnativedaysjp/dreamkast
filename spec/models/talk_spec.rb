@@ -28,6 +28,17 @@ RSpec.describe Talk, type: :model do
       { id: 3, name: "Advanced - 上級者"},
     ]
     )
+    Conference.create!(
+      [
+        {id: 1, name: "CloudNative Days Tokyo 2020"}
+      ]
+    )
+    ConferenceDay.create!(
+      [
+        {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1},
+        {id: 2, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}
+      ]
+    )
 
 
     file_path = File.join(Rails.root, 'spec/fixtures/talks.csv')
@@ -123,5 +134,10 @@ RSpec.describe Talk, type: :model do
   it "is expected talk_number" do
     talk = Talk.find(1)
     expect(talk.talk_number).to eq "1A2"
+  end
+
+  it "returns" do
+    talks = Talk.find_by_params("1", "2", "1")
+    expect(talks.length).to eq 1
   end
 end

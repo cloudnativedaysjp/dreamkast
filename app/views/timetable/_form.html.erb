@@ -1,0 +1,3 @@
+<%= form_with url: 'profiles/talks', method: :post do |form| %>
+  <%= render partial: 'timetable', locals: {conference: @conference, form: form} %>
+<% end %>

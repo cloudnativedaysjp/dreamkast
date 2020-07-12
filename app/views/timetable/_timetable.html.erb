@@ -1,4 +1,4 @@
-<% @conference_days.each do |conference_day| %>
+<% @conference.conference_days.each do |conference_day| %>
   <section id="timetable">
     <h2><%= conference_day.date %></h2>
 
@@ -16,12 +16,11 @@
       <% end %>
 
       <% talk_numbers = [] %>
-      <% conference_day.talks.each_with_index do |talk, index| %>
+      <% @conference.talks.each do |talk| %>
         <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
           <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
-              <% checked = true if @profile.talks.find_by_id(talk.id) %>
-              <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: checked %>
+              <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: talks_checked?(talk.id) %>
             <% end %>
             <% talk_numbers << talk.talk_number %>
           <% end %>

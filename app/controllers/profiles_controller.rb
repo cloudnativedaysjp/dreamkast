@@ -15,7 +15,11 @@ class ProfilesController < ApplicationController
     @profile = Profile.new(profile_params)
     @profile.sub = @current_user[:extra][:raw_info][:sub]
     @profile.email = @current_user[:info][:email]
+
     if @profile.save
+      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params["require_email"]
+      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
+      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
       redirect_to '/track/1'
     else
       respond_to do |format|
@@ -28,7 +32,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to '/profiles/edit', notice: 'Profile was successfully updated.' }
+        format.html { redirect_to '/profiles/edit', notice: '登録情報を更新しました' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -67,6 +71,28 @@ class ProfilesController < ApplicationController
     end
 
     def profile_params
-      params.require(:profile).permit(:sub, :email, :last_name, :first_name, :industry_id, :occupation, :company_name, :company_email, :company_address, :company_tel, :department, :position, :roles)
+      params.require(:profile).permit(
+        :sub,
+        :email,
+        :last_name,
+        :first_name,
+        :industry_id,
+        :occupation,
+        :company_name,
+        :company_email,
+        :company_address,
+        :company_tel,
+        :department,
+        :position,
+        :roles,
+        )
+    end
+
+    def agreement_params
+      params.require(:profile).permit(
+        :require_email,
+        :require_tel,
+        :require_posting
+      )
     end
 end

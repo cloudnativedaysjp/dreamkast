@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     get 'profiles/new', to: 'profiles#new'
     post 'profiles', to: 'profiles#create'
+    post 'profiles/:id', to: 'profiles#edit'
     put 'profiles', to: 'profiles#update'
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'

@@ -15,7 +15,8 @@ class TimetableController < ApplicationController
   end
 
   private
-    def set_profile
-      @profile = Profile.find_by(email: @current_user[:info][:email])
-    end
+
+  def set_profile
+    @profile = Profile.find_by(email: @current_user[:info][:email])
+  end
 end

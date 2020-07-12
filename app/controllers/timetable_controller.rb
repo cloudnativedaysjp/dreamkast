@@ -9,9 +9,14 @@ class TimetableController < ApplicationController
   end
 
   def index
-    @conference = Conference.find_by(abbr: event_name)
-    @conference_days = @conference.conference_days.includes(talks: :speakers)
+    @conference = Conference.includes(:talks, {talks: :speakers}).find_by(abbr: event_name)
   end
+
+  def talks_checked?(talk_id)
+    @profile.talks.select{|talk| talk.id == talk_id}.present?
+  end
+
+  helper_method :talks_checked?
 
   private
 

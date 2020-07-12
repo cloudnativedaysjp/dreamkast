@@ -174,6 +174,17 @@ if Rails.env.development? && RegisteredTalk.all.length == 0
   )
 end
 
+if FormItem.all.length == 0
+  puts "Adding form item list"
+  FormItem.create!(
+    [
+      { id: 1, conference_id: 1, name: "IBMからのメールを希望する"},
+      { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
+      { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
+    ]
+  )
+end
+
 if Rails.env.development? && Track.all.length == 0
   Track.create!(
     [

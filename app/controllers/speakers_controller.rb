@@ -4,6 +4,12 @@ class SpeakersController < ApplicationController
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
   before_action :set_profile
 
+  def logged_in_using_omniauth?
+    if session[:userinfo].present?
+      @current_user = session[:userinfo]
+    end
+  end
+
   # GET /speakers
   # GET /speakers.json
   def index
@@ -71,7 +77,9 @@ class SpeakersController < ApplicationController
   end
 
   def set_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email])
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
   end
 
   # Only allow a list of trusted parameters through.

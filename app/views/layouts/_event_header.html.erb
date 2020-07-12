@@ -7,7 +7,7 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto my-2 my-lg-0">
-        <% unless event_name == ""%>
+        <% unless event_name.nil? %>
           <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger" %></li>
           <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
         <% end %>
@@ -26,7 +26,7 @@
               <%= @current_user[:info][:nickname] %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if @profile.id %>
+              <% if event_name && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
               <div class="dropdown-divider"></div>

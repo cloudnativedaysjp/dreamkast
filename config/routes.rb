@@ -30,6 +30,10 @@ Rails.application.routes.draw do
 
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
+    namespace :profiles do
+      get 'talks', to: 'talks#show'
+      post 'talks', to: 'talks#create'
+    end
     get 'profiles/new', to: 'profiles#new'
     post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'
@@ -38,10 +42,6 @@ Rails.application.routes.draw do
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
 
-    namespace :profiles do
-      get 'talks', to: 'talks#show'
-      post 'talks', to: 'talks#create'
-    end
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'
   end

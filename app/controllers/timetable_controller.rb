@@ -10,6 +10,7 @@ class TimetableController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: event_name)
+    @conference_days = @conference.conference_days.includes(talks: :speakers)
   end
 
   private

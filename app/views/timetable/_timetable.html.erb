@@ -1,6 +1,4 @@
-<% @conference.conference_days.each do |conference_day| %>
-  <% @talks = conference_day.talks %>
-
+<% @conference_days.each do |conference_day| %>
   <section id="timetable">
     <h2><%= conference_day.date %></h2>
 
@@ -18,7 +16,7 @@
       <% end %>
 
       <% talk_numbers = [] %>
-      <% @talks.each_with_index do |talk, index| %>
+      <% conference_day.talks.each_with_index do |talk, index| %>
         <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
           <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
@@ -38,7 +36,7 @@
   </section>
 <% end %>
 <% if defined? form %>
-    <div class="container">
+  <div class="container">
     <div class="row form-group justify-content-md-center">
       <%= form.submit "登録", class: "btn btn-primary form-control " %>
     </div>

@@ -185,7 +185,7 @@ if FormItem.all.length == 0
   )
 end
 
-if !Rails.env.production? && Track.all.length == 0
+if (Rails.env.development? || ENV['REVIEW_APP'] == 'true') && Track.all.length == 0
   Track.create!(
     [
       { id: 1, number: 1, name: "1", conference_id: 1, movie_url: "https://www.youtube.com/embed/QJSo8BZlbeI"},

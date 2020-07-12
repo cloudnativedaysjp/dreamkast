@@ -37,7 +37,7 @@
                                         checked: checked  %>
                 <% talk_numbers << talk.talk_number %>
               <% end %>
-            <%= link_to talk, remote: true do %>
+            <%= link_to talk_path(id: talk.id), remote: true do %>
             <div class="content">
               <h6><%= talk.title %> / <%= talk.speakers.map { |speaker| speaker.name }.join(" / ") %></h6>
             </div>

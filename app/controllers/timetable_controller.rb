@@ -5,7 +5,7 @@ class TimetableController < ApplicationController
   def index
     # date = params[:date]
 
-    @conference = Conference.find_by(name: "CloudNative Days Tokyo 2020")
+    @conference = Conference.find_by(abbr: event_name)
     # if date
     #   @conference_day = @conference.conference_days.find_by!(date: Time.parse(date))
     # else
@@ -15,7 +15,8 @@ class TimetableController < ApplicationController
   end
 
   private
-    def set_profile
-      @profile = Profile.find_by(email: @current_user[:info][:email])
-    end
+
+  def set_profile
+    @profile = Profile.find_by(email: @current_user[:info][:email])
+  end
 end

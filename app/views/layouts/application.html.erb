@@ -16,52 +16,18 @@
 </head>
 
 <body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-scrolled" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="/">
-            <%= image_tag 'header_logo.png', class: "img-fluid header_logo" %>
-            </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/timetables">Timetable</a></li>
-                  <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/speakers">Speakers</a></li>
-                  <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Booth</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Sponsors</a></li>
-                    <li class="nav-item dropdown">
-                        <% if @current_user %>
-                        <script>
-                        tracker.user({
-                          user_id: "<%= @current_user[:extra][:raw_info][:sub] %>",
-                          event: "cndt2020",
-                        })
-                        </script>
-                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="thumbnail img-circle" src="<%= @current_user[:info][:image] %>" />
-                            <%= @current_user[:info][:nickname] %>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/profiles">登録情報変更</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/admin">管理画面</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">Logout</a>
-                        </div>
-                        <% end %>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <%= yield %>
+<% unless home_controller? || admin_controller? %>
+  <%= render partial: "layouts/event_header" %>
+<% end %>
 
-    <footer class="bg-light py-5">
-        <div class="container">
-            <div class="small text-center text-muted">© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)</div>
-        </div>
-    </footer>
+<%= yield %>
+
+<footer class="bg-light py-5">
+  <div class="container">
+    <div class="small text-center text-muted">© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)</div>
+  </div>
+</footer>
 
 </body>
 

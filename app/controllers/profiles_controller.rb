@@ -20,7 +20,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params["require_email"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
-      redirect_to '/track/1'
+      redirect_to "/#{event_name}/track/1"
     else
       respond_to do |format|
         format.html { render :new }
@@ -32,7 +32,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to '/profiles/edit', notice: '登録情報を更新しました' }
+        format.html { redirect_to edit_profile_path(id: @profile.id), notice: '登録情報を更新しました' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -57,6 +57,17 @@ class ProfilesController < ApplicationController
   def set_role
     puts params[:roles]
   end
+
+  def profile_url
+    case action_name
+    when 'new'
+      "/#{params[:event]}/profiles"
+    when 'edit'
+      "/#{params[:event]}/profiles/#{params[:id]}"
+    end
+  end
+
+  helper_method :profile_url
 
   private
     def find_profile

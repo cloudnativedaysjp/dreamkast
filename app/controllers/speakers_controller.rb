@@ -1,5 +1,8 @@
 class SpeakersController < ApplicationController
+  include Secured
+
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile
 
   # GET /speakers
   # GET /speakers.json
@@ -62,13 +65,17 @@ class SpeakersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_speaker
-      @speaker = Speaker.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_speaker
+    @speaker = Speaker.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def speaker_params
-      params.require(:speaker).permit(:name, :profile, :company, :job_title, :twitter_id, :github_id, :avatar)
-    end
+  def set_profile
+    @profile = Profile.find_by(email: @current_user[:info][:email])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def speaker_params
+    params.require(:speaker).permit(:name, :profile, :company, :job_title, :twitter_id, :github_id, :avatar)
+  end
 end

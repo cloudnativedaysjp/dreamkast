@@ -1,6 +1,20 @@
 class ApplicationController < ActionController::Base
   before_action :set_raven_context
 
+  def home_controller?
+    controller_name == "home"
+  end
+
+  def admin_controller?
+    controller_name == "admin"
+  end
+
+  def event_name
+    params[:event]
+  end
+
+  helper_method :home_controller?, :admin_controller?, :event_name
+
   private
 
   def set_raven_context

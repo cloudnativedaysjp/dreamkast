@@ -5,7 +5,11 @@ class Auth0Controller < ApplicationController
       session[:userinfo] = request.env['omniauth.auth']
   
       # Redirect to the URL you want after successful auth
-      redirect_to '/track/1'
+      if request.env['omniauth.origin']
+        redirect_to "#{request.env['omniauth.origin']}/track/1"
+      else
+        redirect_to "/"
+      end
     end
   
     def failure

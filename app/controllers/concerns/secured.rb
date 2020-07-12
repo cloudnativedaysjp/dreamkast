@@ -10,14 +10,14 @@ module Secured
       if session[:userinfo].present?
         @current_user = session[:userinfo]
       else
-        redirect_to '/'
+        redirect_to '/cndt2020'
       end
     end
 
     def new_user?
       unless controller_name == "profiles"
         unless Profile.find_by(email: @current_user[:info][:email])
-          redirect_to '/registration'
+          redirect_to "/#{params[:event]}/registration"
         end
       end
     end

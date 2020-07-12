@@ -26,7 +26,9 @@
               <%= @current_user[:info][:nickname] %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
+              <% if @profile.id %>
+                <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
+              <% end %>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/admin">管理画面</a>
               <div class="dropdown-divider"></div>

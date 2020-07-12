@@ -58,6 +58,17 @@ class ProfilesController < ApplicationController
     puts params[:roles]
   end
 
+  def profile_url
+    case action_name
+    when 'new'
+      "/#{params[:event]}/profiles"
+    when 'edit'
+      "/#{params[:event]}/profiles/#{params[:id]}"
+    end
+  end
+
+  helper_method :profile_url
+
   private
     def find_profile
       @found_profile = Profile.find(parmas[:id])

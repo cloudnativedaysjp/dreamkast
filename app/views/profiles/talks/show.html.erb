@@ -1,10 +1,20 @@
 <div class="container">
-    <div class="row">
-        <h2>Registered Talks</h2>
-        <ul>
+    <div class="row my-3">
+        <div class="col-12">
+            <h2>登録済みセッション一覧</h2>
+        </div>
+
         <% @profile.talks.each do |talk| %>
-            <li><%= talk.title %></li>
+        <div class="card col-12 my-1">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><%= talk.conference_day.date %> <%= talk.start_time.strftime("%R") %>-<%= talk.end_time.strftime("%R") %></h6>
+                <h5 class="card-title"><%= talk.title %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= talk.speakers.map{|t| t.name}.join("/") %></h6>
+                <p class="card-text"><%= talk.abstract %></p>
+            </div>
+        </div>
         <% end %>
-        </ul>
+
+        <div class="col-12 text-center my-4"><%= button_to 'タイムテーブルを見る', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %></div>
     </div>
 </div>

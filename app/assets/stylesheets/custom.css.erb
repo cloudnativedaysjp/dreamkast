@@ -48,7 +48,7 @@ body {
   display: grid;
   background-color: rgba(256, 256, 256, 0.9);
   grid-template-rows: repeat(var(--rows), 30px);
-  grid-template-columns: repeat(7, minmax(160px, 240px));
+  grid-template-columns: repeat(6, minmax(160px, 240px));
   grid-auto-columns: 100px;
 
   overflow-x: auto;  /* 横スクロールの指定 */
@@ -102,7 +102,7 @@ body {
   border-radius: 5px;
   border: solid 1px;
 }
-.content h6 {
+.content h5 {
   display: flex;
   argin-block-start: 1.33em;
   margin-block-end: 0;
@@ -113,6 +113,33 @@ body {
   padding: 0.2rem;
   word-wrap: break-word;
   word-break: break-all;
+  color: #333;
+
+}
+.content h6 {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.2rem 0 0.2rem;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: #666;
+}
+.content .category_difficulty{
+  margin: 0.2rem 0.1rem;
+  line-height: 0.7rem;
+}
+
+.content .difficulty {
+  font-size: 0.4rem;
+  padding: 0.2rem;
+  margin: 0;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: #FFF;
+  background: #FF0000;
+  border-radius: 10px;
 }
 
 .content p {

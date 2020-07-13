@@ -3,16 +3,16 @@
     <h2><%= conference_day.date %></h2>
 
     <div id="container" style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 6) + 1 %>">
-      <% (conference_day.start_time.hour...conference_day.end_time.hour).each_with_index do |time, index| %>
+      <%
+=begin%>
+ <% (conference_day.start_time.hour...conference_day.end_time.hour).each_with_index do |time, index| %>
         <div style="--duration: 60; --row-start: <%= ((index) * 7) - index + 2%>; --row-end: <%= ((index+1) * 7 + 1) - index %>;" class="slot"><%=  "%02d:00" % time %></div>
-      <% end %>
+      <% end %> 
+<%
+=end%>
 
-      <% 6.times.each do |n| %>
-        <% if n.zero? || n.even? %>
-          <div class="track even" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
-        <% else %>
-          <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
-        <% end %>
+      <% ["A","B","C","D","E","F"].each_with_index do |track_name, n| %>
+          <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
       <% talk_numbers = [] %>
@@ -26,7 +26,13 @@
           <% end %>
           <%= link_to talk_path(id: talk.id), remote: true do %>
             <div class="content">
-              <h6><%= talk.title %> / <%= talk.speakers.map { |speaker| speaker.name }.join(" / ") %></h6>
+              <h6><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
+              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 4 %>
+              <div class="category_difficulty">
+                <span class="difficulty"><%= talk.talk_difficulty.name %></span>
+                <span class="difficulty"><%= talk.talk_category.name %></span>
+              </div>
+              <h5><%= talk.title %></h5>
             </div>
           <% end %>
         </div>

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do
+      get 'talks', to: 'talks#show'
       post 'talks', to: 'talks#create'
     end
     get 'profiles/new', to: 'profiles#new'

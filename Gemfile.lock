@@ -99,6 +99,11 @@ GEM
     down (5.1.1)
       addressable (~> 2.5)
     erubi (1.9.0)
+    factory_bot (6.1.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.1.0)
+      factory_bot (~> 6.1.0)
+      railties (>= 5.0.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
@@ -300,6 +305,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   debase
+  factory_bot_rails
   jbuilder (~> 2.7)
   listen (~> 3.2)
   mysql2 (~> 0.5.3)

@@ -20,7 +20,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params["require_email"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
-      redirect_to "/#{event_name}/track/1"
+      redirect_to "/#{event_name}/timetables"
     else
       respond_to do |format|
         format.html { render :new }

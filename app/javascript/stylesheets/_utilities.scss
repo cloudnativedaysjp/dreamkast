@@ -53,21 +53,63 @@
 .privacy_policy {
     font-size: small;
 }
-  
-//   #error_explanation {
-//     border: 2px solid $purple;
-//     margin-bottom: 20px;
-//     background-color: #f0f0f0; }
-  
-//   #error_explanation h2 {
-//     text-align: left;
-//     font-weight: bold;
-//     padding: 5px 5px 5px 15px;
-//     font-size: 12px;
-//     margin: -7px -7px 0;
-//     background-color: #c00;
-//     color: #fff; }
-  
-//   #error_explanation ul li {
-//     font-size: 12px;
-//     list-style: square; }
+
+// 吹き出し
+.balloon {
+  width: 100%;
+  margin: 30px 0;
+  overflow: hidden;
+}
+
+.balloon .icon {
+  float: left;
+  margin-right: -50px;
+  width: 40px;
+}
+
+.balloon .icon img{
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.balloon .chatting {
+  width: 100%;
+  text-align: left;
+}
+.says {
+  display: inline-block;
+  position: relative; 
+  margin: 0 0 0 60px;
+  padding: 10px;
+  max-width: 500px;
+  border: solid 2px $dark-blue;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: #FFF;
+}
+
+.says:before{
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: -18px;
+  margin-top: -12px;
+  border: 7px solid transparent;
+  border-right: 12px solid #FFF;
+  z-index: 2;
+}
+
+.says:after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: -21px;
+  margin-top: -12px;
+  border: 7px solid transparent;
+  border-right: 12px solid $dark-blue;
+  z-index: 1;
+}
+.says p {
+  margin: 0;
+  padding: 0;
+}

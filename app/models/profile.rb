@@ -16,7 +16,7 @@ end
 
 class Profile < ApplicationRecord
   has_many :registered_talks
-  has_many :talks, through: :registered_talks
+  has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks
   has_many :agreements
   has_many :form_items, through: :agreements
 

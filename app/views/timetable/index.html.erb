@@ -1,12 +1,26 @@
 <div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div class="container">
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
-      <%= message %>
-    </div>
+  <h1 class="my-3">タイムテーブル</h1>
+  <% if @current_user %>
+  <div class="balloon">
+      <div class="icon">
+          <%= image_tag  "trademark.png" %>
+      </div>
+      <div class="chatting">
+          <div class="says">
+            
+            <% if flash.empty? %>
+              <p>参加したいセッションを登録しましょう。<br/>セッション名をクリックすると詳細が表示されます。</p>
+            <% else %>
+              <% flash.each do |message_type, message| %>
+                <%= message %>
+              <% end %>
+            <% end %>
+          </div>
+      </div>
+  </div>
   <% end %>
-  <h1>Timetable</h1>
 </div>
 
 <% if @current_user %>

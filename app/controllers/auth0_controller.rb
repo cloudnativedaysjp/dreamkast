@@ -6,7 +6,7 @@ class Auth0Controller < ApplicationController
   
       # Redirect to the URL you want after successful auth
       if request.env['omniauth.origin']
-        redirect_to "#{request.env['omniauth.origin']}/track/1"
+        redirect_to "#{request.env['omniauth.origin']}/profiles/talks"
       else
         redirect_to "/"
       end

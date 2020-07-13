@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   delete 'admin/destroy_user' => 'admin#destroy_user'
 
   scope ":event" do
+    post 'auth/auth0' => redirect('/auth/auth0')
     resources :speakers, only: [:index, :show]
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'

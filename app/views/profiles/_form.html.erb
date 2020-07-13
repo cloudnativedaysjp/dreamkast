@@ -13,12 +13,12 @@
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.label :last_name, "姓" %>*
-      <%= form.text_field :last_name, requierd: true, class: "form-control" %>
+      <%= form.text_field :last_name, requierd: true, class: "form-control", placeholder: "雲" %>
     </div>
 
     <div class="col-12 col-md-6">
       <%= form.label :first_name, "名" %>*
-      <%= form.text_field :first_name, requierd: true, class: "form-control" %>
+      <%= form.text_field :first_name, requierd: true, class: "form-control", placeholder: "太郎" %>
     </div>
   </div>
 
@@ -31,37 +31,37 @@
 
   <div class="form-row form-group">
     <%= form.label :occupation, "職種" %>*
-    <%= form.text_field :occupation, requierd: true, class: "form-control" %>
+    <%= form.text_field :occupation, requierd: true, class: "form-control", placeholder: "SRE / インフラエンジニア / アプリケーション開発　など" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :company_name, "勤務先名/学校名" %>*
-    <%= form.text_field :company_name, requierd: true, class: "form-control" %>
+    <%= form.text_field :company_name, requierd: true, class: "form-control", placeholder: "クラウドネイティブデイズ株式会社" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :company_email, "勤務先メールアドレス" %>*
-    <%= form.email_field :company_email, requierd: true, class: "form-control" %>
+    <%= form.email_field :company_email, requierd: true, class: "form-control", placeholder: "mail@example.com" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :company_address, "勤務先住所" %>*
-    <%= form.text_field :company_address, requierd: true, class: "form-control" %>
+    <%= form.text_field :company_address, requierd: true, class: "form-control", placeholder: "東京都港区○○" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :company_tel, "勤務先電話番号" %>*
-    <%= form.text_field :company_tel, requierd: true, class: "form-control" %>
+    <%= form.text_field :company_tel, requierd: true, class: "form-control", placeholder: "03-0000-0000" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年" %>*
-    <%= form.text_field :department, requierd: true, class: "form-control" %>
+    <%= form.text_field :department, requierd: true, class: "form-control", placeholder: "クラウド開発部門" %>
   </div>
 
   <div class="form-row form-group">
     <%= form.label :position, "勤務先役職" %>*
-    <%= form.text_field :position, required: true, class: "form-control" %>
+    <%= form.text_field :position, required: true, class: "form-control", placeholder: "一般 / 管理職 / CTO など" %>
   </div>
 
   <% if action_name == "new" %>

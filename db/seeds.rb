@@ -106,6 +106,9 @@ if TalkCategory.all.length == 0
       { id: 13, name: "Architecture Design"},
       { id: 14, name: "Hybrid Cloud / Multi Cloud"},
       { id: 15, name: "NFV / Edge"},
+      { id: 16, name: "組織論"},
+      { id: 17, name: "その他"},
+      { id: 18, name: "Keynote"},
     ]
   )
 end
@@ -117,6 +120,7 @@ if TalkDifficulty.all.length == 0
       { id: 1, name: "Beginner - 初級者"},
       { id: 2, name: "Intermediate - 中級者"},
       { id: 3, name: "Advanced - 上級者"},
+      { id: 4, name: ""},
     ]
   )
 end

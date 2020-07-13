@@ -4,38 +4,41 @@
 
 <div class="container">
   <h1>Speakers</h1>
-  <div class="card-deck">
     <% @speakers.each_slice(3) do |sliced_speakers| %>
-      <div class="row py-3">
+      <div class="row">
         <% sliced_speakers.each do |speaker| %>
-          <div class="card">
-            <% unless speaker.avatar_url.nil? %>
-              <div class="avatar text-center">
-                <%= image_tag speaker.avatar_url, :size => '90x90'  %>
-              </div>
+          <div class="col-12 col-md-4 py-3">
+          <div class="card h-100">
+            <div class="avatar text-center">
+            <% if speaker.avatar_url.nil? %>
+                <%= image_tag 'dummy.png', :size => '80x80'  %>
+            <% else %>
+                <%= image_tag speaker.avatar_url, :size => '80x80'  %>
             <% end %>
+            </div>
             <div class="card-body">
-              <h5 class="card-title"><%= speaker.name %></h5>
+              <h5 class="card-title">
+                <%= speaker.name %>
+                <%= link_to image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{speaker.twitter_id}" if speaker.twitter_id != "" %>
+                <%= link_to image_tag("GitHub-Mark-64px.png", width: 20), "https://twitter.com/#{speaker.github_id}" if speaker.github_id != "" %>
+              </h5>
+              <h6 class="card-subtitle text-muted mb-1">
+                <%= speaker.company if speaker.company != "" %>
+              </h6>
+              <h6 class="card-subtitle text-muted mb-1">
+                <%= speaker.job_title if speaker.job_title != "" %>
+              </h6>
+                
               <% if speaker.profile != "" %>
-                <p class="card-text">Profile: <%= speaker.profile %></p>
+                <p class="card-text"><%= speaker.profile %></p>
               <% end %>
-              <% if speaker.company != "" %>
-                <p class="card-text">Company: <%= speaker.company %></p>
-              <% end %>
-              <% if speaker.job_title != "" %>
-                <p class="card-text">Job Title: <%= speaker.job_title %></p>
-              <% end %>
-              <% if speaker.twitter_id != "" %>
-                <p class="card-text">Twitter: <%= speaker.twitter_id %></p>
-              <% end %>
-              <% if speaker.github_id != "" %>
-                <p class="card-text">Github: <%= speaker.github_id %></p>
-              <% end %>
+
+              <%  %>
             </div>
           </div>
+          </div>
         <% end %>
-      </div>
+    </div>
     <% end %>
-  </div>
 </div>
 

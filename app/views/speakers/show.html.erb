@@ -4,7 +4,9 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= @speaker.name %></h5>
-      <% unless @speaker.avatar_url.nil? %>
+      <% if @speaker.avatar_url.nil? %>
+        <%= image_tag "dummy.png", :size => '90x90'  %>
+      <% else %>
         <%= image_tag @speaker.avatar_url, :size => '90x90'  %>
       <% end %>
       <% if @speaker.profile != "" %>

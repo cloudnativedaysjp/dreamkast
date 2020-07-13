@@ -16,7 +16,7 @@
       <% end %>
 
       <% talk_numbers = [] %>
-      <% @conference.talks.each do |talk| %>
+      <% conference_day.talks.each do |talk| %>
         <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
           <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>

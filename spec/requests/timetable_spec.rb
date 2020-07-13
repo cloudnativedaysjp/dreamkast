@@ -6,7 +6,12 @@ describe TimetableController, type: :request do
       create(:cndt2020)
       create(:day1)
       create(:day2)
+      create(:talk_category1)
+      create(:talk_difficulties1)
     end
+
+    let!(:talk1) { create(:talk1) }
+    let!(:talk2) { create(:talk2) }
 
     describe 'not logged in' do
       it "returns a success response without form" do
@@ -14,6 +19,8 @@ describe TimetableController, type: :request do
         expect(response).to be_successful
         expect(response).to have_http_status '200'
         expect(response.body).to_not include '<form action="profiles/talks"'
+        expect(response.body).to include talk1.title
+        expect(response.body).to include talk2.title
       end
     end
 
@@ -30,6 +37,8 @@ describe TimetableController, type: :request do
         expect(response).to be_successful
         expect(response).to have_http_status '200'
         expect(response.body).to include '<form action="profiles/talks"'
+        expect(response.body).to include talk1.title
+        expect(response.body).to include talk2.title
       end
     end
   end

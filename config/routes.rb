@@ -29,10 +29,6 @@ Rails.application.routes.draw do
     get '/' => 'event#show'
 
     # Profile
-    namespace :profiles do
-      get 'talks', to: 'talks#show'
-      post 'talks', to: 'talks#create'
-    end
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do
       get 'talks', to: 'talks#show'

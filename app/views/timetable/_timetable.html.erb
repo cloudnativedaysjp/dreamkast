@@ -17,24 +17,26 @@
 
       <% talk_numbers = [] %>
       <% conference_day.talks.each do |talk| %>
-        <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
-          <% unless talk_numbers.include?(talk.talk_number) %>
+        <div class="talk" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
+          <div class="content">
+            <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
-              <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: talks_checked?(talk.id) %>
+              <div class="radio">
+                <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: talks_checked?(talk.id) %>
+                <label for="<%= "talks[#{talk.day}_#{talk.slot_number}]_#{talk.track}" %>" class="radio-label"></label>
+              </div>
             <% end %>
             <% talk_numbers << talk.talk_number %>
           <% end %>
-          <%= link_to talk_path(id: talk.id), remote: true do %>
-            <div class="content">
-              <h6><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
-              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 4 %>
-              <div class="category_difficulty">
-                <span class="difficulty"><%= talk.talk_difficulty.name %></span>
-                <span class="difficulty"><%= talk.talk_category.name %></span>
-              </div>
-              <h5><%= talk.title %></h5>
+            <h6><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
+            <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+            <div class="category_difficulty">
+              <span class="difficulty"><%= talk.talk_difficulty.name %></span>
+              <span class="difficulty"><%= talk.talk_category.name %></span>
             </div>
-          <% end %>
+            <% end %>
+            <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
+          </div>
         </div>
       <% end %>
     </div>

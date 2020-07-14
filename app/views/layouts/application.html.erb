@@ -12,7 +12,14 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+    <% if @current_user %>
+        <script>
+            tracker.user({
+                user_id: "<%= @current_user[:extra][:raw_info][:sub] %>",
+                event: "<%= event_name %>",
+            })
+        </script>
+    <% end %>
 </head>
 
 <body id="page-top">

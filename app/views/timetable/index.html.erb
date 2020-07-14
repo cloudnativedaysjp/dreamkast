@@ -28,7 +28,7 @@
 </section>
 <% end %>
 
-<% if @current_user %>
+<% if @current_user && @profile %>
   <%= render 'form', conference: @conference %>
 <% else %>
   <%= render 'timetable', conference: @conference %>

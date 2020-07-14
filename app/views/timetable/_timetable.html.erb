@@ -14,9 +14,9 @@
       <% conference_day.talks.each do |talk| %>
         <div class="talk" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
           <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
-          <div class="content <%= 'checked'  if @current_user && talks_checked?(talk.id) %>" day_slot="<%= day_slot %>" talk_number="<%= talk.talk_number %>">
+          <div class="content <%= 'checked'  if @current_user && @profile && talks_checked?(talk.id) %>" day_slot="<%= day_slot %>" talk_number="<%= talk.talk_number %>">
             <% unless talk_numbers.include?(talk.talk_number) %>
-            <% if defined? form %>
+            <% if (defined? form) && @profile %>
               <div class="radio">
                 <%= form.radio_button "talks[#{day_slot}]",
                                       talk.track,

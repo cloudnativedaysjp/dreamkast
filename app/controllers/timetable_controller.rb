@@ -13,7 +13,11 @@ class TimetableController < ApplicationController
   end
 
   def talks_checked?(talk_id)
-    @profile.talks.select{|talk| talk.id == talk_id}.present?
+    if @profile
+      @profile.talks.select{|talk| talk.id == talk_id}.present?
+    else
+      false
+    end
   end
 
   helper_method :talks_checked?

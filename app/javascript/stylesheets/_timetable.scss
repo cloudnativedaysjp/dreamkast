@@ -98,7 +98,7 @@ section.timetable {
   
   .content h6 {
     display: flex;
-    margin: 0;
+    margin: 0 auto;
     align-items: center;
     font-size: 0.7rem;
     padding: 0.2rem 0.2rem 0 0.2rem;
@@ -109,7 +109,7 @@ section.timetable {
   
   .content .radio {
     float: right;
-    margin: 0.5rem;
+    margin: 5px 10px 0 auto;
   
     input[type="radio"] {
       position: absolute;
@@ -124,8 +124,6 @@ section.timetable {
           width: 1.4em;
           height: 1.4em;
           position: relative;
-          top: -0.2em;
-          margin-right: 1em; 
           vertical-align: top;
           cursor: pointer;
           text-align: center;
@@ -354,4 +352,3 @@ section.timetable {
       margin: 15px 0px 5px 0px;
     }
   }
-  

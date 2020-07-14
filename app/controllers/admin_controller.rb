@@ -49,9 +49,8 @@ class AdminController < ApplicationController
     end
     
     private
+
     def is_admin?
-        # unless admin?
-        #     redirect_to controller: "track", action: "show", id: 1
-        # end
+        raise Forbidden unless admin?
     end
 end

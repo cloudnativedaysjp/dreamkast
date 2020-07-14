@@ -41,16 +41,14 @@ describe AdminController, type: :request do
             get admin_path
             expect(response).to be_successful
             expect(response).to have_http_status '200'
-            expect(response.body).to_not include 'あなたはAdminではありません'
           end
         end
 
         context "user is not admin" do
           it "returns a success response" do
             get admin_path
-            expect(response).to be_successful
-            expect(response).to have_http_status '200'
-            expect(response.body).to include 'あなたはAdminではありません'
+            expect(response).to_not be_successful
+            expect(response).to have_http_status '403'
           end
         end
       end
@@ -94,16 +92,14 @@ describe AdminController, type: :request do
             get '/admin/users'
             expect(response).to be_successful
             expect(response).to have_http_status '200'
-            expect(response.body).to_not include 'あなたはAdminではありません'
           end
         end
 
         context 'user is not admin' do
           it "returns a success response" do
             get '/admin/users'
-            expect(response).to be_successful
-            expect(response).to have_http_status '200'
-            expect(response.body).to include 'あなたはAdminではありません'
+            expect(response).to_not be_successful
+            expect(response).to have_http_status '403'
           end
         end
       end

@@ -38,15 +38,14 @@ body {
   background-size: cover;
 }
 
-#timetable {
+section.timetable {
   display: block;
   width: 98%;
   margin: 0 auto;
 }
 
-#container {
+.grid {
   display: grid;
-  background-color: rgba(256, 256, 256, 0.9);
   grid-template-rows: repeat(var(--rows), 30px);
   grid-template-columns: repeat(6, minmax(160px, 240px));
   grid-auto-columns: 100px;
@@ -55,6 +54,14 @@ body {
   overflow-scrolling: touch;  /* スクロールを滑らかにする */
   -webkit-overflow-scrolling: touch;  /* スクロールを滑らかにする */
   grid-gap: .125em .25em;
+  justify-content: center;
+}
+
+.grid h2,
+.grid .balloon {
+  grid-column: span 6;
+  grid-row: span 6;
+  display: flex;
 }
 
 // .slot {
@@ -77,6 +84,7 @@ body {
   display: flex;
   align-items: start;
   justify-content: center;
+  background-color: rgba(256, 256, 256, 0.9);
 }
 
 .keynote {

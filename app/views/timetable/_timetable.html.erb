@@ -30,9 +30,9 @@
             
             <div class="category_difficulty">
               <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-              <span class="difficulty difficulty_<%= talk.talk_difficulty_id %>"><%= talk.talk_difficulty.name %></span>
-              <% end %>
-              <span class="difficulty category_<%= talk.talk_category_id %>"><%= talk.talk_category.name %></span>
+                <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+            <% end %>
+              <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
             </div>
             
             <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>

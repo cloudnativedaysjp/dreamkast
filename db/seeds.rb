@@ -117,9 +117,9 @@ if TalkDifficulty.all.length == 0
   puts "Adding talk difficulty list"
   TalkDifficulty.create!(
     [
-      { id: 1, name: "Beginner - 初級者"},
-      { id: 2, name: "Intermediate - 中級者"},
-      { id: 3, name: "Advanced - 上級者"},
+      { id: 1, name: "初級者"},
+      { id: 2, name: "中級者"},
+      { id: 3, name: "上級者"},
       { id: 4, name: ""},
     ]
   )

@@ -1,34 +1,42 @@
 <% @conference.conference_days.each do |conference_day| %>
-  <section id="timetable">
-    <h2><%= conference_day.date %></h2>
-
-    <div id="container" style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 6) + 1 %>">
-      <% (conference_day.start_time.hour...conference_day.end_time.hour).each_with_index do |time, index| %>
-        <div style="--duration: 60; --row-start: <%= ((index) * 7) - index + 2%>; --row-end: <%= ((index+1) * 7 + 1) - index %>;" class="slot"><%=  "%02d:00" % time %></div>
-      <% end %>
-
-      <% 6.times.each do |n| %>
-        <% if n.zero? || n.even? %>
-          <div class="track even" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
-        <% else %>
-          <div class="track" style="--track: <%= n+1 %>"><%= "Track#{n+1}" %></div>
-        <% end %>
+  <section class="timetable">
+    <div class="grid" style="--rows: 1">
+      <h2><%= conference_day.date %></h2>
+    </div>
+  </section>
+  <section class="timetable">
+    <div class="grid" style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 6) + 1 %>">
+      <% ["A","B","C","D","E","F"].each_with_index do |track_name, n| %>
+          <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
       <% talk_numbers = [] %>
       <% conference_day.talks.each do |talk| %>
-        <div class="talk" style="--track: <%= talk.track %>; --duration: 60; --row-start: <%= talk.row_start%>; --row-end: <%= talk.row_end  %>;">
-          <% unless talk_numbers.include?(talk.talk_number) %>
+        <div class="talk" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
+          <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
+          <div class="content <%= 'checked' if talks_checked?(talk.id) %>" day_slot="<%= day_slot %>" talk_number="<%= talk.talk_number %>">
+            <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
-              <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: talks_checked?(talk.id) %>
+              <div class="radio">
+                <%= form.radio_button "talks[#{day_slot}]",
+                                      talk.track,
+                                      { day_slot: day_slot, checked: talks_checked?(talk.id), talk_number: talk.talk_number} %>
+                <label for="<%= "talks[#{day_slot}]_#{talk.track}" %>" class="radio-label"></label>
+              </div>
             <% end %>
             <% talk_numbers << talk.talk_number %>
           <% end %>
-          <%= link_to talk_path(id: talk.id), remote: true do %>
-            <div class="content">
-              <h6><%= talk.title %> / <%= talk.speakers.map { |speaker| speaker.name }.join(" / ") %></h6>
+            <h6><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
+            
+            <div class="category_difficulty">
+              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+              <span class="difficulty difficulty_<%= talk.talk_difficulty_id %>"><%= talk.talk_difficulty.name %></span>
+              <% end %>
+              <span class="difficulty category_<%= talk.talk_category_id %>"><%= talk.talk_category.name %></span>
             </div>
-          <% end %>
+            
+            <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
+          </div>
         </div>
       <% end %>
     </div>

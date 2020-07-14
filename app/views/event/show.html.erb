@@ -7,11 +7,15 @@
                 <hr class="divider my-4" />
                 <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
             </div>
-            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
-                <%= button_to 'Login', 'auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+            <div class="col-lg-12 align-self-end">
+                <p class="text-white-75 font-weight-light">2020/09/08-09 オンライン開催</p>
+                <p class="text-white-75 font-weight-light">参加費無料</p>
             </div>
-            <div class="col-4 col-sm-4 col-md-2 align-self-baseline my-4">
-                <%= button_to 'Timetable', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+            <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+                <%= button_to '参加申し込み / ログイン', 'auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+            </div>
+            <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+                <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
             </div>
         </div>
     </div>

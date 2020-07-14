@@ -1,0 +1,357 @@
+
+section.timetable {
+    display: block;
+    width: 98%;
+    margin: 0 auto;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-rows: repeat(var(--rows), 30px);
+    grid-template-columns: repeat(6, minmax(160px, 240px));
+    grid-auto-columns: 100px;
+  
+    overflow-x: auto;  /* 横スクロールの指定 */
+    overflow-scrolling: touch;  /* スクロールを滑らかにする */
+    -webkit-overflow-scrolling: touch;  /* スクロールを滑らかにする */
+    grid-gap: .125em .25em;
+    justify-content: center;
+  }
+  
+  .grid h2,
+  .grid .balloon {
+    grid-column: span 6;
+    grid-row: span 6;
+    display: flex;
+  }
+  
+  .track {
+    grid-column: calc(var(--track) + 1);
+    grid-row: 1 / -1;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    background-color: rgba(256, 256, 256, 0.9);
+  }
+  
+  .keynote {
+    grid-column: 2 / -1;
+    --start: calc(1 + var(--row-start));
+    --end: calc(1 + var(--row-end));
+    grid-row: var(--start)/var(--end);
+    z-index: 1;
+    background-color: rgba(256, 256, 256, 0.8);
+    border-radius: 5px;
+  }
+  
+  
+  .talk {
+    --start: calc(1 + var(--track));
+    --end: calc(2 + var(--track));
+    grid-column: var(--start)/var(--end);
+    grid-row: calc(1 + var(--row-start))/calc(1 + var(--row-end));
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .talk:hover{
+    z-index: 9998;
+  }
+  
+  .content {
+    background-color: #FFF;
+    margin: 2px;
+    height: 100%;
+    border-radius: 5px;
+    border: solid 1px #CCC;
+    overflow: hidden;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .1);
+  }
+  
+  .content.checked {
+    background-color: #EEF;
+    border-radius: 5px;
+    border: solid 1px $dark-blue;
+  }
+  
+  .content:hover {
+    background-color: #EEF;
+    height: auto;
+    overflow: visible;
+    min-height: 100%;
+  }
+  
+  .content a {
+    color: #333;
+  }
+  
+  .content h5 {
+    display: flex;
+    margin: 0;
+    align-items: center;
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: #333;
+  }
+  
+  .content h6 {
+    display: flex;
+    margin: 0;
+    align-items: center;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.2rem 0 0.2rem;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: #666;
+  }
+  
+  .content .radio {
+    float: right;
+    margin: 0.5rem;
+  
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      + .radio-label {
+        &:before {
+          content: '';
+          background: white;
+          border-radius: 100%;
+          border: 1px solid darken(white, 25%);
+          display: inline-block;
+          width: 1.4em;
+          height: 1.4em;
+          position: relative;
+          top: -0.2em;
+          margin-right: 1em; 
+          vertical-align: top;
+          cursor: pointer;
+          text-align: center;
+          transition: all 250ms ease;
+        }
+      }
+      &:checked {
+        + .radio-label {
+          &:before {
+            background-color: $dark-blue;
+            box-shadow: inset 0 0 0 4px white;
+          }
+        }
+      }
+      + .radio-label {
+        &:empty {
+          &:before {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  .content .category_difficulty{
+    margin: 0.2rem 0.1rem;
+    line-height: 0.7rem;
+  }
+  
+  .content .difficulty {
+    font-size: 0.4rem;
+    padding: 0.2rem;
+    margin: 0;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: #FFF;
+    background: $dark-blue;
+    border-radius: 10px;
+  }
+  
+  .content p {
+    display: block;
+  }
+  
+  .content hr {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .content ul {
+    font-size: 0.8rem;
+    display: block;
+    display: flex;
+    align-items: start;
+    justify-content: left;
+  }
+  .even {
+    background-color: rgba(248, 248, 255, 0.8);
+  }
+  
+  .avatar img {
+    border-radius: 50%;
+  }
+  
+  .card .avatar img {
+    border-radius: 50%;
+    margin: 10px;
+  }
+  
+  
+.modal-body .category_difficulty{
+    margin: 0 0 10px 0;
+  }
+  
+  .modal-body .difficulty {
+    padding: 0.2rem;
+    margin: 0;
+    word-wrap: break-word;
+    word-break: break-all;
+    color: #FFF;
+    background: $dark-blue;
+    border-radius: 1rem;
+  }
+  
+  .difficulty_1 {
+    filter: hue-rotate(0deg);
+  }
+  
+  .difficulty_2 {
+    filter: hue-rotate(120deg);
+  }
+  
+  .difficulty_3 {
+    filter: hue-rotate(240deg);
+  }
+  
+  .category_1 {
+    filter: hue-rotate(0deg);
+  }
+  
+  .category_2 {
+    filter: hue-rotate(20deg);
+  }
+  
+  .category_3 {
+    filter: hue-rotate(40deg);
+  
+  }
+  
+  .category_4 {
+    filter: hue-rotate(60deg);
+  
+  }
+  
+  .category_5 {
+    filter: hue-rotate(80deg);
+  
+  }
+  
+  .category_6 {
+    filter: hue-rotate(100deg);
+  
+  }
+  
+  .category_7 {
+    filter: hue-rotate(120deg);
+  
+  }
+  
+  .category_8 {
+    filter: hue-rotate(140deg);
+  
+  }
+  
+  .category_9 {
+    filter: hue-rotate(160deg);
+  
+  }
+  
+  .category_10 {
+    filter: hue-rotate(180deg);
+  
+  }
+  
+  .category_11 {
+    filter: hue-rotate(200deg);
+  
+  }
+  
+  .category_12 {
+    filter: hue-rotate(220deg);
+  
+  }
+  
+  .category_13 {
+    filter: hue-rotate(240deg);
+  
+  }
+  
+  .category_14 {
+    filter: hue-rotate(260deg);
+  
+  }
+  
+  .category_15 {
+    filter: hue-rotate(280deg);
+  
+  }
+  
+  .category_16 {
+    filter: hue-rotate(300deg);
+  
+  }
+  
+  .category_17 {
+    filter: hue-rotate(320deg);
+  }
+  
+  .track_name{
+    display: none;
+  }
+  
+  @media (max-width: 500px) {
+    .grid {
+      display: block;
+      grid-template-rows: 100%;
+      grid-template-columns: 100%;
+    }
+    .track_name{
+      display: inline;
+    }
+    .track{
+      display: none;
+    }
+    .content{
+      border-left: 3px solid $dark-blue
+    }
+    .content.checked{
+      border-left: 5px solid $dark-blue
+    }
+    .content[slot="1"] {
+      filter: hue-rotate(0deg);
+    }
+    .content[slot="2"] {
+      filter: hue-rotate(40deg);
+    }
+    .content[slot="3"] {
+      filter: hue-rotate(80deg);
+    }
+    .content[slot="4"] {
+      filter: hue-rotate(120deg);
+    }
+    .content[slot="5"] {
+      filter: hue-rotate(160deg);
+    }
+    .content[slot="6"] {
+      filter: hue-rotate(200deg);
+    }
+    .content[slot="7"] {
+      filter: hue-rotate(240deg);
+    }
+    .content.first{
+      margin-top: 20px;
+    }
+    .timetable h2{
+      margin: 15px 0px 5px 0px;
+    }
+  }
+  

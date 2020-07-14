@@ -10,11 +10,14 @@
           <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
-      <% talk_numbers = [] %>
+      <% talk_numbers = []; day_slots = [] %>
       <% conference_day.talks.each do |talk| %>
-        <div class="talk" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
+        <div class="talk" slot="<%= talk.slot_number %>" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
           <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
-          <div class="content <%= 'checked'  if @current_user && talks_checked?(talk.id) %>" day_slot="<%= day_slot %>" talk_number="<%= talk.talk_number %>">
+          <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>  <%= 'first' unless day_slots.include?(day_slot) %>"
+               slot="<%= talk.slot_number %>"
+               day_slot="<%= day_slot %>"
+               talk_number="<%= talk.talk_number %>">
             <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
               <div class="radio">
@@ -24,9 +27,12 @@
                 <label for="<%= "talks[#{day_slot}]_#{talk.track}" %>" class="radio-label"></label>
               </div>
             <% end %>
-            <% talk_numbers << talk.talk_number %>
+            <% 
+              talk_numbers << talk.talk_number
+              day_slots << day_slot
+            %>
           <% end %>
-            <h6><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
+            <h6><span class="track_name">Track <%= talk.track_name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
             
             <div class="category_difficulty">
               <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>

@@ -6,10 +6,12 @@
           <div class="col">
             <div class="card">
               <div class="card-body">
+                <div class="category_difficulty">
+                  <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>"><%= @talk.talk_difficulty.name %></span>
+                  <span class="difficulty category_<%= @talk.talk_category_id %>"><%= @talk.talk_category.name %></span>
+                </div>
                 <h5 class="card-title"><%= @talk.title %></h5>
                 <p class="card-text"><%= @talk.abstract %></p>
-                <p class="card-text">Main Category: <%= @talk.talk_category.name %></p>
-                <p class="card-text">Audience Experience Level: <%= @talk.talk_difficulty.name %></p>
               </div>
             </div>
           </div>
@@ -17,7 +19,7 @@
 
         <% @talk.speakers.each do |speaker| %>
           <div class="row py-3">
-            <div class="col col-md-auto">
+            <div class="col-auto col-md-auto">
               <div class="avatar">
               <% if speaker.avatar_url.nil? %>
                   <%= image_tag 'dummy.png', :size => '90x90' %>

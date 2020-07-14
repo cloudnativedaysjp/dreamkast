@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe TimetableController, type: :request do
+  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  let(:roles) { [] }
+
   describe "GET #index" do
     before do
       create(:cndt2020)
@@ -28,8 +31,7 @@ describe TimetableController, type: :request do
     describe 'logged in' do
       before do
         create(:alice)
-        allow_any_instance_of(ActionDispatch::Request)
-          .to receive(:session).and_return(userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa"}}})
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 
       it "returns a success response with form" do

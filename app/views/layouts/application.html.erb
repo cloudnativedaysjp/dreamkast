@@ -16,19 +16,32 @@
 </head>
 
 <body id="page-top">
+<div id="wrapper">
+  <% unless home_controller? || admin_controller? %>
+    <%= render partial: "layouts/event_header" %>
+  <% end %>
 
-<% unless home_controller? || admin_controller? %>
-  <%= render partial: "layouts/event_header" %>
-<% end %>
+  <%= yield %>
 
-<%= yield %>
+  <footer class="bg-light py-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <ul class="justify-content-md-center">
+            <li class="text-center"><%= link_to "プライバシーポリシー", "/cndt2020/privacy", class: "text-muted" %></li>
+          </ul>
+        </div>
 
-<footer class="bg-light py-5">
-  <div class="container">
-    <div class="small text-center text-muted">© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)</div>
-  </div>
-</footer>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="small text-center text-muted">© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)</div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
+</div>
 </body>
 
 </html>

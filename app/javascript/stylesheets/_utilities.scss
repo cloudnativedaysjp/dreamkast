@@ -121,6 +121,12 @@ section.timetable {
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .1);
 }
 
+.talk .checked {
+  background-color: #EEF;
+  border-radius: 5px;
+  border: solid 1px $dark-blue;
+}
+
 .content:hover {
   background-color: #EEF;
   height: auto;

@@ -13,12 +13,15 @@
       <% talk_numbers = [] %>
       <% conference_day.talks.each do |talk| %>
         <div class="talk" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
-          <div class="content">
+          <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
+          <div class="content <%= 'checked' if talks_checked?(talk.id) %>" day_slot="<%= day_slot %>" talk_number="<%= talk.talk_number %>">
             <% unless talk_numbers.include?(talk.talk_number) %>
             <% if defined? form %>
               <div class="radio">
-                <%= form.radio_button "talks[#{talk.day}_#{talk.slot_number}]", talk.track, checked: talks_checked?(talk.id) %>
-                <label for="<%= "talks[#{talk.day}_#{talk.slot_number}]_#{talk.track}" %>" class="radio-label"></label>
+                <%= form.radio_button "talks[#{day_slot}]",
+                                      talk.track,
+                                      { day_slot: day_slot, checked: talks_checked?(talk.id), talk_number: talk.talk_number} %>
+                <label for="<%= "talks[#{day_slot}]_#{talk.track}" %>" class="radio-label"></label>
               </div>
             <% end %>
             <% talk_numbers << talk.talk_number %>

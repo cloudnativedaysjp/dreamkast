@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'
     get 'privacy' => 'event#privacy'
+    get 'coc' => 'event#coc'
 
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]

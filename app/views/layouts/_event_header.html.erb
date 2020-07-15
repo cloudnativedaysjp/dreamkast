@@ -8,8 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto my-2 my-lg-0">
         <% unless event_name.nil? %>
-          <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger" %></li>
-          <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
+          <% unless controller_name == "profiles" && action_name == "new" %>
+            <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger" %></li>
+            <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
+          <% end %>
         <% end %>
         <li class="nav-item dropdown">
           <% if @current_user %>

@@ -12,6 +12,6 @@ services:
       - -c
       - |
         docker/wait-for-it.sh db:3306
-        rails db:create dreamkast_test
+        rails db:create RAILS_ENV=test
         rails db:environment:set RAILS_ENV=test
         rspec

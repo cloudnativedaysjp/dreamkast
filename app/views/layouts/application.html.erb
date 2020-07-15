@@ -22,7 +22,7 @@
     <%= render partial: "layouts/event_header" %>
   <% end %>
 
-  <%= yield %>
+  <%= yield %>  
 
   <footer class="bg-light py-4">
     <div class="container">
@@ -42,6 +42,13 @@
       </div>
     </div>
   </footer>
+
+  <% if @current_user %>
+    <div id="message_icon">
+      <%= image_tag  "trademark.png" %>
+    </div>
+    <%= message_box.html_safe %>
+  <% end %>
 
 </div>
 </body>

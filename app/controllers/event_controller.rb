@@ -9,4 +9,8 @@ class EventController < ApplicationController
   def privacy
 
   end
+
+  def coc
+
+  end
 end

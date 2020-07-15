@@ -13,6 +13,20 @@ describe EventController, type: :request do
         expect(response).to have_http_status '200'
         expect(response.body).to include 'CloudNative Days Tokyo 2020'
       end
+
+      it "returns a success response with privacy policy" do
+        get '/cndt2020/privacy'
+        expect(response).to be_successful
+        expect(response).to have_http_status '200'
+        expect(response.body).to include '個人情報保護方針'
+      end
+
+      it "returns a success response with code of conduct" do
+        get '/cndt2020/coc'
+        expect(response).to be_successful
+        expect(response).to have_http_status '200'
+        expect(response.body).to include '行動規範'
+      end
     end
 
     describe 'logged in and not registerd' do

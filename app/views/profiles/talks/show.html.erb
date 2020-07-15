@@ -1,11 +1,7 @@
 <div class="container">
     <div class="row my-3">
         <div class="col-12">
-            <h2>登録済みセッション一覧</h2>
-        </div>
-
-        <div id="message_box">
-            <p>タイムテーブルからセッションの登録・変更ができますよ。</p>
+            <h2>聴講予定セッション一覧</h2>
         </div>
 
         <% @profile.talks.each do |talk| %>
@@ -19,6 +15,7 @@
         </div>
         <% end %>
 
-        <div class="col-12 text-center my-4"><%= button_to 'セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %></div>
+        <div class="col-12 text-center my-4"><%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %></div>
     </div>
 </div>
+<% @message_box = "タイムテーブルから聴講予定セッションの登録・変更ができます。" %>

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get 'dashboard/show'
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'
+    get 'privacy' => 'event#privacy'
 
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]

@@ -4,4 +4,9 @@ class EventController < ApplicationController
       redirect_to profiles_talks_path
     end
   end
+
+  
+  def privacy
+
+  end
 end

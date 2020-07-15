@@ -40,3 +40,25 @@ hr.light {
 .page-section {
     padding: 8rem 0;
 }
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+}
+
+footer ul{
+    margin: 0;
+    padding: 0;
+}
+
+footer ul li {
+    font-size: small;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

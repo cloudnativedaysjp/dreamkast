@@ -4,15 +4,8 @@
             <h2>新規登録</h2>
             <div class="block"></div>
 
-            <div class="balloon">
-                <div class="icon">
-                    <%= image_tag  "trademark.png" %>
-                </div>
-                <div class="chatting">
-                    <div class="says">
-                        <p>Cloud Native Days 2020へようこそ。まずは必要項目を入力してください。</p>
-                    </div>
-                </div>
+            <div id="message_box">
+                <p>Cloud Native Days 2020へようこそ。まずは必要項目を入力してください。</p>
             </div>
             <%= render 'form', profile: @profile %>
         </div>

@@ -53,12 +53,10 @@ Then, setup databases by running Docker Compose
 $ docker-compose up -d
 ```
 
-
-
-## How to run
+Run the application
 
 ```
-$ docker-compose up -d
+$ ./entryponit.sh
 ```
 
 ## DB migration

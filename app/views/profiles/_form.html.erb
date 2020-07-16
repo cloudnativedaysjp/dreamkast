@@ -1,4 +1,14 @@
 <%= form_with(url: profile_url, model: @profile, local: true, class: "needs-validation") do |form| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h5>入力内容にエラーがあります:</h5>
+      <ul>
+        <% @profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="form-row form-group">
     <div class="col-12 col-md-6">

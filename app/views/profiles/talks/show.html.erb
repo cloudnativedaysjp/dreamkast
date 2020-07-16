@@ -1,21 +1,44 @@
 <div class="container">
     <div class="row my-3">
-        <div class="col-12">
-            <h2>聴講予定セッション一覧</h2>
-        </div>
-
-        <% @profile.talks.each do |talk| %>
-        <div class="card col-12 my-1">
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted"><%= talk.conference_day.date %> <%= talk.start_time.strftime("%R") %>-<%= talk.end_time.strftime("%R") %></h6>
-                <h5 class="card-title"><%= talk.title %></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><%= talk.speakers.map{|t| t.name}.join("/") %></h6>
-                <p class="card-text"><%= talk.abstract %></p>
+        <div class="col-12 col-lg-9 main-pane">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="information">
+                        <h3>運営からのお知らせ</h3>
+                        <ul>
+                            <li>
+                                <div class="date">2020/07/21</div>
+                                <div class="body">CNDT2020 参加申し込みを開始しました！</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="talk">
+                    <h3>聴講予定セッション一覧</h3>
+                    <% @profile.talks.each do |talk| %>
+                        <div class="category_difficulty">
+                            <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track_name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                            <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+                                <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+                            <% end %>
+                            <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+                        </div>
+                        <h5><%= talk.title %></h5>
+                    <% end %>
+                    <div class="col-12 text-center my-4">
+                        <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <% end %>
-
-        <div class="col-12 text-center my-4"><%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %></div>
+        <div class="col-12 col-lg-3 sub-pane mt-3 mt-lg-0">
+            <div class="social">
+                <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
     </div>
+
 </div>
 <% @message_box = "タイムテーブルから聴講予定セッションの登録・変更ができます。" %>

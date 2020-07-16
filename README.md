@@ -71,6 +71,6 @@ $ ./bin/webpack-dev-server
 ## DB migration and to add seed data
 
 ```
-$ rails db:migrate
-$ rails db:seed
+$ bundle exec rails db:migrate
+$ bundle exec rails db:seed
 ```

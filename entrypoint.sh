@@ -1,5 +1,5 @@
 #!/bin/bash
-rails db:migrate
-rails db:seed
+bundle exec rails db:migrate
+bundle exec rails db:seed
 rm -f tmp/pids/server.pid
-rails s -b 0.0.0.0 --dev-caching
+bundle exec rails s -b 0.0.0.0 --dev-caching

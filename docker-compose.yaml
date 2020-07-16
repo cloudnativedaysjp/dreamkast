@@ -1,53 +1,5 @@
 version: "3.8"
 services:
-  app: &app_base
-    build: .
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && ./entrypoint.sh"
-    environment:
-      RAILS_ENV: development
-      NODE_ENV: development
-      SENTRY_DSN: ${SENTRY_DSN}
-      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
-      AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
-      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
-      CLOUDCUBE_ACCESS_KEY_ID: ${CLOUDCUBE_ACCESS_KEY_ID}
-      CLOUDCUBE_SECRET_ACCESS_KEY: ${CLOUDCUBE_SECRET_ACCESS_KEY}
-      CLOUDCUBE_URL: ${CLOUDCUBE_URL}
-      MYSQL_HOST: db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: dreamkast
-      REDIS_URL: redis://redis:6379
-    tty: true
-    stdin_open: true
-    volumes:
-      - .:/app
-      - /app/.git
-      - /app/log
-      - bundle:/app/vendor/bundle
-      - node-modules:/app/node_modules
-      - packs:/app/public/packs
-      - vendor:/app/vendor
-    tmpfs:
-      - /app/tmp
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-  webpack:
-    <<: *app_base
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh app:3000 --timeout=600 && bin/webpack-dev-server"
-    environment:
-      RAILS_ENV: development
-      NODE_ENV: development
-      BUNDLE_APP_CONFIG: ./.bundle
-      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
-    ports:
-      - 3035:3035
-    tty: true
-    stdin_open: true
-    depends_on:
-      - app
   db:
     image: mysql:5.7
     environment:
@@ -65,6 +17,8 @@ services:
     image: "redis:5"
     volumes:
       - redis-data:/data
+    ports:
+      - "6379:6379"
 volumes:
   mysql-data:
   bundle:

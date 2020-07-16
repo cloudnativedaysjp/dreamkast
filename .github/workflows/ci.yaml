@@ -21,5 +21,6 @@ jobs:
     - name: Run tests
       shell: bash
       run: |
+        bundle install
         bundle exec rails db:environment:set RAILS_ENV=test
         bundle exec rspec

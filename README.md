@@ -68,8 +68,9 @@ Run Webpack dev server in case you want to edit JavaScript.
 $ ./bin/webpack-dev-server
 ```
 
-## DB migration
+## DB migration and to add seed data
 
 ```
-$ docker-compose run --rm app rails db:migrate
+$ bundle exec rails db:migrate
+$ bundle exec rails db:seed
 ```

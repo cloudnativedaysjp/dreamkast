@@ -15,7 +15,20 @@ class ApplicationController < ActionController::Base
     params[:event]
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name
+  # ActiveRecordの機能でもうちょっといい感じにかける気はする…
+  def talks_checked?(talk_id)
+    @profile.talks.select{|talk| talk.id == talk_id}.present?
+  end
+
+  def talk_category(talk_id)
+    @talk_cagetogies.find{|category| category.id == @conference.talks.find{|talk| talk.id == talk_id}.talk_category_id}
+  end
+
+  def talk_difficulty(talk_id)
+    @talk_difficulties.find{|difficulty| difficulty.id == @conference.talks.find{|talk| talk.id == talk_id}.talk_difficulty_id}
+  end
+
+  helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty
 
   private
 

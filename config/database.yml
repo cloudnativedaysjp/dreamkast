@@ -14,11 +14,7 @@ default: &default
 
 development:
   <<: *default
-  host: <%= ENV.fetch('MYSQL_HOST') { '127.0.0.1'} %>
-  port: <%= ENV.fetch("DATABASE_PORT") { 3306 } %>
-  username: <%= ENV.fetch('MYSQL_USER') { 'root' } %>
-  password: <%= ENV.fetch('MYSQL_PASSWORD') { 'root' }%>
-  database: 'dreamkast_test'
+  # database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -50,9 +50,9 @@ RSpec.describe Talk, type: :model do
     Talk.import(@csv)
   end
 
-  it "has 4 talks after import " do
+  it "has 7 talks after import " do
     talks = Talk.all
-    expect(talks.length).to eq 4
+    expect(talks.length).to eq 7
   end
 
 
@@ -131,13 +131,33 @@ RSpec.describe Talk, type: :model do
     expect(talk.slot_number).to eq "3"
   end
 
+  it "is expected slot_number" do
+    talk = Talk.find(5)
+    expect(talk.slot_number).to eq "1"
+  end
+
+  it "is expected slot_number" do
+    talk = Talk.find(6)
+    expect(talk.slot_number).to eq "1"
+  end
+
   it "is expected talk_number" do
     talk = Talk.find(1)
     expect(talk.talk_number).to eq "1A2"
   end
 
-  it "returns" do
+  it "is expected to return 1 record with day1, slot2, trackA" do
     talks = Talk.find_by_params("1", "2", "1")
     expect(talks.length).to eq 1
+  end
+
+  it "is expected to return 2 record with day1, slot1, trackA" do
+    talks = Talk.find_by_params("1", "1", "1")
+    expect(talks.length).to eq 2
+  end
+
+  it "is expected to return 2 record with day2, slot3, trackC" do
+    talks = Talk.find_by_params("2", "3", "3")
+    expect(talks.length).to eq 2
   end
 end

@@ -9,8 +9,10 @@ class Talk < ApplicationRecord
   has_many :speakers, through: :talks_speakers
   has_many :profiles, through: :registered_talks
 
-  @@track_map = {"1" => "A", "2" => "B", "3" => "C", "4" => "D", "5" => "E", "6" => "F"}
-  @@slot_map = {"12" => "1", "13" => "1", "14" => "2", "15" => "3", "16" => "4", "17" => "5", "18" => "6", "19" => "7"}
+  TRACK_MAP = {"1" => "A", "2" => "B", "3" => "C", "4" => "D", "5" => "E", "6" => "F"}
+  SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
+
+  [Time.new]
 
   def self.import(file)
     destroy_all
@@ -30,11 +32,15 @@ class Talk < ApplicationRecord
   end
 
   def track_name
-    return @@track_map[self.track]
+    return TRACK_MAP[self.track]
   end
 
   def slot_number
-     return @@slot_map[self.start_time.to_time.hour.to_s]
+    SLOT_MAP.each_with_index do |time, index|
+      if time > self.start_time.to_time.strftime("%H%M")
+        return index.to_s
+      end
+    end
   end
 
   def talk_number
@@ -49,11 +55,11 @@ class Talk < ApplicationRecord
     ((self.end_time - self.start_time).to_i / 60 / 10) + row_start
   end
 
-  def self.find_by_params(day, slot_number, track)
+  def self.find_by_params(day, slot_number_param, track)
     date = ConferenceDay.find(day.to_i).date
 
-    after = Time.zone.parse("#{@@slot_map.key(slot_number)}:00:00").utc.strftime("%T")
-    before = Time.zone.parse("#{@@slot_map.key(slot_number)}:59:00").utc.strftime("%T")
+    after = Time.zone.parse(SLOT_MAP[slot_number_param.to_i - 1].dup.insert(2, ":")).utc.strftime("%T")
+    before = (Time.zone.parse(SLOT_MAP[slot_number_param.to_i].dup.insert(2, ":")) - 60).utc.strftime("%T")
 
     where(date: date, track: track)
       .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")

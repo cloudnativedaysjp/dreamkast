@@ -14,7 +14,11 @@ default: &default
 
 development:
   <<: *default
-  # database: db/development.sqlite3
+  host: <%= ENV['MYSQL_HOST'] || '127.0.0.1' %>
+  port: <%= ENV["DATABASE_PORT"] || 3306 %>
+  username: <%= ENV['MYSQL_USER'] || 'root' %>
+  password: <%= ENV['MYSQL_PASSWORD'] || 'root' %>
+  database: 'dreamkast_test'
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

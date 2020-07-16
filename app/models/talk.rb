@@ -12,8 +12,6 @@ class Talk < ApplicationRecord
   TRACK_MAP = {"1" => "A", "2" => "B", "3" => "C", "4" => "D", "5" => "E", "6" => "F"}
   SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
 
-  [Time.new]
-
   def self.import(file)
     destroy_all
     CSV.foreach(file.path, headers: true) do |row|

@@ -6,10 +6,10 @@
 #
 default: &default
   adapter: mysql2
-  database: dreamkast
-  username: user
-  password: password
-  host: 127.0.0.1
+  database: <%= ENV['MYSQL_DATABASE'] || "dreamkast" %>
+  username: <%= ENV['MYSQL_USER'] || "user" %>
+  password: <%= ENV['MYSQL_PASSWORD'] || "password" %>
+  host: <%= ENV['MYSQL_HOST'] || "127.0.0.1" %>
   encoding: utf8mb4
 
 development:

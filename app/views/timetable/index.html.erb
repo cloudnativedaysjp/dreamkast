@@ -5,31 +5,20 @@
 </div>
 
 <% if @current_user %>
-<section class="timetable">
-  <div class="grid" style="--rows: 2">
-    <div class="balloon">
-        <div class="icon">
-            <%= image_tag  "trademark.png" %>
-        </div>
-        <div class="chatting">
-            <div class="says">
-              
-              <% if flash.empty? %>
-                <p>参加したいセッションを登録しましょう。<br/>セッション名をクリックすると詳細が表示されます。</p>
-              <% else %>
-                <% flash.each do |message_type, message| %>
-                  <%= message %>
-                <% end %>
-              <% end %>
-            </div>
-        </div>
-    </div>
-  </div>
-</section>
-<% end %>
-
-<% if @current_user %>
   <%= render 'form', conference: @conference %>
 <% else %>
   <%= render 'timetable', conference: @conference %>
 <% end %>
+
+
+<% 
+if @current_user
+  if flash.empty?
+    @message_box = "聞きたいセッションを登録しましょう。セッション名をクリックすると詳細が表示されます。"
+  else
+    flash.each do |message_type, message|
+      @message_box = message
+    end
+  end
+end
+%>

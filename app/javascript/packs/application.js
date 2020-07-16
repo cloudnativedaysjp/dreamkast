@@ -22,5 +22,6 @@ import './jquery.easing.min.js'
 import './jquery.magnific-popup.min.js'
 import './scripts.js'
 import './timetable.js'
+import './message_box.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

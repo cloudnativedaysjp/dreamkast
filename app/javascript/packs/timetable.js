@@ -1,4 +1,3 @@
-console.log("opened");
 $(function(){
     $('.talk .radio input:radio').click(function(){
         $('.content[day_slot=' + $(this).attr('day_slot') + ']').removeClass('checked');

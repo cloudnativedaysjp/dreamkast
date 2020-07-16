@@ -3,11 +3,6 @@
         <div class="col-12 col-md-6 registration-form py-3 px-md-5">
 
             <h2>登録情報変更</h2>
-            <% flash.each do |message_type, message| %>
-                <div class="alert alert-info" role="alert">
-                <%= message %>
-                </div>
-            <% end %>
             <%= render 'form', profile: @profile %>
         </div>
     </div>

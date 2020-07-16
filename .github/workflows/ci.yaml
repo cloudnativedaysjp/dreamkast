@@ -14,12 +14,44 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
-    - uses: whoan/docker-build-with-cache-action@master
+    - name: Run database
+      shell: bash
+      run: |
+        docker-compose up -d
+    - name: Set up Node.js 12.18.2
+      uses: actions/setup-node@v1
       with:
-        username: inductor
-        password: "${{ secrets.DOCKER_HUB_PASSWORD }}"
-        image_name: dreamkast
+        node-version: 12.18.2
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - uses: actions/cache@v2
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: yarn install
+      run: |
+        yarn
+    - name: Set up Ruby 2.7.1
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7.1
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Bundle install
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
     - name: Run tests
       shell: bash
       run: |
-        docker-compose -f docker-compose.yaml -f test-docker-compose.yaml up --exit-code-from app
+        bundle exec rake webpacker:compile
+        bundle exec rails db:environment:set RAILS_ENV=test
+        bundle exec rspec

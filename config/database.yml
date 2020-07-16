@@ -6,11 +6,11 @@
 #
 default: &default
   adapter: mysql2
-  database: <%= ENV['MYSQL_DATABASE'] %>
-  username: <%= ENV['MYSQL_USER'] %>
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  host: <%= ENV['MYSQL_HOST'] %>
-  encoding: utf8
+  database: dreamkast
+  username: user
+  password: password
+  host: 127.0.0.1
+  encoding: utf8mb4
 
 development:
   <<: *default
@@ -25,5 +25,5 @@ test:
 
 production:
   url: <%= ENV.fetch('CLEARDB_DATABASE_URL', '').sub('mysql://', 'mysql2://') %>
-  encoding: utf8
+  encoding: utf8mb4
   adapter: mysql2

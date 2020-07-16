@@ -29,6 +29,32 @@ export AUTH0_CLIENT_SECRET=jBeB2Jd4sdfsdfdgetwarzOXYsdEyasdfq3wer3r9wglkj129UoF_
 export AUTH0_DOMAIN=yourdomain.auth0.com
 ```
 
+## Setup environment
+
+This repository works with
+
+- Ruby
+- Node.js
+- Yarn
+- Docker Compose (for MySQL and Redis)
+
+the version is controlled by `.node-version` and `.ruby-version` file.
+
+`nodenv` and `rbenv` are recommended to install those.
+
+```
+$ bundle install
+$ bundle exec rake webpacker:compile
+```
+
+Then, setup databases by running Docker Compose
+
+```
+$ docker-compose up -d
+```
+
+
+
 ## How to run
 
 ```

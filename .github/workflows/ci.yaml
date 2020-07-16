@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
-    - uses: whoan/docker-build-with-cache-action@master
+    - name: Set up Ruby 2.7.1
+      uses: actions/setup-ruby@v1
       with:
-        username: inductor
-        password: "${{ secrets.DOCKER_HUB_PASSWORD }}"
-        image_name: dreamkast
+        ruby-version: 2.7.1
     - name: Run tests
       shell: bash
       run: |
-        docker-compose -f docker-compose.yaml -f test-docker-compose.yaml up --exit-code-from app
+        bundle exec rails db:environment:set RAILS_ENV=test
+        bundle exec rspec

@@ -1,61 +1,56 @@
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
+
+    <div class="modal-header">
+      <h5 class="card-title"><%= @talk.title %></h5>
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+            
+
     <div class="modal-body">
-      <div class="container">
+      <div class="category_difficulty">
+        <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>"><%= @talk.talk_difficulty.name %></span>
+        <span class="difficulty category_<%= @talk.talk_category_id %>"><%= @talk.talk_category.name %></span>
+      </div>
+      <p class="card-text"><%= @talk.abstract %></p>
+    </div>
+    <div class="modal-body">
+      <% @talk.speakers.each do |speaker| %>
         <div class="row py-3">
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <div class="category_difficulty">
-                  <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>"><%= @talk.talk_difficulty.name %></span>
-                  <span class="difficulty category_<%= @talk.talk_category_id %>"><%= @talk.talk_category.name %></span>
-                </div>
-                <h5 class="card-title"><%= @talk.title %></h5>
-                <p class="card-text"><%= @talk.abstract %></p>
-              </div>
+          <div class="col-auto col-md-auto">
+            <div class="avatar">
+            <% if speaker.avatar_url.nil? %>
+                <%= image_tag 'dummy.png', :size => '50x50' %>
+            <% else %>
+                <%= image_tag speaker.avatar_url, :size => '50x50' %>
+            <% end %>
             </div>
+          </div>
+          <div class="col">
+            <h5 class="">
+              <%= speaker.name %>
+              <%= link_to image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{speaker.twitter_id}" if speaker.twitter_id != "" %>
+              <%= link_to image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{speaker.github_id}" if speaker.github_id != "" %>
+            </h5>
+            <h6 class="card-subtitle text-muted mb-1">
+              <%= speaker.company if speaker.company != "" %>
+            </h6>
+            <h6 class="card-subtitle text-muted mb-1">
+              <%= speaker.job_title if speaker.job_title != "" %>
+            </h6>
+              
+            <% if speaker.profile != "" %>
+              <p class="card-text"><%= speaker.profile %></p>
+            <% end %>
           </div>
         </div>
-
-        <% @talk.speakers.each do |speaker| %>
-          <div class="row py-3">
-            <div class="col-auto col-md-auto">
-              <div class="avatar">
-              <% if speaker.avatar_url.nil? %>
-                  <%= image_tag 'dummy.png', :size => '90x90' %>
-              <% else %>
-                  <%= image_tag speaker.avatar_url, :size => '90x90' %>
-              <% end %>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <%= speaker.name %>
-                    <%= link_to image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{speaker.twitter_id}" if speaker.twitter_id != "" %>
-                    <%= link_to image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{speaker.github_id}" if speaker.github_id != "" %>
-                  </h5>
-                  <h6 class="card-subtitle text-muted mb-1">
-                    <%= speaker.company if speaker.company != "" %>
-                  </h6>
-                  <h6 class="card-subtitle text-muted mb-1">
-                    <%= speaker.job_title if speaker.job_title != "" %>
-                  </h6>
-                    
-                  <% if speaker.profile != "" %>
-                    <p class="card-text"><%= speaker.profile %></p>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
+      <% end %>
     </div>
+
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
-  </div>
 </div>

@@ -293,7 +293,7 @@ section.timetable {
   display: none;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .grid {
     display: block;
     grid-template-rows: 100%;

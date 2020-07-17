@@ -29,5 +29,35 @@ describe ProfilesController, type: :request do
         expect(response.body).to_not include 'Timetable'
       end
     end
+
+    describe 'register' do
+      subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => ""}}}}}
+      subject(:profiles_params){
+        attributes_for(:alice)
+      }
+      subject(:agreement_params){
+        {
+          require_email: "1",
+          require_tel: "1",
+          require_posting: "1",
+          agree_ms: "1",
+        }
+      }
+
+      before do
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(user_session)
+        create(:form_item1)
+        create(:form_item2)
+        create(:form_item3)
+        create(:form_item4)
+      end
+
+      it "is created 4 agreements when user select 4 checkbox" do
+        expect{
+          post '/cndt2020/profiles', params: {profile: profiles_params.merge(agreement_params)}
+        }.to change(Agreement, :count).by(+4)
+        expect(response.body).to redirect_to '/cndt2020/timetables'
+      end
+    end
   end
 end

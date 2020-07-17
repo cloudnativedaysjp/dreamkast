@@ -32,7 +32,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to edit_profile_path(id: @profile.id), notice: '登録情報を更新しました' }
+        format.html { redirect_to edit_profile_path(id: @profile.id)}
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }

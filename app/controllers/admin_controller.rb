@@ -38,6 +38,10 @@ class AdminController < ApplicationController
         @speakers = Speaker.all
     end
 
+    def edit_speaker
+
+    end
+
     def bulk_insert_speakers
         Speaker.import(params[:file])
         redirect_to '/admin/speakers', notice: 'CSVの読み込みが完了しました'

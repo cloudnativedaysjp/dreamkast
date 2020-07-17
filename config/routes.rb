@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'admin/talks' => 'admin#talks'
   post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
   get 'admin/speakers' => 'admin#speakers'
+  get 'admin/speakers/:id/edit' => 'admin#edit_speaker'
   post 'admin/bulk_insert_speakers' => 'admin#bulk_insert_speakers'
   post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
   delete 'admin/destroy_user' => 'admin#destroy_user'

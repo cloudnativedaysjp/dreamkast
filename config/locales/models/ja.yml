@@ -29,5 +29,11 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+ja:
+  activerecord:
+    models:
+      profile: プロファイル
+    attributes:
+      profile:
+        company_tel: 勤務先電話番号
+        industry_id: 業種

@@ -12,7 +12,7 @@
 
       <% talk_numbers = []; day_slots = [] %>
       <% conference_day.talks.each do |talk| %>
-        <div class="talk" slot="<%= talk.slot_number %>" style="--track: <%= talk.track.to_i - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
+        <div class="talk" slot="<%= talk.slot_number %>" style="--track: <%= talk.track_id - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
           <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
           <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>  <%= 'first' unless day_slots.include?(day_slot) %>"
                slot="<%= talk.slot_number %>"
@@ -22,9 +22,9 @@
             <% if defined? form %>
               <div class="radio">
                 <%= form.radio_button "talks[#{day_slot}]",
-                                      talk.track,
+                                      talk.track_id.to_s,
                                       { day_slot: day_slot, checked: talks_checked?(talk.id), talk_number: talk.talk_number} %>
-                <label for="<%= "talks[#{day_slot}]_#{talk.track}" %>" class="radio-label"></label>
+                <label for="<%= "talks[#{day_slot}]_#{talk.track_id.to_s}" %>" class="radio-label"></label>
               </div>
             <% end %>
             <% 
@@ -32,7 +32,7 @@
               day_slots << day_slot
             %>
           <% end %>
-            <h6><span class="track_name">Track <%= talk.track_name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
+            <h6><span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %></h6>
             
             <div class="category_difficulty">
               <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>

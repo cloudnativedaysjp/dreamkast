@@ -3,6 +3,12 @@ class TalksController < ApplicationController
   before_action :set_profile
   before_action :set_talk, only: [:show]
 
+  def logged_in_using_omniauth?
+    if session[:userinfo].present?
+      @current_user = session[:userinfo]
+    end
+  end
+  
   def show
   end
 

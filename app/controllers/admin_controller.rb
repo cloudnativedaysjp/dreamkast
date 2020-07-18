@@ -38,6 +38,26 @@ class AdminController < ApplicationController
         @speakers = Speaker.all
     end
 
+    def edit_speaker
+        @speaker = Speaker.find_by_id(params[:id])
+    end
+
+    # PATCH/PUT admin/speakers/1
+    # PATCH/PUT admih/speakers/1.json
+    def update_speaker
+        @speaker = Speaker.find(params[:id])
+
+        respond_to do |format|
+            if @speaker.update(speaker_params)
+                format.html { redirect_to @speaker, notice: 'Speaker was successfully updated.' }
+                format.json { render :show, status: :ok, location: @speaker }
+            else
+                format.html { render :edit }
+                format.json { render json: @speaker.errors, status: :unprocessable_entity }
+            end
+        end
+    end
+
     def bulk_insert_speakers
         Speaker.import(params[:file])
         redirect_to '/admin/speakers', notice: 'CSVの読み込みが完了しました'
@@ -52,5 +72,9 @@ class AdminController < ApplicationController
 
     def is_admin?
         raise Forbidden unless admin?
+    end
+
+    def speaker_params
+        params.require(:speaker).permit(:name, :profile, :company, :job_title, :twitter_id, :github_id, :avatar)
     end
 end

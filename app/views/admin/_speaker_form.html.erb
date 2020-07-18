@@ -1,0 +1,58 @@
+<%= form_with(url: "/admin/speakers/#{@speaker.id}", model: @speaker, local: true) do |form| %>
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      Name: <%= @speaker.name %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      Profile: <%= @speaker.profile %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      Company: <%= @speaker.company %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      job_title: <%= @speaker.job_title %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      twitter_id: <%= @speaker.twitter_id %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      github_id: <%= @speaker.github_id %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <% if speaker.avatar_url.nil? %>
+      <div class="avatar">Avatar: <%= image_tag 'dummy.png', :size => '80x80'  %></div>
+    <% else %>
+      <div class="avatar">Avatar: <%= image_tag speaker.avatar_url, :size => '80x80'  %></div>
+    <% end %>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label "Avatarを変更: " %>
+      <%= form.file_field :avatar %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>

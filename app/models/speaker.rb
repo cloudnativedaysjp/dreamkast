@@ -17,4 +17,8 @@ class Speaker < ApplicationRecord
   def self.updatable_attributes
     ["id","name","profile","company","job_title","twitter_id","github_id"]
   end
+
+  def has_avatar?
+    ! self.avatar_url.nil?
+  end
 end

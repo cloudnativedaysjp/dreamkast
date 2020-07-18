@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     resources :track, only: [:show]
+    resources :tracks, only: [:index, :show]
     get 'dashboard/show'
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'

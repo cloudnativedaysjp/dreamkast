@@ -4,6 +4,7 @@ class Talk < ApplicationRecord
   belongs_to :conference
   belongs_to :conference_day
 
+  has_one :video
   has_many :talks_speakers
   has_many :registered_talks
   has_many :speakers, through: :talks_speakers

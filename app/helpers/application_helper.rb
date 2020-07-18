@@ -21,4 +21,13 @@ module ApplicationHelper
     end
     return "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
   end
+
+  def full_title(page_title = '')
+    base_title = "CloudNative Days 2020"
+    if page_title.empty?
+      base_title
+    else
+      page_title + " | " + base_title
+    end
+  end
 end

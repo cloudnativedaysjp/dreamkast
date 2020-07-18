@@ -1,14 +1,21 @@
+<% provide(:title, @talk.title) %>
+
 <div class="container">
     <div class="row my-3">
         <div class="col-12 col-lg-9 main-pane">
             <div class="row">
                 <div class="col-12">
                     <div class="talk">
-                        <h3><%= @talk.title %></h3>
+                        <h3>
+                          <%= @talk.title %> &nbsp;
+                          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-hashtags="#CNDT2020">Tweet</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                          <span class="fb-share-button" data-href="<%= request.original_url %>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></span>
+                        </h3>
                         <h4>
                             Track <%= @talk.track_name %> <%= @talk.conference_day.date.strftime("%m/%d") %> <%= @talk.start_time.strftime("%H:%M") %>-<%= @talk.end_time.strftime("%H:%M") %>
                         </h4>
-
                         <div class="category_difficulty block">
                             <% if @talk.talk_difficulty_id != 4 && @talk.talk_category_id != 18 %>
                               <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>">
@@ -20,6 +27,7 @@
                               <%= @talk.talk_category.name %>
                             </span>
                         </div>
+                        
                         
                         <p><%= @talk.abstract %></p>
 

@@ -13,7 +13,7 @@
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <meta property="og:site_name" content="CloudNative Days 2020" />
+    <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
     <meta property="twitter:card" content="summary" />
     <%= yield(:ogp) %>
 

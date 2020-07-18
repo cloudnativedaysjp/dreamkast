@@ -35,11 +35,11 @@
             <tbody>
                 <% @speakers.each do |speaker| %>
                 <tr>
-                    <% if speaker.avatar_url.nil? %>
-                      <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
-                    <% else %>
-                      <td class="avatar"><%= image_tag speaker.avatar_url, :size => '80x80'  %></td>
-                    <% end %>
+                  <% if speaker.has_avatar? %>
+                    <td class="avatar"><%= image_tag speaker.avatar_url, :size => '80x80'  %></td>
+                  <% else %>
+                    <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
+                  <% end %>
                     <td><%= speaker.name %></td>
                     <td><%= speaker.profile %></td>
                     <td><%= speaker.company %></td>

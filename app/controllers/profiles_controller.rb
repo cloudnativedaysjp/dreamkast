@@ -20,6 +20,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params["require_email"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
+      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params["agree_ms"]
       redirect_to "/#{event_name}/timetables"
     else
       respond_to do |format|
@@ -103,7 +104,8 @@ class ProfilesController < ApplicationController
       params.require(:profile).permit(
         :require_email,
         :require_tel,
-        :require_posting
+        :require_posting,
+        :agree_ms
       )
     end
 end

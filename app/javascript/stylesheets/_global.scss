@@ -62,3 +62,92 @@ footer ul li {
     margin: 0;
     padding: 0;
 }
+
+
+// main layout
+.main-pane .talk {
+    background-color: #FFF;
+    border-radius: 5px;
+    border: solid 1px #CCC;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.main-pane h3 {
+    margin: 0 0 0.7rem 0;
+    font-size: x-large;
+    color: #333;
+    font-weight: bold;
+}
+
+.main-pane h4 {
+    margin: 0 0 0.7rem 0;
+    font-size: large;
+    color: #333;
+    font-weight: bold;
+}
+
+.main-pane h5 {
+    margin: 0 0 0.7rem 0;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.main-pane .talk .category_difficulty.one-liner {
+    margin: 0 0 0.2rem 0rem;
+    font-size: small;
+}
+
+.main-pane .talk .category_difficulty.block {
+    margin: 0 0 1rem 0rem;
+    font-size: medium;
+}
+  
+.main-pane .talk .difficulty {
+    font-size: x-small;
+    padding: 0.2rem;
+    margin: 0;
+    color: #FFF;
+    background: $dark-blue;
+    border-radius: 10px;
+}
+
+.main-pane .information {
+    background-color: #FFF;
+    border-radius: 5px;
+    border: solid 1px #CCC;
+    padding: 10px;
+}
+
+.main-pane .information ul {
+    margin: 0;
+    padding: 0;
+}
+
+.main-pane .information ul li {
+    list-style: none;
+}
+
+.main-pane .information ul li .date {
+    font-size: small;
+}
+
+.main-pane .information ul li .body {
+    font-size: 0.9rem;
+}
+
+.sub-pane {
+    
+}
+
+.sub-pane .social {
+    background-color: #FFF;
+    border-radius: 5px;
+    border: solid 1px #CCC;
+    overflow: hidden;
+}
+
+.fb-share-button {
+    line-height: 1.3rem;
+}

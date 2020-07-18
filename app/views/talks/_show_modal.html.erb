@@ -22,11 +22,7 @@
         <div class="row py-3">
           <div class="col-auto col-md-auto">
             <div class="avatar">
-            <% if speaker.avatar_url.nil? %>
-                <%= image_tag 'dummy.png', :size => '50x50' %>
-            <% else %>
-                <%= image_tag speaker.avatar_url, :size => '50x50' %>
-            <% end %>
+              <%= image_tag speaker.avatar_or_dummy_url, :size => '50x50' %>
             </div>
           </div>
           <div class="col">
@@ -51,6 +47,8 @@
     </div>
 
     <div class="modal-footer">
+
+      <a href="<%= talk_path(id: @talk.id) %>" data-turbolinks="false"><button type="button" class="btn btn-info">Permalinkを表示</button></a>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
 </div>

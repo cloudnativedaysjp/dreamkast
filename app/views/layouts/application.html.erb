@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>CNDT 2020</title>
+    <title><%= full_title(yield(:title)) %></title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -13,10 +13,16 @@
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
+    <meta property="twitter:card" content="summary" />
+    <%= yield(:ogp) %>
+
     <%= render partial: "layouts/karte" %>
 </head>
 
 <body id="page-top">
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0&appId=300575407747858&autoLogAppEvents=1" nonce="G1Hsaf0L"></script>
 <div id="wrapper">
   <% unless home_controller? || admin_controller? %>
     <%= render partial: "layouts/event_header" %>

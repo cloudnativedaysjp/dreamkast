@@ -4,6 +4,10 @@ describe AdminController, type: :request do
   subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
+  before do
+    create(:cndt2020)
+  end
+
   describe "GET admin#show" do
     context "user doesn't logged in" do
       it "redirect to event top page" do

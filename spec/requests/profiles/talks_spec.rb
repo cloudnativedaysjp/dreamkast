@@ -7,6 +7,7 @@ RSpec.describe Profiles::TalksController, type: :request do
   describe "GET /:event/profiles/talks" do
     describe "logged in and registered" do
       before do
+        create(:cndt2020)
         create(:alice)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end

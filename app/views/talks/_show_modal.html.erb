@@ -51,7 +51,8 @@
     </div>
 
     <div class="modal-footer">
-      <%= button_to 'Permalinkを表示', talk_path(id: @talk.id), {method: :get, class: "btn btn-info"} %>
+
+      <a href="<%= talk_path(id: @talk.id) %>"><button type="button" class="btn btn-info">Permalinkを表示</button></a>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
 </div>

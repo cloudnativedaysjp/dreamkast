@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 mb-3">
                     <div class="information">
-                        <h3>運営からのお知らせ</h3>
+                        <h4>運営からのお知らせ</h4>
                         <ul>
                             <li>
                                 <div class="date">2020/07/21</div>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-12">
                     <div class="talk">
-                    <h3>聴講予定セッション一覧</h3>
+                    <h4>聴講予定セッション一覧</h4>
                     <% @profile.talks.each do |talk| %>
                         <div class="category_difficulty">
                             <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track_name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
@@ -24,7 +24,7 @@
                             <% end %>
                             <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
                         </div>
-                        <h5><%= talk.title %></h5>
+                        <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
                     <% end %>
                     <div class="col-12 text-center my-4">
                         <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
@@ -39,6 +39,5 @@
             </div>
         </div>
     </div>
-
 </div>
 <% @message_box = "タイムテーブルから聴講予定セッションの登録・変更ができます。" %>

@@ -6,7 +6,7 @@
     <% end %>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto my-2 my-lg-0">
+      <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
@@ -30,6 +30,8 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/logout">Logout</a>
             </div>
+          <% else %>
+            <li class="nav-item"><%= button_to '参加申し込み / ログイン', 'auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
           <% end %>
         </li>
       </ul>

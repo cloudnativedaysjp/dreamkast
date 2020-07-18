@@ -1,0 +1,56 @@
+<%= form_with(url: "/admin/speakers/#{@speaker.id}", model: @speaker, local: true) do |form| %>
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :profile %>
+      <%= form.text_area :profile %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :company %>
+      <%= form.text_field :company %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :job_title %>
+      <%= form.text_field :job_title %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :twitter_id %>
+      <%= form.text_field :twitter_id %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :github_id %>
+      <%= form.text_field :github_id %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label "Avatar" %>
+      <%= form.file_field :avatar %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>

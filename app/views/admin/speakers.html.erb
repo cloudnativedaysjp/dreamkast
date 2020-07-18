@@ -23,6 +23,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col">Profile</th>
                     <th scope="col">Company</th>
@@ -34,12 +35,18 @@
             <tbody>
                 <% @speakers.each do |speaker| %>
                 <tr>
+                    <% if speaker.avatar_url.nil? %>
+                      <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
+                    <% else %>
+                      <td class="avatar"><%= image_tag speaker.avatar_url, :size => '80x80'  %></td>
+                    <% end %>
                     <td><%= speaker.name %></td>
                     <td><%= speaker.profile %></td>
                     <td><%= speaker.company %></td>
                     <td><%= speaker.job_title %></td>
                     <td><%= speaker.twitter_id %></td>
                     <td><%= speaker.github_id %></td>
+                    <td><%= link_to 'Edit', "speakers/#{speaker.id}/edit" %></td>
                 </tr>
                 <% end %>
             </tbody>

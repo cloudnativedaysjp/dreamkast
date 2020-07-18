@@ -4,11 +4,7 @@
   <meta property="og:title" content="<%= full_title(@talk.title) %>" />
   <meta property="og:description" content="<%= @talk.abstract[0, 100] %>" />
   <% if @talk.speakers.length != 0 %>
-    <% if @talk.speakers[0].avatar_url.nil? %>
-      <meta property="og:image" content="<%= image_url 'dummy.png' %>" />
-    <% else %>
-      <meta property="og:image" content="<%= image_url @talk.speakers[0].avatar_url %>" />
-    <% end %>
+    <meta property="og:image" content="<%= image_url @talk.speakers[0].avatar_or_dummy_url %>" />
   <% end %>
 <% end %>
 <% provide(:title, @talk.title) %>
@@ -48,11 +44,7 @@
                         <div class="row py-3">
                             <div class="col-auto col-md-auto">
                                 <div class="avatar">
-                                    <% if speaker.avatar_url.nil? %>
-                                    <%= image_tag 'dummy.png', :size => '90x90' %>
-                                    <% else %>
-                                    <%= image_tag speaker.avatar_url, :size => '90x90' %>
-                                    <% end %>
+                                    <%= image_tag speaker.avatar_or_dummy_url, :size => '90x90' %>
                                 </div>
                             </div>
                             <div class="col">

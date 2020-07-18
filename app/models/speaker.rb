@@ -21,4 +21,12 @@ class Speaker < ApplicationRecord
   def has_avatar?
     ! self.avatar_url.nil?
   end
+
+  def avatar_or_dummy_url
+    if has_avatar?
+      return avatar_url
+    else
+      return 'dummy.png'
+    end
+  end
 end

@@ -40,6 +40,12 @@ RSpec.describe Talk, type: :model do
       ]
     )
 
+    create(:track1)
+    create(:track2)
+    create(:track3)
+    create(:track4)
+    create(:track5)
+    create(:track6)
 
     file_path = File.join(Rails.root, 'spec/fixtures/talks.csv')
 
@@ -73,7 +79,7 @@ RSpec.describe Talk, type: :model do
 
   it "is expected track" do
     talk = Talk.find(1)
-    expect(talk.track).to eq "1"
+    expect(talk.track_id).to eq 1
   end
 
   it "is expected abstract" do
@@ -106,9 +112,9 @@ RSpec.describe Talk, type: :model do
     expect(talk.day).to eq 2
   end
 
-  it "is expected track_name" do
+  it "is expected track.name" do
     talk = Talk.find(1)
-    expect(talk.track_name).to eq "A"
+    expect(talk.track.name).to eq "A"
   end
 
   it "is expected slot_number" do

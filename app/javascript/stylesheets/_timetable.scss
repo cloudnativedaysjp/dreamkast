@@ -339,3 +339,23 @@ section.timetable {
     margin: 15px 0px 5px 0px;
   }
 }
+
+.timetable-footer {
+  position: fixed;
+  bottom: 0px;
+  background-color: rgba(0,0,0, 0.5);
+  z-index: 100;
+  width: 100%;
+  box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.timetable-footer input{
+  border: 1px solid #FFF;
+  box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.5);;
+}
+
+.timetable-footer .information{
+  color: #FFF;
+  font-size: small;
+  line-height: 80%;
+}

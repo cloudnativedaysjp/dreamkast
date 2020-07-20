@@ -40,5 +40,18 @@ RSpec.describe DashboardController, type: :request do
         end
       end
     end
+
+    describe "not logged in" do
+      before do
+        create(:cndt2020)
+      end
+
+      it "redirect to top page a success response" do
+        get '/cndt2020/dashboard'
+        expect(response).to_not be_successful
+        expect(response).to have_http_status '302'
+        expect(response).to redirect_to '/cndt2020'
+      end
+    end
   end
 end

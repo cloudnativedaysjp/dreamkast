@@ -125,7 +125,7 @@ if TalkDifficulty.all.length == 0
   )
 end
 
-if Rails.env.development? && Talk.all.length == 0
+if (Rails.env.development? || ENV['REVIEW_APP'] == 'true') && Talk.all.length == 0
   file_path = File.join(Rails.root, 'db/talks.csv')
 
   @csv = ActionDispatch::Http::UploadedFile.new(
@@ -135,7 +135,7 @@ if Rails.env.development? && Talk.all.length == 0
   Talk.import(@csv)
 end
 
-if Rails.env.development? && Speaker.all.length == 0
+if (Rails.env.development? || ENV['REVIEW_APP'] == 'true') && Speaker.all.length == 0
   file_path = File.join(Rails.root, 'db/speakers.csv')
 
   @csv = ActionDispatch::Http::UploadedFile.new(
@@ -146,7 +146,7 @@ if Rails.env.development? && Speaker.all.length == 0
   Speaker.import(@csv)
 end
 
-if Rails.env.development? && TalksSpeaker.all.length == 0
+if (Rails.env.development? || ENV['REVIEW_APP'] == 'true') && TalksSpeaker.all.length == 0
   file_path = File.join(Rails.root, 'db/talks_speakers.csv')
 
   @csv = ActionDispatch::Http::UploadedFile.new(
@@ -190,15 +190,15 @@ if FormItem.all.length == 0
   )
 end
 
-if (Rails.env.development? || ENV['REVIEW_APP'] == 'true') && Track.all.length == 0
+if Track.all.length == 0
   Track.create!(
     [
-      { id: 1, number: 1, name: "1", conference_id: 1, movie_url: "https://www.youtube.com/embed/QJSo8BZlbeI"},
-      { id: 2, number: 2, name: "2", conference_id: 1, movie_url: "https://www.youtube.com/embed/i28YOIui1bc?autoplay=1"},
-      { id: 3, number: 3, name: "3", conference_id: 1, movie_url: "https://www.youtube.com/embed/bqD9EwKaE90?autoplay=1"},
-      { id: 4, number: 4, name: "4", conference_id: 1, movie_url: "https://www.youtube.com/embed/hL07TE17rZ8?autoplay=1"},
-      { id: 5, number: 5, name: "5", conference_id: 1, movie_url: "https://www.youtube.com/embed/rD9czFIT4Iw?autoplay=1"},
-      { id: 6, number: 6, name: "6", conference_id: 1, movie_url: "https://www.youtube.com/embed/sSGVgLmZ8u0?autoplay=1"},
+      { id: 1, number: 1, name: "A", conference_id: 1, movie_url: ""},
+      { id: 2, number: 2, name: "B", conference_id: 1, movie_url: ""},
+      { id: 3, number: 3, name: "C", conference_id: 1, movie_url: ""},
+      { id: 4, number: 4, name: "D", conference_id: 1, movie_url: ""},
+      { id: 5, number: 5, name: "E", conference_id: 1, movie_url: ""},
+      { id: 6, number: 6, name: "F", conference_id: 1, movie_url: ""},
     ]
   )
 end

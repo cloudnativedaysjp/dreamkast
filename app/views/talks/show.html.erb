@@ -23,7 +23,7 @@
                           <span class="fb-share-button" data-href="<%= request.original_url %>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></span>
                         </h3>
                         <h4>
-                            (Day<%= @talk.day %>) <%= @talk.conference_day.date.strftime("%m/%d") %> <%= @talk.start_time.strftime("%H:%M") %>-<%= @talk.end_time.strftime("%H:%M") %> - Track <%= @talk.track_name %> 
+                            (Day<%= @talk.day %>) <%= @talk.conference_day.date.strftime("%m/%d") %> <%= @talk.start_time.strftime("%H:%M") %>-<%= @talk.end_time.strftime("%H:%M") %> - Track <%= @talk.track.name %> 
                         </h4>
                         <div class="category_difficulty block">
                             <% if @talk.talk_difficulty_id != 4 && @talk.talk_category_id != 18 %>

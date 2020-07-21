@@ -9,7 +9,7 @@ FactoryBot.define do
     conference_day_id { 1 }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
-    track { 1 }
+    track_id { 1 }
   end
 
   factory :talk2, class: Talk do
@@ -22,6 +22,6 @@ FactoryBot.define do
     abstract { "あいうえおかきくけこ" }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
-    track { 1 }
+    track_id { 1 }
   end
 end

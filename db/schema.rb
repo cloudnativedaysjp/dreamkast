@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_123638) do
+ActiveRecord::Schema.define(version: 2020_07_18_164411) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 2020_07_11_123638) do
     t.string "title"
     t.text "abstract"
     t.string "movie_url"
-    t.string "track"
     t.time "start_time"
     t.time "end_time"
     t.bigint "talk_difficulty_id"
@@ -121,6 +120,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_123638) do
     t.date "date"
     t.integer "conference_id"
     t.integer "conference_day_id"
+    t.integer "track_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
@@ -137,6 +137,15 @@ ActiveRecord::Schema.define(version: 2020_07_11_123638) do
     t.string "name"
     t.string "movie_url"
     t.integer "conference_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "talk_id"
+    t.string "site"
+    t.string "url"
+    t.boolean "on_air"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

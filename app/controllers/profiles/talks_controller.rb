@@ -2,6 +2,13 @@ class Profiles::TalksController < ApplicationController
   include Secured
   before_action :set_profile
 
+  def show
+    @conference = Conference.includes(:talks).find_by(abbr: event_name)
+    @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
+    @talk_cagetogies = TalkCategory.all
+    @talk_difficulties = TalkDifficulty.all
+  end
+
   def new
     @talks = Talk.all
     #register

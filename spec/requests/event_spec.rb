@@ -38,7 +38,7 @@ describe EventController, type: :request do
         get '/cndt2020'
         expect(response).to_not be_successful
         expect(response).to have_http_status '302'
-        expect(response).to redirect_to dashboard_path
+        expect(response).to redirect_to profiles_talks_path
       end
     end
   end

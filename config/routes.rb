@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     resources :track, only: [:show]
-    get 'dashboard' => 'dashboard#show'
+    get 'dashboard/show'
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'
     get 'privacy' => 'event#privacy'
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do
+      get 'talks', to: 'talks#show'
       post 'talks', to: 'talks#create'
     end
     get 'profiles/new', to: 'profiles#new'

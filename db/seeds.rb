@@ -87,6 +87,31 @@ if Industry.all.length == 0
   )
 end
 
+if FormItem.all.length == 0
+  puts "Adding form item list"
+  FormItem.create!(
+    [
+      { id: 1, conference_id: 1, name: "IBMからのメールを希望する"},
+      { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
+      { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
+      { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
+    ]
+  )
+end
+
+if Track.all.length == 0
+  Track.create!(
+    [
+      { id: 1, number: 1, name: "A", conference_id: 1, movie_url: ""},
+      { id: 2, number: 2, name: "B", conference_id: 1, movie_url: ""},
+      { id: 3, number: 3, name: "C", conference_id: 1, movie_url: ""},
+      { id: 4, number: 4, name: "D", conference_id: 1, movie_url: ""},
+      { id: 5, number: 5, name: "E", conference_id: 1, movie_url: ""},
+      { id: 6, number: 6, name: "F", conference_id: 1, movie_url: ""},
+    ]
+  )
+end
+
 if TalkCategory.all.length == 0
   puts "Adding talk category list"
   TalkCategory.create!(
@@ -174,31 +199,6 @@ if Rails.env.development? && RegisteredTalk.all.length == 0
       { talk_id: 28, profile_id: 1},
       { talk_id: 35, profile_id: 1},
       { talk_id: 42, profile_id: 1},
-    ]
-  )
-end
-
-if FormItem.all.length == 0
-  puts "Adding form item list"
-  FormItem.create!(
-    [
-      { id: 1, conference_id: 1, name: "IBMからのメールを希望する"},
-      { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
-      { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
-      { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
-    ]
-  )
-end
-
-if Track.all.length == 0
-  Track.create!(
-    [
-      { id: 1, number: 1, name: "A", conference_id: 1, movie_url: ""},
-      { id: 2, number: 2, name: "B", conference_id: 1, movie_url: ""},
-      { id: 3, number: 3, name: "C", conference_id: 1, movie_url: ""},
-      { id: 4, number: 4, name: "D", conference_id: 1, movie_url: ""},
-      { id: 5, number: 5, name: "E", conference_id: 1, movie_url: ""},
-      { id: 6, number: 6, name: "F", conference_id: 1, movie_url: ""},
     ]
   )
 end

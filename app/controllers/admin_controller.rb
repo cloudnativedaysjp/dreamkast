@@ -67,6 +67,17 @@ class AdminController < ApplicationController
         TalksSpeaker.import(params[:file])
         redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
     end
+
+    def export_speakers
+        all = Speaker.export
+        filename = "./tmp/speaker.csv"
+        File.open(filename, 'w') do |file|
+            file.write(all)
+        end
+        # ダウンロード
+        stat = File::stat(filename)
+        send_file(filename, :filename => "speaker-#{Time.now.strftime("%F")}.csv", :length => stat.size)
+    end
     
     private
 

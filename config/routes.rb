@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   patch 'admin/speakers/:id' => 'admin#update_speaker'
   post 'admin/bulk_insert_speakers' => 'admin#bulk_insert_speakers'
   post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
+  get 'admin/export_speakers' => 'admin#export_speakers'
   delete 'admin/destroy_user' => 'admin#destroy_user'
 
   scope ":event" do

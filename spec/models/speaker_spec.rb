@@ -22,4 +22,9 @@ RSpec.describe Speaker, type: :model do
     @speaker = Speaker.find(1)
     expect(@speaker.name).to eq "高石 諒"
   end
+
+  it "is includes avatar_data in the exported data" do
+    all = Speaker.export
+    expect(all).to include "ultra-super-takaishi-sensei.png"
+  end
 end

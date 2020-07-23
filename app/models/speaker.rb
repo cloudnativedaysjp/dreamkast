@@ -4,14 +4,22 @@ class Speaker < ApplicationRecord
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
 
+  validates :name, presence: true
+  validates :profile, presence: true
+  validates :company, presence: true
+  validates :job_title, presence: true
+
   def self.import(file)
-    puts file.class
+    message = []
     destroy_all
     CSV.foreach(file.path, headers: true) do |row|
       speaker = new
       speaker.attributes = row.to_hash.slice(*updatable_attributes)
-      speaker.save
+      unless speaker.save
+        message << "id: #{speaker.id} のレコードでエラーが発生しています"
+      end
     end
+    return message
   end
 
   def self.export

@@ -13,7 +13,7 @@ RSpec.describe Speaker, type: :model do
     Speaker.import(@csv)
   end
 
-  it "has 3 speakers after import " do
+  it "is imported 3 speakers and ignored 1 speaker due to invalid record" do
     @speakers = Speaker.all
     expect(@speakers.length).to eq 3
   end

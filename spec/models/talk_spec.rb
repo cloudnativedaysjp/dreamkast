@@ -56,7 +56,7 @@ RSpec.describe Talk, type: :model do
     Talk.import(@csv)
   end
 
-  it "has 7 talks after import " do
+  it "is imported 7 talks and ignored 1 invalid talk" do
     talks = Talk.all
     expect(talks.length).to eq 7
   end

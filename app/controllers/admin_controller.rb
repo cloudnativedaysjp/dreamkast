@@ -30,8 +30,13 @@ class AdminController < ApplicationController
     end
 
     def bulk_insert_talks
-        Talk.import(params[:file])
-        redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
+        message = Talk.import(params[:file])
+        if message.size == 0
+            notice = 'CSVの読み込みが完了しました'
+        else
+            notice = message.join(" / ")
+        end
+        redirect_to '/admin/talks', notice: notice
     end
 
     def speakers
@@ -59,8 +64,13 @@ class AdminController < ApplicationController
     end
 
     def bulk_insert_speakers
-        Speaker.import(params[:file])
-        redirect_to '/admin/speakers', notice: 'CSVの読み込みが完了しました'
+        message = Speaker.import(params[:file])
+        if message.size == 0
+            notice = 'CSVの読み込みが完了しました'
+        else
+            notice = message.join(" / ")
+        end
+        redirect_to '/admin/speakers', notice: notice
     end
 
     def bulk_insert_talks_speaker

@@ -9,4 +9,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
         scope: 'openid email profile'
       }
     )
-  end
+end

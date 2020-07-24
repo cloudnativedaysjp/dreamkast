@@ -29,7 +29,7 @@ class Talk < ApplicationRecord
       talk = new
       talk.attributes = row.to_hash.slice(*updatable_attributes)
       unless talk.save
-        message << "id: #{talk.id} のレコードでエラーが発生しています"
+        message << "Error id: #{talk.id} - #{talk.errors.messages}"
       end
     end
     return message

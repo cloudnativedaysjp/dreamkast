@@ -42,10 +42,6 @@ class ApplicationController < ActionController::Base
     render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
   end
 
-  def redirect_to_root
-    redirect_to "/#{params[:event]}"
-  end
-
   private
 
   def set_raven_context

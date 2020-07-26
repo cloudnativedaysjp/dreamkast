@@ -31,11 +31,7 @@ class AdminController < ApplicationController
 
     def bulk_insert_talks
         message = Talk.import(params[:file])
-        if message.size == 0
-            notice = 'CSVの読み込みが完了しました'
-        else
-            notice = message.join(" / ")
-        end
+        notice = message.join(" / ")
         redirect_to '/admin/talks', notice: notice
     end
 

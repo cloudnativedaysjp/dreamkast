@@ -12,13 +12,18 @@ class Speaker < ApplicationRecord
   def self.import(file)
     message = []
     destroy_all
-    CSV.foreach(file.path, headers: true) do |row|
-      speaker = new
-      speaker.attributes = row.to_hash.slice(*updatable_attributes)
-      unless speaker.save
-        message << "id: #{speaker.id} のレコードでエラーが発生しています"
+
+    transaction do
+      CSV.foreach(file.path, headers: true) do |row|
+        speaker = new
+        speaker.attributes = row.to_hash.slice(*updatable_attributes)
+        unless speaker.save
+          message << "id: #{speaker.id} のレコードでエラーが発生しています"
+        end
       end
+      raise ActiveRecord::Rollback unless message.size == 0
     end
+    
     return message
   end
 

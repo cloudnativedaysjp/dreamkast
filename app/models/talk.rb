@@ -25,13 +25,18 @@ class Talk < ApplicationRecord
   def self.import(file)
     message = []
     destroy_all
-    CSV.foreach(file.path, headers: true) do |row|
-      talk = new
-      talk.attributes = row.to_hash.slice(*updatable_attributes)
-      unless talk.save
-        message << "Error id: #{talk.id} - #{talk.errors.messages}"
+
+    transaction do
+      CSV.foreach(file.path, headers: true) do |row|
+        talk = new
+        talk.attributes = row.to_hash.slice(*updatable_attributes)
+        unless talk.save
+          message << "Error id: #{talk.id} - #{talk.errors.messages}"
+        end
       end
+      raise ActiveRecord::Rollback unless message.size == 0
     end
+
     return message
   end
 

@@ -24,9 +24,10 @@ class Talk < ApplicationRecord
 
   def self.import(file)
     message = []
-    destroy_all
 
     transaction do
+      destroy_all
+
       CSV.foreach(file.path, headers: true) do |row|
         talk = new
         talk.attributes = row.to_hash.slice(*updatable_attributes)

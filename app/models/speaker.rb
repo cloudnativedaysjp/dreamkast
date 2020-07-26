@@ -11,9 +11,10 @@ class Speaker < ApplicationRecord
 
   def self.import(file)
     message = []
-    destroy_all
 
     transaction do
+      destroy_all
+
       CSV.foreach(file.path, headers: true) do |row|
         speaker = new
         speaker.attributes = row.to_hash.slice(*updatable_attributes)

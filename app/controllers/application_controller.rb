@@ -3,7 +3,7 @@ class Forbidden < ActionController::ActionControllerError; end
 class ApplicationController < ActionController::Base
   before_action :set_raven_context
 
-  rescue_from Exception, with: :render_500
+  #rescue_from Exception, with: :render_500
   rescue_from Forbidden, with: :render_403
 
   def home_controller?
@@ -38,8 +38,13 @@ class ApplicationController < ActionController::Base
     render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
   end
 
-  def render_404
+  def render_404(e)
     render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
+  end
+
+  def render_500(e)
+    @exception = e
+    render template: 'errors/error_500', status: 404, layout: 'application', content_type: 'text/html'
   end
 
   private
@@ -48,6 +53,5 @@ class ApplicationController < ActionController::Base
     Raven.user_context(id: session[:current_user_id]) # or anything else in session
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
-  # rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
 end

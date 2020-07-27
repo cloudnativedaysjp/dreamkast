@@ -26,7 +26,7 @@ class Profiles::TalksController < ApplicationController
         end
       end
     end
-      redirect_to profiles_talks_path
+      redirect_to dashboard_path
     rescue => e
       redirect_to timetables_path, notice: 'セッション登録に失敗しました'
   end

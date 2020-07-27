@@ -14,8 +14,15 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
-    <meta property="twitter:card" content="summary" />
+    <meta property="og:url" content="<%= request.url %>" />
+    <meta property="og:title" content="<%= full_title(yield(:title)) %>" />
+    <meta property="og:description"
+      content="<%= content_for?(:description) ? yield(:description) : 'CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。' %>" />
+    <meta property="og:image"
+      content="<%= content_for?(:image_url) ? yield(:image_url) : full_url('/assets/images/header_logo.png') %>" />
     <%= yield(:ogp) %>
+    <meta property="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@cloudnativedays" />
 
     <%= render partial: "layouts/karte" %>
 </head>

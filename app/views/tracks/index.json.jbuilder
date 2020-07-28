@@ -3,6 +3,7 @@
 json.current do
   json.array!(@current) do |video|
     json.extract! video, :url, :site
-    json.extract! video.talk, :id, :title, :start_time, :end_time, :abstract, :track
+    json.extract! video.talk, :id, :title, :start_time, :end_time, :abstract
+    json.set! :track_name, video.talk.track.name
   end
 end

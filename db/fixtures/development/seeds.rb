@@ -134,3 +134,15 @@ SponsorAttachment.seed(
     file_data: uploaded_key_image_2.to_json
   }
 )
+
+Video.seed(
+  { talk_id: 1, site: "vimeo", url: "442363621", on_air: true},
+  { talk_id: 2, site: "vimeo", url: "442385897", on_air: true},
+  { talk_id: 3, site: "vimeo", url: "334092219", on_air: true},
+  { talk_id: 4, site: "vimeo", url: "442385897", on_air: true},
+  { talk_id: 5, site: "vimeo", url: "442385897", on_air: true},
+  { talk_id: 6, site: "vimeo", url: "442385897", on_air: true},
+  { talk_id: 7, site: "vimeo", url: "442385897", on_air: false},
+  { talk_id: 8, site: "vimeo", url: "442385897", on_air: false},
+  { talk_id: 9, site: "vimeo", url: "442385897", on_air: false},
+)

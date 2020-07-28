@@ -32,8 +32,9 @@ Rails.application.routes.draw do
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    resources :track, only: [:show]
     get 'dashboard' => 'dashboard#show'
+    get 'tracks/realtime' => 'tracks#realtime'
+
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'

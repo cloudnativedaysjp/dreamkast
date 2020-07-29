@@ -13,16 +13,26 @@ class Speaker < ApplicationRecord
     message = []
 
     transaction do
-      destroy_all
+      speakers = []
 
       CSV.foreach(file.path, headers: true) do |row|
         speaker = new
-        speaker.attributes = row.to_hash.slice(*updatable_attributes)
-        unless speaker.save
+        hash = row.to_hash.slice(*updatable_attributes)
+        hash[:created_at] = Time.now
+        hash[:updated_at] = Time.now
+        speaker.attributes = hash
+        if speaker.valid?
+          speakers << hash
+        else
           message << "id: #{speaker.id} - #{speaker.errors.messages}"
         end
       end
-      raise ActiveRecord::Rollback unless message.size == 0
+
+      if message.size == 0
+        upsert_all(speakers)
+      else
+        raise ActiveRecord::Rollback unless message.size == 0
+      end
     end
     
     return message

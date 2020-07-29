@@ -90,7 +90,7 @@ class AdminController < ApplicationController
         @conference = Conference.includes(:talks).find_by(abbr: 'cndt2020')
         CSV.open(f.path, "wb") do |csv|
             csv << %w[id item count]
-            csv << ["", "registered_user_cound", Profile.count]
+            csv << ["", "registered_user_count", Profile.count]
             @conference.talks.each do |talk|
                 csv << ["#{talk.id}", "#{talk.title}", "#{RegisteredTalk.where(talk_id: talk.id).count}"]
             end

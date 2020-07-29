@@ -95,8 +95,7 @@ class AdminController < ApplicationController
                 csv << ["#{talk.id}", "#{talk.title}", "#{RegisteredTalk.where(talk_id: talk.id).count}"]
             end
         end
-        stat = File::stat(f.path)
-        send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: stat.size)
+        send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: File::stat(f.path).size)
     end
 
     private

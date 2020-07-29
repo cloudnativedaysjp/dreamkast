@@ -3,6 +3,7 @@ class Forbidden < ActionController::ActionControllerError; end
 class ApplicationController < ActionController::Base
   before_action :set_raven_context
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
   #rescue_from Exception, with: :render_500
   rescue_from Forbidden, with: :render_403
 

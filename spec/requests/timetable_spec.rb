@@ -23,13 +23,23 @@ describe TimetableController, type: :request do
     let!(:talk2) { create(:talk2) }
 
     describe 'not logged in' do
-      it "returns a success response without form" do
-        get '/cndt2020/timetables'
-        expect(response).to be_successful
-        expect(response).to have_http_status '200'
-        expect(response.body).to_not include '<form action="profiles/talks"'
-        expect(response.body).to include talk1.title
-        expect(response.body).to include talk2.title
+      context 'get exists event\'s timetables' do
+        it "returns a success response without form" do
+          get '/cndt2020/timetables'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to_not include '<form action="profiles/talks"'
+          expect(response.body).to include talk1.title
+          expect(response.body).to include talk2.title
+        end
+      end
+
+      context 'get not exists event\'s timetables' do
+        it "returns not found response" do
+          get '/not_found/timetables'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '404'
+        end
       end
     end
 
@@ -40,13 +50,24 @@ describe TimetableController, type: :request do
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 
-      it "returns a success response with form" do
-        get '/cndt2020/timetables'
-        expect(response).to be_successful
-        expect(response).to have_http_status '200'
-        expect(response.body).to include '<form action="profiles/talks"'
-        expect(response.body).to include talk1.title
-        expect(response.body).to include talk2.title
+      context 'get exists event\'s timetables' do
+        it "returns a success response with form" do
+          get '/cndt2020/timetables'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to include '<form action="profiles/talks"'
+          expect(response.body).to include talk1.title
+          expect(response.body).to include talk2.title
+        end
+      end
+
+
+      context 'get not exists event\'s timetables' do
+        it "returns not found response" do
+          get '/not_found/timetables'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '404'
+        end
       end
     end
   end

@@ -84,7 +84,7 @@ class AdminController < ApplicationController
 
     def export_statistics
         f = Tempfile.create("statistics.csv")
-        @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: 'cndt2020')
+        @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: Conference.first.abbr)
         CSV.open(f.path, "wb") do |csv|
             csv << %w[id item count]
             csv << ["", "registered_user_count", Profile.count]

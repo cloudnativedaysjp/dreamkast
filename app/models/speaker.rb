@@ -12,27 +12,23 @@ class Speaker < ApplicationRecord
   def self.import(file)
     message = []
 
-    transaction do
-      speakers = []
+    speakers = []
 
-      CSV.foreach(file.path, headers: true) do |row|
-        speaker = new
-        hash = row.to_hash.slice(*updatable_attributes)
-        hash[:created_at] = Time.now
-        hash[:updated_at] = Time.now
-        speaker.attributes = hash
-        if speaker.valid?
-          speakers << hash
-        else
-          message << "id: #{speaker.id} - #{speaker.errors.messages}"
-        end
-      end
-
-      if message.size == 0
-        upsert_all(speakers)
+    CSV.foreach(file.path, headers: true) do |row|
+      speaker = new
+      hash = row.to_hash.slice(*updatable_attributes)
+      hash[:created_at] = Time.now
+      hash[:updated_at] = Time.now
+      speaker.attributes = hash
+      if speaker.valid?
+        speakers << hash
       else
-        raise ActiveRecord::Rollback unless message.size == 0
+        message << "id: #{speaker.id} - #{speaker.errors.messages}"
       end
+    end
+
+    if message.size == 0
+      upsert_all(speakers)
     end
     
     return message

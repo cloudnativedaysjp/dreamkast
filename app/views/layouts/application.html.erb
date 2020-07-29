@@ -19,7 +19,7 @@
     <meta property="og:description"
       content="<%= content_for?(:description) ? yield(:description) : 'CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。' %>" />
     <meta property="og:image"
-      content="<%= content_for?(:image_url) ? yield(:image_url) : full_url('/assets/images/header_logo.png') %>" />
+      content="<%= content_for?(:image_url) ? yield(:image_url) : image_url('/assets/images/header_logo.png') %>" />
     <%= yield(:ogp) %>
     <meta property="twitter:card" content="summary" />
     <meta name="twitter:site" content="@cloudnativedays" />

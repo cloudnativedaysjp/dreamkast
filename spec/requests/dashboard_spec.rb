@@ -39,6 +39,14 @@ RSpec.describe DashboardController, type: :request do
           expect(response.body).to_not include('<a class="dropdown-item" href="/admin">管理画面</a>')
         end
       end
+
+      context 'get not exists event\'s dashboard' do
+        it "returns not found response" do
+          get '/not_found/dashboard'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '404'
+        end
+      end
     end
 
     describe "not logged in" do
@@ -46,11 +54,21 @@ RSpec.describe DashboardController, type: :request do
         create(:cndt2020)
       end
 
-      it "redirect to top page a success response" do
-        get '/cndt2020/dashboard'
-        expect(response).to_not be_successful
-        expect(response).to have_http_status '302'
-        expect(response).to redirect_to '/cndt2020'
+      context 'get exists event\'s dashboard' do
+        it "redirect to top page a success response" do
+          get '/cndt2020/dashboard'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '302'
+          expect(response).to redirect_to '/cndt2020'
+        end
+      end
+
+      context 'get not exists event\'s dashboard' do
+        it "redirect to top page a success response" do
+          get '/not_found/dashboard'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '404'
+        end
       end
     end
   end

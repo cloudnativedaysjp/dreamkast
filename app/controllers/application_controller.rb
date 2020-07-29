@@ -1,8 +1,9 @@
 class Forbidden < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
-  before_action :set_raven_context
+  before_action :set_raven_context, :event_exists?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
   #rescue_from Exception, with: :render_500
   rescue_from Forbidden, with: :render_403
 
@@ -54,4 +55,9 @@ class ApplicationController < ActionController::Base
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
+  def event_exists?
+    if event_name && Conference.where(abbr: event_name).empty?
+      raise ActiveRecord::RecordNotFound
+    end
+  end
 end

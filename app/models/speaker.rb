@@ -46,6 +46,6 @@ class Speaker < ApplicationRecord
   end
 
   def github_link
-    link_to ActionController::Base.image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{speaker.github_id}" if speaker.github_id.present?
+    link_to ActionController::Base.image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{self.github_id}" if self.github_id.present?
   end
 end

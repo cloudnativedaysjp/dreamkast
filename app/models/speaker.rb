@@ -19,7 +19,7 @@ class Speaker < ApplicationRecord
         speaker = new
         speaker.attributes = row.to_hash.slice(*updatable_attributes)
         unless speaker.save
-          message << "id: #{speaker.id} のレコードでエラーが発生しています"
+          message << "id: #{speaker.id} - #{speaker.errors.messages}"
         end
       end
       raise ActiveRecord::Rollback unless message.size == 0

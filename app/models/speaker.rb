@@ -42,10 +42,10 @@ class Speaker < ApplicationRecord
   end
 
   def twitter_link
-    link_to ActionController::Base.helpers.image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{self.twitter_id}" if self.twitter_id.present?
+    link_to ActionController::Base.helpers.image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{twitter_id}" if twitter_id.present?
   end
 
   def github_link
-    link_to ActionController::Base.helpers.image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{self.github_id}" if self.github_id.present?
+    link_to ActionController::Base.helpers.image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{github_id}" if github_id.present?
   end
 end

@@ -10,8 +10,6 @@ class TimetableController < ApplicationController
 
   def index
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
-    raise ActiveRecord::RecordNotFound unless @conference
-
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
     @talk_cagetogies = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all

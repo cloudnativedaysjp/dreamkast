@@ -29,6 +29,12 @@ class AdminController < ApplicationController
         @talks = Talk.all
     end
 
+    def statistics
+        @registered_user_count = Profile.count
+        @conference = Conference.includes(:talks).find_by(abbr: 'cndt2020')
+        @conference.talks
+    end
+
     def bulk_insert_talks
         Talk.import(params[:file])
         redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
@@ -78,7 +84,21 @@ class AdminController < ApplicationController
         stat = File::stat(filename)
         send_file(filename, :filename => "speaker-#{Time.now.strftime("%F")}.csv", :length => stat.size)
     end
-    
+
+    def export_statistics
+        f = Tempfile.create("statistics.csv")
+        @conference = Conference.includes(:talks).find_by(abbr: 'cndt2020')
+        CSV.open(f.path, "wb") do |csv|
+            csv << %w[id item count]
+            csv << ["", "registered_user_cound", Profile.count]
+            @conference.talks.each do |talk|
+                csv << ["#{talk.id}", "#{talk.title}", "#{RegisteredTalk.where(talk_id: talk.id).count}"]
+            end
+        end
+        stat = File::stat(f.path)
+        send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: stat.size)
+    end
+
     private
 
     def is_admin?

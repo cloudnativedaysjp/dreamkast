@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
   get 'admin/talks' => 'admin#talks'
+  get 'admin/statistics' => 'admin#statistics'
   post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
   get 'admin/speakers' => 'admin#speakers'
   get 'admin/speakers/:id/edit' => 'admin#edit_speaker'
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
   post 'admin/bulk_insert_speakers' => 'admin#bulk_insert_speakers'
   post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
   get 'admin/export_speakers' => 'admin#export_speakers'
+  get 'admin/export_statistics' => 'admin#export_statistics'
   delete 'admin/destroy_user' => 'admin#destroy_user'
 
   scope ":event" do

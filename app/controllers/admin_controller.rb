@@ -29,6 +29,9 @@ class AdminController < ApplicationController
         @talks = Talk.all
     end
 
+    def statistics
+    end
+
     def bulk_insert_talks
         message = Talk.import(params[:file])
         notice = message.join(" / ")
@@ -84,7 +87,20 @@ class AdminController < ApplicationController
         stat = File::stat(filename)
         send_file(filename, :filename => "speaker-#{Time.now.strftime("%F")}.csv", :length => stat.size)
     end
-    
+
+    def export_statistics
+        f = Tempfile.create("statistics.csv")
+        @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: Conference.first.abbr)
+        CSV.open(f.path, "wb") do |csv|
+            csv << %w[id item count]
+            csv << ["", "registered_user_count", Profile.count]
+            @conference.talks.each do |talk|
+                csv << %W[#{talk.id} #{talk.title} #{talk.registered_talks.size}]
+            end
+        end
+        send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: File::stat(f.path).size)
+    end
+
     private
 
     def is_admin?

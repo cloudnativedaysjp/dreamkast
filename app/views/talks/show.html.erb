@@ -50,8 +50,8 @@
                             <div class="col">
                                 <h5>
                                     <%= speaker.name %>
-                                    <%= link_to image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{speaker.twitter_id}" if speaker.twitter_id != "" %>
-                                    <%= link_to image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{speaker.github_id}" if speaker.github_id != "" %>
+                                    <%= link_to image_tag("Twitter_Social_Icon_Circle_Color.png", width: 20), "https://twitter.com/#{speaker.twitter_id}" if speaker.twitter_id.present? %>
+                                    <%= link_to image_tag("GitHub-Mark-64px.png", width: 20), "https://github.com/#{speaker.github_id}" if speaker.github_id.present? %>
                                 </h5>
                                 <h6 class="card-subtitle text-muted mb-1">
                                     <%= speaker.company if speaker.company != "" %>

@@ -10,15 +10,35 @@ class Talk < ApplicationRecord
   has_many :speakers, through: :talks_speakers
   has_many :profiles, through: :registered_talks
 
+  validates :conference_id, presence: true
+  validates :title, presence: true
+  validates :abstract, presence: true
+  validates :track_id, presence: true
+  validates :talk_category_id, presence: true
+  validates :talk_difficulty_id, presence: true
+  validates :conference_day_id, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+
   SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
 
   def self.import(file)
-    destroy_all
-    CSV.foreach(file.path, headers: true) do |row|
-      talk = new
-      talk.attributes = row.to_hash.slice(*updatable_attributes)
-      talk.save
+    message = []
+
+    transaction do
+      destroy_all
+
+      CSV.foreach(file.path, headers: true) do |row|
+        talk = new
+        talk.attributes = row.to_hash.slice(*updatable_attributes)
+        unless talk.save
+          message << "Error id: #{talk.id} - #{talk.errors.messages}"
+        end
+      end
+      raise ActiveRecord::Rollback unless message.size == 0
     end
+
+    return message
   end
 
   def self.updatable_attributes

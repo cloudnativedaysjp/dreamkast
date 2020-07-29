@@ -4,14 +4,28 @@ class Speaker < ApplicationRecord
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
 
+  validates :name, presence: true
+  validates :profile, presence: true
+  validates :company, presence: true
+  validates :job_title, presence: true
+
   def self.import(file)
-    puts file.class
-    destroy_all
-    CSV.foreach(file.path, headers: true) do |row|
-      speaker = new
-      speaker.attributes = row.to_hash.slice(*updatable_attributes)
-      speaker.save
+    message = []
+
+    transaction do
+      destroy_all
+
+      CSV.foreach(file.path, headers: true) do |row|
+        speaker = new
+        speaker.attributes = row.to_hash.slice(*updatable_attributes)
+        unless speaker.save
+          message << "id: #{speaker.id} - #{speaker.errors.messages}"
+        end
+      end
+      raise ActiveRecord::Rollback unless message.size == 0
     end
+    
+    return message
   end
 
   def self.export

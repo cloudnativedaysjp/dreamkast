@@ -9,14 +9,5 @@
       <h3>Export to CSV</h3>
       <%= button_to 'エクスポート', '/admin/export_statistics', {method: :get } %>
     </div>
-
-    <div class="col-12 form-group">
-      <ul>
-        <li><%= "登録者数: #{@registered_user_count}" %></li>
-        <% @conference.talks.each do |talk| %>
-          <li><%= talk.id %> <%= talk.title %> <%= RegisteredTalk.where(talk_id: talk.id).count %></li>
-        <% end %>
-      </ul>
-    </div>
   </div>
 </div>

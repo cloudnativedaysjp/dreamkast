@@ -30,9 +30,6 @@ class AdminController < ApplicationController
     end
 
     def statistics
-        @registered_user_count = Profile.count
-        @conference = Conference.includes(:talks).find_by(abbr: 'cndt2020')
-        @conference.talks
     end
 
     def bulk_insert_talks

@@ -56,8 +56,8 @@ class ApplicationController < ActionController::Base
   end
 
   def event_exists?
-    if event_name
-      raise ActiveRecord::RecordNotFound unless Conference.find_by(abbr: event_name)
+    if event_name && Conference.where(abbr: event_name).empty?
+      raise ActiveRecord::RecordNotFound
     end
   end
 end

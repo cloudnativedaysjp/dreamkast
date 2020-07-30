@@ -1,0 +1,23 @@
+<div class="container">
+    <%= render 'navigator' %>
+
+    <div class="row">
+        <h2>Sponsors</h2>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @sponsors.each do |sponsor| %>
+                    <tr>
+                        <td><%= sponsor.name %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

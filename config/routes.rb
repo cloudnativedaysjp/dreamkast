@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'admin/export_speakers' => 'admin#export_speakers'
   get 'admin/export_statistics' => 'admin#export_statistics'
   delete 'admin/destroy_user' => 'admin#destroy_user'
+  get 'admin/sponsors' => 'admin#sponsors'
 
   scope ":event" do
     post 'auth/auth0' => redirect('/auth/auth0')

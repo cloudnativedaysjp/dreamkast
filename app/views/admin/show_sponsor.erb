@@ -34,6 +34,13 @@
         <% end %>
       </tr>
 
+        <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+        <tr>
+          <th>PDF</th>
+          <th><%= link_to 'PDF', pdf.file_url %></th>
+        </tr>
+        <% end %>
+
       </tbody>
     </table>
   </div>

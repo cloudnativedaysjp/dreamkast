@@ -225,8 +225,12 @@ if SponsorAttachment.all.length == 0
   puts "Adding sponsor attachment list"
 
   uploader = SponsorAttachmentFileUploader.new(:store)
-  file = File.new(Rails.root.join('app/assets/images/trademark.png'))
-  uploaded_file = uploader.upload(file)
+  image = File.new(Rails.root.join('app/assets/images/trademark.png'))
+  uploaded_image = uploader.upload(image)
+
+  pdf = File.new(Rails.root.join('app/assets/seeds/dummy.pdf'))
+  uploaded_pdf = uploader.upload(pdf)
+
   SponsorAttachment.create!(
     [
       { id: 1,
@@ -237,8 +241,14 @@ if SponsorAttachment.all.length == 0
       { id: 2,
         sponsor_id: 1,
         type: 'SponsorAttachmentImage',
-        file_data: uploaded_file.to_json
+        file_data: uploaded_image.to_json
       },
+      { id: 3,
+        sponsor_id: 1,
+        type: 'SponsorAttachmentPdf',
+        file_data: uploaded_pdf.to_json
+      },
+
     ]
   )
 end

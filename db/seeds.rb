@@ -226,8 +226,8 @@ if SponsorAttachment.all.length == 0
 
   uploader = SponsorAttachmentFileUploader.new(:store)
 
-  image = File.new(Rails.root.join('app/assets/images/trademark.png'))
-  uploaded_image = uploader.upload(image)
+  logo_image = File.new(Rails.root.join('app/assets/images/trademark.png'))
+  uploaded_logo_image = uploader.upload(logo_image)
 
   pdf = File.new(Rails.root.join('app/assets/seeds/dummy.pdf'))
   uploaded_pdf = uploader.upload(pdf)
@@ -247,8 +247,8 @@ if SponsorAttachment.all.length == 0
       },
       { id: 2,
         sponsor_id: 1,
-        type: 'SponsorAttachmentImage',
-        file_data: uploaded_image.to_json
+        type: 'SponsorAttachmentLogoImage',
+        file_data: uploaded_logo_image.to_json
       },
       { id: 3,
         sponsor_id: 1,

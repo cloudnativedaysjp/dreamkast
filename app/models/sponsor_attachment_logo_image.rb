@@ -1,7 +1,7 @@
-class SponsorAttachmentImage < SponsorAttachment
+class SponsorAttachmentLogoImage < SponsorAttachment
   include SponsorAttachmentFileUploader::Attachment(:file)
 
-  MAX_POSTS_COUNT = 2
+  MAX_POSTS_COUNT = 1
 
   validate :posts_count_must_be_within_limit
 

@@ -225,11 +225,18 @@ if SponsorAttachment.all.length == 0
   puts "Adding sponsor attachment list"
 
   uploader = SponsorAttachmentFileUploader.new(:store)
+
   image = File.new(Rails.root.join('app/assets/images/trademark.png'))
   uploaded_image = uploader.upload(image)
 
   pdf = File.new(Rails.root.join('app/assets/seeds/dummy.pdf'))
   uploaded_pdf = uploader.upload(pdf)
+
+  key_image_1 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_1.jpg'))
+  uploaded_key_image_1 = uploader.upload(key_image_1)
+
+  key_image_2 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_2.jpg'))
+  uploaded_key_image_2 = uploader.upload(key_image_2)
 
   SponsorAttachment.create!(
     [
@@ -257,6 +264,16 @@ if SponsorAttachment.all.length == 0
         sponsor_id: 1,
         type: 'SponsorAttachmentVimeo',
         url: 'https://player.vimeo.com/video/442956490'
+      },
+      { id: 6,
+        sponsor_id: 1,
+        type: 'SponsorAttachmentKeyImage',
+        file_data: uploaded_key_image_1.to_json
+      },
+      { id: 7,
+        sponsor_id: 1,
+        type: 'SponsorAttachmentKeyImage',
+        file_data: uploaded_key_image_2.to_json
       }
     ]
   )

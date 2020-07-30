@@ -2,8 +2,26 @@
   <%= render 'navigator' %>
 
   <div class="row">
-    <h2>Sponsors > <%= @sponsor.name %></h2>
+    <div class="col-12 mb-3">
+      <h2>Sponsors > <%= @sponsor.name %></h2>
+    </div>
   </div>
+
+  <% @sponsor.sponsor_attachment_key_images.each do |image| %>
+    <div class="row">
+      <div class="col-12 mb-3">
+        <%= image_tag image.file_url, class: "img-fluid" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% @sponsor.sponsor_attachment_texts.each do |text| %>
+    <div class="row">
+      <div class="col-12 mb-3">
+        <p><%= text.text %></p>
+      </div>
+    </div>
+  <% end %>
 
   <div class="row">
     <table class="table table-striped">
@@ -20,12 +38,6 @@
         <th><%= @sponsor.description %></th>
       </tr>
 
-      <% @sponsor.sponsor_attachment_texts.each do |text| %>
-        <tr>
-          <th>Text</th>
-          <th><%= text.text %></th>
-        </tr>
-      <% end %>
 
       <% @sponsor.sponsor_attachment_images.each do |text| %>
         <tr>

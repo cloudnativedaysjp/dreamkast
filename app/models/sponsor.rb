@@ -5,4 +5,5 @@ class Sponsor < ApplicationRecord
   has_many :sponsor_attachment_pdfs
   has_many :sponsor_attachment_youtubes
   has_many :sponsor_attachment_vimeos
+  has_many :sponsor_attachment_key_images
 end

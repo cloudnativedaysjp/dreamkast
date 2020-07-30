@@ -20,26 +20,26 @@
         <th><%= @sponsor.description %></th>
       </tr>
 
-      <tr>
-        <% @sponsor.sponsor_attachment_texts.each do |text| %>
+      <% @sponsor.sponsor_attachment_texts.each do |text| %>
+        <tr>
           <th>Text</th>
           <th><%= text.text %></th>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
 
-      <tr>
-        <% @sponsor.sponsor_attachment_images.each do |text| %>
+      <% @sponsor.sponsor_attachment_images.each do |text| %>
+        <tr>
           <th>Image</th>
           <th><%= image_tag text.file_url %></th>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
 
-        <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+      <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
         <tr>
           <th>PDF</th>
           <th><%= link_to 'PDF', pdf.file_url %></th>
         </tr>
-        <% end %>
+      <% end %>
 
       </tbody>
     </table>

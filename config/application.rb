@@ -31,6 +31,7 @@ module Cndtattend
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
     config.active_model.i18n_customize_full_message = true
     config.autoload_paths << "#{Rails.root}/app/middlewares"
+    config.autoload_paths << "#{Rails.root}/app/models/**/"
   end
 end
 

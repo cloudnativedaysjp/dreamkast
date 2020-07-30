@@ -19,6 +19,13 @@
         <th>Description</th>
         <th><%= @sponsor.description %></th>
       </tr>
+
+      <tr>
+        <% @sponsor.sponsor_attachment_texts.each do |text| %>
+          <th>Text</th>
+          <th><%= text.text %></th>
+        <% end %>
+      </tr>
       </tbody>
   </div>
 </div>

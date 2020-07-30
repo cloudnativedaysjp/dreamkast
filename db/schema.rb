@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_025705) do
   create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "sponsor_id", null: false
     t.string "type"
+    t.string "title"
     t.string "url"
     t.text "text"
     t.string "link"

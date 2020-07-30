@@ -253,11 +253,13 @@ if SponsorAttachment.all.length == 0
       { id: 3,
         sponsor_id: 1,
         type: 'SponsorAttachmentPdf',
+        title: 'ダミープレゼンテーション',
         file_data: uploaded_pdf.to_json
       },
       { id: 4,
         sponsor_id: 1,
         type: 'SponsorAttachmentYoutube',
+        title: 'CloudNative Days Tokyo パネルトーク #1',
         url: 'https://www.youtube.com/embed/4TJbl4ziebc'
       },
       { id: 5,

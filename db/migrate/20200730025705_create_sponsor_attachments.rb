@@ -3,6 +3,7 @@ class CreateSponsorAttachments < ActiveRecord::Migration[6.0]
     create_table :sponsor_attachments do |t|
       t.belongs_to :sponsor, null: false, foreign_key: true
       t.string :type
+      t.string :title
       t.string :url
       t.text :text
       t.string :link

@@ -1,14 +1,25 @@
 <div class="container">
   <%= render 'navigator' %>
 
-  <div class="row">
-    <div class="col-12 mb-3">
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
       <h2>Sponsors > <%= @sponsor.name %></h2>
+    </div>
+    <div class="col-2 mb-3">
+      <% @sponsor.sponsor_attachment_images.each do |text| %>
+        <%= image_tag text.file_url %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12 mb-3">
+      <p><%= @sponsor.description %></p>
     </div>
   </div>
 
   <% @sponsor.sponsor_attachment_key_images.each do |image| %>
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-12 mb-3">
         <%= image_tag image.file_url, class: "img-fluid" %>
       </div>
@@ -16,66 +27,32 @@
   <% end %>
 
   <% @sponsor.sponsor_attachment_texts.each do |text| %>
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-12 mb-3">
         <p><%= text.text %></p>
       </div>
     </div>
   <% end %>
 
-  <div class="row">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Field</th>
-        <th scope="col">Value</th>
-      </tr>
-      </thead>
+  <% @sponsor.sponsor_attachment_youtubes.each do |youtube| %>
+    <div class="row mb-3">
+      <div class="col-12 col-md-8">
+        <h4><%= youtube.title %></h4>
+        <div class="movie-wrap">
+          <iframe src="<%= youtube.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-      <tbody>
-      <tr>
-        <th>Description</th>
-        <th><%= @sponsor.description %></th>
-      </tr>
-
-
-      <% @sponsor.sponsor_attachment_images.each do |text| %>
-        <tr>
-          <th>Image</th>
-          <th><%= image_tag text.file_url %></th>
-        </tr>
-      <% end %>
-
-      <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
-        <tr>
-          <th>PDF</th>
-          <th><%= link_to 'PDF', pdf.file_url %></th>
-        </tr>
-      <% end %>
-
-      <% @sponsor.sponsor_attachment_youtubes.each do |youtube| %>
-        <tr>
-          <th>Youtube</th>
-          <th>
-            <div class="col-12 col-md-8 movie-wrap">
-              <iframe src="<%= youtube.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          </th>
-        </tr>
-      <% end %>
-
-      <% @sponsor.sponsor_attachment_vimeos.each do |vimeo| %>
-        <tr>
-          <th>Vimeo</th>
-          <th>
-            <div class="col-12 col-md-8 movie-wrap">
-              <iframe src="<%= vimeo.url %>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            </div>
-          </th>
-        </tr>
-      <% end %>
-
-      </tbody>
-    </table>
+  <div class="row mb-3">
+    <div class="col-12 mb-3">
+      <h4>PDF資料</h4>
+      <ul>
+        <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+          <li><%= link_to pdf.title, pdf.file_url %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </div>

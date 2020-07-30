@@ -248,7 +248,16 @@ if SponsorAttachment.all.length == 0
         type: 'SponsorAttachmentPdf',
         file_data: uploaded_pdf.to_json
       },
-
+      { id: 4,
+        sponsor_id: 1,
+        type: 'SponsorAttachmentYoutube',
+        url: 'https://www.youtube.com/embed/4TJbl4ziebc'
+      },
+      { id: 5,
+        sponsor_id: 1,
+        type: 'SponsorAttachmentVimeo',
+        url: 'https://player.vimeo.com/video/442956490'
+      }
     ]
   )
 end

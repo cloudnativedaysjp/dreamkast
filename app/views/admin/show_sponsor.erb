@@ -41,6 +41,28 @@
         </tr>
       <% end %>
 
+      <% @sponsor.sponsor_attachment_youtubes.each do |youtube| %>
+        <tr>
+          <th>Youtube</th>
+          <th>
+            <div class="col-12 col-md-8 movie-wrap">
+              <iframe src="<%= youtube.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </th>
+        </tr>
+      <% end %>
+
+      <% @sponsor.sponsor_attachment_vimeos.each do |vimeo| %>
+        <tr>
+          <th>Vimeo</th>
+          <th>
+            <div class="col-12 col-md-8 movie-wrap">
+              <iframe src="<%= vimeo.url %>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+          </th>
+        </tr>
+      <% end %>
+
       </tbody>
     </table>
   </div>

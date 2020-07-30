@@ -26,6 +26,15 @@
           <th><%= text.text %></th>
         <% end %>
       </tr>
+
+      <tr>
+        <% @sponsor.sponsor_attachment_images.each do |text| %>
+          <th>Image</th>
+          <th><%= image_tag text.file_url %></th>
+        <% end %>
+      </tr>
+
       </tbody>
+    </table>
   </div>
 </div>

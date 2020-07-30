@@ -95,13 +95,14 @@ ActiveRecord::Schema.define(version: 2020_07_30_025705) do
     t.text "avatar_data"
   end
 
-  create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "sponsor_id", null: false
     t.string "type"
     t.string "url"
     t.text "text"
     t.string "link"
     t.boolean "public"
+    t.string "file_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"

@@ -7,6 +7,7 @@ class CreateSponsorAttachments < ActiveRecord::Migration[6.0]
       t.text :text
       t.string :link
       t.boolean :public
+      t.string :file_data
 
       t.timestamps
     end

@@ -35,7 +35,11 @@ class Talk < ApplicationRecord
           message << "Error id: #{talk.id} - #{talk.errors.messages}"
         end
       end
-      raise ActiveRecord::Rollback unless message.size == 0
+      if message.size == 0
+        message << "Talk CSVのインポートに成功しました"
+      else
+        raise ActiveRecord::Rollback 
+      end
     end
 
     return message

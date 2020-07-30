@@ -170,8 +170,8 @@ RSpec.describe Talk, type: :model do
       expect(talks.length).to eq 2
     end
 
-    it "is not contains error massage" do
-      expect(@message.size).to eq 0
+    it "is contains successful message" do
+      expect(@message[0]).to include "成功"
     end
   end
 

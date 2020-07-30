@@ -141,13 +141,4 @@ ActiveRecord::Schema.define(version: 2020_07_18_164411) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "talk_id"
-    t.string "site"
-    t.string "url"
-    t.boolean "on_air"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
 end

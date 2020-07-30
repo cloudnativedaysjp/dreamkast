@@ -36,6 +36,10 @@ class AdminController < ApplicationController
         @sponsors = Sponsor.all
     end
 
+    def show_sponsor
+        @sponsor = Sponsor.find(params[:id])
+    end
+
     def bulk_insert_talks
         message = Talk.import(params[:file])
         notice = message.join(" / ")

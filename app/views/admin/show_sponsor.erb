@@ -1,0 +1,24 @@
+<div class="container">
+  <%= render 'navigator' %>
+
+  <div class="row">
+    <h2>Sponsors > <%= @sponsor.name %></h2>
+  </div>
+
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Field</th>
+        <th scope="col">Value</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <th>Description</th>
+        <th><%= @sponsor.description %></th>
+      </tr>
+      </tbody>
+  </div>
+</div>

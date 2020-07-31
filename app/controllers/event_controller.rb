@@ -7,6 +7,8 @@ class EventController < ApplicationController
     if session[:userinfo].present?
       redirect_to dashboard_path
     end
+    @conference = Conference.first
+    @sponsor_types = @conference.sponsor_types.order(order: "ASC")
   end
   
   def logged_in_using_omniauth?

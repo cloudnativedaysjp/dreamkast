@@ -210,16 +210,74 @@ if Sponsor.all.length == 0
       { id: 1,
         name: "スポンサー株式会社",
         conference_id: 1,
-        description: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。"
+        description: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。",
+        url: "https://example.com/"
       },
       { id: 2,
         name: "Sponsor, inc.",
         conference_id: 1,
-        description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。"
+        description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。",
+        url: "https://example.com/"
+      },
+      { id: 3,
+        name: "プラチナスポンサー株式会社",
+        conference_id: 1,
+        description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。",
+        url: "https://example.com/"
       },
     ]
   )
 end
+
+if SponsorType.all.length == 0
+  puts "Adding sponsor type list"
+  SponsorType.create!(
+    [
+      { id: 1,
+        conference_id: 1,
+        name: "Diamond",
+        order: 1,
+      },
+      { id: 2,
+        conference_id: 1,
+        name: "Platinum",
+        order: 2,
+      },
+      { id: 3,
+        conference_id: 1,
+        name: "Gold",
+        order: 3,
+      },
+      { id: 4,
+        conference_id: 1,
+        name: "Booth",
+        order: 4,
+      },
+      { id: 5,
+        conference_id: 1,
+        name: "Mini Session",
+        order: 5,
+      },
+      { id: 6,
+        conference_id: 1,
+        name: "CM",
+        order: 6,
+      },
+    ]
+  )
+end
+
+
+if Rails.env.development? && SponsorsSponsorType.all.length == 0
+  SponsorsSponsorType.create!(
+    [
+      { sponsor_id: 1, sponsor_type_id: 1},
+      { sponsor_id: 2, sponsor_type_id: 1},
+      { sponsor_id: 2, sponsor_type_id: 2},
+    ]
+  )
+end
+
 
 if SponsorAttachment.all.length == 0
   puts "Adding sponsor attachment list"

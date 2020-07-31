@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_111941) do
+ActiveRecord::Schema.define(version: 2020_07_30_082237) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -109,13 +109,30 @@ ActiveRecord::Schema.define(version: 2020_07_29_111941) do
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
+  create_table "sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.string "name"
+    t.integer "order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_sponsor_types_on_conference_id"
+  end
+
   create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.string "url"
     t.bigint "conference_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
+  end
+
+  create_table "sponsors_sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "sponsor_id"
+    t.integer "sponsor_type_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "talk_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -165,5 +182,6 @@ ActiveRecord::Schema.define(version: 2020_07_29_111941) do
   end
 
   add_foreign_key "sponsor_attachments", "sponsors"
+  add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
 end

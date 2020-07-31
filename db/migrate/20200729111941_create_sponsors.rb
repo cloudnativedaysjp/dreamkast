@@ -3,6 +3,7 @@ class CreateSponsors< ActiveRecord::Migration[6.0]
     create_table :sponsors do |t|
       t.string :name
       t.text :description
+      t.string :url
       t.belongs_to :conference, null: false, foreign_key: true
 
       t.timestamps

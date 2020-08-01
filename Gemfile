@@ -70,3 +70,5 @@ gem "redis-rails"
 gem "shrine", "~> 3.0"
 
 gem "aws-sdk-s3", "~> 1.14"
+
+gem 'seed-fu'

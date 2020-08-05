@@ -66,34 +66,18 @@ SponsorType.seed(
     conference_id: 1,
     name: "Platinum",
     order: 2,
-  },
-  { id: 3,
-    conference_id: 1,
-    name: "Gold",
-    order: 3,
-  },
-  { id: 4,
-    conference_id: 1,
-    name: "Mini Session",
-    order: 5,
-  },
-  { id: 5,
-    conference_id: 1,
-    name: "Booth",
-    order: 4,
-  },
-  { id: 6,
-    conference_id: 1,
-    name: "CM",
-    order: 6,
   }
 )
 
-SponsorsSponsorType.seed(
-  { sponsor_id: 1, sponsor_type_id: 1},
-  { sponsor_id: 2, sponsor_type_id: 1},
-  { sponsor_id: 2, sponsor_type_id: 2}
-)
+[
+  [1, 'Diamond', 'スポンサー株式会社'],
+  [2, 'Platinum', 'Sponsor, inc.'],
+].each do |sponsors_sponsor_type|
+  id = sponsors_sponsor_type[0]
+  sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
+  sponsor = Sponsor.find_by(name: sponsors_sponsor_type[2])
+  SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
+end
 
 uploader = SponsorAttachmentFileUploader.new(:store)
 
@@ -109,40 +93,48 @@ uploaded_key_image_1 = uploader.upload(key_image_1)
 key_image_2 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_2.jpg'))
 uploaded_key_image_2 = uploader.upload(key_image_2)
 
+[
+  [1, 'スポンサー株式会社', 'trademark.png'],
+  [2, 'Sponsor, inc.', 'trademark.png'],
+].each do |logo|
+  SponsorAttachment.seed(
+    { id: logo[0],
+      sponsor_id: Sponsor.find_by(name: logo[1]).id,
+      type: 'SponsorAttachmentLogoImage',
+      url: logo[2]
+    }
+  )
+end
+
 SponsorAttachment.seed(
-  { id: 1,
+  { id: 3,
     sponsor_id: 1,
     type: 'SponsorAttachmentText',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   },
-  { id: 2,
-    sponsor_id: 1,
-    type: 'SponsorAttachmentLogoImage',
-    url: 'trademark.png'
-  },
-  { id: 3,
+  { id: 4,
     sponsor_id: 1,
     type: 'SponsorAttachmentPdf',
     title: 'ダミープレゼンテーション',
     file_data: uploaded_pdf.to_json
   },
-  { id: 4,
+  { id: 5,
     sponsor_id: 1,
     type: 'SponsorAttachmentYoutube',
     title: 'CloudNative Days Tokyo パネルトーク #1',
     url: 'https://www.youtube.com/embed/4TJbl4ziebc'
   },
-  { id: 5,
+  { id: 6,
     sponsor_id: 1,
     type: 'SponsorAttachmentVimeo',
     url: 'https://player.vimeo.com/video/442956490'
   },
-  { id: 6,
+  { id: 7,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_1.to_json
   },
-  { id: 7,
+  { id: 8,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_2.to_json

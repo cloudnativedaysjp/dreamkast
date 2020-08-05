@@ -52,7 +52,7 @@
           <div class="row justify-content-md-center mb-5">
             <% sponsor_type.sponsors.each do |sponsor| %>
               <% if sponsor.sponsor_attachment_logo_image.present? %>
-                <div class="col-12 col-md-4 my-3 m-md-3"><a href="<%= sponsor.url %>" target="_blank"><%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %></a></div>
+                <div class="col-12 col-md-3 my-3 m-md-3"><a href="<%= sponsor.url %>" target="_blank"><%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %></a></div>
               <% end %>
             <% end %>
           </div>

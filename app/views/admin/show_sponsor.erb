@@ -6,8 +6,8 @@
       <h2>Sponsors > <%= @sponsor.name %></h2>
     </div>
     <div class="col-2 mb-3">
-      <% @sponsor.sponsor_attachment_logo_images.each do |text| %>
-        <%= image_tag text.file_url %>
+      <% if @sponsor.sponsor_attachment_logo_image.present? %>
+        <%= image_tag @sponsor.sponsor_attachment_logo_image.url %>
       <% end %>
     </div>
   </div>

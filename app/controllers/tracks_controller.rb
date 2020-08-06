@@ -4,9 +4,10 @@ class TracksController < ApplicationController
     @current = Video.where(on_air: true)
     @tracks = Track.all
   end
-  
-  def realtime
-    @messages = Message.all
-  end
 
+  def ping
+    ActionCable.server.broadcast(
+      "track_channel", Video.on_air
+    )
+  end
 end

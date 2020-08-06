@@ -1,5 +1,7 @@
 <div class="container">
-  <%= render 'navigator' %>
+  <%= render 'admin/navigator' %>
+
+  <%= link_to 'Edit', "/admin/sponsors/#{@sponsor.id}/edit" %>
 
   <div class="row mb-3">
     <div class="col-10 mb-3 d-flex align-items-center">
@@ -26,13 +28,11 @@
     </div>
   <% end %>
 
-  <% @sponsor.sponsor_attachment_texts.each do |text| %>
     <div class="row mb-3">
       <div class="col-12 mb-3">
-        <p><%= text.text %></p>
+        <p><%= @sponsor.sponsor_attachment_text.text %></p>
       </div>
     </div>
-  <% end %>
 
   <% @sponsor.sponsor_attachment_youtubes.each do |youtube| %>
     <div class="row mb-3">

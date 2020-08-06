@@ -32,14 +32,6 @@ class AdminController < ApplicationController
     def statistics
     end
 
-    def sponsors
-        @sponsors = Sponsor.all
-    end
-
-    def show_sponsor
-        @sponsor = Sponsor.find(params[:id])
-    end
-
     def bulk_insert_talks
         unless params[:file]
             redirect_to '/admin/talks', notice: "アップロードするファイルを選択してください"

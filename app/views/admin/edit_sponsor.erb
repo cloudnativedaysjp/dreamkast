@@ -1,0 +1,30 @@
+<div class="container">
+  <%= render 'navigator' %>
+
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <h2>Sponsors > <%= @sponsor.name %></h2>
+    </div>
+    <div class="col-2 mb-3">
+      <% if @sponsor.sponsor_attachment_logo_image.present? %>
+        <%= image_tag @sponsor.sponsor_attachment_logo_image.url %>
+      <% end %>
+    </div>
+  </div>
+
+
+  <%= form_with(scope: :sponsor, url: admin_sponsors_path, model: @sponsor_form, local: true, method: :patch) do |form| %>
+
+    <div class="form-group">
+      <label for="descriptionInputForm">Description</label>
+      <%= form.text_area :description, class: "form-control", id: "descriptionInputForm", rows: "3" %>
+    </div>
+
+
+    <div class="form-row form-group">
+      <div class="col-12 col-md-6">
+        <%= form.submit %>
+      </div>
+    </div>
+  <% end %>
+</div>

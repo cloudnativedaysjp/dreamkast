@@ -3,21 +3,37 @@ class SponsorForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attribute :sponsor_id, :integer, default: nil
-  attribute :description, :string, default: ""
+  attr_accessor :description, :attachment_text
 
-  def initialize(params: {})
-    super(params)
-    @sponsor = params[:sponsor_id] ? Sponsor.find_by(id: params[:sponsor_id]) : Sponsor.new
+  delegate :persisted?, to: :sponsor
+
+  def initialize(attributes = nil, sponsor: Sponsor.new)
+    @sponsor = sponsor
+    attributes ||= default_attributes
+    super(attributes)
   end
-  def save!
-    raise ActiveRecord::RecordInvalid if invalid?
+
+  def save
+    return if invalid?
+
     ActiveRecord::Base.transaction do
-      @sponsor.save!(description: description)
+      sponsor.update!(description: description)
     end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
-  def description
-    @sponsor.description
+  def to_model
+    sponsor
+  end
+
+  private
+
+  attr_reader :sponsor
+
+  def default_attributes
+    {
+      description: sponsor.description,
+    }
   end
 end

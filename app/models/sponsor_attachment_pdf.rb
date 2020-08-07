@@ -8,6 +8,6 @@ class SponsorAttachmentPdf < SponsorAttachment
   private
 
   def posts_count_must_be_within_limit
-    errors.add(:base, "posts count limit: #{MAX_POSTS_COUNT}") if sponsor.sponsor_attachment_texts.count >= MAX_POSTS_COUNT
+    errors.add(:base, "posts count limit: #{MAX_POSTS_COUNT}") if sponsor.sponsor_attachment_pdfs.count >= MAX_POSTS_COUNT
   end
 end

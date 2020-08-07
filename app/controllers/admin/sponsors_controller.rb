@@ -40,6 +40,13 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def sponsor_params
-    params.require(:sponsor).permit(:description, :attachment_text, :attachment_key_image_1, :attachment_key_image_1_title)
+    params.require(:sponsor).permit(:description,
+                                    :attachment_key_image_1, :attachment_key_image_1_title,
+                                    :attachment_key_image_2, :attachment_key_image_2_title,
+                                    :attachment_text,
+                                    :attachment_vimeo,
+                                    :attachment_pdf_1, :attachment_pdf_1_title,
+                                    :attachment_pdf_2, :attachment_pdf_2_title,
+                                    :attachment_pdf_3, :attachment_pdf_3_title)
   end
 end

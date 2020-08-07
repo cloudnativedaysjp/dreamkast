@@ -28,30 +28,36 @@
     </div>
   <% end %>
 
+  <% if @sponsor.sponsor_attachment_text.present? %>
     <div class="row mb-3">
       <div class="col-12 mb-3">
         <p><%= @sponsor.sponsor_attachment_text.text %></p>
       </div>
     </div>
+  <% end %>
 
-  <% vimeo = @sponsor.sponsor_attachment_vimeo %>
-  <div class="row mb-3">
-    <div class="col-12 col-md-8">
-      <h4><%= vimeo.title %></h4>
-      <div class="movie-wrap">
-        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <% if @sponsor.sponsor_attachment_vimeo.present? %>
+    <% vimeo = @sponsor.sponsor_attachment_vimeo %>
+    <div class="row mb-3">
+      <div class="col-12 col-md-8">
+        <h4><%= vimeo.title %></h4>
+        <div class="movie-wrap">
+          <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
-  <div class="row mb-3">
-    <div class="col-12 mb-3">
-      <h4>PDF資料</h4>
-      <ul>
-        <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
-          <li><%= link_to pdf.title, pdf.file_url %></li>
-        <% end %>
-      </ul>
+  <% if @sponsor.sponsor_attachment_pdfs.size > 0 %>
+    <div class="row mb-3">
+      <div class="col-12 mb-3">
+        <h4>PDF資料</h4>
+        <ul>
+          <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+            <li><%= link_to pdf.title, pdf.file_url %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

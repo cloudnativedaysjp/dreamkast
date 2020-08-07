@@ -25,13 +25,55 @@ class SponsorForm
 
     ActiveRecord::Base.transaction do
       sponsor.update!(description: description)
-      sponsor.sponsor_attachment_key_images[0].update!(title: attachment_key_image_1_title, file: attachment_key_image_1)
-      sponsor.sponsor_attachment_key_images[1].update!(title: attachment_key_image_2_title, file: attachment_key_image_2)
-      sponsor.sponsor_attachment_text.update!(text: attachment_text)
-      sponsor.sponsor_attachment_vimeo.update!(url: attachment_vimeo)
-      sponsor.sponsor_attachment_pdfs[0].update!(title: attachment_pdf_1_title, file: attachment_pdf_1)
-      sponsor.sponsor_attachment_pdfs[1].update!(title: attachment_pdf_2_title, file: attachment_pdf_2)
-      sponsor.sponsor_attachment_pdfs[2].update!(title: attachment_pdf_3_title, file: attachment_pdf_3)
+
+      if sponsor.sponsor_attachment_key_images[0].present?
+        sponsor.sponsor_attachment_key_images[0].update!(title: attachment_key_image_1_title, file: attachment_key_image_1)
+      else
+        image = SponsorAttachmentKeyImage.new(title: attachment_key_image_1_title, file: attachment_key_image_1, sponsor_id: sponsor.id)
+        image.save!
+      end
+
+      if sponsor.sponsor_attachment_key_images[1].present?
+        sponsor.sponsor_attachment_key_images[1].update!(title: attachment_key_image_2_title, file: attachment_key_image_2)
+      else
+        image = SponsorAttachmentKeyImage.new(title: attachment_key_image_2_title, file: attachment_key_image_2, sponsor_id: sponsor.id)
+        image.save!
+      end
+
+      if sponsor.sponsor_attachment_text.present?
+        sponsor.update!(text: attachment_text)
+      else
+        text = SponsorAttachmentText.new(text: text, sponsor_id: sponsor.id)
+        text.save!
+      end
+
+      if sponsor.sponsor_attachment_vimeo.present?
+        sponsor.sponsor_attachment_vimeo.update!(url: attachment_vimeo)
+      else
+        vimeo = SponsorAttachmentVimeo.new(url: attachment_vimeo, sponsor_id: sponsor.id)
+        vimeo.save!
+      end
+
+      if sponsor.sponsor_attachment_pdfs[0].present?
+        sponsor.update!(title: attachment_pdf_1_title, file: attachment_pdf_1)
+      else
+        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_1_title, file: attachment_pdf_1, sponsor_id: sponsor.id)
+        pdf.save!
+      end
+
+      if sponsor.sponsor_attachment_pdfs[1].present?
+        sponsor.update!(title: attachment_pdf_2_title, file: attachment_pdf_2)
+      else
+        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_2_title, file: attachment_pdf_2, sponsor_id: sponsor.id)
+        pdf.save!
+      end
+
+      if sponsor.sponsor_attachment_pdfs[2].present?
+        sponsor.update!(title: attachment_pdf_3_title, file: attachment_pdf_3)
+      else
+        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_3_title, file: attachment_pdf_3, sponsor_id: sponsor.id)
+        pdf.save!
+      end
     end
   rescue ActiveRecord::RecordInvalid
     false
@@ -48,7 +90,7 @@ class SponsorForm
   def default_attributes
     {
       description: sponsor.description,
-      attachment_text: sponsor.sponsor_attachment_text.text,
+      attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
       attachment_key_image_1_title: sponsor.sponsor_attachment_key_images[0].present? ? sponsor.sponsor_attachment_key_images[0].title : '',
       attachment_key_image_2_title: sponsor.sponsor_attachment_key_images[1].present? ? sponsor.sponsor_attachment_key_images[1].title : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',

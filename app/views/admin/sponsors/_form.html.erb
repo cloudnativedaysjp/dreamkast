@@ -20,7 +20,7 @@
       <div class="col-12 col-mb-6">
         <%= form.label "attachment_key_image_#{i+1}".to_sym, "File" %>
         <%= form.file_field "attachment_key_image_#{i+1}".to_sym %>
-        <%= image_tag image.file_url, class: "img-fluid" %>
+        <%= image_tag image.file_url, class: "img-fluid" if image.present? %>
       </div>
     </div>
   <% end %>
@@ -39,9 +39,11 @@
       <% vimeo = @sponsor.sponsor_attachment_vimeo %>
       <%= form.label :attachment_vimeo, "Vimeo embed url" %>
       <%= form.text_field :attachment_vimeo, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      <div class="movie-wrap">
-        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+      <% if vimeo.present? %>
+        <div class="movie-wrap">
+          <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      <% end %>
     </div>
   </div>
 

@@ -33,14 +33,14 @@
     </div>
   </div>
 
-  <h4>Booth: Video</h4>
+  <h4>Booth: Vimeo</h4>
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
-      <% youtube = @sponsor.sponsor_attachment_youtube %>
-      <%= form.label :attachment_youtube, "Youtube embed url" %>
-      <%= form.text_field :attachment_youtube, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
+      <% vimeo = @sponsor.sponsor_attachment_vimeo %>
+      <%= form.label :attachment_vimeo, "Vimeo embed url" %>
+      <%= form.text_field :attachment_vimeo, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
       <div class="movie-wrap">
-        <iframe src="<%= youtube.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </div>

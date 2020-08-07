@@ -120,21 +120,15 @@ SponsorAttachment.seed(
   },
   { id: 5,
     sponsor_id: 1,
-    type: 'SponsorAttachmentYoutube',
-    title: 'CloudNative Days Tokyo パネルトーク #1',
-    url: 'https://www.youtube.com/embed/4TJbl4ziebc'
-  },
-  { id: 6,
-    sponsor_id: 1,
     type: 'SponsorAttachmentVimeo',
     url: 'https://player.vimeo.com/video/442956490'
   },
-  { id: 7,
+  { id: 6,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_1.to_json
   },
-  { id: 8,
+  { id: 7,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_2.to_json

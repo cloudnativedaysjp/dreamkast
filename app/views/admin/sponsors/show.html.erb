@@ -34,16 +34,15 @@
       </div>
     </div>
 
-  <% @sponsor.sponsor_attachment_youtubes.each do |youtube| %>
-    <div class="row mb-3">
-      <div class="col-12 col-md-8">
-        <h4><%= youtube.title %></h4>
-        <div class="movie-wrap">
-          <iframe src="<%= youtube.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <% vimeo = @sponsor.sponsor_attachment_vimeo %>
+  <div class="row mb-3">
+    <div class="col-12 col-md-8">
+      <h4><%= vimeo.title %></h4>
+      <div class="movie-wrap">
+        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
-  <% end %>
+  </div>
 
   <div class="row mb-3">
     <div class="col-12 mb-3">

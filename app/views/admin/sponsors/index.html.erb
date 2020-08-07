@@ -1,23 +1,23 @@
 <div class="container">
-    <%= render 'admin/navigator' %>
+  <%= render 'admin/navigator' %>
 
-    <div class="row">
-        <h2>Sponsors</h2>
-    </div>
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @sponsors.each do |sponsor| %>
-                    <tr>
-                        <td><%= link_to sponsor.name, "/admin/sponsors/#{sponsor.id}" %></td>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </div>
+  <div class="row">
+    <h2>Sponsors</h2>
+  </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sponsors.each do |sponsor| %>
+        <tr>
+          <td><%= link_to sponsor.name, "/admin/sponsors/#{sponsor.id}" %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

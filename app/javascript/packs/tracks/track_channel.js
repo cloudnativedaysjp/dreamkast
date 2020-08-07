@@ -4,13 +4,13 @@ import consumer from "./consumer"
 consumer.subscriptions.create("TrackChannel", {
   connected() {
     window.selected_track = 1;
-    this.update();
+    update_track(track_list[selected_track - 1]);
     var subscription = this;
     document.querySelectorAll('.track_button').forEach(function(link){
       link.addEventListener('click', (event) =>{
         event.preventDefault();
         window.selected_track = link.getAttribute("track_id");
-        subscription.update();
+        update_track(track_list[selected_track - 1]);
       })
     })
   },
@@ -20,8 +20,8 @@ consumer.subscriptions.create("TrackChannel", {
   },
 
   received(data) {
-    window.track_list = data["current"];
     console.log(data);
+    window.track_list = data["current"];
     update_track(track_list[selected_track - 1]);
   },
 

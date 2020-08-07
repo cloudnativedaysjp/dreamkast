@@ -1,13 +1,14 @@
 class TracksController < ApplicationController
 
   def index
-    @current = Video.where(on_air: true)
+    @current = Video.on_air
     @tracks = Track.all
   end
 
   def ping
-    ActionCable.server.broadcast(
-      "track_channel", Video.on_air
-    )
+    # ActionCable.server.broadcast(
+    #   "track_channel", Video.on_air
+    # )
+    
   end
 end

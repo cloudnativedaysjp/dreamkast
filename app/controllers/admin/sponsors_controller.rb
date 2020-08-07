@@ -40,6 +40,6 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def sponsor_params
-    params.require(:sponsor).permit(:description, :attachment_text)
+    params.require(:sponsor).permit(:description, :attachment_text, :attachment_key_image_1, :attachment_key_image_1_title)
   end
 end

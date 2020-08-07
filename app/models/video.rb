@@ -7,14 +7,16 @@ class Video < ApplicationRecord
     list['current'] = []
     current.each do |video|
       list['current'][video.talk.track_id - 1] = {
-        url: video.url,
+        video_id: video.video_id,
         site: video.site,
+        slido_id: video.slido_id,
         id: video.talk.id,
         title: video.talk.title,
-        start_time: video.talk.start_time,
-        end_time: video.talk.end_time,
+        start_time: video.talk.start_time.strftime("%H:%M"),
+        end_time: video.talk.end_time.strftime("%H:%M"),
         abstract: video.talk.abstract,
         track_name: video.talk.track.name,
+        speakers: video.talk.speakers.map{|speaker| speaker.name}.join("/")
       }
     end
     return list

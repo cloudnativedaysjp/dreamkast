@@ -1,7 +1,7 @@
 <div class="container">
   <div class="btn-group track-button d-flex row" role="group">
     <% @tracks.each do |track| %>
-      <%= link_to "Track#{track.number}", "",
+      <%= link_to "Track #{track.name}", "",
           { class: "btn btn-outline-secondary track_button #{'active' if params[:id] == "#{track.number}"}", track_id: track.id.to_s } %>
     <% end %>
   </div>
@@ -10,32 +10,30 @@
     <div class="col-12 col-md-8 movie-wrap">
       <div style="padding:56.25% 0 0 0;position:relative;">
         <iframe src="" id="video" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-        <%# <iframe src="https://player.vimeo.com/video/442363621" id="video" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe> %>
       </div>
       <div id="track_information">
-        <h2 id="video_title"></h2>
-        <h3 id="abstract"></h3>
+        <h3 id="title"></h3>
+        <div id="time"></div>
+        <div id="speakers"></div>
+        <div id="abstract"></div>
       </div>
     </div>
-    <!-- div class="col-12 col-md-4 ">
-      <a href="https://twitter.com/intent/tweet?button_hashtag=CNDT2020&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #CNDT2020</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      <br />
-      <iframe src="https://vimeo.com/live-chat/442363621/" height="400" frameborder="0"></iframe>
-    </div-->
     <div class="col-12 col-md-4 ">
-      <iframe src="https://app.sli.do/event/qto2ktew" height="100%" width="100%" style="min-height: 560px;"></iframe>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#chat" class="nav-link active" data-toggle="tab">チャット</a>
+        </li>
+        <li class="nav-item">
+          <a href="#slido" class="nav-link" data-toggle="tab">質問</a>
+        </li>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <iframe src="" id="chat" class="tab-pane active" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+        <iframe src="" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+      </div>
     </div>
   </div>
 </div>
-
-<div id="messages">
-    <%= render partial: 'message', collection: @messages %>
-</div>
-
-<form>
-<label>Say something:</label><br/>
-<input type="text" data-behavior="room_speaker"/>
-</form>
 
 <%= javascript_pack_tag 'tracks/index.js' %>

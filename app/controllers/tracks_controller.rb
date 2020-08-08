@@ -6,9 +6,9 @@ class TracksController < ApplicationController
   end
 
   def ping
-    # ActionCable.server.broadcast(
-    #   "track_channel", Video.on_air
-    # )
+    ActionCable.server.broadcast(
+      "track_channel", Video.on_air
+    )
     
   end
 end

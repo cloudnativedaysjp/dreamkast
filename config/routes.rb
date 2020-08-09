@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
   get 'admin/talks' => 'admin#talks'
+  put 'admin/talks' => 'admin#update_talks'
   get 'admin/statistics' => 'admin#statistics'
   post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
   get 'admin/speakers' => 'admin#speakers'

@@ -36,6 +36,7 @@
   </div>
 </div>
 <script>
-  window.track_list=<%= @current["current"].to_json.html_safe %>
+  window.track_list=<%= @current["current"].to_json.html_safe %>;
+  window.selected_talk_id = 1;
 </script>
 <%= javascript_pack_tag 'tracks/index.js' %>

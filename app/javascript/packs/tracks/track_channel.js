@@ -22,7 +22,7 @@ consumer.subscriptions.create("TrackChannel", {
   received(data) {
     console.log(data);
     window.track_list = data["current"];
-    update_track(track_list[selected_track - 1]);
+    check_update(track_list[selected_track - 1]);
   },
 
   update: function(message) {

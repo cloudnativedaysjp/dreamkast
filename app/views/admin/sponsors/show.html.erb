@@ -9,7 +9,7 @@
     </div>
     <div class="col-2 mb-3">
       <% if @sponsor.sponsor_attachment_logo_image.present? %>
-        <%= image_tag @sponsor.sponsor_attachment_logo_image.url %>
+        <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo"%>
       <% end %>
     </div>
   </div>

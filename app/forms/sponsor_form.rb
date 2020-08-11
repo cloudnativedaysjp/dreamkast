@@ -20,14 +20,26 @@ class SponsorForm
 
     def sponsor_attachment_key_images_attributes=(attributes)
       @sponsor_attachment_key_images ||= []
-      attributes.each do |i, attachment_key_image_params|
-        if attachment_key_image_params.key?(:id)
-          image = @sponsor.sponsor_sponsor_attachment_key_images.find(attachment_key_image_params[:id])
-          image.update(attachment_key_image_params)
+      attributes.each do |i, params|
+        if params.key?(:id)
+          if params[:_destroy] == "1"
+            image = @sponsor.sponsor_attachment_key_images.find(params[:id])
+            image.destroy
+          else
+            params.delete(:_destroy)
+            image = @sponsor.sponsor_attachment_key_images.find(params[:id])
+            image.update(params)
+          end
         else
-          @sponsor_attachment_key_images.push(SponsorAttachmentKeyImage.new(attachment_key_image_params))
+          params.delete(:_destroy)
+          image = SponsorAttachmentKeyImage.new(params.merge(sponsor_id: sponsor.id))
+          image.save!
+          @sponsor_attachment_key_images.push(image)
         end
       end
+    rescue => e
+      puts e
+      false
     end
   end
 
@@ -51,7 +63,10 @@ class SponsorForm
             image.update(params)
           end
         else
-          @sponsor_attachment_pdfs.push(SponsorAttachmentKeyImage.new(params))
+          params.delete(:_destroy)
+          pdf = SponsorAttachmentPdf.new(params.merge(sponsor_id: sponsor.id))
+          pdf.save!
+          @sponsor_attachment_pdfs.push(pdf)
         end
       end
     rescue => e

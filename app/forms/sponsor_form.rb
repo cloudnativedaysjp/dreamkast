@@ -4,15 +4,61 @@ class SponsorForm
   include ActiveModel::Validations
 
   attr_accessor :description,
-                :attachment_key_image_1, :attachment_key_image_1_title,
-                :attachment_key_image_2, :attachment_key_image_2_title,
+                :sponsor_attachment_key_images,
                 :attachment_text,
                 :attachment_vimeo,
-                :attachment_pdf_1, :attachment_pdf_1_title,
-                :attachment_pdf_2, :attachment_pdf_2_title,
-                :attachment_pdf_3, :attachment_pdf_3_title
+                :sponsor_attachment_pdfs
 
   delegate :persisted?, to: :sponsor
+
+  concerning :SponsorAttachmentKeyImagesBuilder do
+    attr_accessor :sponsor_attachment_key_images
+
+    def sponsor_attachment_key_images
+      @sponsor_attachment_key_images ||= []
+    end
+
+    def sponsor_attachment_key_images_attributes=(attributes)
+      @sponsor_attachment_key_images ||= []
+      attributes.each do |i, attachment_key_image_params|
+        if attachment_key_image_params.key?(:id)
+          image = @sponsor.sponsor_sponsor_attachment_key_images.find(attachment_key_image_params[:id])
+          image.update(attachment_key_image_params)
+        else
+          @sponsor_attachment_key_images.push(SponsorAttachmentKeyImage.new(attachment_key_image_params))
+        end
+      end
+    end
+  end
+
+  concerning :SponsorAttachmentPDFsBuilder do
+    attr_accessor :sponsor_attachment_pdfs
+
+    def sponsor_attachment_pdfs
+      @sponsor_attachment_pdfs ||= [SponsorAttachmentPdf.new, SponsorAttachmentPdf.new, SponsorAttachmentPdf.new]
+    end
+
+    def sponsor_attachment_pdfs_attributes=(attributes)
+      @sponsor_attachment_pdfs ||= []
+      attributes.each do |_i, params|
+        if params.key?(:id)
+          if params[:_destroy] == "1"
+            image = @sponsor.sponsor_attachment_pdfs.find(params[:id])
+            image.destroy
+          else
+            params.delete(:_destroy)
+            image = @sponsor.sponsor_attachment_pdfs.find(params[:id])
+            image.update(params)
+          end
+        else
+          @sponsor_attachment_pdfs.push(SponsorAttachmentKeyImage.new(params))
+        end
+      end
+    rescue => e
+      puts e
+      false
+    end
+  end
 
   def initialize(attributes = nil, sponsor: Sponsor.new)
     @sponsor = sponsor
@@ -20,28 +66,17 @@ class SponsorForm
     super(attributes)
   end
 
+  def sponsor
+    @sponsor
+  end
   def save
     return if invalid?
 
     ActiveRecord::Base.transaction do
       sponsor.update!(description: description)
 
-      if sponsor.sponsor_attachment_key_images[0].present?
-        sponsor.sponsor_attachment_key_images[0].update!(title: attachment_key_image_1_title, file: attachment_key_image_1)
-      else
-        image = SponsorAttachmentKeyImage.new(title: attachment_key_image_1_title, file: attachment_key_image_1, sponsor_id: sponsor.id)
-        image.save!
-      end
-
-      if sponsor.sponsor_attachment_key_images[1].present?
-        sponsor.sponsor_attachment_key_images[1].update!(title: attachment_key_image_2_title, file: attachment_key_image_2)
-      else
-        image = SponsorAttachmentKeyImage.new(title: attachment_key_image_2_title, file: attachment_key_image_2, sponsor_id: sponsor.id)
-        image.save!
-      end
-
       if sponsor.sponsor_attachment_text.present?
-        sponsor.update!(text: attachment_text)
+        sponsor.sponsor_attachment_text.update!(text: attachment_text)
       else
         text = SponsorAttachmentText.new(text: text, sponsor_id: sponsor.id)
         text.save!
@@ -53,34 +88,19 @@ class SponsorForm
         vimeo = SponsorAttachmentVimeo.new(url: attachment_vimeo, sponsor_id: sponsor.id)
         vimeo.save!
       end
-
-      if sponsor.sponsor_attachment_pdfs[0].present?
-        sponsor.update!(title: attachment_pdf_1_title, file: attachment_pdf_1)
-      else
-        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_1_title, file: attachment_pdf_1, sponsor_id: sponsor.id)
-        pdf.save!
-      end
-
-      if sponsor.sponsor_attachment_pdfs[1].present?
-        sponsor.update!(title: attachment_pdf_2_title, file: attachment_pdf_2)
-      else
-        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_2_title, file: attachment_pdf_2, sponsor_id: sponsor.id)
-        pdf.save!
-      end
-
-      if sponsor.sponsor_attachment_pdfs[2].present?
-        sponsor.update!(title: attachment_pdf_3_title, file: attachment_pdf_3)
-      else
-        pdf = SponsorAttachmentPdf.new(title: attachment_pdf_3_title, file: attachment_pdf_3, sponsor_id: sponsor.id)
-        pdf.save!
-      end
     end
-  rescue ActiveRecord::RecordInvalid
+  rescue => e
+    puts e
     false
   end
 
   def to_model
     sponsor
+  end
+
+  def load
+    @sponsor_attachment_key_images = @sponsor.sponsor_attachment_key_images
+    @sponsor_attachment_pdfs = @sponsor.sponsor_attachment_pdfs
   end
 
   private
@@ -91,12 +111,9 @@ class SponsorForm
     {
       description: sponsor.description,
       attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
-      attachment_key_image_1_title: sponsor.sponsor_attachment_key_images[0].present? ? sponsor.sponsor_attachment_key_images[0].title : '',
-      attachment_key_image_2_title: sponsor.sponsor_attachment_key_images[1].present? ? sponsor.sponsor_attachment_key_images[1].title : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
-      attachment_pdf_1_title: sponsor.sponsor_attachment_pdfs[0].present? ? sponsor.sponsor_attachment_pdfs[0].title : '',
-      attachment_pdf_2_title: sponsor.sponsor_attachment_pdfs[1].present? ? sponsor.sponsor_attachment_pdfs[1].title : '',
-      attachment_pdf_3_title: sponsor.sponsor_attachment_pdfs[2].present? ? sponsor.sponsor_attachment_pdfs[2].title : ''
+      sponsor_attachment_key_images: sponsor_attachment_key_images,
+      sponsor_attachment_pdfs: sponsor_attachment_pdfs
     }
   end
 end

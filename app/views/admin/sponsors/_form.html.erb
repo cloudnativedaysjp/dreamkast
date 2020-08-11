@@ -6,23 +6,17 @@
     </div>
   </div>
 
-  <% 2.times.each do |i| %>
-    <% image = @sponsor.sponsor_attachment_key_images[i] %>
-    <h4>Booth: Key Image <%= i+1 %></h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label "attachment_key_image_#{i+1}_title".to_sym, "Title" %>
-        <%= form.text_field "attachment_key_image_#{i+1}_title".to_sym, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      </div>
-    </div>
+  <h4>Booth: Key Images</h4>
+  <div class="key-image-fields">
+    <%= form.fields_for :sponsor_attachment_key_images do |image| %>
+      <%=  render 'admin/sponsors/sponsor_attachment_key_image_fields', :f => image %>
+    <% end %>
+  </div>
 
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label "attachment_key_image_#{i+1}".to_sym, "File" %>
-        <%= form.file_field "attachment_key_image_#{i+1}".to_sym %>
-        <%= image_tag image.file_url, class: "img-fluid" if image.present? %>
-      </div>
-    </div>
+  <% if form.object.sponsor_attachment_key_images.size >= 2 %>
+    <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary', style: "display: none" %></p>
+  <% else %>
+    <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary' %></p>
   <% end %>
 
   <h4>Booth: Text</h4>
@@ -47,23 +41,18 @@
     </div>
   </div>
 
-  <% 3.times.each do |i| %>
-    <% pdf = @sponsor.sponsor_attachment_pdfs[i] %>
-    <h4>Booth: PDF <%= i+1 %></h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label "attachment_pdf_#{i+1}_title".to_sym, "Title" %>
-        <%= form.text_field "attachment_pdf_#{i+1}_title".to_sym, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      </div>
-    </div>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label "attachment_pdf_#{i+1}".to_sym, "File" %>
-        <%= form.file_field "attachment_pdf_#{i+1}".to_sym %>
-        <br>
-        <%= link_to "Link", pdf.file_url if pdf %>
-      </div>
-    </div>
+
+  <h4>Booth: PDFs</h4>
+  <div class="pdf-fields">
+    <%= form.fields_for :sponsor_attachment_pdfs do |a| %>
+      <%=  render 'admin/sponsors/sponsor_attachment_pdf_fields', :f => a%>
+    <% end %>
+  </div>
+
+  <% if form.object.sponsor_attachment_pdfs.size >= 3 %>
+    <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary', style: "display: none" %></p>
+    <% else %>
+    <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
   <% end %>
 
   <div class="form-row form-group">

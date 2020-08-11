@@ -21,11 +21,13 @@
   </div>
 
   <% @sponsor.sponsor_attachment_key_images.each do |image| %>
-    <div class="row mb-3">
-      <div class="col-12 mb-3">
-        <%= image_tag image.file_url, class: "img-fluid" %>
+    <% if image.file_data.present? %>
+      <div class="row mb-3">
+        <div class="col-12 mb-3">
+          <%= image_tag image.file_url, class: "img-fluid" %>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 
   <% if @sponsor.sponsor_attachment_text.present? %>

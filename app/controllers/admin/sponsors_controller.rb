@@ -16,6 +16,7 @@ class Admin::SponsorsController < ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:id])
     @sponsor_form = SponsorForm.new(sponsor: @sponsor)
+    @sponsor_form.load
   end
 
   def update
@@ -41,12 +42,9 @@ class Admin::SponsorsController < ApplicationController
 
   def sponsor_params
     params.require(:sponsor).permit(:description,
-                                    :attachment_key_image_1, :attachment_key_image_1_title,
-                                    :attachment_key_image_2, :attachment_key_image_2_title,
                                     :attachment_text,
                                     :attachment_vimeo,
-                                    :attachment_pdf_1, :attachment_pdf_1_title,
-                                    :attachment_pdf_2, :attachment_pdf_2_title,
-                                    :attachment_pdf_3, :attachment_pdf_3_title)
+                                    sponsor_attachment_key_images_attributes: [:id, :title, :file, :_destroy],
+                                    sponsor_attachment_pdfs_attributes: [:id, :title, :file, :_destroy])
   end
 end

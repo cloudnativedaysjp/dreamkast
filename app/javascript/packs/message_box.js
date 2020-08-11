@@ -5,7 +5,10 @@ $(function(){
     $(window).scroll(function() {
         $("#message_box").addClass("d-none");
     });
-    $(window).touchmove(function() {
+    $(window).bind('touchmove', function() {
+        $("#message_box").addClass("d-none");
+    });
+    $(window).mousemove(function() {
         $("#message_box").addClass("d-none");
     });
 })

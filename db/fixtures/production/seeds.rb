@@ -142,7 +142,19 @@ Sponsor.seed(
     conference_id: 1,
     url: 'https://www.vmware.com/jp.html'
   },
-  )
+  {
+    id: 23,
+    name: 'ミランティス・ジャパン株式会社',
+    conference_id: 1,
+    url: 'https://www.mirantis.co.jp/'
+  },
+  {
+    id: 24,
+    name: 'Elastic',
+    conference_id: 1,
+    url: 'https://www.elastic.co'
+  }
+)
 
 SponsorType.seed(
   { id: 1,
@@ -207,7 +219,10 @@ SponsorType.seed(
   [27, 'CM', 'canonical'],
   [28, 'CM', 'ibm'],
   [29, 'CM', 'kuroco'],
-  [30, 'CM', 'fujitsu']
+  [30, 'CM', 'fujitsu'],
+  [31, 'CM', 'legalforce'],
+  [32, 'Gold', 'ミランティス・ジャパン株式会社'],
+  [33, 'Booth', 'Elastic']
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
@@ -239,6 +254,8 @@ end
   [21, 'NewRelic', 'sponsors/newrelic.png'],
   [22, 'suse', 'sponsors/suse.png'],
   [23, 'vmware', 'sponsors/vmware.png'],
+  [24, 'ミランティス・ジャパン株式会社', 'sponsors/mirantis.png'],
+  [25, 'Elastic', 'sponsors/elastic.png'],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

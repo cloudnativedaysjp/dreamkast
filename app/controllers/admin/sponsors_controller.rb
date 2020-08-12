@@ -26,10 +26,8 @@ class Admin::SponsorsController < ApplicationController
     respond_to do |format|
       if @sponsor_form.save
         format.html { redirect_to "/admin/sponsors/#{params[:id]}", notice: "Sponsor was successfully updated." }
-        format.json { render :show, status: :ok, location: @sponsor }
       else
         format.html { render :edit }
-        format.json { render json: @sponsor.errors, status: :unprocessable_entity }
       end
     end
   end

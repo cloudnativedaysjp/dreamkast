@@ -1,5 +1,6 @@
 class EventController < ApplicationController
-  
+  include ActionView::Helpers::UrlHelper
+
   include Secured
   before_action :set_profile
 
@@ -25,6 +26,20 @@ class EventController < ApplicationController
 
   end
 
+  def sponsor_logo_class(sponsor_type)
+    case sponsor_type.name
+    when "Diamond"
+      "col-12 col-md-4 my-3 m-md-3"
+    when "Platinum"
+      "col-12 col-md-3 my-3 m-md-3"
+    when "Gold", "Mini Session", "CM"
+      "col-12 col-md-2 my-3 m-md-3"
+    else
+      "col-12 col-md-3 my-3 m-md-3"
+    end
+  end
+
+  helper_method :sponsor_logo_class
   private
 
   def set_profile

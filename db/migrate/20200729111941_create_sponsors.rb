@@ -2,6 +2,7 @@ class CreateSponsors< ActiveRecord::Migration[6.0]
   def change
     create_table :sponsors do |t|
       t.string :name
+      t.string :abbr
       t.text :description
       t.string :url
       t.belongs_to :conference, null: false, foreign_key: true

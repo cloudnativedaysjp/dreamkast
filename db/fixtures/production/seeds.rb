@@ -152,6 +152,7 @@ Sponsor.seed(
   },
   {
     id: 21,
+    name: 'suse',
     abbr: 'suse',
     conference_id: 1,
     url: 'https://www.suse.com/ja-jp/solutions/devops/'

@@ -13,144 +13,167 @@ Sponsor.seed(
   {
     id: 1,
     name: "ibm",
+    abbr: "ibm",
     conference_id: 1,
     url: "https://www.ibm.com/jp-ja/cloud/cloud-native"
   },
   {
     id: 2,
     name: "redhat",
+    abbr: "redhat",
     conference_id: 1,
     url: "https://www.redhat.com/ja/global/japan#links"
   },
   {
     id: 3,
     name: "jfrog",
+    abbr: "jfrog",
     conference_id: 1,
     url: "https://jfrog.co.jp/"
   },
   {
     id: 4,
     name: "NewRelic",
+    abbr: "newrelic",
     conference_id: 1,
     url: "https://newrelic.co.jp/"
   },
   {
     id: 5,
     name: "circleci",
+    abbr: "circleci",
     conference_id: 1,
     url: "https://circleci.com/ja/"
   },
   {
     id: 6,
     name: "nginx",
+    abbr: "nginx",
     conference_id: 1,
     url: "https://www.nginx.co.jp/"
   },
   {
     id: 7,
     name: "Oracle",
+    abbr: "Oracle",
     conference_id: 1,
     url: "https://www.oracle.com/jp/index.html"
   },
   {
     id: 8,
     name: "microsoft",
+    abbr: "microsoft",
     conference_id: 1,
     url: "https://news.microsoft.com/ja-jp/"
   },
   {
     id: 9,
     name: "cyberagent",
+    abbr: "cyberagent",
     conference_id: 1,
     url: "https://developers.cyberagent.co.jp/"
   },
   {
     id: 10,
     name: "fujitsu",
+    abbr: "fujitsu",
     conference_id: 1,
     url: "https://www.fujitsu.com/jp/"
   },
   {
     id: 11,
     name: "sios",
+    abbr: "sios",
     conference_id: 1,
     url: "https://sios.jp/"
   },
   {
     id: 12,
     name: "nttdata",
+    abbr: "nttdata",
     conference_id: 1,
     url: "https://www.nttdata.com/jp/ja/"
   },
   {
     id: 13,
     name: "casareal",
+    abbr: "casareal",
     conference_id: 1,
     url: "https://www.casareal.co.jp/"
   },
   {
     id: 14,
     name: "hatena",
+    abbr: "hatena",
     conference_id: 1,
     url: "https://mackerel.io"
   },
   {
     id: 15,
     name: "sysdig",
+    abbr: "sysdig",
     conference_id: 1,
     url: "https://sysdig.jp"
   },
   {
     id: 16,
     name: "canonical",
+    abbr: "canonical",
     conference_id: 1,
     url: "https://jp.ubuntu.com/"
   },
   {
     id: 17,
     name: "pepabo",
+    abbr: "pepabo",
     conference_id: 1,
     url: "https://pepabo.com/"
   },
   {
     id: 18,
     name: "kuroco",
+    abbr: "kuroco",
     conference_id: 1,
     url: "https://kuroco.app/"
   },
   {
     id: 19,
     name: "google",
+    abbr: "google",
     conference_id: 1,
     url: 'https://cloud.google.com/anthos'
   },
   {
     id: 20,
     name: 'legalforce',
+    abbr: 'legalforce',
     conference_id: 1,
     url: 'https://www.legalforce.co.jp/'
   },
   {
     id: 21,
-    name: 'suse',
+    abbr: 'suse',
     conference_id: 1,
     url: 'https://www.suse.com/ja-jp/solutions/devops/'
   },
   {
     id: 22,
     name: 'vmware',
+    abbr: 'vmware',
     conference_id: 1,
     url: 'https://www.vmware.com/jp.html'
   },
   {
     id: 23,
     name: 'ミランティス・ジャパン株式会社',
+    abbr: 'mirantis',
     conference_id: 1,
     url: 'https://www.mirantis.co.jp/'
   },
   {
     id: 24,
     name: 'Elastic',
+    abbr: 'elastic',
     conference_id: 1,
     url: 'https://www.elastic.co'
   }

@@ -177,6 +177,13 @@ Sponsor.seed(
     abbr: 'elastic',
     conference_id: 1,
     url: 'https://www.elastic.co'
+  },
+  {
+    id: 25,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 1,
+    url: 'https://plaid.co.jp/'
   }
 )
 
@@ -208,8 +215,13 @@ SponsorType.seed(
   },
   { id: 6,
     conference_id: 1,
-    name: "CM",
+    name: "cm",
     order: 6,
+  },
+  { id: 7,
+    conference_id: 1,
+    name: "Tool",
+    order: 7,
   }
 )
 
@@ -246,7 +258,8 @@ SponsorType.seed(
   [30, 'CM', 'fujitsu'],
   [31, 'CM', 'legalforce'],
   [32, 'Gold', 'ミランティス・ジャパン株式会社'],
-  [33, 'Booth', 'Elastic']
+  [33, 'Booth', 'Elastic'],
+  [34, 'Tool', 'Plaid']
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
@@ -280,6 +293,7 @@ end
   [23, 'vmware', 'sponsors/vmware.png'],
   [24, 'ミランティス・ジャパン株式会社', 'sponsors/mirantis.png'],
   [25, 'Elastic', 'sponsors/elastic.png'],
+  [26, 'Plaid', 'sponsors/plaid.png'],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

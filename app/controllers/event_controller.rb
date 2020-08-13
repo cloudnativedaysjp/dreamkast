@@ -32,7 +32,7 @@ class EventController < ApplicationController
       "col-12 col-md-4 my-3 m-md-3"
     when "Platinum"
       "col-12 col-md-3 my-3 m-md-3"
-    when "Gold", "Mini Session", "CM"
+    when "Gold", "Mini Session", "CM", "Tool"
       "col-12 col-md-2 my-3 m-md-3"
     else
       "col-12 col-md-3 my-3 m-md-3"

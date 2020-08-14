@@ -291,7 +291,7 @@ end
   [21, 'NewRelic', 'sponsors/newrelic.png'],
   [22, 'suse', 'sponsors/suse.png'],
   [23, 'vmware', 'sponsors/vmware.png'],
-  [24, 'ミランティス・ジャパン株式会社', 'sponsors/mirantis.png'],
+  [24, 'mirantis', 'sponsors/mirantis.png'],
   [25, 'Elastic', 'sponsors/elastic.png'],
   [26, 'Plaid', 'sponsors/plaid.png'],
 ].each do |logo|

@@ -103,7 +103,7 @@ Sponsor.seed(
   },
   {
     id: 14,
-    name: "hatena",
+    name: "株式会社はてな",
     abbr: "hatena",
     conference_id: 1,
     url: "https://mackerel.io"

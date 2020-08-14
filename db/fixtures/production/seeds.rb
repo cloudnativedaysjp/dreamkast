@@ -131,7 +131,7 @@ Sponsor.seed(
   },
   {
     id: 18,
-    name: "kuroco",
+    name: "株式会社ディバータ",
     abbr: "kuroco",
     conference_id: 1,
     url: "https://kuroco.app/"

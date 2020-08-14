@@ -96,7 +96,7 @@ Sponsor.seed(
   },
   {
     id: 13,
-    name: "casareal",
+    name: "株式会社カサレアル",
     abbr: "casareal",
     conference_id: 1,
     url: "https://www.casareal.co.jp/"

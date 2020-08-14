@@ -68,7 +68,7 @@ Sponsor.seed(
   },
   {
     id: 9,
-    name: "cyberagent",
+    name: "株式会社サイバーエージェント",
     abbr: "cyberagent",
     conference_id: 1,
     url: "https://developers.cyberagent.co.jp/"

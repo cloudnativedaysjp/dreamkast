@@ -110,7 +110,7 @@ Sponsor.seed(
   },
   {
     id: 15,
-    name: "sysdig",
+    name: "Sysdig Japan合同会社",
     abbr: "sysdig",
     conference_id: 1,
     url: "https://sysdig.jp"

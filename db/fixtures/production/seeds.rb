@@ -33,7 +33,7 @@ Sponsor.seed(
   },
   {
     id: 4,
-    name: "NewRelic",
+    name: "New Relic株式会社",
     abbr: "newrelic",
     conference_id: 1,
     url: "https://newrelic.co.jp/"

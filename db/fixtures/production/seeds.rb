@@ -40,7 +40,7 @@ Sponsor.seed(
   },
   {
     id: 5,
-    name: "circleci",
+    name: "CircleCI合同会社",
     abbr: "circleci",
     conference_id: 1,
     url: "https://circleci.com/ja/"

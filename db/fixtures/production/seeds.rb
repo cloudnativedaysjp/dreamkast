@@ -26,7 +26,7 @@ Sponsor.seed(
   },
   {
     id: 3,
-    name: "jfrog",
+    name: "JFrog Japan株式会社",
     abbr: "jfrog",
     conference_id: 1,
     url: "https://jfrog.co.jp/"

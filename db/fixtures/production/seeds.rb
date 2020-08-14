@@ -138,7 +138,7 @@ Sponsor.seed(
   },
   {
     id: 19,
-    name: "google",
+    name: "グーグル・クラウド・ジャパン合同会社",
     abbr: "google",
     conference_id: 1,
     url: 'https://cloud.google.com/anthos'

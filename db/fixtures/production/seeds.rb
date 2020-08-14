@@ -117,7 +117,7 @@ Sponsor.seed(
   },
   {
     id: 16,
-    name: "canonical",
+    name: "Canonical/Ubuntu",
     abbr: "canonical",
     conference_id: 1,
     url: "https://jp.ubuntu.com/"

@@ -6,6 +6,7 @@ module ApplicationCable
       self.current_user = cookies.encrypted[:user_id]
     end
 
+    ## TODO: Need to verify websocket connection
     # private
     # def find_verified_user
     #   if verified_user = User.find_by(id: cookies.encrypted[:user_id])

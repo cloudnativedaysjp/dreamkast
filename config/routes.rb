@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   scope ":event" do
     post 'auth/auth0' => redirect('/auth/auth0')
-    resources :speakers, only: [:index, :show]
+    resources :speakers, only: [:index]
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     get 'privacy' => 'event#privacy'
     get 'coc' => 'event#coc'
 
+    resources :booths, only: [:index, :show]
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do

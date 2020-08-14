@@ -1,0 +1,18 @@
+<div class="pdf-field">
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= f.label :title, "Title" %>
+      <%= f.text_field :title, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
+    </div>
+  </div>
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= f.label :file, "File" %>
+      <%= f.file_field :file %>
+      <%= f.hidden_field :_destroy %>
+      <%= link_to 'Delete', '#', class: 'remove_pdf_field' %>
+      <br>
+      <%= link_to "Link", f.object.file_url if f.object.file.present? %>
+    </div>
+  </div>
+</div>

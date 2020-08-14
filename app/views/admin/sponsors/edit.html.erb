@@ -1,0 +1,20 @@
+<div class="container">
+  <%= render :partial => 'admin/navigator' %>
+
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <h2>Sponsors > <%= @sponsor.name %></h2>
+    </div>
+    <div class="col-2 mb-3">
+      <% if @sponsor.sponsor_attachment_logo_image.present? %>
+        <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="registration-form py-3 px-md-5">
+      <%= render 'form', sponsor_form: @sponsor_form %>
+    </div>
+  </div>
+</div>

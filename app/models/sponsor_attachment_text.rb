@@ -1,0 +1,2 @@
+class SponsorAttachmentText < SponsorAttachment
+end

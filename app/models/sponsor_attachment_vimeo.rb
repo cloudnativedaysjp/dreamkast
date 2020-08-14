@@ -1,0 +1,2 @@
+class SponsorAttachmentVimeo < SponsorAttachment
+end

@@ -145,7 +145,7 @@ Sponsor.seed(
   },
   {
     id: 20,
-    name: 'legalforce',
+    name: '株式会社LegalForce',
     abbr: 'legalforce',
     conference_id: 1,
     url: 'https://www.legalforce.co.jp/'

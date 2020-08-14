@@ -61,7 +61,7 @@ Sponsor.seed(
   },
   {
     id: 8,
-    name: "microsoft",
+    name: "日本マイクロソフト株式会社/Microsoft Corporation",
     abbr: "microsoft",
     conference_id: 1,
     url: "https://news.microsoft.com/ja-jp/"

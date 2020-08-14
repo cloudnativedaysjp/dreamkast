@@ -82,7 +82,7 @@ Sponsor.seed(
   },
   {
     id: 11,
-    name: "sios",
+    name: "サイオステクノロジー株式会社",
     abbr: "sios",
     conference_id: 1,
     url: "https://sios.jp/"

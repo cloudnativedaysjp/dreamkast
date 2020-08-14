@@ -124,7 +124,7 @@ Sponsor.seed(
   },
   {
     id: 17,
-    name: "pepabo",
+    name: "GMOペパボ株式会社",
     abbr: "pepabo",
     conference_id: 1,
     url: "https://pepabo.com/"

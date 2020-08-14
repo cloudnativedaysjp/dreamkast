@@ -159,7 +159,7 @@ Sponsor.seed(
   },
   {
     id: 22,
-    name: 'vmware',
+    name: 'ヴイエムウェア株式会社',
     abbr: 'vmware',
     conference_id: 1,
     url: 'https://www.vmware.com/jp.html'

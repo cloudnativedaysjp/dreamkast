@@ -19,7 +19,7 @@ Sponsor.seed(
   },
   {
     id: 2,
-    name: "redhat",
+    name: "レッドハット株式会社",
     abbr: "redhat",
     conference_id: 1,
     url: "https://www.redhat.com/ja/global/japan#links"

@@ -75,7 +75,7 @@ Sponsor.seed(
   },
   {
     id: 10,
-    name: "fujitsu",
+    name: "富士通株式会社",
     abbr: "fujitsu",
     conference_id: 1,
     url: "https://www.fujitsu.com/jp/"

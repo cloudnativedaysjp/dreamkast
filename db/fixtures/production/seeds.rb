@@ -89,7 +89,7 @@ Sponsor.seed(
   },
   {
     id: 12,
-    name: "nttdata",
+    name: "株式会社エヌ・ティ・ティ・データ",
     abbr: "nttdata",
     conference_id: 1,
     url: "https://www.nttdata.com/jp/ja/"

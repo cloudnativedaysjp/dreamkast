@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="my-3 text-center">ブース</h1>
   <% @sponsors.each do |sponsor| %>
-    <p><%= sponsor.name %></p>
+    <p><%= link_to sponsor.name, booth_path(id: sponsor.id) %></p>
     <%= image_tag sponsor.sponsor_attachment_logo_image.url %>
   <% end %>
 </div>

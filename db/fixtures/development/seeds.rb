@@ -77,7 +77,7 @@ SponsorType.seed(
 [
   [1, 'Diamond', 'スポンサー株式会社'],
   [2, 'Platinum', 'Sponsor, inc.'],
-  [4, 'Booth', 'Sponsor, inc.'],
+  [4, 'Booth', 'スポンサー株式会社'],
   [5, 'Booth', 'プラチナスポンサー株式会社'],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]

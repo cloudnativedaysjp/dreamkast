@@ -1,0 +1,3 @@
+class Booth < Sponsor
+
+end

@@ -7,6 +7,10 @@ class BoothsController < ApplicationController
     @sponsors = SponsorType.find_by(conference_id: conference.id, name: "Booth").sponsors
   end
 
+  def show
+    @sponsor = Sponsor.find(params[:id])
+  end
+
   private
 
   def set_profile

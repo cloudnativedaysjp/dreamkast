@@ -54,7 +54,7 @@ Sponsor.seed(
   },
   {
     id: 7,
-    name: "Oracle",
+    name: "日本オラクル株式会社",
     abbr: "Oracle",
     conference_id: 1,
     url: "https://www.oracle.com/jp/index.html"

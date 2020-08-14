@@ -12,7 +12,7 @@ end
 Sponsor.seed(
   {
     id: 1,
-    name: "ibm",
+    name: "日本アイ・ビー・エム株式会社",
     abbr: "ibm",
     conference_id: 1,
     url: "https://www.ibm.com/jp-ja/cloud/cloud-native"

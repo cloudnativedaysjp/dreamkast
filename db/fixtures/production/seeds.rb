@@ -215,7 +215,7 @@ SponsorType.seed(
   },
   { id: 6,
     conference_id: 1,
-    name: "cm",
+    name: "CM",
     order: 6,
   },
   { id: 7,

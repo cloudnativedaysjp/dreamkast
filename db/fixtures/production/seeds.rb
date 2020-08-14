@@ -257,13 +257,13 @@ SponsorType.seed(
   [29, 'CM', 'kuroco'],
   [30, 'CM', 'fujitsu'],
   [31, 'CM', 'legalforce'],
-  [32, 'Gold', 'ミランティス・ジャパン株式会社'],
+  [32, 'Gold', 'mirantis'],
   [33, 'Booth', 'Elastic'],
   [34, 'Tool', 'Plaid']
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
-  sponsor = Sponsor.find_by(name: sponsors_sponsor_type[2])
+  sponsor = Sponsor.find_by(abbr: sponsors_sponsor_type[2])
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
 end
 
@@ -297,7 +297,7 @@ end
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],
-      sponsor_id: Sponsor.find_by(name: logo[1]).id,
+      sponsor_id: Sponsor.find_by(abbr: logo[1]).id,
       type: 'SponsorAttachmentLogoImage',
       url: logo[2]
     }

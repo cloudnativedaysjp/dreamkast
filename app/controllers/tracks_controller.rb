@@ -6,6 +6,6 @@ class TracksController < ApplicationController
   end
 
   def blank
-    
+    render :layout => false
   end
 end

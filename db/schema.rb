@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
 
   create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
+    t.string "abbr"
     t.text "description"
     t.string "url"
     t.bigint "conference_id", null: false
@@ -188,9 +189,6 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "sponsor_attachments", "sponsors"
-  add_foreign_key "sponsor_types", "conferences"
-  add_foreign_key "sponsors", "conferences"
   create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.string "site"
@@ -202,4 +200,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
     t.string "slido_id"
   end
 
+  add_foreign_key "sponsor_attachments", "sponsors"
+  add_foreign_key "sponsor_types", "conferences"
+  add_foreign_key "sponsors", "conferences"
 end

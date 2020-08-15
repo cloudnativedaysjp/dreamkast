@@ -5,10 +5,7 @@ class TracksController < ApplicationController
     @tracks = Track.all
   end
 
-  def ping
-    ActionCable.server.broadcast(
-      "track_channel", Video.on_air
-    )
+  def blank
     
   end
 end

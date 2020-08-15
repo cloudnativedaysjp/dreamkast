@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'dashboard#show'
-    get 'tracks/ping' => 'tracks#ping'
+    get 'tracks/blank' => 'tracks#blank'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

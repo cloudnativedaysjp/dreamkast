@@ -5,7 +5,6 @@ consumer.subscriptions.create("TrackChannel", {
   connected() {
     window.selected_track = 1;
     update_track(track_list[selected_track - 1]);
-    var subscription = this;
     document.querySelectorAll('.track_button').forEach(function(link){
       link.addEventListener('click', (event) =>{
         event.preventDefault();

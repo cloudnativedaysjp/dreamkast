@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Admin
   get 'admin' => 'admin#show'
+  get 'admin/debug' => 'admin#debug'
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
   get 'admin/talks' => 'admin#talks'
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :sponsors, only: [:index, :show, :edit, :update]
     resources :booths, only: [:index, :show, :edit, :update]
+    resources :conferences, only: [:index, :show, :edit, :update]
   end
 
   scope ":event" do

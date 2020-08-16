@@ -7,6 +7,7 @@ class AdminController < ApplicationController
 
     def show
         @session = session
+        @conference = Conference.first
     end
 
     def accesslog

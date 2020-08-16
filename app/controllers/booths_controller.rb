@@ -3,8 +3,8 @@ class BoothsController < ApplicationController
   before_action :set_profile
 
   def index
-    conference = Conference.first
-    @booths = conference.booths
+    @conference = Conference.first
+    @booths = @conference.booths
   end
 
   def show

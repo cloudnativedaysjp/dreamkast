@@ -1,13 +1,17 @@
 <div class="container">
   <h1 class="my-3 text-center">ブース</h1>
   <div class="row">
-    <% @booths.each do |booth| %>
-      <div class="col text-center">
-        <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
-          <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
-          <%= booth.sponsor.name %>
-        <% end %>
-      </div>
+    <% if @conference.opened? %>
+      <% @booths.each do |booth| %>
+        <div class="col text-center">
+          <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
+            <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+            <%= booth.sponsor.name %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= @conference.name %> is not opened.
     <% end %>
   </div>
 </div>

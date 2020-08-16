@@ -1,4 +1,6 @@
 class Conference < ApplicationRecord
+  enum status: { registered: 0, opened: 1, closed: 2 }
+
   has_many :form_items
   has_many :conference_days
   has_many :talks

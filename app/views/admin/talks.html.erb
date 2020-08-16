@@ -29,33 +29,55 @@
     </div>
     <div class="row">
         <h2>Talks</h2>
-        <table class="table table-striped">
+        <table class="table table-striped talks_table" >
             <thead>
                 <tr>
                     <th scope="col">Speakers</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Abstract</th>
+                    <th scope="col">Title / Abstract</th>
                     <th scope="col">Track</th>
-                    <th scope="col">Difficulty</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
+                    <th scope="col">DateTime</th>
+                    <th scope="col">Vimeo ID</th>
+                    <th scope="col">Sli.do ID</th>
+                    <th scope="col">On Air</th>
                 </tr>
             </thead>
             <tbody>
-                <% @talks.each do |talk| %>
-                <tr>
-                    <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li><%= speaker.name %></li><% end %></ul></td>
-                    <td><%= talk.title %></td>
-                    <td><%= talk.abstract %></td>
-                    <td><%= talk.track.name %></td>
-                    <td><%= talk.talk_difficulty.name %></td>
-                    <td><%= talk.talk_category.name %></td>
-                    <td><%= talk.start_time %></td>
-                    <td><%= talk.end_time %></td>
-                </tr>
+                <%= form_with(url: admin_talks_path, local: true, id: "talk_list", method: "put") do |f| %>
+                    <% @talks.each do |talk| %>
+                    <tr>
+                        <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+                        <td>
+                            <h5><%= talk.title %></h5>
+                            <p class="abstract"><%= talk.abstract[0..30] %></p>
+                        </td>
+                        <td><%= talk.track.name %></td>
+                        <td>
+                            <%= talk.date %>
+                            <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+                        </td>
+                        <td>
+                            <% video_id = talk.video ? talk.video.video_id : nil %>
+                            <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "vimeo id", size: "9" %>
+                        </td>
+                        <td>
+                            <% slido_id = talk.video ? talk.video.slido_id : nil %>
+                            <%= text_field_tag "video[#{talk.id}][slido_id]", slido_id ,placeholder: "sli.do id", size: "8" %>
+                        </td>
+                        <td class="on_air_group btn-group-toggle">
+                            <% if talk.video %>
+                            <label class="btn on_air_button <%= "active" if talk.video.on_air %>">
+                                <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track.name %>>
+                            </label>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <% end %>
                 <% end %>
             </tbody>
         </table>
     </div>
+</div>
+<div id="transit_nav" class="p-4">
+    <%= submit_tag "保存", form: "talk_list",class: "btn btn-danger transit_button" %>
+    <br/><span class="text-white"> ※視聴者にも設定が配信されます</span>
 </div>

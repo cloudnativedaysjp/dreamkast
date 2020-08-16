@@ -26,13 +26,13 @@ Profile.seed(
 )
 
 RegisteredTalk.seed(
-  { talk_id: 1, profile_id: 1},
-  { talk_id: 7, profile_id: 1},
-  { talk_id: 14, profile_id: 1},
-  { talk_id: 21, profile_id: 1},
-  { talk_id: 28, profile_id: 1},
-  { talk_id: 35, profile_id: 1},
-  { talk_id: 42, profile_id: 1}
+  { id: 1, talk_id: 1, profile_id: 1},
+  { id: 2, talk_id: 7, profile_id: 1},
+  { id: 3, talk_id: 14, profile_id: 1},
+  { id: 4, talk_id: 21, profile_id: 1},
+  { id: 5, talk_id: 28, profile_id: 1},
+  { id: 6, talk_id: 35, profile_id: 1},
+  { id: 7, talk_id: 42, profile_id: 1}
 )
 
 Sponsor.seed(
@@ -133,4 +133,16 @@ SponsorAttachment.seed(
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_2.to_json
   }
+)
+
+Video.seed(
+  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
+  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
+  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
+  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
+  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
+  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
+  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
+  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
+  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
 )

@@ -282,7 +282,7 @@ SponsorType.seed(
     Booth.seed(:conference_id, :sponsor_id) do |s|
       s.conference_id = 1
       s.sponsor_id = sponsor.id
-      s.published = fales
+      s.published = false
     end
   end
 end

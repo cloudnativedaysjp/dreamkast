@@ -1,5 +1,5 @@
 window.update_track = function(track){
-    if(track === undefined){
+    if(track === undefined || track === null){
         document.getElementById("video").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("chat").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("slido").contentWindow.location.replace("/cndt2020/tracks/blank");
@@ -19,11 +19,13 @@ window.update_track = function(track){
         window.selected_talk_id = track.id;
     }
     document.querySelectorAll(".track_button").forEach(function(a){a.classList.remove('active')});
-    document.querySelector('a[track_id="' + track.track_id + '"]').classList.toggle('active');
+    document.querySelector('a[track_id="' + selected_track + '"]').classList.toggle('active');
 }
 
 window.check_update = function(track){
-    if(window.selected_talk_id != track.id){
-        update_track(track);
+    if(track != undefined || track != null){
+        if(window.selected_talk_id != track.id){
+            update_track(track);
+        }
     }
 }

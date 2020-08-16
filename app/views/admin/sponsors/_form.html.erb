@@ -6,58 +6,60 @@
     </div>
   </div>
 
-  <h4>Booth: Key Images</h4>
-  <div class="key-image-fields">
-    <%= form.fields_for :sponsor_attachment_key_images do |image| %>
-      <%=  render 'admin/sponsors/sponsor_attachment_key_image_fields', :f => image %>
-    <% end %>
-  </div>
-
-  <% if form.object.sponsor_attachment_key_images.size >= 2 %>
-    <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary', style: "display: none" %></p>
-  <% else %>
-    <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary' %></p>
-  <% end %>
-
-  <h4>Booth: Text</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.label :attachment_text, "Text" %>
-      <%= form.text_area :attachment_text, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-    </div>
-  </div>
-
-  <h4>Booth: Vimeo</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <% vimeo = @sponsor.sponsor_attachment_vimeo %>
-      <%= form.label :attachment_vimeo, "Vimeo embed url" %>
-      <%= form.text_field :attachment_vimeo, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      <% if vimeo.present? %>
-        <div class="movie-wrap">
-          <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <% if @sponsor.booth_sponsor? %>
+    <h4>Booth: Key Images</h4>
+    <div class="key-image-fields">
+      <%= form.fields_for :sponsor_attachment_key_images do |image| %>
+        <%=  render 'admin/sponsors/sponsor_attachment_key_image_fields', :f => image %>
       <% end %>
     </div>
-  </div>
 
-
-  <h4>Booth: PDFs</h4>
-  <div class="pdf-fields">
-    <%= form.fields_for :sponsor_attachment_pdfs do |a| %>
-      <%=  render 'admin/sponsors/sponsor_attachment_pdf_fields', :f => a%>
-    <% end %>
-  </div>
-
-  <% if form.object.sponsor_attachment_pdfs.size >= 3 %>
-    <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary', style: "display: none" %></p>
+    <% if form.object.sponsor_attachment_key_images.size >= 2 %>
+      <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary', style: "display: none" %></p>
     <% else %>
-    <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
-  <% end %>
+      <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary' %></p>
+    <% end %>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.submit %>
+    <h4>Booth: Text</h4>
+    <div class="form-row form-group">
+      <div class="col-12 col-mb-6">
+        <%= form.label :attachment_text, "Text" %>
+        <%= form.text_area :attachment_text, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
+      </div>
     </div>
-  </div>
+
+    <h4>Booth: Vimeo</h4>
+    <div class="form-row form-group">
+      <div class="col-12 col-mb-6">
+        <% vimeo = @sponsor.sponsor_attachment_vimeo %>
+        <%= form.label :attachment_vimeo, "Vimeo embed url" %>
+        <%= form.text_field :attachment_vimeo, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
+        <% if vimeo.present? %>
+          <div class="movie-wrap">
+            <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+    <h4>Booth: PDFs</h4>
+    <div class="pdf-fields">
+      <%= form.fields_for :sponsor_attachment_pdfs do |a| %>
+        <%=  render 'admin/sponsors/sponsor_attachment_pdf_fields', :f => a%>
+      <% end %>
+    </div>
+
+    <% if form.object.sponsor_attachment_pdfs.size >= 3 %>
+      <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary', style: "display: none" %></p>
+    <% else %>
+      <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
+    <% end %>
+
+  <% end %>
+    <div class="form-row form-group">
+      <div class="col-12 col-md-6">
+        <%= form.submit %>
+      </div>
+    </div>
 <% end %>

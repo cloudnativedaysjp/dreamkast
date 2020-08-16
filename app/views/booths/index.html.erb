@@ -1,7 +1,13 @@
 <div class="container">
   <h1 class="my-3 text-center">ブース</h1>
-  <% @sponsors.each do |sponsor| %>
-    <p><%= link_to sponsor.name, booth_path(id: sponsor.id) %></p>
-    <%= image_tag sponsor.sponsor_attachment_logo_image.url %>
-  <% end %>
+  <div class="row">
+    <% @sponsors.each do |sponsor| %>
+      <div class="col text-center">
+        <% if sponsor.sponsor_attachment_logo_image.present? %>
+          <%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+          <%= sponsor.name %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

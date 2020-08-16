@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
   get 'admin/talks' => 'admin#talks'
+  put 'admin/talks' => 'admin#update_talks'
   get 'admin/statistics' => 'admin#statistics'
   post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
   get 'admin/speakers' => 'admin#speakers'
@@ -33,8 +34,10 @@ Rails.application.routes.draw do
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    resources :track, only: [:show]
     get 'dashboard' => 'dashboard#show'
+    get 'tracks/blank' => 'tracks#blank'
+
+    resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'
     get '/' => 'event#show'
     get 'privacy' => 'event#privacy'

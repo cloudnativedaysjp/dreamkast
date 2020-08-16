@@ -1,0 +1,45 @@
+.talks_table{
+
+}
+
+.talks_table .speaker{
+    font-size: 0.8em;
+}
+
+.talks_table .abstract{
+    font-size: 0.8em;
+}
+
+.talks_table h5{
+    font-size: 1em;
+}
+
+.on_air_group .on_air_button{
+    background-color: $secondary;
+}
+.on_air_group .on_air_button:after{
+    color: white;
+    content: "Waiting"
+}
+
+.on_air_group .active{
+    background-color: $danger;
+}
+.on_air_group .active:after{
+    color: white;
+    content: "On Air"
+}
+
+#transit_nav{
+    position: fixed;
+    bottom: 0px;
+    background-color: rgba(0,0,0, 0.5);
+    z-index: 100;
+    width: 100%;
+    box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#transit_nav .transit_button{
+    border: 2px solid #FFF;
+}

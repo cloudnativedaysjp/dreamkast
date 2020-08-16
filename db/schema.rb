@@ -69,6 +69,13 @@ ActiveRecord::Schema.define(version: 2020_08_16_073715) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "content"
+    t.string "text"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "sub"
     t.string "email"
@@ -130,6 +137,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_073715) do
 
   create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
+    t.string "abbr"
     t.text "description"
     t.string "url"
     t.bigint "conference_id", null: false
@@ -189,6 +197,17 @@ ActiveRecord::Schema.define(version: 2020_08_16_073715) do
     t.integer "conference_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "talk_id"
+    t.string "site"
+    t.string "url"
+    t.boolean "on_air"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "video_id"
+    t.string "slido_id"
   end
 
   add_foreign_key "booths", "conferences"

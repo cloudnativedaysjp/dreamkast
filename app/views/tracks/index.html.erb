@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="btn-group track-button d-flex row" role="group">
+    <% @tracks.each do |track| %>
+      <%= link_to "Track #{track.name}", "",
+          { class: "btn btn-outline-secondary track_button #{'active' if params[:id] == "#{track.number}"}", track_id: track.id.to_s } %>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-8 movie-wrap">
+      <div style="padding:56.25% 0 0 0;position:relative;">
+        <iframe src="" id="video" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+      </div>
+      <div id="track_information">
+        <h3 id="title"></h3>
+        <div id="time"></div>
+        <div id="speakers"></div>
+        <div id="abstract"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 ">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="#chat" class="nav-link active" data-toggle="tab">チャット</a>
+        </li>
+        <li class="nav-item">
+          <a href="#slido" class="nav-link" data-toggle="tab">質問</a>
+        </li>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <iframe src="" id="chat" class="tab-pane active" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+        <iframe src="" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  window.track_list=<%= @current["current"].to_json.html_safe %>;
+  window.selected_talk_id = 1;
+</script>
+<%= javascript_pack_tag 'tracks/index.js' %>

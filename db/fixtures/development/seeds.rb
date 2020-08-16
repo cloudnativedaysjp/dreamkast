@@ -77,13 +77,21 @@ SponsorType.seed(
 [
   [1, 'Diamond', 'スポンサー株式会社'],
   [2, 'Platinum', 'Sponsor, inc.'],
-  [4, 'Booth', 'スポンサー株式会社'],
-  [5, 'Booth', 'プラチナスポンサー株式会社'],
+  [4, 'Booth', 'スポンサー株式会社', true],
+  [5, 'Booth', 'プラチナスポンサー株式会社', false],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
   sponsor = Sponsor.find_by(name: sponsors_sponsor_type[2])
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
+
+  if sponsors_sponsor_type[1] == 'Booth'
+    Booth.seed(:conference_id, :sponsor_id) do |s|
+      s.conference_id = 1
+      s.sponsor_id = sponsor.id
+      s.published = sponsors_sponsor_type[3]
+    end
+  end
 end
 
 uploader = SponsorAttachmentFileUploader.new(:store)

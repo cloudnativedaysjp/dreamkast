@@ -1,11 +1,11 @@
 <div class="container">
   <h1 class="my-3 text-center">ブース</h1>
   <div class="row">
-    <% @sponsors.each do |sponsor| %>
+    <% @booths.each do |booth| %>
       <div class="col text-center">
-        <% if sponsor.sponsor_attachment_logo_image.present? %>
-          <%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
-          <%= sponsor.name %>
+        <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
+          <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+          <%= booth.sponsor.name %>
         <% end %>
       </div>
     <% end %>

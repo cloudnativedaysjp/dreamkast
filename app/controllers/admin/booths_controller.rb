@@ -1,4 +1,4 @@
-class Admin::SponsorsController < ApplicationController
+class Admin::BoothsController < ApplicationController
   include Secured
   include Logging
   include LogoutHelper
@@ -7,8 +7,7 @@ class Admin::SponsorsController < ApplicationController
 
   def index
     conference = Conference.first
-    @sponsor_types = conference.sponsor_types.order(order: "ASC")
-    @sponsors = Sponsor.all
+    @booths = conference.booths
   end
 
   def show
@@ -42,7 +41,6 @@ class Admin::SponsorsController < ApplicationController
 
   def sponsor_params
     params.require(:sponsor).permit(:description,
-                                    :booth_published,
                                     :attachment_text,
                                     :attachment_vimeo,
                                     sponsor_attachment_key_images_attributes: [:id, :title, :file, :_destroy],

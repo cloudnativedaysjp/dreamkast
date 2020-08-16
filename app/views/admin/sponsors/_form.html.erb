@@ -56,6 +56,10 @@
       <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
     <% end %>
 
+    <h4>Booth: Published?</h4>
+    <%= form.label :booth_published, "Published" %>
+    <%= form.check_box :booth_published %>
+
   <% end %>
     <div class="form-row form-group">
       <div class="col-12 col-md-6">

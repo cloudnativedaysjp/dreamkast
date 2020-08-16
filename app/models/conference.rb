@@ -5,4 +5,5 @@ class Conference < ApplicationRecord
   has_many :tracks
   has_many :sponsors
   has_many :sponsor_types
+  has_many :booths
 end

@@ -4,7 +4,7 @@ class BoothsController < ApplicationController
 
   def index
     conference = Conference.first
-    @sponsors = SponsorType.find_by(conference_id: conference.id, name: "Booth").sponsors
+    @booths = conference.booths
   end
 
   def show

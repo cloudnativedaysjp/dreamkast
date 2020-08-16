@@ -3,12 +3,13 @@ class BoothsController < ApplicationController
   before_action :set_profile
 
   def index
-    @conference = Conference.first
+    @conference = Conference.find_by(abbr: params[:event])
     @booths = @conference.booths
   end
 
   def show
-    @sponsor = Sponsor.find(params[:id])
+    @conference = Conference.find_by(abbr: params[:event])
+    @booth = @conference.booths.find(params[:id])
   end
 
   private

@@ -1,21 +1,21 @@
 <div class="row mb-3">
   <div class="col-10 mb-3 d-flex align-items-center">
-    <h2>Sponsors > <%= @sponsor.name %></h2>
+    <h2><%= sponsor.name %></h2>
   </div>
   <div class="col-2 mb-3">
-    <% if @sponsor.sponsor_attachment_logo_image.present? %>
-      <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo"%>
+    <% if sponsor.sponsor_attachment_logo_image.present? %>
+      <%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo"%>
     <% end %>
   </div>
 </div>
 
 <div class="row mb-3">
   <div class="col-12 mb-3">
-    <p><%= @sponsor.description %></p>
+    <p><%= sponsor.description %></p>
   </div>
 </div>
 
-<% @sponsor.sponsor_attachment_key_images.each do |image| %>
+<% sponsor.sponsor_attachment_key_images.each do |image| %>
   <% if image.file_data.present? %>
     <div class="row mb-3">
       <div class="col-12 mb-3">
@@ -25,16 +25,16 @@
   <% end %>
 <% end %>
 
-<% if @sponsor.sponsor_attachment_text.present? %>
+<% if sponsor.sponsor_attachment_text.present? %>
   <div class="row mb-3">
     <div class="col-12 mb-3">
-      <p><%= @sponsor.sponsor_attachment_text.text %></p>
+      <p><%= sponsor.sponsor_attachment_text.text %></p>
     </div>
   </div>
 <% end %>
 
-<% if @sponsor.sponsor_attachment_vimeo.present? %>
-  <% vimeo = @sponsor.sponsor_attachment_vimeo %>
+<% if sponsor.sponsor_attachment_vimeo.present? %>
+  <% vimeo = sponsor.sponsor_attachment_vimeo %>
   <div class="row mb-3">
     <div class="col-12 col-md-8">
       <h4><%= vimeo.title %></h4>
@@ -45,12 +45,12 @@
   </div>
 <% end %>
 
-<% if @sponsor.sponsor_attachment_pdfs.size > 0 %>
+<% if sponsor.sponsor_attachment_pdfs.size > 0 %>
   <div class="row mb-3">
     <div class="col-12 mb-3">
       <h4>PDF資料</h4>
       <ul>
-        <% @sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+        <% sponsor.sponsor_attachment_pdfs.each do |pdf| %>
           <li><%= link_to pdf.title, pdf.file_url %></li>
         <% end %>
       </ul>

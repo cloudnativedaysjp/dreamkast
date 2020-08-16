@@ -5,8 +5,10 @@
       <% @booths.each do |booth| %>
         <div class="col text-center">
           <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
-            <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
-            <%= booth.sponsor.name %>
+            <%= link_to booth_path(id: booth.id) do %>
+              <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+              <%= booth.sponsor.name %>
+            <% end %>
           <% end %>
         </div>
       <% end %>

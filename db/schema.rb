@@ -137,7 +137,6 @@ ActiveRecord::Schema.define(version: 2020_08_16_073715) do
 
   create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.string "abbr"
     t.text "description"
     t.string "url"
     t.bigint "conference_id", null: false

@@ -3,5 +3,6 @@ FactoryBot.define do
     id { 1 }
     name { 'CloudNative Days Tokyo 2020'}
     abbr { 'cndt2020' }
+    status { 0 }
   end
 end

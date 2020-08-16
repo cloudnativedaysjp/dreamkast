@@ -11,7 +11,7 @@
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
             <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
-            <% if @conference.opened? %>
+            <% if @conference.present? && @conference.opened? %>
               <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
           <% end %>

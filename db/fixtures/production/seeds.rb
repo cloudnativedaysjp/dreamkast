@@ -278,6 +278,13 @@ SponsorType.seed(
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
   sponsor = Sponsor.find_by(abbr: sponsors_sponsor_type[2])
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
+  if sponsors_sponsor_type[1] == 'Booth'
+    Booth.seed(:conference_id, :sponsor_id) do |s|
+      s.conference_id = 1
+      s.sponsor_id = sponsor.id
+      s.published = fales
+    end
+  end
 end
 
 [

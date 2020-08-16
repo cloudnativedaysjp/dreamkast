@@ -5,7 +5,13 @@ csv = CSV.read(File.join(Rails.root, 'db/speakers.csv'), headers: true)
 Speaker.seed(csv.map(&:to_hash))
 
 csv = CSV.read(File.join(Rails.root, 'db/talks_speakers.csv'), headers: true)
-TalksSpeaker.seed(csv.map(&:to_hash))
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
 
 Profile.seed(
   {

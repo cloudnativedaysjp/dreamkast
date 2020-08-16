@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 2020_08_16_083019) do
     t.boolean "published"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["conference_id"], name: "index_boothes_on_conference_id"
-    t.index ["sponsor_id"], name: "index_boothes_on_sponsor_id"
+    t.index ["conference_id"], name: "index_booths_on_conference_id"
+    t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
   create_table "conference_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

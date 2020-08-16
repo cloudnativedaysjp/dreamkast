@@ -6,6 +6,8 @@ class Admin::SponsorsController < ApplicationController
   before_action :is_admin?
 
   def index
+    conference = Conference.first
+    @sponsor_types = conference.sponsor_types.order(order: "ASC")
     @sponsors = Sponsor.all
   end
 

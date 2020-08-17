@@ -1,4 +1,4 @@
-Rails.application.config.session_store :redis_store, {
+Rails.application.config.session_store :redis_store, **{
     servers: ENV['REDIS_URL'],
     expire_after: 30.minutes
 }

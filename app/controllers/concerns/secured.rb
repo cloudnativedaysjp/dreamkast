@@ -15,7 +15,7 @@ module Secured
     end
 
     def new_user?
-      unless ["profiles", "timetable", "speakers", "event"].include?(controller_name) || controller_path == "talks"
+      unless ["profiles", "timetable", "speakers", "event", "contents"].include?(controller_name) || controller_path == "talks"
         unless Profile.find_by(email: @current_user[:info][:email])
           redirect_to "/#{params[:event]}/registration"
         end

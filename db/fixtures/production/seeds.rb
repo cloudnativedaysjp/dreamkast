@@ -197,7 +197,21 @@ Sponsor.seed(
     abbr: 'Plaid',
     conference_id: 1,
     url: 'https://plaid.co.jp/'
-  }
+  },
+  {
+    id: 26,
+    name: '日本電気株式会社',
+    abbr: 'nec',
+    conference_id: 1,
+    url: 'https://jpn.nec.com/'
+  },
+  {
+    id: 27,
+    name: 'Rancher Labs, Inc.',
+    abbr: 'rancherlabs',
+    conference_id: 1,
+    url: 'https://www.rancher.co.jp/'
+  },
 )
 
 SponsorType.seed(
@@ -272,7 +286,10 @@ SponsorType.seed(
   [31, 'CM', 'legalforce'],
   [32, 'Gold', 'mirantis'],
   [33, 'Booth', 'Elastic'],
-  [34, 'Tool', 'Plaid']
+  [34, 'Tool', 'Plaid'],
+  [35, 'Gold', 'nec'],
+  [36, 'Platinum', 'rancherlabs'],
+  [37, 'Booth', 'rancherlabs'],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
@@ -297,7 +314,7 @@ end
   [14, 'microsoft', 'sponsors/microsoft.png'],
   [15, 'nttdata', 'sponsors/nttdata.png'],
   [16, 'oracle', 'sponsors/oracle.png'],
-  # [17, 'rancherlabs', 'sponsors/rancherlabs.png'],
+  [17, 'rancherlabs', 'sponsors/rancherlabs.png'],
   [18, 'redhat', 'sponsors/redhat.png'],
   [19, 'sios', 'sponsors/sios.png'],
   [20, 'sysdig', 'sponsors/sysdig.png'],
@@ -307,6 +324,7 @@ end
   [24, 'mirantis', 'sponsors/mirantis.png'],
   [25, 'Elastic', 'sponsors/elastic.png'],
   [26, 'Plaid', 'sponsors/plaid.png'],
+  [27, 'nec', 'sponsors/nec.png'],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

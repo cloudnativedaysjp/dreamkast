@@ -22,8 +22,7 @@ window.update_track = function(track){
             console.log(track)
             tracker.track("watch_video", {
                 track_name: track.track_name,
-                talk_id: track.id,
-                datetime: new Date(),
+                talk_id: track.id
             });
         }, 120 * 1000);
     }

@@ -1,4 +1,5 @@
 window.update_track = function(track){
+    clearInterval(window.timer);
     if(track === undefined || track === null){
         document.getElementById("video").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("chat").contentWindow.location.replace("/cndt2020/tracks/blank");
@@ -17,6 +18,14 @@ window.update_track = function(track){
         document.getElementById("speakers").innerHTML = track.speakers;
         document.getElementById("time").innerHTML = track.start_time + "-" + track.end_time;
         window.selected_talk_id = track.id;
+        window.timer = setInterval(function(){
+            console.log(track)
+            tracker.track("watch_video", {
+                track_name: track.track_name,
+                talk_id: track.id,
+                datetime: new Date(),
+            });
+        }, 120 * 1000);
     }
     document.querySelectorAll(".track_button").forEach(function(a){a.classList.remove('active')});
     document.querySelector('a[track_id="' + selected_track + '"]').classList.toggle('active');

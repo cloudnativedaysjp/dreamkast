@@ -12,6 +12,8 @@ class DashboardController < ApplicationController
   private
 
   def set_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email])
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
   end
 end

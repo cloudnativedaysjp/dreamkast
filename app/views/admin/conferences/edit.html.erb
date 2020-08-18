@@ -1,0 +1,15 @@
+<div class="container">
+  <%= render :partial => 'admin/navigator' %>
+
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <h2>Conference > <%= @conference.name %></h2>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="registration-form py-3 px-md-5 w-100">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

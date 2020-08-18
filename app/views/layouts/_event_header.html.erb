@@ -12,6 +12,9 @@
             <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
             <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
             <li class="nav-item"><%= link_to "Events", contents_path, class: "nav-link js-scroll-trigger" %></li>
+            <% if @conference.present? && @conference.opened? %>
+              <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
+            <% end %>
           <% end %>
         <% end %>
         <li class="nav-item dropdown">

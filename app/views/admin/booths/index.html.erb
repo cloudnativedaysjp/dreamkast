@@ -1,0 +1,25 @@
+<div class="container">
+  <%= render 'admin/navigator' %>
+
+  <div class="row">
+    <h2>Booths</h2>
+  </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Published</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @booths.each do |booth| %>
+        <tr>
+          <td><%= link_to booth.sponsor.name, "/admin/sponsors/#{booth.sponsor.id}" %></td>
+          <td><%=  booth.published %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,3 +1,6 @@
+DUMMY_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+
+
 csv = CSV.read(File.join(Rails.root, 'db/talks.csv'), headers: true)
 Talk.seed(csv.map(&:to_hash))
 
@@ -59,6 +62,24 @@ Sponsor.seed(
     conference_id: 1,
     description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。",
     url: "https://example.com/"
+  },
+  {
+    id: 4,
+    name: "スポンサー4",
+    conference_id: 1,
+    url: "https://example.com/"
+  },
+  {
+    id: 5,
+    name: "スポンサー5",
+    conference_id: 1,
+    url: "https://example.com/"
+  },
+  {
+    id: 6,
+    name: "スポンサー6",
+    conference_id: 1,
+    url: "https://example.com/"
   }
 )
 
@@ -72,17 +93,35 @@ SponsorType.seed(
     conference_id: 1,
     name: "Platinum",
     order: 2,
+  },
+  { id: 3,
+    conference_id: 1,
+    name: "Booth",
+    order: 2,
   }
 )
 
 [
   [1, 'Diamond', 'スポンサー株式会社'],
   [2, 'Platinum', 'Sponsor, inc.'],
+  [4, 'Booth', 'スポンサー株式会社', true],
+  [5, 'Booth', 'プラチナスポンサー株式会社', true],
+  [6, 'Booth', 'スポンサー4', true],
+  [7, 'Booth', 'スポンサー5', true],
+  [8, 'Booth', 'スポンサー6', true],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
   sponsor = Sponsor.find_by(name: sponsors_sponsor_type[2])
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
+
+  if sponsors_sponsor_type[1] == 'Booth'
+    Booth.seed(:conference_id, :sponsor_id) do |s|
+      s.conference_id = 1
+      s.sponsor_id = sponsor.id
+      s.published = sponsors_sponsor_type[3]
+    end
+  end
 end
 
 uploader = SponsorAttachmentFileUploader.new(:store)
@@ -102,6 +141,10 @@ uploaded_key_image_2 = uploader.upload(key_image_2)
 [
   [1, 'スポンサー株式会社', 'trademark.png'],
   [2, 'Sponsor, inc.', 'trademark.png'],
+  [3, 'プラチナスポンサー株式会社', 'trademark.png'],
+  [4, 'スポンサー4', 'trademark.png'],
+  [5, 'スポンサー5', 'trademark.png'],
+  [6, 'スポンサー6', 'trademark.png']
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],
@@ -113,28 +156,28 @@ uploaded_key_image_2 = uploader.upload(key_image_2)
 end
 
 SponsorAttachment.seed(
-  { id: 3,
+  { id: 7,
     sponsor_id: 1,
     type: 'SponsorAttachmentText',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    text: DUMMY_TEXT
   },
-  { id: 4,
+  { id: 8,
     sponsor_id: 1,
     type: 'SponsorAttachmentPdf',
     title: 'ダミープレゼンテーション',
     file_data: uploaded_pdf.to_json
   },
-  { id: 5,
+  { id: 9,
     sponsor_id: 1,
     type: 'SponsorAttachmentVimeo',
     url: 'https://player.vimeo.com/video/442956490'
   },
-  { id: 6,
+  { id: 10,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_1.to_json
   },
-  { id: 7,
+  { id: 11,
     sponsor_id: 1,
     type: 'SponsorAttachmentKeyImage',
     file_data: uploaded_key_image_2.to_json

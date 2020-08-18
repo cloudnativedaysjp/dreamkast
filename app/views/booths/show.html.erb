@@ -1,0 +1,7 @@
+<div class="container">
+  <% if @booth.published %>
+    <%= render 'booth', sponsor: @booth.sponsor %>
+  <% else %>
+    Booth is not opened.
+  <% end %>
+</div>

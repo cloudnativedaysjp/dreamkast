@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Admin
   get 'admin' => 'admin#show'
+  get 'admin/debug' => 'admin#debug'
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
   get 'admin/talks' => 'admin#talks'
@@ -25,6 +26,8 @@ Rails.application.routes.draw do
   delete 'admin/destroy_user' => 'admin#destroy_user'
   namespace :admin do
     resources :sponsors, only: [:index, :show, :edit, :update]
+    resources :booths, only: [:index, :show]
+    resources :conferences, only: [:index, :show, :edit, :update]
   end
 
   scope ":event" do
@@ -43,6 +46,7 @@ Rails.application.routes.draw do
     get 'privacy' => 'event#privacy'
     get 'coc' => 'event#coc'
 
+    resources :booths, only: [:index, :show]
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do

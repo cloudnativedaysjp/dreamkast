@@ -1,0 +1,19 @@
+<div class="container">
+  <h1 class="my-3 text-center">ブース</h1>
+  <div class="row">
+    <% if @conference.opened? %>
+      <% @booths.each do |booth| %>
+        <div class="col-12 col-md-4 my-3 text-center">
+          <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
+            <%= link_to booth_path(id: booth.id) do %>
+              <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+              <%= booth.sponsor.name %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= @conference.name %> is not opened.
+    <% end %>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_134648) do
+ActiveRecord::Schema.define(version: 2020_08_16_083019) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "booths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.boolean "published"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_booths_on_conference_id"
+    t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
+  end
+
   create_table "conference_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
@@ -44,6 +54,8 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "abbr"
+    t.integer "status", default: 0, null: false
+    t.index ["status"], name: "index_conferences_on_status"
   end
 
   create_table "form_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -200,6 +212,8 @@ ActiveRecord::Schema.define(version: 2020_08_07_134648) do
     t.string "slido_id"
   end
 
+  add_foreign_key "booths", "conferences"
+  add_foreign_key "booths", "sponsors"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"

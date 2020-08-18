@@ -5,19 +5,23 @@
     <h2>Sponsors</h2>
   </div>
   <div class="row">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Name</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @sponsors.each do |sponsor| %>
+    <% @sponsor_types.each do |sponsor_type| %>
+      <h3><%= sponsor_type.name %></h3>
+      <table class="table table-striped">
+        <thead>
         <tr>
-          <td><%= link_to sponsor.name, "/admin/sponsors/#{sponsor.id}" %></td>
+          <th scope="col">Name</th>
         </tr>
-      <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        <% sponsor_type.sponsors.each do |sponsor| %>
+          <tr>
+            <td><%= link_to sponsor.name, "/admin/sponsors/#{sponsor.id}" %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
   </div>
 </div>

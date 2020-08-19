@@ -2,7 +2,7 @@
     <%= link_to "Conference", "/admin", { class: "btn btn-outline-secondary #{'active' if action_name == 'show'}", "data-turbolinks" => false } %>
     <%= link_to "View accesslog", "/admin/accesslog", { class: "btn btn-outline-secondary #{'active' if action_name == 'accesslog'}", "data-turbolinks" => false } %>
     <%= link_to "Users", "/admin/users", { class: "btn btn-outline-secondary #{'active' if action_name == 'users'}", "data-turbolinks" => false } %>
-    <%= link_to "Speakers", "/admin/speakers", { class: "btn btn-outline-secondary #{'active' if action_name == 'speakers' || action_name == 'edit_speaker' }", "data-turbolinks" => false } %>
+    <%= link_to "Speakers", admin_speakers_path, { class: "btn btn-outline-secondary #{'active' if action_name == 'speakers' || action_name == 'edit_speaker' }", "data-turbolinks" => false } %>
     <%= link_to "Talks", "/admin/talks", { class: "btn btn-outline-secondary #{'active' if action_name == 'talks'}", "data-turbolinks" => false } %>
     <%= link_to "Statistics", "/admin/statistics", { class: "btn btn-outline-secondary #{'active' if action_name == 'statistics'}", "data-turbolinks" => false } %>
     <%= link_to "Sponsors", "/admin/sponsors", { class: "btn btn-outline-secondary #{'active' if action_name == 'sponsors' || action_name == 'show_sponsor' }", "data-turbolinks" => false } %>

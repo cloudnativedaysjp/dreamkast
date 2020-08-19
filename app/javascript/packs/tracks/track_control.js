@@ -19,7 +19,6 @@ window.update_track = function(track){
         document.getElementById("time").innerHTML = track.start_time + "-" + track.end_time;
         window.selected_talk_id = track.id;
         window.timer = setInterval(function(){
-            console.log(track)
             tracker.track("watch_video", {
                 track_name: track.track_name,
                 talk_id: track.id

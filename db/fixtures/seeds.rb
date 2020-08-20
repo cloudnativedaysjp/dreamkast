@@ -5,7 +5,10 @@ Conference.seed(
 
 ConferenceDay.seed(
   {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1},
-  {id: 2, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}
+  {id: 2, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1},
+  {id: 3, date: "2020-09-02", start_time: "19:00", end_time: "21:00", conference_id: 1}, #rejekts
+  {id: 4, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}, #CM
+  {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}, #Mini session
 )
 
 Industry.seed(

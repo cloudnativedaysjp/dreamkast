@@ -1,4 +1,5 @@
 <% @conference.conference_days.each do |conference_day| %>
+  <% if conference_day.id == 1 || conference_day.id == 2  %>
   <section class="timetable">
     <div class="grid" style="--rows: 1">
       <h2><%= conference_day.date %></h2>
@@ -47,6 +48,7 @@
       <% end %>
     </div>
   </section>
+  <% end %>
 <% end %>
 <% if defined? form %>
   <div class="timetable-footer">

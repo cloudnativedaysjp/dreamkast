@@ -9,7 +9,7 @@
         <h2>Bulk insert TALKS from CSV</h2>
         <div class="col-12 form-group">
         
-        <%= form_with(url: '/admin/bulk_insert_talks', multipart: true) do |form| %>
+        <%= form_with(url: admin_bulk_insert_talks, multipart: true) do |form| %>
             <%= form.file_field :file %>
             <%= form.submit "インポート" %>
             ※ Bulk insertを行うと既存のレコードは全て削除されます。
@@ -20,7 +20,7 @@
         <h2>Bulk insert TALKS-SPEAKER from CSV</h2>
         <div class="col-12 form-group">
         
-        <%= form_with(url: '/admin/bulk_insert_talks_speaker', multipart: true) do |form| %>
+        <%= form_with(url: admin_bulk_insert_talks_speaker, multipart: true) do |form| %>
             <%= form.file_field :file %>
             <%= form.submit "インポート" %>
             ※ Bulk insertを行うと既存のレコードは全て削除されます。

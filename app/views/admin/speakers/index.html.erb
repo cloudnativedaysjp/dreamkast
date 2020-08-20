@@ -1,5 +1,5 @@
 <div class="container">
-    <%= render 'navigator' %>
+    <%= render 'admin/navigator' %>
     <% flash.each do |message_type, message| %>
         <div class="alert alert-info" role="alert">
         <%= message %>
@@ -9,7 +9,7 @@
         <h2>Bulk insert from CSV</h2>
         <div class="col-12 form-group">
         
-        <%= form_with(url: '/admin/bulk_insert_speakers', multipart: true) do |form| %>
+        <%= form_with(url: admin_bulk_insert_speakers_path, multipart: true) do |form| %>
             <%= form.file_field :file %>
             <%= form.submit "インポート" %>
             ※ Bulk insertを行うと既存のレコードは全て削除されます。
@@ -19,7 +19,7 @@
         <div class="row">
         <h2>Export to CSV</h2>
         <div class="col-12 form-group">
-            <%= button_to 'エクスポート', '/admin/export_speakers', {method: :get } %>
+            <%= button_to 'エクスポート', admin_export_speakers_path, {method: :get } %>
         </div>
     </div>
     <div class="row">

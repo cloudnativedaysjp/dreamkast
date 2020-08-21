@@ -56,6 +56,15 @@
       <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
     <% end %>
 
+    <h4>Booth: URL for communication (e.g. Zoom)</h4>
+    <div class="form-row form-group">
+      <div class="col-12 col-mb-6">
+        <%= form.label :attachment_zoom, "URL" %>
+        <%= form.text_field :attachment_zoom, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
+      </div>
+    </div>
+
+
     <h4>Booth: Published?</h4>
     <%= form.label :booth_published, "Published" %>
     <%= form.check_box :booth_published %>

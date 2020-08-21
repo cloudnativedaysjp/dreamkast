@@ -45,6 +45,7 @@ class Admin::SponsorsController < ApplicationController
                                     :booth_published,
                                     :attachment_text,
                                     :attachment_vimeo,
+                                    :attachment_zoom,
                                     sponsor_attachment_key_images_attributes: [:id, :title, :file, :_destroy],
                                     sponsor_attachment_pdfs_attributes: [:id, :title, :file, :_destroy])
   end

@@ -57,3 +57,14 @@
     </div>
   </div>
 <% end %>
+
+<% if sponsor.sponsor_attachment_zoom.present? %>
+  <% url = sponsor.sponsor_attachment_zoom %>
+  <div class="row mb-3  justify-content-center">
+    <div class="col-12 col-md-8">
+      <%= link_to(url.url) do %>
+        <button type="button" class="btn btn-info btn-lg btn-block">スポンサーの人と話をする(外部URLを開きます)</button>
+    <% end %>
+    </div>
+  </div>
+<% end %>

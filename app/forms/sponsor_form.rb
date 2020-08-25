@@ -99,7 +99,7 @@ class SponsorForm
       if sponsor.sponsor_attachment_text.present?
         sponsor.sponsor_attachment_text.update!(text: attachment_text)
       else
-        text = SponsorAttachmentText.new(text: text, sponsor_id: sponsor.id)
+        text = SponsorAttachmentText.new(text: attachment_text, sponsor_id: sponsor.id)
         text.save!
       end
 

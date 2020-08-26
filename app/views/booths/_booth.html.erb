@@ -28,7 +28,7 @@
 <% if sponsor.sponsor_attachment_text.present? %>
   <div class="row mb-3">
     <div class="col-12 mb-3">
-      <p><%= sponsor.sponsor_attachment_text.text %></p>
+      <p><%= simple_format(h(auto_link(sponsor.sponsor_attachment_text.text, html: { target: '_blank' }))) %></p>
     </div>
   </div>
 <% end %>

@@ -22,7 +22,8 @@ Rails.application.routes.draw do
     resources :speakers, only: [:index, :edit, :update]
     post 'bulk_insert_speakers' => 'speakers#bulk_insert_speakers'
     get 'export_speakers' => 'speakers#export_speakers'
-    resources :talks, only: [:index, :update]
+    resources :talks, only: [:index]
+    put 'talks' => 'talks#update_talks'
     post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
     post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
   end

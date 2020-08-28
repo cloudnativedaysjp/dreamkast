@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
     @talk_cagetogies = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all
+    @booths = Booth.where(conference_id: @conference.id)
   end
 
   private

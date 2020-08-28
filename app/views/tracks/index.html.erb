@@ -38,6 +38,23 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <% if @conference.opened? %>
+      <div class="col-12 mb-3 py-1 my-3 text-center booths-header">
+        <h4>↓ ブースにお立ち寄りください ↓</h4>
+      </div>
+
+      <div class="col-12 mb-3">
+        <%= render 'dashboard/booth_section' %>
+      </div>
+    <% else %>
+      <div class="col-12">
+        <h4 class="text-center booths-header"><%= @conference.name %> is not opened.</h4>
+      </div>
+    <% end %>
+  </div>
+
 </div>
 <script>
   window.track_list=<%= @current["current"].to_json.html_safe %>;

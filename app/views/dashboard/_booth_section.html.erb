@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <% @booths.shuffle.each do |booth| %>
+      <div class="col-12 col-sm-4 my-3 text-center">
+        <div class="booth-frame">
+          <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
+            <%= link_to booth_path(id: booth.id) do %>
+              <%= image_tag booth.sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+              <%= booth.sponsor.name %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

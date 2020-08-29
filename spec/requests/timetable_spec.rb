@@ -9,6 +9,7 @@ describe TimetableController, type: :request do
       create(:cndt2020)
       create(:day1)
       create(:day2)
+      create(:rejekt)
       create(:track1)
       create(:track2)
       create(:track3)
@@ -21,6 +22,7 @@ describe TimetableController, type: :request do
 
     let!(:talk1) { create(:talk1) }
     let!(:talk2) { create(:talk2) }
+    let!(:talk_rejekt) { create(:talk_rejekt) }
 
     describe 'not logged in' do
       context 'get exists event\'s timetables' do
@@ -31,6 +33,7 @@ describe TimetableController, type: :request do
           expect(response.body).to_not include '<form action="profiles/talks"'
           expect(response.body).to include talk1.title
           expect(response.body).to include talk2.title
+          expect(response.body).to_not include talk_rejekt.title
         end
       end
 
@@ -58,6 +61,7 @@ describe TimetableController, type: :request do
           expect(response.body).to include '<form action="profiles/talks"'
           expect(response.body).to include talk1.title
           expect(response.body).to include talk2.title
+          expect(response.body).to_not include talk_rejekt.title
         end
       end
 

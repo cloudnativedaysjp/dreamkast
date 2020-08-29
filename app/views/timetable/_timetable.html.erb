@@ -1,5 +1,5 @@
 <% @conference.conference_days.each do |conference_day| %>
-  <% if conference_day.id == 1 || conference_day.id == 2  %>
+  <% unless conference_day.internal  %>
   <section class="timetable">
     <div class="grid" style="--rows: 1">
       <h2><%= conference_day.date %></h2>

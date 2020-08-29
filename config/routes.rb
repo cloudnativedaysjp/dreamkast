@@ -12,11 +12,7 @@ Rails.application.routes.draw do
   get 'admin/debug' => 'admin#debug'
   get 'admin/accesslog' => 'admin#accesslog'
   get 'admin/users' => 'admin#users'
-  get 'admin/talks' => 'admin#talks'
-  put 'admin/talks' => 'admin#update_talks'
   get 'admin/statistics' => 'admin#statistics'
-  post 'admin/bulk_insert_talks' => 'admin#bulk_insert_talks'
-  post 'admin/bulk_insert_talks_speaker' => 'admin#bulk_insert_talks_speaker'
   get 'admin/export_statistics' => 'admin#export_statistics'
   delete 'admin/destroy_user' => 'admin#destroy_user'
   namespace :admin do
@@ -26,6 +22,10 @@ Rails.application.routes.draw do
     resources :speakers, only: [:index, :edit, :update]
     post 'bulk_insert_speakers' => 'speakers#bulk_insert_speakers'
     get 'export_speakers' => 'speakers#export_speakers'
+    resources :talks, only: [:index]
+    put 'talks' => 'talks#update_talks'
+    post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
+    post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
   end
 
   scope ":event" do

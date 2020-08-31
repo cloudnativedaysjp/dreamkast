@@ -58,7 +58,7 @@
   </div>
 <% end %>
 
-<% if sponsor.sponsor_attachment_zoom.present? %>
+<% if sponsor.sponsor_attachment_zoom.present? && sponsor.sponsor_attachment_zoom.url != ""%>
   <% url = sponsor.sponsor_attachment_zoom %>
   <div class="row mb-3  justify-content-center">
     <div class="col-12 col-md-8">

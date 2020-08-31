@@ -9,8 +9,8 @@ class TimetableController < ApplicationController
   end
 
   def index
-    @conference = Conference.includes(:talks).find_by(abbr: event_name)
-    @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
+    @conference = Conference.includes(conference_days: :talks).includes(talks: :track).find_by(abbr: event_name)
+    @talks = Talk.includes(:track).eager_load(:talk_category, :talk_difficulty).all
     @talk_cagetogies = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all
   end

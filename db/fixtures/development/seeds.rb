@@ -80,6 +80,12 @@ Sponsor.seed(
     name: "スポンサー6",
     conference_id: 1,
     url: "https://example.com/"
+  },
+  {
+    id: 7,
+    name: "Special Sponsor",
+    conference_id: 1,
+    url: "https://example.com/"
   }
 )
 
@@ -87,17 +93,22 @@ SponsorType.seed(
   { id: 1,
     conference_id: 1,
     name: "Diamond",
-    order: 1,
+    order: 2,
   },
   { id: 2,
     conference_id: 1,
     name: "Platinum",
-    order: 2,
+    order: 3,
   },
   { id: 3,
     conference_id: 1,
     name: "Booth",
-    order: 2,
+    order: 4,
+  },
+  { id: 4,
+    conference_id: 1,
+    name: "Special Collaboration",
+    order: 1,
   }
 )
 
@@ -109,6 +120,7 @@ SponsorType.seed(
   [6, 'Booth', 'スポンサー4', true],
   [7, 'Booth', 'スポンサー5', true],
   [8, 'Booth', 'スポンサー6', true],
+  [9, 'Special Collaboration', 'Special Sponsor', true],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])
@@ -144,7 +156,8 @@ uploaded_key_image_2 = uploader.upload(key_image_2)
   [3, 'プラチナスポンサー株式会社', 'trademark.png'],
   [4, 'スポンサー4', 'trademark.png'],
   [5, 'スポンサー5', 'trademark.png'],
-  [6, 'スポンサー6', 'trademark.png']
+  [6, 'スポンサー6', 'trademark.png'],
+  [7, 'Special Sponsor', 'trademark.png'],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

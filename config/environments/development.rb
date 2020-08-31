@@ -62,3 +62,11 @@ Rails.application.configure do
   config.web_console.whitelisted_ips = '0.0.0.0/0' #追記
   config.web_console.permissions = '0.0.0.0/0'
 end
+
+AppName::Application.configure do
+  config.after_initialize do
+    Bullet.enable = true # Bulletプラグインを有効
+    Bullet.alert = true # JavaScriptでの通知
+    Bullet.rails_logger = true # Railsログに出力
+  end
+end

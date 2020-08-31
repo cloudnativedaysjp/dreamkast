@@ -48,6 +48,7 @@ group :development do
   gem 'ruby-debug-ide'
   gem 'debase'
   gem 'pry-rails'
+  gem 'bullet'
 end
 
 group :test do

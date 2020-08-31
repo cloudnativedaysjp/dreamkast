@@ -32,7 +32,7 @@ class EventController < ApplicationController
 
   def sponsor_logo_class(sponsor_type)
     case sponsor_type.name
-    when "Diamond"
+    when "Diamond", "Special Collaboration"
       "col-12 col-md-4 my-3 m-md-3"
     when "Platinum"
       "col-12 col-md-3 my-3 m-md-3"

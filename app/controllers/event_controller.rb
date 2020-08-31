@@ -5,10 +5,14 @@ class EventController < ApplicationController
   before_action :set_profile
 
   def show
-    if session[:userinfo].present?
-      redirect_to dashboard_path
-    end
     @conference = Conference.first
+    if session[:userinfo].present?
+      if @conference.opened?
+        redirect_to tracks_path
+      else
+        redirect_to dashboard_path
+      end
+    end
     @sponsor_types = @conference.sponsor_types.order(order: "ASC")
   end
   

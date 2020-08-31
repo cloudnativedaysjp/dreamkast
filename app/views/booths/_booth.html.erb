@@ -36,10 +36,9 @@
 <% if sponsor.sponsor_attachment_vimeo.present? %>
   <% vimeo = sponsor.sponsor_attachment_vimeo %>
   <div class="row mb-3">
-    <div class="col-12 col-md-8">
-      <h4><%= vimeo.title %></h4>
+    <div class="col-12 mb-3 text-center">
       <div class="movie-wrap">
-        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="<%= vimeo.url %>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
   </div>

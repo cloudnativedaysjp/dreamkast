@@ -157,7 +157,7 @@ uploaded_key_image_2 = uploader.upload(key_image_2)
   [4, 'スポンサー4', 'trademark.png'],
   [5, 'スポンサー5', 'trademark.png'],
   [6, 'スポンサー6', 'trademark.png'],
-  [7, 'Special Sponsor', 'trademark.png'],
+  [12, 'Special Sponsor', 'trademark.png'],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

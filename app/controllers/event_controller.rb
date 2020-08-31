@@ -5,7 +5,7 @@ class EventController < ApplicationController
   before_action :set_profile
 
   def show
-    @conference = Conference.first
+    @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).find_by(abbr: event_name)
     if session[:userinfo].present?
       if @conference.opened?
         redirect_to tracks_path
@@ -13,7 +13,6 @@ class EventController < ApplicationController
         redirect_to dashboard_path
       end
     end
-    @sponsor_types = @conference.sponsor_types.order(order: "ASC")
   end
   
   def logged_in_using_omniauth?

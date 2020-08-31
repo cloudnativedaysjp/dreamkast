@@ -5,7 +5,7 @@ class EventController < ApplicationController
   before_action :set_profile
 
   def show
-    @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).find_by(abbr: event_name)
+    @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).order("sponsor_types.order ASC").find_by(abbr: event_name)
     if session[:userinfo].present?
       if @conference.opened?
         redirect_to tracks_path

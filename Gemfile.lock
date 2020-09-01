@@ -172,6 +172,7 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-timeout (0.6.0)
     rails (6.0.3.1)
       actioncable (= 6.0.3.1)
       actionmailbox (= 6.0.3.1)
@@ -323,6 +324,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 0.1)
   pry-rails
   puma (~> 4.1)
+  rack-timeout
   rails (~> 6.0.3, >= 6.0.3.1)
   rails_autolink
   redis-rails

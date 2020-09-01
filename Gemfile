@@ -75,3 +75,5 @@ gem "aws-sdk-s3", "~> 1.14"
 gem 'seed-fu'
 
 gem 'rails_autolink'
+
+gem "rack-timeout"

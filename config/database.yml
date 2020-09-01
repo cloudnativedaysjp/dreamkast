@@ -30,3 +30,4 @@ production:
   url: <%= ENV['DATABASE_URL'] || ENV.fetch('CLEARDB_DATABASE_URL', '').sub('mysql://', 'mysql2://') %>
   encoding: utf8mb4
   adapter: mysql2
+  pool: 50

@@ -6,16 +6,41 @@
     <% end %>
   </div>
 
-  <div class="row">
+  <div class="row main-pane">
     <div class="col-12 col-md-8 movie-wrap">
       <div style="padding:56.25% 0 0 0;position:relative;">
         <iframe src="" id="video" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
       </div>
-      <div id="track_information">
+      <div id="track_information" class="mb-3">
         <h3 id="title"></h3>
         <div id="time"></div>
         <div id="speakers"></div>
         <div id="abstract"></div>
+      </div>
+
+      <div class="talk accordion mb-3" id="registered-talk">
+        <h4 class="">
+          <button class="btn btn-inline text-left" type="button" data-toggle="collapse" data-target="#registered-talk-list" aria-expanded="true" aria-controls="registered-talk-list">
+            ▼ 聴講予定セッション一覧
+          </button>
+        </h4>
+
+        <div id="registered-talk-list" class="collapse" aria-labelledby="headingOne" data-parent="#registered-talk">
+          <% @profile.talks.each do |talk| %>
+            <div class="category_difficulty">
+              <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+                <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+              <% end %>
+              <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+            </div>
+            <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="">
+        
       </div>
     </div>
     <div class="col-12 col-md-4 ">

@@ -29,41 +29,45 @@
     </div>
     <div class="row">
         <h2>Talks</h2>
-        <table class="table table-striped talks_table" >
+        <table class="table table-striped talks_table" data-toggle="table" data-search="true" data-show-columns="true" data-filter-control="true" data-show-search-clear-button="true">
             <thead>
-                <tr>
+                <tr class="tr-class-1">
                     <th scope="col">Speakers</th>
                     <th scope="col">Title / Abstract</th>
-                    <th scope="col">Track</th>
-                    <th scope="col">DateTime</th>
+                    <th data-field="track" data-filter-control="select" scope="col">Track</th>
+                    <th data-field="data" data-filter-control="select" scope="col">Date</th>
+                    <th data-field="time" data-filter-control="select" scope="col"></th>
                     <th scope="col">Vimeo ID</th>
                     <th scope="col">Sli.do ID</th>
-                    <th scope="col">On Air</th>
+                    <th data-field="on-air" data-filter-control="select" scope="col">On Air</th>
                 </tr>
             </thead>
             <tbody>
                 <%= form_with(url: admin_talks_path, local: true, id: "talk_list", method: "put") do |f| %>
-                    <% @talks.each do |talk| %>
-                    <tr>
-                        <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-                        <td>
+
+                    <% @talks.each_with_index do |talk, index| %>
+                    <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
+                        <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>"><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+                        <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
                             <h5><%= talk.title %></h5>
                             <p class="abstract"><%= talk.abstract[0..30] %></p>
                         </td>
-                        <td><%= talk.track.name %></td>
-                        <td>
+                        <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %>"><%= talk.track.name %></td>
+                        <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %>">
                             <%= talk.date %>
-                            <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
                         </td>
-                        <td>
+                      <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %>">
+                        <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+                      </td>
+                      <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %>">
                             <% video_id = talk.video ? talk.video.video_id : nil %>
                             <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "vimeo id", size: "9" %>
                         </td>
-                        <td>
+                        <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %>">
                             <% slido_id = talk.video ? talk.video.slido_id : nil %>
                             <%= text_field_tag "video[#{talk.id}][slido_id]", slido_id ,placeholder: "sli.do id", size: "8" %>
                         </td>
-                        <td class="on_air_group btn-group-toggle">
+                        <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> on_air_group btn-group-toggle">
                             <% if talk.video %>
                             <label class="btn on_air_button <%= "active" if talk.video.on_air %>">
                                 <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track.name %>>
@@ -73,6 +77,7 @@
                     </tr>
                     <% end %>
                 <% end %>
+
             </tbody>
         </table>
     </div>

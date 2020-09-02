@@ -1,10 +1,28 @@
+.tracks{
+    background-color: rgba($color: #FFF, $alpha: 0.8);
+}
+
 #track_information{
-    background-color: rgba($color: #FFF, $alpha: 1.0);
 }
 .movie-wrap{
-    background-color: rgba($color: #FFF, $alpha: 1.0);
 }
 
 .tool-pane .nav-item{
     background-color: white;
+}
+
+.booth-frame {
+    background-color: #FFF;
+    border-radius: 5px;
+    border: solid 1px #CCC;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.booths-header {
+    background-color: #FFF;
+    //border-radius: 5px;
+    //border: solid 1px #CCC;
+    overflow: hidden;
+    padding: 10px;
 }

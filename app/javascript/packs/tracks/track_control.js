@@ -2,7 +2,6 @@ window.update_track = function(track){
     clearInterval(window.timer);
     if(track === undefined || track === null){
         document.getElementById("video").contentWindow.location.replace("/cndt2020/tracks/blank");
-        document.getElementById("chat").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("slido").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("title").innerHTML = "放送なし";
         document.getElementById("abstract").innerHTML = "";
@@ -11,7 +10,6 @@ window.update_track = function(track){
         window.selected_talk_id = "0";
     }else{
         document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/" + track.video_id + "?autoplay=1&loop=0&autopause=0");
-        document.getElementById("chat").contentWindow.location.replace("https://vimeo.com/live-chat/" + track.video_id);
         document.getElementById("slido").contentWindow.location.replace("https://app.sli.do/event/" + track.slido_id);
         document.getElementById("title").innerHTML = track.title;
         document.getElementById("abstract").innerHTML = track.abstract;

@@ -15,7 +15,7 @@
         <tr>
           <th scope="col">Time</th>
           <th scope="col">Speakers</th>
-          <th scope="col">Title / Abstract</th>
+          <th scope="col">Title</th>
           <th scope="col">Vimeo ID</th>
           <th scope="col">Sli.do ID</th>
           <th scope="col">On Air</th>
@@ -29,11 +29,7 @@
                 <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
               </td>
               <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-              <td>
-                <h5><%= talk.title %></h5>
-                <p class="abstract"><%= talk.abstract[0..30] %></p>
-              </td>
-
+              <td><h5><%= talk.title %></h5></td>
               <td>
                 <% video_id = talk.video ? talk.video.video_id : nil %>
                 <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "vimeo id", size: "9" %>

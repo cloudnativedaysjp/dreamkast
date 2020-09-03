@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     put 'talks' => 'talks#update_talks'
     post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
     post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
+    resources :tracks, only: [:index]
   end
 
   scope ":event" do

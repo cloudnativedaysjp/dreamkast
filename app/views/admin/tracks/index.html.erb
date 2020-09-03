@@ -1,0 +1,20 @@
+<div class="container">
+  <%= render 'admin/navigator' %>
+
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <% @conference.conference_days.each_with_index do |day, index| %>
+        <a class="nav-item nav-link <%= index == 0 ? 'active' : '' %>" id="nav-<%= day.date %>-tab" data-toggle="tab" href="#nav-<%= day.date %>" role="tab" aria-controls="nav-<%= day.date %>" aria-selected="true"><%= day.date %></a>
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+    <% @conference.conference_days.each_with_index do |day, index| %>
+      <div class="tab-pane fade show  <%= index == 0 ? 'active' : '' %>" id="nav-<%= day.date %>" role="tabpanel" aria-labelledby="nav-<%= day.date %>-tab">
+        <%= render 'admin/talks/tracks_nav', conference: @conference, conference_day: day %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

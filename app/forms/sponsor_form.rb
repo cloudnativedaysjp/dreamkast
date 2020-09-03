@@ -138,7 +138,7 @@ class SponsorForm
   def default_attributes
     {
       description: sponsor.description,
-      booth_published: sponsor.booth.published.present? ? sponsor.booth.published : nil,
+      booth_published: sponsor.booth.present? && sponsor.booth.published.present? ? sponsor.booth.published : nil,
       attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
       attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',

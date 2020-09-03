@@ -11,6 +11,8 @@ window.update_track = function(track){
     }else{
         document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/" + track.video_id + "?autoplay=1&loop=0&autopause=0");
         document.getElementById("slido").contentWindow.location.replace("https://app.sli.do/event/" + track.slido_id);
+        document.getElementById("twitter").href = "http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020_" + track.track_name;
+        document.getElementById("twitter").innerHTML = "Twitterでつぶやく<br/>#CNDT2020_" + track.track_name;
         document.getElementById("title").innerHTML = track.title;
         document.getElementById("abstract").innerHTML = track.abstract;
         document.getElementById("speakers").innerHTML = track.speakers;
@@ -34,3 +36,5 @@ window.check_update = function(track){
         }
     }
 }
+
+

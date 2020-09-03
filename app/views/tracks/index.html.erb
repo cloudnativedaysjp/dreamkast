@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container tracks">
   <div class="btn-group track-button d-flex row" role="group">
     <% @tracks.each do |track| %>
       <%= link_to "Track #{track.name}", "",
@@ -7,34 +7,57 @@
   </div>
 
   <div class="row">
-    <div class="col-12 col-md-8 movie-wrap">
+    <div class="col-12 movie-wrap my-3">
       <div style="padding:56.25% 0 0 0;position:relative;">
-        <iframe src="" id="video" frameborder="0"  allow="autoplay; fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+      <iframe src="" id="video" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
       </div>
-      <div id="track_information">
+    </div>
+
+    <div id="main-pane" class="col-12 col-md-8">
+      <div id="track_information" class="mb-3">
         <h3 id="title"></h3>
+        <div class="mb-2">
+          <span id="time"></span> - 
+          <span id="speakers"></span>
+        </div>
         <div id="time"></div>
         <div id="speakers"></div>
         <div id="abstract"></div>
       </div>
+
+      <div id="social" class="row">
+        <div class="col-6 p-3">
+          <a href='https://discord.gg/bvuTMNQ' target="_blank" class="btn btn-outline-primary btn-lg btn-block">Ask the speaker<br/>(Discord)</a>
+        </div>
+        <div class="col-6 p-3">
+          <a id="twitter" href='' target="_blank" class="btn btn-outline-primary btn-lg btn-block">Twitterでシェア</a>
+        </div>
+      </div>
+
+      <div id="registered-talk" class="talk accordion mt-3">
+        <h4 class="">
+          <button class="btn btn-inline text-left" type="button" data-toggle="collapse" data-target="#registered-talk-list" aria-expanded="false" aria-controls="registered-talk-list">
+            聴講予定セッション一覧
+          </button>
+        </h4>
+
+        <div id="registered-talk-list" class="collapse" aria-labelledby="headingOne" data-parent="#registered-talk">
+          <% @profile.talks.each do |talk| %>
+            <div class="category_difficulty">
+              <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+                <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+              <% end %>
+              <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+            </div>
+            <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <div class="col-12 col-md-4 ">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a href="#chat" class="nav-link active" data-toggle="tab">チャット</a>
-        </li>
-        <li class="nav-item">
-          <a href="#slido" class="nav-link" data-toggle="tab">質問</a>
-        </li>
-        <li class="nav-item">
-          <a href="#discord" class="nav-link" data-toggle="tab">Discord</a>
-        </li>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <iframe src="" id="chat" class="tab-pane active" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+    <div id="sub-pane" class="col-12 col-md-4">
+      <div class="">
         <iframe src="" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
-        <iframe src="https://discordapp.com/widget?id=740163110492438558&theme=dark" id="discord" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"  sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
       </div>
     </div>
   </div>

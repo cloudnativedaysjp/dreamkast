@@ -3,6 +3,8 @@ window.update_track = function(track){
     if(track === undefined || track === null){
         document.getElementById("video").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("slido").contentWindow.location.replace("/cndt2020/tracks/blank");
+        document.getElementById("twitter").href = "http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020";
+        document.getElementById("twitter").innerHTML = "Twitterでつぶやく<br/>#CNDT2020";
         document.getElementById("title").innerHTML = "放送なし";
         document.getElementById("abstract").innerHTML = "";
         document.getElementById("speakers").innerHTML = "";

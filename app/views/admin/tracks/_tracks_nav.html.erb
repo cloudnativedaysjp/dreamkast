@@ -22,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-        <%= form_with(url: admin_talks_path, local: true, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put") do |f| %>
+        <%= form_with(url: admin_tracks_path, local: true, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put") do |f| %>
           <% talks.each do |talk| %>
             <tr>
               <td>

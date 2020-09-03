@@ -10,6 +10,11 @@ class Admin::TracksController < ApplicationController
     @tracks = @conference.tracks
   end
 
+  def update_tracks
+    TalksHelper.update_talks(params[:video])
+
+    redirect_to '/admin/tracks', notice: "配信設定を更新しました"
+  end
   private
 
   def is_admin?

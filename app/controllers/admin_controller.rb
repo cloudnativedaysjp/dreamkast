@@ -8,6 +8,8 @@ class AdminController < ApplicationController
     def show
         @session = session
         @conference = Conference.first
+        @current = Video.on_air
+
     end
 
     def accesslog

@@ -64,7 +64,7 @@ Rails.application.configure do
 
   config.after_initialize do
     Bullet.enable = true # Bulletプラグインを有効
-    Bullet.alert = true # JavaScriptでの通知
+    Bullet.alert = false # JavaScriptでの通知
     Bullet.rails_logger = true # Railsログに出力
   end
 end

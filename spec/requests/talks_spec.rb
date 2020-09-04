@@ -30,6 +30,30 @@ describe TalksController, type: :request do
         expect(response.body).to include talk1.abstract
         expect(response.body).to include talk1.title
       end
+
+      it "includes vimeo iframe" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).to include "player.vimeo.com"
+      end
+
+      it "doesn't includes slido iframe" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).not_to include "sli.do"
+      end
+    end
+
+    describe 'not logged in and site opened' do
+      before do
+        Conference.destroy_all
+        create(:cndt2020_opened)
+      end
+      it "doesn't includes vimeo iframe" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).not_to include "player.vimeo.com"
+      end
     end
 
     describe 'logged in and not registerd' do

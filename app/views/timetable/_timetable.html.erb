@@ -12,7 +12,7 @@
       <% end %>
 
       <% talk_numbers = []; day_slots = [] %>
-      <% conference_day.talks.each do |talk| %>
+      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
         <div class="talk" slot="<%= talk.slot_number %>" style="--track: <%= talk.track.number - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
           <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
           <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>  <%= 'first' unless day_slots.include?(day_slot) %>"

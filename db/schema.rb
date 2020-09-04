@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_103140) do
+ActiveRecord::Schema.define(version: 2020_09_04_132713) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_103140) do
     t.integer "conference_id"
     t.integer "conference_day_id"
     t.integer "track_id"
+    t.boolean "show_on_timetable"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end

@@ -1,2 +1,24 @@
 module TalksHelper
+  def self.update_talks(videos)
+    videos.each do |talk_id, value|
+      talk = Talk.find(talk_id)
+      if talk.video
+        video = Talk.find(talk_id).video
+      else
+        video = Video.new
+        video.talk_id = talk.id
+      end
+      video.video_id = value[:video_id]
+      video.slido_id = value[:slido_id]
+      if value[:on_air]
+        video.on_air = true
+      else
+        video.on_air = false
+      end
+      video.save
+    end
+    ActionCable.server.broadcast(
+      "track_channel", Video.on_air
+    )
+  end
 end

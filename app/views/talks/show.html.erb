@@ -105,3 +105,10 @@
 </div>
 
 <% @message_box = "タイムテーブルから聴講予定セッションの登録・変更ができます。" %>
+
+<% if @conference.opened? && @current_user %>
+<script>
+  window.talk_id = "<%= @talk.id %>";
+</script>
+<%= javascript_pack_tag 'talks.js' %>
+<% end %>

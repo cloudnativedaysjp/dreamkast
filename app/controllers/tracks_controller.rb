@@ -15,6 +15,10 @@ class TracksController < ApplicationController
 
   def waiting
     @conference = Conference.find_by(abbr: event_name)
+    if @conference.opened?
+      redirect_to tracks_path
+    end
+
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
     @talk_cagetogies = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all

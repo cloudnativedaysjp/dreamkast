@@ -38,5 +38,3 @@ window.check_update = function(track){
         }
     }
 }
-
-

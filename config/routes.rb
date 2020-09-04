@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :talks, only: [:show]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    get 'dashboard' => 'dashboard#show'
+    get 'dashboard' => 'tracks#waiting'
     get 'tracks/blank' => 'tracks#blank'
     get 'contents' => 'contents#index'
 

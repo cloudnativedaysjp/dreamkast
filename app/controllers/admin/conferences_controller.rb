@@ -21,6 +21,9 @@ class Admin::ConferencesController < ApplicationController
 
     respond_to do |format|
       if @conference.update(conference_params)
+        if @conference.opened?
+          ActionCable.server.broadcast("waiting_channel","redirect to tracks");
+        end
         format.html { redirect_to "/admin", notice: "Conference was successfully updated." }
       else
         format.html { render :edit }

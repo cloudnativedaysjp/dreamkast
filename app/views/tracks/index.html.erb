@@ -69,7 +69,7 @@
       </div>
 
       <div class="col-12 mb-3">
-        <%= render 'dashboard/booth_section' %>
+        <%= render 'booth_section' %>
       </div>
     <% else %>
       <div class="col-12">
@@ -83,4 +83,4 @@
   window.track_list=<%= @current["current"].to_json.html_safe %>;
   window.selected_talk_id = 1;
 </script>
-<%= javascript_pack_tag 'tracks/index.js' %>
+<%= javascript_pack_tag 'tracks/track_channel.js' %>

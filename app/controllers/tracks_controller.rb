@@ -13,6 +13,23 @@ class TracksController < ApplicationController
     @booths = Booth.where(conference_id: @conference.id, published: true)
   end
 
+  def waiting
+    @conference = Conference.find_by(abbr: event_name)
+    if @conference.opened?
+      redirect_to tracks_path
+    end
+
+    @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
+    @talk_cagetogies = TalkCategory.all
+    @talk_difficulties = TalkDifficulty.all
+    @booths = Booth.where(conference_id: @conference.id, published: true)
+  end
+
+  def reload
+    ActionCable.server.broadcast("waiting_channel","aaa");
+    render plain: "OK"
+  end
+
   def blank
     render :layout => false
   end

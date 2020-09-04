@@ -3,6 +3,8 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create("TrackChannel", {
   connected() {
+    console.log("tracks connected");
+
     window.selected_track = 1;
     update_track(track_list[selected_track - 1]);
     document.querySelectorAll('.track_button').forEach(function(link){

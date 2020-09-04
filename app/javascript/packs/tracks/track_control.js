@@ -1,7 +1,7 @@
 window.update_track = function(track){
     clearInterval(window.timer);
     if(track === undefined || track === null){
-        document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/450845161??background=1&loop=0");
+        document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/450845161?autoplay=1&loop=0&autopause=0");
         document.getElementById("slido").contentWindow.location.replace("/cndt2020/tracks/blank");
         document.getElementById("twitter").href = "http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020";
         document.getElementById("twitter").innerHTML = "Twitterでつぶやく<br/>#CNDT2020";

@@ -1,7 +1,7 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <% conference.tracks.each_with_index do |track, index| %>
-      <a class="nav-item nav-link <%= index == 0 ? 'active' : '' %>" id="nav-<%= track.number %>-tab" data-toggle="tab" href="#nav-<%= track.number %>" role="tab" aria-controls="nav-<%= track.number %>" aria-selected="true"><%= track.name %></a>
+      <a class="nav-item nav-link <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>-tab" data-toggle="tab" href="#nav-<%= conference_day.date %>-<%= track.number %>" role="tab" aria-controls="nav-<%= conference_day.date %>-<%= track.number %>" aria-selected="true"><%= track.name %></a>
     <% end %>
   </div>
 </nav>
@@ -9,7 +9,7 @@
 <div class="tab-content" id="nav-tabContent">
   <% conference.tracks.each_with_index do |track, index| %>
     <% talks = Talk.where(conference_id: conference.id, conference_day_id: conference_day.id, track_id: track.id).order('conference_day_id ASC, start_time ASC, track_id ASC') %>
-    <div class="tab-pane fade show <%= index == 0 ? 'active' : '' %>" id="nav-<%= track.number %>" role="tabpanel" aria-labelledby="nav-<% track.number %>-tab">
+    <div class="tab-pane fade show <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>" role="tabpanel" aria-labelledby="nav-<%= conference_day.date %>-<%= track.number %>-tab">
       <table class="table table-striped talks_table" >
         <thead>
         <tr>
@@ -40,7 +40,7 @@
               </td>
               <td class="on_air_group btn-group-toggle">
                 <% if talk.video %>
-                  <label class="btn on_air_button <%= "active" if talk.video.on_air %>">
+                  <label class="btn on_air_button <%= "active" if talk.video.on_air %>" id="button_<%= talk.id %>">
                     <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track.name %>>
                   </label>
                 <% end %>

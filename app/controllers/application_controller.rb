@@ -3,9 +3,11 @@ class Forbidden < ActionController::ActionControllerError; end
 class ApplicationController < ActionController::Base
   before_action :set_raven_context, :event_exists?
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
-  #rescue_from Exception, with: :render_500
-  rescue_from Forbidden, with: :render_403
+  unless Rails.env.development?
+    rescue_from Exception, with: :render_500
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from Forbidden, with: :render_403
+  end
 
   def home_controller?
     controller_name == "home"
@@ -34,18 +36,17 @@ class ApplicationController < ActionController::Base
 
   helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty
 
-  def render_403(e)
-    @exception = e
+  def render_403
     render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
   end
 
-  def render_404(e)
+  def render_404
     render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
   end
 
-  def render_500(e)
-    @exception = e
-    render template: 'errors/error_500', status: 404, layout: 'application', content_type: 'text/html'
+  def render_500(e = nil)
+    logger.error "Rendering 500 with exception: #{e.message}" if e
+    render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
   end
 
   private

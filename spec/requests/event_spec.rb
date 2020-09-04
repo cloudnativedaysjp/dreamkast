@@ -34,11 +34,11 @@ describe EventController, type: :request do
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
       end
 
-      it "redirect to /:event/dashboard" do
+      it "redirect to /cndt2020/registration" do
         get '/cndt2020'
         expect(response).to_not be_successful
         expect(response).to have_http_status '302'
-        expect(response).to redirect_to dashboard_path
+        expect(response).to redirect_to '/cndt2020/registration'
       end
     end
   end

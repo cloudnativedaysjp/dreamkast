@@ -10,6 +10,7 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
+    show_on_timetable { true }
   end
 
   factory :talk2, class: Talk do
@@ -23,6 +24,7 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
+    show_on_timetable { true }
   end
 
   factory :talk_rejekt, class: Talk do
@@ -36,5 +38,20 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
+    show_on_timetable { true }
+  end
+
+  factory :talk_cm, class: Talk do
+    id { 4 }
+    title { "CM" }
+    start_time { "10:00" }
+    end_time { "11:00" }
+    conference_id { 1 }
+    conference_day_id { 3 }
+    abstract { "CMCMCMCMCMCM" }
+    talk_difficulty_id { 1 }
+    talk_category_id { 1 }
+    track_id { 1 }
+    show_on_timetable { false }
   end
 end

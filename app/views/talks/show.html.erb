@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="row my-3">
-        <div class="col-12 col-lg-9 main-pane">
+        <div class="col-12 col-lg-8 main-pane">
             <div class="row">
                 <div class="col-12">
                     <div class="talk">
@@ -36,6 +36,14 @@
                               <%= @talk.talk_category.name %>
                             </span>
                         </div>
+
+                        <% if @talk.video_published && @talk.video.present? %>
+                            <div class="mb-2">
+                                <div style="padding:56.25% 0 0 0;position:relative;">
+                                    <iframe src="https://player.vimeo.com/video/<% @talk.video.video_id %>" id="video" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        <% end %>
                         
                         
                         <p><%= @talk.abstract %></p>
@@ -64,6 +72,13 @@
                                 <p class="card-text"><%= speaker.profile %></p>
                                 <% end %>
                             </div>
+                            <% if @talk.document_url.present? %>
+                            <div class="col-12 my-3 pt-2" style="border-top: 1px solid #CCC">
+                                <ul>
+                                    <li><a href="<%= @talk.document_url %>" target="_blank">発表資料</a></li>
+                                </ul>
+                            </div>
+                            <% end %>
                         </div>
                         <% end %>
 
@@ -74,11 +89,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-3 sub-pane mt-3 mt-lg-0">
-            <div class="social">
-                <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
+        <div class="col-12 col-lg-4 sub-pane mt-3 mt-lg-0">
+            <% if @talk.video.present? && @talk.video.slido_id.present? %>
+                <iframe src="https://app.sli.do/event/<% @talk.video.slido_id %>" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+            <% else %>
+                <div class="social">
+                    <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            <% end %>
         </div>
     </div>
 </div>

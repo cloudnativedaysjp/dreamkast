@@ -20,6 +20,7 @@ describe TalksController, type: :request do
     end
     let!(:talk1) { create(:talk1) }
     let!(:talk2) { create(:talk2) }
+    let!(:video) { create(:video) }
 
     describe 'not logged in' do
       it "returns a success response" do
@@ -56,6 +57,36 @@ describe TalksController, type: :request do
         expect(response).to have_http_status '200'
         expect(response.body).to include 'タイムテーブル'
         expect(response.body).to include talk2.title
+      end
+
+      it "includes vimeo iframe if video_published is true" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).to include "player.vimeo.com"
+      end
+
+      it "doesn't includes vimeo iframe if video_published is false" do
+        get '/cndt2020/talks/2'
+        expect(response).to be_successful
+        expect(response.body).not_to include "player.vimeo.com"
+      end
+
+      it "doesn't includes vimeo iframe if video_published is false" do
+        get '/cndt2020/talks/2'
+        expect(response).to be_successful
+        expect(response.body).not_to include "player.vimeo.com"
+      end
+
+      it "includes slido iframe if it has slido id" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).to include "sli.do"
+      end
+
+      it "includes twitter iframe if it not have slido id" do
+        get '/cndt2020/talks/2'
+        expect(response).to be_successful
+        expect(response.body).to include "twitter-timeline"
       end
     end
   end

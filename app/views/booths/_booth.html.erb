@@ -36,10 +36,9 @@
 <% if sponsor.sponsor_attachment_vimeo.present? %>
   <% vimeo = sponsor.sponsor_attachment_vimeo %>
   <div class="row mb-3">
-    <div class="col-12 col-md-8">
-      <h4><%= vimeo.title %></h4>
+    <div class="col-12 mb-3 text-center">
       <div class="movie-wrap">
-        <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="<%= vimeo.url %>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -47,18 +46,27 @@
 
 <% if sponsor.sponsor_attachment_pdfs.size > 0 %>
   <div class="row mb-3">
-    <div class="col-12 mb-3">
-      <h4>PDF資料</h4>
-      <ul>
-        <% sponsor.sponsor_attachment_pdfs.each do |pdf| %>
-          <li><%= link_to pdf.title, pdf.file_url %></li>
-        <% end %>
-      </ul>
+    <div class="col-12 mb-3 text-center">
+      <h4>PDF資料ダウンロード</h4>
+      <div class="container">
+        <div class="row">
+          <% sponsor.sponsor_attachment_pdfs.each do |pdf| %>
+            <div class="col-12 col-sm-4 my-3 text-center">
+              <div class="booth-pdf-item">
+                <%= link_to pdf.file_url do %>
+                  <h5><%= pdf.title %></h5>
+                  <%= image_tag "pdf.svg", style: "width: 128px;"%>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
 
-<% if sponsor.sponsor_attachment_zoom.present? %>
+<% if sponsor.sponsor_attachment_zoom.present? && sponsor.sponsor_attachment_zoom.url != ""%>
   <% url = sponsor.sponsor_attachment_zoom %>
   <div class="row mb-3  justify-content-center">
     <div class="col-12 col-md-8">
@@ -68,3 +76,9 @@
     </div>
   </div>
 <% end %>
+<script>
+  window.booth = {};
+  window.booth.name = "<%= sponsor.name %>";
+  window.booth.id = "<%= sponsor.id %>";
+</script>
+<%= javascript_pack_tag 'booth.js' %>

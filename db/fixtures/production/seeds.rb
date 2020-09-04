@@ -303,6 +303,7 @@ SponsorType.seed(
   [36, 'Platinum', 'rancherlabs'],
   [37, 'Booth', 'rancherlabs'],
   [38, 'Special Collaboration', 'lf'],
+  [39, 'Booth', 'redhat'],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1])

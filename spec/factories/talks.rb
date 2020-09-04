@@ -41,7 +41,6 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
-<<<<<<< HEAD
     show_on_timetable { true }
   end
 
@@ -57,8 +56,6 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { false }
-=======
     video_published { true }
->>>>>>> Implement video and slido to talks page
   end
 end

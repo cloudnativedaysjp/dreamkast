@@ -36,7 +36,6 @@ Rails.application.routes.draw do
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'tracks#waiting'
     get 'tracks/blank' => 'tracks#blank'
-    get 'tracks/reload' => 'tracks#reload'
     get 'contents' => 'contents#index'
 
     resources :tracks, only: [:index, :show]

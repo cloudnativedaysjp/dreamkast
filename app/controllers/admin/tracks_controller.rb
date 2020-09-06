@@ -11,9 +11,10 @@ class Admin::TracksController < ApplicationController
   end
 
   def update_tracks
-    TalksHelper.update_talks(params[:video])
-
-    redirect_to '/admin/tracks', notice: "配信設定を更新しました"
+    respond_to do |format|
+      TalksHelper.update_talks(params[:video])
+      format.js
+    end
   end
   private
 

@@ -37,7 +37,7 @@
                             </span>
                         </div>
 
-                        <% if !@conference.opened? || @current_user %>
+                        <% if !@conference.opened? || !@conference.registered? || @current_user %>
                             <% if @talk.video_published && @talk.video.present? %>
                                 <div class="mb-2">
                                     <div style="padding:56.25% 0 0 0;position:relative;">

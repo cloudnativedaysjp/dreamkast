@@ -31,16 +31,28 @@ describe TalksController, type: :request do
         expect(response.body).to include talk1.title
       end
 
-      it "includes vimeo iframe" do
+      it "doesn't includes vimeo iframe when site registered" do
         get '/cndt2020/talks/1'
         expect(response).to be_successful
-        expect(response.body).to include "player.vimeo.com"
+        expect(response.body).not_to include "player.vimeo.com"
       end
 
       it "doesn't includes slido iframe" do
         get '/cndt2020/talks/1'
         expect(response).to be_successful
         expect(response.body).not_to include "sli.do"
+      end
+    end
+
+    describe 'not logged in and site closed' do
+      before do
+        Conference.destroy_all
+        create(:cndt2020_closed)
+      end
+      it "includes vimeo iframe" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).to include "player.vimeo.com"
       end
     end
 
@@ -69,7 +81,7 @@ describe TalksController, type: :request do
       end
     end
 
-    describe 'logged in' do
+    describe 'logged in and site registered' do
       before do
         create(:alice)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
@@ -83,20 +95,8 @@ describe TalksController, type: :request do
         expect(response.body).to include talk2.title
       end
 
-      it "includes vimeo iframe if video_published is true" do
+      it " doesn't includes vimeo iframe whatever video_published is true" do
         get '/cndt2020/talks/1'
-        expect(response).to be_successful
-        expect(response.body).to include "player.vimeo.com"
-      end
-
-      it "doesn't includes vimeo iframe if video_published is false" do
-        get '/cndt2020/talks/2'
-        expect(response).to be_successful
-        expect(response.body).not_to include "player.vimeo.com"
-      end
-
-      it "doesn't includes vimeo iframe if video_published is false" do
-        get '/cndt2020/talks/2'
         expect(response).to be_successful
         expect(response.body).not_to include "player.vimeo.com"
       end
@@ -111,6 +111,27 @@ describe TalksController, type: :request do
         get '/cndt2020/talks/2'
         expect(response).to be_successful
         expect(response.body).to include "twitter-timeline"
+      end
+    end
+
+    describe 'logged in and site opened' do
+      before do
+        Conference.destroy_all
+        create(:cndt2020_opened)
+        create(:alice)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+      end
+
+      it " includes vimeo iframe if video_published is true" do
+        get '/cndt2020/talks/1'
+        expect(response).to be_successful
+        expect(response.body).to include "player.vimeo.com"
+      end
+
+      it "doesn't includes vimeo iframe if video_published is false" do
+        get '/cndt2020/talks/2'
+        expect(response).to be_successful
+        expect(response.body).not_to include "player.vimeo.com"
       end
     end
   end

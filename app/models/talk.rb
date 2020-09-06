@@ -47,7 +47,7 @@ class Talk < ApplicationRecord
   end
 
   def self.updatable_attributes
-    ["id","conference_id","title","abstract","track_id","talk_category_id","talk_difficulty_id","date","conference_day_id","start_time","end_time","movie_url"]
+    ["id","conference_id","title","abstract","track_id","talk_category_id","talk_difficulty_id","date","conference_day_id","start_time","end_time","movie_url", "show_on_timetable", "video_published", "document_url"]
   end
 
   def day

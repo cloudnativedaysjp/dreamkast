@@ -11,6 +11,8 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    video_published { true }
+    document_url { "http://" }
   end
 
   factory :talk2, class: Talk do
@@ -25,6 +27,7 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    video_published { false }
   end
 
   factory :talk_rejekt, class: Talk do
@@ -53,5 +56,6 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { false }
+    video_published { true }
   end
 end

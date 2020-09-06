@@ -10,6 +10,7 @@ class TalksController < ApplicationController
   end
   
   def show
+    @conference = Conference.find_by(abbr: event_name)
   end
 
   private

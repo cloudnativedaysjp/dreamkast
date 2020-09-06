@@ -4,5 +4,7 @@ FactoryBot.define do
     site { "MyString" }
     url { "MyString" }
     on_air { false }
+    slido_id { "1234" }
+    video_id { "1234" }
   end
 end

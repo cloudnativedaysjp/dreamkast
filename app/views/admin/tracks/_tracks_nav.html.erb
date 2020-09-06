@@ -10,7 +10,8 @@
   <% conference.tracks.each_with_index do |track, index| %>
     <% talks = Talk.where(conference_id: conference.id, conference_day_id: conference_day.id, track_id: track.id).order('conference_day_id ASC, start_time ASC, track_id ASC') %>
     <div class="tab-pane fade show <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>" role="tabpanel" aria-labelledby="nav-<%= conference_day.date %>-<%= track.number %>-tab">
-      <table class="table table-striped talks_table" >
+      <%= form_with(url: admin_tracks_path, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put", class: "talk_list_form") do |f| %>
+        <table class="table table-striped talks_table" >
         <thead>
         <tr>
           <th scope="col">Time</th>
@@ -22,7 +23,6 @@
         </tr>
         </thead>
         <tbody>
-        <%= form_with(url: admin_tracks_path, local: true, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put", class: "talk_list_form") do |f| %>
           <% talks.each do |talk| %>
             <tr>
               <td>
@@ -47,13 +47,14 @@
               </td>
             </tr>
           <% end %>
-        <% end %>
-        </tbody>
-      </table>
-      <div class="p-4 text-center">
-        <%= submit_tag "保存", form: "talk_list_#{conference_day.date}_#{track.number}", class: "btn btn-danger transit_button" %>
-        <br/><span> ※視聴者にも設定が配信されます</span>
-      </div>
+          </tbody>
+        </table>
+
+        <div class="p-4 text-center">
+          <%= f.submit('保存', class: "btn btn-danger transit_button" ) %>
+          <br/><span> ※視聴者にも設定が配信されます</span>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

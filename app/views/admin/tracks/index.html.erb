@@ -1,6 +1,7 @@
 <div class="container">
   <%= render 'admin/navigator' %>
 
+  <div id="alert-pane"></div>
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <% @conference.conference_days.each_with_index do |day, index| %>

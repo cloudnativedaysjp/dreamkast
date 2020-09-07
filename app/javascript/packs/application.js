@@ -23,5 +23,6 @@ import './timetable.js'
 import './sponsor_form.js'
 import './message_box.js'
 import './admin.js'
+import './contents.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

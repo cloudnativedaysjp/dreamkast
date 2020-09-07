@@ -58,7 +58,7 @@
                 <% else %>
                   <% link = admin_attachment_path(id: pdf.id) %>
                 <% end %>
-                <%= link_to link do %>
+                <%= link_to link, "data-turbolinks" => false do %>
                   <h5><%= pdf.title %></h5>
                   <%= image_tag "pdf.svg", style: "width: 128px;"%>
                 <% end %>

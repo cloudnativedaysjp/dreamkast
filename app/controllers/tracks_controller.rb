@@ -31,6 +31,7 @@ class TracksController < ApplicationController
   end
 
   def blank
+    @msg = params.key?(:msg) ? params[:msg] : "No content"
     render :layout => false
   end
 

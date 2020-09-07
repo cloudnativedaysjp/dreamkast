@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
     resources :tracks, only: [:index]
     put 'tracks' => 'tracks#update_tracks'
+    resources :attachments, only: [:show]
   end
 
   scope ":event" do
@@ -47,6 +48,8 @@ Rails.application.routes.draw do
     get 'coc' => 'event#coc'
 
     resources :booths, only: [:index, :show]
+    resources :attachments, only: [:show]
+
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do

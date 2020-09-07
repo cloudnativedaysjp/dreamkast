@@ -53,7 +53,12 @@
           <% sponsor.sponsor_attachment_pdfs.each do |pdf| %>
             <div class="col-12 col-sm-4 my-3 text-center">
               <div class="booth-pdf-item">
-                <%= link_to pdf.file_url do %>
+                <% if params[:event] %>
+                  <% link = attachment_path(id: pdf.id) %>
+                <% else %>
+                  <% link = admin_attachment_path(id: pdf.id) %>
+                <% end %>
+                <%= link_to link, "data-turbolinks" => false do %>
                   <h5><%= pdf.title %></h5>
                   <%= image_tag "pdf.svg", style: "width: 128px;"%>
                 <% end %>

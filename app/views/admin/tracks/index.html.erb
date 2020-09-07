@@ -19,3 +19,11 @@
   </div>
 
 </div>
+<script>
+  window.foo = {}
+    <% @conference.conference_days.each_with_index do |day, index| %>
+      <% @conference.tracks.each do |track| %>
+        window.foo['<%= "#{day.date}-#{track.number}" %>'] = get_current_talk("<%=  day.date %>", "<%=  track.number %>");
+      <% end %>
+    <% end %>
+</script>

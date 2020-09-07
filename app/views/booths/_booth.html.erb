@@ -53,7 +53,7 @@
           <% sponsor.sponsor_attachment_pdfs.each do |pdf| %>
             <div class="col-12 col-sm-4 my-3 text-center">
               <div class="booth-pdf-item">
-                <%= link_to pdf.file_url do %>
+                <%= link_to attachment_path(id: pdf.id) do %>
                   <h5><%= pdf.title %></h5>
                   <%= image_tag "pdf.svg", style: "width: 128px;"%>
                 <% end %>

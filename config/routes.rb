@@ -47,6 +47,8 @@ Rails.application.routes.draw do
     get 'coc' => 'event#coc'
 
     resources :booths, only: [:index, :show]
+    resources :attachments, only: [:show]
+
     # Profile
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do

@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     resources :tracks, only: [:index]
     put 'tracks' => 'tracks#update_tracks'
     resources :attachments, only: [:show]
-    resources :links, only: [:index]
   end
 
   scope ":event" do

@@ -11,6 +11,12 @@ class ContentsController < ApplicationController
   def index
   end
 
+  def discussion
+  end
+
+  def kontest
+  end
+
   private
     def set_profile
       if @current_user

@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12 py-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <%= link_to '#discussion-board' do %>
+            <h4 class="card-title" id="discussion-board" style="color: #2E2F30">
+              CNDT2020 Discussion Board
+            </h4>
+          <% end %>
+          <h6 class="card-subtitle text-muted mb-3">
+            開催日時：Day1 2020/09/08 (火) - Day2 2020/09/09 (水)
+          </h6>
+          <h6 class="card-subtitle text-muted mb-3">
+            公開期限：2020/09/27（日）
+          </h6>
+          <h6 class="card-subtitle mb-3">
+            参加URL：
+            <% if @current_user %>
+              <a href="https://miro.com/app/board/o9J_kodoxUo=/" target="_blank">https://miro.com/app/board/o9J_kodoxUo=/</a> (Miroが開きます)
+            <% else %>
+              <strong>表示するには CNDT2020 サイトにログインしてください。</strong>
+            <% end %>
+          </h6>
+
+          <p class="card-text">この CNDT2020 Discussion Board は、ともに悩みを共有し、ともに解決して一歩進んでいくことを目的に作られています。議論の多様性を認めあって、友好的な場にしましょう。オンラインだからこその電子ボード上で、URLや画像を共有しながら気軽に情報交換することができます。</p>
+          <p class="card-text"><strong>初級者も歓迎しています！</strong></p>
+          
+          <% if @current_user %>
+            <hr />
+            <h4>↓ Discussion Board 現在の様子</h4>
+            <iframe src="https://miro.com/app/embed/o9J_kodoxUo=/?autoplay=yep" style="width: 100%; min-height: 600px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+              
+            <p>書き込む場合は<a href="https://miro.com/app/board/o9J_kodoxUo=/" target="_blank">https://miro.com/app/board/o9J_kodoxUo=/</a> をクリック！</p>          
+          <% else %>
+            <div class="mt-3" id="discussion-board-more-body">
+              <%= image_tag "contents/discussion_board.png", :width => '70%', style: 'margin-bottom:50px;' %>
+
+              <h5 class="card-subtitle mb-1">
+                使い方（Discussion Board 側にも記載してあります）
+              </h5>
+              <%= image_tag "contents/discussion_board_howto.png", :width => '100%', style: 'margin-bottom:30px;' %>
+            </div>
+          <% end %>
+
+          <h6 class="text-muted my-3">
+            企画・運営：CNDT2020 実行委員会
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% @message_box = "豊富な併設イベントも開催中！" %>

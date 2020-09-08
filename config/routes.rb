@@ -39,7 +39,8 @@ Rails.application.routes.draw do
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'tracks#waiting'
     get 'tracks/blank' => 'tracks#blank'
-    get 'contents' => 'contents#index'
+    get 'kontest' => 'contents#kontest'
+    get 'discussion' => 'contents#discussion'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

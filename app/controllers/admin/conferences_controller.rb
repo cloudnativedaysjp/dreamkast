@@ -14,13 +14,16 @@ class Admin::ConferencesController < ApplicationController
 
   def edit
     @conference = Conference.find(params[:id])
+    @conference_form = ConferenceForm.new(conference: @conference)
+    @conference_form.load
   end
 
   def update
     @conference = Conference.find(params[:id])
+    @conference_form = ConferenceForm.new(conference_params, conference: @conference)
 
     respond_to do |format|
-      if @conference.update(conference_params)
+      if @conference_form.save
         if @conference.opened?
           ActionCable.server.broadcast("waiting_channel","redirect to tracks");
         end
@@ -38,6 +41,7 @@ class Admin::ConferencesController < ApplicationController
   end
 
   def conference_params
-    params.require(:conference).permit(:status)
+    params.require(:conference).permit(:status,
+                                       links_attributes: [:id, :title, :url, :description, :_destroy])
   end
 end

@@ -210,3 +210,10 @@ Video.seed(
   { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
   { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
 )
+
+
+Link.seed(
+  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
+)

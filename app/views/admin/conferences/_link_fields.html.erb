@@ -1,0 +1,15 @@
+<div class="link-field">
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= f.label :title, "Title" %>
+      <%= f.text_field :title %>
+
+      <%= f.label :url, "URL" %>
+      <%= f.text_field :url %>
+      <%= f.label :description, "Description" %>
+      <%= f.text_field :description %>
+      <%= f.hidden_field :_destroy %>
+      <%= link_to 'Delete', '#', class: 'remove_link_field' %>
+    </div>
+  </div>
+</div>

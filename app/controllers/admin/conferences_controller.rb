@@ -42,6 +42,6 @@ class Admin::ConferencesController < ApplicationController
 
   def conference_params
     params.require(:conference).permit(:status,
-                                       links_attributes: [:id, :title, :url, :_destroy])
+                                       links_attributes: [:id, :title, :url, :description, :_destroy])
   end
 end

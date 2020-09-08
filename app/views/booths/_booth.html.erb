@@ -9,6 +9,17 @@
   </div>
 </div>
 
+<% if sponsor.sponsor_attachment_zoom.present? && sponsor.sponsor_attachment_zoom.url != ""%>
+  <% url = sponsor.sponsor_attachment_zoom %>
+  <div class="row mb-3  justify-content-center">
+    <div class="col-12 col-md-8">
+      <%= link_to(url.url) do %>
+        <button type="button" class="btn btn-info btn-lg btn-block">スポンサーの人と話をする(外部URLを開きます)</button>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <div class="row mb-3">
   <div class="col-12 mb-3">
     <p><%= simple_format(h(auto_link(sponsor.description, html: { target: '_blank' }))) %></p>

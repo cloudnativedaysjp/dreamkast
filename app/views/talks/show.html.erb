@@ -41,7 +41,7 @@
                             <% if @talk.video_published && @talk.video.present? %>
                                 <div class="mb-2">
                                     <div style="padding:56.25% 0 0 0;position:relative;">
-                                        <iframe src="https://player.vimeo.com/video/<% @talk.video.video_id %>" id="video" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                        <iframe src="https://player.vimeo.com/video/<%= @talk.video.video_id %>" id="video" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                                     </div>
                                 </div>
                             <% end %>
@@ -93,7 +93,7 @@
         </div>
         <div class="col-12 col-lg-4 sub-pane mt-3 mt-lg-0">
             <% if @current_user && @talk.video.present? && @talk.video.slido_id.present? %>
-                <iframe src="https://app.sli.do/event/<% @talk.video.slido_id %>" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
+                <iframe src="https://app.sli.do/event/<%= @talk.video.slido_id %>" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
             <% else %>
                 <div class="social">
                     <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a>

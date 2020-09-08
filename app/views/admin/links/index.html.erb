@@ -1,0 +1,26 @@
+<div class="container">
+  <%= render 'admin/navigator' %>
+
+  <div class="row">
+    <h2>Links</h2>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">URL</th>
+        <th scope="col">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @links.each do |link| %>
+        <tr>
+          <td><ul class="p-0"><%= link.title %></td>
+          <td><ul class="p-0"><%= link.url %></td>
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  </div>
+</div>

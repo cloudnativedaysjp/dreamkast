@@ -1,14 +1,24 @@
-<%= form_with(url: admin_conference_path, model: @conference, local: true, method: :patch) do |form| %>
+<%= form_with(url: admin_conference_path, model: conference_form, local: true, method: :patch) do |form| %>
 
   <h3>Status</h3>
+
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
-      <% form.object.class.statuses.keys.each do |key| %>
+      <% @conference_form.conference.class.statuses.keys.each do |key| %>
         <%= form.radio_button :status, key %>
         <%= form.label :status, key %><br>
       <% end %>
     </div>
   </div>
+
+  <h4>Links</h4>
+  <div class="link-fields">
+    <%= form.fields_for :links do |f| %>
+      <%= render 'admin/conferences/link_fields', :f => f %>
+    <% end %>
+  </div>
+
+  <p><%= link_to_add_link_fields "Add Link", form, :links, class: 'add-link btn btn-primary' %></p>
 
   <div class="form-row form-group">
     <div class="col-12 col-md-6">

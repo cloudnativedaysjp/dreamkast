@@ -1,0 +1,16 @@
+class LinksController < ApplicationController
+  include Secured
+  before_action :set_profile
+
+  def index
+    @conference = Conference.find_by(abbr: event_name)
+    @links = Link.where(conference_id: @conference.id)
+  end
+
+  private
+  def set_profile
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
+  end
+end

@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="my-3 text-center">Links</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+
+    <ul>
+      <% @links.each do |link| %>
+        <li>
+          <%= link_to link.title, link.url %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

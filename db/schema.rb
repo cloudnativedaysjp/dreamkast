@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_030040) do
+ActiveRecord::Schema.define(version: 2020_09_08_113241) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 2020_09_07_030040) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "links", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.string "title"
+    t.string "url"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_links_on_conference_id"
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -183,9 +193,9 @@ ActiveRecord::Schema.define(version: 2020_09_07_030040) do
     t.integer "conference_id"
     t.integer "conference_day_id"
     t.integer "track_id"
+    t.boolean "show_on_timetable"
     t.boolean "video_published", default: false, null: false
     t.string "document_url"
-    t.boolean "show_on_timetable"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
@@ -219,6 +229,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_030040) do
 
   add_foreign_key "booths", "conferences"
   add_foreign_key "booths", "sponsors"
+  add_foreign_key "links", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"

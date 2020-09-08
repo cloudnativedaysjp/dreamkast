@@ -8,5 +8,6 @@
     <%= link_to "Statistics", "/admin/statistics", { class: "btn btn-outline-secondary #{'active' if action_name == 'statistics'}", "data-turbolinks" => false } %>
     <%= link_to "Sponsors", "/admin/sponsors", { class: "btn btn-outline-secondary #{'active' if controller_name == 'sponsors' || action_name == 'show_sponsor' }", "data-turbolinks" => false } %>
     <%= link_to "Booths", "/admin/booths", { class: "btn btn-outline-secondary #{'active' if controller_name == 'booths' || action_name == 'show_booth' }", "data-turbolinks" => false } %>
+    <%= link_to "Links", "/admin/links", { class: "btn btn-outline-secondary #{'active' if controller_name == 'links' }", "data-turbolinks" => false } %>
     <%= link_to "Debug", "/admin/debug", { class: "btn btn-outline-secondary #{'active' if action_name == 'debug'}", "data-turbolinks" => false  } %>
 </div>

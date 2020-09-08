@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :tracks, only: [:index]
     put 'tracks' => 'tracks#update_tracks'
     resources :attachments, only: [:show]
+    resources :links, only: [:index]
   end
 
   scope ":event" do
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
 
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'
+    resources :links, only: [:index]
   end
 
   get '*path', controller: 'application', action: 'render_404'

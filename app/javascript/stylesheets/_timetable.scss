@@ -208,6 +208,14 @@ section.timetable {
   border-radius: 1rem;
 }
 
+.archivable {
+  filter: hue-rotate(0deg);
+}
+
+.non_archivable {
+  filter: hue-rotate(180deg);
+}
+
 .difficulty_1 {
   filter: hue-rotate(0deg);
 }

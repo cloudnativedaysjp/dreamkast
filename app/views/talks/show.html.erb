@@ -35,6 +35,15 @@
                             <span class="difficulty category_<%= @talk.talk_category_id %>">
                               <%= @talk.talk_category.name %>
                             </span>
+                            <% if @talk.video_published %>
+                                <span class="archivable">
+                                    アーカイブ視聴可
+                                </span>
+                            <% else %>
+                                <span class="non_archivable">
+                                    アーカイブ視聴不可
+                                </span>
+                            <% end %>
                         </div>
 
                         <% if @conference.closed? || (@conference.opened? && @current_user) %>

@@ -1,0 +1,55 @@
+<div class="container">
+  <h1 class="my-3 text-center">トーク一覧</h1>
+  <div class="row">
+    <table class="table table-striped talks_table" data-toggle="table" data-filter-control="true">
+      <thead>
+      <tr class="tr-class-1">
+        <th scope="col">Speakers</th>
+        <th scope="col">Title</th>
+        <th data-field="track" data-filter-control="select" scope="col">Track</th>
+        <th data-field="data" data-filter-control="select" scope="col">Date</th>
+        <th data-field="time" data-filter-control="select" scope="col">Time</th>
+        <th data-field="video" data-filter-control="select" data-filter-data-collector="tableFilterStripHtml" scope="col">アーカイブ視聴</th>
+        <th data-field="document" data-filter-control="select" data-filter-data-collector="tableFilterStripHtml" scope="col">資料</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @talks.each_with_index do |talk, index| %>
+        <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
+          <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>"><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+          <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
+            <%= talk.title %>
+          </td>
+          <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %>"><%= talk.track.name %></td>
+          <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %>">
+            <%= talk.date %>
+          </td>
+          <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %>">
+            <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+          </td>
+
+          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %>">
+            <% if @conference.closed? || (@conference.opened? && @current_user) %>
+              <% if talk.video_published && talk.video.present? %>
+                <%= link_to 'あり', talk_path(id: talk.id)%>
+              <% else %>
+                なし
+              <% end %>
+            <% end %>
+          </td>
+
+          <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %>">
+            <% if talk.document_url.present? %>
+              <%= link_to 'あり', talk.document_url %>
+            <% else %>
+              なし
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  </div>
+</div>

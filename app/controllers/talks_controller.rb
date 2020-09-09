@@ -13,6 +13,11 @@ class TalksController < ApplicationController
     @conference = Conference.find_by(abbr: event_name)
   end
 
+  def index
+    @conference = Conference.find_by(abbr: event_name)
+    @talks = @conference.talks.where(show_on_timetable: true)
+  end
+
   private
     def set_talk
       @talk = Talk.find(params[:id])

@@ -13,7 +13,6 @@ class SpeakersController < ApplicationController
   # GET /speakers
   # GET /speakers.json
   def index
-    @conference = Conference.find_by(abbr: event_name)
     @speakers = Speaker.all
   end
 

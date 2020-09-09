@@ -20,7 +20,7 @@
         <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
           <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>"><ul class="p-0 vertical-middle"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
           <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
-            <%= talk.title %>
+            <%= link_to talk.title, talk_path(id: talk.id) %>
           </td>
           <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.talk_category.name %>

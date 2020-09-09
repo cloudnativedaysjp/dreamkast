@@ -9,12 +9,15 @@ class ContentsController < ApplicationController
   end
 
   def index
+    @conference = Conference.find_by(abbr: event_name)
   end
 
   def discussion
+    @conference = Conference.find_by(abbr: event_name)
   end
 
   def kontest
+    @conference = Conference.find_by(abbr: event_name)
   end
 
   private

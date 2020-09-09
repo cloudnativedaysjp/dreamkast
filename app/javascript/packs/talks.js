@@ -18,3 +18,7 @@ window.tableFilterStripHtml = function (value) {
 $(document).on('turbolinks:load', function() {
     $('[data-toggle="table"]').bootstrapTable();
 });
+
+$(window).resize(function () {
+    $('.talks-frame').bootstrapTable('resetView')
+})

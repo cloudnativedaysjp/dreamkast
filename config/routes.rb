@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   scope ":event" do
     post 'auth/auth0' => redirect('/auth/auth0')
     resources :speakers, only: [:index, :show]
-    resources :talks, only: [:show]
+    resources :talks, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'tracks#waiting'

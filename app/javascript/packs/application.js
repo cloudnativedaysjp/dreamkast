@@ -14,12 +14,16 @@ require("turbolinks").start()
 // const imagePath = (name) => images(name, true)
 import '../stylesheets/application'
 import './bootstrap_custom.js'
+import './bootstrap-table.js'
+import './utils'
+import './bootstrap-table-filter-control.js'
 import jquery from 'jquery';
 window.$ = window.jquery = jquery;
 import './jquery.easing.min.js'
 import './jquery.magnific-popup.min.js'
 import './scripts.js'
 import './timetable.js'
+import './talks.js'
 import './sponsor_form.js'
 import './conference_form.js'
 import './message_box.js'

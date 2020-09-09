@@ -10,3 +10,15 @@ $(function(){
         });
     }, 120 * 1000);
 })
+
+window.tableFilterStripHtml = function (value) {
+    return value.replace(/<[^>]+>/g, '').trim();
+}
+
+$(document).on('turbolinks:load', function() {
+    $('[data-toggle="table"]').bootstrapTable();
+});
+
+$(window).resize(function () {
+    $('.talks-frame').bootstrapTable('resetView')
+})

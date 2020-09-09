@@ -12,7 +12,16 @@
             <% if @conference.present? && @conference.opened? %>
               <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
-            <li class="nav-item"><%= link_to "Timetable", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
+
+            <li class="nav-item dropdown">
+              <%= link_to "Timetable", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'Timetable', timetables_path, class: "dropdown-item", data: {"turbolinks" => false}%>
+                <div class="dropdown-divider"></div>
+                <%= link_to 'セッションリスト', talks_path, class: "dropdown-item", data: {"turbolinks" => false} %>
+              </div>
+            </li>
+
             <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
             <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <li class="nav-item"><%= link_to "Kontest", kontest_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>

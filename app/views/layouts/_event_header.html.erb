@@ -46,7 +46,9 @@
               <a class="dropdown-item" href="/logout">Logout</a>
             </div>
           <% else %>
-            <li class="nav-item"><%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
+            <% unless @conference.closed? %>
+              <li class="nav-item"><%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
+            <% end %>
           <% end %>
         </li>
       </ul>

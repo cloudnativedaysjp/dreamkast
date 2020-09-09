@@ -25,7 +25,7 @@
             <% if talk.document_url.present? %>
               <div class="card-text">
                 <p class="link"><%= link_to talk.title, talk.document_url, target: "_blank" %></p>
-                <p class="link-description"><%= "#{talk.conference_day.date} Track#{talk.track.name} #{talk.start_time.strftime("%H:%M") }-#{talk.end_time.strftime("%H:%M")} #{talk.speakers.map(&:name).join(', ')}"%></p>
+                <p class="link-description"><%= "#{talk.conference_day.date} Track#{talk.track.name} #{talk.start_time.strftime("%H:%M") }-#{talk.end_time.strftime("%H:%M")} #{talk.speakers.map(&:name).join(', ')}"%> (<%= link_to 'permalink', talk_path(id: talk.id) %>)</p>
               </div>
             <% end %>
           <% end %>

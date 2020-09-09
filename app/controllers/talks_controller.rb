@@ -15,7 +15,7 @@ class TalksController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: event_name)
-    @talks = @conference.talks.where(show_on_timetable: true)
+    @talks = @conference.talks.where(show_on_timetable: true).order('date ASC').order('start_time ASC')
   end
 
   private

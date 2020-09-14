@@ -1,6 +1,6 @@
 
 Conference.seed(
-  {id: 1, name: "CloudNative Days Tokyo 2020", abbr: "cndt2020", status: 2}
+  {id: 1, name: "CloudNative Days Tokyo 2020", abbr: "cndt2020"}
 )
 
 ConferenceDay.seed(

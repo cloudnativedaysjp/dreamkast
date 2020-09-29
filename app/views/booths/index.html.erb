@@ -1,7 +1,6 @@
 <div class="container">
   <h1 class="my-3 text-center">ブース</h1>
   <div class="row">
-    <% if @conference.opened? %>
       <% @booths.each do |booth| %>
         <div class="col-12 col-md-4 my-3 text-center">
           <% if booth.published && booth.sponsor.sponsor_attachment_logo_image.present? %>
@@ -12,8 +11,5 @@
           <% end %>
         </div>
       <% end %>
-    <% else %>
-      <%= @conference.name %> is not opened.
-    <% end %>
   </div>
 </div>

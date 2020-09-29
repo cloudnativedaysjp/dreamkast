@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(version: 2020_09_08_113241) do
     t.integer "conference_id"
     t.integer "conference_day_id"
     t.integer "track_id"
-    t.boolean "show_on_timetable"
     t.boolean "video_published", default: false, null: false
     t.string "document_url"
+    t.boolean "show_on_timetable"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end

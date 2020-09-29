@@ -9,7 +9,7 @@
       <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
-            <% if @conference.present? && @conference.opened? %>
+            <% if @conference.present? && @current_user %>
               <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
 

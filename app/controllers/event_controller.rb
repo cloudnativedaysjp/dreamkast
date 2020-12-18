@@ -22,11 +22,11 @@ class EventController < ApplicationController
   end
   
   def privacy
-
+    @conference = Conference.find_by(abbr: params[:event])
   end
 
   def coc
-
+    @conference = Conference.find_by(abbr: params[:event])
   end
 
   def sponsor_logo_class(sponsor_type)
@@ -42,8 +42,23 @@ class EventController < ApplicationController
     end
   end
 
-  helper_method :sponsor_logo_class
+  helper_method :sponsor_logo_class, :days
   private
+
+  def days
+    day_of_the_week = %w(月 火 水 木 金 土 日)
+    d = @conference.conference_days.where(internal: false)
+    if d.length == 1
+      day = day_of_the_week[d.first.date.cwday - 1]
+      return d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
+    else
+      first = d.order(:date).first
+      fday = day_of_the_week[first.date.cwday - 1]
+      last = d.order(:date).last
+      lday = day_of_the_week[last.date.cwday - 1]
+      return "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
+    end
+  end
 
   def set_profile
     if @current_user

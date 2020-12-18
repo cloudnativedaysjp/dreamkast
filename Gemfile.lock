@@ -207,6 +207,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redcarpet (3.5.1)
     redis (4.2.1)
     redis-actionpack (5.2.0)
       actionpack (>= 5, < 7)
@@ -330,6 +331,7 @@ DEPENDENCIES
   rack-timeout
   rails (~> 6.0.3, >= 6.0.3.1)
   rails_autolink
+  redcarpet
   redis-rails
   rspec-rails
   ruby-debug-ide

@@ -41,24 +41,26 @@
 
   <%= yield %>
 
-  <footer class="bg-light py-4">
+  <% if event_name %>
+    <footer class="bg-light py-4">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6">
           <ul class="justify-content-md-center">
-            <li class="text-center"><%= link_to "プライバシーポリシー", "/cndt2020/privacy", class: "text-muted" %></li>
-            <li class="text-center"><%= link_to "行動規範", "/cndt2020/coc", class: "text-muted" %></li>
+            <li class="text-center"><%= link_to "プライバシーポリシー", "/#{event_name}/privacy", class: "text-muted" %></li>
+            <li class="text-center"><%= link_to "行動規範", "/#{event_name}/coc", class: "text-muted" %></li>
           </ul>
         </div>
 
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="small text-center text-muted">© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)</div>
+          <div class="small text-center text-muted"><%= @conference.copyright %></div>
         </div>
       </div>
     </div>
   </footer>
+  <% end %>
 
   <% if @current_user %>
     <div id="message_icon">

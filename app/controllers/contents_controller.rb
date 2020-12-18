@@ -12,9 +12,11 @@ class ContentsController < ApplicationController
   end
 
   def discussion
+    @conference = Conference.find_by(abbr: params[:event])
   end
 
   def kontest
+    @conference = Conference.find_by(abbr: params[:event])
   end
 
   private

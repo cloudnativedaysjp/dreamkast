@@ -4,6 +4,8 @@ describe EventController, type: :request do
   describe "GET event#show" do
     before do
       create(:cndt2020)
+      create(:day1)
+      create(:day2)
     end
 
     describe 'not logged in' do
@@ -18,7 +20,7 @@ describe EventController, type: :request do
         get '/cndt2020/privacy'
         expect(response).to be_successful
         expect(response).to have_http_status '200'
-        expect(response.body).to include '個人情報保護方針'
+        expect(response.body).to include 'This is Privacy Policy'
       end
 
       it "returns a success response with code of conduct" do

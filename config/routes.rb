@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  root 'home#show', event: 'cndt2020'
-  get '/home#show' => redirect('/cndt2020')
+  root 'home#show'
 
   # Auth
   get 'auth/auth0/callback' => 'auth0#callback'

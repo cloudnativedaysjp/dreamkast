@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def show
-    redirect_to('/cndt2020')
+    @conferences = Conference.all
   end
-
 end

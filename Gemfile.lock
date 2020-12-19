@@ -99,7 +99,7 @@ GEM
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.9)
     diff-lcs (1.4.2)
-    down (5.1.1)
+    down (5.2.0)
       addressable (~> 2.5)
     erubi (1.9.0)
     factory_bot (6.1.0)
@@ -164,7 +164,7 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_suffix (4.0.5)
+    public_suffix (4.0.6)
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
@@ -261,7 +261,7 @@ GEM
       rubyzip (>= 1.2.2)
     sentry-raven (3.0.0)
       faraday (>= 1.0)
-    shrine (3.2.1)
+    shrine (3.3.0)
       content_disposition (~> 1.0)
       down (~> 5.1)
     spring (2.1.0)
@@ -334,7 +334,7 @@ DEPENDENCIES
   seed-fu
   selenium-webdriver
   sentry-raven
-  shrine (~> 3.0)
+  shrine (~> 3.3)
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)

@@ -3,12 +3,12 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
 
-FROM ruby:2.7.1 as fetch-lib
+FROM ruby:2.7.2 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
 RUN bundle install
 
-FROM ruby:2.7.1 as asset-compile
+FROM ruby:2.7.2 as asset-compile
 ENV YARN_VERSION 1.22.4
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
@@ -26,7 +26,7 @@ COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN bundle exec rake webpacker:install
 RUN bundle exec rake webpacker:compile
 
-FROM ruby:2.7.1-slim
+FROM ruby:2.7.2-slim
 
 ENV YARN_VERSION 1.22.4
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn

@@ -167,6 +167,8 @@ GEM
     public_suffix (4.0.6)
     puma (4.3.5)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
       rack
@@ -324,6 +326,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 0.1)
   pry-rails
   puma (~> 4.1)
+  pundit
   rack-timeout
   rails (~> 6.0.3, >= 6.0.3.1)
   rails_autolink
@@ -345,7 +348,7 @@ DEPENDENCIES
   webpacker (~> 4.0)
 
 RUBY VERSION
-   ruby 2.7.1p83
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.1.4

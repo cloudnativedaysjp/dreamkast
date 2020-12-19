@@ -1,5 +1,74 @@
 DUMMY_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
+Conference.seed(
+  {
+    id: 1,
+    name: "Test Event Autumn 2020",
+    abbr: "tea2020",
+    status: 2, # closed
+  },
+  {
+    id: 2,
+    name: "Test Event Winter 2020",
+    abbr: "tew2020",
+    status: 1, # opened
+  },
+  {
+    id: 3,
+    name: "Test Event Summer 2021",
+    abbr: "tes2021",
+    status: 0, # registered
+  },
+  )
+
+ConferenceDay.seed(
+  {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
+  {id: 2, date: "2020-09-07", start_time: "19:00", end_time: "21:00", conference_id: 1, internal: true}, #前夜祭
+  {id: 3, date: "2020-12-15", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 4, date: "2020-12-16", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
+  )
+
+
+Industry.seed(
+  { id: 1,  conference_id: 1, name: "業界A" },
+  { id: 2,  conference_id: 1, name: "業界B" },
+  { id: 3,  conference_id: 2, name: "業界C" },
+  { id: 4,  conference_id: 2, name: "業界D" },
+  { id: 5,  conference_id: 3, name: "業界E" },
+  { id: 6,  conference_id: 3, name: "業界F" },
+  )
+
+
+Track.seed(
+  { id: 1, number: 1, name: "A", conference_id: 1},
+  { id: 2, number: 1, name: "A", conference_id: 2},
+  { id: 3, number: 2, name: "B", conference_id: 2},
+  { id: 4, number: 1, name: "A", conference_id: 3},
+)
+
+
+TalkCategory.seed(
+  { id: 1,  conference_id: 1, name: "Category A"},
+  { id: 2,  conference_id: 1, name: "Category B"},
+  { id: 3,  conference_id: 2, name: "Category C"},
+  { id: 4,  conference_id: 2, name: "Category D"},
+  { id: 5,  conference_id: 3, name: "Category E"},
+  { id: 6,  conference_id: 3, name: "Category F"}
+)
+
+TalkDifficulty.seed(
+  { id: 1, conference_id: 1, name: "初級者"},
+  { id: 2, conference_id: 1, name: "中級者"},
+  { id: 3, conference_id: 1, name: "上級者"},
+  { id: 1, conference_id: 2, name: "初級者"},
+  { id: 2, conference_id: 2, name: "中級者"},
+  { id: 3, conference_id: 2, name: "上級者"},
+  { id: 1, conference_id: 3, name: "初級者"},
+  { id: 2, conference_id: 3, name: "中級者"},
+  { id: 3, conference_id: 3, name: "上級者"},
+  )
+
 
 csv = CSV.read(File.join(Rails.root, 'db/talks.csv'), headers: true)
 Talk.seed(csv.map(&:to_hash))

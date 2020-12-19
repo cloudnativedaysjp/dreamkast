@@ -3,7 +3,7 @@
   <div class="container">
     <% if @conference %>
       <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
-        <% if FileTest.exist?("#{Rails.root}/public/images/#{@conference.abbr}_header_logo.png") %>
+        <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}_header_logo.png") %>
           <%= image_tag 'cndt2020_header_logo.png', class: "img-fluid header_logo" %>
         <% else %>
           <p><%= @conference.name %></p>

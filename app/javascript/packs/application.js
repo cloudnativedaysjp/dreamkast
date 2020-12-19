@@ -29,5 +29,6 @@ import './conference_form.js'
 import './message_box.js'
 import './admin.js'
 import './contents.js'
+import './speaker_form.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

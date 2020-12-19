@@ -1,16 +1,4 @@
-<%= form_with(model: speaker, local: true) do |form| %>
-  <% if speaker.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(speaker.errors.count, "error") %> prohibited this speaker from being saved:</h2>
-
-      <ul>
-        <% speaker.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
@@ -44,6 +32,25 @@
   <div class="field">
     <%= form.label "Avatar" %>
     <%= form.file_field :avatar %>
+  </div>
+
+
+  <p>Talks:</p>
+  <div class="talk-fields">
+    <%= form.fields_for :talks do |talk| %>
+      <%= render 'speakers/talk_fields', :f => talk, :conference => @conference %>
+    <% end %>
+  </div>
+
+  <% if  action_name == "new" || form.object.talks.size < 3 %>
+    <p><%= link_to_add_talk_fields "Add Talk", form, :talks, class: 'add-talk btn btn-primary' %></p>
+  <% else %>
+    <p><%= link_to_add_talk_fields "Add Talk", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
+  <% end %>
+
+
+  <div class="field">
+    <%= form.hidden_field :conference_id, value: @conference.id %>
   </div>
 
   <div class="actions">

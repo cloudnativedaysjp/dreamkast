@@ -1,9 +1,9 @@
 class Talk < ApplicationRecord
-  belongs_to :talk_category
-  belongs_to :talk_difficulty
+  belongs_to :talk_category, optional: true
+  belongs_to :talk_difficulty, optional: true
   belongs_to :conference
-  belongs_to :conference_day
-  belongs_to :track
+  belongs_to :conference_day, optional: true
+  belongs_to :track, optional: true
 
   has_one :video
   has_many :talks_speakers
@@ -14,12 +14,12 @@ class Talk < ApplicationRecord
   validates :conference_id, presence: true
   validates :title, presence: true
   validates :abstract, presence: true
-  validates :track_id, presence: true
-  validates :talk_category_id, presence: true
-  validates :talk_difficulty_id, presence: true
-  validates :conference_day_id, presence: true
-  validates :start_time, presence: true
-  validates :end_time, presence: true
+  # validates :track_id, presence: true
+  # validates :talk_category_id, presence: true
+  # validates :talk_difficulty_id, presence: true
+  # validates :conference_day_id, presence: true
+  # validates :start_time, presence: true
+  # validates :end_time, presence: true
 
   SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
 

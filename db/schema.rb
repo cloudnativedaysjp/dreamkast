@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_18_152450) do
+ActiveRecord::Schema.define(version: 2020_12_19_092318) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -132,6 +132,8 @@ ActiveRecord::Schema.define(version: 2020_12_18_152450) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "avatar_data"
     t.integer "conference_id"
+    t.text "email"
+    t.text "sub"
   end
 
   create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

@@ -1,12 +1,20 @@
 class Forbidden < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
+  include Pundit
+
   before_action :set_raven_context, :event_exists?
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   unless Rails.env.development?
     rescue_from Exception, with: :render_500
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     rescue_from Forbidden, with: :render_403
+  end
+
+  def user_not_authorized
+    render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
   end
 
   def home_controller?

@@ -10,7 +10,7 @@ module Secured
       if session[:userinfo].present?
         @current_user = session[:userinfo]
       else
-        redirect_to '/cndt2020'
+        redirect_to "/#{params[:event]}"
       end
     end
 

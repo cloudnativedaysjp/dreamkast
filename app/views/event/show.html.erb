@@ -3,7 +3,7 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-12 align-self-end">
-                <h1 class="text-uppercase text-white font-weight-bold">CloudNative Days Tokyo 2020</h1>
+                <h1 class="text-uppercase text-white font-weight-bold"><%= @conference.name %></h1>
                 <hr class="divider my-4" />
                 <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
             </div>
@@ -34,21 +34,17 @@
 </header>
 <!-- About-->
 <section class="page-section bg-primary" id="about">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2 class="text-white mt-0">About</h2>
-                <hr class="divider light my-4" />
-                <p class="text-white-75 mb-4 text-center">CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。</p>
-
-                <p class="text-white-75 mb-4 text-center">最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。</p>
-
-                <p class="text-white-75 mb-4 text-center">皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。</p>
-
-                <p class="text-white-75 mb-4 text-center">クラウドネイティブで、未来を共に創造しましょう。</p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="text-white mt-0">About</h2>
+        <hr class="divider light my-4" />
+        <% @conference.about.split("\n").each do |line| %>
+          <p class="text-white-75 mb-4 text-center"><%= line %></p>
+        <% end %>
+      </div>
     </div>
+  </div>
 </section>
 
 <section class="page-section" id="sponsors">
@@ -81,9 +77,9 @@
                 <h2 class="text-white mt-0">開催概要</h2>
                 <hr class="divider light my-4" />
                 <h5 class="text-white mt-0">名称</h5>
-                <p class="text-white-75 mb-4 text-center">CloudNative Days Tokyo 2020</p>
+                <p class="text-white-75 mb-4 text-center"><%= @conference.name %></p>
                 <h5 class="text-white mt-0">日程</h5>
-                <p class="text-white-75 mb-4 text-center">2020年9月8日(火)～9日(水)</p>
+                <p class="text-white-75 mb-4 text-center"><%= days %></p>
                 <h5 class="text-white mt-0">会場</h5>
                 <p class="text-white-75 mb-4 text-center">オンライン開催</p>
                 <h5 class="text-white mt-0">主催</h5>

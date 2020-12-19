@@ -1,5 +1,20 @@
 Conference.seed(
-  {id: 1, name: "CloudNative Days Tokyo 2020", abbr: "cndt2020"}
+  {
+    id: 1,
+    name: "CloudNative Days Tokyo 2020",
+    abbr: "cndt2020",
+    status: 2, # closed
+    theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
+最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
+皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
+クラウドネイティブで、未来を共に創造しましょう。
+EOS
+  }
 )
 
 ConferenceDay.seed(

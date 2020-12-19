@@ -1,7 +1,9 @@
 <div class="container">
-    <div class="row my-5">
-        <div class="col-12">
-            <%= render 'privacy' %>
-        </div>
+  <div class="row my-5">
+    <div class="col-12">
+      <div class="privacy_policy">
+        <%= markdown @conference.privacy_policy %>
+      </div>
     </div>
+  </div>
 </div>

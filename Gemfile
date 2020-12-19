@@ -79,3 +79,5 @@ gem 'rails_autolink'
 gem "rack-timeout"
 
 gem "pundit"
+
+gem 'redcarpet'

@@ -53,6 +53,8 @@
     <%= form.hidden_field :conference_id, value: @conference.id %>
   </div>
 
+  <%= markdown @conference.privacy_policy_for_speaker %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

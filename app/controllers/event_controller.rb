@@ -1,21 +1,13 @@
 class EventController < ApplicationController
   include ActionView::Helpers::UrlHelper
 
-  include Secured
-  before_action :set_profile
+  before_action :set_current_user, :set_profile, :set_speaker
 
   def show
     @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).order("sponsor_types.order ASC").find_by(abbr: event_name)
-    if session[:userinfo].present?
-      if @conference.opened?
-        redirect_to tracks_path
-      else
-        redirect_to dashboard_path
-      end
-    end
   end
-  
-  def logged_in_using_omniauth?
+
+  def set_current_user
     if session[:userinfo].present?
       @current_user = session[:userinfo]
     end
@@ -63,6 +55,12 @@ class EventController < ApplicationController
   def set_profile
     if @current_user
       @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
+  end
+
+  def set_speaker
+    if @current_user
+      @speaker = Speaker.find_by(email: @current_user[:info][:email])
     end
   end
 end

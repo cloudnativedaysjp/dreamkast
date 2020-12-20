@@ -21,18 +21,28 @@
             <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
               <%= button_to 'リンク集', links_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
             </div>
-        <% else %>
+          <% else %>
             <% if @conference.registered? %>
               <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                <%= button_to 'トークエントリー', speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+                <% if @speaker.present? %>
+                  <%= button_to 'スピーカーダッシュボードを見る', speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+                <% else %>
+                  <%= button_to '登壇者としてエントリーする', speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+                <% end %>
               </div>
             <% end %>
-            <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
-            </div>
-            <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+            <% if event_name == 'cndt2020' %>
+              <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+                <% if @profile.present? %>
+                  <%= button_to 'ダッシュボードを見る', dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+                <% else %>
+                  <%= button_to '聴講者として申し込みする', registration_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+                <% end %>
+              </div>
+              <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
                 <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
-            </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
     </div>

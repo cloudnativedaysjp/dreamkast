@@ -8,5 +8,4 @@ module SpeakersHelper
     end
     link_to(name, '#', class: "add_talk_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")}, style: args[:style])
   end
-
 end

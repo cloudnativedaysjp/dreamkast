@@ -41,7 +41,7 @@
               <%= @current_user[:info][:nickname] %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if event_name && @profile.id %>
+              <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
               <% if admin? %>

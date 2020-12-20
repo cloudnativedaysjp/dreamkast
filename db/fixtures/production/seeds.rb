@@ -40,8 +40,8 @@ ConferenceDay.seed(
   {id: 4, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: true}, #CM
   {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: true}, #Mini session
 
-  {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
-  {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
+  {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   )
 
 Industry.seed(

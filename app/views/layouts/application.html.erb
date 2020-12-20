@@ -35,9 +35,6 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0&appId=300575407747858&autoLogAppEvents=1" nonce="G1Hsaf0L"></script>
 <div id="wrapper">
-  <% unless home_controller? || admin_controller? %>
-    <%= render partial: "layouts/event_header" %>
-  <% end %>
 
   <%= yield %>
 

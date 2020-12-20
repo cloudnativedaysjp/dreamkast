@@ -12,7 +12,7 @@ $(document).on('click', '.add_talk_fields', function(event) {
 
 $(document).on('click', '.remove_talk_field', function(event) {
     console.log("remove talk field!!")
-    $(this).prev('input[type=hidden]').val('1');
+    $(this).parent().find('.destroy_flag_field').val(1)
     $(this).closest('.talk-field').hide();
     if ($('div:visible.talk-field').length < 3) {
         $('.add-talk').show()

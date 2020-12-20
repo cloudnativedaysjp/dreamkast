@@ -32,7 +32,10 @@ class SpeakerForm
           if params[:_destroy] == "1"
             @destroy_talks << @speaker.talks.find(params[:id])
           else
-            @talks << @speaker.talks.find(params[:id])
+            params.delete(:_destroy)
+            talk = @speaker.talks.find(params[:id])
+            talk.update(params)
+            @talks << talk
           end
         else
           params.delete(:_destroy)
@@ -47,6 +50,8 @@ class SpeakerForm
 
   def initialize(attributes = nil, speaker: Speaker.new)
     @speaker = speaker
+    @talks ||= []
+    @destroy_talks ||= []
     attributes ||= default_attributes
     super(attributes)
   end
@@ -60,11 +65,20 @@ class SpeakerForm
 
     ActiveRecord::Base.transaction do
       puts "conference_id #{conference_id}"
-      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id)
-      @talks.each do |talk|
-        talk.save!
+      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email)
+      @destroy_talks.each do |talk|
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
-        talk_speaker.save!
+        talk.destroy!
+        talk_speaker.destroy!
+      end
+      @talks.each do |talk|
+        if talk.persisted?
+          talk.save!
+        else
+          talk.save!
+          talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
+          talk_speaker.save!
+        end
       end
     end
   rescue => e

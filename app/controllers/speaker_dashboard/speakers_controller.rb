@@ -1,8 +1,5 @@
-class SpeakersController < ApplicationController
-  include Secured
-
-  before_action :set_speaker, only: [:show, :edit, :update, :destroy]
-  before_action :set_profile
+class SpeakerDashboard::SpeakersController < ApplicationController
+  include SecuredSpeaker
 
   def logged_in_using_omniauth?
     if session[:userinfo].present?
@@ -10,30 +7,14 @@ class SpeakersController < ApplicationController
     end
   end
 
-  # GET /speakers
-  # GET /speakers.json
-  def index
-    @speakers = Speaker.all
-  end
-
-  # GET /speakers/1
-  # GET /speakers/1.json
-  def show
-    @speaker = Speaker.find_by(id: params[:id])
-    render_404 unless @speaker
-    authorize @speaker
-
-    @conference = Conference.find_by(abbr: params[:event])
-  end
-
-  # GET /speakers/new
+  # GET :event/speaker_dashboard/speakers/new
   def new
     @speaker_form = SpeakerForm.new
     @conference = Conference.find_by(abbr: params[:event])
     @speaker_form.load
   end
 
-  # GET /speakers/1/edit
+  # GET :event/speaker_dashboard/speakers/:id/edit
   def edit
     @speaker = Speaker.find_by(id: params[:id])
     authorize @speaker
@@ -44,8 +25,8 @@ class SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
   end
 
-  # POST /speakers
-  # POST /speakers.json
+  # POST :event/speaker_dashboard/speakers
+  # POST :event/speaker_dashboard/speakers.json
   def create
     @conference = Conference.find_by(abbr: params[:event])
 
@@ -53,10 +34,9 @@ class SpeakersController < ApplicationController
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
 
-
     respond_to do |format|
       if @speaker_form.save
-        format.html { redirect_to "/#{@conference.abbr}", notice: 'Speaker was successfully created.' }
+        format.html { redirect_to "/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else
         format.html { render :new }
@@ -65,56 +45,51 @@ class SpeakersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /speakers/1
-  # PATCH/PUT /speakers/1.json
+  # PATCH/PUT :event/speaker_dashboard/speakers/1
+  # PATCH/PUT :event/speaker_dashboard/speakers/1.json
   def update
+    @conference = Conference.find_by(abbr: params[:event])
     @speaker = Speaker.find(params[:id])
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
-    @speaker_form.load
+    p @speaker_form.talks
+    @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
+    @speaker_form.email = @current_user[:info][:email]
+    # @speaker_form.load
 
     respond_to do |format|
-      if @speaker_form.update(speaker_params)
-        format.html { redirect_to speaker_path(id: @speaker.id), notice: 'Speaker was successfully updated.' }
+      if @speaker_form.save
+        format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @speaker }
       else
         format.html { render :edit }
-        format.json { render json: @speaker.errors, status: :unprocessable_entity }
+        format.json { render json: @speaker_form.speaker.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /speakers/1
-  # DELETE /speakers/1.json
-  def destroy
-    @speaker.destroy
-    respond_to do |format|
-      format.html { redirect_to speakers_url, notice: 'Speaker was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_speaker
-    @speaker = Speaker.find(params[:id])
-  end
 
-  def set_profile
-    if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email])
-    end
-  end
+  # Use callbacks to share common setup or constraints between actions.
+  # def set_speaker
+  #   @speaker = Speaker.find(params[:id])
+  # end
+  #
+  # def set_profile
+  #   if @current_user
+  #     @profile = Profile.find_by(email: @current_user[:info][:email])
+  #   end
+  # end
 
   helper_method :speaker_url
 
   def speaker_url
     case action_name
     when 'new'
-      "/#{params[:event]}/speakers"
+      "/#{params[:event]}/speaker_dashboard/speakers"
     when 'edit'
-      "/#{params[:event]}/speakers/#{params[:id]}"
+      "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"
     end
   end
 

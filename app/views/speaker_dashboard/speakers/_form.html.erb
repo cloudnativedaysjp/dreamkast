@@ -38,7 +38,7 @@
   <p>Talks:</p>
   <div class="talk-fields">
     <%= form.fields_for :talks do |talk| %>
-      <%= render 'speakers/talk_fields', :f => talk, :conference => @conference %>
+      <%= render 'talk_fields', :f => talk, :conference => @conference %>
     <% end %>
   </div>
 

@@ -1,0 +1,15 @@
+<h1>speaker dashboard</h1>
+
+<% unless @speaker.present? %>
+  <%= link_to 'entry', speakers_entry_path %>
+<% else %>
+  <%= @speaker.name %>
+
+  <ul>
+
+  <% @speaker.talks.each do |talk| %>
+      <li><%= talk.title %></li>
+  <% end %>
+  </ul>
+  <%= link_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id) %>
+<% end %>

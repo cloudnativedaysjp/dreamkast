@@ -1,9 +1,11 @@
-<h1>New Speaker</h1>
-<% if logged_in? %>
-  <%= render 'form', speaker: @speaker %>
-<% else %>
-  スピーカーとしてエントリーするにはログインが必要です
-  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-    <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
-  </div>
-<% end %>
+<div class="container">
+  <h1>New Speaker</h1>
+  <% if logged_in? %>
+    <%= render 'form', speaker: @speaker %>
+  <% else %>
+    スピーカーとしてエントリーするにはログインが必要です
+    <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+      <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+    </div>
+  <% end %>
+</div>

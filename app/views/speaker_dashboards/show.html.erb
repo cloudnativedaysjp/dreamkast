@@ -1,15 +1,20 @@
-<h1>speaker dashboard</h1>
+<div class="container">
+  <h1>speaker dashboard</h1>
 
-<% unless @speaker.present? %>
-  <%= link_to 'entry', speakers_entry_path %>
-<% else %>
-  <%= @speaker.name %>
+  <% unless @speaker.present? %>
 
-  <ul>
+    <%= link_to 'entry', speakers_entry_path %>
 
-  <% @speaker.talks.each do |talk| %>
-      <li><%= talk.title %></li>
+  <% else %>
+
+    <%= @speaker.name %>
+
+    <ul>
+      <% @speaker.talks.each do |talk| %>
+        <li><%= talk.title %></li>
+      <% end %>
+    </ul>
+    <%= link_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id) %>
+
   <% end %>
-  </ul>
-  <%= link_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id) %>
-<% end %>
+</div>

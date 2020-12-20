@@ -9,6 +9,12 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   # GET :event/speaker_dashboard/speakers/new
   def new
+    if @current_user
+      if Speaker.find_by(email: @current_user[:info][:email])
+        redirect_to speaker_dashboard_path
+      end
+    end
+
     @speaker_form = SpeakerForm.new
     @conference = Conference.find_by(abbr: params[:event])
     @speaker_form.load
@@ -53,7 +59,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
-    p @speaker_form.talks
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
     # @speaker_form.load

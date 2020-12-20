@@ -14,6 +14,22 @@ CloudNative Days はコミュニティ、企業、技術者が一堂に会し、
 皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
 クラウドネイティブで、未来を共に創造しましょう。
 EOS
+  },
+  {
+    id: 2,
+    name: "CloudNative Days Online 2021",
+    abbr: "cndo2021",
+    status: 0, # registered
+    theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days Online 2021 (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
+最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
+皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
+クラウドネイティブで、未来を共に創造しましょう。
+EOS
   }
 )
 
@@ -23,6 +39,9 @@ ConferenceDay.seed(
   {id: 3, date: "2020-09-02", start_time: "19:00", end_time: "21:00", conference_id: 1, internal: true}, #rejekts
   {id: 4, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: true}, #CM
   {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: true}, #Mini session
+
+  {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
+  {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
   )
 
 Industry.seed(

@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def full_title(page_title = '')
-    if event_name
+    if event_name && Conference.find_by(abbr: event_name).present?
       base_title = Conference.find_by(abbr: event_name).name
       if page_title.empty?
         base_title

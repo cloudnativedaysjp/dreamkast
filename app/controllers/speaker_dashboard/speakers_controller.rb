@@ -71,17 +71,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  # def set_speaker
-  #   @speaker = Speaker.find(params[:id])
-  # end
-  #
-  # def set_profile
-  #   if @current_user
-  #     @profile = Profile.find_by(email: @current_user[:info][:email])
-  #   end
-  # end
-
   helper_method :speaker_url
 
   def speaker_url

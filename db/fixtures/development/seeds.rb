@@ -10,6 +10,7 @@ Conference.seed(
     theme: "これはTestEventAutumn2020のテーマです",
     copyright: '© Test Event Autumn 2020 Committee',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/development/coc.md')),
     about: <<'EOS'
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -26,6 +27,7 @@ EOS
     theme: "これはTestEventWinter2020のテーマです",
     copyright: '© Test Event Winter 2020 Committee',
     privacy_policy: 'This is Privacy Policy',
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
     coc: 'This is CoC',
     about: <<'EOS'
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -41,6 +43,7 @@ EOS
     status: 0, # registered
     theme: "これはTestEventSummer2021のテーマです",
     privacy_policy: 'This is Privacy Policy',
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
     copyright: '© Test Event Summer 2021 Committee',
     coc: 'This is CoC',
     about: <<'EOS'

@@ -6,12 +6,11 @@ class Auth0Controller < ApplicationController
   
       # Redirect to the URL you want after successful auth
 
-      ## FIXME: CNDT2020終了後はここについて見直しが必要
-      # if request.env['omniauth.origin']
-      #   redirect_to "#{request.env['omniauth.origin']}/profiles/talks"
-      # else
+      if request.env['omniauth.origin']
+        redirect_to "#{request.env['omniauth.origin']}"
+      else
         redirect_to "/"
-      # end
+      end
     end
   
     def failure

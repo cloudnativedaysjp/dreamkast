@@ -43,10 +43,10 @@
               <%= @current_user[:info][:nickname] %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if event_name && @profile.id %>
+              <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
-              <% if admin? %>
+              <% if controller_name != "event" && admin? %>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/admin">管理画面</a>
               <% end %>
@@ -54,7 +54,7 @@
               <a class="dropdown-item" href="/logout">Logout</a>
             </div>
           <% else %>
-              <li class="nav-item"><%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
+              <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
           <% end %>
         </li>
       </ul>

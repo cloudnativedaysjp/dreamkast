@@ -77,6 +77,8 @@ RSpec.describe TracksController, type: :request do
     describe "logged in and registered" do
       before do
         create(:cndt2020_opened)
+        create(:day1)
+        create(:day2)
         create(:alice)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
@@ -92,9 +94,8 @@ RSpec.describe TracksController, type: :request do
       context "when user access to root page" do
         it "redirect to tracks" do
           get '/cndt2020'
-          expect(response).to_not be_successful
-          expect(response).to have_http_status '302'
-          expect(response).to redirect_to '/cndt2020/tracks'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
         end
       end
     end

@@ -1,0 +1,13 @@
+<div class="talk-field">
+  <p>Talk:</p>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :abstract %>
+  <%= f.text_field :abstract %>
+
+  <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
+  <%= f.hidden_field :conference_id, value: @conference.id %>
+
+  <%= link_to 'Delete', '#', class: 'remove_talk_field' %>
+</div>

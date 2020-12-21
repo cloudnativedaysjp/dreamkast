@@ -5,7 +5,7 @@ module Secured
       before_action :logged_in_using_omniauth?, :new_user?
       helper_method :admin?, :speaker?
     end
-  
+
     def logged_in_using_omniauth?
       if session[:userinfo].present?
         @current_user = session[:userinfo]

@@ -15,6 +15,7 @@ class TelValidator < ActiveModel::EachValidator
 end
 
 class Profile < ApplicationRecord
+  attr_accessor :conference_id
   has_many :registered_talks
   has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks
   has_many :agreements

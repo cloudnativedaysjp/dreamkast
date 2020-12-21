@@ -53,7 +53,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_500(e = nil)
-    logger.error "Rendering 500 with exception: #{e.message}" if e
+    if e
+      logger.error "Rendering 500 with exception: #{e.message}"
+      logger.error e.backtrace.join("\n")
+    end
+
     render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
   end
 

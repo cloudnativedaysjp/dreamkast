@@ -38,19 +38,19 @@ EOS
   },
   {
     id: 3,
-    name: "Test Event Summer 2021",
-    abbr: "tes2021",
+    name: "CloudNative Days Online 2021",
+    abbr: "cndo2021",
     status: 0, # registered
-    theme: "これはTestEventSummer2021のテーマです",
-    privacy_policy: 'This is Privacy Policy',
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
-    copyright: '© Test Event Summer 2021 Committee',
-    coc: 'This is CoC',
+    theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days Online 2021 (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
+最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
+皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
+クラウドネイティブで、未来を共に創造しましょう。
 EOS
   }
 )

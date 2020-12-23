@@ -6,6 +6,7 @@ FactoryBot.define do
     theme { 'これはTestEventAutumn2020のテーマです' }
     copyright { '© Test Event Autumn 2020 Committee' }
     privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 0 }
     about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -20,6 +21,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     theme { 'これはTestEventAutumn2020のテーマです' }
     copyright { '© Test Event Autumn 2020 Committee' }
     privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 1 }
     about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -34,6 +36,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     theme { 'これはTestEventAutumn2020のテーマです' }
     copyright { '© Test Event Autumn 2020 Committee' }
     privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 2 }
     about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

@@ -13,8 +13,6 @@ class SpeakerDashboardsController < ApplicationController
   def logged_in_using_omniauth?
     if logged_in?
       @current_user = session[:userinfo]
-     else
-      redirect_to "/#{params[:event]}/speaker_dashboard"
     end
   end
 

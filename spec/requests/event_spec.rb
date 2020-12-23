@@ -14,6 +14,7 @@ describe EventController, type: :request do
         expect(response).to be_successful
         expect(response).to have_http_status '200'
         expect(response.body).to include 'CloudNative Days Tokyo 2020'
+        expect(response.body).to include '登壇者としてエントリーする'
       end
 
       it "returns a success response with privacy policy" do
@@ -31,16 +32,34 @@ describe EventController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
-      before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa"}}})
+    describe 'logged in' do
+      describe 'not registered' do
+        before do
+          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa"}}})
+        end
+
+        it "returns a success response with event top page" do
+          get '/cndt2020'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to include 'CloudNative Days Tokyo 2020'
+          expect(response.body).to include '登壇者としてエントリーする'
+        end
       end
 
-      it "redirect to /cndt2020/registration" do
-        get '/cndt2020'
-        expect(response).to be_successful
-        expect(response).to have_http_status '200'
-        expect(response.body).to include 'CloudNative Days Tokyo 2020'
+      describe 'registered' do
+        before do
+          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa"}}})
+          create(:speaker_alice)
+        end
+
+        it "returns a success response with event top page" do
+          get '/cndt2020'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to include 'CloudNative Days Tokyo 2020'
+          expect(response.body).to include 'スピーカーダッシュボードを見る'
+        end
       end
     end
   end

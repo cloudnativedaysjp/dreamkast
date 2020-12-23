@@ -3,11 +3,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
-  # def logged_in_using_omniauth?
-  #   if session[:userinfo].present?
-  #     @current_user = session[:userinfo]
-  #   end
-
   # GET :event/speaker_dashboard/speakers/new
   def new
     if @current_user

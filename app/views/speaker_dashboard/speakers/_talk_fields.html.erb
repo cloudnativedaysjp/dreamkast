@@ -11,6 +11,16 @@
     <%= f.text_area :abstract %>
   </div>
 
+  <div class="field">
+    <%= f.label :talk_category_id, "取り上げる技術領域" %>*
+    <%= f.collection_select :talk_category_id, TalkCategory.all, :id, :name, {prompt: ""}, {class: "form-control", requierd: true} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :talk_time_id, "セッション時間" %>*
+    <%= f.collection_select :talk_time_id, TalkTime.all, :id, :time_minutes, {prompt: ""}, {class: "form-control", requierd: true} %>
+  </div>
+
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>
 

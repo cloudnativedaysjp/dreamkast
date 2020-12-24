@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_101521) do
+ActiveRecord::Schema.define(version: 2020_12_24_094247) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -192,6 +192,14 @@ ActiveRecord::Schema.define(version: 2020_12_20_101521) do
     t.integer "conference_id"
   end
 
+  create_table "talk_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.integer "time_minutes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_talk_times_on_conference_id"
+  end
+
   create_table "talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.text "abstract"
@@ -209,6 +217,7 @@ ActiveRecord::Schema.define(version: 2020_12_20_101521) do
     t.boolean "video_published", default: false, null: false
     t.string "document_url"
     t.boolean "show_on_timetable"
+    t.integer "talk_time_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
@@ -246,4 +255,5 @@ ActiveRecord::Schema.define(version: 2020_12_20_101521) do
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
+  add_foreign_key "talk_times", "conferences"
 end

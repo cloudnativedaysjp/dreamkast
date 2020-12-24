@@ -136,7 +136,26 @@ TalkCategory.seed(
   { id: 15, conference_id: 1, name: "NFV / Edge"},
   { id: 16, conference_id: 1, name: "組織論"},
   { id: 17, conference_id: 1, name: "その他"},
-  { id: 18, conference_id: 1, name: "Keynote"}
+  { id: 18, conference_id: 1, name: "Keynote"},
+
+  { id: 19, conference_id: 2, name: "CI / CD"},
+  { id: 20, conference_id: 2, name: "Customizing / Extending"},
+  { id: 21, conference_id: 2, name: "IoT / Edge"},
+  { id: 22, conference_id: 2, name: "Microservices / Services Mesh"},
+  { id: 23, conference_id: 2, name: "ML / GPGPU / HPC"},
+  { id: 24, conference_id: 2, name: "Networking"},
+  { id: 25, conference_id: 2, name: "Operation / Monitoring / Logging"},
+  { id: 26, conference_id: 2, name: "Orchestration"},
+  { id: 27, conference_id: 2, name: "Runtime"},
+  { id: 28, conference_id: 2, name: "Security"},
+  { id: 29, conference_id: 2, name: "Serveless / FaaS"},
+  { id: 30, conference_id: 2, name: "Storage / Database"},
+  { id: 31, conference_id: 2, name: "Architecture Design"},
+  { id: 32, conference_id: 2, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 33, conference_id: 2, name: "NFV / Edge"},
+  { id: 34, conference_id: 2, name: "組織論"},
+  { id: 35, conference_id: 2, name: "その他"},
+  { id: 36, conference_id: 2, name: "Keynote"}
 )
 
 TalkDifficulty.seed(
@@ -144,6 +163,17 @@ TalkDifficulty.seed(
   { id: 2, conference_id: 1, name: "中級者"},
   { id: 3, conference_id: 1, name: "上級者"},
   { id: 4, conference_id: 1, name: ""},
+)
+
+TalkTime.seed(
+  { id: 1, conference_id: 2, time_minutes: 5},
+  { id: 2, conference_id: 2, time_minutes: 10},
+  { id: 3, conference_id: 2, time_minutes: 15},
+  { id: 4, conference_id: 2, time_minutes: 20},
+  { id: 5, conference_id: 2, time_minutes: 25},
+  { id: 6, conference_id: 2, time_minutes: 30},
+  { id: 7, conference_id: 2, time_minutes: 35},
+  { id: 8, conference_id: 2, time_minutes: 40}
 )
 
 if ENV['REVIEW_APP'] == 'true'

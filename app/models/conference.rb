@@ -10,4 +10,5 @@ class Conference < ApplicationRecord
   has_many :booths
   has_many :links
   has_many :talk_times
+  has_many :talk_categories
 end

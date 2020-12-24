@@ -104,14 +104,14 @@ TalkDifficulty.seed(
   )
 
 TalkTime.seed(
-  { id: 1, conference_id: 1, time_minutes: 5},
-  { id: 2, conference_id: 1, time_minutes: 10},
-  { id: 3, conference_id: 1, time_minutes: 15},
-  { id: 4, conference_id: 1, time_minutes: 20},
-  { id: 5, conference_id: 1, time_minutes: 25},
-  { id: 6, conference_id: 1, time_minutes: 30},
-  { id: 7, conference_id: 1, time_minutes: 35},
-  { id: 8, conference_id: 1, time_minutes: 40}
+  { id: 1, conference_id: 3, time_minutes: 5},
+  { id: 2, conference_id: 3, time_minutes: 10},
+  { id: 3, conference_id: 3, time_minutes: 15},
+  { id: 4, conference_id: 3, time_minutes: 20},
+  { id: 5, conference_id: 3, time_minutes: 25},
+  { id: 6, conference_id: 3, time_minutes: 30},
+  { id: 7, conference_id: 3, time_minutes: 35},
+  { id: 8, conference_id: 3, time_minutes: 40}
 )
 
 csv = CSV.read(File.join(Rails.root, 'db/talks.csv'), headers: true)

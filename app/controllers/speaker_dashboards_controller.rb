@@ -3,18 +3,11 @@ class SpeakerDashboardsController < ApplicationController
   before_action :logged_in_using_omniauth?, :set_speaker
 
   def show
-    # @speaker = Speaker.find_by(id: params[:id])
-    # render_404 unless @speaker
-    # authorize @speaker
-
-    @conference ||= Conference.find_by(abbr: params[:event])
   end
 
   def logged_in_using_omniauth?
     if logged_in?
       @current_user = session[:userinfo]
-     else
-      redirect_to "/#{params[:event]}/speaker_dashboard"
     end
   end
 

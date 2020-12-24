@@ -5,13 +5,13 @@ class ApplicationController < ActionController::Base
 
   before_action :set_raven_context, :event_exists?
 
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
   unless Rails.env.development?
     rescue_from Exception, with: :render_500
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     rescue_from Forbidden, with: :render_403
   end
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def user_not_authorized
     render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'

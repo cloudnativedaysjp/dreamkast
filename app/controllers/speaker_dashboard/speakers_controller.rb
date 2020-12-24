@@ -1,11 +1,7 @@
 class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
 
-  def logged_in_using_omniauth?
-    if session[:userinfo].present?
-      @current_user = session[:userinfo]
-    end
-  end
+  skip_before_action :logged_in_using_omniauth?, only: [:new]
 
   # GET :event/speaker_dashboard/speakers/new
   def new
@@ -22,13 +18,13 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   # GET :event/speaker_dashboard/speakers/:id/edit
   def edit
-    @speaker = Speaker.find_by(id: params[:id])
+    @conference = Conference.find_by(abbr: params[:event])
+    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker: @speaker)
     @speaker_form.load
 
-    @conference = Conference.find_by(abbr: params[:event])
   end
 
   # POST :event/speaker_dashboard/speakers

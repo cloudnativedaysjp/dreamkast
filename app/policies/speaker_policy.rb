@@ -4,7 +4,7 @@ class SpeakerPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.id == speaker.id
+    speaker.present? && record.id == speaker.id
   end
 
   def update?

@@ -2,23 +2,23 @@
   <p>Talk:</p>
 
   <div class="field">
-    <%= f.label :title, 'セッションタイトル' %>
-    <%= f.text_field :title %>
+    <%= f.label :title, 'セッションタイトル' %>*
+    <%= f.text_field :title, class: "form-control", required: true %>
   </div>
 
   <div class="field">
     <%= f.label :abstract, 'セッション概要' %>
-    <%= f.text_area :abstract %>
+    <%= f.text_area :abstract, {class: "form-control"}  %>
   </div>
 
   <div class="field">
     <%= f.label :talk_category_id, "取り上げる技術領域" %>*
-    <%= f.collection_select :talk_category_id, TalkCategory.all, :id, :name, {prompt: ""}, {class: "form-control", requierd: true} %>
+    <%= f.collection_select :talk_category_id, TalkCategory.all, :id, :name, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
   <div class="field">
     <%= f.label :talk_time_id, "セッション時間" %>*
-    <%= f.collection_select :talk_time_id, TalkTime.all, :id, :time_minutes, {prompt: ""}, {class: "form-control", requierd: true} %>
+    <%= f.collection_select :talk_time_id, TalkTime.all, :id, :time_minutes, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>

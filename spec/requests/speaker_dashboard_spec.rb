@@ -14,7 +14,7 @@ describe SpeakerDashboardsController, type: :request do
         get '/cndt2020/speaker_dashboard'
         expect(response).to be_successful
         expect(response).to have_http_status '200'
-        expect(response.body).to include 'speaker dashboard'
+        expect(response.body).to include 'スピーカーダッシュボード'
       end
     end
 
@@ -28,7 +28,7 @@ describe SpeakerDashboardsController, type: :request do
           get '/cndt2020/speaker_dashboard'
           expect(response).to be_successful
           expect(response).to have_http_status '200'
-          expect(response.body).to include 'speaker dashboard'
+          expect(response.body).to include 'スピーカーダッシュボード'
           expect(response.body).to include 'entry'
         end
       end
@@ -43,7 +43,7 @@ describe SpeakerDashboardsController, type: :request do
           get '/cndt2020/speaker_dashboard'
           expect(response).to be_successful
           expect(response).to have_http_status '200'
-          expect(response.body).to include 'speaker dashboard'
+          expect(response.body).to include 'スピーカーダッシュボード'
           expect(response.body).to include 'edit'
         end
       end

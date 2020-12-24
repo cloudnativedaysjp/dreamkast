@@ -1,17 +1,59 @@
 <div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-12 col-md-6 registration-form py-3 px-md-5">
 
-      <h1>スピーカーエントリーフォーム</h1>
-      <% if logged_in? %>
-        <%= render 'form', speaker: @speaker %>
-      <% else %>
-        スピーカーとしてエントリーするにはログインが必要です
-        <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-          <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
-        </div>
-      <% end %>
+  <% if logged_in? %>
+    <h1>スピーカーエントリーフォーム</h1>
+    <%= render 'form', speaker: @speaker %>
+  <% else %>
+    <div class="row speaker-dashboard-form">
+      <div class="col-12 my-4">
+        <h2 class="text-center">CloudNative Daysで登壇してみませんか？</h2>
+        <p>CloudNative Days Spring 2021 Onlineでは、これまでのイベント開催で培った知見やクラウドネイティブなマインドセットを最大限に活用し、オンライン時代に最適なイベントを目指しています。</p>
+      </div>
+      <div class="col-12 my-4">
+        <h2 class="text-center">こんなイベントにしたいと思っています</h2>
+        <ol>
+          <li>CFP無し。エントリー者全員登壇</li>
+          <li>全国どこからでも登壇</li>
+          <li>事前収録制により登壇者も参加者とリアルタイムにコミュニケーション</li>
+        </ol>
+      </div>
+      <div class="col-12 my-4">
+        <h2 class="text-center">エントリーの流れ</h2>
+        <ol>
+          <li>本ページから登壇者ポータルにログイン</li>
+          <li>登壇内容を入力してエントリー</li>
+          <li>動画収録後、登壇者ポータルからアップロード(アップロード機能は後日公開)</li>
+        </ol>
+      </div>
+      <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+        <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+        <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+      </div>
+      <div class="col-12 my-4">
+        <h2 class="text-center">エントリーQ&A</h2>
+        <h3>登壇方法は選択出来ますか？</h3>
+        <p>今回のセッションは、すべて事前収録した動画となります。</p>
+
+        <h3>エントリーは必要ですか？</h3>
+        <p>はい、事前にエントリーが必要です。登壇者ポータルよりエントリー後、指定期日（イベント開催1ヶ月前が目処）までに動画によるセッションをご用意ください。</p>
+
+        <h3>収録の経験がなく、不安です</h3>
+        <p>オンラインによる動画収録支援サービスも提供予定です。詳細は後日ご案内します。</p>
+
+        <h3>エントリーまでに動画の収録が必要ですか？</h3>
+        <p>エントリー時点では動画の投稿は不要ですが、どのような内容のセッションかご記入頂きます。</p>
+        <h3>エントリー後、登壇内容が変わっても構いませんか？</h3>
+        <p>多少の変更であれば、投稿時に内容が変わってもOKです。ただ、大幅な変更の場合は、事前に運営にご相談ください。</p>
+        <h3>登壇時間は何分ですか？</h3>
+        <p>時間は、5〜40分間の可変となります。エントリー時に目安となる時間をお知らせください</p>
+        <h3>事前審査はありますか？ また、内容に制限はありますか？</h3>
+        <p>事前の審査はありません。原則的にはクラウドネイティブに関連していればどのような内容でもOKです。ただし投稿後に内容をチェックさせて頂き、場合によっては修正のお願いや、配信の見送りをする場合がありますのでご了承ください。</p>
+      </div>
+      <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+        <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+        <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+      </div>
     </div>
-
-  </div>
+    
+  <% end %>
 </div>

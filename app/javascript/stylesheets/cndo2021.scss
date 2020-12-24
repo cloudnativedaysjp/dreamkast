@@ -1,5 +1,5 @@
 // Import custom variables and override default Bootstrap variables
-@import "./_variables.scss";
+@import "./cndo2021/_variables.scss";
 
 // Import Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -17,6 +17,8 @@
 @import "./_booth.scss";
 @import "./_links.scss";
 @import "./_talks.scss";
+@import "./cndo2021/_cndo2021.scss";
+
 
 // Import custom utilities
 @import "./_utilities.scss";

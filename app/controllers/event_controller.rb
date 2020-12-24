@@ -5,6 +5,7 @@ class EventController < ApplicationController
 
   def show
     @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).order("sponsor_types.order ASC").find_by(abbr: event_name)
+    render event_view
   end
 
   def set_current_user
@@ -33,5 +34,4 @@ class EventController < ApplicationController
       "col-12 col-md-3 my-3 m-md-3"
     end
   end
-
 end

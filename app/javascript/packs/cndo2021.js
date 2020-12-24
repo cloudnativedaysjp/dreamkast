@@ -12,7 +12,7 @@ require("turbolinks").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/application'
+import '../stylesheets/cndo2021'
 import './bootstrap_custom.js'
 import './bootstrap-table.js'
 import './utils'
@@ -32,4 +32,3 @@ import './contents.js'
 import './speaker_form.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
-//require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)

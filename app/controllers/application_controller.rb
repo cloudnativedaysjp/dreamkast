@@ -101,4 +101,12 @@ class ApplicationController < ActionController::Base
       @speaker = Speaker.find_by(email: @current_user[:info][:email])
     end
   end
+
+  def event_view
+    if FileTest.exist?("#{Rails.root}/app/views/#{controller_name}/#{event_name}_#{action_name}.html.erb")
+      "#{controller_name}/#{event_name}_#{action_name}.html.erb"
+    else
+      "#{controller_name}/#{action_name}.html.erb"
+    end
+  end
 end

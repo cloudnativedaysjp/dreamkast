@@ -1,36 +1,36 @@
 <%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, '名前' %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :profile %>
+    <%= form.label :profile, 'プロフィール(200文字程度)' %>
     <%= form.text_area :profile %>
   </div>
 
   <div class="field">
-    <%= form.label :company %>
+    <%= form.label :company, '会社名 / 所属団体名' %>
     <%= form.text_field :company %>
   </div>
 
   <div class="field">
-    <%= form.label :job_title %>
+    <%= form.label :job_title, '肩書き' %>
     <%= form.text_field :job_title %>
   </div>
 
   <div class="field">
-    <%= form.label :twitter_id %>
+    <%= form.label :twitter_id, 'Twitter ID' %>
     <%= form.text_field :twitter_id %>
   </div>
 
   <div class="field">
-    <%= form.label :github_id %>
+    <%= form.label :github_id, 'GitHub ID' %>
     <%= form.text_field :github_id %>
   </div>
 
   <div class="field">
-    <%= form.label "Avatar" %>
+    <%= form.label :avatar, 'プロフィール画像' %>
     <%= form.file_field :avatar %>
   </div>
 

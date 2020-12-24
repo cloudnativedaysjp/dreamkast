@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>New Speaker</h1>
+  <h1><%= @conference.name %> 登壇エントリーフォーム</h1>
   <% if logged_in? %>
     <%= render 'form', speaker: @speaker %>
   <% else %>

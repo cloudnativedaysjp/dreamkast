@@ -1,10 +1,15 @@
 <div class="talk-field">
   <p>Talk:</p>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
 
-  <%= f.label :abstract %>
-  <%= f.text_field :abstract %>
+  <div class="field">
+    <%= f.label :title, 'セッションタイトル' %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :abstract, 'セッション概要' %>
+    <%= f.text_area :abstract %>
+  </div>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>

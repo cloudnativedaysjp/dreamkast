@@ -1,4 +1,6 @@
 <%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
+  <h3>スピーカー情報</h3>
+
   <div class="field">
     <%= form.label :name, '名前' %>*
     <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
@@ -34,8 +36,8 @@
     <%= form.file_field :avatar, class: "form-control"  %>
   </div>
 
+  <h3>セッション情報</h3>
 
-  <p>Talks:</p>
   <div class="talk-fields">
     <%= form.fields_for :talks do |talk| %>
       <%= render 'talk_fields', :f => talk, :conference => @conference %>
@@ -43,9 +45,9 @@
   </div>
 
   <% if  action_name == "new" || form.object.talks.size < 3 %>
-    <p><%= link_to_add_talk_fields "Add Talk", form, :talks, class: 'add-talk btn btn-primary' %></p>
+    <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
   <% else %>
-    <p><%= link_to_add_talk_fields "Add Talk", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
+    <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
   <% end %>
 
 

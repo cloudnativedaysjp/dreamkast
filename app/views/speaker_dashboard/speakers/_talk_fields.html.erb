@@ -1,5 +1,4 @@
 <div class="talk-field">
-  <p>Talk:</p>
 
   <div class="field">
     <%= f.label :title, 'セッションタイトル' %>*
@@ -25,4 +24,5 @@
   <%= f.hidden_field :conference_id, value: @conference.id %>
 
   <%= link_to 'Delete', '#', class: 'remove_talk_field' %>
+  <hr>
 </div>

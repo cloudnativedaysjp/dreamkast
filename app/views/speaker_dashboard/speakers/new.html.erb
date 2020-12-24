@@ -1,11 +1,17 @@
 <div class="container">
-  <h1><%= @conference.name %> 登壇エントリーフォーム</h1>
-  <% if logged_in? %>
-    <%= render 'form', speaker: @speaker %>
-  <% else %>
-    スピーカーとしてエントリーするにはログインが必要です
-    <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-      <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-md-6 registration-form py-3 px-md-5">
+
+      <h1>スピーカーエントリーフォーム</h1>
+      <% if logged_in? %>
+        <%= render 'form', speaker: @speaker %>
+      <% else %>
+        スピーカーとしてエントリーするにはログインが必要です
+        <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+          <%= button_to '参加申し込み / ログイン', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+
+  </div>
 </div>

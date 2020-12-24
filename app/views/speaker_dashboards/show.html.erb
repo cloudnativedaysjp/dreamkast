@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>speaker dashboard</h1>
+  <h1>スピーカーダッシュボード</h1>
 
   <% unless @speaker.present? %>
 
@@ -7,13 +7,16 @@
 
   <% else %>
 
-    <%= @speaker.name %>
+    Hi, <%=@speaker.name %> !
 
-    <ul>
-      <% @speaker.talks.each do |talk| %>
-        <li><%= talk.title %></li>
-      <% end %>
-    </ul>
+    <h2>エントリーリスト</h2>
+
+    <% @speaker.talks.each do |talk| %>
+      <h3><%= talk.title %></h3>
+      <p><%= talk.abstract %></p>
+      <p><%= talk.talk_category.name %></p>
+      <p><%= talk.talk_time.time_minutes %></p>
+    <% end %>
     <%= link_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id) %>
 
   <% end %>

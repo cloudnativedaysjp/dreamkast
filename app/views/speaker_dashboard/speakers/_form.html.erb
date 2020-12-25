@@ -10,13 +10,13 @@
         </div>
 
         <div class="field">
-          <%= form.label :profile, 'プロフィール(200文字程度)' %>
-          <%= form.text_area :profile, class: "form-control"  %>
+          <%= form.label :profile, 'プロフィール(200文字程度)' %>*
+          <%= form.text_area :profile, class: "form-control", required: true %>
         </div>
 
         <div class="field">
-          <%= form.label :company, '会社名 / 所属団体名' %>
-          <%= form.text_field :company, class: "form-control", placeholder: 'クラウドネイティブデイズ株式会社' %>
+          <%= form.label :company, '会社名 / 所属団体名' %>*
+          <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
         </div>
 
         <div class="field">

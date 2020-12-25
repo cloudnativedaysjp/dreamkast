@@ -8,10 +8,14 @@ module SecuredSpeaker
   
   def logged_in_using_omniauth?
     if logged_in?
-      @current_user = session[:userinfo]
+      set_current_user
     else
       redirect_to "/#{params[:event]}/speaker_dashboard"
     end
+  end
+
+  def set_current_user
+    @current_user = session[:userinfo]
   end
 
   def logged_in?

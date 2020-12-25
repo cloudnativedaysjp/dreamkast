@@ -78,4 +78,12 @@ module ApplicationHelper
     markdown = Redcarpet::Markdown.new(html_render, options)
     markdown.render(text).html_safe
   end
+
+  def event_js_path
+    if event_name == "cndo2021"
+      return "cndo2021"
+    else
+      return "application"
+    end
+  end
 end

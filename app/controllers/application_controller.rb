@@ -61,6 +61,7 @@ class ApplicationController < ActionController::Base
     render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
   end
 
+  helper_method :sponsor_logo_class, :days
   private
 
   def set_raven_context
@@ -71,6 +72,41 @@ class ApplicationController < ActionController::Base
   def event_exists?
     if event_name && Conference.where(abbr: event_name).empty?
       raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  def days
+    day_of_the_week = %w(月 火 水 木 金 土 日)
+    d = @conference.conference_days.where(internal: false)
+    if d.length == 1
+      day = day_of_the_week[d.first.date.cwday - 1]
+      return d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
+    else
+      first = d.order(:date).first
+      fday = day_of_the_week[first.date.cwday - 1]
+      last = d.order(:date).last
+      lday = day_of_the_week[last.date.cwday - 1]
+      return "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
+    end
+  end
+
+  def set_profile
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
+  end
+
+  def set_speaker
+    if @current_user
+      @speaker = Speaker.find_by(email: @current_user[:info][:email])
+    end
+  end
+
+  def event_view
+    if FileTest.exist?("#{Rails.root}/app/views/#{controller_name}/#{event_name}_#{action_name}.html.erb")
+      "#{controller_name}/#{event_name}_#{action_name}.html.erb"
+    else
+      "#{controller_name}/#{action_name}.html.erb"
     end
   end
 end

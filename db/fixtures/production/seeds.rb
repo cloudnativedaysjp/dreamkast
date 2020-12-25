@@ -17,19 +17,31 @@ EOS
   },
   {
     id: 2,
-    name: "CloudNative Days Online 2021",
+    name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
     status: 0, # registered
-    theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
-    copyright: '© CloudNative Days Online 2021 (Secretariat by Impress Corporation)',
+    theme: "ともに踏み出す CloudNative祭",
+    copyright: '© CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'
-CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
-最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
-皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
-クラウドネイティブで、未来を共に創造しましょう。
+    『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。
+    CNCFによる定義によると、『近代的でダイナミックな環境で、スケーラブルなアプリケーションを構築・実行するための能力を組織にもたらす』のがクラウドネイティブ技術です。
+    また、オープンソースでベンダー中立なエコシステムを育成・維持し、このパラダイムの採用を促進したいとも述べられています。
+    私たちはこの考えに賛同します。クラウドネイティブ技術を日本にも浸透させるべく、過去数年にわたりイベントを行ってきました。
+    
+    しかし世の中が大きく変わりつつある昨今。我々はこう考えました。
+    『今ならオンラインの特性を生かして、CloudNative Daysをダイナミックな環境でスケーラブルな形に更に進化させられるのではないか？』
+    
+    オンラインでは、誰でも情報を得ることができ、誰もが発信することもできます。オープンな思想のもとに作られたインターネットには境界がありません。
+    そうしたインターネットの成り立ちを思い出し、初心者から達人まで、住んでいる場所を問わず、クラウドネイティブに取り組む人が、
+    
+    ・今まで参加者だった人が壁を感じずに発信できる
+    ・参加者が、これまで以上に多様な視点から学びを得られる
+    
+    そんな機会を創り出し、登壇者・参加者・イベント主催者といった垣根を超えて、クラウドネイティブ・コミュニティを広げていきたいと考えています。
+    CloudNative Days Spring 2021 Onlineでは、クラウドネイティブ技術を通じて培った知見やマインドセットを最大限に活用し、これまでに無かった斬新なイベントを目指しています。
 EOS
   }
 )

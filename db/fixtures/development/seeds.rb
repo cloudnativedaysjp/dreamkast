@@ -4,23 +4,22 @@ DUMMY_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 Conference.seed(
   {
     id: 1,
-    name: "Test Event Autumn 2020",
-    abbr: "tea2020",
+    name: "CloudNative Days Tokyo 2020",
+    abbr: "cndt2020",
     status: 2, # closed
-    theme: "これはTestEventAutumn2020のテーマです",
-    copyright: '© Test Event Autumn 2020 Committee',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy.md')),
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
-    coc: File.read(File.join(Rails.root, 'db/fixtures/development/coc.md')),
+    theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
+最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
+皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
+クラウドネイティブで、未来を共に創造しましょう。
 EOS
   },
   {
-    id: 2,
+    id: 3,
     name: "Test Event Winter 2020",
     abbr: "tew2020",
     status: 1, # opened
@@ -37,20 +36,32 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 EOS
   },
   {
-    id: 3,
-    name: "Test Event Summer 2021",
-    abbr: "tes2021",
+    id: 2,
+    name: "CloudNative Days Spring 2021 ONLINE",
+    abbr: "cndo2021",
     status: 0, # registered
-    theme: "これはTestEventSummer2021のテーマです",
-    privacy_policy: 'This is Privacy Policy',
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
-    copyright: '© Test Event Summer 2021 Committee',
-    coc: 'This is CoC',
+    theme: "ともに踏み出す CloudNative祭",
+    copyright: '© CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。
+    CNCFによる定義によると、『近代的でダイナミックな環境で、スケーラブルなアプリケーションを構築・実行するための能力を組織にもたらす』のがクラウドネイティブ技術です。
+    また、オープンソースでベンダー中立なエコシステムを育成・維持し、このパラダイムの採用を促進したいとも述べられています。
+    私たちはこの考えに賛同します。クラウドネイティブ技術を日本にも浸透させるべく、過去数年にわたりイベントを行ってきました。
+    
+    しかし世の中が大きく変わりつつある昨今。我々はこう考えました。
+    『今ならオンラインの特性を生かして、CloudNative Daysをダイナミックな環境でスケーラブルな形に更に進化させられるのではないか？』
+    
+    オンラインでは、誰でも情報を得ることができ、誰もが発信することもできます。オープンな思想のもとに作られたインターネットには境界がありません。
+    そうしたインターネットの成り立ちを思い出し、初心者から達人まで、住んでいる場所を問わず、クラウドネイティブに取り組む人が、
+    
+    ・今まで参加者だった人が壁を感じずに発信できる
+    ・参加者が、これまで以上に多様な視点から学びを得られる
+    
+    そんな機会を創り出し、登壇者・参加者・イベント主催者といった垣根を超えて、クラウドネイティブ・コミュニティを広げていきたいと考えています。
+    CloudNative Days Spring 2021 Onlineでは、クラウドネイティブ技術を通じて培った知見やマインドセットを最大限に活用し、これまでに無かった斬新なイベントを目指しています。
 EOS
   }
 )
@@ -58,8 +69,8 @@ EOS
 ConferenceDay.seed(
   {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
   {id: 2, date: "2020-09-07", start_time: "19:00", end_time: "21:00", conference_id: 1, internal: true}, #前夜祭
-  {id: 3, date: "2020-12-15", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
-  {id: 4, date: "2020-12-16", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 3, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 4, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
   )
 

@@ -9,10 +9,9 @@
     <%= csp_meta_tag %>
     <%= favicon_link_tag('favicon.ico') %>
 
-
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag event_js_path, 'data-turbolinks-track': 'reload' %>
 
     <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
     

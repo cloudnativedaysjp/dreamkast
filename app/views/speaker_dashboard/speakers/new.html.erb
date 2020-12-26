@@ -2,7 +2,6 @@
 
   <% if logged_in? %>
     <h1 class="text-center py-3 entry">エントリーフォーム</h1>
-    
     <%= render 'form', speaker: @speaker %>
   <% else %>
     <div class="row speaker-dashboard-form">
@@ -48,13 +47,12 @@
         <h3>登壇時間は何分ですか？</h3>
         <p>時間は、5〜40分間の可変となります。エントリー時に目安となる時間をお知らせください</p>
         <h3>事前審査はありますか？ また、内容に制限はありますか？</h3>
-        <p>事前の審査はありません。原則的にはクラウドネイティブに関連していればどのような内容でもOKです。ただし投稿後に内容をチェックさせて頂き、場合によっては修正のお願いや、配信の見送りをする場合がありますのでご了承ください。</p>
+        <p>事前の審査はありません。原則的にはクラウドネイティブに関連していればどのような内容でもOKです。ただし投稿後に内容をチェックさせて頂き、場合によっては修正のお願いや、配信の見送りをする場合がありますのでご了承ください。また、自社製品のセールスを目的とするセッションについては、動画投稿ではなく<a href="Mailto:cndj-spo@impress.co.jp">CNDO2021への協賛</a>をご検討ください。</p>
       </div>
       <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
         <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-primary btn-xl inline" } %>
         <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
       </div>
     </div>
-    
   <% end %>
 </div>

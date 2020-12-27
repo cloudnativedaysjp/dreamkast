@@ -87,9 +87,14 @@ Industry.seed(
 
 Track.seed(
   { id: 1, number: 1, name: "A", conference_id: 1},
-  { id: 2, number: 1, name: "A", conference_id: 2},
-  { id: 3, number: 2, name: "B", conference_id: 2},
-  { id: 4, number: 1, name: "A", conference_id: 3},
+  { id: 2, number: 2, name: "B", conference_id: 1},
+  { id: 3, number: 3, name: "C", conference_id: 1},
+  { id: 4, number: 4, name: "D", conference_id: 1},
+  { id: 5, number: 5, name: "E", conference_id: 1},
+  { id: 6, number: 6, name: "F", conference_id: 1},
+  { id: 7, number: 1, name: "A", conference_id: 2},
+  { id: 8, number: 2, name: "B", conference_id: 2},
+  { id: 9, number: 1, name: "A", conference_id: 3},
 )
 
 

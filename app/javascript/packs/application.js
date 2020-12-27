@@ -32,4 +32,7 @@ import './contents.js'
 import './speaker_form.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
-//require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)
+//require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)// Support component names relative to this directory:
+var componentRequireContext = require.context("components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);

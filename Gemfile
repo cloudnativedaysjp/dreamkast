@@ -81,3 +81,5 @@ gem "rack-timeout"
 gem "pundit"
 
 gem 'redcarpet'
+
+gem 'react-rails'

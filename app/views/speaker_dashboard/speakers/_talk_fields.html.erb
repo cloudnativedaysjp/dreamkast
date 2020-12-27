@@ -16,7 +16,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :talk_time_id, "セッション時間" %>*
+    <%= f.label :talk_time_id, "セッション時間(分)" %>*
     <%= f.collection_select :talk_time_id, @conference.talk_times, :id, :time_minutes, {prompt: ""}, class: "form-control", required: true %>
   </div>
 

@@ -19,7 +19,7 @@ CloudNative Days はコミュニティ、企業、技術者が一堂に会し、
 EOS
   },
   {
-    id: 3,
+    id: 2,
     name: "Test Event Winter 2020",
     abbr: "tew2020",
     status: 1, # opened
@@ -36,7 +36,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 EOS
   },
   {
-    id: 2,
+    id: 3,
     name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
     status: 0, # registered
@@ -69,9 +69,9 @@ EOS
 ConferenceDay.seed(
   {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1, internal: false},
   {id: 2, date: "2020-09-07", start_time: "19:00", end_time: "21:00", conference_id: 1, internal: true}, #前夜祭
-  {id: 3, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
-  {id: 4, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
-  {id: 5, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
+  {id: 3, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
+  {id: 4, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
+  {id: 5, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
   )
 
 

@@ -36,7 +36,7 @@
 
         <div class="field">
           <%= form.label :avatar, 'プロフィール画像' %>
-          <% if @speaker.avatar_url.present? %>
+          <% if @speaker && @speaker.avatar_url.present? %>
             <br>
             <%= image_tag @speaker.avatar_url, :size => '80x80' %>
           <% end %>

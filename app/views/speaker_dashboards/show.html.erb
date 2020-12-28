@@ -1,23 +1,27 @@
 <div class="container">
-  <h1>スピーカーダッシュボード</h1>
+  <h1 class="text-center py-3 entry">スピーカーダッシュボード</h1>
+  <div class="row speaker-dashboard-form">
 
   <% unless @speaker.present? %>
-
-    <%= link_to 'entry', speakers_entry_path %>
-
+    <div class="col-12 my-4">
+    <%= link_to 'エントリー', speakers_entry_path %>
+    </div>
   <% else %>
-
-    Hi, <%=@speaker.name %> !
-
-    <h2>エントリーリスト</h2>
-
-    <% @speaker.talks.each do |talk| %>
-      <h3><%= talk.title %></h3>
-      <p><%= talk.abstract %></p>
-      <p><%= talk.talk_category.name %></p>
-      <p><%= talk.talk_time.time_minutes %></p>
-    <% end %>
-    <%= link_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id) %>
-
+    <h2 class="py-3 pl-2"> エントリー済みセッション一覧</h2>
+    <div class="col-12 mb-4">
+      <div class="card-group  my-4">
+        <% @speaker.talks.each do |talk| %>
+          <div class="card m-1">
+            <div class="card-body">
+              <h5 class="card-title"><%= talk.title %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
+              <p class="card-text"><%= talk.abstract %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <%= button_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
+    </div>
   <% end %>
+  </div>
 </div>

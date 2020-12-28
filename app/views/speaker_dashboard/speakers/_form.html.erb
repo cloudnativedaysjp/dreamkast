@@ -36,6 +36,10 @@
 
         <div class="field">
           <%= form.label :avatar, 'プロフィール画像' %>
+          <% if @speaker && @speaker.avatar_url.present? %>
+            <br>
+            <%= image_tag @speaker.avatar_url, :size => '80x80' %>
+          <% end %>
           <%= form.file_field :avatar, class: "form-control"  %>
         </div>
       </section>

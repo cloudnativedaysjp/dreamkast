@@ -38,8 +38,10 @@ class SpeakerForm
             @talks << talk
           end
         else
-          params.delete(:_destroy)
-          @talks << Talk.new(params)
+          unless params[:_destroy] == "1"
+            params.delete(:_destroy)
+            @talks << Talk.new(params)
+          end
         end
       end
     rescue => e

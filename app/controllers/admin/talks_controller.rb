@@ -3,7 +3,7 @@ class Admin::TalksController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?
+  before_action :is_admin?, :set_conference
 
   def index
     @talks = Talk.all.order('conference_day_id ASC, start_time ASC, track_id ASC')

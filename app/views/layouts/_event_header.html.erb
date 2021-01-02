@@ -46,9 +46,9 @@
               <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
-              <% if controller_name != "event" && admin? %>
+              <% if admin? %>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/admin">管理画面</a>
+                <a class="dropdown-item" href=<%= admin_path %>>管理画面</a>
               <% end %>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/logout">Logout</a>

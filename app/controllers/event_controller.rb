@@ -2,6 +2,7 @@ class EventController < ApplicationController
   include ActionView::Helpers::UrlHelper
 
   before_action :set_current_user, :set_profile, :set_speaker
+  helper_method :admin?
 
   def show
     @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).order("sponsor_types.order ASC").find_by(abbr: event_name)
@@ -33,5 +34,9 @@ class EventController < ApplicationController
     else
       "col-12 col-md-3 my-3 m-md-3"
     end
+  end
+
+  def admin?
+    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("CNDT2020-Admin")
   end
 end

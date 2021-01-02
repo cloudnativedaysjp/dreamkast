@@ -3,13 +3,12 @@ class AdminController < ApplicationController
     include Logging
     include LogoutHelper
 
-    before_action :is_admin?
+    before_action :is_admin?, :set_conference
 
     def show
         @session = session
-        @conference = Conference.first
+        @conference = Conference.find_by(abbr: event_name)
         @current = Video.on_air
-
     end
 
     def accesslog

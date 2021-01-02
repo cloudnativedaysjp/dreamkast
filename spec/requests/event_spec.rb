@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe EventController, type: :request do
+  subject(:session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => roles}}}} }
+  let(:roles) { [] }
+
   describe "GET event#show" do
     before do
       create(:cndt2020)
@@ -35,7 +38,7 @@ describe EventController, type: :request do
     describe 'logged in' do
       describe 'not registered' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa"}}})
+          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
         end
 
         it "returns a success response with event top page" do
@@ -49,7 +52,7 @@ describe EventController, type: :request do
 
       describe 'registered' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa"}}})
+          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
           create(:speaker_alice)
         end
 

@@ -6,7 +6,7 @@ class Admin::SpeakersController < ApplicationController
   before_action :is_admin?, :set_conference
 
   def index
-    @speakers = Speaker.all
+    @speakers = @conference.speakers
   end
 
   def edit

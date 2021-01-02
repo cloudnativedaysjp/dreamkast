@@ -6,7 +6,7 @@ class Admin::TalksController < ApplicationController
   before_action :is_admin?, :set_conference
 
   def index
-    @talks = Talk.all.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.order('conference_day_id ASC, start_time ASC, track_id ASC')
   end
 
   def update_talks

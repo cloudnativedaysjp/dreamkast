@@ -7,7 +7,7 @@ class Admin::SponsorsController < ApplicationController
 
   def index
     @sponsor_types = @conference.sponsor_types.order(order: "ASC")
-    @sponsors = Sponsor.all
+    @sponsors = @conference.sponsors
   end
 
   def show

@@ -2,6 +2,8 @@ class Speaker < ApplicationRecord
   include ActionView::Helpers::UrlHelper
   include AvatarUploader::Attachment(:avatar)
 
+  belongs_to :conference
+
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
 
@@ -9,6 +11,7 @@ class Speaker < ApplicationRecord
   validates :profile, presence: true
   validates :company, presence: true
   validates :job_title, presence: true
+  validates :conference_id, presence: true
 
   def self.import(file)
     message = []
@@ -20,6 +23,7 @@ class Speaker < ApplicationRecord
       hash = row.to_hash.slice(*updatable_attributes)
       hash[:created_at] = Time.now
       hash[:updated_at] = Time.now
+      p hash
       speaker.attributes = hash
       if speaker.valid?
         speakers << hash
@@ -46,7 +50,7 @@ class Speaker < ApplicationRecord
   end
 
   def self.updatable_attributes
-    ["id","name","profile","company","job_title","twitter_id","github_id", "avatar_data"]
+    %w[id conference_id name profile company job_title twitter_id github_id avatar_data]
   end
 
   def has_avatar?

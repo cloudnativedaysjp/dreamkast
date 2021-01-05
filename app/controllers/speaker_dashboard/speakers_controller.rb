@@ -5,14 +5,15 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   # GET :event/speaker_dashboard/speakers/new
   def new
+    @conference = Conference.find_by(abbr: params[:event])
+
     if set_current_user
-      if Speaker.find_by(email: @current_user[:info][:email])
+      if Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
         redirect_to speaker_dashboard_path
       end
     end
 
     @speaker_form = SpeakerForm.new
-    @conference = Conference.find_by(abbr: params[:event])
     @speaker_form.load
   end
 

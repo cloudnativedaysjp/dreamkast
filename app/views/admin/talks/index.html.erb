@@ -50,10 +50,12 @@
                     <h5><%= talk.title %></h5>
                     <p class="abstract"><%= talk.abstract[0..30] %></p>
                   </td>
-                  <td><%= talk.track.name %></td>
+                  <td><%= talk.track.present? ? talk.track.name : "" %></td>
                   <td>
                     <%= talk.date %>
-                    <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+                    <% if talk.start_time.present? && talk.start_time.present? %>
+                      <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+                    <% end %>
                   </td>
                   <td>
                     <% video_id = talk.video ? talk.video.video_id : nil %>

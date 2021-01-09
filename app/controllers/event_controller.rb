@@ -37,6 +37,6 @@ class EventController < ApplicationController
   end
 
   def admin?
-    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("$#{@conference.abbr.upcase}-Admin")
+    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{@conference.abbr.upcase}-Admin")
   end
 end

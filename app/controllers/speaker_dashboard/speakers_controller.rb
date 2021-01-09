@@ -86,7 +86,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   def pundit_user
     if @current_user
-      Speaker.find_by(email: @current_user[:info][:email])
+      Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
     end
   end
 

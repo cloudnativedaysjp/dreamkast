@@ -3,11 +3,10 @@ class Admin::BoothsController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?
+  before_action :is_admin?, :set_conference
 
   def index
-    conference = Conference.first
-    @booths = conference.booths
+    @booths = @conference.booths
   end
 
   def show

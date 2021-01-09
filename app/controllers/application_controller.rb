@@ -90,6 +90,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_conference
+    @conference = Conference.find_by(abbr: event_name)
+  end
+
   def set_profile
     if @current_user
       @profile = Profile.find_by(email: @current_user[:info][:email])

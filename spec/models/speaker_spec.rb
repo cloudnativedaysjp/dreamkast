@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Speaker, type: :model do
+  before do
+    create(:cndt2020)
+  end
 
   describe 'with valid CSV' do
     before do

@@ -1,4 +1,5 @@
 class EventController < ApplicationController
+  include Secured
   include ActionView::Helpers::UrlHelper
 
   before_action :set_current_user, :set_profile, :set_speaker
@@ -33,5 +34,11 @@ class EventController < ApplicationController
     else
       "col-12 col-md-3 my-3 m-md-3"
     end
+  end
+
+  private
+
+  def use_secured_before_action?
+    false
   end
 end

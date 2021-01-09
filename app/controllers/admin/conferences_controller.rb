@@ -3,23 +3,20 @@ class Admin::ConferencesController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?
+  before_action :is_admin?, :set_conference
 
   def index
   end
 
   def show
-    @conference = Conference.find(params[:id])
   end
 
   def edit
-    @conference = Conference.find(params[:id])
     @conference_form = ConferenceForm.new(conference: @conference)
     @conference_form.load
   end
 
   def update
-    @conference = Conference.find(params[:id])
     @conference_form = ConferenceForm.new(conference_params, conference: @conference)
 
     respond_to do |format|

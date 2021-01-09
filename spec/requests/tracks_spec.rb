@@ -23,7 +23,7 @@ RSpec.describe TracksController, type: :request do
 
         it "link to admin is displayed" do
           get '/cndt2020/dashboard'
-          expect(response.body).to include('<a class="dropdown-item" href="/admin">管理画面</a>')
+          expect(response.body).to include('<a class="dropdown-item" href="/cndt2020/admin">管理画面</a>')
         end
       end
 

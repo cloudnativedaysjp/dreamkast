@@ -3,10 +3,10 @@ class Admin::SpeakersController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?
+  before_action :is_admin?, :set_conference
 
   def index
-    @speakers = Speaker.all
+    @speakers = @conference.speakers
   end
 
   def edit

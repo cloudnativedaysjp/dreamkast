@@ -3,10 +3,9 @@ class Admin::TracksController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?
+  before_action :is_admin?, :set_conference
 
   def index
-    @conference = Conference.find_by(abbr: "cndt2020")
     @tracks = @conference.tracks
   end
 

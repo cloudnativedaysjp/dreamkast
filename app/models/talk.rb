@@ -56,6 +56,10 @@ class Talk < ApplicationRecord
     return self.conference_day_id
   end
 
+  def track_name
+    track.present? ? track.name : ''
+  end
+
   def slot_number
     SLOT_MAP.each_with_index do |time, index|
       if time > self.start_time.to_time.strftime("%H%M")

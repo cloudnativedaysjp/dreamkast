@@ -40,6 +40,8 @@ class SpeakerForm
         else
           unless params[:_destroy] == "1"
             params.delete(:_destroy)
+            params[:show_on_timetable] = true
+            params[:video_published] = true
             @talks << Talk.new(params)
           end
         end

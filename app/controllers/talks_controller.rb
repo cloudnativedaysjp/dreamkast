@@ -2,6 +2,7 @@ class TalksController < ApplicationController
   include Secured
   before_action :set_profile
   before_action :set_talk, only: [:show]
+  helper_method :talk_start_to_end
 
   def logged_in_using_omniauth?
     if session[:userinfo].present?
@@ -19,17 +20,25 @@ class TalksController < ApplicationController
   end
 
   private
-    def set_talk
-      @talk = Talk.find(params[:id])
-    end
+  def set_talk
+    @talk = Talk.find(params[:id])
+  end
 
-    def talk_params
-      params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
-    end
+  def talk_params
+    params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
+  end
 
-    def set_profile
-      if @current_user
-        @profile = Profile.find_by(email: @current_user[:info][:email])
-      end
+  def set_profile
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
     end
+  end
+
+  def talk_start_to_end(talk)
+    if talk.start_time.present? && talk.end_time.present?
+      talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M")
+    else
+      ''
+    end
+  end
 end

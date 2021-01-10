@@ -18,31 +18,33 @@
 
       <% @talks.each_with_index do |talk, index| %>
         <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
-          <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>"><ul class="p-0 vertical-middle"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+          <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>">
+            <ul class="p-0 vertical-middle">
+              <% talk.speakers.each do |speaker| %>
+                <li class="speaker"><%= speaker.name %></li>
+              <% end %>
+            </ul>
+          </td>
+
           <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
             <%= link_to talk.title, talk_path(id: talk.id), data: {"turbolinks" => false} %>
           </td>
+
           <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.talk_category.name %>
           </td>
 
-          <% if talk.track.present? %>
-            <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center"><%= talk.track.name %></td>
-          <% else %>
-            <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center"></td>
-          <% end %>
+          <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center">
+            <%= talk.track_name %>
+          </td>
 
           <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.date %>
           </td>
 
-          <% if talk.start_time.present? && talk.end_time.present? %>
-            <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
-              <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
-            </td>
-            <% else %>
-            <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center"></td>
-          <% end %>
+          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
+            <%= talk_start_to_end(talk) %>
+          </td>
 
           <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
             <% if @conference.closed? || (@conference.opened? && @current_user) %>
@@ -57,6 +59,7 @@
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>
           </td>
+
         </tr>
       <% end %>
 

@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'logout' => 'logout#logout'
 
+  namespace 'api' do
+    namespace 'v1' do
+      resources :conferences, only: [:show], path: "events"
+    end
+  end
+
   scope ":event" do
     post 'auth/auth0' => redirect('/auth/auth0')
 

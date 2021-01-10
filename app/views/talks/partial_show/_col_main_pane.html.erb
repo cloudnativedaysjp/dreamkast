@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-12">
+    <div class="talk">
+
+      <h3>
+        <%= talk.title %>
+        <%= render 'talks/partial_show/twitter_share_button', hash_tag: conference.abbr.upcase %>
+        <%= render 'talks/partial_show/facebook_share_button', url: request.original_url %>
+      </h3>
+
+      <div class="row py-3">
+        <%= render 'talks/partial_show/col_talk_category_block', talk: talk %>
+      </div>
+
+      <% if conference.closed? || (conference.opened? && @current_user) %>
+        <%= render 'talks/partial_show/talk_video_block', talk: talk %>
+      <% end %>
+
+      <p><%= talk.abstract %></p>
+
+      <% talk.speakers.each do |speaker| %>
+        <div class="row py-3">
+          <%= render 'talks/partial_show/col_speaker_avatar', speaker: speaker %>
+          <%= render 'talks/partial_show/col_speaker', speaker: speaker %>
+        </div>
+      <% end %>
+
+      <% if talk.document_url.present? %>
+        <div class="col-12 my-3 pt-2" style="border-top: 1px solid #CCC">
+          <ul>
+            <li><a href="<%= talk.document_url %>" target="_blank">発表資料</a></li>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="col-12 text-center my-4">
+        <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+      </div>
+    </div>
+  </div>
+</div>

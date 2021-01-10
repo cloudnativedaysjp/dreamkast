@@ -25,13 +25,24 @@
           <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.talk_category.name %>
           </td>
-          <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center"><%= talk.track.name %></td>
+
+          <% if talk.track.present? %>
+            <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center"><%= talk.track.name %></td>
+          <% else %>
+            <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center"></td>
+          <% end %>
+
           <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.date %>
           </td>
-          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
-          </td>
+
+          <% if talk.start_time.present? && talk.end_time.present? %>
+            <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
+              <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
+            </td>
+            <% else %>
+            <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center"></td>
+          <% end %>
 
           <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
             <% if @conference.closed? || (@conference.opened? && @current_user) %>

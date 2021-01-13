@@ -1,5 +1,7 @@
 class Conference < ApplicationRecord
   enum status: { registered: 0, opened: 1, closed: 2 }
+  enum speaker_entry: { speaker_entry_disabled: 0, speaker_entry_enabled: 1 }
+  enum attendee_entry: { attendee_entry_disabled: 0, attendee_entry_enabled: 1 }
 
   has_many :form_items
   has_many :conference_days

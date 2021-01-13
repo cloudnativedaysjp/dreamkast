@@ -24,7 +24,7 @@ class Admin::ConferencesController < ApplicationController
         if @conference.opened?
           ActionCable.server.broadcast("waiting_channel","redirect to tracks");
         end
-        format.html { redirect_to "/admin", notice: "Conference was successfully updated." }
+        format.html { redirect_to admin_path, notice: "Conference was successfully updated." }
       else
         format.html { render :edit }
       end
@@ -39,6 +39,8 @@ class Admin::ConferencesController < ApplicationController
 
   def conference_params
     params.require(:conference).permit(:status,
+                                       :speaker_entry,
+                                       :attendee_entry,
                                        links_attributes: [:id, :title, :url, :description, :_destroy])
   end
 end

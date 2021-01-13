@@ -1,6 +1,6 @@
 <%= form_with(url: admin_conference_path, model: conference_form, local: true, method: :patch) do |form| %>
 
-  <h3>Status</h3>
+  <h3>Conference Status</h3>
 
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
@@ -11,7 +11,29 @@
     </div>
   </div>
 
-  <h4>Links</h4>
+  <h3>Speaker Entry Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <% @conference_form.conference.class.speaker_entries.keys.each do |key| %>
+        <%= form.radio_button :speaker_entry, key %>
+        <%= form.label :speaker_entry, key %><br>
+      <% end %>
+    </div>
+  </div>
+
+  <h3>Attendee Entry Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <% @conference_form.conference.class.attendee_entries.keys.each do |key| %>
+        <%= form.radio_button :attendee_entry, key %>
+        <%= form.label :attendee_entry, key %><br>
+      <% end %>
+    </div>
+  </div>
+
+  <h3>Links</h3>
   <div class="link-fields">
     <%= form.fields_for :links do |f| %>
       <%= render 'admin/conferences/link_fields', :f => f %>

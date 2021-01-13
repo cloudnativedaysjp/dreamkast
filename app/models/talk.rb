@@ -14,7 +14,10 @@ class Talk < ApplicationRecord
 
   validates :conference_id, presence: true
   validates :title, presence: true
-  validates :abstract, presence: true
+
+  # エントリー時、セッション概要は空白でもいいのでバリデーションしなくていい
+  # validates :abstract, presence: true
+
   # エントリーフォームから入力する時、以下のフィールドには入力しないのでバリデーションを削っている
   # validates :track_id, presence: true
   # validates :talk_category_id, presence: true

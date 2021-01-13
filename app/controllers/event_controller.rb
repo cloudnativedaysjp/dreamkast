@@ -41,4 +41,8 @@ class EventController < ApplicationController
   def use_secured_before_action?
     false
   end
+
+  def speaker_entry_button_name
+    @speaker.present? ? 'スピーカーダッシュボードを見る' : '登壇者としてエントリーする'
+  end
 end

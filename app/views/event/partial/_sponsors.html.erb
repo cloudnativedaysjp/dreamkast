@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 text-center">
+      <h2 class="text-black mt-0">Sponsors</h2>
+      <hr class="divider primary my-4" />
+
+      <% conference.sponsor_types.each do |sponsor_type| %>
+        <h3 class="text-black mt-0"><%= sponsor_type.name %></h3>
+        <hr class="divider primary my-4" />
+        <div class="row justify-content-md-center mb-5">
+          <% sponsor_type.sponsors.each do |sponsor| %>
+            <% if sponsor.sponsor_attachment_logo_image.present? %>
+              <div class="<%= sponsor_logo_class(sponsor_type) %>"><a href="<%= sponsor.url %>" target="_blank"><%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %></a></div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

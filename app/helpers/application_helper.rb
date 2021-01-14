@@ -44,6 +44,14 @@ module ApplicationHelper
     end
   end
 
+  def event_image_url
+    if event_name && Conference.find_by(abbr: event_name).present? && FileTest.exist?("#{Rails.root}/app/assets/images/#{event_name}/header_logo.png")
+      image_url("#{event_name}/trademark.png")
+    else
+      image_url('trademark.png')
+    end
+  end
+
   def link_to_add_pdf_fields(name, f, association, **args)
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id

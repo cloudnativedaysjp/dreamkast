@@ -13,7 +13,7 @@
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag event_js_path, 'data-turbolinks-track': 'reload' %>
 
-    <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
+    <meta property="og:site_name" content="<%= site_name %>" />
     
     <% if yield(:ogp).size == 0 %>
       <meta property="og:url" content="<%= request.original_url %>" />

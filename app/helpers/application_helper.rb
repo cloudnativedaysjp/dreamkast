@@ -22,6 +22,15 @@ module ApplicationHelper
     return "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
   end
 
+  
+  def site_name
+    if event_name && Conference.find_by(abbr: event_name).present?
+      Conference.find_by(abbr: event_name).name
+    else
+      "CloudNative Days"
+    end
+  end
+
   def full_title(page_title = '')
     if event_name && Conference.find_by(abbr: event_name).present?
       base_title = Conference.find_by(abbr: event_name).name

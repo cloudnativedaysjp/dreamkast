@@ -13,13 +13,13 @@
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag event_js_path, 'data-turbolinks-track': 'reload' %>
 
-    <meta property="og:site_name" content="<%= Conference.find(1).name %>" />
+    <meta property="og:site_name" content="<%= site_name %>" />
     
     <% if yield(:ogp).size == 0 %>
       <meta property="og:url" content="<%= request.original_url %>" />
       <meta property="og:type" content="article" />
       <meta property="og:title" content="<%= full_title(yield(:title)) %>" />
-      <meta property="og:image" content="<%= image_url('trademark.png') %>" />
+      <meta property="og:image" content="<%= event_image_url %>" />
       <meta property="og:description" content="CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。" />
     <% else %>
       <%= yield(:ogp) %>

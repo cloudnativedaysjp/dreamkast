@@ -22,6 +22,15 @@ module ApplicationHelper
     return "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
   end
 
+  
+  def site_name
+    if event_name && Conference.find_by(abbr: event_name).present?
+      Conference.find_by(abbr: event_name).name
+    else
+      "CloudNative Days"
+    end
+  end
+
   def full_title(page_title = '')
     if event_name && Conference.find_by(abbr: event_name).present?
       base_title = Conference.find_by(abbr: event_name).name
@@ -32,6 +41,14 @@ module ApplicationHelper
       end
     else
       "CloudNative Days"
+    end
+  end
+
+  def event_image_url
+    if event_name && Conference.find_by(abbr: event_name).present? && FileTest.exist?("#{Rails.root}/app/assets/images/#{event_name}/header_logo.png")
+      image_url("#{event_name}/trademark.png")
+    else
+      image_url('trademark.png')
     end
   end
 

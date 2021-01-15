@@ -7,3 +7,4 @@ node_modules
 test-docker-compose.yaml
 tmp
 vendor
+config/master.key

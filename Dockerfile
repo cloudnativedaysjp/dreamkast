@@ -1,4 +1,4 @@
-FROM node:12.18.1-slim as node
+FROM node:12.18.2-slim as node
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
@@ -18,7 +18,7 @@ WORKDIR /app
 COPY bin bin
 COPY config config
 COPY Rakefile Rakefile
-COPY app/assets app/assets
+COPY app app
 COPY Gemfile* ./
 COPY package.json yarn.lock ./
 COPY --from=node /app/node_modules /app/node_modules

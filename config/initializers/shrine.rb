@@ -9,11 +9,8 @@ if Rails.env.development? || Rails.env.test?
   }
 else
   s3_options = {
-    access_key_id: ENV['CLOUDCUBE_ACCESS_KEY_ID'],
-    secret_access_key: ENV['CLOUDCUBE_SECRET_ACCESS_KEY'],
-    region: 'us-east-1',
-    bucket: URI.parse(ENV['CLOUDCUBE_URL']).host.split('.')[0],
-    prefix: URI.parse(ENV['CLOUDCUBE_URL']).path.slice(1...)
+    region: ENV['S3_REGION'],
+    bucket: ENV['S3_BUCKET']
   }
 
   Shrine.storages = {

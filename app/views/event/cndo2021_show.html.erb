@@ -1,4 +1,4 @@
-<div id="cndt2021" >
+<div id="<%= @conference.abbr %>" >
   <div class="background">
     <video src="https://cloudnativedaysjp-website.s3-ap-northeast-1.amazonaws.com/background.mp4" autoplay loop muted></video>
   </div>
@@ -25,34 +25,10 @@
                     <% end %>
               </div>
               <% if @conference.closed? %>
-                <div class="col-12 col-xs-12 col-lg-3 align-self-baseline">
-                  <%= button_to 'アーカイブ視聴、資料はこちら', talks_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                </div>
-                <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                  <%= button_to 'リンク集', links_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                </div>
+                <%= render 'event/partial/buttons', conference: @conference %>
               <% else %>
-                <% if @conference.registered? %>
-                  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                    <% if @speaker.present? %>
-                      <%= button_to 'スピーカーダッシュボードを見る', speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                    <% else %>
-                      <%= button_to '登壇者としてエントリーする', speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                    <% end %>
-                  </div>
-                <% end %>
-                <% if event_name == 'cndt2020' %>
-                  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                    <% if @profile.present? %>
-                      <%= button_to 'ダッシュボードを見る', dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                    <% else %>
-                      <%= button_to '聴講者として申し込みする', registration_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-                    <% end %>
-                  </div>
-                  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-                    <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
-                  </div>
-                <% end %>
+                <%= render 'event/partial/speaker_entry_button', conference: @conference %>
+                <%= render 'event/partial/attendee_entry_button', conference: @conference %>
               <% end %>
             </div>
       </div>
@@ -61,65 +37,15 @@
 
     <!-- About-->
     <section class="page-section bg-primary" id="about">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <h2 class="text-white mt-0">About</h2>
-            <hr class="divider light my-4" />
-            <% @conference.about.split("\n").each do |line| %>
-              <p class="text-white-75 mb-4 text-center"><%= line %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
+      <%= render 'event/partial/about', conference: @conference %>
     </section>
 
     <section class="page-section" id="sponsors">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 text-center">
-            <h2 class="text-black mt-0">Sponsors</h2>
-            <hr class="divider primary my-4" />
-
-            <% @conference.sponsor_types.each do |sponsor_type| %>
-              <h3 class="text-black mt-0"><%= sponsor_type.name %></h3>
-              <hr class="divider primary my-4" />
-              <div class="row justify-content-md-center mb-5">
-                <% sponsor_type.sponsors.each do |sponsor| %>
-                  <% if sponsor.sponsor_attachment_logo_image.present? %>
-                    <div class="<%= sponsor_logo_class(sponsor_type) %>"><a href="<%= sponsor.url %>" target="_blank"><%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %></a></div>
-                  <% end %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
+      <%= render 'event/partial/sponsors', conference: @conference %>
     </section>
 
     <section class="page-section bg-secondary" id="information">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="text-white mt-0">開催概要</h2>
-                    <hr class="divider light my-4" />
-                    <h5 class="text-white mt-0">名称</h5>
-                    <p class="text-white-75 mb-4 text-center"><%= @conference.name %></p>
-                    <h5 class="text-white mt-0">日程</h5>
-                    <p class="text-white-75 mb-4 text-center"><%= days %></p>
-                    <h5 class="text-white mt-0">会場</h5>
-                    <p class="text-white-75 mb-4 text-center">オンライン開催</p>
-                    <h5 class="text-white mt-0">主催</h5>
-                    <p class="text-white-75 mb-4 text-center">CloudNative Days Tokyo Committee</p>
-                    <h5 class="text-white mt-0">参加費</h5>
-                    <p class="text-white-75 mb-4 text-center">無料 (事前登録制)</p>
-                    <h5 class="text-white mt-0">想定来場者</h5>
-                    <p class="text-white-75 mb-4 text-center">インフラエンジニア SRE, アプリエンジニアなど8割以上が開発者、その他 CTO/CIO, システムインテグレーターなど</p>
-                    <h5 class="text-white mt-0">キーワード</h5>
-                    <p class="text-white-75 mb-4 text-center">CloudNative, Kubernetes, Container, Microservices, CI/CD, DevOps, Edge/NFV, AI/Machine Learning, GPU/HPC</p>
-                </div>
-            </div>
-        </div>
+      <%= render 'event/partial/information', conference: @conference %>
     </section>
   </div>
 </div>

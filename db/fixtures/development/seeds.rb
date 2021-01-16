@@ -7,6 +7,8 @@ Conference.seed(
     name: "CloudNative Days Tokyo 2020",
     abbr: "cndt2020",
     status: 2, # closed
+    speaker_entry: 0,
+    attendee_entry: 0,
     theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
     copyright: '© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
@@ -23,6 +25,8 @@ EOS
     name: "Test Event Winter 2020",
     abbr: "tew2020",
     status: 1, # opened
+    speaker_entry: 0,
+    attendee_entry: 0,
     theme: "これはTestEventWinter2020のテーマです",
     copyright: '© Test Event Winter 2020 Committee',
     privacy_policy: 'This is Privacy Policy',
@@ -40,6 +44,8 @@ EOS
     name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
     status: 0, # registered
+    speaker_entry: 0,
+    attendee_entry: 0,
     theme: "ともに踏み出す CloudNative祭",
     copyright: '© CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),

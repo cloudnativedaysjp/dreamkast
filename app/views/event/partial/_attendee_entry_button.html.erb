@@ -1,0 +1,12 @@
+<% if (conference.registered? || conference.opened?) && conference.attendee_entry_enabled? %>
+  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+    <% if @profile.present? %>
+      <%= button_to 'ダッシュボードを見る', dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+    <% else %>
+      <%= button_to '聴講者として申し込みする', registration_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+    <% end %>
+  </div>
+  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+    <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+  </div>
+<% end %>

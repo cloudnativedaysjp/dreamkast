@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_24_094247) do
+ActiveRecord::Schema.define(version: 2021_01_13_131031) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2020_12_24_094247) do
     t.text "coc"
     t.string "copyright"
     t.text "privacy_policy_for_speaker"
+    t.integer "speaker_entry"
+    t.integer "attendee_entry"
     t.index ["status"], name: "index_conferences_on_status"
   end
 

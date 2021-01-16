@@ -18,7 +18,7 @@
                 <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
               </h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
-              <p class="card-text"><%= talk.abstract %></p>
+              <p class="card-text"><%= simple_format talk.abstract %></p>
             </div>
           </div>
         <% end %>

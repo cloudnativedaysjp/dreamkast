@@ -12,7 +12,7 @@ class Admin::TalksController < ApplicationController
   def update_talks
     TalksHelper.update_talks(params[:video])
 
-    redirect_to '/admin/talks', notice: "配信設定を更新しました"
+    redirect_to admin_talks_url, notice: "配信設定を更新しました"
   end
 
   def bulk_insert_talks

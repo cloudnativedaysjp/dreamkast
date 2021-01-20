@@ -16,7 +16,7 @@
         <%= render 'talks/partial_show/talk_video_block', talk: talk %>
       <% end %>
 
-      <p><%= talk.abstract %></p>
+      <p><%= simple_format talk.abstract %></p>
 
       <% talk.speakers.each do |speaker| %>
         <div class="row py-3">

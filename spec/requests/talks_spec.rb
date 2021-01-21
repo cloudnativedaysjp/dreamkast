@@ -118,6 +118,7 @@ describe TalksController, type: :request do
       before do
         Conference.destroy_all
         create(:cndt2020_opened)
+        create(:cndo2021)
         create(:alice)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
@@ -132,6 +133,12 @@ describe TalksController, type: :request do
         get '/cndt2020/talks/2'
         expect(response).to be_successful
         expect(response.body).not_to include "player.vimeo.com"
+      end
+
+      it "doesn't includes vimeo iframe if video_published is false" do
+        get '/cndo2021/talks/1'
+        expect(response).to_not be_successful
+        expect(response).to have_http_status '404'
       end
     end
   end

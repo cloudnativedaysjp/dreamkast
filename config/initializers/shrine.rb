@@ -9,6 +9,8 @@ if Rails.env.development? || Rails.env.test?
   }
 else
   s3_options = {
+    access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    secret_access_key: ENV['AWS_ACCESS_KEY_ID'],
     region: ENV['S3_REGION'],
     bucket: ENV['S3_BUCKET']
   }

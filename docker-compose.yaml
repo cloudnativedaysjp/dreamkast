@@ -22,14 +22,6 @@ services:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     tty: true
     stdin_open: true
-    volumes:
-      - .:/app
-      - /app/.git
-      - /app/log
-      - bundle:/app/vendor/bundle
-      - node-modules:/app/node_modules
-      - packs:/app/public/packs
-      - vendor:/app/vendor
     tmpfs:
       - /app/tmp
     ports:
@@ -59,8 +51,4 @@ services:
       - "6379:6379"
 volumes:
   mysql-data:
-  bundle:
-  node-modules:
-  packs:
-  vendor:
   redis-data:

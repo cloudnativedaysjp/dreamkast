@@ -51,7 +51,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
   end
 
   factory :cndo2021, class: Conference do
-    id { 1 }
+    id { 2 }
     name { 'CloudNative Days Online 2021'}
     abbr { 'cndo2021' }
     theme { 'これはCloudNativeDaysOnlinee2021のテーマです' }

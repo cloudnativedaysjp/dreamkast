@@ -135,7 +135,7 @@ describe TalksController, type: :request do
         expect(response.body).not_to include "player.vimeo.com"
       end
 
-      it "doesn't includes vimeo iframe if video_published is false" do
+      it "return 404 when you try to show talk that is not included conference" do
         get '/cndo2021/talks/1'
         expect(response).to_not be_successful
         expect(response).to have_http_status '404'

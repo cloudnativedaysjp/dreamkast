@@ -1,4 +1,4 @@
-FROM node:12.18.1-slim as node
+FROM node:12.18.2-slim as node
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
@@ -18,7 +18,7 @@ WORKDIR /app
 COPY bin bin
 COPY config config
 COPY Rakefile Rakefile
-COPY app/assets app/assets
+COPY app app
 COPY Gemfile* ./
 COPY package.json yarn.lock ./
 COPY --from=node /app/node_modules /app/node_modules
@@ -34,12 +34,12 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 
-ENV RAILS_ENV=development, RAILS_LOG_TO_STDOUT=ON
+ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabled
 WORKDIR /app
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 COPY --from=fetch-lib /usr/lib/x86_64-linux-gnu/libmariadb.so.3 /usr/lib/x86_64-linux-gnu/libmariadb.so.3
-COPY --from=asset-compile /app/public/packs /app/public/packs
 COPY . .
+COPY --from=asset-compile /app/public /app/public
 EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]

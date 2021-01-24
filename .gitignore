@@ -45,3 +45,4 @@ yarn-debug.log*
 public/uploads/*
 
 .DS_Store
+/config/credentials/production.key

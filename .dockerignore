@@ -1,5 +1,6 @@
 .git
 .github
+.env
 docker-compose.yaml
 Dockerfile
 log
@@ -7,3 +8,8 @@ node_modules
 test-docker-compose.yaml
 tmp
 vendor
+config/master.key
+public/assets
+public/packs-test
+public/packs
+public/uploads

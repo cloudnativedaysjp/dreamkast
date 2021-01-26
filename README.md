@@ -1,6 +1,6 @@
-# cndtattend
+# dreamkast
 
-例のアレ
+Online Conference Platform
 
 ## Prerequisites
 
@@ -51,7 +51,7 @@ $ bundle exec rake webpacker:compile
 Then, setup databases by running Docker Compose
 
 ```
-$ docker-compose up -d
+$ docker-compose up -d db redis
 ```
 
 Run the application

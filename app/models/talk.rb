@@ -112,4 +112,13 @@ class Talk < ApplicationRecord
   def on_air?
     video.present? ? video.on_air : false
   end
+
+  def video_platform
+    video.present? ? video.site : ''
+  end
+
+  def video_id
+    video.present? ? video.id : ''
+  end
+
 end

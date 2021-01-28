@@ -1,8 +1,8 @@
 json.array! @talks do |talk|
   json.id talk.id
   json.trackId talk.track_id
-  json.videoPlatform "foo"
-  json.videoId "foo"
+  json.videoPlatform talk.video_platform
+  json.videoId talk.video_id
   json.title talk.title
   json.abstract talk.abstract
   json.speakers talk.speaker_ids

@@ -92,4 +92,24 @@ class Talk < ApplicationRecord
     where(date: date, track_id: track_id)
       .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")
   end
+
+  def speaker_ids
+    talks_speakers.map(&:id)
+  end
+
+  def difficulty
+    talk_difficulty.present? ? talk_difficulty.name : ''
+  end
+
+  def category
+    talk_category.present? ? talk_category.name : ''
+  end
+
+  def duration
+    talk_time.present? ? talk_time.time_minutes : 0
+  end
+
+  def on_air?
+    video.present? ? video.on_air : false
+  end
 end

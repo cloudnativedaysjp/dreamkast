@@ -86,7 +86,7 @@ paths:
           description: Invalid params supplied
         '404':
           description: Track not found
-  /api/v1/events/{eventId}/talks:
+  /api/v1/talks:
     get:
       tags:
         - Talk

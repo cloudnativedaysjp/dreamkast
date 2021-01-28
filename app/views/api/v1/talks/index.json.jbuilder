@@ -14,5 +14,5 @@ json.array! @talks do |talk|
   json.talkDifficulty talk.difficulty
   json.talkCategory talk.category
   json.onAir talk.on_air?
-  json.documentUrl talk.document_url
+  json.documentUrl talk.document_url ? talk.document_url : ''
 end

@@ -1,0 +1,276 @@
+openapi: "3.0.2"
+info:
+  title: Dreamkast API
+  version: "1.0.0"
+  description: "This is a API definition of the Dreamakst. You can find a documentation of this API at http://api-docs.dev.cloudnativedays.jp/."
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: http://localhost:8080/
+  - url: http://api-mock.dev.cloudnativedays.jp/
+  - url: http://dreamkast-api-mock.udcp.info/
+paths:
+  /api/v1/events/{eventId}:
+    get:
+      tags:
+        - Event
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid eventId supplied
+        '404':
+          description: Event not found
+  /api/v1/events/{eventId}/tracks:
+    get:
+      tags:
+        - Track
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Invalid eventId supplied
+        '404':
+          description: Event not found
+  
+  /api/v1/events/{eventId}/tracks/{trackId}:
+    get:
+      tags:
+        - Track
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+        - name: trackId
+          in: path
+          description: ID of track
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Track not found
+  /api/v1/events/{eventId}/talks:
+    get:
+      tags:
+        - Talk
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Talk'
+        '400':
+          description: Invalid eventId supplied
+        '404':
+          description: Event not found
+  /api/v1/events/{eventId}/talks/{talkId}:
+    get:
+      tags:
+        - Talk
+      parameters:
+        - name: eventId
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Talk'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Talk not found
+
+components:
+  schemas:
+    Event:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        abbr:
+          type: string
+        status:
+          type: string
+        theme:
+          type: string
+        about:
+          type: string
+        privacy_policy:
+          type: string
+        privacy_policy_for_speaker:
+          type: string
+        copyright:
+          type: string
+        coc:
+          type: string
+      example:
+        id: 2
+        name: "CloudNative Days Spring 2020 ONLINE"
+        abbr: "cndo2021"
+        status: "closed"
+        theme: "ともに踏み出すCloudNative祭"
+        about: "『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。"
+        privacy_policy: "プライバシーポリシーだよ"
+        privacy_policy_for_speaker: "スピーカー向けのポリシーだよ"
+        copyright: "CloudNative Days Committee"
+        coc: "CoCだよ"
+      required:
+        - id
+        - name
+        - abbr
+        - status
+        - theme
+        - about
+        - privacy_policy
+        - privacy_policy_for_speaker
+        - copyright
+        - coc
+    Track:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        videoPlatform:
+          type: string
+        videoId:
+          type: string
+      example:
+        id: 2
+        name: "Track 2"
+        videoPlatform: "vimeo"
+        videoId: "453935827"
+      required:
+        - id
+        - name
+    Talk:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        trackId:
+          type: string
+        videoPlatform:
+          type: string
+        videoId:
+          type: string
+        title:
+          type: string
+        abstract:
+          type: string
+        speakers:
+          type: array
+        dayId:
+          type: number
+        showOnTimetable:
+          type: boolean
+        startTime:
+          type: string
+        endTime:
+          type: string
+        talkDuration:
+          type: number
+        talkDifficulty:
+          type: string
+        talkCategory:
+          type: string
+        onAir:
+          type: boolean
+        documentUrl:
+          type: string
+      example:
+        id: 1
+        trackId: 2
+        videoPlatform: "vimeo"
+        videoId: "453935827"
+        title: "やんごとなき発表"
+        abstract: "やんごとなき発表をします"
+        speakers: "やんごとない人"
+        dayId: 1
+        showOnTimetable: true
+        startTime: "Sat, 23 Jan 2021 09:00:00 GMT"
+        endTime: "Sat, 23 Jan 2021 09:20:00 GMT"
+        talkDuration: 40
+        talkDifficulty: "moderate"
+        talkCategory: "CI/CD"
+        onAir: true
+        documentUrl: "http://documents"
+      required:
+        - id
+        - trackId
+        - videoId
+        - title
+        - abstract
+        - speakers
+        - dayId
+        - showOnTimetable
+        - startTime
+        - endTime
+        - talkDuration
+        - talkDifficulty
+        - talkCategory

@@ -66,4 +66,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
+
+  config.add_setting :committee_options
+  config.committee_options = {
+    schema_path: Rails.root.join('schemas', 'swagger.yml').to_s,
+  }
+  include Committee::Rails::Test::Methods
 end

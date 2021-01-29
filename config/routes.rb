@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       resources :conferences, only: [:show], path: "events"
+      resources :talks, only: [:index]
     end
   end
 

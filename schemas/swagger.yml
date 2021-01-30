@@ -33,7 +33,7 @@ paths:
           description: Invalid eventId supplied
         '404':
           description: Event not found
-  /api/v1/events/{eventId}/tracks:
+  /api/v1/tracks:
     get:
       tags:
         - Track

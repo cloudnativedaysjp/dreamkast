@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources :conferences, only: [:show], path: "events"
       resources :talks, only: [:index, :show]
+      resources :tracks, only: [:index]
     end
   end
 

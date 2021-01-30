@@ -347,3 +347,9 @@ Link.seed(
   {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
   {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
 )
+
+ChatMessage.seed(
+  {id: 1, body: "chat message 1", conference_id: 1, talk_id: 1},
+  {id: 2, body: "chat message 2", conference_id: 1, talk_id: 1},
+  {id: 3, body: "chat message 3", conference_id: 1, talk_id: 1},
+)

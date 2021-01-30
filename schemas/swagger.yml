@@ -126,7 +126,54 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
-
+  /api/v1/chat_messages:
+    get:
+      tags:
+        - ChatMessage
+      parameters:
+        - name: eventId
+          in: query
+          description: ID of event
+          required: true
+          schema:
+            type: string
+        - name: talkId
+          in: query
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+        - name: createdFrom
+          in: query
+          description: YYYY-MM-DDThh:mm:ss+TZD (use UTC)
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+        '400':
+          description: Invalid params supplied
+        '404':
+           description: ChatMessage not found
+    post:
+      tags:
+        - ChatMessage
+      summary: Post Chat Message
+      requestBody:
+        description: chat message to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessage'
+      responses:
+        '201':
+          description: CREATED
 components:
   schemas:
     Event:
@@ -262,3 +309,25 @@ components:
         - talkDuration
         - talkDifficulty
         - talkCategory
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        eventId:
+          type: number
+        talkId:
+          type: number
+        body:
+          type: string
+        createdAt:
+          type: string
+      example:
+        id: 2
+        body: "foo bar"
+        createdAt: "2021-01-30T10:06:33.938Z"
+      required:
+        - eventId
+        - talkId
+        - body

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :conferences, only: [:show], path: "events"
       resources :talks, only: [:index, :show]
       resources :tracks, only: [:index, :show]
+      resources :chat_messages, only: [:index, :create]
     end
   end
 
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
     # Admin
     get 'admin' => 'admin#show'
     get 'admin/debug' => 'admin#debug'
+    get 'admin/chat' => 'admin#chat'
     get 'admin/accesslog' => 'admin#accesslog'
     get 'admin/users' => 'admin#users'
     get 'admin/statistics' => 'admin#statistics'

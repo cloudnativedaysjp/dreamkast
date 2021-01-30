@@ -83,3 +83,5 @@ gem "rack-timeout"
 gem "pundit"
 
 gem 'redcarpet'
+
+gem 'awesome_nested_set'

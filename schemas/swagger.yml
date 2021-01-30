@@ -33,7 +33,7 @@ paths:
           description: Invalid eventId supplied
         '404':
           description: Event not found
-  /api/v1/events/{eventId}/tracks:
+  /api/v1/tracks:
     get:
       tags:
         - Track
@@ -58,17 +58,11 @@ paths:
         '404':
           description: Event not found
   
-  /api/v1/events/{eventId}/tracks/{trackId}:
+  /api/v1/tracks/{trackId}:
     get:
       tags:
         - Track
       parameters:
-        - name: eventId
-          in: path
-          description: ID of event
-          required: true
-          schema:
-            type: string
         - name: trackId
           in: path
           description: ID of track
@@ -110,17 +104,11 @@ paths:
           description: Invalid eventId supplied
         '404':
           description: Event not found
-  /api/v1/events/{eventId}/talks/{talkId}:
+  /api/v1/talks/{talkId}:
     get:
       tags:
         - Talk
       parameters:
-        - name: eventId
-          in: path
-          description: ID of event
-          required: true
-          schema:
-            type: string
         - name: talkId
           in: path
           description: ID of talk

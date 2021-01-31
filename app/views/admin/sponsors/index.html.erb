@@ -16,7 +16,7 @@
         <tbody>
         <% sponsor_type.sponsors.each do |sponsor| %>
           <tr>
-            <td><%= link_to sponsor.name, "/admin/sponsors/#{sponsor.id}" %></td>
+            <td><%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %></td>
           </tr>
         <% end %>
         </tbody>

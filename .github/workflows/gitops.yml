@@ -46,26 +46,30 @@ jobs:
             IMAGE_TAG=${{ github.head_ref }}
           fi
 
-          CACHE_BASE=$ECR_REGISTRY/$ECR_REPOSITORY:base-cache
-          CACHE_BUILD=$ECR_REGISTRY/$ECR_REPOSITORY:build-cache
+          CACHE_NODE=$ECR_REGISTRY/$ECR_REPOSITORY:node-cache
+          CACHE_FETCH_LIB=$ECR_REGISTRY/$ECR_REPOSITORY:fetch-lib-cache
+          CACHE_COMPILE_CACHE=$ECR_REGISTRY/$ECR_REPOSITORY:asset-compile-cache
 
           IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
           docker build \
-            --cache-from=$CACHE_BASE \
-            --cache-from=$CACHE_BUILD \
+            --cache-from=$CACHE_NODE \
+            --cache-from=$CACHE_FETCH_LIB \
+            --cache-from=$CACHE_COMPILE_CACHE \
             --build-arg=BUILDKIT_INLINE_CACHE=1 \
             -t $IMAGE_WITH_TAG \
             -t $IMAGE_WITH_SHA .
 
-          docker build --target base -t $CACHE_BASE --build-arg=BUILDKIT_INLINE_CACHE=1  .
-          docker build --target build -t $CACHE_BUILD --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker build --target node -t $CACHE_NODE --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker build --target fetch-lib -t $CACHE_FETCH_LIB --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker build --target asset-compile -t $CACHE_COMPILE_CACHE --build-arg=BUILDKIT_INLINE_CACHE=1  .
 
           docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
           docker push $IMAGE_WITH_SHA
-          docker push $CACHE_BASE
-          docker push $CACHE_BUILD
+          docker push $CACHE_NODE
+          docker push $CACHE_FETCH_LIB
+          docker push $CACHE_CACHE_COMPILE_CACHE
 
           echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
           echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"

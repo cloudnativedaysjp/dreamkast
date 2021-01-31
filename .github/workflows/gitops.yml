@@ -69,7 +69,7 @@ jobs:
           docker push $IMAGE_WITH_SHA
           docker push $CACHE_NODE
           docker push $CACHE_FETCH_LIB
-          docker push $CACHE_CACHE_COMPILE_CACHE
+          docker push $CACHE_COMPILE_CACHE
 
           echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
           echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"

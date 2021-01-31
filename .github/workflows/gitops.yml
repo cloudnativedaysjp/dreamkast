@@ -34,6 +34,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: dreamkast-ecs
+          DOCKER_BUILDKIT: 1
         run: |
           echo REF ${{ github.ref }}
           echo HEAD REF ${{ github.head_ref }}

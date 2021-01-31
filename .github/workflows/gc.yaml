@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+    tags:
+      - v*
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Checkout dreamkast-infra
+        uses: actions/checkout@v2
+        with:
+          repository: cloudnativedaysjp/dreamkast-infra
+          path: dreamkast-infra
+          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+
+      - name: Clean up manifests
+        run: |
+          BRANCH=ui-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
+
+          rm -f dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          rm -rf dreamkast-infra/dreamkast/overlays/$BRANCH
+
+      - name: Commit files
+        run: |
+          cd dreamkast-infra/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git status
+          git add -A
+          git commit -am "Clean up review apps $(echo ${{ github.head_ref }} | sed s/_/-/)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: cloudnativedaysjp/dreamkast-infra
+          directory: dreamkast-infra
+          branch: main

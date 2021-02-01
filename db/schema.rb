@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_131031) do
+ActiveRecord::Schema.define(version: 2021_01_31_110738) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_131031) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "video_id"
     t.string "slido_id"
+    t.text "video_file_data"
   end
 
   add_foreign_key "booths", "conferences"

@@ -1,0 +1,146 @@
+name: GitOps
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize]
+    tags:
+      - v*
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: ecr
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: dreamkast-ecs
+          DOCKER_BUILDKIT: 1
+        run: |
+          echo REF ${{ github.ref }}
+          echo HEAD REF ${{ github.head_ref }}
+          echo SHA ${{ github.sha }}
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
+
+          if [ ! -e ${{ github.head_ref }} ]; then
+            IMAGE_TAG=${{ github.head_ref }}
+          fi
+
+          CACHE_NODE=$ECR_REGISTRY/$ECR_REPOSITORY:node-cache
+          CACHE_FETCH_LIB=$ECR_REGISTRY/$ECR_REPOSITORY:fetch-lib-cache
+          CACHE_COMPILE_CACHE=$ECR_REGISTRY/$ECR_REPOSITORY:asset-compile-cache
+
+          IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+
+          docker build \
+            --cache-from=$CACHE_NODE \
+            --cache-from=$CACHE_FETCH_LIB \
+            --cache-from=$CACHE_COMPILE_CACHE \
+            --build-arg=BUILDKIT_INLINE_CACHE=1 \
+            -t $IMAGE_WITH_TAG \
+            -t $IMAGE_WITH_SHA .
+
+          docker build --target node -t $CACHE_NODE --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker build --target fetch-lib -t $CACHE_FETCH_LIB --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker build --target asset-compile -t $CACHE_COMPILE_CACHE --build-arg=BUILDKIT_INLINE_CACHE=1  .
+
+          docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
+          docker push $IMAGE_WITH_SHA
+          docker push $CACHE_NODE
+          docker push $CACHE_FETCH_LIB
+          docker push $CACHE_COMPILE_CACHE
+
+          echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
+          echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
+          echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
+
+      - name: Checkout dreamkast-infra
+        uses: actions/checkout@v2
+        with:
+          repository: cloudnativedaysjp/dreamkast-infra
+          path: dreamkast-infra
+          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+
+      - name: Update Kubernetes resources
+        env:
+          IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
+        run: |
+          if [ ! -e ${{ github.head_ref }} ]; then
+            BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
+          else
+            BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
+          fi
+
+          echo "========Update application manifests=========="
+          if [ ! -e ${{ github.head_ref }} ]; then
+            cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
+          fi
+          cd dreamkast-infra/dreamkast/overlays/$BRANCH
+          kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          if [ ! -e ${{ github.head_ref }} ]; then
+            kustomize edit set namespace dreamkast-$BRANCH
+            sed -i -e s/BRANCH/$BRANCH/ ./ingress.yaml
+          fi
+          cat kustomization.yaml
+
+          echo "========Generate ArgoCD app=========="
+          cd ../../../../
+          cp dreamkast-infra/argocd-apps/template/dreamkast.yaml dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          sed -i -e s/BRANCH/$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          if [ ! -e ${{ github.head_ref }} ]; then
+            sed -i -e s/NAMESPACE/dreamkast-$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          else
+            sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          fi
+
+      - name: Commit files
+        run: |
+          cd dreamkast-infra/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git status
+          git add -A
+          git commit -am "Bump docker tag"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: cloudnativedaysjp/dreamkast-infra
+          directory: dreamkast-infra
+          branch: main
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        if: ${{ github.event.action == 'opened' }}
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Review app
+            http://dreamkast-dk-${{ github.event.pull_request.number }}.dev.cloudnativedays.jp/

@@ -5,6 +5,14 @@
         <%= message %>
         </div>
     <% end %>
+
+  <div class="row">
+    <h2>Download TALKS to CSV</h2>
+    <div class="col-12 form-group">
+      <%= link_to 'download', admin_talks_path(format: :csv) %>
+    </div>
+  </div>
+
     <div class="row">
         <h2>Bulk insert TALKS from CSV</h2>
         <div class="col-12 form-group">

@@ -102,6 +102,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
                                     :github_id,
                                     :avatar,
                                     :conference_id,
-                                    talks_attributes: [:id, :title, :abstract, :conference_id, :_destroy, :talk_category_id, :talk_time_id])
+                                    talks_attributes: [:id, :title, :abstract, :conference_id, :_destroy, :talk_category_id, :talk_time_id, :video_file])
   end
 end

@@ -10,6 +10,7 @@
         <th data-field="track" data-filter-control="select" scope="col">Track</th>
         <th data-field="data" data-filter-control="select" scope="col">Date</th>
         <th data-field="time" data-filter-control="select" scope="col">Time</th>
+        <th data-field="talk_time" data-filter-control="select" scope="col">TalkTime</th>
         <th data-field="video" data-filter-control="select" data-filter-data-collector="tableFilterStripHtml" scope="col">アーカイブ視聴</th>
         <th data-field="document" data-filter-control="select" data-filter-data-collector="tableFilterStripHtml" scope="col">資料</th>
       </tr>
@@ -47,6 +48,10 @@
           </td>
 
           <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
+            <%= talk.time %>
+          </td>
+
+          <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
             <% if @conference.closed? || (@conference.opened? && @current_user) %>
               <% if talk.video_published && talk.video.present? %>
                 <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
@@ -54,7 +59,7 @@
             <% end %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
             <% if talk.document_url.present? %>
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>

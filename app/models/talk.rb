@@ -121,4 +121,7 @@ class Talk < ApplicationRecord
     video.present? ? video.id : ''
   end
 
+  def time
+    talk_time.present? ? talk_time.time_minutes : 0
+  end
 end

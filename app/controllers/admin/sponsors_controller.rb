@@ -26,7 +26,7 @@ class Admin::SponsorsController < ApplicationController
 
     respond_to do |format|
       if @sponsor_form.save
-        format.html { redirect_to "/admin/sponsors/#{params[:id]}", notice: "Sponsor was successfully updated." }
+        format.html { redirect_to admin_sponsor_url(event: params[:event], id:params[:id]), notice: "Sponsor was successfully updated." }
       else
         format.html { render :edit }
       end
@@ -45,6 +45,7 @@ class Admin::SponsorsController < ApplicationController
                                     :attachment_text,
                                     :attachment_vimeo,
                                     :attachment_zoom,
+                                    :attachment_miro,
                                     sponsor_attachment_key_images_attributes: [:id, :title, :file, :_destroy],
                                     sponsor_attachment_pdfs_attributes: [:id, :title, :file, :_destroy])
   end

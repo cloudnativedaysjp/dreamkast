@@ -44,6 +44,13 @@
   </div>
 <% end %>
 
+<% if sponsor.sponsor_attachment_miro.present? && sponsor.sponsor_attachment_miro.url != "" %>
+  <div class="row mb-3">
+    <iframe src="https://miro.com/app/live-embed/<%= sponsor.sponsor_attachment_miro.url %>/?autoplay=yep"  style="width: 100%; min-height: 600px;"  frameBorder="0" scrolling="no" allowFullScreen></iframe>
+  </div>
+<% end %>
+
+
 <% if sponsor.sponsor_attachment_vimeo.present? %>
   <% vimeo = sponsor.sponsor_attachment_vimeo %>
   <div class="row mb-3">

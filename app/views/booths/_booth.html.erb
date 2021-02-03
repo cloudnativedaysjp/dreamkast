@@ -46,6 +46,7 @@
 
 <% if sponsor.sponsor_attachment_miro.present? && sponsor.sponsor_attachment_miro.url != "" %>
   <div class="row mb-3">
+    <h4>オンラインホワイトボード (See the boardをクリックしてください)</h4>
     <iframe src="https://miro.com/app/live-embed/<%= sponsor.sponsor_attachment_miro.url %>/?autoplay=yep"  style="width: 100%; min-height: 600px;"  frameBorder="0" scrolling="no" allowFullScreen></iframe>
   </div>
 <% end %>

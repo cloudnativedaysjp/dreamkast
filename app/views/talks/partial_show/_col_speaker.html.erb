@@ -12,6 +12,6 @@
   </h6>
 
   <% if speaker.profile != "" %>
-    <p class="card-text"><%= speaker.profile %></p>
+    <p class="card-text"><%= simple_format(speaker.profile) %></p>
   <% end %>
 </div>

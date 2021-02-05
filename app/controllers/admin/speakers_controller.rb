@@ -20,7 +20,7 @@ class Admin::SpeakersController < ApplicationController
 
     respond_to do |format|
       if @speaker.update(speaker_params)
-        format.html { redirect_to "/admin/speakers", notice: "Speaker #{@speaker.name} (id: #{@speaker.id})was successfully updated." }
+        format.html { redirect_to admin_speaker_path, notice: "Speaker #{@speaker.name} (id: #{@speaker.id})was successfully updated." }
         format.json { render :show, status: :ok, location: @speaker }
       else
         format.html { render :edit }
@@ -31,7 +31,7 @@ class Admin::SpeakersController < ApplicationController
 
   def bulk_insert_speakers
     unless params[:file]
-      redirect_to '/admin/speakers', notice: "アップロードするファイルを選択してください"
+      redirect_to admin_speakers_path, notice: "アップロードするファイルを選択してください"
     else
       message = Speaker.import(params[:file])
       if message.size == 0

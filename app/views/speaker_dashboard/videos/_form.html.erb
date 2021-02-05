@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <%= form_with(url: video_url, model: @video, local: true) do |form| %>
+
+      <div class="field">
+        <p><%= @talk.title %></p>
+      </div>
+
+      <div class="field">
+        <%= form.label :video_file, "Video File" %><br/>
+        <%= form.file_field :video_file %>
+      </div>
+
+      <div class="actions justify-content-center py-3">
+        <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>

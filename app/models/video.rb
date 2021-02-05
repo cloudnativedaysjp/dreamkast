@@ -1,5 +1,5 @@
 class Video < ApplicationRecord
-  include AvatarUploader::Attachment(:video_file)
+  include VideoFileUploader::Attachment(:video_file)
 
   belongs_to :talk
   

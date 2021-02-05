@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get '/speaker_dashboard' => 'speaker_dashboards#show'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
+      resources :videos, only: [:edit, :update]
     end
 
 

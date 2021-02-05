@@ -23,7 +23,6 @@ class Speaker < ApplicationRecord
       hash = row.to_hash.slice(*updatable_attributes)
       hash[:created_at] = Time.now
       hash[:updated_at] = Time.now
-      p hash
       speaker.attributes = hash
       if speaker.valid?
         speakers << hash

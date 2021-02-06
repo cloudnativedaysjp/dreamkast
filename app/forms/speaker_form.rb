@@ -24,36 +24,16 @@ class SpeakerForm
       @talks ||= []
     end
 
-    def videos
-      @videos ||= []
-    end
     def talks_attributes=(attributes)
       @talks ||= []
-      @videos ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
         if params.key?(:id)
-          talk = @speaker.talks.find(params[:id])
           if params[:_destroy] == "1"
-            @destroy_talks << talk
+            @destroy_talks << @speaker.talks.find(params[:id])
           else
             params.delete(:_destroy)
-
-            video_file = params[:video_file]
-            if video_file
-              p video_file
-              params.delete(:video_file)
-              puts 'update video file ===================================================================='
-              if talk.video
-                puts "talk.video is exists"
-                video = talk.video
-                video[:video_file] = video_file
-                @videos << video
-              else
-                puts "talk.video is not exists"
-                @videos << Video.new(video_file: video_file, talk: talk)
-              end
-            end
+            talk = @speaker.talks.find(params[:id])
             talk.update(params)
             @talks << talk
           end
@@ -62,11 +42,7 @@ class SpeakerForm
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
-            talk = Talk.new(params)
-            video_file = params[:video_file]
-            params.delete(:video_file)
-            @talks << talk
-            @videos << Video.new(video_file: video_file, talk: talk)
+            @talks << Talk.new(params)
           end
         end
       end
@@ -79,7 +55,6 @@ class SpeakerForm
   def initialize(attributes = nil, speaker: Speaker.new)
     @speaker = speaker
     @talks ||= []
-    @videos ||= []
     @destroy_talks ||= []
     attributes ||= default_attributes
     super(attributes)
@@ -108,10 +83,6 @@ class SpeakerForm
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
         end
-      end
-      @videos.each do |video|
-        p video
-        video.save!
       end
     end
   rescue => e

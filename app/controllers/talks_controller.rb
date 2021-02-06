@@ -23,16 +23,7 @@ class TalksController < ApplicationController
   private
 
   def talk_params
-    params.require(:talk).permit(:title,
-                                 :abstract,
-                                 :movie_url,
-                                 :track,
-                                 :start_time,
-                                 :end_time,
-                                 :talk_difficulty_id,
-                                 :talk_category_id,
-                                 :video_file
-    )
+    params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
   end
 
   def set_profile

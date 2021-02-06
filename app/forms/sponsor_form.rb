@@ -9,6 +9,7 @@ class SponsorForm
                 :attachment_text,
                 :attachment_vimeo,
                 :attachment_zoom,
+                :attachment_miro,
                 :sponsor_attachment_pdfs
 
   delegate :persisted?, to: :sponsor
@@ -116,6 +117,13 @@ class SponsorForm
         url = SponsorAttachmentZoom.new(url: attachment_zoom, sponsor_id: sponsor.id)
         url.save!
       end
+
+      if sponsor.sponsor_attachment_miro.present?
+        sponsor.sponsor_attachment_miro.update!(url: attachment_miro)
+      else
+        url = SponsorAttachmentMiro.new(url: attachment_miro, sponsor_id: sponsor.id)
+        url.save!
+      end
     end
   rescue => e
     puts e
@@ -142,6 +150,7 @@ class SponsorForm
       attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
       attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',
+      attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : '',
       sponsor_attachment_key_images: sponsor_attachment_key_images,
       sponsor_attachment_pdfs: sponsor_attachment_pdfs
     }

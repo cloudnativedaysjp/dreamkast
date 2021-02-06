@@ -1,0 +1,37 @@
+<div class="grid">
+  <h3 class="grid" style=""><%= header %></h3>
+</div>
+<div class="grid" style="--rows: <%= (((Time.zone.parse(to) - Time.zone.parse(from)) / 60 / 5)).to_i + 3 %>">
+  <% tracks.each_with_index do |track_name, n| %>
+    <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+  <% end %>
+  <% conference_day.talks.where(show_on_timetable: true, start_time:Time.zone.parse(from).utc..Time.zone.parse(to).utc).each do |talk| %>
+    <div class="talk"
+      slot="<%= talk.slot_number %>"
+      style="--track: <%= talk.track.number - 1 %>;
+              --duration: 60;
+              --row-start: <%= ((talk.start_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;
+              --row-end: <%= ((talk.end_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;">
+      <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
+          slot="<%= talk.slot_number %>"
+          day_slot="<%= talk.day_slot %>">
+      <% if form %>
+          <div class="radio">
+          <%= form.check_box "talks[#{talk.id}]", { day_slot: talk.day_slot, checked: talks_checked?(talk.id)}, true, false %>
+          <label for="<%= "talks[#{talk.id}]" %>" class="radio-label"></label>
+          </div>
+      <% end %>
+        <h6>
+            <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
+        </h6>
+        <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
+        <div class="category_difficulty">
+          <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+          <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+          <% end %>
+          <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -155,14 +155,13 @@ Track.seed(
   { id: 4, number: 4, name: "D", conference_id: 1},
   { id: 5, number: 5, name: "E", conference_id: 1},
   { id: 6, number: 6, name: "F", conference_id: 1},
-  { id: 7, number: 1, name: "A", conference_id: 2},
-  { id: 8, number: 2, name: "B", conference_id: 2},
-  { id: 9, number: 3, name: "C", conference_id: 2},
-  { id: 10, number: 4, name: "D", conference_id: 2},
-  { id: 11, number: 5, name: "E", conference_id: 2},
-  { id: 12, number: 6, name: "F", conference_id: 2},
-  { id: 13, number: 7, name: "G", conference_id: 2},
-  { id: 14, number: 8, name: "H", conference_id: 2},
+  { id: 10, number: 1, name: "A", conference_id: 2},
+  { id: 11, number: 2, name: "B", conference_id: 2},
+  { id: 12, number: 3, name: "C", conference_id: 2},
+  { id: 13, number: 4, name: "D", conference_id: 2},
+  { id: 14, number: 5, name: "E", conference_id: 2},
+  { id: 15, number: 6, name: "F", conference_id: 2},
+  { id: 16, number: 7, name: "G", conference_id: 2},
 )
 
 
@@ -186,36 +185,37 @@ TalkCategory.seed(
   { id: 17, conference_id: 1, name: "その他"},
   { id: 18, conference_id: 1, name: "Keynote"},
 
-  { id: 19, conference_id: 2, name: "CI / CD"},
-  { id: 20, conference_id: 2, name: "Customizing / Extending"},
-  { id: 21, conference_id: 2, name: "IoT / Edge"},
-  { id: 22, conference_id: 2, name: "Microservices / Services Mesh"},
-  { id: 23, conference_id: 2, name: "ML / GPGPU / HPC"},
-  { id: 24, conference_id: 2, name: "Networking"},
-  { id: 25, conference_id: 2, name: "Operation / Monitoring / Logging"},
-  { id: 26, conference_id: 2, name: "Orchestration"},
-  { id: 27, conference_id: 2, name: "Runtime"},
-  { id: 28, conference_id: 2, name: "Security"},
-  { id: 29, conference_id: 2, name: "Serveless / FaaS"},
-  { id: 30, conference_id: 2, name: "Storage / Database"},
-  { id: 31, conference_id: 2, name: "Architecture Design"},
-  { id: 32, conference_id: 2, name: "Hybrid Cloud / Multi Cloud"},
-  { id: 33, conference_id: 2, name: "NFV / Edge"},
-  { id: 34, conference_id: 2, name: "組織論"},
-  { id: 35, conference_id: 2, name: "その他"},
-  { id: 36, conference_id: 2, name: "Keynote"}
+  { id: 21, conference_id: 2, name: "CI / CD"},
+  { id: 22, conference_id: 2, name: "Customizing / Extending"},
+  { id: 23, conference_id: 2, name: "IoT / Edge"},
+  { id: 24, conference_id: 2, name: "Microservices / Services Mesh"},
+  { id: 25, conference_id: 2, name: "ML / GPGPU / HPC"},
+  { id: 26, conference_id: 2, name: "Networking"},
+  { id: 27, conference_id: 2, name: "Operation / Monitoring / Logging"},
+  { id: 28, conference_id: 2, name: "Orchestration"},
+  { id: 29, conference_id: 2, name: "Runtime"},
+  { id: 30, conference_id: 2, name: "Security"},
+  { id: 31, conference_id: 2, name: "Serveless / FaaS"},
+  { id: 32, conference_id: 2, name: "Storage / Database"},
+  { id: 33, conference_id: 2, name: "Architecture Design"},
+  { id: 34, conference_id: 2, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 35, conference_id: 2, name: "NFV / Edge"},
+  { id: 36, conference_id: 2, name: "組織論"},
+  { id: 37, conference_id: 2, name: "その他"},
+  { id: 38, conference_id: 2, name: "Keynote"}
 )
 
 TalkDifficulty.seed(
   { id: 1, conference_id: 1, name: "初級者"},
   { id: 2, conference_id: 1, name: "中級者"},
   { id: 3, conference_id: 1, name: "上級者"},
-  { id: 1, conference_id: 2, name: "初級者"},
-  { id: 2, conference_id: 2, name: "中級者"},
-  { id: 3, conference_id: 2, name: "上級者"},
-  { id: 1, conference_id: 10, name: "初級者"},
-  { id: 2, conference_id: 10, name: "中級者"},
-  { id: 3, conference_id: 10, name: "上級者"},
+  { id: 4, conference_id: 1, name: ""},
+  { id: 11, conference_id: 2, name: "初級者"},
+  { id: 12, conference_id: 2, name: "中級者"},
+  { id: 13, conference_id: 2, name: "上級者"},
+  { id: 27, conference_id: 10, name: "初級者"},
+  { id: 28, conference_id: 10, name: "中級者"},
+  { id: 29, conference_id: 10, name: "上級者"},
   )
 
 TalkTime.seed(
@@ -229,13 +229,31 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
-csv = CSV.read(File.join(Rails.root, 'db/talks.csv'), headers: true)
+
+# Import CNDT2020 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks.csv'), headers: true)
 Talk.seed(csv.map(&:to_hash))
 
-csv = CSV.read(File.join(Rails.root, 'db/speakers.csv'), headers: true)
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/speakers.csv'), headers: true)
 Speaker.seed(csv.map(&:to_hash))
 
-csv = CSV.read(File.join(Rails.root, 'db/talks_speakers.csv'), headers: true)
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+# Import CNDO2021 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks_speakers.csv'), headers: true)
 csv.each do |row|
   TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
     h = row.to_hash

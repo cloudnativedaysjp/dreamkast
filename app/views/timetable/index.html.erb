@@ -5,9 +5,19 @@
 </div>
 
 <% if @current_user %>
-  <%= render 'form', conference: @conference %>
+  <%= form_with url: 'profiles/talks', method: :post do |form| %>
+    <% if @params[:event] == 'cndo2021' %>
+      <%= render partial: 'timetable_cndo2021', locals: {conference: @conference, form: form} %>
+    <% else %>
+      <%= render partial: 'timetable', locals: {conference: @conference, form: form} %>
+    <% end %>
+  <% end %>
 <% else %>
-  <%= render 'timetable', conference: @conference %>
+  <% if @params[:event] == 'cndo2021' %>
+    <%= render 'timetable_cndo2021', conference: @conference, form: nil %>
+  <% else %>
+    <%= render 'timetable', conference: @conference %>
+  <% end %>
 <% end %>
 
 

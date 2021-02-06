@@ -58,4 +58,35 @@ FactoryBot.define do
     show_on_timetable { false }
     video_published { true }
   end
+
+  factory :cndo_talk1, class: Talk do
+    id { 10 }
+    title { "talk1" }
+    start_time { "12:30" }
+    end_time { "12:40" }
+    abstract { "あいうえおかきくけこさしすせそ" }
+    conference_id { 2 }
+    conference_day_id { 10 }
+    talk_difficulty_id { 10 }
+    talk_category_id { 10 }
+    track_id { 10 }
+    show_on_timetable { true }
+    video_published { true }
+    document_url { "http://" }
+  end
+
+  factory :cndo_talk2, class: Talk do
+    id { 11 }
+    title { "talk2" }
+    start_time { "12:30" }
+    end_time { "12:40" }
+    conference_id { 2 }
+    conference_day_id { 11 }
+    abstract { "あいうえおかきくけこ" }
+    talk_difficulty_id { 10 }
+    talk_category_id { 10 }
+    track_id { 10 }
+    show_on_timetable { true }
+    video_published { false }
+  end
 end

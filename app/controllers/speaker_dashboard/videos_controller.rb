@@ -1,27 +1,22 @@
 class SpeakerDashboard::VideosController < ApplicationController
   include SecuredSpeaker
 
+  before_action :set_conference
+
   # GET :event/speaker_dashboard/videos
   def new
-    @conference = Conference.find_by(abbr: params[:event])
     @talk = Talk.find(params[:talk_id])
-    @speaker = pundit_user
-    authorize @speaker
+    authorize @talk
 
     @video = Video.new()
-    unless @talk.speakers.map(&:id).include?(@speaker.id)
-      raise Forbidden
-    end
-
   end
 
   # POST :event/speaker_dashboard/videos
   def create
-    @conference = Conference.find_by(abbr: params[:event])
     @talk = Talk.find(videos_params[:talk_id])
+    authorize @talk
+
     @video = Video.new(videos_params)
-    @speaker = pundit_user
-    authorize @speaker
 
     respond_to do |format|
       if @video.save
@@ -36,19 +31,20 @@ class SpeakerDashboard::VideosController < ApplicationController
 
   # GET :event/speaker_dashboard/videos/:id/edit
   def edit
-    @conference = Conference.find_by(abbr: params[:event])
     @video = Video.find_by(id: params[:id])
     @talk = @video.talk
-    @speaker = pundit_user
-    authorize @speaker
+    authorize @talk
+
+    unless @talk.speakers.map(&:id).include?(@speaker.id)
+      raise Forbidden
+    end
   end
 
   # PATCH/PUT :event/speaker_dashboard/videos/1
   def update
-    @conference = Conference.find_by(abbr: params[:event])
     @video = Video.find(params[:id])
-    @speaker = pundit_user
-    authorize @speaker
+    @talk = @video.talk
+    authorize @talk
 
     respond_to do |format|
       old_file = @video.video_file if @video.video_file_data != ""

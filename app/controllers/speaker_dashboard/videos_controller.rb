@@ -34,10 +34,6 @@ class SpeakerDashboard::VideosController < ApplicationController
     @video = Video.find_by(id: params[:id])
     @talk = @video.talk
     authorize @talk
-
-    unless @talk.speakers.map(&:id).include?(@speaker.id)
-      raise Forbidden
-    end
   end
 
   # PATCH/PUT :event/speaker_dashboard/videos/1

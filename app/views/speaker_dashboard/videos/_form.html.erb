@@ -1,19 +1,54 @@
-<div class="row justify-content-center">
-  <div class="col-12 col-lg-8">
+<section class="row justify-content-center">
+  <section class="col-12 col-lg-8">
+
+    <div class="card m-1">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= @talk.title %>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= @talk.talk_category.name %> / <%= @talk.talk_time.time_minutes %>分</h6>
+        <p class="card-text"><%= simple_format @talk.abstract %></p>
+      </div>
+    </div>
+
     <%= form_with(url: video_url, model: @video, local: true) do |form| %>
 
       <div class="field">
-        <p><%= @talk.title %></p>
+        <%= form.hidden_field :video_file, value: @video.video_file_data, class: "upload-data" %>
       </div>
 
-      <div class="field">
-        <%= form.label :video_file, "Video File" %><br/>
-        <%= form.file_field :video_file %>
-      </div>
+      <div id="drag-drop-area"></div>
+      <div class="for-ProgressBar"></div>
 
       <div class="actions justify-content-center py-3">
         <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
       </div>
     <% end %>
-  </div>
-</div>
+  </section>
+</section>
+
+<script>
+    const hiddenInput = document.querySelector('.upload-data')
+    const uppy = Uppy.Core({
+        restrictions: {maxNumberOfFiles: 1}
+    })
+        .use(Uppy.Dashboard, {
+            height: 250,
+            inline: true,
+            target: '#drag-drop-area',
+        })
+        .use(Uppy.AwsS3Multipart, {companionUrl: '/'})
+
+    uppy.on('upload-success', (file, response) => {
+        const uploadedFileData = {
+            id: response.uploadURL.match(/\/video_file\/([^\?]+)/)[1],
+            storage: 'video_file',
+            metadata: {
+                size: file.size,
+                filename: file.name,
+                mime_type: file.type,
+            }
+        }
+        hiddenInput.value = JSON.stringify(uploadedFileData)
+    })
+</script>

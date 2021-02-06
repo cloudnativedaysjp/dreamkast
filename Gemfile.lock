@@ -240,6 +240,8 @@ GEM
     redis-store (1.9.0)
       redis (>= 4, < 5)
     regexp_parser (1.7.1)
+    roda (3.40.0)
+      rack
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -304,6 +306,10 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uniform_notifier (1.13.0)
+    uppy-s3_multipart (0.3.4)
+      aws-sdk-s3 (~> 1.0)
+      content_disposition (~> 1.0)
+      roda (>= 2.27, < 4)
     web-console (4.0.2)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -362,6 +368,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
+  uppy-s3_multipart (~> 0.3)
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)

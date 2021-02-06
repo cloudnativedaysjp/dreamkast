@@ -22,8 +22,7 @@ class SpeakerDashboard::VideosController < ApplicationController
 
     respond_to do |format|
       old_file = @video.video_file
-      uploaded = VideoFileUploader.upload(videos_params[:video_file], :store)
-      if @video.update_attributes(video_file_data: uploaded.to_json)
+      if @video.update_attributes(video_file_data: videos_params[:video_file])
         old_file.delete
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @talk }

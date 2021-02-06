@@ -2,14 +2,17 @@
   "name": "cndtattend",
   "private": true,
   "dependencies": {
+    "@popperjs/core": "^2.6.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
+    "@uppy/core": "^1.16.0",
+    "@uppy/dashboard": "^1.16.0",
+    "@uppy/xhr-upload": "^1.6.10",
     "bootstrap": "4.3.1",
     "bootstrap-table": "^1.17.1",
     "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",

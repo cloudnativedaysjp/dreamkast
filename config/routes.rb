@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Shrine.uppy_s3_multipart(:video_file) => "/s3/multipart"
+
   root 'home#show'
 
   # Auth

@@ -83,3 +83,5 @@ gem "rack-timeout"
 gem "pundit"
 
 gem 'redcarpet'
+
+gem "uppy-s3_multipart", "~> 0.3"

@@ -8,6 +8,7 @@ require('@uppy/dashboard/dist/style.css')
 const uppyTriggerElement = document.querySelector('.upload-data')
 
 const startUppy = () => {
+    console.log("startUppy!!");
     const hiddenInput = document.querySelector('.upload-data')
     const uppy = Uppy({
         restrictions: {maxNumberOfFiles: 1}

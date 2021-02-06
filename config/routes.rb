@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  mount Shrine.uppy_s3_multipart(:video_file) => "/s3/multipart"
+  unless Rails.env.development? || Rails.env.test?
+    mount Shrine.uppy_s3_multipart(:video_file) => "/s3/multipart"
+  end
 
   root 'home#show'
 

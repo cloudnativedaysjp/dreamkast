@@ -20,10 +20,12 @@
             <% end %>
 
             <li class="nav-item dropdown">
-              <%= link_to "Timetable", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
+              <%= link_to "SessionList", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to 'Timetable', timetables_path, class: "dropdown-item", data: {"turbolinks" => false}%>
-                <div class="dropdown-divider"></div>
+                <% if @conference.show_timetable_enabled? %>
+                  <%= link_to 'Timetable', timetables_path, class: "dropdown-item", data: {"turbolinks" => false} %>
+                  <div class="dropdown-divider"></div>
+                <% end %>
                 <%= link_to 'セッションリスト', talks_path, class: "dropdown-item", data: {"turbolinks" => false} %>
               </div>
             </li>

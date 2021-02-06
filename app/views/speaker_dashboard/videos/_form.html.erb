@@ -32,28 +32,4 @@
   </section>
 </section>
 
-<script>
-    const hiddenInput = document.querySelector('.upload-data')
-    const uppy = Uppy.Core({
-        restrictions: {maxNumberOfFiles: 1}
-    })
-        .use(Uppy.Dashboard, {
-            height: 250,
-            inline: true,
-            target: '#drag-drop-area',
-        })
-        .use(Uppy.AwsS3Multipart, {companionUrl: '/'})
-
-    uppy.on('upload-success', (file, response) => {
-        const uploadedFileData = {
-            id: response.uploadURL.match(/\/video_file\/([^\?]+)/)[1],
-            storage: 'video_file',
-            metadata: {
-                size: file.size,
-                filename: file.name,
-                mime_type: file.type,
-            }
-        }
-        hiddenInput.value = JSON.stringify(uploadedFileData)
-    })
-</script>
+<%= javascript_pack_tag 'video_uploader' %>

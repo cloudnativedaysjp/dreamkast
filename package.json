@@ -2,11 +2,12 @@
   "name": "cndtattend",
   "private": true,
   "dependencies": {
-    "@popperjs/core": "^2.6.0",
+    "popper.js": "^1.16.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
+    "@uppy/aws-s3-multipart": "^1.8.12",
     "@uppy/core": "^1.16.0",
     "@uppy/dashboard": "^1.16.0",
     "@uppy/xhr-upload": "^1.6.10",

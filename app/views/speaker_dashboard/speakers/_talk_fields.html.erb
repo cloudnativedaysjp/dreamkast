@@ -20,17 +20,10 @@
     <%= f.collection_select :talk_time_id, @conference.talk_times, :id, :time_minutes, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
-    <%= f.label :video_file, "Video File" %><br/>
-    <%= f.file_field :video_file %>
-  </div>
-
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>
 
-  <div class="text-right">
     <%= link_to 'Delete Talk', '#', class: 'remove_talk_field text-right' %>
-  </div>
 
   <hr>
 </div>

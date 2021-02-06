@@ -19,7 +19,7 @@
               </h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
               <p class="card-text"><%= simple_format talk.abstract %></p>
-              <a href="<%= edit_speaker_dashboard_video_path(id: talk.video.id) %>" class="btn btn-primary">Upload Video</a>
+              <a href="<%= video_url(talk) %>" class="btn btn-primary">Upload Video</a>
             </div>
           </div>
         <% end %>

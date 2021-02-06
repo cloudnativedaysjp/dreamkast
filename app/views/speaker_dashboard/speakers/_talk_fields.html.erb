@@ -23,6 +23,9 @@
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>
 
-  <%= link_to 'Delete', '#', class: 'remove_talk_field' %>
+  <% if @conference.speaker_entry_enabled? %>
+    <%= link_to 'Delete Talk', '#', class: 'remove_talk_field text-right' %>
+  <% end %>
+
   <hr>
 </div>

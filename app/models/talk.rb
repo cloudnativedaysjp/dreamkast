@@ -63,10 +63,6 @@ class Talk < ApplicationRecord
     track.present? ? track.name : ''
   end
 
-  def track_id
-    track.present? ? track.id : ''
-  end
-
   def slot_number
     SLOT_MAP.each_with_index do |time, index|
       if time > self.start_time.to_time.strftime("%H%M")

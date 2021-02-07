@@ -1,0 +1,11 @@
+<form>
+  <label>Say something:</label><br>
+  <input type="text" id="message" data-behavior="room_speaker">
+  <input type="submit" id="send_message">
+</form>
+
+<div id="chat">
+
+</div>
+
+<%= javascript_pack_tag 'chat/index.js' %>

@@ -91,10 +91,10 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
-          if [ ! -e ${{ github.head_ref }} ]; then
-            BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
-          elif  [ $IMAGE_TAG = "master"]; then
+          if [ $IMAGE_TAG = "master" ]; then
             BRANCH=main
+          elif  [ ! -e ${{ github.head_ref }}  ]; then
+            BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
           else
             BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
           fi

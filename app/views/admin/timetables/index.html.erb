@@ -40,12 +40,12 @@
             </td>
             <td>
               <div class="field">
-                <%= ft.text_field :start_time, value: talk.start_time.strftime("%H:%M"), class: "form-control", placeholder: 'HH:MM'  %>
+                <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime("%H:%M") : '', class: "form-control", placeholder: 'HH:MM'  %>
               </div>
             </td>
             <td>
               <div class="field">
-                <%= ft.text_field :end_time, value: talk.end_time.strftime("%H:%M"), class: "form-control", placeholder: 'HH:MM'  %>
+                <%= ft.text_field :end_time, value: talk.end_time ? talk.end_time.strftime("%H:%M") : '', class: "form-control", placeholder: 'HH:MM'  %>
               </div>
             </td>
             <td><%= talk.time  %>m</td>

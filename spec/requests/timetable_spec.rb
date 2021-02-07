@@ -89,4 +89,70 @@ describe TimetableController, type: :request do
       end
     end
   end
+
+  describe "GET cndo#index" do
+    before do
+      create(:cndo2021)
+      create(:cndo_day1)
+      create(:cndo_day2)
+      create(:cndo_track1)
+      create(:cndo_track2)
+      create(:cndo_track3)
+      create(:cndo_track4)
+      create(:cndo_track5)
+      create(:cndo_track6)
+      create(:cndo_track7)
+      create(:cndo_talk_category1)
+      create(:cndo_talk_difficulties1)
+    end
+
+    let!(:cndo_talk1) { create(:cndo_talk1) }
+    let!(:cndo_talk2) { create(:cndo_talk2) }
+
+    describe 'not logged in' do
+      context 'get exists event\'s timetables' do
+        it "returns a success response without form" do
+          get '/cndo2021/timetables'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to_not include '<form action="profiles/talks"'
+          expect(response.body).to include cndo_talk1.title
+          expect(response.body).to include cndo_talk2.title
+        end
+      end
+    end
+
+    describe 'logged in and not registerd' do
+      before do
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+      end
+
+      it "redirect to /cndo2021/registration" do
+        get '/cndo2021/timetables'
+        expect(response).to_not be_successful
+        expect(response).to have_http_status '302'
+        expect(response).to redirect_to '/cndo2021/registration'
+      end
+    end
+
+    describe 'logged in' do
+      before do
+        create(:alice)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+      end
+
+      context 'get exists event\'s timetables' do
+        it "returns a success response with form" do
+          get '/cndo2021/timetables'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to include '<form action="profiles/talks"'
+          expect(response.body).to include cndo_talk1.title
+          expect(response.body).to include cndo_talk2.title
+        end
+      end
+    end
+  end
+
+  
 end

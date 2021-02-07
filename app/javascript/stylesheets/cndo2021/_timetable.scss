@@ -6,8 +6,8 @@ section.timetable {
 
 .grid {
     display: grid;
-    grid-template-rows: repeat(var(--rows), 30px);
-    grid-template-columns: repeat(6, minmax(160px, 240px));
+    grid-template-rows: repeat(var(--rows), 40px);
+    grid-template-columns: repeat(7, minmax(160px, 240px));
     grid-auto-columns: 100px;
     overflow-x: auto;
     /* 横スクロールの指定 */
@@ -24,6 +24,14 @@ section.timetable {
     grid-column: span 6;
     grid-row: span 6;
     display: flex;
+}
+
+.grid h3 {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    display: flex;
+    justify-content: left;
+    overflow: hidden;
 }
 
 .track {
@@ -68,8 +76,12 @@ section.timetable {
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .1);
 }
 
-.content.checked {
-    background-color: #EEF;
+label.checkbox-label {
+    display: contents;
+}
+
+label.checkbox-label input[type="checkbox"]:checked+.content {
+    background-color: #DDF;
     border-radius: 5px;
     border: solid 1px $dark-blue;
 }
@@ -107,44 +119,8 @@ section.timetable {
     color: #666;
 }
 
-.content .radio {
-    float: right;
-    margin: 5px 10px 0 auto;
-    input[type="radio"] {
-        position: absolute;
-        opacity: 0;
-        +.radio-label {
-            &:before {
-                content: '';
-                background: white;
-                border-radius: 100%;
-                border: 1px solid darken(white, 25%);
-                display: inline-block;
-                width: 1.4em;
-                height: 1.4em;
-                position: relative;
-                vertical-align: top;
-                cursor: pointer;
-                text-align: center;
-                transition: all 250ms ease;
-            }
-        }
-        &:checked {
-            +.radio-label {
-                &:before {
-                    background-color: $dark-blue;
-                    box-shadow: inset 0 0 0 4px white;
-                }
-            }
-        }
-        +.radio-label {
-            &:empty {
-                &:before {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
+.checkbox-label input[type=checkbox] {
+    visibility: hidden;
 }
 
 .content .category_difficulty {
@@ -215,83 +191,83 @@ section.timetable {
     filter: hue-rotate(180deg);
 }
 
-.difficulty_1 {
+.difficulty_11 {
     filter: hue-rotate(0deg);
 }
 
-.difficulty_2 {
+.difficulty_12 {
     filter: hue-rotate(120deg);
 }
 
-.difficulty_3 {
+.difficulty_13 {
     filter: hue-rotate(240deg);
 }
 
-.category_1 {
+.category_21 {
     filter: hue-rotate(0deg);
 }
 
-.category_2 {
+.category_22 {
     filter: hue-rotate(20deg);
 }
 
-.category_3 {
+.category_23 {
     filter: hue-rotate(40deg);
 }
 
-.category_4 {
+.category_24 {
     filter: hue-rotate(60deg);
 }
 
-.category_5 {
+.category_25 {
     filter: hue-rotate(80deg);
 }
 
-.category_6 {
+.category_26 {
     filter: hue-rotate(100deg);
 }
 
-.category_7 {
+.category_27 {
     filter: hue-rotate(120deg);
 }
 
-.category_8 {
+.category_28 {
     filter: hue-rotate(140deg);
 }
 
-.category_9 {
+.category_29 {
     filter: hue-rotate(160deg);
 }
 
-.category_10 {
+.category_30 {
     filter: hue-rotate(180deg);
 }
 
-.category_11 {
+.category_31 {
     filter: hue-rotate(200deg);
 }
 
-.category_12 {
+.category_32 {
     filter: hue-rotate(220deg);
 }
 
-.category_13 {
+.category_33 {
     filter: hue-rotate(240deg);
 }
 
-.category_14 {
+.category_34 {
     filter: hue-rotate(260deg);
 }
 
-.category_15 {
+.category_35 {
     filter: hue-rotate(280deg);
 }
 
-.category_16 {
+.category_36 {
     filter: hue-rotate(300deg);
 }
 
-.category_17 {
+.category_37 {
     filter: hue-rotate(320deg);
 }
 
@@ -317,25 +293,25 @@ section.timetable {
     .content.checked {
         border-left: 5px solid $dark-blue
     }
-    .content[slot="1"] {
+    .content[track_number="1"] {
         filter: hue-rotate(0deg);
     }
-    .content[slot="2"] {
+    .content[track_number="2"] {
         filter: hue-rotate(40deg);
     }
-    .content[slot="3"] {
+    .content[track_number="3"] {
         filter: hue-rotate(80deg);
     }
-    .content[slot="4"] {
+    .content[track_number="4"] {
         filter: hue-rotate(120deg);
     }
-    .content[slot="5"] {
+    .content[track_number="5"] {
         filter: hue-rotate(160deg);
     }
-    .content[slot="6"] {
+    .content[track_number="6"] {
         filter: hue-rotate(200deg);
     }
-    .content[slot="7"] {
+    .content[track_number="7"] {
         filter: hue-rotate(240deg);
     }
     .content.first {

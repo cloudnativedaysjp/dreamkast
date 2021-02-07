@@ -1,15 +1,13 @@
 // Import custom variables and override default Bootstrap variables
 @import "./cndo2021/_variables.scss";
-
 // Import Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-table/src/bootstrap-table';
-
 // Import custom styles
 @import "./_global.scss";
 @import "./_navbar.scss";
 @import "./_portfolio.scss";
-@import "./_timetable.scss";
+@import "./cndo2021/_timetable.scss";
 @import "./message_box.scss";
 @import "./landing.scss";
 @import "./_tracks.scss";
@@ -18,7 +16,5 @@
 @import "./_links.scss";
 @import "./_talks.scss";
 @import "./cndo2021/_cndo2021.scss";
-
-
 // Import custom utilities
 @import "./cndo2021/_utilities.scss";

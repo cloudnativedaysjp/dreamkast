@@ -59,5 +59,17 @@
 </div>
 
 <div id="transit_nav" class="p-4">
-  <%= submit_tag "保存", form: "timetable",class: "btn btn-danger transit_button" %>
+  <%= submit_tag "タイムテーブルを保存", form: "timetable",class: "btn btn-danger transit_button" %>
+
+  <% if @conference.show_timetable_enabled? %>
+    <%= form_with(url: admin_close_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button" %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: admin_publish_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button" %>
+    <% end %>
+  <% end %>
 </div>

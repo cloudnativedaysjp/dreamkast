@@ -35,6 +35,8 @@ Rails.application.routes.draw do
       resources :talks, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
+      post 'publish_timetable' => 'timetables#publish'
+      post 'close_timetable' => 'timetables#close'
       put 'talks' => 'talks#update_talks'
       post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
       post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'

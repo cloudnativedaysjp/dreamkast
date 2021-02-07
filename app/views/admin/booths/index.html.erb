@@ -15,7 +15,7 @@
       <tbody>
       <% @booths.each do |booth| %>
         <tr>
-          <td><%= link_to booth.sponsor.name, "/admin/sponsors/#{booth.sponsor.id}" %></td>
+          <td><%= link_to booth.sponsor.name, admin_sponsor_path(id: booth.sponsor.id) %></td>
           <td><%=  booth.published %></td>
         </tr>
       <% end %>

@@ -5,6 +5,14 @@
         <%= message %>
         </div>
     <% end %>
+
+  <div class="row">
+    <h2>Download TALKS to CSV</h2>
+    <div class="col-12 form-group">
+      <%= link_to 'download', admin_talks_path(format: :csv) %>
+    </div>
+  </div>
+
     <div class="row">
         <h2>Bulk insert TALKS from CSV</h2>
         <div class="col-12 form-group">
@@ -36,6 +44,7 @@
                     <th scope="col">Title / Abstract</th>
                     <th scope="col">Track</th>
                     <th scope="col">DateTime</th>
+                    <th scope="col">Time</th>
                     <th scope="col">Vimeo ID</th>
                     <th scope="col">Sli.do ID</th>
                     <th scope="col">On Air</th>
@@ -56,6 +65,9 @@
                     <% if talk.start_time.present? && talk.start_time.present? %>
                       <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
                     <% end %>
+                  </td>
+                  <td>
+                    <%= talk.time %>
                   </td>
                   <td>
                     <% video_id = talk.video ? talk.video.video_id : nil %>

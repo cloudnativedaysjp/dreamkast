@@ -35,11 +35,11 @@ class ApplicationController < ActionController::Base
   end
 
   def talk_category(talk_id)
-    @talk_cagetogies.find{|category| category.id == @conference.talks.find{|talk| talk.id == talk_id}.talk_category_id}
+    @talk_cagetogies.find(@conference.talks.find(talk_id).talk_category_id)
   end
 
   def talk_difficulty(talk_id)
-    @talk_difficulties.find{|difficulty| difficulty.id == @conference.talks.find{|talk| talk.id == talk_id}.talk_difficulty_id}
+    @talk_difficulties.find(@conference.talks.find(talk_id).talk_difficulty_id)
   end
 
   helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty

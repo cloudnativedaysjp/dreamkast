@@ -14,26 +14,28 @@ class Profiles::TalksController < ApplicationController
     RegisteredTalk.transaction do
       RegisteredTalk.where(profile_id: @profile.id).delete_all
 
-      if params[:event] == "cndo2021"
-        params[:talks].each do |key, value|
-          talk_id = key.to_i
-          if talk = Talk.find(talk_id)
-            RegisteredTalk.create!(
-              profile_id: @profile.id,
-              talk_id: talk.id
-            )
+      if params[:talks].present?
+        if params[:event] == "cndo2021"
+          params[:talks].each do |key, value|
+            talk_id = key.to_i
+            if talk = Talk.find(talk_id)
+              RegisteredTalk.create!(
+                profile_id: @profile.id,
+                talk_id: talk.id
+              )
+            end
           end
-        end
-      else
-        params[:talks].each do |key, value|
-          day, slot = key.split("_")
-          track_id = value
-          
-          Talk.find_by_params(day, slot, track_id).each do |talk|
-            RegisteredTalk.create!(
-              profile_id: @profile.id,
-              talk_id: talk.id
-            )
+        else
+          params[:talks].each do |key, value|
+            day, slot = key.split("_")
+            track_id = value
+            
+            Talk.find_by_params(day, slot, track_id).each do |talk|
+              RegisteredTalk.create!(
+                profile_id: @profile.id,
+                talk_id: talk.id
+              )
+            end
           end
         end
       end

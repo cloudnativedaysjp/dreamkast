@@ -12,26 +12,27 @@
               --duration: 60;
               --row-start: <%= ((talk.start_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;
               --row-end: <%= ((talk.end_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;">
-      <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
-          slot="<%= talk.slot_number %>"
-          day_slot="<%= talk.day_slot %>">
       <% if form %>
-          <div class="radio">
-          <%= form.check_box "talks[#{talk.id}]", { day_slot: talk.day_slot, checked: talks_checked?(talk.id)}, true, false %>
-          <label for="<%= "talks[#{talk.id}]" %>" class="radio-label"></label>
-          </div>
+      <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+      <%= form.check_box "talks[#{talk.id}]", { talk_id: talk.id, checked: talks_checked?(talk.id)}, true, false %>
       <% end %>
-        <h6>
-            <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
-        </h6>
-        <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
-        <div class="category_difficulty">
-          <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-          <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
-          <% end %>
-          <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+
+        <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>" talk_id="<%= talk.id %>" track_number="<%= talk.track.number %>">
+          <h6>
+              <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
+          </h6>
+          <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
+          <div class="category_difficulty">
+            <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+            <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
+            <% end %>
+            <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+          </div>
         </div>
-      </div>
+
+      <% if form %>
+      </label>
+      <% end %>
     </div>
   <% end %>
 </div>

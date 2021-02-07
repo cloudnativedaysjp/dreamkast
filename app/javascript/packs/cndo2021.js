@@ -22,7 +22,6 @@ window.$ = window.jquery = jquery;
 import './jquery.easing.min.js'
 import './jquery.magnific-popup.min.js'
 import './scripts.js'
-//import './timetable.js'
 import './talks.js'
 import './sponsor_form.js'
 import './conference_form.js'

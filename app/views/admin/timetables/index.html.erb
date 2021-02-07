@@ -35,7 +35,7 @@
             </td>
             <td>
               <div class="field">
-                <%= ft.text_field :date, value: talk.date, class: "form-control", placeholder: 'XXXX-YY-ZZ '  %>
+                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, value: talk.conference_day_id, class: "form-control", placeholder: 'XXXX-YY-ZZ '  %>
               </div>
             </td>
             <td>

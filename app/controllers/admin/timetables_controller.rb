@@ -51,6 +51,6 @@ class Admin::TimetablesController < ApplicationController
   private
 
   def talks_params
-    params.permit(talks: [:track_id, :date, :start_time, :end_time])[:talks]
+    params.permit(talks: [:track_id, :conference_day_id, :start_time, :end_time])[:talks]
   end
 end

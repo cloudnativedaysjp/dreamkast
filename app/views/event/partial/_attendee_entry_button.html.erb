@@ -6,7 +6,9 @@
       <%= button_to '聴講者として申し込みする', registration_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
     <% end %>
   </div>
-  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
-    <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
-  </div>
+  <% if @conference.show_timetable_enabled? %>
+    <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
+      <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+    </div>
+  <% end %>
 <% end %>

@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def talk_category(talk)
-    @talk_cagetogies.find(talk.talk_category_id)
+    @talk_categories.find(talk.talk_category_id)
   end
 
   def talk_difficulty(talk)

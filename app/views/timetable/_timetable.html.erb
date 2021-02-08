@@ -39,7 +39,7 @@
 
             <%= render 'talk_category_difficulty', talk: talk %>
 
-            <h5><%= link_to talk_path(id: talk.id), remote: true do %><%= talk.title %><% end %></h5>
+            <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
           </div>
         </div>
       <% end %>

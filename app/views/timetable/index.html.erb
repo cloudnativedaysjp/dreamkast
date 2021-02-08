@@ -6,18 +6,10 @@
 
 <% if @current_user %>
   <%= form_with url: 'profiles/talks', method: :post do |form| %>
-    <% if @params[:event] == 'cndo2021' %>
-      <%= render partial: 'timetable_cndo2021', locals: {conference: @conference, form: form} %>
-    <% else %>
-      <%= render partial: 'timetable', locals: {conference: @conference, form: form} %>
-    <% end %>
+    <%= render partial: timetable_partial_name, locals: {conference: @conference, form: form} %>
   <% end %>
 <% else %>
-  <% if @params[:event] == 'cndo2021' %>
-    <%= render 'timetable_cndo2021', conference: @conference, form: nil %>
-  <% else %>
-    <%= render 'timetable', conference: @conference %>
-  <% end %>
+  <%= render partial: timetable_partial_name, locals: {conference: @conference, form: nil} %>
 <% end %>
 
 

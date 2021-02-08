@@ -19,9 +19,19 @@ class TimetableController < ApplicationController
 
   private
 
+  helper_method :timetable_partial_name
+
   def set_profile
     if @current_user
       @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
+  end
+
+  def timetable_partial_name
+    if @params[:event] == 'cndo2021'
+      'timetable_cndo2021'
+    else
+      'timetable'
     end
   end
 end

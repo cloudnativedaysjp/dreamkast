@@ -8,8 +8,8 @@ class TracksController < ApplicationController
     @tracks = Track.all
 
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
-    @talk_categories = TalkCategory.all
-    @talk_difficulties = TalkDifficulty.all
+    @talk_categories = TalkCategory.where(conference_id: @conference.id)
+    @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
     @booths = Booth.where(conference_id: @conference.id, published: true)
   end
 

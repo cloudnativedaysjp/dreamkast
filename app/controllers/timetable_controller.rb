@@ -11,8 +11,8 @@ class TimetableController < ApplicationController
   def index
     @conference = Conference.includes(conference_days: :talks).includes(talks: :track).find_by(abbr: event_name)
     @talks = @conference.talks.includes(:track).eager_load(:talk_category, :talk_difficulty).where(show_on_timetable: true)
-    @talk_categories = TalkCategory.all
-    @talk_difficulties = TalkDifficulty.all
+    @talk_categories = TalkCategory.where(conference_id: @conference.id)
+    @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
 
     @params = params
   end

@@ -54,18 +54,5 @@
   <% end %>
 <% end %>
 <% if form %>
-  <div class="timetable-footer">
-    <div class="container">
-      <div class="row justify-content-md-center mt-1">
-        <div class="col-12 col-md-8" style="line-height: 90%;">
-          <span class="information">視聴したいセッションを選択してください。配信終了後に、セッションのアーカイブ視聴も可能です(一部除く)。</span>
-        </div>
-      </div>
-      <div class="row form-group justify-content-md-center mt-2 mb-3">
-        <div class="col-12 col-md-4">
-          <%= form.submit "セッション登録", class: "btn btn-danger form-control btn-lg" %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render 'timetable_footer', information: '視聴したいセッションを選択してください。配信終了後に、セッションのアーカイブ視聴も可能です(一部除く)。' %>
 <% end %>

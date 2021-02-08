@@ -34,12 +34,12 @@ class ApplicationController < ActionController::Base
     @profile.talks.select{|talk| talk.id == talk_id}.present?
   end
 
-  def talk_category(talk_id)
-    @talk_cagetogies.find(@conference.talks.find(talk_id).talk_category_id)
+  def talk_category(talk)
+    @talk_cagetogies.find(talk.talk_category_id)
   end
 
-  def talk_difficulty(talk_id)
-    @talk_difficulties.find(@conference.talks.find(talk_id).talk_difficulty_id)
+  def talk_difficulty(talk)
+    @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
   helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty

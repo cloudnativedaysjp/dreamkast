@@ -44,9 +44,7 @@
               </div>
             </td>
             <td>
-              <div class="field">
-                <%= ft.text_field :end_time, value: talk.end_time ? talk.end_time.strftime("%H:%M") : '', class: "form-control", placeholder: 'HH:MM'  %>
-              </div>
+              <p><%= talk.end_time ? talk.end_time.strftime("%H:%M") : '' %></p>
             </td>
             <td><%= talk.time  %>m</td>
           </tr>

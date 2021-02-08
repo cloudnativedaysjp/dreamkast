@@ -18,7 +18,11 @@ class Admin::TimetablesController < ApplicationController
     @talks = []
     talks_params.each do |id, talk_param|
       talk = Talk.find(id)
-      talk.update(talk_param)
+      end_time = ""
+      if talk_param[:start_time] != ""
+        end_time = (Time.parse(talk_param[:start_time]) + (talk.time.to_i * 60)).to_s(:db)
+      end
+      talk.update(talk_param.merge(end_time: end_time))
       @talks << talk
     end
     redirect_to admin_timetables_path,  notice: "タイムテーブルを更新しました"
@@ -51,6 +55,6 @@ class Admin::TimetablesController < ApplicationController
   private
 
   def talks_params
-    params.permit(talks: [:track_id, :conference_day_id, :start_time, :end_time])[:talks]
+    params.permit(talks: [:track_id, :conference_day_id, :start_time])[:talks]
   end
 end

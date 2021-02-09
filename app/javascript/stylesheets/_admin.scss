@@ -38,8 +38,11 @@
     width: 100%;
     box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 #transit_nav .transit_button{
     border: 2px solid #FFF;
+    margin: 5px;
 }

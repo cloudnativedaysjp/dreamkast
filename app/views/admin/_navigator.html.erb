@@ -4,6 +4,7 @@
     <%= link_to "Users", admin_users_path, { class: "btn btn-outline-secondary #{'active' if action_name == 'users'}", "data-turbolinks" => false } %>
     <%= link_to "Speakers", admin_speakers_path, { class: "btn btn-outline-secondary #{'active' if controller_name == 'speakers' || action_name == 'edit_speaker' }", "data-turbolinks" => false } %>
     <%= link_to "Talks", admin_talks_path, { class: "btn btn-outline-secondary #{'active' if controller_name == 'talks'}", "data-turbolinks" => false } %>
+    <%= link_to "TimeTable", admin_timetables_path, { class: "btn btn-outline-secondary #{'active' if controller_name == 'timetables'}", "data-turbolinks" => false } %>
     <%= link_to "Tracks", admin_tracks_path, { class: "btn btn-outline-secondary #{'active' if controller_name == 'tracks'}", "data-turbolinks" => false } %>
     <%= link_to "Statistics", admin_statistics_path, { class: "btn btn-outline-secondary #{'active' if action_name == 'statistics'}", "data-turbolinks" => false } %>
     <%= link_to "Sponsors", admin_sponsors_path, { class: "btn btn-outline-secondary #{'active' if controller_name == 'sponsors' || action_name == 'show_sponsor' }", "data-turbolinks" => false } %>

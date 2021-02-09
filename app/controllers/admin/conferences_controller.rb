@@ -41,6 +41,7 @@ class Admin::ConferencesController < ApplicationController
     params.require(:conference).permit(:status,
                                        :speaker_entry,
                                        :attendee_entry,
+                                       :show_timetable,
                                        links_attributes: [:id, :title, :url, :description, :_destroy])
   end
 end

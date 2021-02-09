@@ -3,7 +3,7 @@ class Admin::TimetablesController < ApplicationController
   include Logging
   include LogoutHelper
 
-  before_action :is_admin?, :set_conference
+  before_action :is_admin?, :set_conference, :set_profile
 
   def index
     @talks = @conference.talks.order('conference_day_id ASC, start_time ASC, track_id ASC')
@@ -52,9 +52,34 @@ class Admin::TimetablesController < ApplicationController
     end
   end
 
+  def preview
+    @talks = @conference.talks.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @tracks = Track.where(conference_id: @conference.id)
+    @talk_categories = TalkCategory.where(conference_id: @conference.id)
+    @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def set_profile
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email])
+    end
+  end
+
   private
 
+  helper_method :timetable_partial_name
   def talks_params
     params.permit(talks: [:track_id, :conference_day_id, :start_time])[:talks]
   end
+
+  def timetable_partial_name
+    if params[:event] == 'cndo2021'
+      'timetable_cndo2021'
+    else
+      'timetable'
+    end
+    end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe TalksController, type: :request do
-  describe 'GET /api/v1/tracks' do
+describe Api::V1::SponsorsController, type: :request do
+  describe 'GET /api/v1/sponsors' do
     before do
       create(:cndt2020)
       create(:day1)

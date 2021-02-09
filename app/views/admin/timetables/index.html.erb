@@ -66,12 +66,12 @@
   <% if @conference.show_timetable_enabled? %>
     <%= form_with(url: admin_close_timetable_path, local: true, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button" %>
+      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button", data: { confirm: '本当に非公開にしますか？' } %>
     <% end %>
   <% else %>
     <%= form_with(url: admin_publish_timetable_path, local: true, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button" %>
+      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button", data: { confirm: '本当に公開しますか？' }  %>
     <% end %>
   <% end %>
 </div>

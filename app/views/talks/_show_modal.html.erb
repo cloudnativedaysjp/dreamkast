@@ -12,7 +12,9 @@
 
     <div class="modal-body">
       <div class="category_difficulty">
-        <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>"><%= @talk.talk_difficulty.name %></span>
+        <%  if @talk.talk_difficulty.present? %>
+          <span class="difficulty difficulty_<%= @talk.talk_difficulty_id %>"><%= @talk.talk_difficulty.name %></span>
+        <% end %>
         <span class="difficulty category_<%= @talk.talk_category_id %>"><%= @talk.talk_category.name %></span>
         <% if @talk.video_published %>
             <span class="difficulty archivable">

@@ -1,0 +1,33 @@
+<div class="container">
+  <%= render 'admin/navigator' %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <h2>TimeTable Preview</h2>
+</div>
+
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<%= render partial: "timetable/#{timetable_partial_name}", locals: {conference: @conference, form: nil} %>
+
+<div id="transit_nav" class="p-4">
+
+  <%= form_with(url: admin_timetables_path, local: true, method: :get) do |form| %>
+    <%= form.submit "編集画面へ移動", class: "btn btn-danger transit_button" %>
+  <% end %>
+
+  <% if @conference.show_timetable_enabled? %>
+    <%= form_with(url: admin_close_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: admin_publish_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button", data: { confirm: '本当に公開しますか？' }  %>
+    <% end %>
+  <% end %>
+</div>

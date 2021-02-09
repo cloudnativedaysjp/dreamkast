@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :conferences, only: [:show], path: "events"
       resources :talks, only: [:index, :show]
       resources :tracks, only: [:index, :show]
+      resources :sponsors, only: [:index]
       resources :chat_messages, only: [:index, :create]
     end
   end

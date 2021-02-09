@@ -128,4 +128,12 @@ class Talk < ApplicationRecord
   def time
     talk_time.present? ? talk_time.time_minutes : 0
   end
+
+  def start_to_end
+    if start_time.present? && end_time.present?
+      start_time.strftime("%H:%M") + "-" + end_time.strftime("%H:%M")
+    else
+      ''
+    end
+  end
 end

@@ -33,6 +33,17 @@
     </div>
   </div>
 
+  <h3>Timetable Visible Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <% @conference_form.conference.class.show_timetables.keys.each do |key| %>
+        <%= form.radio_button :show_timetable, key %>
+        <%= form.label :show_timetable, key %><br>
+      <% end %>
+    </div>
+  </div>
+
   <h3>Links</h3>
   <div class="link-fields">
     <%= form.fields_for :links do |f| %>

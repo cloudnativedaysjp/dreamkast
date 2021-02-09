@@ -1,0 +1,73 @@
+<div class="container">
+  <%= render 'admin/navigator' %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <h2>TimeTable Editor</h2>
+
+
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">Speakers</th>
+      <th scope="col">Title</th>
+      <th scope="col">Track</th>
+      <th scope="col">Date</th>
+      <th scope="col">Start</th>
+      <th scope="col">End</th>
+      <th scope="col">Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= form_with(url: admin_timetable_path, local: true, id: "timetable", method: "put") do |f| %>
+      <% @talks.each do |talk| %>
+        <%= fields_for 'talks[]', talk do |ft| %>
+          <tr>
+            <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+            <td><h5><%= talk.title %></h5></td>
+            <td>
+              <div class="field">
+                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, value: talk.track_id, class: "form-control" %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, value: talk.conference_day_id, class: "form-control", placeholder: 'XXXX-YY-ZZ '  %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime("%H:%M") : '', class: "form-control", placeholder: 'HH:MM'  %>
+              </div>
+            </td>
+            <td>
+              <p><%= talk.end_time ? talk.end_time.strftime("%H:%M") : '' %></p>
+            </td>
+            <td><%= talk.time  %>m</td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div id="transit_nav" class="p-4">
+  <%= submit_tag "タイムテーブルを保存", form: "timetable",class: "btn btn-danger transit_button" %>
+
+  <% if @conference.show_timetable_enabled? %>
+    <%= form_with(url: admin_close_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button" %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: admin_publish_timetable_path, local: true, method: :post) do |form| %>
+      <%= form.hidden_field :show_timetable, value: @conference.id %>
+      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button" %>
+    <% end %>
+  <% end %>
+</div>

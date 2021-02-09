@@ -66,52 +66,9 @@
 
   <% if action_name == "new" %>
   <div class="privacy_policy">
-    <h4>個人情報保護方針(プライバシー ポリシー)</h4>
-    <p>
-    ご登録頂きました個人情報はイベントの運営会社である株式会社インプレスが管理し、電話/電子メール/郵送等による、各種サービスやセミナー開催情報などの情報提供に利用させて頂きます。インプレス社の詳しいプライバシーポリシーに関しましては<a href="https://www.impress.co.jp/privacy.html" target="_blank">こちらをご覧下さい。</a></p>
+    <%= markdown @conference.privacy_policy %>
 
-    <p>
-    なお、今回ご登録いただきました個人情報は、本セミナー協賛企業（各種スポンサー）へ提供いたします。以下に記載の協賛企業からご登録者の皆様に、直接電子メールや郵送でご案内をさせていただく場合がございます。
-    </p>
-    <p>
-    リスト提供企業社名一覧（順不同）
-    </p>
-
-    
-    <ul>
-        <li>日本アイ・ビー・エム株式会社</li>
-        <li>富士通株式会社</li>
-        <li>F5ネットワークスジャパン合同会社</li>
-        <li>New Relic株式会社</li>
-        <li>JFrog Japan株式会社</li>
-        <li>サイオステクノロジー株式会社</li>
-        <li>株式会社はてな</li>
-        <li>CircleCI合同会社</li>
-        <li>株式会社ディバータ</li>
-        <li>Sysdig Japan合同会社</li>
-        <li>株式会社カサレアル</li>
-        <li>グーグル・クラウド・ジャパン合同会社</li>
-        <li>株式会社サイバーエージェント</li>
-        <li>日本オラクル株式会社</li>
-        <li>レッドハット株式会社</li>
-        <li>株式会社エヌ・ティ・ティ・データ</li>
-        <li>Canonical/Ubuntu</li>
-        <li>日本マイクロソフト株式会社/Microsoft Corporation</li>
-        <li>GMOペパボ株式会社</li>
-        <li>SUSE ソフトウエア ソリューションズ ジャパン株式会社</li>
-        <li>ヴイエムウェア株式会社</li>
-        <li>株式会社LegalForce</li>
-        <li>Linux Foundation</li>
-        <li>ミランティス・ジャパン株式会社</li>
-        <li>Elastic</li>
-        <li>Rancher Labs, Inc.</li>
-        <li>日本電気株式会社</li>
-        <li>Linux Foundation</li>
-    </ul>
-    <p>
-    業務委託先または提携先へ業務預託する場合がございますが、個人情報をお客様の承諾なしに目的外利用すること、及び第三者に提供することはございません。なお、開催日までに協賛企業（各種スポンサー）、講演提供企業が追加となりました場合は、セミナーWebサイトに公開しますとともに、追加となりました協賛企業ともご登録情報を共有させていただきます。あらかじめご了承の上、お申し込みをお願いいたします。
-    </p>
-
+    <% if @event == "cndt2020" %>
     <h4>IBMおよびIBMの⼦会社、関連会社からの情報提供</h4>
     <p>
     IBMおよび<a href="https://www.ibm.com/ibm/jp/ja/keireki.pdf#subsidiaries" target="_blank">IBMの⼦会社、関連会社</a>から、製品、サービス、オファリングに関する情報をお送りさせていただく場合があります。
@@ -131,14 +88,21 @@
       <%= form.check_box :require_posting, {class: "form-check-input"}, true, false %>
       <label class="form-check-label" for="require_posting">郵便を希望する</label>
     </div>
+    <% end %>
 
     <h4 class="mt-3">日本マイクロソフト株式会社/Microsoft Corporation</h4>
     <p>
     日本マイクロソフト株式会社/Microsoft Corporationから情報提供を希望される場合、申し込み者情報に記載いただいた内容を日本マイクロソフト株式会社/Microsoft Corporationへ提供させていただきます。利用目的は当該企業の製品・サービスに関する情報またはマーケティング活動に関する情報をお知らせすることです。個人情報の取り扱いにつきましては、日本マイクロソフト株式会社/Microsoft Corporationのプライバシーポリシーに準拠します
     </p>
     <div class="form-check">
+    <% if @event == "cndt2020" %>
       <%= form.check_box :agree_ms, {class: "form-check-input"}, true, false %>
       <label class="form-check-label" for="agree_ms">日本マイクロソフト株式会社/Microsoft Corporationへの個人情報提供に同意する</label>
+    <% elsif @event == "cndo2021" %>
+      <%= form.check_box :agree_ms_cndo2021, {class: "form-check-input"}, true, false %>
+      <label class="form-check-label" for="agree_ms">日本マイクロソフト株式会社/Microsoft Corporationへの個人情報提供に同意する</label>
+    <% end %>
+
     </div>
     <p>(<a href="https://privacy.microsoft.com/ja-jp/privacystatement/" target="_blank">プライバシーステートメント</a>)</p>
     <p></p>

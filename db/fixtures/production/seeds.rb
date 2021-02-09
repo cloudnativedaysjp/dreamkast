@@ -119,7 +119,8 @@ FormItem.seed(
   { id: 1, conference_id: 1, name: "IBMからのメールを希望する"},
   { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
   { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
-  { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"}
+  { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
+  { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"}
 )
 
 Track.seed(

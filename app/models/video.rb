@@ -1,4 +1,6 @@
 class Video < ApplicationRecord
+  include VideoFileUploader::Attachment(:video_file)
+
   belongs_to :talk
   
   def self.on_air

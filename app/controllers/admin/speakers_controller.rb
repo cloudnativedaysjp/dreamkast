@@ -37,7 +37,7 @@ class Admin::SpeakersController < ApplicationController
 
   def bulk_insert_speakers
     unless params[:file]
-      redirect_to '/admin/speakers', notice: "アップロードするファイルを選択してください"
+      redirect_to admin_speakers_path, notice: "アップロードするファイルを選択してください"
     else
       message = Speaker.import(params[:file])
       if message.size == 0

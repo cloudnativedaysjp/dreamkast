@@ -19,6 +19,12 @@
               </h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
               <p class="card-text"><%= simple_format talk.abstract %></p>
+              <% if talk.video.present? && talk.video.video_file.present? %>
+                <p class="card-text">アップロード済みビデオファイル: <%= talk.video.video_file.metadata["filename"] %></p>
+              <% else %>
+                <p class="card-text">ビデオファイルはまだアップロードされていません</p>
+              <% end %>
+              <a href="<%= video_url(talk) %>" class="btn btn-primary">Upload Video</a>
             </div>
           </div>
         <% end %>

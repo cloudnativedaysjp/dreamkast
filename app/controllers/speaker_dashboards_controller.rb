@@ -17,4 +17,16 @@ class SpeakerDashboardsController < ApplicationController
       @speaker = Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
     end
   end
+
+  private
+
+  helper_method :video_url
+
+  def video_url(talk)
+    if talk.video.present?
+      "/#{params[:event]}/speaker_dashboard/videos/#{talk.video.id}/edit"
+    else
+      "/#{params[:event]}/speaker_dashboard/videos/new?talk_id=#{talk.id}"
+    end
+  end
 end

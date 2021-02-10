@@ -274,6 +274,7 @@ ActiveRecord::Schema.define(version: 2021_02_06_151359) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "video_id"
     t.string "slido_id"
+    t.text "video_file_data"
   end
 
   add_foreign_key "booths", "conferences"

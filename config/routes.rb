@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  unless Rails.env.development? || Rails.env.test?
+    mount Shrine.uppy_s3_multipart(:video_file) => "/s3/multipart"
+  end
+
   root 'home#show'
 
   # Auth
@@ -54,6 +58,7 @@ Rails.application.routes.draw do
     get '/speaker_dashboard' => 'speaker_dashboards#show'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
+      resources :videos, only: [:new, :create, :edit, :update]
     end
 
 

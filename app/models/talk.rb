@@ -75,12 +75,16 @@ class Talk < ApplicationRecord
     return day.to_s + self.track.name + slot_number
   end
 
+  def day_slot
+    return self.day.to_s + "_" + self.slot_number
+  end
+
   def row_start
-    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60 / 10).to_i + 1
+    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60 / 5).to_i + 1
   end
 
   def row_end
-    ((self.end_time - self.start_time).to_i / 60 / 10) + row_start
+    ((self.end_time - self.start_time).to_i / 60 / 5) + row_start
   end
 
   def self.find_by_params(day, slot_number_param, track_id)
@@ -123,5 +127,13 @@ class Talk < ApplicationRecord
 
   def time
     talk_time.present? ? talk_time.time_minutes : 0
+  end
+
+  def start_to_end
+    if start_time.present? && end_time.present?
+      start_time.strftime("%H:%M") + "-" + end_time.strftime("%H:%M")
+    else
+      ''
+    end
   end
 end

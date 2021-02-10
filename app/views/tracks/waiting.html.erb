@@ -39,7 +39,7 @@
           <% @profile.talks.each do |talk| %>
             <div class="category_difficulty">
               <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-              <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+              <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
                 <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
               <% end %>
               <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>

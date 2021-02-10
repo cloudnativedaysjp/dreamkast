@@ -17,8 +17,8 @@ class Video < ApplicationRecord
         start_time: video.talk.start_time.strftime("%H:%M"),
         end_time: video.talk.end_time.strftime("%H:%M"),
         abstract: video.talk.abstract,
-        track_name: video.talk.track.name,
-        track_number: video.talk.track.number,
+        track_name: video.talk.track.present? ? video.talk.track.name : '',
+        track_number: video.talk.track.present? ? video.talk.track.number : '',
         track_id: video.talk.track_id,
         speakers: video.talk.speakers.map{|speaker| speaker.name}.join("/")
       }

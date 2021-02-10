@@ -3,7 +3,7 @@
 </div>
 
 <div class="container booth-frame my-4">
-  <%= link_to 'Edit', "/admin/sponsors/#{@sponsor.id}/edit" %>
+  <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id) %>
 
   <%= render 'booths/booth', sponsor: @sponsor %>
 </div>

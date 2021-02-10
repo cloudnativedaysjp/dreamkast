@@ -58,6 +58,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    awesome_nested_set (3.3.1)
+      activerecord (>= 4.0.0, < 7.0)
     aws-eventstream (1.1.0)
     aws-partitions (1.423.0)
     aws-sdk-core (3.112.0)
@@ -334,6 +336,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_nested_set
   aws-sdk-s3 (~> 1.14)
   bootsnap (>= 1.4.2)
   bullet

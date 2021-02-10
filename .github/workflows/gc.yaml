@@ -29,7 +29,7 @@ jobs:
 
       - name: Clean up manifests
         run: |
-          BRANCH=ui-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
+          BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
 
           rm -f dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
           rm -rf dreamkast-infra/dreamkast/overlays/$BRANCH

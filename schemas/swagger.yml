@@ -126,6 +126,106 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
+  /api/v1/talks/{trackId}:
+    get:
+      tags:
+        - Talk
+      parameters:
+        - name: trackId
+          in: path
+          description: ID of track
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Talk'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Talk not found
+  /api/v1/chat_messages:
+    get:
+      tags:
+        - ChatMessage
+      parameters:
+        - name: eventId
+          in: query
+          description: ID of event
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: query
+          description: ID of chat room
+          required: true
+          schema:
+            type: string
+        - name: roomType
+          in: query
+          description: Type of chat room
+          required: true
+          schema:
+            type: string
+        - name: createdFrom
+          in: query
+          description: YYYY-MM-DDThh:mm:ss+TZD (use UTC)
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+        '400':
+          description: Invalid params supplied
+        '404':
+           description: ChatMessage not found
+    post:
+      tags:
+        - ChatMessage
+      summary: Post Chat Message
+      requestBody:
+        description: chat message to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessage'
+      responses:
+        '201':
+          description: CREATED
+  /api/v1/sponsors:
+    get:
+      tags:
+        - Sponsor
+      parameters:
+        - name: eventId
+          in: query
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '400':
+          description: Invalid params supplied
 
 components:
   schemas:
@@ -262,3 +362,61 @@ components:
         - talkDuration
         - talkDifficulty
         - talkCategory
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        eventId:
+          type: number
+        talkId:
+          type: number
+        body:
+          type: string
+        createdAt:
+          type: string
+      example:
+        id: 2
+        body: "foo bar"
+        createdAt: "2021-01-30T10:06:33.938Z"
+      required:
+        - eventId
+        - talkId
+        - body
+    Sponsor:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        conference_id:
+          type: number
+        name:
+          type: string
+        abbr:
+          type: string
+        url:
+          type: string
+        logo_url:
+          type: string
+      example:
+        - id: 1
+          conference_id: 2
+          name: スポンサー1株式会社
+          abbr: sponsor1
+          url: https://example.com/
+          logo_url: cndo2021/trademark.png
+        - id: 2
+          conference_id: 2
+          name: スポンサー2株式会社
+          abbr: sponsor2
+          url: https://example.com/
+          logo_url: dummy.png
+      required:
+        - id
+        - conference_id
+        - name
+        - abbr
+        - url
+        - logo_url

@@ -49,14 +49,16 @@
 
         <div class="talk-fields">
           <%= form.fields_for :talks do |talk| %>
-            <%= render 'talk_fields', :f => talk, :conference => @conference %>
+            <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference %>
           <% end %>
         </div>
 
-        <% if  action_name == "new" || form.object.talks.size < 3 %>
-          <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
-        <% else %>
-          <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
+        <% if @conference.speaker_entry_enabled? || admin? %>
+          <% if action_name == "new" || form.object.talks.size < 3 %>
+            <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
+          <% else %>
+            <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
+          <% end %>
         <% end %>
       </section>
 

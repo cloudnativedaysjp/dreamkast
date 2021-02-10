@@ -46,4 +46,14 @@ FactoryBot.define do
     conference_id { 1 }
     movie_url { "" }
   end
+
+  ["A", "B", "C", "D", "E", "F", "G"].each_with_index do |value, index|
+    factory "cndo_track#{index + 1}".to_sym, class: Track do
+      id { index + 10 }
+      number { index + 1 }
+      name { value }
+      conference_id { 2 }
+      movie_url { "" }
+    end
+  end
 end

@@ -5,9 +5,11 @@
 </div>
 
 <% if @current_user %>
-  <%= render 'form', conference: @conference %>
+  <%= form_with url: 'profiles/talks', method: :post do |form| %>
+    <%= render partial: timetable_partial_name, locals: {conference: @conference, form: form} %>
+  <% end %>
 <% else %>
-  <%= render 'timetable', conference: @conference %>
+  <%= render partial: timetable_partial_name, locals: {conference: @conference, form: nil} %>
 <% end %>
 
 

@@ -2,7 +2,12 @@
   <%= render 'navigator' %>
 
   <h2><%= @conference.name %></h2>
-  <p>status: <%= @conference.status %></p>
+  <ul>
+    <li>カンファレンスステータス: <%= @conference.status %></li>
+    <li>スピーカーのエントリー: <%= @conference.speaker_entry %></li>
+    <li>参加者の申し込み: <%= @conference.attendee_entry %></li>
+    <li>タイムテーブルを表示: <%= @conference.show_timetable %></li>
+  </ul>
   <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id) %>
 
   <hr>

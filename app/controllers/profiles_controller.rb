@@ -6,6 +6,8 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new
+    @conference = Conference.find_by(abbr: params[:event])
+    @event = params[:event]
   end
 
   def edit
@@ -21,6 +23,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
       Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params["agree_ms"]
+      Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params["agree_ms_cndo2021"]
       redirect_to "/#{event_name}/timetables"
     else
       respond_to do |format|
@@ -105,7 +108,8 @@ class ProfilesController < ApplicationController
         :require_email,
         :require_tel,
         :require_posting,
-        :agree_ms
+        :agree_ms,
+        :agree_ms_cndo2021
       )
     end
 end

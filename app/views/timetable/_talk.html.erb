@@ -1,0 +1,33 @@
+<div class="grid">
+  <h3 class="grid" style=""><%= header %></h3>
+</div>
+<div class="grid" style="--rows: <%= (((Time.zone.parse(to) - Time.zone.parse(from)) / 60 / 5)).to_i + 3 %>">
+  <% tracks.each_with_index do |track_name, n| %>
+    <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+  <% end %>
+  <% conference_day.talks.where(show_on_timetable: true, start_time:Time.zone.parse(from).utc..Time.zone.parse(to).utc).each do |talk| %>
+    <div class="talk"
+      slot="<%= talk.slot_number %>"
+      style="--track: <%= talk.track.number - 1 %>;
+              --duration: 60;
+              --row-start: <%= ((talk.start_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;
+              --row-end: <%= ((talk.end_time - Time.zone.parse("2000-01-01 #{from}")) / 60 / 5 ).to_i + 1 %>;">
+      <% if form %>
+      <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+      <%= form.check_box "talks[#{talk.id}]", { talk_id: talk.id, checked: talks_checked?(talk.id)}, true, false %>
+      <% end %>
+
+        <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>" talk_id="<%= talk.id %>" track_number="<%= talk.track.number %>">
+          <h6>
+              <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
+          </h6>
+          <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
+          <%= render 'timetable/talk_category_difficulty', talk: talk %>
+        </div>
+
+      <% if form %>
+      </label>
+      <% end %>
+    </div>
+  <% end %>
+</div>

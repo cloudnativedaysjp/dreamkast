@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_31_110738) do
+ActiveRecord::Schema.define(version: 2021_02_06_151359) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -40,6 +40,30 @@ ActiveRecord::Schema.define(version: 2021_01_31_110738) do
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
+  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "talk_id"
+    t.bigint "booth_id"
+    t.bigint "profile_id"
+    t.bigint "speaker_id"
+    t.string "body"
+    t.integer "parent_id"
+    t.integer "lft", null: false
+    t.integer "rgt", null: false
+    t.integer "depth", default: 0, null: false
+    t.integer "children_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["booth_id"], name: "index_chat_messages_on_booth_id"
+    t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
+    t.index ["lft"], name: "index_chat_messages_on_lft"
+    t.index ["parent_id"], name: "index_chat_messages_on_parent_id"
+    t.index ["profile_id"], name: "index_chat_messages_on_profile_id"
+    t.index ["rgt"], name: "index_chat_messages_on_rgt"
+    t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
+    t.index ["talk_id"], name: "index_chat_messages_on_talk_id"
+  end
+
   create_table "conference_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
@@ -65,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_01_31_110738) do
     t.text "privacy_policy_for_speaker"
     t.integer "speaker_entry"
     t.integer "attendee_entry"
+    t.integer "show_timetable"
     t.index ["status"], name: "index_conferences_on_status"
   end
 
@@ -254,6 +279,11 @@ ActiveRecord::Schema.define(version: 2021_01_31_110738) do
 
   add_foreign_key "booths", "conferences"
   add_foreign_key "booths", "sponsors"
+  add_foreign_key "chat_messages", "booths"
+  add_foreign_key "chat_messages", "conferences"
+  add_foreign_key "chat_messages", "profiles"
+  add_foreign_key "chat_messages", "speakers"
+  add_foreign_key "chat_messages", "talks"
   add_foreign_key "links", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"

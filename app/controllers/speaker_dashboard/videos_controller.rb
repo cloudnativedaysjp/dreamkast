@@ -20,7 +20,8 @@ class SpeakerDashboard::VideosController < ApplicationController
 
     respond_to do |format|
       if @video.save
-        SpeakerMailer.video_uploaded(@current_user, @talk, @video).deliver_now
+        speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+        SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
 
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @video }

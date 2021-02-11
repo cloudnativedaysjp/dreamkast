@@ -11,12 +11,12 @@ servers:
   - url: http://api-mock.dev.cloudnativedays.jp/
   - url: http://dreamkast-api-mock.udcp.info/
 paths:
-  /api/v1/events/{eventId}:
+  /api/v1/events/{eventAbbr}:
     get:
       tags:
         - Event
       parameters:
-        - name: eventId
+        - name: eventAbbr
           in: path
           description: ID of event
           required: true
@@ -30,7 +30,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Event'
         '400':
-          description: Invalid eventId supplied
+          description: Invalid eventAbbr supplied
         '404':
           description: Event not found
   /api/v1/tracks:
@@ -38,9 +38,9 @@ paths:
       tags:
         - Track
       parameters:
-        - name: eventId
-          in: path
-          description: ID of event
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
           required: true
           schema:
             type: string
@@ -54,7 +54,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Track'
         '400':
-          description: Invalid eventId supplied
+          description: Invalid eventAbbr supplied
         '404':
           description: Event not found
   
@@ -85,9 +85,9 @@ paths:
       tags:
         - Talk
       parameters:
-        - name: eventId
-          in: path
-          description: ID of event
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
           required: true
           schema:
             type: string
@@ -101,7 +101,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Talk'
         '400':
-          description: Invalid eventId supplied
+          description: Invalid eventAbbr supplied
         '404':
           description: Event not found
   /api/v1/talks/{talkId}:
@@ -155,9 +155,9 @@ paths:
       tags:
         - ChatMessage
       parameters:
-        - name: eventId
+        - name: eventAbbr
           in: query
-          description: ID of event
+          description: abbr of event (e.g. cndt2020)
           required: true
           schema:
             type: string
@@ -209,9 +209,9 @@ paths:
       tags:
         - Sponsor
       parameters:
-        - name: eventId
+        - name: eventAbbr
           in: query
-          description: ID of event
+          description: abbr of event (e.g. cndt2020)
           required: true
           schema:
             type: string
@@ -368,8 +368,8 @@ components:
       properties:
         id:
           type: number
-        eventId:
-          type: number
+        eventAbbr:
+          type: string
         talkId:
           type: number
         body:
@@ -381,7 +381,7 @@ components:
         body: "foo bar"
         createdAt: "2021-01-30T10:06:33.938Z"
       required:
-        - eventId
+        - eventAbbr
         - talkId
         - body
     Sponsor:
@@ -390,8 +390,8 @@ components:
       properties:
         id:
           type: number
-        conference_id:
-          type: number
+        eventAbbr:
+          type: string
         name:
           type: string
         abbr:
@@ -415,7 +415,7 @@ components:
           logo_url: dummy.png
       required:
         - id
-        - conference_id
+        - eventAbbr
         - name
         - abbr
         - url

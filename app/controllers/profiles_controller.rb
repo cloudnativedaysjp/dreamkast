@@ -1,6 +1,7 @@
 class ProfilesController < ApplicationController
   include Secured
 
+  before_action :set_conference
   before_action :set_current_profile, only: [:edit, :update, :destroy]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
 
@@ -14,7 +15,7 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile = Profile.new(profile_params)
+    @profile = Profile.new(profile_params.merge(conference_id: @conference.id))
     @profile.sub = @current_user[:extra][:raw_info][:sub]
     @profile.email = @current_user[:info][:email]
 
@@ -100,6 +101,7 @@ class ProfilesController < ApplicationController
         :department,
         :position,
         :roles,
+        :conference_id
         )
     end
 

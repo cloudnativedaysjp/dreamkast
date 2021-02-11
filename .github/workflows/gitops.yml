@@ -3,10 +3,10 @@ name: GitOps
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-      - master
+      - main
     types: [opened, synchronize]
     tags:
       - v*
@@ -91,7 +91,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
-          if [ $IMAGE_TAG = "master" ]; then
+          if [ $IMAGE_TAG = "main" ]; then
             BRANCH=main
           elif  [ ! -e ${{ github.head_ref }}  ]; then
             BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_06_151359) do
+ActiveRecord::Schema.define(version: 2021_02_11_053252) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 2021_02_06_151359) do
     t.integer "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.datetime "publish_time"
+    t.text "body"
+    t.boolean "publish"
+    t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
   create_table "booths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -277,6 +285,7 @@ ActiveRecord::Schema.define(version: 2021_02_06_151359) do
     t.text "video_file_data"
   end
 
+  add_foreign_key "announcements", "conferences"
   add_foreign_key "booths", "conferences"
   add_foreign_key "booths", "sponsors"
   add_foreign_key "chat_messages", "booths"

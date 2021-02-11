@@ -19,6 +19,7 @@ class TracksController < ApplicationController
       redirect_to tracks_path
     end
 
+    @announcements = @conference.announcements
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
     @talk_categories = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all

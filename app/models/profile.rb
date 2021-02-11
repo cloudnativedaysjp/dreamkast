@@ -21,8 +21,9 @@ class Profile < ApplicationRecord
   has_many :agreements
   has_many :form_items, through: :agreements
 
-  validates :sub, presence: true, uniqueness: { case_sensitive: true}, length: { maximum: 250 }
-  validates :email, presence: true, uniqueness: { case_sensitive: true}, email: true
+  validate :sub_and_email_must_be_unique_in_a_conference
+  validates :sub, presence: true, length: { maximum: 250 }
+  validates :email, presence: true, email: true
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :industry_id, presence: true, length: { maximum: 10 }
@@ -33,4 +34,10 @@ class Profile < ApplicationRecord
   validates :company_tel, presence: true, length: { maximum: 128 }, tel: true
   validates :department, presence: true, length: { maximum: 128 }
   validates :position, presence: true, length: { maximum: 128 }
+
+  def sub_and_email_must_be_unique_in_a_conference
+    if Profile.where(sub: sub, email: email, conference_id: conference_id).exists?
+      errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
+    end
+  end
 end

@@ -64,7 +64,7 @@ class Admin::TimetablesController < ApplicationController
 
   def set_profile
     if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email])
+      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
     end
   end
 

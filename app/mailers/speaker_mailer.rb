@@ -1,5 +1,5 @@
 class SpeakerMailer < ApplicationMailer
-  default from: 'CloudNative Days 実行委員会 <noreply@cloudnativedays.jp>'
+  default from: 'CloudNative Days 実行委員会 <noreply@mail.cloudnativedays.jp>'
   layout 'mailer'
 
   def video_uploaded(speaker, talk, video)

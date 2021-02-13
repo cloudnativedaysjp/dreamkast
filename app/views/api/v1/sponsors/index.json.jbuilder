@@ -1,6 +1,6 @@
 json.array! @sponsors do |sponsor|
   json.id sponsor.id
-  json.conference_id sponsor.conference_id
+  json.eventAbbr @conference.abbr
   json.name sponsor.name
   json.abbr sponsor.abbr
   json.url sponsor.url

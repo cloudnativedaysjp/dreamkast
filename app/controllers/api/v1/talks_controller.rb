@@ -1,6 +1,6 @@
 class Api::V1::TalksController < ApplicationController
   def index
-    conference = Conference.find_by(abbr: params[:eventId])
+    conference = Conference.find_by(abbr: params[:eventAbbr])
     @talks = Talk.where(conference_id: conference.id)
     render 'api/v1/talks/index.json.jbuilder'
   end

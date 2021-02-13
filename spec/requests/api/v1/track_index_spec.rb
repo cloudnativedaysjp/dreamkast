@@ -13,13 +13,13 @@ describe TalksController, type: :request do
     end
 
     it 'confirm json schema' do
-      get '/api/v1/tracks?eventId=cndt2020'
+      get '/api/v1/tracks?eventAbbr=cndt2020'
       expect(response).to have_http_status :ok
       assert_response_schema_confirm
     end
 
     it 'successed request' do
-      get '/api/v1/tracks?eventId=cndt2020'
+      get '/api/v1/tracks?eventAbbr=cndt2020'
       expect(response.status).to eq 200
     end
   end

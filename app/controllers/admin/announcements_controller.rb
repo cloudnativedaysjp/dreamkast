@@ -45,7 +45,13 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   def destroy
-    
+    @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
+    @announcement.destroy
+
+    respond_to do |format|
+      format.html { redirect_to admin_announcements_path, notice: 'Announcement was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private

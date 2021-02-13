@@ -120,6 +120,7 @@ describe TalksController, type: :request do
         create(:cndt2020_opened)
         create(:cndo2021)
         create(:alice)
+        create(:alice_cndo2021)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 

@@ -880,3 +880,42 @@ SponsorAttachment.seed(
     file_data: uploaded_key_image_2.to_json
   }
 )
+
+Video.seed(
+  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
+  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
+  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
+  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
+  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
+  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
+  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
+  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
+  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
+  { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+  { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+)
+
+
+Link.seed(
+  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
+)
+
+ChatMessage.seed(
+  {id: 1, body: "chat message 1", conference_id: 1, talk_id: 1},
+  {id: 2, body: "chat message 2", conference_id: 1, talk_id: 1},
+  {id: 3, body: "chat message 3", conference_id: 1, talk_id: 1},
+)
+
+Announcement.seed(
+  {id: 1, conference_id: 1, publish_time: "2020-08-24 10:00:00", publish: true, body: <<'EOS'
+9/2（水）19:00-20:30に、プレイベントとして、CNDT2020 Rejektsを開催します！CNDT2020にお申込の方はどなたでもご参加できます！ぜひご視聴ください！,
+EOS
+  },
+  {id: 2, conference_id: 1, publish_time: "2020-08-20 10:00:00", publish: true, body: <<'EOS'
+最終セッションの実施時間を18:00-18:40に変更致しました。それに伴い、イベントの終了時間は19:00となります(ask the speaker含む）
+<a href="https://event.cloudnativedays.jp/cndt2020/talks/66" target="_blank">「Cloud Foundry on K8sでクラウドネイティブ始めませんか？」（有元 久住 / SUSE )</a>のセッション時間が、9/9 16:00-16:40に変更になりました。予定が重複する場合は、登録セッションを変更してください
+EOS
+}
+)

@@ -10,15 +10,12 @@
       <div class="information">
         <h4>運営からのお知らせ</h4>
         <ul>
-          <li>
-            <div class="date">2020/08/24</div>
-            <div class="body">9/2（水）19:00-20:30に、プレイベントとして、CNDT2020 Rejektsを開催します！CNDT2020にお申込の方はどなたでもご参加できます！ぜひご視聴ください！</div>
-          </li>
-          <li>
-            <div class="date">2020/08/20</div>
-            <div class="body">最終セッションの実施時間を18:00-18:40に変更致しました。それに伴い、イベントの終了時間は19:00となります(ask the speaker含む）</div>
-            <div class="body"><a href="https://event.cloudnativedays.jp/cndt2020/talks/66" target="_blank">「Cloud Foundry on K8sでクラウドネイティブ始めませんか？」（有元 久住 / SUSE )</a>のセッション時間が、9/9 16:00-16:40に変更になりました。予定が重複する場合は、登録セッションを変更してください</div>
-          </li>
+          <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
+            <li>
+              <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+              <%= simple_format announcement.body %>
+            </li>
+          <% end %>
         </ul>
       </div>
 
@@ -27,7 +24,7 @@
           <a href='https://discord.gg/bvuTMNQ' target="_blank" class="btn btn-outline-primary btn-lg btn-block">Ask the speaker<br/>(Discord)</a>
         </div>
         <div class="col-6 p-3">
-          <a id="twitter" href='http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020' target="_blank" class="btn btn-outline-primary btn-lg btn-block">Twitterでシェア</a>
+          <a id="twitter" href=<%=  "http://twitter.com/share?url=https://event.cloudnativedays.jp/#{@conference.abbr}/&related=@cloudnativedays&hashtags=#{@conference.abbr.upcase}" %> target="_blank" class="btn btn-outline-primary btn-lg btn-block">Twitterでシェア</a>
         </div>
       </div>
 

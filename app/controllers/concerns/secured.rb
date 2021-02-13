@@ -15,7 +15,7 @@ module Secured
     end
 
     def new_user?
-      if session[:userinfo].present? && !Profile.find_by(email: @current_user[:info][:email])
+      if session[:userinfo].present? && !Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
         unless ["profiles"].include?(controller_name)
           redirect_to "/#{params[:event]}/registration"
         end

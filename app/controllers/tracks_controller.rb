@@ -19,6 +19,7 @@ class TracksController < ApplicationController
       redirect_to tracks_path
     end
 
+    @announcements = @conference.announcements.where(publish: true)
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
     @talk_categories = TalkCategory.all
     @talk_difficulties = TalkDifficulty.all
@@ -38,7 +39,7 @@ class TracksController < ApplicationController
   private
   def set_profile
     if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email])
+      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
     end
   end
 end

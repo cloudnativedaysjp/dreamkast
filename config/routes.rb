@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       resources :talks, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
+      resources :announcements
       post 'publish_timetable' => 'timetables#publish'
       post 'close_timetable' => 'timetables#close'
       get 'preview_timetable' => 'timetables#preview'

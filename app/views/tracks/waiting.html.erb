@@ -10,7 +10,7 @@
       <div class="information">
         <h4>運営からのお知らせ</h4>
         <ul>
-          <% @announcements.each do |announcement| %>
+          <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
             <li>
               <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
               <%= simple_format announcement.body %>

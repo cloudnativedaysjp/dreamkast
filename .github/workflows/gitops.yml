@@ -66,6 +66,7 @@ jobs:
           docker build --target asset-compile -t $CACHE_COMPILE_CACHE --build-arg=BUILDKIT_INLINE_CACHE=1  .
 
           docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
+          docker push $IMAGE_WITH_TAG
           docker push $IMAGE_WITH_SHA
           docker push $CACHE_NODE
           docker push $CACHE_FETCH_LIB

@@ -37,6 +37,7 @@ This repository works with
 - Node.js
 - Yarn
 - Docker Compose (for MySQL and Redis)
+- AWS CLI
 
 the version is controlled by `.node-version` and `.ruby-version` file.
 
@@ -48,10 +49,37 @@ $ bundle install
 $ bundle exec rake webpacker:compile
 ```
 
-Then, setup databases by running Docker Compose
+Then, create `.env-local` file and fill these values. If you don't know correct values, please ask us. 
 
 ```
-$ docker-compose up -d db redis
+export AUTH0_CLIENT_ID=
+export AUTH0_CLIENT_SECRET=
+export AUTH0_DOMAIN=
+export SENTRY_DSN=
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export S3_BUCKET=
+export S3_REGION=
+export MYSQL_HOST=db
+export MYSQL_USER=user
+export MYSQL_PASSWORD=password
+export MYSQL_DATABASE=dreamkast
+export REDIS_URL=redis://redis:6379
+export RAILS_MASTER_KEY=
+```
+
+Next, configure awscli and logged in registry using it.
+
+```
+source .env-local
+aws ecr get-login-password | docker login --username AWS --password-stdin http://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/
+```
+
+Then, setup databases, ui and load balancer by running Docker Compose
+
+```
+$ docker-compose pull ui
+$ docker-compose up -d db redis nginx ui
 ```
 
 Run the application
@@ -74,4 +102,3 @@ $ ./bin/webpack-dev-server
 $ bundle exec rails db:migrate
 $ bundle exec rails db:seed
 ```
-

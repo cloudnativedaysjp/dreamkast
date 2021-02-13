@@ -67,6 +67,9 @@ class Admin::AnnouncementsController < ApplicationController
     end
   end
 
+  def is_admin?
+    raise Forbidden unless admin?
+  end
 
   def announcement_params
     params.require(:announcement).permit(:publish_time, :body, :publish, :conference_id)

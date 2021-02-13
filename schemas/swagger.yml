@@ -91,6 +91,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: trackId
+          in: query
+          description: ID of track
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -122,30 +128,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Talk'
-        '400':
-          description: Invalid params supplied
-        '404':
-          description: Talk not found
-  /api/v1/talks/{trackId}:
-    get:
-      tags:
-        - Talk
-      parameters:
-        - name: trackId
-          in: path
-          description: ID of track
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Talk'
         '400':
           description: Invalid params supplied
         '404':

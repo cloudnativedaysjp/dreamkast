@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
   before do
+    create(:cndt2020)
+
     @profile = Profile.new(
       sub: "stub",
       email: "tester@example.com",
@@ -15,6 +17,7 @@ RSpec.describe Profile, type: :model do
       company_tel: "000-0000-0000",
       department: "aaaaaa",
       position: "bbbbbb",
+      conference_id: 1
     )
   end
   

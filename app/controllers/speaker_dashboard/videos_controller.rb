@@ -20,6 +20,9 @@ class SpeakerDashboard::VideosController < ApplicationController
 
     respond_to do |format|
       if @video.save
+        speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+        SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @video }
       else
@@ -43,9 +46,13 @@ class SpeakerDashboard::VideosController < ApplicationController
     authorize @talk
 
     respond_to do |format|
+      speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
       old_file = @video.video_file if @video.video_file_data != ""
+
       if @video.update_attributes(video_file_data: videos_params[:video_file_data])
         old_file.delete if old_file
+        SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @talk }
       else

@@ -291,54 +291,341 @@ RegisteredTalk.seed(
   { id: 7, talk_id: 42, profile_id: 1}
 )
 
+Video.seed(
+  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
+  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
+  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
+  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
+  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
+  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
+  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
+  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
+  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
+  { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+  { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+)
+
+
+Link.seed(
+  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
+)
+
+ChatMessage.seed(
+  {id: 1, body: "chat message 1", conference_id: 1, talk_id: 1},
+  {id: 2, body: "chat message 2", conference_id: 1, talk_id: 1},
+  {id: 3, body: "chat message 3", conference_id: 1, talk_id: 1},
+)
+
 Sponsor.seed(
-  { id: 1,
-    name: "スポンサー株式会社",
+  {
+    id: 1,
+    name: "日本アイ・ビー・エム株式会社",
+    abbr: "ibm",
     conference_id: 1,
-    description: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。",
-    url: "https://example.com/"
+    url: "https://www.ibm.com/jp-ja/cloud/cloud-native"
   },
-  { id: 2,
-    name: "Sponsor, inc.",
+  {
+    id: 2,
+    name: "レッドハット株式会社",
+    abbr: "redhat",
     conference_id: 1,
-    description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。",
-    url: "https://example.com/"
+    url: "https://www.redhat.com/ja/global/japan#links"
   },
-  { id: 3,
-    name: "プラチナスポンサー株式会社",
+  {
+    id: 3,
+    name: "JFrog Japan株式会社",
+    abbr: "jfrog",
     conference_id: 1,
-    description: "しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかフワフワした感じがあったばかりである。掌の上で少し落ちついて書生の顔を見たのがいわゆる人間というものの見始であろう。この時妙なものだと思った感じが今でも残っている。第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。のみならず顔の真中があまりに突起している。",
-    url: "https://example.com/"
+    url: "https://jfrog.co.jp/"
   },
   {
     id: 4,
-    name: "スポンサー4",
+    name: "New Relic株式会社",
+    abbr: "newrelic",
     conference_id: 1,
-    url: "https://example.com/"
+    url: "https://newrelic.co.jp/"
   },
   {
     id: 5,
-    name: "スポンサー5",
+    name: "CircleCI合同会社",
+    abbr: "circleci",
     conference_id: 1,
-    url: "https://example.com/"
+    url: "https://circleci.com/ja/"
   },
   {
     id: 6,
-    name: "スポンサー6",
+    name: "F5ネットワークスジャパン合同会社",
+    abbr: "nginx",
     conference_id: 1,
-    url: "https://example.com/"
+    url: "https://www.nginx.co.jp/"
   },
   {
     id: 7,
-    name: "Special Sponsor",
+    name: "日本オラクル株式会社",
+    abbr: "Oracle",
     conference_id: 1,
-    url: "https://example.com/"
+    url: "https://www.oracle.com/jp/index.html"
   },
   {
     id: 8,
-    name: "hogehoge",
+    name: "日本マイクロソフト株式会社/Microsoft Corporation",
+    abbr: "microsoft",
+    conference_id: 1,
+    url: "https://news.microsoft.com/ja-jp/"
+  },
+  {
+    id: 9,
+    name: "株式会社サイバーエージェント",
+    abbr: "cyberagent",
+    conference_id: 1,
+    url: "https://developers.cyberagent.co.jp/"
+  },
+  {
+    id: 10,
+    name: "富士通株式会社",
+    abbr: "fujitsu",
+    conference_id: 1,
+    url: "https://www.fujitsu.com/jp/"
+  },
+  {
+    id: 11,
+    name: "サイオステクノロジー株式会社",
+    abbr: "sios",
+    conference_id: 1,
+    url: "https://sios.jp/"
+  },
+  {
+    id: 12,
+    name: "株式会社エヌ・ティ・ティ・データ",
+    abbr: "nttdata",
+    conference_id: 1,
+    url: "https://www.nttdata.com/jp/ja/"
+  },
+  {
+    id: 13,
+    name: "株式会社カサレアル",
+    abbr: "casareal",
+    conference_id: 1,
+    url: "https://www.casareal.co.jp/"
+  },
+  {
+    id: 14,
+    name: "株式会社はてな",
+    abbr: "hatena",
+    conference_id: 1,
+    url: "https://mackerel.io"
+  },
+  {
+    id: 15,
+    name: "Sysdig Japan合同会社",
+    abbr: "sysdig",
+    conference_id: 1,
+    url: "https://sysdig.jp"
+  },
+  {
+    id: 16,
+    name: "Canonical/Ubuntu",
+    abbr: "canonical",
+    conference_id: 1,
+    url: "https://jp.ubuntu.com/"
+  },
+  {
+    id: 17,
+    name: "GMOペパボ株式会社",
+    abbr: "pepabo",
+    conference_id: 1,
+    url: "https://pepabo.com/"
+  },
+  {
+    id: 18,
+    name: "株式会社ディバータ",
+    abbr: "kuroco",
+    conference_id: 1,
+    url: "https://kuroco.app/"
+  },
+  {
+    id: 19,
+    name: "グーグル・クラウド・ジャパン合同会社",
+    abbr: "google",
+    conference_id: 1,
+    url: 'https://cloud.google.com/anthos'
+  },
+  {
+    id: 20,
+    name: '株式会社LegalForce',
+    abbr: 'legalforce',
+    conference_id: 1,
+    url: 'https://www.legalforce.co.jp/'
+  },
+  {
+    id: 21,
+    name: 'SUSE ソフトウエア ソリューションズ ジャパン株式会社',
+    abbr: 'suse',
+    conference_id: 1,
+    url: 'https://www.suse.com/ja-jp/solutions/devops/'
+  },
+  {
+    id: 22,
+    name: 'ヴイエムウェア株式会社',
+    abbr: 'vmware',
+    conference_id: 1,
+    url: 'https://www.vmware.com/jp.html'
+  },
+  {
+    id: 23,
+    name: 'ミランティス・ジャパン株式会社',
+    abbr: 'mirantis',
+    conference_id: 1,
+    url: 'https://www.mirantis.co.jp/'
+  },
+  {
+    id: 24,
+    name: 'Elastic',
+    abbr: 'elastic',
+    conference_id: 1,
+    url: 'https://www.elastic.co'
+  },
+  {
+    id: 25,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 1,
+    url: 'https://plaid.co.jp/'
+  },
+  {
+    id: 26,
+    name: '日本電気株式会社',
+    abbr: 'nec',
+    conference_id: 1,
+    url: 'https://jpn.nec.com/'
+  },
+  {
+    id: 27,
+    name: 'Rancher Labs, Inc.',
+    abbr: 'rancherlabs',
+    conference_id: 1,
+    url: 'https://www.rancher.co.jp/'
+  },
+  {
+    id: 28,
+    name: 'Linux Foundation',
+    abbr: 'lf',
+    conference_id: 1,
+    url: 'https://www.cncf.io/'
+  },
+  {
+    id: 30,
+    name: 'CircleCI合同会社',
+    abbr: 'circleci',
     conference_id: 2,
-    url: "https://example.com/"
+    url: 'https://circleci.com/ja/'
+  },
+  {
+    id: 31,
+    name: 'New Relic株式会社',
+    abbr: 'newrelic',
+    conference_id: 2,
+    url: 'https://newrelic.com/jp'
+  },
+  {
+    id: 32,
+    name: 'JFrog Japan株式会社',
+    abbr: 'jfrog',
+    conference_id: 2,
+    url: 'https://jfrog.com/ja/'
+  },
+  {
+    id: 33,
+    name: 'Datadog Japan 合同会社',
+    abbr: 'datadog',
+    conference_id: 2,
+    url: 'https://www.datadoghq.com/ja'
+  },
+  {
+    id: 34,
+    name: 'レッドハット株式会社',
+    abbr: 'redhat',
+    conference_id: 2,
+    url: ''
+  },
+  {
+    id: 35,
+    name: 'GMOインターネットグループ',
+    abbr: 'gmo',
+    conference_id: 2,
+    url: 'https://www.gmo.jp/'
+  },
+  {
+    id: 36,
+    name: 'SUSE ソフトウエア ソリューションズ ジャパン株式会社',
+    abbr: 'suse',
+    conference_id: 2,
+    url: 'https://www.suse.com/ja-jp/ '
+  },
+  {
+    id: 37,
+    name: 'アクイアジャパン合同会社',
+    abbr: 'acquia',
+    conference_id: 2,
+    url: 'https://www.acquia.com/jp'
+  },
+  {
+    id: 38,
+    name: 'ヴイエムウェア株式会社',
+    abbr: 'vmware',
+    conference_id: 2,
+    url: 'https://www.vmware.com/jp'
+  },
+  {
+    id: 39,
+    name: '日本マイクロソフト株式会社',
+    abbr: 'microsoft',
+    conference_id: 2,
+    url: ''
+  },
+  {
+    id: 40,
+    name: 'F5ネットワークスジャパン合同会社',
+    abbr: 'nginx',
+    conference_id: 2,
+    url: 'https://www.nginx.co.jp/'
+  },
+  {
+    id: 41,
+    name: 'SCSK株式会社',
+    abbr: 'scsk',
+    conference_id: 2,
+    url: 'https://www.scsk.jp/sp/sysdig/'
+  },
+  {
+    id: 42,
+    name: 'LINE株式会社',
+    abbr: 'line',
+    conference_id: 2,
+    url: 'https://engineering.linecorp.com/ja/'
+  },
+  {
+    id: 43,
+    name: '株式会社LegalForce',
+    abbr: 'legalforce',
+    conference_id: 2,
+    url: 'https://www.legalforce.co.jp/'
+  },
+  {
+    id: 44,
+    name: 'ミランティス・ジャパン株式会社',
+    abbr: 'mirantis',
+    conference_id: 2,
+    url: 'https://www.mirantis.co.jp/lens/'
+  },
+  {
+    id: 45,
+    name: 'Plaid',
+    abbr: 'plaid',
+    conference_id: 2,
+    url: 'https://plaid.co.jp/'
   }
 )
 
@@ -355,54 +642,198 @@ SponsorType.seed(
   },
   { id: 3,
     conference_id: 1,
-    name: "Booth",
+    name: "Gold",
     order: 4,
   },
   { id: 4,
     conference_id: 1,
+    name: "Mini Session",
+    order: 6,
+  },
+  { id: 5,
+    conference_id: 1,
+    name: "Booth",
+    order: 5,
+  },
+  { id: 6,
+    conference_id: 1,
+    name: "CM",
+    order: 7,
+  },
+  { id: 7,
+    conference_id: 1,
+    name: "Tool",
+    order: 8,
+  },
+  { id: 8,
+    conference_id: 1,
     name: "Special Collaboration",
     order: 1,
   },
-  { id: 5,
+  { id: 10,
     conference_id: 2,
     name: "Diamond",
-    order: 2,
+    order: 1,
   },
-  { id: 6,
+  { id: 11,
     conference_id: 2,
     name: "Platinum",
+    order: 2,
+  },
+  { id: 12,
+    conference_id: 2,
+    name: "Gold",
     order: 3,
   },
-  { id: 7,
+  { id: 13,
     conference_id: 2,
     name: "Booth",
     order: 4,
   },
+  { id: 14,
+    conference_id: 2,
+    name: "CM",
+    order: 5,
+  },
+  { id: 15,
+    conference_id: 2,
+    name: "Tool",
+    order: 6,
+  }
 )
 
 [
-  [1, 'Diamond', 'スポンサー株式会社', false, 1],
-  [2, 'Platinum', 'Sponsor, inc.', false, 1],
-  [4, 'Booth', 'スポンサー株式会社', true, 1],
-  [5, 'Booth', 'プラチナスポンサー株式会社', true, 1],
-  [6, 'Booth', 'スポンサー4', true, 1],
-  [7, 'Booth', 'スポンサー5', true, 1],
-  [8, 'Booth', 'スポンサー6', true, 1],
-  [9, 'Special Collaboration', 'Special Sponsor', true, 1],
-  [10, 'Booth', 'hogehoge', true, 2],
+  [1, 'Diamond', 'ibm', 1],
+  [2, 'Diamond', 'redhat', 1],
+  [3, 'Diamond', 'jfrog', 1],
+  [4, 'Diamond', 'NewRelic', 1],
+  [5, 'Platinum', 'circleci', 1],
+  [6, 'Platinum', 'nginx', 1],
+  [7, 'Platinum', 'oracle', 1],
+  [8, 'Platinum', 'microsoft', 1],
+  [9, 'Platinum', 'google', 1],
+  [10, 'Platinum', 'legalforce', 1],
+  [11, 'Platinum', 'suse', 1],
+  [12, 'Platinum', 'vmware', 1],
+  [13, 'Gold', 'cyberagent', 1],
+  [14, 'Gold', 'fujitsu', 1],
+  [15, 'Gold', 'sios', 1],
+  [16, 'Gold', 'nttdata', 1],
+  [17, 'Gold', 'casareal', 1],
+  [18, 'Gold', 'hatena', 1],
+  [19, 'Gold', 'sysdig', 1],
+  [20, 'Booth', 'canonical', 1],
+  [21, 'Booth', 'circleci', 1],
+  [22, 'Booth', 'nginx', 1],
+  [23, 'Booth', 'ibm', 1],
+  [24, 'Booth', 'pepabo', 1],
+  [25, 'Booth', 'legalforce', 1],
+  [26, 'Mini Session', 'ibm', 1],
+  [27, 'CM', 'canonical', 1],
+  [28, 'CM', 'ibm', 1],
+  [29, 'CM', 'kuroco', 1],
+  [30, 'CM', 'fujitsu', 1],
+  [31, 'CM', 'legalforce', 1],
+  [32, 'Gold', 'mirantis', 1],
+  [33, 'Booth', 'Elastic', 1],
+  [34, 'Tool', 'Plaid', 1],
+  [35, 'Gold', 'nec', 1],
+  [36, 'Platinum', 'rancherlabs', 1],
+  [37, 'Booth', 'rancherlabs', 1],
+  [38, 'Special Collaboration', 'lf', 1],
+  [39, 'Booth', 'redhat', 1],
+  [40, 'Diamond', 'circleci', 2],
+  [41, 'Diamond', 'newrelic', 2],
+  [42, 'Diamond', 'jfrog', 2],
+  [43, 'Diamond', 'datadog', 2],
+  [44, 'Diamond', 'redhat', 2],
+  [45, 'Diamond', 'gmo', 2],
+  [46, 'Platinum', 'suse', 2],
+  [47, 'Platinum', 'acquia', 2],
+  [48, 'Platinum', 'vmware', 2],
+  [49, 'Platinum', 'microsoft', 2],
+  [50, 'Platinum', 'nginx', 2],
+  [51, 'Gold', 'scsk', 2],
+  [52, 'Gold', 'line', 2],
+  [53, 'Booth', 'circleci', 2],
+  [54, 'Booth', 'newrelic', 2],
+  [55, 'Booth', 'jfrog', 2],
+  [56, 'Booth', 'datadog', 2],
+  [57, 'Booth', 'redhat', 2],
+  [58, 'Booth', 'gmo', 2],
+  [59, 'Booth', 'nginx', 2],
+  [60, 'CM', 'legalforce', 2],
+  [61, 'CM', 'mirantis', 2],
+  [62, 'CM', 'gmo', 2],
+  [63, 'CM', 'line', 2],
+  [64, 'Tool', 'plaid', 2],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
-  sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[4])
-  sponsor = Sponsor.find_by(name: sponsors_sponsor_type[2], conference_id: sponsors_sponsor_type[4])
+  sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
+  sponsor = Sponsor.find_by(abbr: sponsors_sponsor_type[2], conference_id: sponsors_sponsor_type[3])
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
-
   if sponsors_sponsor_type[1] == 'Booth'
     Booth.seed(:conference_id, :sponsor_id) do |s|
-      s.conference_id = sponsors_sponsor_type[4]
+      s.conference_id = sponsors_sponsor_type[3]
       s.sponsor_id = sponsor.id
-      s.published = sponsors_sponsor_type[3]
+      s.published = false
     end
   end
+end
+
+[
+  [1, 'canonical', 'sponsors/cndt2020/canonical.png', 1],
+  [2, 'casareal', 'sponsors/cndt2020/casareal.png', 1],
+  [3, 'circleci', 'sponsors/cndt2020/circleci.png', 1],
+  [4, 'cyberagent', 'sponsors/cndt2020/cyberagent.png', 1],
+  [5, 'kuroco', 'sponsors/cndt2020/diverta.png', 1],
+  [6, 'nginx', 'sponsors/cndt2020/f5.jpg', 1],
+  [7, 'fujitsu', 'sponsors/cndt2020/fujitsu.png', 1],
+  [8, 'pepabo', 'sponsors/cndt2020/gmo-pepabo.png', 1],
+  [9, 'google', 'sponsors/cndt2020/google.png', 1],
+  [10, 'hatena', 'sponsors/cndt2020/hatena.png', 1],
+  [11, 'ibm', 'sponsors/cndt2020/ibm.jpg', 1],
+  [12, 'jfrog', 'sponsors/cndt2020/jfrog.png', 1],
+  [13, 'legalforce', 'sponsors/cndt2020/legalforce.png', 1],
+  [14, 'microsoft', 'sponsors/cndt2020/microsoft.png', 1],
+  [15, 'nttdata', 'sponsors/cndt2020/nttdata.png', 1],
+  [16, 'oracle', 'sponsors/cndt2020/oracle.png', 1],
+  [17, 'rancherlabs', 'sponsors/cndt2020/rancherlabs.png', 1],
+  [18, 'redhat', 'sponsors/cndt2020/redhat.png', 1],
+  [19, 'sios', 'sponsors/cndt2020/sios.png', 1],
+  [20, 'sysdig', 'sponsors/cndt2020/sysdig.png', 1],
+  [21, 'NewRelic', 'sponsors/cndt2020/newrelic.png', 1],
+  [22, 'suse', 'sponsors/cndt2020/suse.png', 1],
+  [23, 'vmware', 'sponsors/cndt2020/vmware.png', 1],
+  [24, 'mirantis', 'sponsors/cndt2020/mirantis.png', 1],
+  [25, 'Elastic', 'sponsors/cndt2020/elastic.png', 1],
+  [26, 'Plaid', 'sponsors/cndt2020/plaid.png', 1],
+  [27, 'nec', 'sponsors/cndt2020/nec.png', 1],
+  [28, 'lf', 'sponsors/cndt2020/cncf.jpg', 1],
+  [30, 'circleci', 'sponsors/cndo2021/circleci.png', 2],
+  [31, 'newrelic', 'sponsors/cndo2021/newrelic.png', 2],
+  [32, 'jfrog', 'sponsors/cndo2021/jfrog.png', 2],
+  [33, 'datadog', 'sponsors/cndo2021/datadog.png', 2],
+  [34, 'redhat', '', 2],
+  [35, 'gmo', 'sponsors/cndo2021/gmo.png', 2],
+  [36, 'suse', 'sponsors/cndo2021/suse.png', 2],
+  [37, 'acquia', 'sponsors/cndo2021/acquia.png', 2],
+  [38, 'vmware', 'sponsors/cndo2021/vmware.png', 2],
+  [39, 'microsoft', '', 2],
+  [40, 'nginx', 'sponsors/cndo2021/nginx.png', 2],
+  [41, 'scsk', 'sponsors/cndo2021/scsk.png', 2],
+  [42, 'line', 'sponsors/cndo2021/line.png', 2],
+  [43, 'legalforce', 'sponsors/cndo2021/legalforce.png', 2],
+  [44, 'mirantis', 'sponsors/cndo2021/mirantis.png', 2],
+  [45, 'plaid', 'sponsors/cndo2021/plaid.png', 2]
+].each do |logo|
+  SponsorAttachment.seed(
+    { id: logo[0],
+      sponsor_id: Sponsor.find_by(abbr: logo[1], conference_id: logo[3]).id,
+      type: 'SponsorAttachmentLogoImage',
+      url: logo[2]
+    }
+  )
 end
 
 uploader = SponsorAttachmentFileUploader.new(:store)
@@ -419,23 +850,7 @@ uploaded_key_image_1 = uploader.upload(key_image_1)
 key_image_2 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_2.jpg'))
 uploaded_key_image_2 = uploader.upload(key_image_2)
 
-[
-  [1, 'スポンサー株式会社', 'trademark.png'],
-  [2, 'Sponsor, inc.', 'trademark.png'],
-  [3, 'プラチナスポンサー株式会社', 'trademark.png'],
-  [4, 'スポンサー4', 'trademark.png'],
-  [5, 'スポンサー5', 'trademark.png'],
-  [6, 'スポンサー6', 'trademark.png'],
-  [12, 'Special Sponsor', 'trademark.png'],
-].each do |logo|
-  SponsorAttachment.seed(
-    { id: logo[0],
-      sponsor_id: Sponsor.find_by(name: logo[1]).id,
-      type: 'SponsorAttachmentLogoImage',
-      url: logo[2]
-    }
-  )
-end
+
 
 SponsorAttachment.seed(
   { id: 7,

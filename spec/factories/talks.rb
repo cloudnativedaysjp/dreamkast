@@ -30,6 +30,22 @@ FactoryBot.define do
     video_published { false }
   end
 
+  factory :talk3, class: Talk do
+    id { 5 }
+    title { "talk3" }
+    start_time { "13:00" }
+    end_time { "13:40" }
+    conference_id { 1 }
+    conference_day_id { 2 }
+    abstract { "track3 talk" }
+    talk_difficulty_id { 1 }
+    talk_category_id { 1 }
+    track_id { 3 }
+    show_on_timetable { true }
+    video_published { false }
+  end
+
+
   factory :talk_rejekt, class: Talk do
     id { 3 }
     title { "Rejected Talk" }

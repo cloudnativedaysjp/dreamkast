@@ -49,6 +49,16 @@ services:
       - redis-data:/data
     ports:
       - "6379:6379"
+  nginx:
+    image: nginx
+    volumes:
+    - ./config/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+    - 8080:80
+  ui:
+    image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ui:main
+    ports:
+    - 3001:3001
 volumes:
   mysql-data:
   redis-data:

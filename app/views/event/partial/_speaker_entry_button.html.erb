@@ -1,11 +1,9 @@
 <% if conference.registered? %>
-  <div class="col-12 col-xs-12 col-lg-3 align-self-baseline my-4">
     <% if conference.speaker_entry_enabled? %>
-      <%= button_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+      <%= link_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl  m-2" } %>
     <% else %>
       <% if @speaker.present?  %>
-        <%= button_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+        <%= link_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-primary btn-xl  m-2" } %>
       <% end %>
     <% end %>
-  </div>
 <% end %>

@@ -288,10 +288,11 @@ label.checkbox-label input[type="checkbox"]:checked+.content {
         display: none;
     }
     .content {
-        border-left: 3px solid $dark-blue
+        border-left: 30px solid #DDD;
+        padding: 5px 0px 10px 10px;
     }
-    .content.checked {
-        border-left: 5px solid $dark-blue
+    label.checkbox-label input[type="checkbox"]:checked+.content {
+        border-left: 30px solid $dark-blue;
     }
     .content[track_number="1"] {
         filter: hue-rotate(0deg);

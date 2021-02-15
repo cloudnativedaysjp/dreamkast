@@ -45,6 +45,6 @@ class EventController < ApplicationController
   helper_method :speaker_entry_button_name
 
   def speaker_entry_button_name
-    @speaker.present? ? 'スピーカーダッシュボードを見る' : '登壇者としてエントリーする'
+    @speaker.present? ? '登壇者ダッシュボード' : '登壇者としてエントリー'
   end
 end

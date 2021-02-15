@@ -30,6 +30,22 @@ describe ProfilesController, type: :request do
       end
     end
 
+    describe 'logged in and already registerd' do
+      subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "mock", "https://cloudnativedays.jp/roles" => ""}}}}}
+
+      before do
+        create(:alice)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(user_session)
+      end
+
+      it "redirect to timetables" do
+        get '/cndt2020/registration'
+        expect(response).to_not be_successful
+        expect(response).to have_http_status '302'
+        expect(response.body).to redirect_to '/cndt2020/dashboard'
+      end
+    end
+
     describe 'register' do
       subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => ""}}}}}
       subject(:profiles_params){

@@ -7,15 +7,19 @@ module Secured
     end
 
     def logged_in_using_omniauth?
-      if session[:userinfo].present?
-        @current_user = session[:userinfo]
+      if logged_in?
+        set_current_user
       else
         redirect_to "/#{params[:event]}"
       end
     end
 
+    def logged_in?
+      session[:userinfo].present?
+    end
+
     def new_user?
-      if session[:userinfo].present? && !Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+      if session[:userinfo].present? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
         unless ["profiles"].include?(controller_name)
           redirect_to "/#{params[:event]}/registration"
         end
@@ -36,6 +40,10 @@ module Secured
 
     def event_name
       params[:event]
+    end
+
+    def set_current_user
+      @current_user ||= session[:userinfo]
     end
 
     def is_admin?

@@ -9,9 +9,9 @@ describe ProfilesController, type: :request do
     describe 'not logged in' do
       it "redirect to event top page" do
         get '/cndt2020/registration'
-        expect(response).to_not be_successful
-        expect(response).to have_http_status '302'
-        expect(response).to redirect_to '/cndt2020'
+        expect(response).to be_successful
+        expect(response).to have_http_status '200'
+        expect(response.body).to include 'ログイン'
       end
     end
 

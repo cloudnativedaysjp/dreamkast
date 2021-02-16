@@ -26,7 +26,7 @@
             </span>
         <% end %>
       </div>
-      <p class="card-text"><%= @talk.abstract %></p>
+      <p class="card-text"><%= simple_format(@talk.abstract) %></p>
     </div>
     <div class="modal-body">
       <% @talk.speakers.each do |speaker| %>

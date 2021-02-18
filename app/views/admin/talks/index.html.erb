@@ -49,6 +49,7 @@
                     <th scope="col">Track</th>
                     <th scope="col">DateTime</th>
                     <th scope="col">Time</th>
+                    <th scope="col">Video File</th>
                     <th scope="col">Vimeo ID</th>
                     <th scope="col">Sli.do ID</th>
                     <th scope="col">On Air</th>
@@ -72,6 +73,11 @@
                   </td>
                   <td>
                     <%= talk.time %>
+                  </td>
+                  <td>
+                    <% if talk.video.present? && talk.video.video_file.present? %>
+                      <%= talk.video.video_url %>
+                    <% end %>
                   </td>
                   <td>
                     <% video_id = talk.video ? talk.video.video_id : nil %>

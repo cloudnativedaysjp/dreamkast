@@ -626,7 +626,15 @@ Sponsor.seed(
     abbr: 'plaid',
     conference_id: 2,
     url: 'https://plaid.co.jp/'
+  },
+  {
+    id: 46,
+    name: '株式会社クラウドネイティブ',
+    abbr: 'cloudnative',
+    conference_id: 2,
+    url: 'https://cloudnative.co.jp/'
   }
+
 )
 
 SponsorType.seed(
@@ -767,6 +775,7 @@ SponsorType.seed(
   [62, 'CM', 'gmo', 2],
   [63, 'CM', 'line', 2],
   [64, 'Tool', 'plaid', 2],
+  [65, 'Platinum', 'cloudnative', 2],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -825,7 +834,8 @@ end
   [42, 'line', 'sponsors/cndo2021/line.png', 2],
   [43, 'legalforce', 'sponsors/cndo2021/legalforce.png', 2],
   [44, 'mirantis', 'sponsors/cndo2021/mirantis.png', 2],
-  [45, 'plaid', 'sponsors/cndo2021/plaid.png', 2]
+  [45, 'plaid', 'sponsors/cndo2021/plaid.png', 2],
+  [46, 'cloudnative', 'sponsors/cndo2021/cloudnative.png', 2],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

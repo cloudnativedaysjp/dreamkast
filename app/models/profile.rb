@@ -40,4 +40,15 @@ class Profile < ApplicationRecord
       errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
     end
   end
+
+  def self.export(event_id)
+    attr = %w[id email last_name first_name]
+    all = CSV.generate do |csv|
+      csv << attr
+      Profile.where(conference_id: event_id).each do |speaker|
+        csv << speaker.attributes.values_at(*attr)
+      end
+    end
+    return all
+  end
 end

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       resources :speakers, only: [:index, :edit, :update]
       post 'bulk_insert_speakers' => 'speakers#bulk_insert_speakers'
       get 'export_speakers' => 'speakers#export_speakers'
+      get 'export_profiles' => 'profiles#export_profiles'
       resources :talks, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]

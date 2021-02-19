@@ -1,18 +1,13 @@
-name: GitOps
+name: GitOps for development
 
 on:
-  push:
-    branches:
-    - main
   pull_request:
     branches:
       - main
     types: [opened, synchronize]
-    tags:
-      - v*
 
 jobs:
-  push:
+  gitops:
     runs-on: ubuntu-latest
 
     steps:
@@ -66,7 +61,6 @@ jobs:
           docker build --target asset-compile -t $CACHE_COMPILE_CACHE --build-arg=BUILDKIT_INLINE_CACHE=1  .
 
           docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
-          docker push $IMAGE_WITH_TAG
           docker push $IMAGE_WITH_SHA
           docker push $CACHE_NODE
           docker push $CACHE_FETCH_LIB
@@ -88,39 +82,60 @@ jobs:
         with:
           kustomize-version: "3.6.1"
 
-      - name: Update Kubernetes resources
+      - name: Get target branch from IMAGE_TAG
+        id: target-branch
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
-          if [ $IMAGE_TAG = "main" ]; then
-            BRANCH=main
-          elif  [ ! -e ${{ github.head_ref }}  ]; then
+          if  [ ! -e ${{ github.head_ref }}  ]; then
             BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
           else
             BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
           fi
+          echo "::set-output name=BRANCH::${BRANCH}"
 
+      - name: Update Kubernetes resources
+        env:
+          BASE_DIR: dreamkast-infra
+          APP_TEMPLATE_DIR: manifests/app/dreamkast/overlays/template
+          APP_TARGET_DIR: manifests/app/dreamkast/overlays/development/${{ steps.target-branch.outputs.BRANCH }}
+          ARGO_TEMPLATE_FILE: manifests/app/argocd-apps/template/dreamkast.yaml
+          ARGO_TARGET_FILE: manifests/app/argocd-apps/development/dreamkast-${{ steps.target-branch.outputs.BRANCH }}.yaml
+          IMAGE: ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          NAMESPACE: dreamkast-${{ steps.target-branch.outputs.BRANCH }}
+          REPLACEMENTS: BRANCH=${{ steps.target-branch.outputs.BRANCH }}
+        run: |
           echo "========Update application manifests=========="
-          if [ ! -e ${{ github.head_ref }} ]; then
-            cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
+          (
+          if [ ! -d ${BASE_DIR}/${APP_TARGET_DIR} ]; then
+            cp -r ${BASE_DIR}/${APP_TEMPLATE_DIR} ${BASE_DIR}/${APP_TARGET_DIR}
           fi
-          cd dreamkast-infra/dreamkast/overlays/$BRANCH
-          kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
-          if [ ! -e ${{ github.head_ref }} ]; then
-            kustomize edit set namespace dreamkast-$BRANCH
-            sed -i -e s/BRANCH/$BRANCH/ ./ingress.yaml
-          fi
+          cd ${BASE_DIR}/${APP_TARGET_DIR}
+          kustomize edit set image ${IMAGE}
+          kustomize edit set namespace ${NAMESPACE}
+          IFS=, ARR=(${REPLACEMENTS})
+          for r in "${ARR[@]}"; do
+            before=$(echo $r | cut -d= -f1)
+            after=$(echo $r | cut -d= -f2)
+            sed -i -e s/$before/$after/g ./*
+          done
+          # output
           cat kustomization.yaml
+          )
 
           echo "========Generate ArgoCD app=========="
-          cd ../../../../
-          cp dreamkast-infra/argocd-apps/template/dreamkast.yaml dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
-          sed -i -e s/BRANCH/$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
-          if [ ! -e ${{ github.head_ref }} ]; then
-            sed -i -e s/NAMESPACE/dreamkast-$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
-          else
-            sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          (
+          if [ ! -d ${BASE_DIR}/${ARGO_TARGET_FILE} ]; then
+            cp ${BASE_DIR}/${ARGO_TEMPLATE_FILE} ${BASE_DIR}/${ARGO_TARGET_FILE}
           fi
+          sed -i -e s/NAMESPACE/${NAMESPACE}/ ${BASE_DIR}/${ARGO_TARGET_FILE}
+          IFS=, ARR=(${REPLACEMENTS})
+          for r in "${ARR[@]}"; do
+            before=$(echo $r | cut -d= -f1)
+            after=$(echo $r | cut -d= -f2)
+            sed -i -e s/$before/$after/g ${BASE_DIR}/${ARGO_TARGET_FILE}
+          done
+          )
 
       - name: Commit files
         run: |
@@ -129,7 +144,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git status
           git add -A
-          git commit -am "Bump docker tag"
+          git commit -am "Bump docker tag (${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA})"
 
       - name: Push changes
         uses: ad-m/github-push-action@master

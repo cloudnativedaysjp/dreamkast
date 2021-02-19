@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2021_02_16_095643) do
 
   create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.bigint "room_id"
     t.bigint "profile_id"
     t.bigint "speaker_id"
     t.string "body"
@@ -62,12 +61,12 @@ ActiveRecord::Schema.define(version: 2021_02_16_095643) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "room_type"
+    t.bigint "room_id"
     t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
     t.index ["lft"], name: "index_chat_messages_on_lft"
     t.index ["parent_id"], name: "index_chat_messages_on_parent_id"
     t.index ["profile_id"], name: "index_chat_messages_on_profile_id"
     t.index ["rgt"], name: "index_chat_messages_on_rgt"
-    t.index ["room_id"], name: "index_chat_messages_on_room_id"
     t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
   end
 
@@ -290,7 +289,6 @@ ActiveRecord::Schema.define(version: 2021_02_16_095643) do
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
-  add_foreign_key "chat_messages", "talks", column: "room_id"
   add_foreign_key "links", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"

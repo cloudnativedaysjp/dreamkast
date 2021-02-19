@@ -30,7 +30,7 @@ jobs:
           BRANCH=dk-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
 
           rm -f dreamkast-infra/manifests/app/argocd-apps/development/dreamkast-$BRANCH.yaml
-          rm -rf dreamkast-infra/manifests/app/dreamkast/overlays/deployment/$BRANCH
+          rm -rf dreamkast-infra/manifests/app/dreamkast/overlays/development/$BRANCH
 
       - name: Commit files
         run: |

@@ -358,6 +358,8 @@ components:
           type: string
         createdAt:
           type: string
+        replyTo:
+          type: number
       example:
         id: 2
         body: "foo bar"

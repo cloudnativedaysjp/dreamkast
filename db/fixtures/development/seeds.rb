@@ -312,12 +312,6 @@ Link.seed(
   {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
 )
 
-ChatMessage.seed(
-  {id: 1, body: "chat message 1", conference_id: 1, talk_id: 1},
-  {id: 2, body: "chat message 2", conference_id: 1, talk_id: 1},
-  {id: 3, body: "chat message 3", conference_id: 1, talk_id: 1},
-)
-
 Sponsor.seed(
   {
     id: 1,
@@ -913,9 +907,11 @@ Link.seed(
 )
 
 ChatMessage.seed(
-  {id: 1, body: "chat message 1", conference_id: 1, talk_id: 1},
-  {id: 2, body: "chat message 2", conference_id: 1, talk_id: 1},
-  {id: 3, body: "chat message 3", conference_id: 1, talk_id: 1},
+  {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 1, room_type: 'talk'},
+  {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 1, room_type: 'talk'},
+  {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 1, room_type: 'talk'},
+  {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 6, room_type: 'talk'},
+  {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 6, room_type: 'talk'},
 )
 
 Announcement.seed(

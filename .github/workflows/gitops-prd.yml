@@ -85,47 +85,16 @@ jobs:
           kustomize-version: "3.6.1"
 
       - name: Update Kubernetes resources
-        env:
-          BASE_DIR: dreamkast-infra
-          APP_TEMPLATE_DIR: manifests/app/dreamkast/overlays/template
-          APP_TARGET_DIR: manifests/app/dreamkast/overlays/production/main
-          ARGO_TEMPLATE_FILE: manifests/app/argocd-apps/template/dreamkast.yaml
-          ARGO_TARGET_FILE: manifests/app/argocd-apps/production/dreamkast-main.yaml
-          IMAGE: ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
-          NAMESPACE: dreamkast
-          REPLACEMENTS: BRANCH=main
-        run: |
-          echo "========Update application manifests=========="
-          (
-          if [ ! -d ${BASE_DIR}/${APP_TARGET_DIR} ]; then
-            cp -r ${BASE_DIR}/${APP_TEMPLATE_DIR} ${BASE_DIR}/${APP_TARGET_DIR}
-          fi
-          cd ${BASE_DIR}/${APP_TARGET_DIR}
-          kustomize edit set image ${IMAGE}
-          kustomize edit set namespace ${NAMESPACE}
-          IFS=, ARR=(${REPLACEMENTS})
-          for r in "${ARR[@]}"; do
-            before=$(echo $r | cut -d= -f1)
-            after=$(echo $r | cut -d= -f2)
-            sed -i -e s/$before/$after/g ./*
-          done
-          # output
-          cat kustomization.yaml
-          )
-
-          echo "========Generate ArgoCD app=========="
-          (
-          if [ ! -d ${BASE_DIR}/${ARGO_TARGET_FILE} ]; then
-            cp ${BASE_DIR}/${ARGO_TEMPLATE_FILE} ${BASE_DIR}/${ARGO_TARGET_FILE}
-          fi
-          sed -i -e s/NAMESPACE/${NAMESPACE}/ ${BASE_DIR}/${ARGO_TARGET_FILE}
-          IFS=, ARR=(${REPLACEMENTS})
-          for r in "${ARR[@]}"; do
-            before=$(echo $r | cut -d= -f1)
-            after=$(echo $r | cut -d= -f2)
-            sed -i -e s/$before/$after/g ${BASE_DIR}/${ARGO_TARGET_FILE}
-          done
-          )
+        uses: cloudnativedaysjp/action-dreamkast-gitops@main
+        with:
+          base_dir: dreamkast-infra
+          app_template_dir: manifests/app/dreamkast/overlays/template
+          app_target_dir: manifests/app/dreamkast/overlays/production/main
+          argo_template_file: manifests/app/argocd-apps/template/dreamkast.yaml
+          argo_target_file: manifests/app/argocd-apps/production/dreamkast-main.yaml
+          image: ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          namespace: dreamkast
+          replacements: BRANCH=main,ENVIRONMENT=production
 
       - name: Commit files
         run: |

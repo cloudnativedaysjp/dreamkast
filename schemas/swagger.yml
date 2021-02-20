@@ -372,8 +372,10 @@ components:
           type: number
         eventAbbr:
           type: string
-        talkId:
+        roomId:
           type: number
+        roomType:
+          type: string
         body:
           type: string
         createdAt:

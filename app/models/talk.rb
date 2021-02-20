@@ -98,7 +98,7 @@ class Talk < ApplicationRecord
   end
 
   def speaker_names
-    talks_speakers.map(&:name)
+    speakers.map(&:name)
   end
 
   def difficulty

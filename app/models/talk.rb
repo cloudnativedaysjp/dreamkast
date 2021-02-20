@@ -97,8 +97,8 @@ class Talk < ApplicationRecord
       .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")
   end
 
-  def speaker_ids
-    talks_speakers.map(&:id)
+  def speaker_names
+    talks_speakers.map(&:name)
   end
 
   def difficulty

@@ -4,7 +4,7 @@ json.videoPlatform @talk.video_platform
 json.videoId @talk.video_id
 json.title @talk.title
 json.abstract @talk.abstract
-json.speakers @talk.speaker_ids
+json.speakers @talk.speaker_names
 json.dayId @talk.conference_day.id
 json.showOnTimetable @talk.show_on_timetable
 json.startTime @talk.start_time

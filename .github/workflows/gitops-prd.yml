@@ -79,11 +79,6 @@ jobs:
           path: dreamkast-infra
           token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "3.6.1"
-
       - name: Update Kubernetes resources
         uses: cloudnativedaysjp/action-dreamkast-gitops@main
         with:

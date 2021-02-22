@@ -370,6 +370,10 @@ components:
       properties:
         id:
           type: number
+        profile_id:
+          type: number
+        speaker_id:
+          type: number
         eventAbbr:
           type: string
         roomId:
@@ -380,6 +384,9 @@ components:
           type: string
         createdAt:
           type: string
+        messageType:
+          type: string
+          enum: [chat, qa]
       example:
         id: 2
         body: "foo bar"
@@ -388,6 +395,7 @@ components:
         - eventAbbr
         - talkId
         - body
+        - messageType
     Sponsor:
       type: object
       additionalProperties: false

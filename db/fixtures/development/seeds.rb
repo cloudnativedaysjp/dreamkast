@@ -907,11 +907,11 @@ Link.seed(
 )
 
 ChatMessage.seed(
-  {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk'},
-  {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk'},
-  {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk'},
-  {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk'},
-  {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk'},
+  {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+  {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+  {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 1},
+  {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 0},
+  {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 1},
 )
 
 Announcement.seed(

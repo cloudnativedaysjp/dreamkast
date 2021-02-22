@@ -1,4 +1,7 @@
 class Api::V1::ChatMessagesController < ApplicationController
+  include Secured
+  before_action :set_profile
+
   skip_before_action :verify_authenticity_token
 
   def index
@@ -17,11 +20,22 @@ class Api::V1::ChatMessagesController < ApplicationController
     room_type = @params[:roomType]
     body= @params[:body]
     reply_to = @params[:replyTo]
+    message_type = @params[:messageType]
+
+    attr = {profile_id: @profile.id, body: body, conference_id: conference.id, room_id: room_id, room_type: room_type, message_type: message_type}
+
+    speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    attr[:speaker_id] = speaker.id if speaker.present?
+
     if reply_to
       parent = ChatMessage.find(reply_to)
-      parent.children.create!(body: body, conference_id: conference.id, room_id: room_id, room_type: room_type)
+      parent.children.create!(attr)
     else
-      ChatMessage.create!(body: body, conference_id: conference.id, room_id: room_id, room_type: room_type)
+      ChatMessage.create!(attr)
     end
+  end
+
+  def event_name
+    params[:eventAbbr]
   end
 end

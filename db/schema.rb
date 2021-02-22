@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_095643) do
+ActiveRecord::Schema.define(version: 2021_02_21_071413) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_095643) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "room_type"
     t.bigint "room_id"
+    t.integer "message_type"
     t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
     t.index ["lft"], name: "index_chat_messages_on_lft"
     t.index ["parent_id"], name: "index_chat_messages_on_parent_id"

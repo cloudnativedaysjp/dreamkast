@@ -1,9 +1,9 @@
-name: GitOps for production
+name: GitOps for staging
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+    - main
 
 jobs:
   gitops:
@@ -82,12 +82,12 @@ jobs:
         with:
           base_dir: dreamkast-infra
           app_template_dir: manifests/app/dreamkast/overlays/template
-          app_target_dir: manifests/app/dreamkast/overlays/production/main
+          app_target_dir: manifests/app/dreamkast/overlays/staging/main
           argo_template_file: manifests/app/argocd-apps/template/dreamkast.yaml
-          argo_target_file: manifests/app/argocd-apps/production/dreamkast-main.yaml
+          argo_target_file: manifests/app/argocd-apps/development/dreamkast-staging.yaml
           image: ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
-          namespace: dreamkast
-          replacements: BRANCH=main,ENVIRONMENT=production
+          namespace: dreamkast-staging
+          replacements: BRANCH=main,ENVIRONMENT=staging
 
       - name: Commit files
         run: |

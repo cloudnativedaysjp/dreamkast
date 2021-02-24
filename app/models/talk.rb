@@ -122,7 +122,7 @@ class Talk < ApplicationRecord
   end
 
   def video_id
-    video.present? ? video.id : ''
+    video.present? ? video.video_id : ''
   end
 
   def time

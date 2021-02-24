@@ -4,7 +4,8 @@ FactoryBot.define do
     number { 1 }
     name { "A" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_1" }
   end
 
   factory :track2, class: Track do
@@ -12,7 +13,8 @@ FactoryBot.define do
     number { 2 }
     name { "B" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_2" }
   end
 
   factory :track3, class: Track do
@@ -20,7 +22,8 @@ FactoryBot.define do
     number { 3 }
     name { "C" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_3" }
   end
 
   factory :track4, class: Track do
@@ -28,7 +31,8 @@ FactoryBot.define do
     number { 4 }
     name { "D" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_4" }
   end
 
   factory :track5, class: Track do
@@ -36,7 +40,8 @@ FactoryBot.define do
     number { 5 }
     name { "E" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_5" }
   end
 
   factory :track6, class: Track do
@@ -44,7 +49,8 @@ FactoryBot.define do
     number { 6 }
     name { "F" }
     conference_id { 1 }
-    movie_url { "" }
+    video_platform { "vimeo" }
+    video_id { "video_6" }
   end
 
   ["A", "B", "C", "D", "E", "F", "G"].each_with_index do |value, index|
@@ -53,7 +59,8 @@ FactoryBot.define do
       number { index + 1 }
       name { value }
       conference_id { 2 }
-      movie_url { "" }
+      video_platform { "vimeo" }
+      video_id { "video_7" }
     end
   end
 end

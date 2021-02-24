@@ -156,13 +156,13 @@ Track.seed(
   { id: 4, number: 4, name: "D", conference_id: 1},
   { id: 5, number: 5, name: "E", conference_id: 1},
   { id: 6, number: 6, name: "F", conference_id: 1},
-  { id: 10, number: 1, name: "A", conference_id: 2},
-  { id: 11, number: 2, name: "B", conference_id: 2},
-  { id: 12, number: 3, name: "C", conference_id: 2},
-  { id: 13, number: 4, name: "D", conference_id: 2},
-  { id: 14, number: 5, name: "E", conference_id: 2},
-  { id: 15, number: 6, name: "F", conference_id: 2},
-  { id: 16, number: 7, name: "G", conference_id: 2},
+  { id: 10, number: 1, name: "A", conference_id: 2, video_platform: "vimeo", video_id: "aaaaaa"},
+  { id: 11, number: 2, name: "B", conference_id: 2, video_platform: "vimeo", video_id: "bbbbbb"},
+  { id: 12, number: 3, name: "C", conference_id: 2, video_platform: "vimeo", video_id: "cccccc"},
+  { id: 13, number: 4, name: "D", conference_id: 2, video_platform: "vimeo", video_id: "dddddd"},
+  { id: 14, number: 5, name: "E", conference_id: 2, video_platform: "vimeo", video_id: "eeeeee"},
+  { id: 15, number: 6, name: "F", conference_id: 2, video_platform: "vimeo", video_id: "ffffff"},
+  { id: 16, number: 7, name: "G", conference_id: 2, video_platform: "vimeo", video_id: "gggggg"},
 )
 
 

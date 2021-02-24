@@ -4,6 +4,9 @@ class Api::V1::TalksController < ApplicationController
     query = {conference_id: conference.id}
     query[:track_id] = params[:trackId] if params[:trackId]
     @talks = Talk.where(query)
+    if params[:conferenceDayIds]
+      @talks = @talks.where(params[:conferenceDayIds].split(",").map{|id| "conference_day_id = #{id}"}.join(" OR "))
+    end
     render 'api/v1/talks/index.json.jbuilder'
   end
 

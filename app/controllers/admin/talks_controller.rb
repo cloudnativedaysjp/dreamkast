@@ -34,7 +34,7 @@ class Admin::TalksController < ApplicationController
   end
 
   def update_talks
-  TalksHelper.update_talks(params[:video])
+  TalksHelper.update_talks(@conference, params[:video])
 
     redirect_to admin_talks_url, notice: "配信設定を更新しました"
   end

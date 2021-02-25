@@ -1,5 +1,5 @@
 module TalksHelper
-  def self.update_talks(videos)
+  def self.update_talks(conference, videos)
     videos.each do |talk_id, value|
       talk = Talk.find(talk_id)
       if talk.video
@@ -19,6 +19,9 @@ module TalksHelper
     end
     ActionCable.server.broadcast(
       "track_channel", Video.on_air
+    )
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2
     )
   end
 end

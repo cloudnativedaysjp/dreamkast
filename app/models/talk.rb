@@ -28,6 +28,10 @@ class Talk < ApplicationRecord
 
   SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
 
+  scope :on_air, -> {
+    includes(:video).where(videos: { on_air: 1 })
+  }
+
   def self.import(file)
     message = []
 

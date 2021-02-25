@@ -478,7 +478,7 @@ Sponsor.seed(
     name: 'レッドハット株式会社',
     abbr: 'redhat',
     conference_id: 2,
-    url: ''
+    url: 'https://www.redhat.com/en/global/japan'
   },
   {
     id: 35,
@@ -513,7 +513,7 @@ Sponsor.seed(
     name: '日本マイクロソフト株式会社',
     abbr: 'microsoft',
     conference_id: 2,
-    url: ''
+    url: 'https://azure.microsoft.com/ja-jp/developer/'
   },
   {
     id: 40,
@@ -752,12 +752,12 @@ end
   [31, 'newrelic', 'sponsors/cndo2021/newrelic.png', 2],
   [32, 'jfrog', 'sponsors/cndo2021/jfrog.png', 2],
   [33, 'datadog', 'sponsors/cndo2021/datadog.png', 2],
-  [34, 'redhat', '', 2],
+  [34, 'redhat', 'sponsors/cndo2021/redhat.png', 2],
   [35, 'gmo', 'sponsors/cndo2021/gmo.png', 2],
   [36, 'suse', 'sponsors/cndo2021/suse.png', 2],
   [37, 'acquia', 'sponsors/cndo2021/acquia.png', 2],
   [38, 'vmware', 'sponsors/cndo2021/vmware.png', 2],
-  [39, 'microsoft', '', 2],
+  [39, 'microsoft', 'sponsors/cndo2021/microsoft.png', 2],
   [40, 'nginx', 'sponsors/cndo2021/nginx.png', 2],
   [41, 'scsk', 'sponsors/cndo2021/scsk.png', 2],
   [42, 'line', 'sponsors/cndo2021/line.png', 2],

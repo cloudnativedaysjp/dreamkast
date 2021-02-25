@@ -14,6 +14,11 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
+          <% if @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
+            <% if logged_in? && @profile.present? %>
+              <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
+            <% end %>
+          <% end %>
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <% if @conference.present? && @conference.opened? %>
               <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
@@ -47,6 +52,10 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
+              <% end %>
+              <% if !@conference.closed? && @conference.speaker_entry_enabled? %>
+                <div class="dropdown-divider"></div>
+                <%= link_to 'スピーカーダッシュボード', speakers_entry_path, class: "dropdown-item" %>
               <% end %>
               <% if admin? %>
                 <div class="dropdown-divider"></div>

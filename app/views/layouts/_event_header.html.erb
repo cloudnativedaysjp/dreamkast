@@ -53,6 +53,10 @@
               <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
+              <% if !@conference.closed? && @conference.speaker_entry_enabled? %>
+                <div class="dropdown-divider"></div>
+                <%= link_to 'スピーカーダッシュボード', speakers_entry_path, class: "dropdown-item" %>
+              <% end %>
               <% if admin? %>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<%= admin_path %>">管理画面</a>

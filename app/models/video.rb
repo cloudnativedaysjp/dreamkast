@@ -25,4 +25,34 @@ class Video < ApplicationRecord
     end
     return list
   end
+
+  def self.on_air_v2
+    tracks = Track.where(conference_id: 2)
+    res = {}
+    on_air_talks = Talk.on_air.where(conference_id: 2)
+    tracks.each do |track|
+      talk = on_air_talks.find_by(track_id: track.id)
+      if talk
+        res[track.id] = {
+          id: talk.id,
+          trackId: talk.track_id,
+          trackId: talk.track_id,
+          videoPlatform: track.video_platform,
+          title: talk.title,
+          abstract: talk.abstract,
+          speakers: talk.speaker_names,
+          dayId: talk.conference_day.present? ? talk.conference_day.id : 0,
+          showOnTimetable: talk.show_on_timetable,
+          startTime: talk.start_time,
+          endTime: talk.end_time,
+          talkDuration: talk.duration,
+          talkDifficulty: talk.difficulty,
+          talkCategory: talk.category,
+          onAir: talk.on_air?,
+          documentUrl: talk.document_url ? talk.document_url : '',
+        }
+      end
+    end
+    return res
+  end
 end

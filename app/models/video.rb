@@ -2,26 +2,28 @@ class Video < ApplicationRecord
   include VideoFileUploader::Attachment(:video_file)
 
   belongs_to :talk
-  
+
   def self.on_air
     current = Video.where(on_air: true)
     list = {}
     list['current'] = []
     current.each do |video|
-      list['current'][video.talk.track_id - 1] = {
-        video_id: video.video_id,
-        site: video.site,
-        slido_id: video.slido_id,
-        id: video.talk.id,
-        title: video.talk.title,
-        start_time: video.talk.start_time.strftime("%H:%M"),
-        end_time: video.talk.end_time.strftime("%H:%M"),
-        abstract: video.talk.abstract,
-        track_name: video.talk.track.present? ? video.talk.track.name : '',
-        track_number: video.talk.track.present? ? video.talk.track.number : '',
-        track_id: video.talk.track_id,
-        speakers: video.talk.speakers.map{|speaker| speaker.name}.join("/")
-      }
+      if video.talk.track.present?
+        list['current'][video.talk.track.number - 1] = {
+          video_id: video.video_id,
+          site: video.site,
+          slido_id: video.slido_id,
+          id: video.talk.id,
+          title: video.talk.title,
+          start_time: video.talk.start_time.strftime("%H:%M"),
+          end_time: video.talk.end_time.strftime("%H:%M"),
+          abstract: video.talk.abstract,
+          track_name: video.talk.track.present? ? video.talk.track.name : '',
+          track_number: video.talk.track.present? ? video.talk.track.number : '',
+          track_id: video.talk.track_id,
+          speakers: video.talk.speakers.map{|speaker| speaker.name}.join("/")
+        }
+      end
     end
     return list
   end

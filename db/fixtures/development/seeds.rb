@@ -81,7 +81,8 @@ ConferenceDay.seed(
 
   {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
-  )
+  {id: 8, date: "2021-02-26", start_time: "19:00", end_time: "21:00", conference_id: 2, internal: false}, #Pre event
+)
 
 Industry.seed(
   { id: 1,  conference_id: 1, name: "IT関連製造業" },

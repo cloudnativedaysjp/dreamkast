@@ -38,8 +38,8 @@ class Video < ApplicationRecord
         res[track.id] = {
           id: talk.id,
           trackId: talk.track_id,
-          trackId: talk.track_id,
           videoPlatform: track.video_platform,
+          videoId: talk.video_id,
           title: talk.title,
           abstract: talk.abstract,
           speakers: talk.speaker_names,

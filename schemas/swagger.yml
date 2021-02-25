@@ -97,6 +97,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: conferenceDayIds
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -317,6 +322,11 @@ components:
           type: boolean
         documentUrl:
           type: string
+        conferenceDayId:
+          type: number
+        conferenceDayDate:
+          type: string
+          format: date
       example:
         - id: 1
           trackId: 2
@@ -370,9 +380,9 @@ components:
       properties:
         id:
           type: number
-        profile_id:
+        profileId:
           type: number
-        speaker_id:
+        speakerId:
           type: number
         eventAbbr:
           type: string

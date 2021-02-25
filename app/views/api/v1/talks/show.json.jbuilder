@@ -14,3 +14,5 @@ json.talkDifficulty @talk.difficulty
 json.talkCategory @talk.category
 json.onAir @talk.on_air?
 json.documentUrl @talk.document_url ? @talk.document_url : ''
+json.conferenceDayId @talk.conference_day.id
+json.conferenceDayDate @talk.conference_day.date

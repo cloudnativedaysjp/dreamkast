@@ -75,9 +75,9 @@
                     <%= talk.time %>
                   </td>
                   <td>
-                    <% if talk.video.present? && talk.video.video_file.present? %>
+                    <%# if talk.video.present? && talk.video.video_file.present? %>
                       <%#= link_to talk.video.video_file.metadata["filename"], talk.video.video_file_url %>
-                    <% end %>
+                    <%# end %>
                   </td>
                   <td>
                     <% video_id = talk.video ? talk.video.video_id : nil %>

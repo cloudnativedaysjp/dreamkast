@@ -88,12 +88,15 @@
                     <%= text_field_tag "video[#{talk.id}][slido_id]", slido_id ,placeholder: "sli.do id", size: "8" %>
                   </td>
                   <td class="on_air_group btn-group-toggle">
+                    <!--
                     <% if talk.video %>
                             <label class="btn on_air_button <%= "active" if talk.video.on_air %>">
                                 <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track_name %>>
                             </label>
                             <% end %>
+                    -->
                         </td>
+                    
                     </tr>
                     <% end %>
                 <% end %>

@@ -22,7 +22,8 @@ class Admin::ConferencesController < ApplicationController
     respond_to do |format|
       if @conference_form.save
         if @conference.opened?
-          ActionCable.server.broadcast("waiting_channel","redirect to tracks");
+          path = "/#{@conference.abbr}/#{@conference.abbr == 'cndt2020' ? 'tracks' : 'ui/'}"
+          ActionCable.server.broadcast("waiting_channel",{msg: "redirect to tracks", redirectTo: path})
         end
         format.html { redirect_to admin_path, notice: "Conference was successfully updated." }
       else

@@ -11,8 +11,7 @@ consumer.subscriptions.create("WaitingChannel", {
 
   received(data) {
     console.log("received");
-
-    window.location.href = "/cndt2020/tracks";
+    window.location.href = data["redirectTo"];
   },
 
   update: function(message) {

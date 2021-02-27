@@ -303,7 +303,12 @@ components:
           description: array of speakers name
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
         dayId:
           type: number
         showOnTimetable:

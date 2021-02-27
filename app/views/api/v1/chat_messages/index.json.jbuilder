@@ -1,7 +1,7 @@
 json.array! @chat_messages do |msg|
   json.id msg.id
-  json.profile_id msg.profile_id
-  json.speaker_id msg.speaker_id
+  json.profileId msg.profile_id
+  json.speakerId msg.speaker_id
   json.body msg.body
   json.eventAbbr @conference.abbr
   json.roomType msg.room_type

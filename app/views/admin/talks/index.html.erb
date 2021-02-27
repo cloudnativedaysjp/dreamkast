@@ -75,9 +75,13 @@
                     <%= talk.time %>
                   </td>
                   <td>
-                    <%# if talk.video.present? && talk.video.video_file.present? %>
-                      <%#= link_to talk.video.video_file.metadata["filename"], talk.video.video_file_url %>
-                    <%# end %>
+                    <% if talk.video.present? && talk.video.video_file_data == "" %>
+                      WARNING: 文字列が空です。
+                    <% elsif talk.video.present? && talk.video.video_file.present? %>
+                      <%= link_to talk.video.video_file.metadata["filename"], talk.video.video_file_url %>
+                    <% else %>
+                      未提出
+                    <% end %>
                   </td>
                   <td>
                     <% video_id = talk.video ? talk.video.video_id : nil %>

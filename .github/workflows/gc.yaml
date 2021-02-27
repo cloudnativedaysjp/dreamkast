@@ -47,4 +47,24 @@ jobs:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
-          branch: main
+          branch: gc/dk-${{ github.event.pull_request.number }}
+
+      - name: Create and Merge Pull Request
+        uses: "actions/github-script@v2"
+        with:
+          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          script: |
+            const pr = await github.pulls.create({
+              owner: "cloudnativedaysjp",
+              repo: "dreamkast-infra",
+              title: "Automated PR (gc/dk-${{ github.event.pull_request.number }})",
+              body: "**this PR is automatically created & merged**",
+              head: "development/gc-${{ github.event.pull_request.number }}",
+              base: "main"
+            });
+            await github.pulls.merge({
+              owner: "cloudnativedaysjp",
+              repo: "dreamkast-infra",
+              pull_number: pr.data.number,
+              merge_method: "merge",
+            });

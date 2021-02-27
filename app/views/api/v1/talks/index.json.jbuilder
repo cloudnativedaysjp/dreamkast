@@ -5,7 +5,7 @@ json.array! @talks do |talk|
   json.videoId talk.video_id
   json.title talk.title
   json.abstract talk.abstract
-  json.speakers talk.speaker_names
+  json.speakers talk.speakers.map{|speaker| {id: speaker.id, name: speaker.name}}
   json.dayId talk.conference_day.present? ? talk.conference_day.id : 0
   json.showOnTimetable talk.show_on_timetable
   json.startTime talk.start_time

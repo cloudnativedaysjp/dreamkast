@@ -51,7 +51,12 @@ class SpeakerDashboard::VideosController < ApplicationController
 
       if @video.update_attributes(video_file_data: videos_params[:video_file_data])
         old_file.delete if old_file
-        SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+        # TODO: 非同期化すること！！！
+        begin
+          SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+        rescue => e
+          logger.error "Failed to send mail: #{e.message}"
+        end
 
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @talk }

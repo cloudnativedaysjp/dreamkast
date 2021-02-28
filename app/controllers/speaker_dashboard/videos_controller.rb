@@ -21,7 +21,12 @@ class SpeakerDashboard::VideosController < ApplicationController
     respond_to do |format|
       if @video.save
         speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
-        SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+        # TODO: 非同期化すること！！！
+        begin
+          SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
+        rescue => e
+          logger.error "Failed to send mail: #{e.message}"
+        end
 
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @video }

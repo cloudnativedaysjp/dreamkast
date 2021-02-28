@@ -10,6 +10,7 @@ const uppyTriggerElement = document.querySelector('.upload-data')
 const startUppy = () => {
     console.log("startUppy!!");
     const hiddenInput = document.querySelector('.upload-data')
+    const submitButton = document.querySelector('.update-video')
     const uppy = Uppy({
         restrictions: {maxNumberOfFiles: 1}
     })
@@ -17,6 +18,10 @@ const startUppy = () => {
             height: 250,
             inline: true,
             target: '#drag-drop-area',
+            doneButtonHandler: () => {
+                submitButton.disabled = true;
+                uppy.reset()
+            }
         })
         .use(AwsS3Multipart, {companionUrl: '/'})
 
@@ -31,6 +36,7 @@ const startUppy = () => {
             }
         }
         hiddenInput.value = JSON.stringify(uploadedFileData)
+        submitButton.disabled = false;
     })
 }
 

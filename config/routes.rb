@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :tracks, only: [:index, :show]
       resources :sponsors, only: [:index]
       resources :chat_messages, only: [:index, :create]
+      resources :booths, only: [:show]
     end
   end
 

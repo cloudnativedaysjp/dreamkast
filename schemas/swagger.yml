@@ -214,6 +214,28 @@ paths:
                   $ref: '#/components/schemas/Sponsor'
         '400':
           description: Invalid params supplied
+  /api/v1/booths/{boothId}:
+    get:
+      tags:
+        - Booth
+      parameters:
+        - name: boothId
+          in: path
+          description: ID of booth
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booth'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Booth not found
 
 components:
   schemas:
@@ -427,6 +449,10 @@ components:
           type: string
         logo_url:
           type: string
+        sponsorType:
+          type: string
+        boothId:
+          type: number
       example:
         - id: 1
           conference_id: 2
@@ -447,3 +473,55 @@ components:
         - abbr
         - url
         - logo_url
+    Booth:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        sponsorId:
+          type: number
+        sponsorName:
+          type: string
+        published:
+          type: boolean
+        description:
+          type: string
+        url:
+          type: string
+        abbr:
+          type: string
+        text:
+          type: string
+        logoUrl:
+          type: string
+        vimeoUrl:
+          type: string
+        miroUrl:
+          type: string
+        pdfUrls:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              title:
+                type: string
+        keyImageUrls:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - sponsorId
+        - sponsorName
+        - published
+        - description
+        - abbr
+        - text
+        - logoUrl
+        - vimeoUrl
+        - miroUrl
+        - pdfUrls
+        - keyImageUrls

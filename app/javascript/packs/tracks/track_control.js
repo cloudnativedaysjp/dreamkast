@@ -23,7 +23,8 @@ window.update_track = function(track){
         window.timer = setInterval(function(){
             tracker.track("watch_video", {
                 track_name: track.track_name,
-                talk_id: track.id
+                talk_id: track.id,
+                talk_name: track.title,
             });
         }, 120 * 1000);
     }

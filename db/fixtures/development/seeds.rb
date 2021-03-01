@@ -628,6 +628,20 @@ Sponsor.seed(
     abbr: 'cloudnative',
     conference_id: 2,
     url: 'https://cloudnative.co.jp/'
+  },
+  {
+    id: 47,
+    name: 'The Linux Foundation',
+    abbr: 'lf',
+    conference_id: 2,
+    url: 'https://www.linuxfoundation.jp/'
+  },
+  {
+    id: 48,
+    name: 'LPI-Japan',
+    abbr: 'lpi',
+    conference_id: 2,
+    url: 'https://lpi.or.jp/'
   }
 
 )
@@ -702,6 +716,11 @@ SponsorType.seed(
     conference_id: 2,
     name: "Tool",
     order: 6,
+  },
+  { id: 16,
+    conference_id: 2,
+    name: "Logo",
+    order: 7,
   }
 )
 
@@ -763,7 +782,6 @@ SponsorType.seed(
   [55, 'Booth', 'jfrog', 2],
   [56, 'Booth', 'datadog', 2],
   [57, 'Booth', 'redhat', 2],
-  [58, 'Booth', 'gmo', 2],
   [59, 'Booth', 'nginx', 2],
   [60, 'CM', 'legalforce', 2],
   [61, 'CM', 'mirantis', 2],
@@ -771,6 +789,8 @@ SponsorType.seed(
   [63, 'CM', 'line', 2],
   [64, 'Tool', 'plaid', 2],
   [65, 'Platinum', 'cloudnative', 2],
+  [58, 'Logo', 'lf', 2],
+  [66, 'Logo', 'lpi', 2],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -831,6 +851,8 @@ end
   [44, 'mirantis', 'sponsors/cndo2021/mirantis.png', 2],
   [45, 'plaid', 'sponsors/cndo2021/plaid.png', 2],
   [46, 'cloudnative', 'sponsors/cndo2021/cloudnative.png', 2],
+  [47, 'lf', 'sponsors/cndo2021/lf.png', 2],
+  [48, 'lpi', 'sponsors/cndo2021/lpi.png', 2],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

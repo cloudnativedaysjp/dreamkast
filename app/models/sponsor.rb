@@ -13,6 +13,10 @@ class Sponsor < ApplicationRecord
   has_many :sponsors_sponsor_types
   has_many :sponsor_types, through: :sponsors_sponsor_types
 
+  def booth_info
+    {id: booth.id, opened: booth.published}
+  end
+
   def booth_sponsor?
     self.sponsor_types.each do |type|
       if type.name == 'Booth'

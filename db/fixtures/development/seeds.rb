@@ -582,7 +582,7 @@ Sponsor.seed(
   },
   {
     id: 40,
-    name: 'F5ネットワークスジャパン合同会社',
+    name: 'F5ネットワークスジャパン合同会社／NGINX',
     abbr: 'nginx',
     conference_id: 2,
     url: 'https://www.nginx.co.jp/'

@@ -192,6 +192,36 @@ paths:
       responses:
         '201':
           description: CREATED
+  /api/v1/chat_messages/{messageId}:
+    put:
+      tags:
+        - ChatMessage
+      summary: Update Chat Message
+      parameters:
+        - name: messageId
+          in: path
+          description: ID of ChatMessage
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: chat message to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChatMessage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ChatMessage'
+        '400':
+          description: Invalid params supplied
+        '404':
+           description: ChatMessage not found
   /api/v1/sponsors:
     get:
       tags:
@@ -404,6 +434,27 @@ components:
     ChatMessage:
       type: object
       additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ChatMessageProperties'
+      required:
+        - eventAbbr
+        - talkId
+        - body
+        - messageType
+      example:
+        id: 2
+        body: "foo bar"
+        createdAt: "2021-01-30T10:06:33.938Z"
+    UpdateChatMessage:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ChatMessageProperties'
+      required:
+        - eventAbbr
+        - body
+    ChatMessageProperties:
+      type: object
       properties:
         id:
           type: number
@@ -424,15 +475,6 @@ components:
         messageType:
           type: string
           enum: [chat, qa]
-      example:
-        id: 2
-        body: "foo bar"
-        createdAt: "2021-01-30T10:06:33.938Z"
-      required:
-        - eventAbbr
-        - talkId
-        - body
-        - messageType
     Sponsor:
       type: object
       additionalProperties: false

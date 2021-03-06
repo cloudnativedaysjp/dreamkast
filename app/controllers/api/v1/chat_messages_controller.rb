@@ -35,6 +35,13 @@ class Api::V1::ChatMessagesController < ApplicationController
     end
   end
 
+  def update
+    @params ||= JSON.parse(request.body.read, {:symbolize_names => true})
+    chat_msg = ChatMessage.find(params[:id])
+    body= @params[:body]
+    chat_msg.update!({body: body})
+  end
+
   def event_name
     params[:eventAbbr]
   end

@@ -11,6 +11,26 @@ servers:
   - url: http://api-mock.dev.cloudnativedays.jp/
   - url: http://dreamkast-api-mock.udcp.info/
 paths:
+  /api/v1/${eventAbbr}/my_profile:
+    get:
+      tags:
+        - Profile
+      parameters:
+        - name: eventAbbr
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '403':
+          description: You don't logged in
   /api/v1/events/{eventAbbr}:
     get:
       tags:
@@ -269,6 +289,16 @@ paths:
 
 components:
   schemas:
+    Profile:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - id
+        - name
     Event:
       type: object
       additionalProperties: false

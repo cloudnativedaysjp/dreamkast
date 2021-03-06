@@ -12,6 +12,7 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-18.04
+    if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
     - uses: actions/checkout@v2
     - name: Run database

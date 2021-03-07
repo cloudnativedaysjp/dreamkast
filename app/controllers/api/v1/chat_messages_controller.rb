@@ -39,7 +39,6 @@ class Api::V1::ChatMessagesController < ApplicationController
   end
 
   def update
-    # @params ||= JSON.parse(request.body.read, {:symbolize_names => true})
     chat_msg = ChatMessage.find(params[:id])
     body= params[:body]
     authorize chat_msg

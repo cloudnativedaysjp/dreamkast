@@ -10,6 +10,8 @@ jobs:
     if: ${{ contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
       - uses: actions-ecosystem/action-release-label@v1
         id: release-label
@@ -25,6 +27,12 @@ jobs:
         with:
           current_version: ${{ steps.get-latest-tag.outputs.tag }}
           level: ${{ steps.release-label.outputs.level }}
+
+      - name: set credential
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          git config remote.origin.url https://${GITHUB_ACTOR}:${PERSONAL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}
 
       - uses: actions-ecosystem/action-push-tag@v1
         if: ${{ steps.release-label.outputs.level != null }}

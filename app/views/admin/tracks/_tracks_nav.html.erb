@@ -25,9 +25,7 @@
         <tbody>
           <% talks.each do |talk| %>
             <tr>
-              <td>
-                <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
-              </td>
+              <td><%= talk.start_to_end %></td>
               <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
               <td><h5><%= talk.title %></h5></td>
               <td>

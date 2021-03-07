@@ -12,11 +12,12 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1' do
+      get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:show], path: "events"
       resources :talks, only: [:index, :show]
       resources :tracks, only: [:index, :show]
       resources :sponsors, only: [:index]
-      resources :chat_messages, only: [:index, :create]
+      resources :chat_messages, only: [:index, :create, :update]
       resources :booths, only: [:show]
     end
   end

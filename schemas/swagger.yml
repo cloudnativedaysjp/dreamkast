@@ -11,6 +11,26 @@ servers:
   - url: http://api-mock.dev.cloudnativedays.jp/
   - url: http://dreamkast-api-mock.udcp.info/
 paths:
+  /api/v1/${eventAbbr}/my_profile:
+    get:
+      tags:
+        - Profile
+      parameters:
+        - name: eventAbbr
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '403':
+          description: You don't logged in
   /api/v1/events/{eventAbbr}:
     get:
       tags:
@@ -192,6 +212,45 @@ paths:
       responses:
         '201':
           description: CREATED
+  /api/v1/chat_messages/{messageId}:
+    put:
+      tags:
+        - ChatMessage
+      summary: Update Chat Message
+      parameters:
+        - name: messageId
+          in: path
+          description: ID of ChatMessage
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: chat message to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChatMessage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ChatMessage'
+        '403':
+          description: Don't have permission to update
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '400':
+          description: Invalid params supplied
+        '404':
+           description: ChatMessage not found
   /api/v1/sponsors:
     get:
       tags:
@@ -239,6 +298,16 @@ paths:
 
 components:
   schemas:
+    Profile:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - id
+        - name
     Event:
       type: object
       additionalProperties: false
@@ -404,6 +473,27 @@ components:
     ChatMessage:
       type: object
       additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ChatMessageProperties'
+      required:
+        - eventAbbr
+        - talkId
+        - body
+        - messageType
+      example:
+        id: 2
+        body: "foo bar"
+        createdAt: "2021-01-30T10:06:33.938Z"
+    UpdateChatMessage:
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: '#/components/schemas/ChatMessageProperties'
+      required:
+        - eventAbbr
+        - body
+    ChatMessageProperties:
+      type: object
       properties:
         id:
           type: number
@@ -424,15 +514,6 @@ components:
         messageType:
           type: string
           enum: [chat, qa]
-      example:
-        id: 2
-        body: "foo bar"
-        createdAt: "2021-01-30T10:06:33.938Z"
-      required:
-        - eventAbbr
-        - talkId
-        - body
-        - messageType
     Sponsor:
       type: object
       additionalProperties: false

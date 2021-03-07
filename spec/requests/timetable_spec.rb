@@ -137,7 +137,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:bob)
+        create(:bob_cndo2021)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 

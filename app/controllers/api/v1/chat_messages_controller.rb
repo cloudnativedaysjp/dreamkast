@@ -4,6 +4,9 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  rescue_from Pundit::NotAuthorizedError, with: :not_authorized
+
+
   def index
     @conference = Conference.find_by(abbr: params[:eventAbbr])
     query = {conference_id: @conference.id, room_type: params[:roomType], room_id: params[:roomId]}
@@ -36,13 +39,25 @@ class Api::V1::ChatMessagesController < ApplicationController
   end
 
   def update
-    @params ||= JSON.parse(request.body.read, {:symbolize_names => true})
+    # @params ||= JSON.parse(request.body.read, {:symbolize_names => true})
     chat_msg = ChatMessage.find(params[:id])
-    body= @params[:body]
+    body= params[:body]
+    authorize chat_msg
+
     chat_msg.update!({body: body})
+  end
+
+  def not_authorized
+    render json: { error: 'Unauthorized' }, status: 403
   end
 
   def event_name
     params[:eventAbbr]
+  end
+
+  def pundit_user
+    if @current_user
+      Profile.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    end
   end
 end

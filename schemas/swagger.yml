@@ -238,6 +238,15 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/ChatMessage'
+        '403':
+          description: Don't have permission to update
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         '400':
           description: Invalid params supplied
         '404':

@@ -24,6 +24,13 @@
               <% else %>
                 <p class="card-text">ビデオファイルはまだアップロードされていません</p>
               <% end %>
+
+              <% if talk.document_url.present? %>
+                <p class="card-text">資料URL: <%= link_to talk.document_url, talk.document_url %></p>
+              <% else %>
+                <p class="card-text">資料URLはまだ追加されていません</p>
+              <% end %>
+
               <a href="<%= video_url(talk) %>" class="btn btn-primary">Upload Video</a>
             </div>
           </div>

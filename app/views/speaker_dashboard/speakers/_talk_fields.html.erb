@@ -20,6 +20,11 @@
     <%= f.collection_select :talk_time_id, @conference.talk_times, :id, :time_minutes, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
+  <div class="field">
+    <%= f.label :document_url, "資料URL" %>
+    <%= f.text_field :document_url, class: "form-control" %>
+  </div>
+
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>
 

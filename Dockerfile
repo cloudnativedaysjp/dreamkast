@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.0-experimental
+# syntax = docker/dockerfile:experimental
 
 FROM ruby:2.7.2 AS nodejs
 

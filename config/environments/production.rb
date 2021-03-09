@@ -115,6 +115,7 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  OmniAuth.config.logger = Rails.logger
   OmniAuth.config.on_failure = Proc.new { |env|
     message_key = env['omniauth.error.type']
     error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)

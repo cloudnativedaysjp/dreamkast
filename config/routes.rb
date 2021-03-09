@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  unless Rails.env.development? || Rails.env.test?
+  unless Rails.env.development? || Rails.env.test? || ENV['AWS_ACCESS_KEY_ID']
     mount Shrine.uppy_s3_multipart(:video_file) => "/s3/multipart"
   end
 

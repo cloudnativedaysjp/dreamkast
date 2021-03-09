@@ -65,7 +65,7 @@
   </footer>
   <% end %>
 
-  <% if @current_user %>
+  <% if @current_user && @conference&.abbr == 'cndt2021'%>
     <div id="message_icon">
       <%= image_tag  "trademark.png" %>
     </div>

@@ -11,7 +11,7 @@ class Admin::TracksController < ApplicationController
 
   def update_tracks
     respond_to do |format|
-      TalksHelper.update_talks(params[:video])
+      TalksHelper.update_talks(@conference, params[:video])
       format.js
     end
   end

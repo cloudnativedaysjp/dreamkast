@@ -88,3 +88,5 @@ gem "uppy-s3_multipart", "~> 0.3"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
+
+gem 'activerecord-nulldb-adapter'

@@ -25,9 +25,9 @@ COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN bundle exec rake webpacker:install
 RUN bundle exec rake webpacker:compile
+RUN bundle exec rails assets:precompile
 
 FROM ruby:2.7.2-slim
-
 ENV YARN_VERSION 1.22.4
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/

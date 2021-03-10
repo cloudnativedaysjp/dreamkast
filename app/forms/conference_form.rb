@@ -107,7 +107,7 @@ class ConferenceForm
   private
 
   def default_attributes
-    p     a = {
+    {
       status: conference.status,
       speaker_entry: conference.speaker_entry,
       attendee_entry: conference.attendee_entry,

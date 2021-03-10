@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app:
     build: .
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && ./entrypoint.sh"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed_fu && ./entrypoint.sh"
     environment:
       RAILS_ENV: production
       NODE_ENV: production

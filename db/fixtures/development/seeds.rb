@@ -778,7 +778,6 @@ SponsorType.seed(
   [51, 'Gold', 'scsk', 2],
   [52, 'Gold', 'line', 2],
   [53, 'Booth', 'circleci', 2],
-  [54, 'Booth', 'newrelic', 2],
   [55, 'Booth', 'jfrog', 2],
   [56, 'Booth', 'datadog', 2],
   [57, 'Booth', 'redhat', 2],

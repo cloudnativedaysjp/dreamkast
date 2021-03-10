@@ -332,6 +332,15 @@ components:
           type: string
         coc:
           type: string
+        conferenceDays:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              date:
+                type: string
       example:
         id: 2
         name: "CloudNative Days Spring 2020 ONLINE"

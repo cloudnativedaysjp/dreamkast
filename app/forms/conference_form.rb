@@ -39,6 +39,38 @@ class ConferenceForm
     end
   end
 
+  concerning :ConferenceDaysBuilder do
+    attr_accessor :conference_days
+
+    def conference_days
+      @conference_days ||= @conference.conference_days
+    end
+
+    def conference_days_attributes=(attributes)
+      @conference_days ||= []
+      attributes.each do |i, params|
+        if params.key?(:id)
+          if params[:_destroy] == "1"
+            link = @conference.conference_days.find(params[:id])
+            link.destroy
+          else
+            params.delete(:_destroy)
+            link = @conference.conference_days.find(params[:id])
+            link.update(params)
+          end
+        else
+          params.delete(:_destroy)
+          day = ConferenceDay.new(params.merge(conference_id: conference.id))
+          day.save!
+          @conference_days.push(day)
+        end
+      end
+    rescue => e
+      puts e
+      false
+    end
+  end
+
   def initialize(attributes = nil, conference: Conference.new)
     @conference = conference
     attributes ||= default_attributes
@@ -67,6 +99,7 @@ class ConferenceForm
 
   def load
     @links = @conference.links
+    @conference_days = @conference.conference_days
   end
 
   attr_reader :conference
@@ -79,7 +112,8 @@ class ConferenceForm
       speaker_entry: conference.speaker_entry,
       attendee_entry: conference.attendee_entry,
       show_timetable: conference.show_timetable,
-      links: links
+      links: links,
+      conference_days: conference_days
     }
   end
 end

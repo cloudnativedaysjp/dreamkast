@@ -53,6 +53,14 @@
 
   <p><%= link_to_add_link_fields "Add Link", form, :links, class: 'add-link btn btn-primary' %></p>
 
+  <h3>Conference Days</h3>
+
+  <div class="conference-day-fields">
+    <%= form.fields_for :conference_days do |f| %>
+      <%= render 'admin/conferences/conference_day_fields', :f => f %>
+    <% end %>
+  </div>
+
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.submit %>

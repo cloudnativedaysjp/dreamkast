@@ -13,7 +13,7 @@ namespace :db do
       show_on_timetable: false,
       track_id: track.id,
       start_time: Time.parse('10:00'),
-      end_time: Time.parse('10:30'),
+      end_time: Time.parse('19:30'),
       talk_difficulty_id: 11,
       talk_category_id: 35,
       talk_time_id: 6

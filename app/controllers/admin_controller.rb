@@ -24,7 +24,7 @@ class AdminController < ApplicationController
     end
 
     def users
-        @profiles = Profile.all
+        @profiles = Profile.where(conference_id: @conference.id)
     end
 
     def statistics

@@ -1,47 +1,47 @@
 # syntax = docker/dockerfile:experimental
 
-FROM ruby:2.7.2 AS nodejs
-
-WORKDIR /tmp
-
-# Node.jsのダウンロード
-RUN curl -LO https://nodejs.org/dist/v12.18.2/node-v12.18.2-linux-x64.tar.xz
-RUN tar xvf node-v12.18.2-linux-x64.tar.xz
-RUN mv node-v12.18.2-linux-x64 node
-
-FROM ruby:2.7.2
-# nodejsをインストールしたイメージからnode.jsをコピーする
-COPY --from=nodejs /tmp/node /opt/node
-ENV PATH /opt/node/bin:$PATH
-
-# yarnのインストール
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-ENV PATH /root/.yarn/bin:/root/.config/yarn/global/node_modules/.bin:$PATH
-
-# ruby-2.7.0でnewした場合を考慮
-RUN gem install bundler
-
+FROM node:12.18.2-slim as node
 WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --check-files
 
-# Dockerのビルドステップキャッシュを利用するため
-# 先にGemfileを転送し、bundle installする
-COPY Gemfile Gemfile.lock package.json yarn.lock /app/
+FROM ruby:2.7.2 as fetch-lib
+WORKDIR /app
+COPY Gemfile* ./
+RUN bundle install
 
-RUN bundle config set app_config .bundle
-RUN bundle config set path .cache/bundle
-# mount cacheを利用する
-RUN bundle install && \
-    mkdir -p vendor && \
-    cp -ar .cache/bundle vendor/bundle
-RUN bundle config set path vendor/bundle
-
-RUN /root/.yarn/bin/yarn install --modules-folder .cache/node_modules && \
-    cp -ar .cache/node_modules node_modules
-
+FROM ruby:2.7.2 as asset-compile
+ENV YARN_VERSION 1.22.4
+COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
+WORKDIR /app
 COPY . /app
+COPY --from=node /app/node_modules /app/node_modules
+COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
 
+RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
+    yarn install --modules-folder .cache/node_modules && \
+    cp -ar .cache/node_modules node_modules
 ENV AWS_ACCESS_KEY_ID=''
-RUN SECRET_KEY_BASE=hoge RAILS_ENV=production DB_ADAPTER=nulldb bin/rails assets:precompile
+RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=production DB_ADAPTER=nulldb bin/rails assets:precompile
 
+FROM ruby:2.7.2-slim
+
+ENV YARN_VERSION 1.22.4
+COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
+
+ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabled
+WORKDIR /app
+COPY --from=node /app/node_modules /app/node_modules
+COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
+COPY --from=fetch-lib /usr/lib/x86_64-linux-gnu/libmariadb.so.3 /usr/lib/x86_64-linux-gnu/libmariadb.so.3
+COPY . .
+COPY --from=asset-compile /app/public /app/public
 EXPOSE 3000
 ENTRYPOINT ["./entrypoint.sh"]
+

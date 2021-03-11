@@ -122,6 +122,7 @@ describe TalksController, type: :request do
         create(:alice)
         create(:alice_cndo2021)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+        allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
       end
 
       it " includes vimeo iframe if video_published is true" do

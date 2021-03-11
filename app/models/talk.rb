@@ -140,4 +140,10 @@ class Talk < ApplicationRecord
       ''
     end
   end
+
+  def archived?
+    now = Time.now.in_time_zone('Tokyo')
+    etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
+    return (now.to_i - etime.to_i) >= 600
+  end
 end

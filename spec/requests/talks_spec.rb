@@ -48,6 +48,7 @@ describe TalksController, type: :request do
       before do
         Conference.destroy_all
         create(:cndt2020_closed)
+        allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
       end
       it "includes vimeo iframe" do
         get '/cndt2020/talks/1'

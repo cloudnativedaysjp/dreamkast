@@ -53,7 +53,7 @@
               <% if event_name && @profile.present? && @profile.id %>
                 <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
               <% end %>
-              <% if !@conference.closed? && @conference.speaker_entry_enabled? %>
+              <% if (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?) %>
                 <div class="dropdown-divider"></div>
                 <%= link_to 'スピーカーダッシュボード', speakers_entry_path, class: "dropdown-item" %>
               <% end %>

@@ -12,7 +12,7 @@
         <%= render 'talks/partial_show/col_talk_category_block', talk: talk %>
       </div>
 
-      <% if conference.closed? || (conference.opened? && @current_user) %>
+      <% if (conference.closed? && @current_user) || (conference.opened? && @current_user) %>
         <%= render 'talks/partial_show/talk_video_block', talk: talk %>
       <% end %>
 

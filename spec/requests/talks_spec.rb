@@ -53,7 +53,7 @@ describe TalksController, type: :request do
       it "includes vimeo iframe" do
         get '/cndt2020/talks/1'
         expect(response).to be_successful
-        expect(response.body).to include "player.vimeo.com"
+        expect(response.body).to_not include "player.vimeo.com"
       end
     end
 

@@ -25,7 +25,7 @@
 
 <% @message_box = "タイムテーブルから聴講予定セッションの登録・変更ができます。" %>
 
-<% if @conference.opened? && @current_user %>
+<% if @current_user %>
   <script>
       window.talk_id = "<%= @talk.id %>";
       window.talk_name = "<%= @talk.title %>";

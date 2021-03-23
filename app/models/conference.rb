@@ -1,5 +1,5 @@
 class Conference < ApplicationRecord
-  enum status: { registered: 0, opened: 1, closed: 2 }
+  enum status: { registered: 0, opened: 1, closed: 2, archived: 3 }
   enum speaker_entry: { speaker_entry_disabled: 0, speaker_entry_enabled: 1 }
   enum attendee_entry: { attendee_entry_disabled: 0, attendee_entry_enabled: 1 }
   enum show_timetable: { show_timetable_disabled: 0, show_timetable_enabled: 1 }

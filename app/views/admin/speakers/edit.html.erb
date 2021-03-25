@@ -1,5 +1,4 @@
-<div class="container">
-  <%= render 'admin/navigator' %>
+<%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
     <div class="alert alert-info" role="alert">
       <%= message %>
@@ -11,5 +10,4 @@
   <%= render 'speaker_dashboard/speakers/form', speaker: @speaker %>
 
   <%= link_to 'Back', admin_speakers_url %>
-
-</div>
+<% end %>

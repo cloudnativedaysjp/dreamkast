@@ -1,6 +1,4 @@
-<div class="container">
-  <%= render :partial => 'admin/navigator' %>
-
+<%= render 'admin/layout' do %>
   <div class="row mb-3">
     <div class="col-10 mb-3 d-flex align-items-center">
       <h2>Conference > <%= @conference.name %></h2>
@@ -12,4 +10,4 @@
       <%= render 'form', conference_form: @conference_form %>
     </div>
   </div>
-</div>
+<% end %>

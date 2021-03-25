@@ -1,5 +1,4 @@
-<div class="container">
-  <%= render 'admin/navigator' %>
+<%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
     <div class="alert alert-info" role="alert">
       <%= message %>
@@ -53,8 +52,7 @@
     <% end %>
     </tbody>
   </table>
-</div>
-</div>
+<% end %>
 
 <div id="transit_nav" class="p-4">
   <%= submit_tag "タイムテーブルを保存", form: "timetable",class: "btn btn-danger transit_button" %>

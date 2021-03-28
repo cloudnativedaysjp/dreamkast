@@ -10,6 +10,7 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
 FROM ruby:2.7.2 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
+RUN apt-get update && apt-get install shared-mime-info
 RUN bundle install
 
 FROM ruby:2.7.2 as asset-compile

@@ -43,6 +43,11 @@ the version is controlled by `.node-version` and `.ruby-version` file.
 
 `nodenv` and `rbenv` are recommended to install those.
 
+You need to install shared-mime-info
+
+- macOS: `brew install shared-mime-info`
+- Ubuntu, Debian: `apt-get install shared-mime-info`
+
 ```
 $ yarn install --check-files
 $ bundle install

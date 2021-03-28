@@ -1,6 +1,4 @@
-<div class="container">
-  <%= render 'admin/navigator' %>
-
+<%= render 'admin/layout' do %>
   <h1>Announcement</h1>
 
   <%= link_to 'New Announcement', new_admin_announcement_path %>
@@ -33,4 +31,4 @@
     <% end %>
     </tbody>
   </table>
-</div>
+<% end %>

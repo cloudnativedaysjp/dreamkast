@@ -1,9 +1,5 @@
-<div class="container">
-  <%= render 'admin/navigator' %>
-</div>
-
-<div class="container booth-frame my-4">
+<%= render 'admin/layout' do %>
   <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id) %>
 
   <%= render 'booths/booth', sponsor: @sponsor %>
-</div>
+<% end %>

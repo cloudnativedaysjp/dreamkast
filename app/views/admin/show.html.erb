@@ -1,6 +1,4 @@
-<div class="container">
-  <%= render 'navigator' %>
-
+<%= render 'layout' do %>
   <h2><%= @conference.name %></h2>
   <ul>
     <li>カンファレンスステータス: <%= @conference.status %></li>
@@ -33,8 +31,8 @@
     <% end %>
     </tbody>
   </table>
+<% end %>
 
-</div>
 <script>
     window.track_list=<%= @current["current"].to_json.html_safe %>;
 </script>

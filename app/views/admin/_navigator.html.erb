@@ -1,18 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <%= render 'admin/nav_item', name: 'Conference', path: admin_path, active: action_name == 'show' %>
-      <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'show' %>
-      <%= render 'admin/nav_item', name: 'AccessLog', path: admin_accesslog_path, active: action_name == 'accesslog' %>
-      <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
-      <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
-      <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>
-      <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
-      <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
-      <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
-      <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
-      <%= render 'admin/nav_item', name: 'Booths', path: admin_booths_path, active: controller_name == 'booths' || action_name == 'show_booth' %>
-      <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
-    </ul>
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h3><%= @conference.abbr %></h3>
   </div>
+
+  <ul class="list-unstyled components">
+    <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'announcements' %>
+    <%= render 'admin/nav_item', name: 'AccessLog', path: admin_accesslog_path, active: action_name == 'accesslog' %>
+    <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
+    <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
+    <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>
+    <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
+    <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
+    <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
+    <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
+    <%= render 'admin/nav_item', name: 'Booths', path: admin_booths_path, active: controller_name == 'booths' || action_name == 'show_booth' %>
+    <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
+  </ul>
 </nav>

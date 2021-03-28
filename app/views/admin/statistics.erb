@@ -1,13 +1,11 @@
-<div class="container">
-  <%= render 'navigator' %>
-
+<%= render 'layout' do %>
   <div class="row">
     <div class="col-12 form-group">
-    <h2>Statistics</h2>
+      <h2>Statistics</h2>
     </div>
     <div class="col-12 form-group">
       <h3>Export to CSV</h3>
       <%= button_to 'エクスポート', admin_export_statistics_path, {method: :get } %>
     </div>
   </div>
-</div>
+<% end %>

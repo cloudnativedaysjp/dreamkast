@@ -29,6 +29,5 @@ import './message_box.js'
 import './admin.js'
 import './contents.js'
 import './speaker_form.js'
-import './video_uploader.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

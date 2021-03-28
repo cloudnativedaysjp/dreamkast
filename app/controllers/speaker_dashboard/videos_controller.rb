@@ -51,11 +51,8 @@ class SpeakerDashboard::VideosController < ApplicationController
     authorize @talk
 
     respond_to do |format|
-      speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
-      old_file = @video.video_file if @video.video_file_data != ""
+      if @video.update(videos_params)
 
-      if @video.update_attributes(video_file_data: videos_params[:video_file_data])
-        old_file.delete if old_file
         # TODO: 非同期化すること！！！
         begin
           SpeakerMailer.video_uploaded(speaker, @talk, @video).deliver_now
@@ -92,6 +89,6 @@ class SpeakerDashboard::VideosController < ApplicationController
   end
 
   def videos_params
-    params.require(:video).permit(:talk_id, :video_file_data)
+    params.require(:video).permit(:talk_id, :url)
   end
 end

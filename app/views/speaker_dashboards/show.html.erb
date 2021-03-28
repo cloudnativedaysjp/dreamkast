@@ -19,10 +19,10 @@
               </h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
               <p class="card-text"><%= simple_format talk.abstract %></p>
-              <% if talk.video.present? && talk.video.video_file.present? %>
-                <p class="card-text">アップロード済みビデオファイル: <%= talk.video.video_file.metadata["filename"] %></p>
+              <% if talk.video&.url.present? %>
+                <p class="card-text">ビデオファイルダウンロード用URL: <%= talk.video.url %></p>
               <% else %>
-                <p class="card-text">ビデオファイルはまだアップロードされていません</p>
+                <p class="card-text">ビデオファイルダウンロード用URLはまだ登録されていません</p>
               <% end %>
 
               <% if talk.document_url.present? %>

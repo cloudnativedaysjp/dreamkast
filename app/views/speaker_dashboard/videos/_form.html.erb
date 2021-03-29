@@ -1,34 +1,29 @@
-<section class="row justify-content-center">
-  <section class="col-12 col-lg-8">
-
-    <div class="card m-1">
-      <div class="card-body">
-        <h5 class="card-title"><%= @talk.title %></h5>
-        <h6 class="card-subtitle mb-2 text-muted"><%= @talk.talk_category.name %> / <%= @talk.talk_time.time_minutes %>分</h6>
-        <p class="card-text"><%= simple_format @talk.abstract %></p>
-        <hr>
-        <% if @video.url.present? %>
-          <p class="card-text">ビデオファイルダウンロード用URL: <%= link_to @video.url %></p>
-        <% else %>
-          <p class="card-text">ビデオファイルダウンロード用URLはまだ登録されていません</p>
-        <% end %>
-      </div>
-    </div>
-
-    <%= form_with(url: video_url, model: @video, local: true) do |form| %>
-
-      <div class="field">
-        <%= form.hidden_field :talk_id, value: @talk.id %>
-        <%= form.label :url, 'ビデオファイルをダウンロード可能なURL' %>
-        <%= form.text_field :url, value: @video&.url %>
-      </div>
-
-      <div id="drag-drop-area"></div>
-      <div class="for-ProgressBar"></div>
-
-      <div class="actions justify-content-center py-3">
-        <%= form.submit class: "btn btn-primary btn-lg btn-block update-video" %>
-      </div>
+<div class="card m-1">
+  <div class="card-body">
+    <h5 class="card-title"><%= @talk.title %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= @talk.talk_category.name %> / <%= @talk.talk_time.time_minutes %>分</h6>
+    <p class="card-text"><%= simple_format @talk.abstract %></p>
+    <hr>
+    <% if @video.url.present? %>
+      <p class="card-text">ビデオファイルダウンロード用URL: <%= link_to @video.url %></p>
+    <% else %>
+      <p class="card-text">ビデオファイルダウンロード用URLはまだ登録されていません</p>
     <% end %>
-  </section>
-</section>
+  </div>
+</div>
+
+<%= form_with(url: video_url, model: @video, local: true) do |form| %>
+
+  <div class="field">
+    <%= form.hidden_field :talk_id, value: @talk.id %>
+    <%= form.label :url, 'ビデオファイルをダウンロード可能なURL' %>
+    <%= form.text_field :url, value: @video&.url %>
+  </div>
+
+  <div id="drag-drop-area"></div>
+  <div class="for-ProgressBar"></div>
+
+  <div class="actions justify-content-center py-3">
+    <%= form.submit class: "btn btn-primary btn-lg btn-block update-video" %>
+  </div>
+<% end %>

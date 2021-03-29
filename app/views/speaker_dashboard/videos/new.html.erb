@@ -1,8 +1,16 @@
 <div class="container">
-  <h1>Upload Video</h1>
+  <h1 class="text-center py-3 entry">ビデオファイルダウンロード用のURL登録</h1>
 
-  <%= render 'form', video: @video, talk: @talk %>
+  <section class="row justify-content-center">
+    <section class="col-12 col-lg-8">
+      <%= render 'form', video: @video, talk: @talk %>
+    </section>
+  </section>
 
-  <%= link_to 'Back', speaker_dashboard_path %>
+  <section class="row justify-content-center">
+    <section class="col-12 col-lg-8">
+      <%= link_to 'Back', speaker_dashboard_path %>
+    </section>
+  </section>
 
 </div>

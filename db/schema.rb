@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 2021_04_04_021259) do
     t.integer "children_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "booth_id"
+    t.string "room_type"
+    t.bigint "room_id"
     t.integer "message_type"
-    t.index ["booth_id"], name: "index_chat_messages_on_booth_id"
     t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
     t.index ["lft"], name: "index_chat_messages_on_lft"
     t.index ["parent_id"], name: "index_chat_messages_on_parent_id"
@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_021259) do
     t.bigint "talk_id", null: false
     t.string "url"
     t.integer "status", default: 0, null: false
-    t.index ["talk_id"], name: "index_video_registration_status_on_talk_id"
+    t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 
   create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

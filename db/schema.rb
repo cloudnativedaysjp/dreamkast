@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_021259) do
     t.string "video_platform"
   end
 
-  create_table "video_registration", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "video_registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.string "url"
     t.integer "status", default: 0, null: false
@@ -303,5 +303,5 @@ ActiveRecord::Schema.define(version: 2021_04_04_021259) do
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "talk_times", "conferences"
-  add_foreign_key "video_registration_status", "talks"
+  add_foreign_key "video_registrations", "talks"
 end

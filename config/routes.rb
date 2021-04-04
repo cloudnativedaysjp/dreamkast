@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'export_speakers' => 'speakers#export_speakers'
       get 'export_profiles' => 'profiles#export_profiles'
       resources :talks, only: [:index]
+      resources :videos, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
       resources :announcements
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
       resources :tracks, only: [:index]
       put 'tracks' => 'tracks#update_tracks'
       resources :attachments, only: [:show]
+      put 'video_registrations' => 'video_registrations#bulk_update'
     end
 
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
@@ -62,7 +64,7 @@ Rails.application.routes.draw do
     get '/speaker_dashboard' => 'speaker_dashboards#show'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
-      resources :videos, only: [:new, :create, :edit, :update]
+      resources :video_registrations, only: [:new, :create, :edit, :update]
     end
 
 

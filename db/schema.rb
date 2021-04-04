@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_142606) do
+ActiveRecord::Schema.define(version: 2021_04_04_021259) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 2021_02_24_142606) do
     t.integer "children_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "room_type"
-    t.bigint "room_id"
+    t.bigint "booth_id"
     t.integer "message_type"
+    t.index ["booth_id"], name: "index_chat_messages_on_booth_id"
     t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
     t.index ["lft"], name: "index_chat_messages_on_lft"
     t.index ["parent_id"], name: "index_chat_messages_on_parent_id"
@@ -273,6 +273,13 @@ ActiveRecord::Schema.define(version: 2021_02_24_142606) do
     t.string "video_platform"
   end
 
+  create_table "video_registration", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.string "url"
+    t.integer "status", default: 0, null: false
+    t.index ["talk_id"], name: "index_video_registration_status_on_talk_id"
+  end
+
   create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.string "site"
@@ -296,4 +303,5 @@ ActiveRecord::Schema.define(version: 2021_02_24_142606) do
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "talk_times", "conferences"
+  add_foreign_key "video_registration_status", "talks"
 end

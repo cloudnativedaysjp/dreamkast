@@ -21,12 +21,12 @@
           <div class="col-lg-12 align-self-center">
                 <p class="text-white-75 font-weight-bold"><%= days %> オンライン開催</p>
                 <p class="text-white-75 font-weight-bold">参加費無料</p>
-                <% if @conference.closed? %>
+                <% if @conference.closed? || @conference.archived? %>
                   <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
                 <% end %>
           </div>
           <div class="col-12 align-self-center">
-            <% if @conference.closed? %>
+            <% if @conference.closed? || @conference.archived?%>
               <%= render 'event/partial/buttons', conference: @conference %>
             <% else %>
               <%= render 'event/partial/speaker_entry_button', conference: @conference %>

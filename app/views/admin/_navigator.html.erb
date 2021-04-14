@@ -10,6 +10,7 @@
     <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
     <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
     <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>
+    <%= render 'admin/nav_item', name: 'ビデオファイル提出状況', path: admin_videos_path, active: controller_name == 'videos' %>
     <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
     <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
     <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>

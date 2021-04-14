@@ -19,11 +19,6 @@
               </h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
               <p class="card-text"><%= simple_format talk.abstract %></p>
-              <% if talk.video.present? && talk.video.video_file.present? %>
-                <p class="card-text">アップロード済みビデオファイル: <%= talk.video.video_file.metadata["filename"] %></p>
-              <% else %>
-                <p class="card-text">ビデオファイルはまだアップロードされていません</p>
-              <% end %>
 
               <% if talk.document_url.present? %>
                 <p class="card-text">資料URL: <%= link_to talk.document_url, talk.document_url %></p>
@@ -31,7 +26,13 @@
                 <p class="card-text">資料URLはまだ追加されていません</p>
               <% end %>
 
-              <a href="<%= video_url(talk) %>" class="btn btn-primary">Upload Video</a>
+              <% if talk.video_registration&.url.present? %>
+                <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
+              <% else %>
+                <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
+              <% end %>
+
+              <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
             </div>
           </div>
         <% end %>

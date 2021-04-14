@@ -1,0 +1,58 @@
+<%= render 'admin/layout' do %>
+  <div class="row">
+    <h2>ビデオファイル提出状況</h2>
+  </div>
+
+  <div class="row">
+    <ul>
+      <li>提出状況: <%= @talks.count{|talk| talk.video_registration&.submitted? } %>/<%= @talks.size %></li>
+      <li>URL登録状況: <%= @talks.count{|talk| talk.video_registration&.url.present? } %>/<%= @talks.size %></li>
+      <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col">Speakers</th>
+        <th scope="col">Title</th>
+        <th scope="col">Video File Url</th>
+        <th scope="col">アップロード確認</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= form_with(url: admin_video_registrations_path, local: true, id: "video_registration_list", method: "put") do |f| %>
+
+        <% @talks.each do |talk| %>
+          <tr>
+            <td><%= talk.speakers.map(&:name).join(", ") %></td>
+            <td><%= talk.title %></td>
+
+            <td>
+              <% if (talk.video_registration&.submitted? || talk.video_registration&.confirmed?) && talk.video_registration&.url.present? %>
+                <%= link_to 'Download', talk.video_registration&.url %>
+              <% elsif talk.video_registration&.submitted? && talk.video_registration&.url.empty?  %>
+                提出済みだがURLが空
+              <% else %>
+                未提出
+              <% end %>
+            </td>
+            <td class="video_registration_group btn-group-toggle">
+              <% if (talk.video_registration&.submitted? || talk.video_registration&.confirmed?) && talk.video_registration&.url.present? %>
+                <%= f.select "video_registration[#{talk.video_registration.id}]", {'ビデオファイル未確認': 1, 'ビデオファイル確認済み': 2}, {selected: VideoRegistration.statuses[talk.video_registration.status]}, {class: "form-control"} %>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<div id="transit_nav" class="p-4">
+  <%= submit_tag "保存", form: "video_registration_list",class: "btn btn-danger transit_button" %>
+  <br/><span class="text-white">*確認済みに変更したスピーカーにメールで通知が届きます</span>
+</div>

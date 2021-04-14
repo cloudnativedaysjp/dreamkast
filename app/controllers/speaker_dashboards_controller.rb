@@ -20,13 +20,21 @@ class SpeakerDashboardsController < ApplicationController
 
   private
 
-  helper_method :video_url
+  helper_method :video_registration_url, :video_registration_status
 
-  def video_url(talk)
-    if talk.video.present?
-      "/#{params[:event]}/speaker_dashboard/videos/#{talk.video.id}/edit"
+  def video_registration_url(talk)
+    if talk.video_registration.present?
+      "/#{params[:event]}/speaker_dashboard/video_registrations/#{talk.video_registration.id}/edit"
     else
-      "/#{params[:event]}/speaker_dashboard/videos/new?talk_id=#{talk.id}"
+      "/#{params[:event]}/speaker_dashboard/video_registrations/new?talk_id=#{talk.id}"
+    end
+  end
+
+  def video_registration_status(video_registration)
+    if video_registration.submitted?
+      '提出されたビデオファイルの確認中です。'
+    elsif video_registration.confirmed?
+      '提出されたビデオファイルの確認が完了しました。'
     end
   end
 end

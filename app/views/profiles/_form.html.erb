@@ -42,7 +42,7 @@
 
   <div class="form-row form-group">
     <%= form.label :occupation, "職種" %>*
-    <%= form.text_field :occupation, required: true, class: "form-control", placeholder: "SRE / インフラエンジニア / アプリケーション開発　など" %>
+    <%= form.select :occupation, @occupations, {prompt: ''}, {required: true, class: "form-control"} %>
   </div>
 
   <div class="form-row form-group">

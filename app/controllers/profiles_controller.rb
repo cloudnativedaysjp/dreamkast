@@ -5,8 +5,10 @@ class ProfilesController < ApplicationController
   before_action :set_current_profile, only: [:edit, :update, :destroy]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
+  OCCUPATIONS = %w[インフラエンジニア ソフトウェア開発エンジニア サポートエンジニア 学生 その他]
 
   def new
+    @occupations = OCCUPATIONS
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
     if set_current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
@@ -17,6 +19,7 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    @occupations = OCCUPATIONS
   end
 
   def create

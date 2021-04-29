@@ -34,12 +34,6 @@
     </div>
   </div>
 
-
-  <div class="form-row form-group">
-    <%= form.label :industry_id, "業種" %>*
-    <%= form.collection_select :industry_id, Industry.all, :id, :name, {prompt: ""}, {class: "form-control", requierd: true} %>
-  </div>
-
   <div class="form-row form-group">
     <%= form.label :occupation, "職種" %>*
     <%= form.select :occupation, @occupations, {prompt: ''}, {required: true, class: "form-control"} %>
@@ -53,11 +47,6 @@
   <div class="form-row form-group">
     <%= form.label :company_email, "勤務先メールアドレス" %>*
     <%= form.email_field :company_email, required: true, class: "form-control", placeholder: "mail@example.com" %>
-  </div>
-
-  <div class="form-row form-group">
-    <%= form.label :company_address, "勤務先住所" %>*
-    <%= form.text_field :company_address, required: true, class: "form-control", placeholder: "東京都港区○○" %>
   </div>
 
   <div class="form-row form-group">

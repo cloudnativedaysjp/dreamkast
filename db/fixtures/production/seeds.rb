@@ -3,7 +3,6 @@ Conference.seed(
     id: 1,
     name: "CloudNative Days Tokyo 2020",
     abbr: "cndt2020",
-    status: 2, # closed
     speaker_entry: 0, # disabled
     attendee_entry: 0, # disabled
     theme: "+Native 〜ともに創るクラウドネイティブの世界〜",

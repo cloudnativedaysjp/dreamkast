@@ -128,7 +128,7 @@ jobs:
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v2"
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.pulls.create({
               owner: "cloudnativedaysjp",

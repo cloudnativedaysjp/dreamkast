@@ -37,9 +37,9 @@ jobs:
 
       - name: set credential
         env:
-          PERSONAL_ACCESS_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
-          git config remote.origin.url https://${GITHUB_ACTOR}:${PERSONAL_ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}
+          git config remote.origin.url https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
 
       - uses: actions-ecosystem/action-push-tag@v1
         if: ${{ steps.release-label.outputs.level != null }}

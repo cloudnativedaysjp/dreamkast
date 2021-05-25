@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1.0.2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -75,7 +82,7 @@ jobs:
         with:
           repository: cloudnativedaysjp/dreamkast-infra
           path: dreamkast-infra
-          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Get target branch from IMAGE_TAG
         id: target-branch
@@ -113,7 +120,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
           branch: development/dk-${{ github.event.pull_request.number }}
@@ -121,7 +128,7 @@ jobs:
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v2"
         with:
-          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.pulls.create({
               owner: "cloudnativedaysjp",

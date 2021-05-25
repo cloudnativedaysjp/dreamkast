@@ -82,7 +82,7 @@ jobs:
         with:
           repository: cloudnativedaysjp/dreamkast-infra
           path: dreamkast-infra
-          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Get target branch from IMAGE_TAG
         id: target-branch

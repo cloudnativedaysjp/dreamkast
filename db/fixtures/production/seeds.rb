@@ -43,6 +43,22 @@ EOS
     そんな機会を創り出し、登壇者・参加者・イベント主催者といった垣根を超えて、クラウドネイティブ・コミュニティを広げていきたいと考えています。
     CloudNative Days Spring 2021 Onlineでは、クラウドネイティブ技術を通じて培った知見やマインドセットを最大限に活用し、これまでに無かった斬新なイベントを目指しています。
 EOS
+  },
+  {
+    id: 3,
+    name: "CI/CD Conference by CloudNative Days",
+    abbr: "cicd2021",
+    status: 1, # opened
+    speaker_entry: 1,
+    attendee_entry: 0,
+    theme: "Continuous 〜 技術を知り、試して、取り入れる 〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+CI/CD Conferenceは、CI/CDに特化したテックカンファレンスです。『技術を知り、試して、取り入れる』のコンセプトのもと、参加者が優れたCI/CDの知見を取り入れ、改善を行っていけるイベントを目指しています。そして、ゆくゆくは参加者が登壇者となり、他の人に知見を共有していける、Continuousなイベントでありたいと思っています。
+EOS
   }
 )
 
@@ -56,6 +72,9 @@ ConferenceDay.seed(
   {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 8, date: "2021-02-26", start_time: "19:00", end_time: "21:00", conference_id: 2, internal: true}, #Pre event
+    
+  {id: 9, date: "2021-08-31", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
+  {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
   )
 
 Industry.seed(
@@ -137,6 +156,9 @@ Track.seed(
   { id: 14, number: 5, name: "E", conference_id: 2},
   { id: 15, number: 6, name: "F", conference_id: 2},
   { id: 16, number: 7, name: "G", conference_id: 2},
+  { id: 17, number: 1, name: "A", conference_id: 3},
+  { id: 18, number: 2, name: "B", conference_id: 3},
+  { id: 19, number: 3, name: "C", conference_id: 3},
 )
 
 
@@ -188,6 +210,9 @@ TalkDifficulty.seed(
   { id: 11, conference_id: 2, name: "初級者"},
   { id: 12, conference_id: 2, name: "中級者"},
   { id: 13, conference_id: 2, name: "上級者"},
+  { id: 21, conference_id: 3, name: "初級者"},
+  { id: 22, conference_id: 3, name: "中級者"},
+  { id: 23, conference_id: 3, name: "上級者"},
 )
 
 TalkTime.seed(

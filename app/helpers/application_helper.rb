@@ -106,8 +106,8 @@ module ApplicationHelper
   end
 
   def event_js_path
-    if event_name == "cndo2021"
-      return "cndo2021"
+    if event_name != "cndo2020"
+      return event_name
     else
       return "application"
     end

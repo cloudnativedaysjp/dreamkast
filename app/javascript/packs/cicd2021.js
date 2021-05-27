@@ -12,7 +12,7 @@ require("turbolinks").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/cndo2021'
+import '../stylesheets/cicd2021'
 import './bootstrap_custom.js'
 import './bootstrap-table.js'
 import './utils'

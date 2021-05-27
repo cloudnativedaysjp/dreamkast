@@ -46,7 +46,7 @@ EOS
   },
   {
     id: 3,
-    name: "CI/CD Conference by CloudNative Days",
+    name: "CI/CD Conference 2021 by CloudNative Days",
     abbr: "cicd2021",
     status: 1, # opened
     speaker_entry: 1,

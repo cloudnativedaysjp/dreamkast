@@ -106,7 +106,7 @@ module ApplicationHelper
   end
 
   def event_js_path
-    if event_name != "cndo2020"
+    if !event_name.nil? && event_name != "cndt2020"
       return event_name
     else
       return "application"

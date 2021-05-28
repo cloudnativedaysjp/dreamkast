@@ -15,13 +15,18 @@
         </div>
 
         <div class="field">
-          <%= form.label :company, '会社名 / 所属団体名' %>*
+          <%= form.label :company, '会社名 / 所属団体名（★）' %>*
           <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
         </div>
 
         <div class="field">
           <%= form.label :job_title, '肩書き' %>*
           <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア'  %>
+        </div>
+
+        <div class="field">
+          <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等' %>
+          <%= form.text_area :additional_documents, class: "form-control", required: false, placeholder: "https://speakerdeck.com/\nhttps://www.slideshare.net/"  %>
         </div>
 
         <div class="field">

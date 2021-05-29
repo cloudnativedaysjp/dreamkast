@@ -177,7 +177,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     mysql2 (0.5.3)
-    nio4r (2.5.2)
+    nio4r (2.5.7)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
@@ -205,7 +205,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (4.3.5)
+    puma (4.3.8)
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -379,7 +379,7 @@ DEPENDENCIES
   omniauth-auth0 (~> 2.4)
   omniauth-rails_csrf_protection (~> 0.1)
   pry-rails
-  puma (~> 4.1)
+  puma (~> 4.3)
   pundit
   rack-timeout
   rails (~> 6.0.3, >= 6.0.3.1)

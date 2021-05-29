@@ -12,6 +12,10 @@ body {
     color: fade-out($white, 0.25);
 }
 
+.text-pink {
+    color: $sparkle-pink;
+}
+
 // Header
 .header_logo {
     width: 200px;

@@ -58,7 +58,7 @@ EOS
     status: 0,
     speaker_entry: 1,
     attendee_entry: 0,
-    theme: "Continuous 〜 技術を知り、試して、取り入れる 〜",
+    theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),

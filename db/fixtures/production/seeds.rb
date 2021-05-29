@@ -48,7 +48,7 @@ EOS
     id: 3,
     name: "CI/CD Conference 2021 by CloudNative Days",
     abbr: "cicd2021",
-    status: 1, # opened
+    status: 0,
     speaker_entry: 1,
     attendee_entry: 0,
     theme: "Continuous 〜 技術を知り、試して、取り入れる 〜",
@@ -73,9 +73,9 @@ ConferenceDay.seed(
   {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 8, date: "2021-02-26", start_time: "19:00", end_time: "21:00", conference_id: 2, internal: true}, #Pre event
     
-  {id: 9, date: "2021-08-31", start_time: "12:00", end_time: "20:00", conference_id: 3, internal: false},
+  {id: 9, date: "2021-09-03", start_time: "13:00", end_time: "19:00", conference_id: 3, internal: false},
   {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
-  )
+)
 
 Industry.seed(
   { id: 1,  conference_id: 1, name: "IT関連製造業" },

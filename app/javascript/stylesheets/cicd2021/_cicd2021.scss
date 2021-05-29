@@ -102,6 +102,11 @@ header h1 {
     font-weight: bold;
 }
 
+.speaker-dashboard-form h4 {
+    font-weight: bold;
+    font-size: large;
+}
+
 .speaker-dashboard-form p {
     font-size: large;
     margin: 1em 0;
@@ -127,6 +132,10 @@ header h1 {
 
 .entry {
     font-size: xx-large;
+}
+
+.speaker-dashboard-form .centered-image {
+    margin: 0 auto;
 }
 
 // .speaker-dashboard-form .field {

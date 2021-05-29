@@ -79,21 +79,41 @@ header h1 {
     background-size: cover;
 }
 
+// Speaker Dashboard
 .speaker-dashboard-form {
-    background: rgba(256, 256, 256, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#speaker-landing {
+    line-height: 200%;
+}
+
+@media (max-width: 992px) {
+    #speaker-landing {
+        line-height: 130%;
+    }
 }
 
 .speaker-dashboard-form h2 {
     font-weight: bold;
 }
 
+.speaker-dashboard-form h3 {
+    font-weight: bold;
+}
+
 .speaker-dashboard-form p {
-    font-size: larger;
+    font-size: large;
     margin: 1em 0;
 }
 
 .speaker-dashboard-form ol {
-    font-size: x-large;
+    font-size: larger;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form ul {
+    font-size: larger;
     margin: 1em 0;
 }
 
@@ -108,3 +128,7 @@ header h1 {
 .entry {
     font-size: xx-large;
 }
+
+// .speaker-dashboard-form .field {
+//     margin-bottom: 10px;
+// }

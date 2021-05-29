@@ -1,4 +1,4 @@
-.tracks{
+.tracks {
     background-color: rgba($color: #FFF, $alpha: 1);
 }
 
@@ -6,12 +6,11 @@
     margin: 30px 0px 0px 0px;
 }
 
-#main-pane{
-}
-.movie-wrap{
-}
+#main-pane {}
 
-.tool-pane .nav-item{
+.movie-wrap {}
+
+.tool-pane .nav-item {
     background-color: white;
 }
 
@@ -69,7 +68,7 @@
     margin: 0 0 1rem 0rem;
     font-size: medium;
 }
-  
+
 #main-pane .talk .difficulty {
     font-size: x-small;
     padding: 0.2rem;
@@ -79,38 +78,34 @@
     border-radius: 10px;
 }
 
-
 #registered-talk {
     background-color: #FFF;
-
 }
 
-#registered-talk button{
+#registered-talk button {
     background-color: #FFF;
 }
 
 #registered-talk button[aria-expanded="true"]:before {
     content: "▼";
 }
+
 #registered-talk button[aria-expanded="false"]:before {
     content: "▶";
 }
-  
+
 #registered-talk-list {
     padding-left: 10px;
 }
 
-#track_information{
-    
-}
+#track_information {}
 
-#social {
-}
-#social a{
+#social {}
+
+#social a {
     display: flex;
     height: 4em;
     vertical-align: bottom;
     align-items: center;
     justify-content: center;
 }
-

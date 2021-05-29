@@ -1,21 +1,21 @@
 <div class="talk-field">
 
-  <div class="field">
+  <div class="field pb-3">
     <%= f.label :title, 'セッションタイトル（★★★）' %>*
     <%= f.text_field :title, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="field pb-3">
     <%= f.label :abstract, 'セッション概要（★★★）' %>
     <%= f.text_area :abstract, {class: "form-control"}  %>
   </div>
 
-  <div class="field">
+  <div class="field pb-3">
     <%= f.label :talk_difficulty_id, "受講者レベル（★★）" %>*
     <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="field pb-3">
     <%= f.label :document_url, "資料URL" %>
     <%= f.text_field :document_url, class: "form-control" %>
   </div>

@@ -32,13 +32,23 @@
   </div>
 
   <div class="field pb-3">
-    <%= f.label :expected_participants, "想定受講者（★★）" %>*
-    <%= f.collection_check_boxes :expected_participants, expected_participant_params, :id, :params, {multiple: true}, {class: "form-control"} %>
+    <%= f.label :expected_participants, "想定受講者（★★）", {class: 'form-check-label'}%>*
+    <div class="form-check">
+      <% expected_participant_params.each do |item| %>
+        <%= f.check_box :expected_participants, {multiple: true}, item.id,  {class: 'form-check-input'} %>
+        <%= f.label :expected_participants, item.params, {class: 'form-check-label'} %><br>
+      <% end %>
+    </div>
   </div>
 
   <div class="field pb-3">
     <%= f.label :execution_phases, "実行フェーズ（★★）" %>*
-    <%= f.collection_check_boxes :execution_phases, execution_phases_params, :id, :params, {multiple: true}, {class: "form-control"} %>
+    <div class="form-check">
+      <% execution_phases_params.each do |item| %>
+        <%= f.check_box :execution_phases, {multiple: true}, item.id, {class: "form-control"} %>
+        <%= f.label :execution_phases, item.params, {class: 'form-check-label'} %><br>
+      <% end %>
+    </div>
   </div>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>

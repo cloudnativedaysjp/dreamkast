@@ -71,9 +71,6 @@ EOS
     id: 10,
     name: "Test Event Winter 2020",
     abbr: "tew2020",
-    status: 1, # opened
-    speaker_entry: 0,
-    attendee_entry: 0,
     theme: "これはTestEventWinter2020のテーマです",
     copyright: '© Test Event Winter 2020 Committee',
     privacy_policy: 'This is Privacy Policy',

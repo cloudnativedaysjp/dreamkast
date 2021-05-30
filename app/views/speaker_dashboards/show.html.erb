@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container speaker-dashboard-form">
   <h1 class="text-center py-3 entry">スピーカーダッシュボード</h1>
   <div class="row speaker-dashboard-form">
 
@@ -17,7 +17,9 @@
                 <%= talk.title %>
                 <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
               </h5>
+              <% if talk.talk_category %>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
+              <% end %>
               <p class="card-text"><%= simple_format talk.abstract %></p>
 
               <% if talk.document_url.present? %>

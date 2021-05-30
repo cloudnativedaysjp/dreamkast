@@ -1,7 +1,9 @@
 <div class="card m-1">
   <div class="card-body">
     <h5 class="card-title"><%= @talk.title %></h5>
+    <% if talk.talk_category %>
     <h6 class="card-subtitle mb-2 text-muted"><%= @talk.talk_category.name %> / <%= @talk.talk_time.time_minutes %>分</h6>
+    <% end %>
     <p class="card-text"><%= simple_format @talk.abstract %></p>
     <hr>
     <% if @video_registration.url.present? %>

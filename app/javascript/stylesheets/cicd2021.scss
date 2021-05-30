@@ -1,17 +1,18 @@
 // Import custom variables and override default Bootstrap variables
-@import "./_variables.scss";
+@import "./cicd2021/_variables.scss";
 // Import Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-table/src/bootstrap-table';
 // Import custom styles
 @import "./_global.scss";
 @import "./_navbar.scss";
-@import "./_timetable.scss";
+@import "./cicd2021/_timetable.scss";
 @import "./message_box.scss";
 @import "./_tracks.scss";
 @import "./_admin.scss";
 @import "./_booth.scss";
 @import "./_links.scss";
 @import "./_talks.scss";
+@import "./cicd2021/_cicd2021.scss";
 // Import custom utilities
-@import "./_utilities.scss";
+@import "./cicd2021/_utilities.scss";

@@ -1,3 +1,14 @@
+<% if f.object.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger" role="alert">
+    <h5>入力内容にエラーがあります:</h5>
+    <ul>
+      <% f.object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="talk-field">
 
   <div class="field pb-3">
@@ -18,6 +29,16 @@
   <div class="field pb-3">
     <%= f.label :document_url, "資料URL" %>
     <%= f.text_field :document_url, class: "form-control" %>
+  </div>
+
+  <div class="field pb-3">
+    <%= f.label :expected_participants, "想定受講者（★★）" %>*
+    <%= f.collection_check_boxes :expected_participants, expected_participant_params, :id, :params, {multiple: true}, {class: "form-control"} %>
+  </div>
+
+  <div class="field pb-3">
+    <%= f.label :execution_phases, "実行フェーズ（★★）" %>*
+    <%= f.collection_check_boxes :execution_phases, execution_phases_params, :id, :params, {multiple: true}, {class: "form-control"} %>
   </div>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>

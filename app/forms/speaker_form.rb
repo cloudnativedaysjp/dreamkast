@@ -13,6 +13,7 @@ class SpeakerForm
                 :github_id,
                 :avatar,
                 :conference_id,
+                :additional_documents,
                 :talks
 
   delegate :persisted?, to: :speaker
@@ -34,6 +35,8 @@ class SpeakerForm
           else
             params.delete(:_destroy)
             talk = @speaker.talks.find(params[:id])
+            params[:expected_participants] = params[:expected_participants].map(&:to_i).select{|n| n != 0} if params[:expected_participants].present?
+            params[:execution_phases] = params[:execution_phases].map(&:to_i).select{|n| n != 0}  if params[:execution_phases].present?
             talk.update(params)
             @talks << talk
           end
@@ -42,6 +45,8 @@ class SpeakerForm
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
+            params[:expected_participants] = params[:expected_participants].map(&:to_i)
+            params[:execution_phases] = params[:execution_phases].map(&:to_i)
             @talks << Talk.new(params)
           end
         end
@@ -113,6 +118,7 @@ class SpeakerForm
       twitter_id: speaker.twitter_id,
       github_id: speaker.github_id,
       avatar: speaker.avatar_data,
+      additional_documents: speaker.additional_documents,
       talks: talks
     }
   end

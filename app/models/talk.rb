@@ -170,10 +170,10 @@ class Talk < ApplicationRecord
   private
 
   def validate_expected_participants
-    errors.add(:base, '想定受講者は最低1項目選択してください') if expected_participants.empty?
+    errors.add(:base, '想定受講者は最低1項目選択してください') if expected_participants&.empty?
   end
 
   def validate_execution_phases
-    errors.add(:base, '実行フェーズは最低1項目選択してください') if execution_phases.empty?
+    errors.add(:base, '実行フェーズは最低1項目選択してください') if execution_phases&.empty?
   end
 end

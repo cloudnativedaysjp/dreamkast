@@ -46,6 +46,8 @@ RSpec.describe Talk, type: :model do
     create(:track4)
     create(:track5)
     create(:track6)
+    create(:proposal_item_configs_expected_participant)
+    create(:proposal_item_configs_execution_phase)
   end
 
   describe 'when import valid CSV' do

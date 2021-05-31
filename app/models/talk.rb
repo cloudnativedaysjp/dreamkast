@@ -26,6 +26,8 @@ class Talk < ApplicationRecord
   # validates :conference_day_id, presence: true
   # validates :start_time, presence: true
   # validates :end_time, presence: true
+  validate :validate_expected_participants
+  validate :validate_execution_phases
 
   SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
 
@@ -163,5 +165,15 @@ class Talk < ApplicationRecord
     now = Time.now.in_time_zone('Tokyo')
     etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     return (now.to_i - etime.to_i) >= 600
+  end
+
+  private
+
+  def validate_expected_participants
+    errors.add(:base, '想定受講者は最低1項目選択してください') if expected_participants&.empty?
+  end
+
+  def validate_execution_phases
+    errors.add(:base, '実行フェーズは最低1項目選択してください') if execution_phases&.empty?
   end
 end

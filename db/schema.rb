@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_114436) do
+ActiveRecord::Schema.define(version: 2021_05_30_020119) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -149,6 +149,16 @@ ActiveRecord::Schema.define(version: 2021_05_28_114436) do
     t.integer "conference_id"
   end
 
+  create_table "proposal_item_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.string "type"
+    t.integer "item_number"
+    t.string "label"
+    t.string "item_name"
+    t.json "params"
+    t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
+  end
+
   create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"
@@ -253,6 +263,8 @@ ActiveRecord::Schema.define(version: 2021_05_28_114436) do
     t.string "document_url"
     t.boolean "show_on_timetable"
     t.integer "talk_time_id"
+    t.json "expected_participants"
+    t.json "execution_phases"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
@@ -300,6 +312,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_114436) do
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
   add_foreign_key "links", "conferences"
+  add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"

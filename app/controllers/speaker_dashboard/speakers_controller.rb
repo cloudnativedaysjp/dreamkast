@@ -66,20 +66,20 @@ class SpeakerDashboard::SpeakersController < ApplicationController
         format.json { render :show, status: :ok, location: @speaker }
       else
         format.html { render :edit }
-        format.json { render json: @speaker_form.speaker.errors, status: :unprocessable_entity }
+        format.json { render json: @speaker_form.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
 
-  helper_method :speaker_url
+helper_method :speaker_url, :expected_participant_params, :execution_phases_params
 
   def speaker_url
     case action_name
     when 'new'
       "/#{params[:event]}/speaker_dashboard/speakers"
-    when 'edit'
+    when 'edit', 'update'
       "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"
     end
   end
@@ -88,6 +88,14 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     if @current_user
       Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
     end
+  end
+
+  def expected_participant_params
+    @conference.proposal_item_configs.where(label: 'expected_participant')
+  end
+
+  def execution_phases_params
+    @conference.proposal_item_configs.where(label: 'execution_phase')
   end
 
   # Only allow a list of trusted parameters through.
@@ -102,6 +110,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
                                     :github_id,
                                     :avatar,
                                     :conference_id,
-                                    talks_attributes: [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_time_id])
+                                    :additional_documents,
+                                    talks_attributes: [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, expected_participants: [], execution_phases: []])
   end
 end

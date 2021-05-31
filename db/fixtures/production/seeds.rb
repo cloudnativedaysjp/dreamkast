@@ -828,3 +828,86 @@ EOS
   }
 )
 
+ProposalItemConfig.seed(
+  {
+    id: 1,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'architect - システム設計'
+  },
+  {
+    id: 2,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'dveloper - システム開発'
+  },
+  {
+    id: 3,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'app-developer - アプリケーション開発'
+  },
+  {
+    id: 4,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'operator/sys-admin - 運用管理/システム管理'
+  },
+  {
+    id: 5,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'CxO/biz - ビジネス層'
+  },
+  {
+    id: 6,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'expected_participant',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'その他'
+  },
+  {
+    id: 7,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Dev/QA（開発環境）'
+  },
+  {
+    id: 8,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'PoC（検証）'
+  },
+  {
+    id: 9,
+    conference_id: 3,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Production（本番環境）'
+  },
+  )

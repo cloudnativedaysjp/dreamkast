@@ -1,3 +1,14 @@
+<% if f.object.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger" role="alert">
+    <h5>入力内容にエラーがあります:</h5>
+    <ul>
+      <% f.object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="talk-field">
 
   <div class="field pb-3">
@@ -18,6 +29,26 @@
   <div class="field pb-3">
     <%= f.label :document_url, "資料URL" %>
     <%= f.text_field :document_url, class: "form-control" %>
+  </div>
+
+  <div class="field pb-3">
+    <%= f.label :expected_participants, "想定受講者（★★）", {class: 'form-check-label'}%>*
+    <div class="form-check">
+      <% expected_participant_params.each do |item| %>
+        <%= f.check_box :expected_participants, {multiple: true}, item.id,  {class: 'form-check-input'} %>
+        <%= f.label :expected_participants, item.params, {class: 'form-check-label'} %><br>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field pb-3">
+    <%= f.label :execution_phases, "実行フェーズ（★★）" %>*
+    <div class="form-check">
+      <% execution_phases_params.each do |item| %>
+        <%= f.check_box :execution_phases, {multiple: true}, item.id, {class: "form-control"} %>
+        <%= f.label :execution_phases, item.params, {class: 'form-check-label'} %><br>
+      <% end %>
+    </div>
   </div>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>

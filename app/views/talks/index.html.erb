@@ -32,7 +32,7 @@
           </td>
 
           <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.talk_category.name %>
+            <%= talk.talk_category.name if talk.talk_category.present? %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center">

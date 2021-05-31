@@ -25,16 +25,21 @@
               <% if talk.document_url.present? %>
                 <p class="card-text">資料URL: <%= link_to talk.document_url, talk.document_url %></p>
               <% else %>
-                <p class="card-text">資料URLはまだ追加されていません</p>
+                <% if @conference.speaker_entry_disabled? %>
+                  <p class="card-text">資料URLはまだ追加されていません</p>
+                <% end %>
               <% end %>
 
-              <% if talk.video_registration&.url.present? %>
-                <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
-              <% else %>
-                <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
-              <% end %>
+              <% if @conference.speaker_entry_disabled? %>
 
-              <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
+                <% if talk.video_registration&.url.present? %>
+                  <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
+                <% else %>
+                  <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
+                <% end %>
+
+                <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
+              <% end %>
             </div>
           </div>
         <% end %>

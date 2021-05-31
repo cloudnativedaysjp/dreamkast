@@ -74,7 +74,7 @@ class SpeakerForm
 
     ActiveRecord::Base.transaction do
       puts "conference_id #{conference_id}"
-      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email)
+      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
       @destroy_talks.each do |talk|
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
         talk.destroy!

@@ -987,7 +987,7 @@ ProposalItemConfig.seed(
     label: 'expected_participant',
     item_number: 1,
     item_name: '想定受講者（★★）',
-    params: 'dveloper - システム開発'
+    params: 'developer - システム開発'
   },
   {
     id: 3,

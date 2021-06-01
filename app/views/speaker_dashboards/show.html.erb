@@ -23,10 +23,10 @@
               <p class="card-text"><%= simple_format talk.abstract %></p>
 
               <% if talk.document_url.present? %>
-                <p class="card-text">資料URL: <%= link_to talk.document_url, talk.document_url %></p>
+                <p class="card-text">セッション資料公開URL: <%= link_to talk.document_url, talk.document_url %></p>
               <% else %>
                 <% if @conference.speaker_entry_disabled? %>
-                  <p class="card-text">資料URLはまだ追加されていません</p>
+                  <p class="card-text">セッション資料公開URLはまだ追加されていません</p>
                 <% end %>
               <% end %>
 

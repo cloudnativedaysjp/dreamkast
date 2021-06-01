@@ -26,10 +26,12 @@
     <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
+  <% if @conference.speaker_entry_disabled? %>
   <div class="field pb-3">
     <%= f.label :document_url, "資料URL" %>
     <%= f.text_field :document_url, class: "form-control" %>
   </div>
+  <% end %>
 
   <div class="field pb-3">
     <%= f.label :expected_participants, "想定受講者（★★）", {class: 'form-check-label'}%>*

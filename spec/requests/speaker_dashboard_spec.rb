@@ -47,6 +47,22 @@ describe SpeakerDashboardsController, type: :request do
           expect(response.body).to include 'edit'
         end
       end
+
+      describe 'registered and entry enabled' do
+        before do
+          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(admin_userinfo)
+          create(:cndt2020_speaker_entry_enabled)
+          create(:speaker_alice)
+        end
+
+        it "doesn't include information about video status" do
+          get '/cndt2020/speaker_dashboard'
+          expect(response).to be_successful
+          expect(response).to have_http_status '200'
+          expect(response.body).to_not include 'ビデオファイル提出状況'
+          expect(response.body).to include 'edit'
+        end
+      end
     end
   end
 end

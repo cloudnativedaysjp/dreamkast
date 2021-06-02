@@ -50,7 +50,7 @@ EOS
     abbr: "cicd2021",
     theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cicd2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'

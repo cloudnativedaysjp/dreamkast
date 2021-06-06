@@ -6,10 +6,10 @@
 #
 default: &default
   adapter: mysql2
-  database: <%= ENV['MYSQL_DATABASE'] || "dreamkast" %>
-  username: <%= ENV['MYSQL_USER'] || "user" %>
-  password: <%= ENV['MYSQL_PASSWORD'] || "password" %>
-  host: <%= ENV['MYSQL_HOST'] || "127.0.0.1" %>
+  database: "<%= ENV['MYSQL_DATABASE'] || 'dreamkast' %>"
+  username: "<%= ENV['MYSQL_USER'] || 'user' %>"
+  password: "<%= ENV['MYSQL_PASSWORD'] || 'password' %>"
+  host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
   encoding: utf8mb4
 
 development:
@@ -20,21 +20,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   adapter: mysql2
-  host: <%= ENV.fetch('MYSQL_HOST') { '127.0.0.1'} %>
-  port: <%= ENV.fetch("DATABASE_PORT") { 3306 } %>
-  username: <%= ENV.fetch('MYSQL_USER') { 'root' } %>
-  password: <%= ENV.fetch('MYSQL_PASSWORD') { 'root' }%>
-  database: 'dreamkast_test'
-
-heroku: &heroku
-  url: <%= ENV['DATABASE_URL'] || ENV.fetch('CLEARDB_DATABASE_URL', '').sub('mysql://', 'mysql2://') %>
-  encoding: utf8mb4
-  adapter: mysql2
-  pool: 50
+  database: dreamkast_test
+  username: "<%= ENV['MYSQL_USER'] || 'root' %>"
+  password: "<%= ENV['MYSQL_PASSWORD'] || 'root' %>"
+  host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
+  port: "<%= ENV['DATABASE_PORT'] || 3306 %>"
 
 production:
-  <% if ENV['CLEARDB_DATABASE_URL'] %>
-  <<: *heroku
-  <% else %>
   <<: *default
-  <% end %>

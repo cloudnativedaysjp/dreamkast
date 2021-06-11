@@ -1,4 +1,7 @@
 class Talk < ApplicationRecord
+  after_create do
+    SpeakerMailer.cfp_registered(Thread.current[:user], self).deliver_now
+  end
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference
@@ -158,6 +161,18 @@ class Talk < ApplicationRecord
       start_time.strftime("%H:%M") + "-" + end_time.strftime("%H:%M")
     else
       ''
+    end
+  end
+
+  def expected_participant_params
+    self.expected_participants.filter_map do |e|
+      ProposalItemConfig.find(e).params unless e == 0
+    end
+  end
+
+  def execution_phase_params
+    self.execution_phases.filter_map do |e|
+      ProposalItemConfig.find(e).params unless e == 0
     end
   end
 

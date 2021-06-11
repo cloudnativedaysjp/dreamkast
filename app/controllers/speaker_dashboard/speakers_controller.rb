@@ -86,7 +86,9 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
 
   def pundit_user
     if @current_user
-      Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+      speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+      Thread.current[:user] = speaker
+      speaker
     end
   end
 

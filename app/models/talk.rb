@@ -1,7 +1,4 @@
 class Talk < ApplicationRecord
-  after_create do
-    SpeakerMailer.cfp_registered(Thread.current[:user], self).deliver_now
-  end
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference

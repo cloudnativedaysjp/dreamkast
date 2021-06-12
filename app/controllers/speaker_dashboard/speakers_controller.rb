@@ -38,7 +38,15 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @speaker_form.email = @current_user[:info][:email]
 
     respond_to do |format|
-      if @speaker_form.save
+      if r = @speaker_form.save
+        r.each do |talk|
+          begin
+            # TODO: 非同期実行
+            SpeakerMailer.cfp_registered(@speaker, talk).deliver_now
+          rescue => e
+            logger.error "Failed to send mail: #{e.message}"
+          end
+        end
         format.html { redirect_to "/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else
@@ -59,9 +67,18 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
     # @speaker_form.load
+    exists_talks = @speaker.talk_ids
 
     respond_to do |format|
-      if @speaker_form.save
+      if r = @speaker_form.save
+        r.each do |talk|
+          begin
+            # TODO: 非同期実行
+            SpeakerMailer.cfp_registered(@speaker, talk).deliver_now unless exists_talks.include?(talk.id)
+          rescue => e
+            logger.error "Failed to send mail: #{e.message}"
+          end
+        end
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @speaker }
       else
@@ -86,9 +103,7 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
 
   def pundit_user
     if @current_user
-      speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
-      Thread.current[:user] = speaker
-      speaker
+      Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
     end
   end
 

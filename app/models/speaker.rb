@@ -6,6 +6,8 @@ class Speaker < ApplicationRecord
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
+  has_many :proposals_speakers
+  has_many :proposals, through: :proposals_speakers
 
   validates :name, presence: true
   validates :profile, presence: true

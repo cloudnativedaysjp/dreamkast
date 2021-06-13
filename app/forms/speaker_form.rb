@@ -87,6 +87,11 @@ class SpeakerForm
           talk.save!
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
+
+          proposal = Proposal.new(conference_id: conference_id, talk_id: talk.id)
+          proposal.save!
+          proposal_speaker = ProposalsSpeaker.new(proposal_id: proposal.id, speaker_id: speaker.id)
+          proposal_speaker.save!
         end
       end
     end

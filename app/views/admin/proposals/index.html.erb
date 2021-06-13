@@ -1,0 +1,31 @@
+<%= render 'admin/layout' do %>
+  <div class="row">
+    <h2>Talks</h2>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col">Speakers</th>
+        <th scope="col">Title / Abstract</th>
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @proposals.each do |proposal| %>
+        <tr>
+
+          <td><ul class="p-0"><% proposal.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+
+          <td>
+            <h5><%= proposal.talk.title %></h5>
+            <p class="abstract"><%= proposal.talk.abstract[0..30] %></p>
+          </td>
+
+          <td>
+            <%= proposal.status %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

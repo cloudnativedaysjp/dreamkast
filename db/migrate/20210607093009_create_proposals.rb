@@ -14,5 +14,7 @@ class CreateProposals < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    add_column :conferences, :cfp_result_visible, :boolean, default: false
   end
 end

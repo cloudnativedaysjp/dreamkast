@@ -20,7 +20,7 @@ class SpeakerDashboardsController < ApplicationController
 
   private
 
-  helper_method :video_registration_url, :video_registration_status
+  helper_method :video_registration_url, :video_registration_status, :proposal_status
 
   def video_registration_url(talk)
     if talk.video_registration.present?
@@ -35,6 +35,19 @@ class SpeakerDashboardsController < ApplicationController
       '提出されたビデオファイルの確認中です。'
     elsif video_registration.confirmed?
       '提出されたビデオファイルの確認が完了しました。'
+    end
+  end
+
+  def proposal_status(proposal)
+    return 'エントリー済み' unless @conference.cfp_result_visible
+
+    case proposal.status
+    when 'registered'
+      'エントリー済み'
+    when 'accepted'
+      '採択'
+    when 'rejected'
+      '不採択'
     end
   end
 end

@@ -17,6 +17,7 @@
                 <%= talk.title %>
                 <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
               </h5>
+              受付状況: <%= proposal_status(talk.proposal) %>
               <% if talk.talk_category %>
               <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
               <% end %>

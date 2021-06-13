@@ -18,6 +18,7 @@ class Admin::ConferencesController < ApplicationController
 
   def update
     @conference_form = ConferenceForm.new(conference_params, conference: @conference)
+        referrer_controller = Rails.application.routes.recognize_path(request.referrer)[:controller]
 
     respond_to do |format|
       if @conference_form.save
@@ -25,7 +26,12 @@ class Admin::ConferencesController < ApplicationController
           path = "/#{@conference.abbr}/#{@conference.abbr == 'cndt2020' ? 'tracks' : 'ui/'}"
           ActionCable.server.broadcast("waiting_channel",{msg: "redirect to tracks", redirectTo: path})
         end
-        format.html { redirect_to admin_path, notice: "Conference was successfully updated." }
+        redirect_path = if referrer_controller == 'admin/proposals'
+                          admin_proposals_path
+                        else
+                          admin_path
+                        end
+        format.html { redirect_to redirect_path, notice: "Conference was successfully updated." }
       else
         format.html { render :edit }
       end
@@ -40,6 +46,7 @@ class Admin::ConferencesController < ApplicationController
 
   def conference_params
     params.require(:conference).permit(:status,
+                                       :cfp_result_visible,
                                        :speaker_entry,
                                        :attendee_entry,
                                        :show_timetable,

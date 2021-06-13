@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
     t.integer "speaker_entry"
     t.integer "attendee_entry"
     t.integer "show_timetable"
+    t.boolean "cfp_result_visible", default: false
     t.index ["status"], name: "index_conferences_on_status"
   end
 

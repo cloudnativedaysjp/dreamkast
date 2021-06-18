@@ -7,8 +7,6 @@ describe TalksController, type: :request do
   describe "GET /cndt2020/talks/:id" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
       create(:track1)
       create(:track2)
       create(:track3)

@@ -5,8 +5,6 @@ describe SpeakerDashboard::SpeakersController, type: :request do
   describe "GET speakers#edit" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
     end
 
     context "user doesn't log in" do

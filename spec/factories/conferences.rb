@@ -17,7 +17,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
     coc { "this is coc"}
 
-    trait :closed do
+    trait :registered do
       status { 0 }
     end
 
@@ -25,12 +25,25 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       status { 1 }
     end
 
-    trait :archived do
+    trait :closed do
       status { 2 }
+    end
+
+    trait :archived do
+      status { 3 }
     end
 
     trait :speaker_entry_enabled do
       speaker_entry { 1 }
+    end
+
+    trait :speaker_entry_disabled do
+      speaker_entry { 0 }
+    end
+
+    after(:build) do
+      create(:day1)
+      create(:day2)
     end
   end
 

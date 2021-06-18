@@ -77,8 +77,6 @@ RSpec.describe TracksController, type: :request do
     describe "logged in and registered" do
       before do
         create(:cndt2020, :opened)
-        create(:day1)
-        create(:day2)
         create(:alice)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end

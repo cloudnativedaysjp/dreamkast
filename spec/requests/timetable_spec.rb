@@ -7,8 +7,6 @@ describe TimetableController, type: :request do
   describe "GET #index" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
       create(:rejekt)
       create(:track1)
       create(:track2)

@@ -7,8 +7,6 @@ describe EventController, type: :request do
   describe "GET event#show" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
     end
 
     describe 'not logged in' do

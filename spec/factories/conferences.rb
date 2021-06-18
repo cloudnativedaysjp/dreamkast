@@ -41,9 +41,15 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       speaker_entry { 0 }
     end
 
-    after(:build) do
+    after(:build) do |conference|
       create(:day1)
       create(:day2)
+      create(:track, id: 1, number: 1, name: 'A', conference_id: conference.id, video_id: 'video_1')
+      create(:track, id: 2, number: 2, name: 'B', conference_id: conference.id, video_id: 'video_2')
+      create(:track, id: 3, number: 3, name: 'C', conference_id: conference.id, video_id: 'video_3')
+      create(:track, id: 4, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_4')
+      create(:track, id: 5, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_5')
+      create(:track, id: 6, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_6')
     end
   end
 

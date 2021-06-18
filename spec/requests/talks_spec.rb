@@ -8,12 +8,6 @@ describe TalksController, type: :request do
     context 'CNDT2020 is registered' do
       before do
         create(:cndt2020, :registered)
-        create(:track1)
-        create(:track2)
-        create(:track3)
-        create(:track4)
-        create(:track5)
-        create(:track6)
         create(:talk_category1)
         create(:talk_difficulties1)
       end
@@ -113,12 +107,6 @@ describe TalksController, type: :request do
     context 'CNDT2020 is opened' do
       before do
         create(:cndt2020, :opened)
-        create(:track1)
-        create(:track2)
-        create(:track3)
-        create(:track4)
-        create(:track5)
-        create(:track6)
         create(:talk_category1)
         create(:talk_difficulties1)
       end
@@ -210,12 +198,6 @@ describe TalksController, type: :request do
     context 'CNDT2020 is closed' do
       before do
         create(:cndt2020, :closed)
-        create(:track1)
-        create(:track2)
-        create(:track3)
-        create(:track4)
-        create(:track5)
-        create(:track6)
         create(:talk_category1)
         create(:talk_difficulties1)
       end
@@ -307,12 +289,6 @@ describe TalksController, type: :request do
     context 'CNDT2020 is archived' do
       before do
         create(:cndt2020, :archived)
-        create(:track1)
-        create(:track2)
-        create(:track3)
-        create(:track4)
-        create(:track5)
-        create(:track6)
         create(:talk_category1)
         create(:talk_difficulties1)
       end

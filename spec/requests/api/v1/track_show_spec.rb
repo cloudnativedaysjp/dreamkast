@@ -6,8 +6,6 @@ describe TalksController, type: :request do
       create(:cndt2020)
       create(:talk1)
       create(:talk2)
-      create(:track1)
-      create(:track2)
     end
 
     it 'confirm json schema' do

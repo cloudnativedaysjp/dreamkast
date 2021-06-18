@@ -8,12 +8,6 @@ describe TimetableController, type: :request do
     before do
       create(:cndt2020)
       create(:rejekt)
-      create(:track1)
-      create(:track2)
-      create(:track3)
-      create(:track4)
-      create(:track5)
-      create(:track6)
       create(:talk_category1)
       create(:talk_difficulties1)
     end

@@ -6,8 +6,6 @@ describe Api::V1::SponsorsController, type: :request do
       create(:cndt2020)
       create(:talk1)
       create(:talk2)
-      create(:track1)
-      create(:track2)
       create(:sponsor)
       create(:sponsor_attachment_logo)
     end

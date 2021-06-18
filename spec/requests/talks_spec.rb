@@ -5,23 +5,23 @@ describe TalksController, type: :request do
   let(:roles) { [] }
 
   describe "GET /cndt2020/talks/:id" do
-    before do
-      create(:cndt2020)
-      create(:track1)
-      create(:track2)
-      create(:track3)
-      create(:track4)
-      create(:track5)
-      create(:track6)
-      create(:talk_category1)
-      create(:talk_difficulties1)
-    end
-    let!(:talk1) { create(:talk1) }
-    let!(:talk2) { create(:talk2) }
-    let!(:video) { create(:video) }
+    context 'CNDT2020 is registered' do
+      before do
+        create(:cndt2020, :registered)
+        create(:track1)
+        create(:track2)
+        create(:track3)
+        create(:track4)
+        create(:track5)
+        create(:track6)
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
+      let!(:talk1) { create(:talk1) }
+      let!(:talk2) { create(:talk2) }
+      let!(:video) { create(:video) }
 
-    context "user doesn't logged in" do
-      context 'site registered' do
+      context "user doesn't logged in" do
         it "returns a success response" do
           get '/cndt2020/talks/1'
           expect(response).to be_successful
@@ -43,116 +43,21 @@ describe TalksController, type: :request do
         end
       end
 
-      context 'site opened' do
-        before do
-          Conference.destroy_all
-          create(:cndt2020, :opened)
-        end
-
-        context 'talk is archived' do
+      context "user logged in" do
+        context "user doesn't registered" do
           before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
+            allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
           end
 
-          it "doesn't includes vimeo iframe" do
+          it "redirect to /cndt2020/registration" do
             get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).not_to include "player.vimeo.com"
+            expect(response).to_not be_successful
+            expect(response).to have_http_status '302'
+            expect(response).to redirect_to '/cndt2020/registration'
           end
         end
 
-        context 'talk is not archived' do
-          before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
-          end
-
-          it "doesn't includes vimeo iframe" do
-            get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).not_to include "player.vimeo.com"
-          end
-        end
-      end
-
-      context 'site is closed' do
-        before do
-          Conference.destroy_all
-          create(:cndt2020, :closed)
-        end
-
-        describe 'talk is archived' do
-          before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
-          end
-
-          it "includes vimeo iframe" do
-            get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).to_not include "player.vimeo.com"
-          end
-        end
-
-        context 'talk is not archived' do
-          before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
-          end
-
-          it "doesn't includes vimeo iframe" do
-            get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).to_not include "player.vimeo.com"
-          end
-        end
-      end
-
-      context 'site is archived' do
-        before do
-          Conference.destroy_all
-          create(:cndt2020, :archived)
-        end
-
-        context 'talk is archived' do
-          before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
-          end
-
-          it "includes vimeo iframe" do
-            get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).to include "player.vimeo.com"
-          end
-        end
-
-        context 'talk is not archived' do
-          before do
-            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
-          end
-
-          it "doesn't includes vimeo iframe" do
-            get '/cndt2020/talks/1'
-            expect(response).to be_successful
-            expect(response.body).to_not include "player.vimeo.com"
-          end
-        end
-      end
-    end
-
-    context 'logged in' do
-      context "user doesn't registered" do
-        before do
-          allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
-        end
-
-        it "redirect to /cndt2020/registration" do
-          get '/cndt2020/talks/1'
-          expect(response).to_not be_successful
-          expect(response).to have_http_status '302'
-          expect(response).to redirect_to '/cndt2020/registration'
-        end
-      end
-
-      context "user already registered" do
-        context 'site registered' do
+        context "user already registered" do
           before do
             create(:alice)
             allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
@@ -202,11 +107,54 @@ describe TalksController, type: :request do
             end
           end
         end
+      end
+    end
 
-        context 'site opened' do
+    context 'CNDT2020 is opened' do
+      before do
+        create(:cndt2020, :opened)
+        create(:track1)
+        create(:track2)
+        create(:track3)
+        create(:track4)
+        create(:track5)
+        create(:track6)
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
+      let!(:talk1) { create(:talk1) }
+      let!(:talk2) { create(:talk2) }
+      let!(:video) { create(:video) }
+
+      context "user doesn't logged in" do
+        context 'talk is archived' do
           before do
-            Conference.destroy_all
-            create(:cndt2020, :opened)
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
+          end
+
+          it "doesn't includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).not_to include "player.vimeo.com"
+          end
+        end
+
+        context 'talk is not archived' do
+          before do
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
+          end
+
+          it "doesn't includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).not_to include "player.vimeo.com"
+          end
+        end
+      end
+
+      context "user logged in" do
+        context "user already registered" do
+          before do
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)
@@ -256,11 +204,54 @@ describe TalksController, type: :request do
             end
           end
         end
+      end
+    end
 
-        context 'site closed' do
+    context 'CNDT2020 is closed' do
+      before do
+        create(:cndt2020, :closed)
+        create(:track1)
+        create(:track2)
+        create(:track3)
+        create(:track4)
+        create(:track5)
+        create(:track6)
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
+      let!(:talk1) { create(:talk1) }
+      let!(:talk2) { create(:talk2) }
+      let!(:video) { create(:video) }
+
+      context "user doesn't logged in" do
+        describe 'talk is archived' do
           before do
-            Conference.destroy_all
-            create(:cndt2020, :closed)
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
+          end
+
+          it "includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).to_not include "player.vimeo.com"
+          end
+        end
+
+        context 'talk is not archived' do
+          before do
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
+          end
+
+          it "doesn't includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).to_not include "player.vimeo.com"
+          end
+        end
+      end
+
+      context "user logged in" do
+        context "user already registered" do
+          before do
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)
@@ -310,11 +301,54 @@ describe TalksController, type: :request do
             end
           end
         end
+      end
+    end
 
-        context 'site archived' do
+    context 'CNDT2020 is archived' do
+      before do
+        create(:cndt2020, :archived)
+        create(:track1)
+        create(:track2)
+        create(:track3)
+        create(:track4)
+        create(:track5)
+        create(:track6)
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
+      let!(:talk1) { create(:talk1) }
+      let!(:talk2) { create(:talk2) }
+      let!(:video) { create(:video) }
+
+      context "user doesn't logged in" do
+        context 'talk is archived' do
           before do
-            Conference.destroy_all
-            create(:cndt2020, :closed)
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
+          end
+
+          it "includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).to include "player.vimeo.com"
+          end
+        end
+
+        context 'talk is not archived' do
+          before do
+            allow_any_instance_of(Talk).to receive(:archived?).and_return(false)
+          end
+
+          it "doesn't includes vimeo iframe" do
+            get '/cndt2020/talks/1'
+            expect(response).to be_successful
+            expect(response.body).to_not include "player.vimeo.com"
+          end
+        end
+      end
+
+      context "user logged in" do
+        context "user already registered" do
+          before do
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)

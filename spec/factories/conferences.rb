@@ -69,5 +69,17 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
+
+    after(:build) do |conference|
+      create(:cndo_day1)
+      create(:cndo_day2)
+      create(:track, id: 10, number: 1, name: 'A', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 11, number: 2, name: 'B', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 12, number: 3, name: 'C', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 13, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 14, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 15, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 16, number: 7, name: 'G', conference_id: conference.id, video_id: 'video_7')
+    end
   end
 end

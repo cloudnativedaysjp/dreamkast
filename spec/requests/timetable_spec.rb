@@ -85,15 +85,6 @@ describe TimetableController, type: :request do
   describe "GET cndo#index" do
     before do
       create(:cndo2021)
-      create(:cndo_day1)
-      create(:cndo_day2)
-      create(:cndo_track1)
-      create(:cndo_track2)
-      create(:cndo_track3)
-      create(:cndo_track4)
-      create(:cndo_track5)
-      create(:cndo_track6)
-      create(:cndo_track7)
       create(:cndo_talk_category1)
       create(:cndo_talk_difficulties1)
     end

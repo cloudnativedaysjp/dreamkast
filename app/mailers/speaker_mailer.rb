@@ -9,4 +9,12 @@ class SpeakerMailer < ApplicationMailer
 
     mail(to: speaker.email, subject: 'ビデオファイルの提出が完了しました')
   end
+
+  def cfp_registered(conference, speaker, talk)
+    @conference = conference
+    @speaker = speaker
+    @talk = talk
+
+    mail(to: speaker.email, subject: "【#{@conference.name}】プロポーザルを受け付けました")
+  end
 end

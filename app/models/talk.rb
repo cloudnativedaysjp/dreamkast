@@ -161,6 +161,18 @@ class Talk < ApplicationRecord
     end
   end
 
+  def expected_participant_params
+    self.expected_participants.filter_map do |e|
+      ProposalItemConfig.find(e).params unless e == 0
+    end
+  end
+
+  def execution_phase_params
+    self.execution_phases.filter_map do |e|
+      ProposalItemConfig.find(e).params unless e == 0
+    end
+  end
+
   def archived?
     now = Time.now.in_time_zone('Tokyo')
     etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")

@@ -35,7 +35,7 @@ describe AdminController, type: :request do
 
       context "user is registered" do
         before do
-          create(:alice)
+          create(:alice, :on_cndt2020)
         end
 
         context "user is admin" do
@@ -86,7 +86,7 @@ describe AdminController, type: :request do
 
       context 'user is registered' do
         before do
-          create(:alice)
+          create(:alice, :on_cndt2020)
         end
 
         context 'user is admin' do

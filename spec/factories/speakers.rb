@@ -9,6 +9,7 @@ FactoryBot.define do
     job_title { 'job_title' }
     conference_id { 1 }
   end
+
   factory :speaker_bob, class: Speaker do
     id { 2 }
     sub { 'bbb' }

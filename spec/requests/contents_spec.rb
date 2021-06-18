@@ -9,7 +9,7 @@ describe ContentsController, type: :request do
 
       before do
         create(:cndt2020)
-        create(:alice)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 
@@ -58,7 +58,7 @@ describe ContentsController, type: :request do
 
       before do
         create(:cndt2020)
-        create(:alice)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 

@@ -20,6 +20,7 @@ class Profile < ApplicationRecord
   has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks
   has_many :agreements
   has_many :form_items, through: :agreements
+  has_many :chat_messages
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
   validates :sub, presence: true, length: { maximum: 250 }

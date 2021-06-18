@@ -55,7 +55,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:alice)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 
@@ -120,7 +120,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:bob_cndo2021)
+        create(:bob, :on_cndo2021)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 

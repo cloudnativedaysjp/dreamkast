@@ -53,7 +53,7 @@ describe TalksController, type: :request do
 
         context "user already registered" do
           before do
-            create(:alice)
+            create(:alice, :on_cndt2020)
             allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
           end
 
@@ -144,8 +144,8 @@ describe TalksController, type: :request do
         context "user already registered" do
           before do
             create(:cndo2021)
-            create(:alice)
-            create(:alice_cndo2021)
+            create(:alice, :on_cndt2020)
+            create(:alice, :on_cndo2021)
             allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
             allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
           end
@@ -235,8 +235,8 @@ describe TalksController, type: :request do
         context "user already registered" do
           before do
             create(:cndo2021)
-            create(:alice)
-            create(:alice_cndo2021)
+            create(:alice, :on_cndt2020)
+            create(:alice, :on_cndo2021)
             allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
             allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
           end
@@ -326,8 +326,8 @@ describe TalksController, type: :request do
         context "user already registered" do
           before do
             create(:cndo2021)
-            create(:alice)
-            create(:alice_cndo2021)
+            create(:alice, :on_cndt2020)
+            create(:alice, :on_cndo2021)
             allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
             allow_any_instance_of(Talk).to receive(:archived?).and_return(true)
           end

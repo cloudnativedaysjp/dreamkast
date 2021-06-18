@@ -23,10 +23,10 @@ describe Api::V1::ChatMessagesController, type: :request do
       before do
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
         create(:cndt2020)
-        create(:alice)
         create(:talk1)
-        create(:message_from_alice)
+        create(:message_from_alice, profile: alice)
       end
+      let!(:alice) { create(:alice, :on_cndt2020)}
 
       it 'confirm json schema' do
         put '/api/v1/chat_messages/1', params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
@@ -45,11 +45,11 @@ describe Api::V1::ChatMessagesController, type: :request do
     before do
       allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
       create(:cndt2020)
-      create(:alice)
-      create(:bob)
+      create(:alice, :on_cndt2020)
       create(:talk1)
-      create(:message_from_bob)
+      create(:message_from_bob, profile: bob)
     end
+    let!(:bob) { create(:bob, :on_cndt2020)}
 
     it 'confirm json schema' do
       put '/api/v1/chat_messages/2', params: {"eventAbbr": "cndt2020", "body": "hogehoge"}

@@ -16,62 +16,24 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
     coc { "this is coc"}
+
+    trait :closed do
+      status { 0 }
+    end
+
+    trait :opened do
+      status { 1 }
+    end
+
+    trait :archived do
+      status { 2 }
+    end
+
+    trait :speaker_entry_enabled do
+      speaker_entry { 1 }
+    end
   end
 
-  factory :cndt2020_opened, class: Conference do
-    id { 1 }
-    name { 'CloudNative Days Tokyo 2020'}
-    abbr { 'cndt2020' }
-    theme { 'これはTestEventAutumn2020のテーマです' }
-    copyright { '© Test Event Autumn 2020 Committee' }
-    privacy_policy { 'This is Privacy Policy' }
-    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
-    status { 1 }
-    speaker_entry { 1 }
-    attendee_entry { 1 }
-    show_timetable { 1 }
-    about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
-  end
-
-  factory :cndt2020_closed, class: Conference do
-    id { 1 }
-    name { 'CloudNative Days Tokyo 2020'}
-    abbr { 'cndt2020' }
-    theme { 'これはTestEventAutumn2020のテーマです' }
-    copyright { '© Test Event Autumn 2020 Committee' }
-    privacy_policy { 'This is Privacy Policy' }
-    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
-    status { 2 }
-    speaker_entry { 1 }
-    attendee_entry { 1 }
-    show_timetable { 1 }
-    about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
-  end
-
-
-  factory :cndt2020_archived, class: Conference do
-    id { 1 }
-    name { 'CloudNative Days Tokyo 2020'}
-    abbr { 'cndt2020' }
-    theme { 'これはTestEventAutumn2020のテーマです' }
-    copyright { '© Test Event Autumn 2020 Committee' }
-    privacy_policy { 'This is Privacy Policy' }
-    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
-    status { 3 }
-    speaker_entry { 1 }
-    attendee_entry { 1 }
-    show_timetable { 1 }
-    about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
-  end
   factory :cndo2021, class: Conference do
     id { 2 }
     name { 'CloudNative Days Online 2021'}
@@ -84,23 +46,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
-    about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
-  end
-  factory :cndt2020_speaker_entry_enabled, class: Conference do
-    id { 3 }
-    name { 'CloudNative Days Tokyo 2020'}
-    abbr { 'cndt2020' }
-    theme { 'これはCICD2021のテーマです' }
-    copyright { '© CloudNativeDaysOnline 2021 Committee' }
-    privacy_policy { 'This is Privacy Policy' }
-    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
-    status { 0 }
-    speaker_entry { 1 }
-    attendee_entry { 0 }
-    show_timetable { 0 }
     about { "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.

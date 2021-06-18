@@ -48,7 +48,7 @@ describe TalksController, type: :request do
       context 'site opened' do
         before do
           Conference.destroy_all
-          create(:cndt2020_opened)
+          create(:cndt2020, :opened)
         end
 
         context 'talk is archived' do
@@ -79,7 +79,7 @@ describe TalksController, type: :request do
       context 'site is closed' do
         before do
           Conference.destroy_all
-          create(:cndt2020_closed)
+          create(:cndt2020, :closed)
         end
 
         describe 'talk is archived' do
@@ -110,7 +110,7 @@ describe TalksController, type: :request do
       context 'site is archived' do
         before do
           Conference.destroy_all
-          create(:cndt2020_archived)
+          create(:cndt2020, :archived)
         end
 
         context 'talk is archived' do
@@ -208,7 +208,7 @@ describe TalksController, type: :request do
         context 'site opened' do
           before do
             Conference.destroy_all
-            create(:cndt2020_opened)
+            create(:cndt2020, :opened)
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)
@@ -262,7 +262,7 @@ describe TalksController, type: :request do
         context 'site closed' do
           before do
             Conference.destroy_all
-            create(:cndt2020_closed)
+            create(:cndt2020, :closed)
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)
@@ -316,7 +316,7 @@ describe TalksController, type: :request do
         context 'site archived' do
           before do
             Conference.destroy_all
-            create(:cndt2020_closed)
+            create(:cndt2020, :closed)
             create(:cndo2021)
             create(:alice)
             create(:alice_cndo2021)

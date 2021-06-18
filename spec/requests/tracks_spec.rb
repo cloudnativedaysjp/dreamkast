@@ -76,7 +76,7 @@ RSpec.describe TracksController, type: :request do
   describe "GET /:event/tracks" do
     describe "logged in and registered" do
       before do
-        create(:cndt2020_opened)
+        create(:cndt2020, :opened)
         create(:day1)
         create(:day2)
         create(:alice)

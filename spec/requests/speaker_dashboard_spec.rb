@@ -51,7 +51,7 @@ describe SpeakerDashboardsController, type: :request do
       describe 'registered and entry enabled' do
         before do
           allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(admin_userinfo)
-          create(:cndt2020_speaker_entry_enabled)
+          create(:cndt2020, :speaker_entry_enabled)
           create(:speaker_alice)
         end
 

@@ -15,6 +15,6 @@ class SpeakerMailer < ApplicationMailer
     @speaker = speaker
     @talk = talk
 
-    mail(to: speaker.email, subject: 'プロポーザルを受け付けました')
+    mail(to: speaker.email, subject: "【#{@conference.name}】プロポーザルを受け付けました")
   end
 end

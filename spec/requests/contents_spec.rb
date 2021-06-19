@@ -4,7 +4,7 @@ describe ContentsController, type: :request do
   describe "GET #kontest" do
 
     describe "logged in and registered" do
-      subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+      subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "alice"}}, extra: {raw_info: {sub: "alice", "https://cloudnativedays.jp/roles" => roles}}} } }
       let(:roles) { [] }
 
       before do
@@ -24,7 +24,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
       end
 
       it "redirect to /cndt2020/registration" do
@@ -53,7 +53,7 @@ describe ContentsController, type: :request do
   describe "GET #discussion" do
 
     describe "logged in and registered" do
-      subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+      subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "alice"}}, extra: {raw_info: {sub: "alice", "https://cloudnativedays.jp/roles" => roles}}} } }
       let(:roles) { [] }
 
       before do
@@ -73,7 +73,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
       end
 
       it "redirect to /cndt2020/registration" do

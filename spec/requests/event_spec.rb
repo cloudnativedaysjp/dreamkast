@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe EventController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => roles}}}} }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => roles}}}} }
   let(:roles) { [] }
 
   describe "GET event#show" do

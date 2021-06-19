@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SpeakerDashboardsController, type: :request do
-  admin_userinfo = {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"]}}}}
+  admin_userinfo = {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"]}}}}
   describe "GET speaker_dashboards#show" do
     context 'CNDT2020 is registered' do
       before do

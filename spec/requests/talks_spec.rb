@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe TalksController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
   describe "GET /cndt2020/talks/:id" do
@@ -40,7 +40,7 @@ describe TalksController, type: :request do
       context "user logged in" do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+            allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
           end
 
           it "redirect to /cndt2020/registration" do

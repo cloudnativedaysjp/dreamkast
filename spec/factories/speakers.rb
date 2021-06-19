@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :speaker_alice, class: Speaker do
     id { 1 }
     sub { 'aaa' }
-    email { 'foo@example.com' }
+    email { 'alice@example.com' }
     name { 'Alice' }
     profile { 'This is profile' }
     company { 'company' }

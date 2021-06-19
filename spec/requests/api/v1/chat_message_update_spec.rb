@@ -5,12 +5,12 @@ describe Api::V1::ChatMessagesController, type: :request do
     {
       userinfo: {
         info: {
-          email: "foo@example.com",
-          extra: {sub: "aaa"}
+          email: "alice@example.com",
+          extra: {sub: "alice"}
         },
         extra: {
           raw_info: {
-            sub: "aaa",
+            sub: "alice",
             "https://cloudnativedays.jp/roles" => roles
           }
         }
@@ -21,12 +21,12 @@ describe Api::V1::ChatMessagesController, type: :request do
   describe 'PUT /api/v1/chat_message/:id' do
     describe 'update own chat message' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
-        create(:cndt2020)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: alice.email}})
         create(:talk1)
         create(:message_from_alice, profile: alice)
       end
-      let!(:alice) { create(:alice, :on_cndt2020)}
+      let!(:cndt2020) { create(:cndt2020) }
+      let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020)}
 
       it 'confirm json schema' do
         put '/api/v1/chat_messages/1', params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
@@ -43,22 +43,22 @@ describe Api::V1::ChatMessagesController, type: :request do
 
   describe 'update others chat message' do
     before do
-      allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
-      create(:cndt2020)
-      create(:alice, :on_cndt2020)
-      create(:talk1)
-      create(:message_from_bob, profile: bob)
+      allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: alice.email}})
+      create(:talk1, conference: cndt2020)
     end
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
     let!(:bob) { create(:bob, :on_cndt2020)}
+    let!(:msg) { create(:message_from_bob, profile: bob) }
 
     it 'confirm json schema' do
-      put '/api/v1/chat_messages/2', params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
+      put "/api/v1/chat_messages/#{msg.id}", params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
       expect(response).to have_http_status :forbidden
       assert_response_schema_confirm
     end
 
     it 'succeed request' do
-      put '/api/v1/chat_messages/2', params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
+      put "/api/v1/chat_messages/#{msg.id}", params: {"eventAbbr": "cndt2020", "body": "hogehoge"}
       expect(response.status).to eq 403
     end
   end

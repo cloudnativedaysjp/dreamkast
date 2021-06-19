@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SpeakerDashboard::SpeakersController, type: :request do
-  admin_userinfo = {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"]}}}}
+  admin_userinfo = {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"]}}}}
   describe "GET speakers#edit" do
     before do
       create(:cndt2020)

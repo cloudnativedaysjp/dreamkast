@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TracksController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
   describe "GET /:event/dashboard" do

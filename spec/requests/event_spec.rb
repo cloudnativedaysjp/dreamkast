@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 describe EventController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => roles}}}} }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => roles}}}} }
   let(:roles) { [] }
 
   describe "GET event#show" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
     end
 
     describe 'not logged in' do

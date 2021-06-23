@@ -4,5 +4,7 @@ class ChatMessage < ApplicationRecord
   after_create_commit { ChatMessageBroadcastJob.perform_later self }
   after_update_commit { ChatMessageBroadcastJob.perform_later self }
 
+  belongs_to :profile
+
   enum message_type: { chat: 0, qa: 1 }
 end

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe TracksController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
   describe "GET /:event/dashboard" do
     describe "logged in and registered" do
       before do
         create(:cndt2020)
-        create(:alice)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 
@@ -76,10 +76,8 @@ RSpec.describe TracksController, type: :request do
   describe "GET /:event/tracks" do
     describe "logged in and registered" do
       before do
-        create(:cndt2020_opened)
-        create(:day1)
-        create(:day2)
-        create(:alice)
+        create(:cndt2020, :opened)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
       end
 

@@ -4,8 +4,6 @@ describe EventController, type: :request do
   describe 'GET /api/v1/events/{eventId}' do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
     end
 
     it 'confirm json schema' do

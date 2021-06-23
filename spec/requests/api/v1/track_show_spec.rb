@@ -4,12 +4,8 @@ describe TalksController, type: :request do
   describe 'GET /api/v1/tracks/{trackId}' do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
       create(:talk1)
       create(:talk2)
-      create(:track1)
-      create(:track2)
     end
 
     it 'confirm json schema' do

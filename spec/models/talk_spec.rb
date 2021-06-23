@@ -28,24 +28,8 @@ RSpec.describe Talk, type: :model do
       { id: 3, name: "Advanced - 上級者"},
     ]
     )
-    Conference.create!(
-      [
-        {id: 1, name: "CloudNative Days Tokyo 2020"}
-      ]
-    )
-    ConferenceDay.create!(
-      [
-        {id: 1, date: "2020-09-08", start_time: "12:00", end_time: "20:00", conference_id: 1},
-        {id: 2, date: "2020-09-09", start_time: "12:00", end_time: "20:00", conference_id: 1}
-      ]
-    )
 
-    create(:track1)
-    create(:track2)
-    create(:track3)
-    create(:track4)
-    create(:track5)
-    create(:track6)
+    create(:cndt2020)
     create(:proposal_item_configs_expected_participant)
     create(:proposal_item_configs_execution_phase)
   end

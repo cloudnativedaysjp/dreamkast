@@ -16,7 +16,7 @@ describe ProfilesController, type: :request do
     end
 
     describe 'logged in and not registerd' do
-      subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "mock", "https://cloudnativedays.jp/roles" => ""}}}}}
+      subject(:user_session) { {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "mock", "https://cloudnativedays.jp/roles" => ""}}}}}
 
       before do
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(user_session)
@@ -31,10 +31,10 @@ describe ProfilesController, type: :request do
     end
 
     describe 'logged in and already registerd' do
-      subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "mock", "https://cloudnativedays.jp/roles" => ""}}}}}
+      subject(:user_session) { {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "mock", "https://cloudnativedays.jp/roles" => ""}}}}}
 
       before do
-        create(:alice)
+        create(:alice, :on_cndt2020)
         allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(user_session)
       end
 
@@ -47,7 +47,7 @@ describe ProfilesController, type: :request do
     end
 
     describe 'register' do
-      subject(:user_session) { {userinfo: {info: {email: "foo@example.com"}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => ""}}}}}
+      subject(:user_session) { {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => ""}}}}}
       subject(:profiles_params){
         attributes_for(:alice)
       }

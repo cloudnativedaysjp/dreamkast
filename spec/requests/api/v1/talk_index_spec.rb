@@ -4,8 +4,6 @@ describe TalksController, type: :request do
   describe 'GET /api/v1/talks' do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
       create(:talk1)
       create(:talk2)
       create(:talk3)

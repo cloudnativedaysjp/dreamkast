@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Admin::SpeakersController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "alice"}}, extra: {raw_info: {sub: "alice", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
   before do
@@ -35,7 +35,7 @@ describe Admin::SpeakersController, type: :request do
 
       context "user is registered" do
         before do
-          create(:alice)
+          create(:alice, :on_cndt2020)
         end
 
         context "user is admin" do

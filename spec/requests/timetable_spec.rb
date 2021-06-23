@@ -1,21 +1,14 @@
 require 'rails_helper'
 
 describe TimetableController, type: :request do
-  subject(:session) { {userinfo: {info: {email: "foo@example.com", extra: {sub: "aaa"}}, extra: {raw_info: {sub: "aaa", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:alice_session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "alice"}}, extra: {raw_info: {sub: "alice", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:bob_session) { {userinfo: {info: {email: "bob@example.com", extra: {sub: "bob"}}, extra: {raw_info: {sub: "bob", "https://cloudnativedays.jp/roles" => roles}}} } }
   let(:roles) { [] }
 
   describe "GET #index" do
     before do
       create(:cndt2020)
-      create(:day1)
-      create(:day2)
       create(:rejekt)
-      create(:track1)
-      create(:track2)
-      create(:track3)
-      create(:track4)
-      create(:track5)
-      create(:track6)
       create(:talk_category1)
       create(:talk_difficulties1)
     end
@@ -48,9 +41,9 @@ describe TimetableController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
+    describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
       end
 
       it "redirect to /cndt2020/registration" do
@@ -63,8 +56,8 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:alice)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+        create(:alice, :on_cndt2020)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(alice_session)
       end
 
       context 'get exists event\'s timetables' do
@@ -93,15 +86,6 @@ describe TimetableController, type: :request do
   describe "GET cndo#index" do
     before do
       create(:cndo2021)
-      create(:cndo_day1)
-      create(:cndo_day2)
-      create(:cndo_track1)
-      create(:cndo_track2)
-      create(:cndo_track3)
-      create(:cndo_track4)
-      create(:cndo_track5)
-      create(:cndo_track6)
-      create(:cndo_track7)
       create(:cndo_talk_category1)
       create(:cndo_talk_difficulties1)
     end
@@ -122,9 +106,9 @@ describe TimetableController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
+    describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "foo@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
       end
 
       it "redirect to /cndo2021/registration" do
@@ -137,8 +121,8 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:bob_cndo2021)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+        create(:bob, :on_cndo2021)
+        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(bob_session)
       end
 
       context 'get exists event\'s timetables' do

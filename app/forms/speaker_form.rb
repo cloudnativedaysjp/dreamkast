@@ -98,7 +98,7 @@ class SpeakerForm
       end
     end
   rescue => e
-    puts "faild to save: #{e}"
+    puts "failed to save: #{e}"
     false
   end
 

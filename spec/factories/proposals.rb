@@ -6,5 +6,4 @@ FactoryBot.define do
     end
   end
 
-  factory :proposals_speakers, class: ProposalsSpeaker
 end

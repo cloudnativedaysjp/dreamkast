@@ -168,13 +168,6 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "proposals_speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
-    t.integer "proposal_id"
-    t.integer "speaker_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"

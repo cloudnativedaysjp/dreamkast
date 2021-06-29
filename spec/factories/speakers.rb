@@ -15,7 +15,6 @@ FactoryBot.define do
         speaker.talks << talk
         FactoryBot.create(:talks_speakers, {talk: talk, speaker: speaker})
         proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 0)
-        FactoryBot.create(:proposals_speakers, speaker: speaker, proposal: proposal)
       end
     end
 
@@ -25,7 +24,6 @@ FactoryBot.define do
         speaker.talks << talk
         FactoryBot.create(:talks_speakers, {talk: talk, speaker: speaker})
         proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 1)
-        FactoryBot.create(:proposals_speakers, speaker: speaker, proposal: proposal)
       end
     end
 
@@ -35,7 +33,6 @@ FactoryBot.define do
         speaker.talks << talk
         FactoryBot.create(:talks_speakers, {talk: talk, speaker: speaker})
         proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 2)
-        FactoryBot.create(:proposals_speakers, speaker: speaker, proposal: proposal)
       end
     end
   end

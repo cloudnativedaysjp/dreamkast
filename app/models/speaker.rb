@@ -6,14 +6,16 @@ class Speaker < ApplicationRecord
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
-  has_many :proposals_speakers
-  has_many :proposals, through: :proposals_speakers
 
   validates :name, presence: true
   validates :profile, presence: true
   validates :company, presence: true
   validates :job_title, presence: true
   validates :conference_id, presence: true
+
+  def proposals
+    talks.map(&:proposals)
+  end
 
   def self.import(file)
     message = []

@@ -8,13 +8,6 @@ class CreateProposals < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    create_table :proposals_speakers do |t|
-      t.integer :proposal_id
-      t.integer :speaker_id
-
-      t.timestamps
-    end
-
     add_column :conferences, :cfp_result_visible, :boolean, default: false
   end
 end

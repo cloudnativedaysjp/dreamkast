@@ -1,4 +1,10 @@
 <%= render 'layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
   <h2><%= @conference.name %></h2>
   <ul>
     <li>カンファレンスステータス: <%= @conference.status %></li>

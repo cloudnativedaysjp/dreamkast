@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_020119) do
+ActiveRecord::Schema.define(version: 2021_06_07_093009) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_020119) do
     t.integer "speaker_entry"
     t.integer "attendee_entry"
     t.integer "show_timetable"
+    t.boolean "cfp_result_visible", default: false
     t.index ["status"], name: "index_conferences_on_status"
   end
 
@@ -157,6 +158,14 @@ ActiveRecord::Schema.define(version: 2021_05_30_020119) do
     t.string "item_name"
     t.json "params"
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
+  end
+
+  create_table "proposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "talk_id", null: false
+    t.integer "conference_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

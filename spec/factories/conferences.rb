@@ -41,6 +41,14 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       speaker_entry { 0 }
     end
 
+    trait :cfp_result_visible do
+      cfp_result_visible { true }
+    end
+
+    trait :cfp_result_invisible do
+      cfp_result_visible { false }
+    end
+
     after(:build) do |conference|
       create(:day1)
       create(:day2)

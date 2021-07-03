@@ -1,0 +1,55 @@
+<%= render 'admin/layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <h2>Talks</h2>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col">Speakers</th>
+        <th scope="col">Title / Abstract</th>
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= form_with(url: admin_proposals_path, local: true, id: "proposal_list", method: "put") do |f| %>
+        <% @proposals.each do |proposal| %>
+          <tr>
+
+            <td><ul class="p-0"><% proposal.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+
+            <td>
+              <h5><%= proposal.talk.title %></h5>
+              <p class="abstract"><%= proposal.talk.abstract[0..30] %></p>
+            </td>
+
+            <td>
+              <%= f.select "proposal[#{proposal.id}][status]", proposal.class.statuses.to_a, {selected: proposal.class.statuses[proposal.status]} %>
+
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+<div id="transit_nav" class="p-4">
+  <%= submit_tag "保存", form: "proposal_list",class: "btn btn-danger transit_button" %>
+
+  <% if @conference.cfp_result_visible %>
+    <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, local: true, method: :patch) do |form| %>
+      <%= form.hidden_field :cfp_result_visible, value: false %>
+      <%= form.submit "採択結果を非公開にする", class: "btn btn-danger transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, local: true, method: :patch) do |form| %>
+      <%= form.hidden_field :cfp_result_visible, value: true %>
+      <%= form.submit "採択結果を公開する", class: "btn btn-danger transit_button", data: { confirm: '本当に公開しますか？' }  %>
+    <% end %>
+  <% end %>
+</div>

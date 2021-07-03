@@ -76,9 +76,11 @@ class SpeakerForm
       puts "conference_id #{conference_id}"
       speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
       @destroy_talks.each do |talk|
+        proposal = talk.proposal
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
         talk.destroy!
         talk_speaker.destroy!
+        proposal.destroy! if proposal
       end
       @talks.each do |talk|
         if talk.persisted?
@@ -87,11 +89,14 @@ class SpeakerForm
           talk.save!
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
+
+          proposal = Proposal.new(conference_id: conference_id, talk_id: talk.id)
+          proposal.save!
         end
       end
     end
   rescue => e
-    puts "faild to save: #{e}"
+    puts "failed to save: #{e}"
     false
   end
 

@@ -41,8 +41,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
       if r = @speaker_form.save
         r.each do |talk|
           begin
-            # TODO: 非同期実行
-            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_now
+            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
           rescue => e
             logger.error "Failed to send mail: #{e.message}"
           end
@@ -73,8 +72,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
       if r = @speaker_form.save
         r.each do |talk|
           begin
-            # TODO: 非同期実行
-            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_now unless exists_talks.include?(talk.id)
+            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
           rescue => e
             logger.error "Failed to send mail: #{e.message}"
           end

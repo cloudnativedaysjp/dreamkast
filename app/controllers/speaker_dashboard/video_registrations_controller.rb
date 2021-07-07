@@ -54,7 +54,7 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
       if @video_registration.update(video_registrations_params)
 
         begin
-          SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver_later
+          SpeakerMailer.video_uploaded(speaker, @talk, @video_registration)
         rescue => e
           logger.error "Failed to send mail: #{e.message}"
         end

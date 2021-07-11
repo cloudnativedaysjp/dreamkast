@@ -15,8 +15,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
     if logged_in?
       @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").first
       if @sponsor.nil?
-        @unable_found_in_sponsor_speakers = true
-        flash[:alert] = "ログインが許可されていません"
+        raise Forbidden
       elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
         redirect_to new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id)
       elsif logged_in? && @sponsor.present? && @sponsor_profile.present?
@@ -58,6 +57,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
       '提出されたビデオファイルの確認が完了しました。'
     end
   end
+
 
   def proposal_status(proposal)
     return 'エントリー済み' unless @conference.cfp_result_visible

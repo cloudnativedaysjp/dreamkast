@@ -20,7 +20,7 @@
               <%= talk.title %>
               <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
             </h5>
-            <%= talk.sponsor.present? ? 'スポンサーセッション' : '公募セッション' %>
+            <%= talk.sponsor.present? ? 'スポンサーセッション' : '公募セッション' %><br>
             <% if talk.proposal.present? %>
               受付状況: <%= proposal_status(talk.proposal) %>
             <% end %>

@@ -1,0 +1,13 @@
+<div class="container speaker-dashboard-form">
+  <h1 class="text-center py-3 entry">スポンサーダッシュボード</h1>
+  <div class="row speaker-dashboard-form">
+    <div class="col-12 my-4">
+      <% unless logged_in? %>
+        <%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %>
+      <% else %>
+        スポンサー名: <%= @sponsor_profile.sponsor.name %><br>
+        氏名: <%= @sponsor_profile.name %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -37,6 +37,13 @@ class SpeakerForm
             talk = @speaker.talks.find(params[:id])
             params[:expected_participants] = params[:expected_participants].map(&:to_i).select{|n| n != 0} if params[:expected_participants].present?
             params[:execution_phases] = params[:execution_phases].map(&:to_i).select{|n| n != 0}  if params[:execution_phases].present?
+            if @sponsor.present? && params[:sponsor_session] == "true"
+              params[:sponsor_id] = @sponsor.id
+              params.delete(:sponsor_session)
+            else
+              params[:sponsor_id] = nil
+              params.delete(:sponsor_session)
+            end
             talk.update(params)
             @talks << talk
           end
@@ -47,6 +54,13 @@ class SpeakerForm
             params[:video_published] = true
             params[:expected_participants] = params[:expected_participants].map(&:to_i)
             params[:execution_phases] = params[:execution_phases].map(&:to_i)
+            if @sponsor.present? && params[:sponsor_session] == "true"
+              params[:sponsor_id] = @sponsor.id
+              params.delete(:sponsor_session)
+            else
+              params[:sponsor_id] = nil
+              params.delete(:sponsor_session)
+            end
             @talks << Talk.new(params)
           end
         end
@@ -57,8 +71,9 @@ class SpeakerForm
     end
   end
 
-  def initialize(attributes = nil, speaker: Speaker.new)
+  def initialize(attributes = nil, speaker: Speaker.new, sponsor: nil)
     @speaker = speaker
+    @sponsor = sponsor
     @talks ||= []
     @destroy_talks ||= []
     attributes ||= default_attributes

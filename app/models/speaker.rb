@@ -17,6 +17,10 @@ class Speaker < ApplicationRecord
     talks.map(&:proposals)
   end
 
+  def sponsor_talks
+    talks.filter { |talk| talk.sponsor.present? }
+  end
+
   def self.import(file)
     message = []
 

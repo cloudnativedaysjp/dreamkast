@@ -11,5 +11,6 @@ class AddColumnsToSponsors < ActiveRecord::Migration[6.0]
     end
 
     add_column :sponsors, :speaker_emails, :string
+    add_column :talks, :sponsor_id, :integer
   end
 end

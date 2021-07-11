@@ -1,4 +1,4 @@
-class SponsorDashboard::SponsorProfilesController < ApplicationController
+class SponsorDashboards::SponsorProfilesController < ApplicationController
   include SecuredSponsor
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
@@ -6,6 +6,7 @@ class SponsorDashboard::SponsorProfilesController < ApplicationController
   # GET :event/sponsor_dashboard/sponsor_profiles/new
   def new
     @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id])
 
     if set_current_user
       if SponsorProfile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
@@ -29,19 +30,19 @@ class SponsorDashboard::SponsorProfilesController < ApplicationController
     sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%")
     if sponsor.size == 0
       redirect_to "/#{@conference.abbr}/sponsor_dashboard", notice: 'ログインが許可されていません'
-    end
+    else
+      @sponsor_profile = SponsorProfile.new(sponsor_profile_params.merge(conference_id: @conference.id))
+      @sponsor_profile.sub = @current_user[:extra][:raw_info][:sub]
 
-    @sponsor_profile = SponsorProfile.new(sponsor_profile_params.merge(conference_id: @conference.id))
-    @sponsor_profile.sub = @current_user[:extra][:raw_info][:sub]
+      @sponsor_profile.email = @current_user[:info][:email]
+      @sponsor_profile.sponsor_id = sponsor.first.id
 
-    @sponsor_profile.email = @current_user[:info][:email]
-    @sponsor_profile.sponsor_id = sponsor.first.id
-
-    respond_to do |format|
-      if @sponsor_profile.save
-        format.html { redirect_to "/#{@conference.abbr}/sponsor_dashboard", notice: 'Speaker was successfully created.' }
-      else
-        format.html { render :new }
+      respond_to do |format|
+        if @sponsor_profile.save
+          format.html { redirect_to "/#{@conference.abbr}/sponsor_dashboards/#{@sponsor.id}", notice: 'Speaker was successfully created.' }
+        else
+          format.html { render :new }
+        end
       end
     end
   end
@@ -69,9 +70,9 @@ class SponsorDashboard::SponsorProfilesController < ApplicationController
   def sponsor_url
     case action_name
     when 'new'
-      "/#{params[:event]}/sponsor_dashboard/sponsor_profiles"
+      "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/sponsor_profiles"
     when 'edit', 'update'
-      "/#{params[:event]}/sponsor_dashboard/sponsor_profiles/#{params[:id]}"
+      "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/sponsor_profiles/#{params[:id]}"
     end
   end
 

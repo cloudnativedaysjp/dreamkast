@@ -1,11 +1,33 @@
-class SponsorDashboardsController < ApplicationController
+class SponsorDashboards::SponsorDashboardsController < ApplicationController
   include SecuredSponsor
   before_action :logged_in_using_omniauth?, :set_sponsor_profile
 
   def show
-    if logged_in? && @sponsor_profile.nil?
-      redirect_to new_sponsor_dashboard_sponsor_profile_path
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    unless logged_in? && @sponsor.present? && @sponsor_profile.present?
+      redirect_to sponsor_dashboards_login_path
+    else
+      @speaker = @conference.speakers.find_by(email: @current_user[:info][:email])
     end
+  end
+
+  def login
+    @sponsor = found_in_sponsor_speakers
+    if logged_in? && @sponsor.nil?
+      @unable_found_in_sponsor_speakers = true
+      flash[:alert] = "ログインが許可されていません"
+    elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
+      redirect_to new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id)
+    elsif logged_in? && @sponsor.present? && @sponsor_profile.present?
+      redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id)
+    end
+  end
+
+  private
+
+  def found_in_sponsor_speakers
+    sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%")
+    return sponsor.first
   end
 
   def logged_in_using_omniauth?
@@ -21,7 +43,6 @@ class SponsorDashboardsController < ApplicationController
     end
   end
 
-  private
 
   helper_method :video_registration_url, :video_registration_status, :proposal_status
 

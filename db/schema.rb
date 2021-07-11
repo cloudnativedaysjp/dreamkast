@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_103023) do
     t.integer "talk_time_id"
     t.json "expected_participants"
     t.json "execution_phases"
+    t.integer "sponsor_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end

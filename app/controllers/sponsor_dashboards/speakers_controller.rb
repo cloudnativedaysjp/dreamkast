@@ -1,4 +1,4 @@
-class SpeakerDashboard::SpeakersController < ApplicationController
+class SponsorDashboards::SpeakersController < ApplicationController
   include SecuredSpeaker
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
@@ -22,7 +22,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def edit
     @conference = Conference.find_by(abbr: params[:event])
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    p @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker: @speaker)
@@ -48,7 +48,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
             logger.error "Failed to send mail: #{e.message}"
           end
         end
-        format.html { redirect_to "/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.' }
+        format.html { redirect_to "/#{@conference.abbr}/sponsor_dashboard", notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else
         format.html { render :new }
@@ -57,14 +57,14 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     end
   end
 
-  # PATCH/PUT :event/speaker_dashboard/speakers/1
-  # PATCH/PUT :event/speaker_dashboard/speakers/1.json
+  # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def update
     @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
     authorize @speaker
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, sponsor: @sponsor)
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
     # @speaker_form.load
@@ -80,11 +80,9 @@ class SpeakerDashboard::SpeakersController < ApplicationController
             logger.error "Failed to send mail: #{e.message}"
           end
         end
-        format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
-        format.json { render :show, status: :ok, location: @speaker }
+        format.html { redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @speaker_form.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -96,9 +94,9 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
   def speaker_url
     case action_name
     when 'new'
-      "/#{params[:event]}/speaker_dashboard/speakers"
+      "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers"
     when 'edit', 'update'
-      "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"
+      "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers/#{params[:id]}"
     end
   end
 

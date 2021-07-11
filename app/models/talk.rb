@@ -4,6 +4,7 @@ class Talk < ApplicationRecord
   belongs_to :conference
   belongs_to :conference_day, optional: true
   belongs_to :track, optional: true
+  belongs_to :sponsor, optional: true
   has_one :proposal
 
   has_one :video_registration, dependent: :destroy
@@ -178,6 +179,10 @@ class Talk < ApplicationRecord
     now = Time.now.in_time_zone('Tokyo')
     etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     return (now.to_i - etime.to_i) >= 600
+  end
+
+  def sponsor_session?
+    sponsor.present?
   end
 
   private

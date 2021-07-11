@@ -10,7 +10,7 @@ module SecuredSponsor
     if logged_in?
       set_current_user
     else
-      redirect_to "/#{params[:event]}/sponsor_dashboard"
+      redirect_to "/#{params[:event]}/sponsor_dashboards/login"
     end
   end
 

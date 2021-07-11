@@ -12,23 +12,20 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
   end
 
   def login
-    @sponsor = found_in_sponsor_speakers
-    if logged_in? && @sponsor.nil?
-      @unable_found_in_sponsor_speakers = true
-      flash[:alert] = "ログインが許可されていません"
-    elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
-      redirect_to new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id)
-    elsif logged_in? && @sponsor.present? && @sponsor_profile.present?
-      redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id)
+    if logged_in?
+      @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").first
+      if @sponsor.nil?
+        @unable_found_in_sponsor_speakers = true
+        flash[:alert] = "ログインが許可されていません"
+      elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
+        redirect_to new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id)
+      elsif logged_in? && @sponsor.present? && @sponsor_profile.present?
+        redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id)
+      end
     end
   end
 
   private
-
-  def found_in_sponsor_speakers
-    sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%")
-    return sponsor.first
-  end
 
   def logged_in_using_omniauth?
     if logged_in?

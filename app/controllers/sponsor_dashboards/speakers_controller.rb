@@ -3,7 +3,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
-  # GET :event/speaker_dashboard/speakers/new
+  # GET /:event/speaker_dashboard/speakers/new
   def new
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
@@ -89,7 +89,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   private
 
-helper_method :speaker_url, :expected_participant_params, :execution_phases_params
+  helper_method :speaker_url, :expected_participant_params, :execution_phases_params
 
   def speaker_url
     case action_name

@@ -22,7 +22,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def edit
     @conference = Conference.find_by(abbr: params[:event])
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    p @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker: @speaker)

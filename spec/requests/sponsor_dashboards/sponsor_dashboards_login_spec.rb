@@ -30,7 +30,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
       end
     end
 
-    describe "sponsor speaker isn registered" do
+    describe "sponsor speaker is registered" do
       let!(:sponsor) { create(:sponsor, :with_speaker_emails)}
 
       describe "sponsor doesn't logged in" do

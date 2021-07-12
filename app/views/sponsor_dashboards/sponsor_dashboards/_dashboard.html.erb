@@ -8,7 +8,7 @@
 
 <% unless @speaker %>
   <div class="col-12 mb-4">
-  スポンサーとしてエントリーしているセッションはありません。
+    <%= link_to 'スポンサーセッションを登録する', new_sponsor_dashboards_speaker_path %>
   </div>
 <% else %>
   <div class="col-12 mb-4">

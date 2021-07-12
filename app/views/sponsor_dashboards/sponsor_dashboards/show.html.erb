@@ -1,5 +1,5 @@
 <div class="container speaker-dashboard-form">
-  <h1 class="text-center py-3 entry">スポンサーダッシュボード</h1>
+  <h1 class="text-center py-3 entry">スポンサーダッシュボード( <%= @sponsor.name %>)</h1>
   <% flash.each do |message_type, message| %>
     <div class="alert alert-info" role="alert">
       <%= message %>

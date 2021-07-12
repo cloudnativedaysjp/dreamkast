@@ -1,0 +1,32 @@
+<div class="card m-1">
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <b>名前</b>
+          <p class="card-text"><%= speaker.name %></p>
+          <b>プロフィール</b>
+          <p class="card-text"><%= simple_format speaker.profile %></p>
+          <b>プロフィール画像</b>
+          <% if @speaker && @speaker.avatar_url.present? %>
+            <p class="card-text"><%= image_tag @speaker.avatar_url, :size => '80x80' %></p>
+          <% end %>
+        </div>
+        <div class="col">
+          <b>会社名 / 所属団体名</b>
+          <p class="card-text"><%= speaker.company %></p>
+          <b>肩書き</b>
+          <p class="card-text"><%= speaker.job_title %></p>
+          <b>過去の登壇実績が分かるスライド等</b>
+          <p class="card-text"><%= simple_format speaker.additional_documents %></p>
+        </div>
+        <div class="col">
+          <b>Twitter ID</b>
+          <p class="card-text"><%= speaker.twitter_id %></p>
+          <b>GitHub ID</b>
+          <p class="card-text"><%= speaker.github_id %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

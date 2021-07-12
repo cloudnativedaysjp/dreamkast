@@ -7,7 +7,12 @@
         <%= link_to 'エントリー', speakers_entry_path %>
       </div>
     <% else %>
-      <h2 class="py-3 pl-2"> エントリー済みセッション一覧</h2>
+      <h2 class="py-3 pl-2">スピーカープロフィール</h2>
+      <div class="col-12 mb-4">
+        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+      </div>
+
+      <h2 class="py-3 pl-2">エントリー済みセッション一覧</h2>
       <div class="col-12 mb-4">
         <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
         <%= button_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>

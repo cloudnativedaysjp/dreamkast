@@ -3,7 +3,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
-  # GET /:event/speaker_dashboard/speakers/new
+  # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
@@ -18,7 +18,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @speaker_form.load
   end
 
-  # GET :event/speaker_dashboard/speakers/:id/edit
+  # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
     @conference = Conference.find_by(abbr: params[:event])
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
@@ -29,10 +29,10 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @speaker_form.load
   end
 
-  # POST :event/speaker_dashboard/speakers
-  # POST :event/speaker_dashboard/speakers.json
+  # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
     @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new())
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
@@ -48,7 +48,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
             logger.error "Failed to send mail: #{e.message}"
           end
         end
-        format.html { redirect_to "/#{@conference.abbr}/sponsor_dashboard", notice: 'Speaker was successfully created.' }
+        format.html { redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else
         format.html { render :new }

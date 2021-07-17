@@ -16,7 +16,7 @@ class Admin::SpeakersController < ApplicationController
   end
 
   # PATCH/PUT admin/speakers/1
-  # PATCH/PUT admih/speakers/1.json
+  # PATCH/PUT admin/speakers/1.json
   def update
     @speaker = Speaker.find(params[:id])
 

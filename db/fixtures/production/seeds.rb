@@ -598,6 +598,13 @@ Sponsor.seed(
     abbr: 'lpi',
     conference_id: 2,
     url: 'https://lpi.or.jp/'
+  },
+  {
+    id: 49,
+    name: 'Dummy Sponsor Japan',
+    abbr: 'dsj',
+    conference_id: 3,
+    url: 'https://repl.info/'
   }
 )
 
@@ -676,6 +683,11 @@ SponsorType.seed(
     conference_id: 2,
     name: "Logo",
     order: 7,
+  },
+  { id: 17,
+    conference_id: 3,
+    name: "Dummy",
+    order: 1,
   }
 )
 
@@ -745,6 +757,7 @@ SponsorType.seed(
   [65, 'Platinum', 'cloudnative', 2],
   [58, 'Logo', 'lf', 2],
   [66, 'Logo', 'lpi', 2],
+  [67, 'Dummy', 'dsj', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -806,6 +819,7 @@ end
   [46, 'cloudnative', 'sponsors/cndo2021/cloudnative.png', 2],
   [47, 'lf', 'sponsors/cndo2021/lf.png', 2],
   [48, 'lpi', 'sponsors/cndo2021/lpi.png', 2],
+  [49, 'dsj', 'trademark.png', 3],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

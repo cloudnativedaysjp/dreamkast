@@ -13,6 +13,7 @@
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Status</th>
+        <th scope="col">SponsorSession?</th>
       </tr>
       </thead>
       <tbody>
@@ -29,7 +30,10 @@
 
             <td>
               <%= f.select "proposal[#{proposal.id}][status]", proposal.class.statuses.to_a, {selected: proposal.class.statuses[proposal.status]} %>
+            </td>
 
+            <td>
+              <%= proposal.talk.sponsor.present? ? proposal.talk.sponsor.name : '' %>
             </td>
           </tr>
         <% end %>

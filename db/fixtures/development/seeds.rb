@@ -665,8 +665,14 @@ Sponsor.seed(
     abbr: 'lpi',
     conference_id: 2,
     url: 'https://lpi.or.jp/'
+  },
+  {
+    id: 49,
+    name: 'FooBar',
+    abbr: 'foobar',
+    conference_id: 3,
+    url: 'https://repl.info/'
   }
-
 )
 
 SponsorType.seed(
@@ -744,6 +750,11 @@ SponsorType.seed(
     conference_id: 2,
     name: "Logo",
     order: 7,
+  },
+  { id: 17,
+    conference_id: 3,
+    name: "Diamond",
+    order: 1,
   }
 )
 
@@ -813,6 +824,7 @@ SponsorType.seed(
   [65, 'Platinum', 'cloudnative', 2],
   [58, 'Logo', 'lf', 2],
   [66, 'Logo', 'lpi', 2],
+  [67, 'Diamond', 'foobar', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])

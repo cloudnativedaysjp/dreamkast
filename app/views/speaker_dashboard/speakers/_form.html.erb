@@ -1,85 +1,80 @@
-<div class="row speaker-dashboard-form justify-content-center">
-  <div class="col-12 col-lg-8">
-      <h1 class="text-center py-3 entry">エントリーフォーム</h1>
-    <%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
-      <section class="speaker-information py-3">
-        <h3 class="py-3">スピーカー情報</h3>
+<%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
+  <section class="speaker-information py-3">
+    <h3 class="py-3">スピーカー情報</h3>
 
-        <div class="field pb-3">
-          <%= form.label :name, '名前' %>*
-          <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :name, '名前' %>*
+      <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :profile, 'プロフィール(200文字程度)' %>*
-          <%= form.text_area :profile, class: "form-control", required: true %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :profile, 'プロフィール(200文字程度)' %>*
+      <%= form.text_area :profile, class: "form-control", required: true %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :company, '会社名 / 所属団体名（★）' %>*
-          <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :company, '会社名 / 所属団体名（★）' %>*
+      <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :job_title, '肩書き' %>*
-          <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア'  %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :job_title, '肩書き' %>*
+      <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア'  %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等' %>
-          <%= form.text_area :additional_documents, class: "form-control", required: false, placeholder: "https://speakerdeck.com/\nhttps://www.slideshare.net/"  %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等' %>
+      <%= form.text_area :additional_documents, class: "form-control", required: false, placeholder: "https://speakerdeck.com/\nhttps://www.slideshare.net/"  %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :twitter_id, 'Twitter ID' %>
-          <%= form.text_field :twitter_id, class: "form-control", placeholder: 'cloudnativedays'  %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :twitter_id, 'Twitter ID' %>
+      <%= form.text_field :twitter_id, class: "form-control", placeholder: 'cloudnativedays'  %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :github_id, 'GitHub ID' %>
-          <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp'  %>
-        </div>
+    <div class="field pb-3">
+      <%= form.label :github_id, 'GitHub ID' %>
+      <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp'  %>
+    </div>
 
-        <div class="field pb-3">
-          <%= form.label :avatar, 'プロフィール画像' %>
-          <% if @speaker && @speaker.avatar_url.present? %>
-            <br>
-            <%= image_tag @speaker.avatar_url, :size => '80x80' %>
-          <% end %>
-          <%= form.hidden_field :avatar, value: @speaker && @speaker.avatar_url.present? ? @speaker.avatar_data : '' %>
-          <%= form.file_field :avatar, class: "form-control"  %>
-        </div>
-      </section>
+    <div class="field pb-3">
+      <%= form.label :avatar, 'プロフィール画像' %>
+      <% if @speaker && @speaker.avatar_url.present? %>
+        <br>
+        <%= image_tag @speaker.avatar_url, :size => '80x80' %>
+      <% end %>
+      <%= form.hidden_field :avatar, value: @speaker && @speaker.avatar_url.present? ? @speaker.avatar_data : '' %>
+      <%= form.file_field :avatar, class: "form-control"  %>
+    </div>
+  </section>
 
-      <section class="speaker-information py-3">
-        <h3 class="py-3">セッション情報</h3>
+  <section class="speaker-information py-3">
+    <h3 class="py-3">セッション情報</h3>
 
-        <div class="talk-fields">
-          <%= form.fields_for :talks do |talk| %>
-            <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference %>
-          <% end %>
-        </div>
+    <div class="talk-fields">
+      <%= form.fields_for :talks do |talk| %>
+        <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference %>
+      <% end %>
+    </div>
 
-        <% if @conference.speaker_entry_enabled? || admin? %>
-          <% if action_name == "new" || form.object.talks.size < 3 %>
-            <p class="alert alert-info">追加ボタンを押すとセッションを最大3件まで登録できます。またエントリー後にダッシュボードから更新可能です。</p>
-            <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
-          <% else %>
-            <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
-          <% end %>
-        <% end %>
-      </section>
-
-      <section class="privacy">
-        <div class="field py-3">
-          <%= form.hidden_field :conference_id, value: @conference.id %>
-          <%= markdown @conference.privacy_policy_for_speaker %>
-        </div>
-      </section>
-      
-      <div class="actions justify-content-center py-3">
-        <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
-      </div>
+    <% if @conference.speaker_entry_enabled? || admin? %>
+      <% if action_name == "new" || form.object.talks.size < 3 %>
+        <p class="alert alert-info">追加ボタンを押すとセッションを最大3件まで登録できます。またエントリー後にダッシュボードから更新可能です。</p>
+        <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
+      <% else %>
+        <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
+      <% end %>
     <% end %>
+  </section>
+
+  <section class="privacy">
+    <div class="field py-3">
+      <%= form.hidden_field :conference_id, value: @conference.id %>
+      <%= markdown @conference.privacy_policy_for_speaker %>
+    </div>
+  </section>
+      
+  <div class="actions justify-content-center py-3">
+    <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
   </div>
-</div>
+<% end %>

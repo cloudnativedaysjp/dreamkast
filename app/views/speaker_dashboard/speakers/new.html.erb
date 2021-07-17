@@ -1,16 +1,16 @@
 <div class="container">
 
   <% if logged_in? %>
-    <%= render 'form', speaker: @speaker %>
+    <%= render 'form_outer', speaker: @speaker %>
   <% else %>
     <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
       <div class="col-12 my-4">
         <h2 class="text-center">CI/CD Conference 2021で登壇してみませんか？</h2>
         <p>クラウドネイティブなアプリケーション開発を実現する上で、CI/CDは欠かせない要素の一つです。<br />
-自分たちのチームやプロダクトにとって最適なCI/CDの形とはなんだろう。こうした究極の問いは、我々実行委員も含め多くのエンジニアが課題に感じているのではないかと思います。例えば、テストの効率的な回し方、チームに適したブランチ戦略、作ったCI/CDパイプラインのリファクタリングなど、悩みは尽きないですよね！
-</p>
+          自分たちのチームやプロダクトにとって最適なCI/CDの形とはなんだろう。こうした究極の問いは、我々実行委員も含め多くのエンジニアが課題に感じているのではないかと思います。例えば、テストの効率的な回し方、チームに適したブランチ戦略、作ったCI/CDパイプラインのリファクタリングなど、悩みは尽きないですよね！
+        </p>
         <p>
-        そこで、<b>2021年9月3日</b>に、CloudNative Daysの特別編として、<b>CI/CD Conference 2021 by CloudNative Days</b>を開催します。CI/CD Conferenceのセッション公募(CFP)に参加して、抱えていた悩みや知見を共有してみませんか？
+          そこで、<b>2021年9月3日</b>に、CloudNative Daysの特別編として、<b>CI/CD Conference 2021 by CloudNative Days</b>を開催します。CI/CD Conferenceのセッション公募(CFP)に参加して、抱えていた悩みや知見を共有してみませんか？
         </p>
         <h4 class="pt-3">セッションの例</h4>
         <ul>

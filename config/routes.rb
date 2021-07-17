@@ -69,6 +69,14 @@ Rails.application.routes.draw do
       resources :video_registrations, only: [:new, :create, :edit, :update]
     end
 
+    namespace :sponsor_dashboards do
+      get '/login' => 'sponsor_dashboards#login'
+      get ':sponsor_id' => 'sponsor_dashboards#show'
+      scope ':sponsor_id' do
+        resources :sponsor_profiles, only: [:new, :edit, :create, :update]
+        resources :speakers, only: [:new, :edit, :create, :update]
+      end
+    end
 
     resources :talks, only: [:show, :index]
     get 'timetables' => 'timetable#index'

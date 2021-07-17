@@ -18,6 +18,7 @@
       <th scope="col">Start</th>
       <th scope="col">End</th>
       <th scope="col">Time</th>
+      <th scope="col">SponsorSession?</th>
     </tr>
     </thead>
     <tbody>
@@ -46,6 +47,9 @@
               <p><%= talk.end_time ? talk.end_time.strftime("%H:%M") : '' %></p>
             </td>
             <td><%= talk.time  %>m</td>
+            <td>
+              <%= talk.sponsor.present? ? talk.sponsor.name : '' %>
+            </td>
           </tr>
         <% end %>
       <% end %>

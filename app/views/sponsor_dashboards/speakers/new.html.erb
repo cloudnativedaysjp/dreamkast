@@ -1,0 +1,11 @@
+<div class="container">
+
+  <% if logged_in? %>
+    <%= render 'form_outer', speaker: @speaker %>
+  <% else %>
+    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+      <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
+      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+    </div>
+  <% end %>
+</div>

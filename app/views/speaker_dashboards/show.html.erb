@@ -2,53 +2,21 @@
   <h1 class="text-center py-3 entry">スピーカーダッシュボード</h1>
   <div class="row speaker-dashboard-form">
 
-  <% unless @speaker.present? %>
-    <div class="col-12 my-4">
-    <%= link_to 'エントリー', speakers_entry_path %>
-    </div>
-  <% else %>
-    <h2 class="py-3 pl-2"> エントリー済みセッション一覧</h2>
-    <div class="col-12 mb-4">
-      <div class="card-group  my-4">
-        <% @speaker.talks.each do |talk| %>
-          <div class="card m-1">
-            <div class="card-body">
-              <h5 class="card-title">
-                <%= talk.title %>
-                <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
-              </h5>
-              <% if talk.proposal.present? %>
-                受付状況: <%= proposal_status(talk.proposal) %>
-              <% end %>
-              <% if talk.talk_category %>
-              <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
-              <% end %>
-              <p class="card-text"><%= simple_format talk.abstract %></p>
-
-              <% if talk.document_url.present? %>
-                <p class="card-text">セッション資料公開URL: <%= link_to talk.document_url, talk.document_url %></p>
-              <% else %>
-                <% if @conference.speaker_entry_disabled? %>
-                  <p class="card-text">セッション資料公開URLはまだ追加されていません</p>
-                <% end %>
-              <% end %>
-
-              <% if @conference.speaker_entry_disabled? %>
-
-                <% if talk.video_registration&.url.present? %>
-                  <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
-                <% else %>
-                  <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
-                <% end %>
-
-                <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+    <% unless @speaker.present? %>
+      <div class="col-12 my-4">
+        <%= link_to 'エントリー', speakers_entry_path %>
       </div>
-    <%= button_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
-    </div>
-  <% end %>
+    <% else %>
+      <h2 class="py-3 pl-2">スピーカープロフィール</h2>
+      <div class="col-12 mb-4">
+        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+      </div>
+
+      <h2 class="py-3 pl-2">エントリー済みセッション一覧</h2>
+      <div class="col-12 mb-4">
+        <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+        <%= button_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
   </div>
 </div>

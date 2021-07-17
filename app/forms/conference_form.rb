@@ -16,7 +16,9 @@ class ConferenceForm
 
     def links_attributes=(attributes)
       @links ||= []
-      attributes.each do |i, params|
+      attributes.each do |_i, params|
+        params.transform_keys!(&:to_sym)
+
         if params.key?(:id)
           if params[:_destroy] == "1"
             link = @conference.links.find(params[:id])
@@ -48,7 +50,9 @@ class ConferenceForm
 
     def conference_days_attributes=(attributes)
       @conference_days ||= []
-      attributes.each do |i, params|
+      attributes.each do |_i, params|
+        params.transform_keys!(&:to_sym)
+
         if params.key?(:id)
           if params[:_destroy] == "1"
             link = @conference.conference_days.find(params[:id])

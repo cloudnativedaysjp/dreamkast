@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_093009) do
+ActiveRecord::Schema.define(version: 2021_07_04_103023) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -205,6 +205,18 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
+  create_table "sponsor_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "sub"
+    t.string "email"
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_sponsor_profiles_on_conference_id"
+    t.index ["sponsor_id"], name: "index_sponsor_profiles_on_sponsor_id"
+  end
+
   create_table "sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -222,6 +234,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
     t.bigint "conference_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "speaker_emails"
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
   end
 
@@ -274,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
     t.integer "talk_time_id"
     t.json "expected_participants"
     t.json "execution_phases"
+    t.integer "sponsor_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
@@ -323,6 +337,7 @@ ActiveRecord::Schema.define(version: 2021_06_07_093009) do
   add_foreign_key "links", "conferences"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
+  add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "talk_times", "conferences"

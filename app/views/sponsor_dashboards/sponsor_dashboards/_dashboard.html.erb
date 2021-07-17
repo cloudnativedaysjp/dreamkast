@@ -1,0 +1,20 @@
+<% unless @speaker %>
+  <div class="col-12 mb-4">
+    <%= link_to 'スポンサーセッションを登録する', new_sponsor_dashboards_speaker_path %>
+  </div>
+<% else %>
+  <h2 class="py-3 pl-2"><%= @sponsor_profile.name %>さんのスピーカープロフィール</h2>
+  <div class="col-12 mb-4">
+    <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+  </div>
+
+  <h3 class="py-3 pl-2"><%= @sponsor_profile.name %>さんのセッション一覧</h3>
+  <div class="col-12 mb-4">
+    ※ スポンサーセッション、公募セッション両方が表示されます
+  </div>
+
+  <div class="col-12 mb-4">
+    <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+    <%= button_to 'edit', edit_sponsor_dashboards_speaker_path(id: @speaker.id, sponsor_id: @sponsor.id), method: "get", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>

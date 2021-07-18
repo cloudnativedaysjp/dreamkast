@@ -316,6 +316,7 @@ GEM
     shrine (3.3.0)
       content_disposition (~> 1.0)
       down (~> 5.1)
+    slack-incoming-webhooks (0.3.0)
     spring (2.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -399,6 +400,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   shrine (~> 3.3)
+  slack-incoming-webhooks
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)

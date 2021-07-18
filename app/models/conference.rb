@@ -19,4 +19,6 @@ class Conference < ApplicationRecord
   has_many :speakers
   has_many :announcements
   has_many :proposal_item_configs
+  has_many :profiles
+  has_many :stats_of_registrants
 end

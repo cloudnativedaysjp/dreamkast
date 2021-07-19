@@ -668,11 +668,46 @@ Sponsor.seed(
   },
   {
     id: 49,
-    name: 'FooBar',
-    abbr: 'foobar',
+    name: "CircleCI合同会社",
+    abbr: "circleci",
     conference_id: 3,
-    url: 'https://repl.info/'
-  }
+    url: "https://circleci.com/ja/"
+  },
+  {
+    id: 50,
+    name: "LINE株式会社",
+    abbr: 'line',
+    conference_id: 3,
+    url: 'https://engineering.linecorp.com/ja/'
+  },
+  {
+    id: 51,
+    name: "日本マイクロソフト株式会社/Microsoft Corporation",
+    abbr: "microsoft",
+    conference_id: 3,
+    url: "https://news.microsoft.com/ja-jp/"
+  },
+  {
+    id: 52,
+    name: "株式会社ゆめみ",
+    abbr: "yumemi",
+    conference_id: 3,
+    url: "https://www.yumemi.co.jp/"
+  },
+  {
+    id: 53,
+    name: "日本シノプシス合同会社",
+    abbr: "synopsys",
+    conference_id: 3,
+    url: "https://www.synopsys.com/ja-jp.html"
+  },
+  {
+    id: 54,
+    name: "株式会社サイバーエージェント",
+    abbr: "cyberagent",
+    conference_id: 3,
+    url: "https://developers.cyberagent.co.jp/"
+  },
 )
 
 SponsorType.seed(
@@ -751,10 +786,29 @@ SponsorType.seed(
     name: "Logo",
     order: 7,
   },
-  { id: 17,
+  {
+    id: 17,
     conference_id: 3,
     name: "Diamond",
     order: 1,
+  },
+  {
+    id: 18,
+    conference_id: 3,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 19,
+    conference_id: 3,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 20,
+    conference_id: 3,
+    name: "CM",
+    order: 4,
   }
 )
 
@@ -824,7 +878,14 @@ SponsorType.seed(
   [65, 'Platinum', 'cloudnative', 2],
   [58, 'Logo', 'lf', 2],
   [66, 'Logo', 'lpi', 2],
-  [67, 'Diamond', 'foobar', 3],
+  [67, 'Diamond', 'circleci', 3],
+  [68, 'Diamond', 'microsoft', 3],
+  [69, 'Diamond', 'synopsys', 3],
+  [70, 'Platinum', 'line', 3],
+  [71, 'Gold', 'yumemi', 3],
+  [72, 'Gold', 'cyberagent', 3],
+  [73, 'CM', 'line', 3],
+  [74, 'CM', 'yumemi', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -886,6 +947,12 @@ end
   [46, 'cloudnative', 'sponsors/cndo2021/cloudnative.png', 2],
   [47, 'lf', 'sponsors/cndo2021/lf.png', 2],
   [48, 'lpi', 'sponsors/cndo2021/lpi.png', 2],
+  [49, 'circleci', 'sponsors/cicd2021/circleci.png', 3],
+  [50, 'line', 'sponsors/cicd2021/line.png', 3],
+  [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
+  [52, 'yumemi', 'trademark.png', 3],
+  [53, 'synopsys', 'trademark.png', 3],
+  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

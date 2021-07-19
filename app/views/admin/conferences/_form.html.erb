@@ -53,6 +53,15 @@
     </div>
   </div>
 
+  <h3>Sponsors Visible Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.check_box :show_sponsors %>
+      <%= form.label :show_sponsors, 'Visible' %><br>
+    </div>
+  </div>
+
   <h3>Links</h3>
   <div class="link-fields">
     <%= form.fields_for :links do |f| %>

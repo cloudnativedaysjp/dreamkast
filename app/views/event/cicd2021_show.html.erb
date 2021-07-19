@@ -33,9 +33,11 @@
       <%= render 'event/partial/about', conference: @conference %>
     </section>
 
-    <section class="page-section" id="sponsors">
-      <%= render 'event/partial/sponsors', conference: @conference %>
-    </section>
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
+    <% end %>
 
     <section class="page-section bg-secondary" id="information">
       

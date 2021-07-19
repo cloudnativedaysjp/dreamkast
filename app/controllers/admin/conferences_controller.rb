@@ -50,6 +50,7 @@ class Admin::ConferencesController < ApplicationController
                                        :speaker_entry,
                                        :attendee_entry,
                                        :show_timetable,
+                                       :show_sponsors,
                                        links_attributes: [:id, :title, :url, :description, :_destroy],
                                        conference_days_attributes: [:id, :date])
   end

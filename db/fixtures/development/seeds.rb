@@ -882,8 +882,8 @@ SponsorType.seed(
   [68, 'Diamond', 'microsoft', 3],
   [69, 'Diamond', 'synopsys', 3],
   [70, 'Platinum', 'line', 3],
-  [71, 'Gold', 'yumemi', 3],
-  [72, 'Gold', 'cyberagent', 3],
+  [71, 'Platinum', 'cyberagent', 3],
+  [72, 'Gold', 'yumemi', 3],
   [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
 ].each do |sponsors_sponsor_type|

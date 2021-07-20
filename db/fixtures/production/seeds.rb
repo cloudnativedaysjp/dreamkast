@@ -643,8 +643,22 @@ Sponsor.seed(
   },
   {
     id: 55,
-    name: "株式会社クラウドネイティブデイズ",
-    abbr: "cnd",
+    name: "株式会社クラウドネイティブデイズ1",
+    abbr: "cnd1",
+    conference_id: 3,
+    url: "https://cloudnativedays.jp/"
+  },
+  {
+    id: 56,
+    name: "株式会社クラウドネイティブデイズ2",
+    abbr: "cnd2",
+    conference_id: 3,
+    url: "https://cloudnativedays.jp/"
+  },
+  {
+    id: 57,
+    name: "株式会社クラウドネイティブデイズ3",
+    abbr: "cnd3",
     conference_id: 3,
     url: "https://cloudnativedays.jp/"
   },
@@ -826,7 +840,9 @@ SponsorType.seed(
   [72, 'Gold', 'yumemi', 3],
   [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
-  [75, 'Diamond', 'cnd', 3],
+  [75, 'Diamond', 'cnd1', 3],
+  [76, 'Diamond', 'cnd2', 3],
+  [77, 'Diamond', 'cnd3', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -894,7 +910,9 @@ end
   [52, 'yumemi', 'trademark.png', 3],
   [53, 'synopsys', 'trademark.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
-  [55, 'cnd', 'trademark.png', 3]
+  [55, 'cnd1', 'trademark.png', 3],
+  [56, 'cnd2', 'trademark.png', 3],
+  [57, 'cnd3', 'trademark.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

@@ -894,7 +894,7 @@ end
   [52, 'yumemi', 'trademark.png', 3],
   [53, 'synopsys', 'trademark.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
-  [55, 'cnd', 'trademark', 3]
+  [55, 'cnd', 'trademark.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

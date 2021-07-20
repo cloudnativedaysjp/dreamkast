@@ -641,6 +641,13 @@ Sponsor.seed(
     conference_id: 3,
     url: "https://developers.cyberagent.co.jp/"
   },
+  {
+    id: 55,
+    name: "株式会社クラウドネイティブデイズ",
+    abbr: "cnd",
+    conference_id: 3,
+    url: "https://cloudnativedays.jp/"
+  },
 )
 
 SponsorType.seed(
@@ -819,6 +826,7 @@ SponsorType.seed(
   [72, 'Gold', 'yumemi', 3],
   [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
+  [75, 'Diamond', 'cnd', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -885,7 +893,8 @@ end
   [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
   [52, 'yumemi', 'trademark.png', 3],
   [53, 'synopsys', 'trademark.png', 3],
-  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3]
+  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
+  [55, 'cnd', 'trademark', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

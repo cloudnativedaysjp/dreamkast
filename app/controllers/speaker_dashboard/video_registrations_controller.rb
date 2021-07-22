@@ -53,9 +53,8 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
     respond_to do |format|
       if @video_registration.update(video_registrations_params)
 
-        # TODO: 非同期化すること！！！
         begin
-          SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver_now
+          SpeakerMailer.video_uploaded(speaker, @talk, @video_registration)
         rescue => e
           logger.error "Failed to send mail: #{e.message}"
         end

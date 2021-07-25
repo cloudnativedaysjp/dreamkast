@@ -1,6 +1,9 @@
 <div class="category_difficulty">
-  <%  if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+  <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
     <%= tag.span(talk_difficulty(talk).name, class: "difficulty difficulty_#{talk_difficulty(talk).id}") %>
   <% end %>
   <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
+  <% if talk.sponsor.present? %>
+    <span class="difficulty">スポンサーセッション</span>
+  <% end %>
 </div>

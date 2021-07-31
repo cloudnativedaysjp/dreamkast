@@ -7,6 +7,7 @@
         <th scope="col">Speakers</th>
         <th scope="col">Title</th>
         <th data-field="category" data-filter-control="select" scope="col">Category</th>
+        <th data-field="expected_participant" data-filter-control="input" scope="col">Category</th>
         <th data-field="track" data-filter-control="select" scope="col">Track</th>
         <th data-field="data" data-filter-control="select" scope="col">Date</th>
         <th data-field="time" data-filter-control="select" scope="col">Time</th>
@@ -36,22 +37,26 @@
           </td>
 
           <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.track_name %>
+            <%= simple_format talk.expected_participant_params.join("<br>")%>
           </td>
 
           <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.date %>
+            <%= talk.track_name %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk_start_to_end(talk) %>
+            <%= talk.date %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.time %>
+            <%= talk_start_to_end(talk) %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
+            <%= talk.time %>
+          </td>
+
+          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
             <% if @conference.closed? || (@conference.opened? && @current_user) %>
               <% if talk.video_published && talk.video.present? %>
                 <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
@@ -59,7 +64,7 @@
             <% end %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 10 %>" class="td-class-<%= index + 1 %> text-center">
             <% if talk.document_url.present? %>
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>

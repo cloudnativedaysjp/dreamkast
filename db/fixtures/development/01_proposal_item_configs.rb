@@ -177,7 +177,7 @@ ProposalItemConfig.seed(
   {
     id: 20,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
@@ -186,7 +186,7 @@ ProposalItemConfig.seed(
   {
     id: 21,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
@@ -195,7 +195,7 @@ ProposalItemConfig.seed(
   {
     id: 22,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
@@ -204,7 +204,7 @@ ProposalItemConfig.seed(
   {
     id: 23,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
@@ -214,7 +214,7 @@ ProposalItemConfig.seed(
   {
     id: 24,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'session_time',
     item_number: 4,
     item_name: '必要とする講演時間 - Session time you need（★）',
@@ -223,7 +223,7 @@ ProposalItemConfig.seed(
   {
     id: 25,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'session_time',
     item_number: 4,
     item_name: '必要とする講演時間 - Session time you need（★）',
@@ -233,7 +233,7 @@ ProposalItemConfig.seed(
   {
     id: 26,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'language',
     item_number: 5,
     item_name: '講演言語 - Language（★）',
@@ -242,7 +242,7 @@ ProposalItemConfig.seed(
   {
     id: 27,
     conference_id: 4,
-    type: 'ProposalItemConfigCheckBox',
+    type: 'ProposalItemConfigRadioButton',
     label: 'language',
     item_number: 5,
     item_name: '講演言語 - Language（★）',

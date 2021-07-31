@@ -135,6 +135,17 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
 
   def talks_attributes
     attr= [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session]
-    attr.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
+    h = {}
+    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+      conf = @conference.proposal_item_configs.find_by(label: label)
+      if conf.class.to_s == 'ProposalItemConfigCheckBox'
+        h[conf.label.pluralize.to_sym] = []
+      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
+        attr << conf.label.pluralize.to_sym
+      end
+    end
+    attr.append(h)
+
+    # attr.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
   end
 end

@@ -671,7 +671,7 @@ Sponsor.seed(
     name: "CircleCI合同会社",
     abbr: "circleci",
     conference_id: 3,
-    url: "https://circleci.com/ja/"
+    url: "https://circleci.com/ja/customers/"
   },
   {
     id: 50,
@@ -685,7 +685,7 @@ Sponsor.seed(
     name: "日本マイクロソフト株式会社/Microsoft Corporation",
     abbr: "microsoft",
     conference_id: 3,
-    url: "https://news.microsoft.com/ja-jp/"
+    url: "https://azure.microsoft.com/ja-jp/developer/"
   },
   {
     id: 52,
@@ -699,14 +699,14 @@ Sponsor.seed(
     name: "日本シノプシス合同会社",
     abbr: "synopsys",
     conference_id: 3,
-    url: "https://www.synopsys.com/ja-jp.html"
+    url: "https://www.synopsys.com/ja-jp/software-integrity.html"
   },
   {
     id: 54,
     name: "株式会社サイバーエージェント",
     abbr: "cyberagent",
     conference_id: 3,
-    url: "https://developers.cyberagent.co.jp/"
+    url: "https://developers.cyberagent.co.jp/blog/"
   },
 )
 

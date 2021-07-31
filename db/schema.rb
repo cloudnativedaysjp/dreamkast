@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 2021_07_31_033738) do
   create_table "proposal_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "talk_id", null: false
-    t.string "type"
     t.json "params"
     t.string "label", null: false
     t.index ["conference_id"], name: "index_proposal_items_on_conference_id"

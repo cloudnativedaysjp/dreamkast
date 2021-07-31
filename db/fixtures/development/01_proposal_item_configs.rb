@@ -3,7 +3,7 @@ ProposalItemConfig.seed(
     id: 1,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'architect - システム設計'
@@ -12,7 +12,7 @@ ProposalItemConfig.seed(
     id: 2,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'developer - システム開発'
@@ -21,7 +21,7 @@ ProposalItemConfig.seed(
     id: 3,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'app-developer - アプリケーション開発'
@@ -30,7 +30,7 @@ ProposalItemConfig.seed(
     id: 4,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'operator/sys-admin - 運用管理/システム管理'
@@ -39,7 +39,7 @@ ProposalItemConfig.seed(
     id: 5,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'CxO/biz - ビジネス層'
@@ -48,7 +48,7 @@ ProposalItemConfig.seed(
     id: 6,
     conference_id: 3,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'その他'
@@ -86,7 +86,7 @@ ProposalItemConfig.seed(
     id: 10,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'architect - システム設計'
@@ -95,7 +95,7 @@ ProposalItemConfig.seed(
     id: 11,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'developer - システム開発'
@@ -104,7 +104,7 @@ ProposalItemConfig.seed(
     id: 12,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'app-developer - アプリケーション開発'
@@ -113,7 +113,7 @@ ProposalItemConfig.seed(
     id: 13,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'operator/sys-admin - 運用管理/システム管理'
@@ -122,7 +122,7 @@ ProposalItemConfig.seed(
     id: 14,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'CxO/biz - ビジネス層'
@@ -131,7 +131,7 @@ ProposalItemConfig.seed(
     id: 15,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
+    label: 'assumed_visitor',
     item_number: 1,
     item_name: '想定受講者（★★）',
     params: 'その他'

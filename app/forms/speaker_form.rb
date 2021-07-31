@@ -26,6 +26,7 @@ class SpeakerForm
     end
 
     def talks_attributes=(attributes)
+      proposal_item_config_labels = @conference.proposal_item_configs.map(&:label).uniq
       @talks ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
@@ -43,15 +44,15 @@ class SpeakerForm
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
             end
-            @conference.proposal_item_configs.map(&:label).uniq
-            @conference.proposal_item_configs.map(&:label).uniq.each do |label|
-              if talk.proposal_items.find_by(label: label).present?
-                talk.proposal_items.find_by(label: label).update(params:  params[label.pluralize])
-              else
-                talk.proposal_items.build(conference_id: params[:conference_id], label: label, params: params[label.pluralize]) if params[label.pluralize].present?
-              end
-              params.delete(label.pluralize)
+
+            proposal_item_params = {}
+            proposal_item_config_labels.each do |label|
+              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
             end
+            proposal_item_config_labels.each do |label|
+              talk.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
+            end
+
             talk.update(params)
             @talks << talk
           end
@@ -68,11 +69,15 @@ class SpeakerForm
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
             end
-            t = Talk.new(params)
-            @conference.proposal_item_configs.map(&:label).uniq.each do |label|
-              t.proposal_items.build(conference_id: params[:conference_id], label: label, params: params[label.pluralize]) if params[pluralize].present?
+            proposal_item_params = {}
+            proposal_item_config_labels.each do |label|
+              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
             end
-            @talks << Talk.new(params)
+            t = Talk.new(params)
+            proposal_item_config_labels.each do |label|
+              t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
+            end
+            @talks << t
           end
         end
       end

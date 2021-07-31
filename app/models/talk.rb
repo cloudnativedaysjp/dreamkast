@@ -187,6 +187,15 @@ class Talk < ApplicationRecord
     sponsor.present?
   end
 
+  def create_or_update_proposal_item(label, params)
+    item = proposal_items.find_by(label: label)
+    if item.present?
+      item.update(params:  params)
+    else
+      proposal_items.build(conference_id: conference_id, label: label, params: params)
+    end
+  end
+
   private
 
   def validate_expected_participants

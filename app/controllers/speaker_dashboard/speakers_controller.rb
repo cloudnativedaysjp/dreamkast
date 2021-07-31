@@ -34,7 +34,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def create
     @conference = Conference.find_by(abbr: params[:event])
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new())
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new(), conference: @conference)
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
 
@@ -134,7 +134,7 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
   end
 
   def talks_attributes
-    attr= [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session, expected_participant: []]
+    attr= [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session]
     attr.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
   end
 end

@@ -604,7 +604,7 @@ Sponsor.seed(
     name: "CircleCI合同会社",
     abbr: "circleci",
     conference_id: 3,
-    url: "https://circleci.com/ja/"
+    url: "https://circleci.com/ja/customers/"
   },
   {
     id: 50,
@@ -618,7 +618,7 @@ Sponsor.seed(
     name: "日本マイクロソフト株式会社/Microsoft Corporation",
     abbr: "microsoft",
     conference_id: 3,
-    url: "https://news.microsoft.com/ja-jp/"
+    url: "https://azure.microsoft.com/ja-jp/developer/"
   },
   {
     id: 52,
@@ -632,14 +632,14 @@ Sponsor.seed(
     name: "日本シノプシス合同会社",
     abbr: "synopsys",
     conference_id: 3,
-    url: "https://www.synopsys.com/ja-jp.html"
+    url: "https://www.synopsys.com/ja-jp/software-integrity.html"
   },
   {
     id: 54,
     name: "株式会社サイバーエージェント",
     abbr: "cyberagent",
     conference_id: 3,
-    url: "https://developers.cyberagent.co.jp/"
+    url: "https://developers.cyberagent.co.jp/blog/"
   },
 )
 
@@ -883,8 +883,8 @@ end
   [49, 'circleci', 'sponsors/cicd2021/circleci.png', 3],
   [50, 'line', 'sponsors/cicd2021/line.png', 3],
   [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
-  [52, 'yumemi', 'trademark.png', 3],
-  [53, 'synopsys', 'trademark.png', 3],
+  [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
+  [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(

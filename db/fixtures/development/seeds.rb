@@ -950,7 +950,7 @@ end
   [49, 'circleci', 'sponsors/cicd2021/circleci.png', 3],
   [50, 'line', 'sponsors/cicd2021/line.png', 3],
   [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
-  [52, 'yumemi', 'trademark.png', 3],
+  [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
   [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3]
 ].each do |logo|

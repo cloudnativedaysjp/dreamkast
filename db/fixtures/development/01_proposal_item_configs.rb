@@ -193,7 +193,7 @@ ProposalItemConfig.seed(
     params: 'Only Slide - スライドのみ公開可'
   },
   {
-    id: 21,
+    id: 22,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
     label: 'whether_it_can_be_published',
@@ -202,7 +202,7 @@ ProposalItemConfig.seed(
     params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   },
   {
-    id: 21,
+    id: 23,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
     label: 'whether_it_can_be_published',
@@ -212,7 +212,7 @@ ProposalItemConfig.seed(
   },
 
   {
-    id: 22,
+    id: 24,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
     label: 'session_time',
@@ -221,7 +221,7 @@ ProposalItemConfig.seed(
     params: '40min (full session)'
   },
   {
-    id: 23,
+    id: 25,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
     label: 'session_time',
@@ -231,21 +231,21 @@ ProposalItemConfig.seed(
   },
 
   {
-    id: 24,
+    id: 26,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'session_time',
+    label: 'language',
     item_number: 5,
     item_name: '講演言語 - Language（★）',
     params: 'JA'
   },
   {
-    id: 24,
+    id: 27,
     conference_id: 4,
     type: 'ProposalItemConfigCheckBox',
-    label: 'session_time',
+    label: 'language',
     item_number: 5,
     item_name: '講演言語 - Language（★）',
     params: 'EN'
-  },
+  }
 )

@@ -118,8 +118,6 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
 
   # Only allow a list of trusted parameters through.
   def speaker_params
-    talks_attributes = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session, expected_participant: []]
-    talks_attributes = talks_attributes.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
     params.require(:speaker).permit(:name,
                                     :name_mother_tongue,
                                     :sub,
@@ -133,5 +131,10 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
                                     :conference_id,
                                     :additional_documents,
                                     talks_attributes: talks_attributes)
+  end
+
+  def talks_attributes
+    attr= [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session, expected_participant: []]
+    attr.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
   end
 end

@@ -4,6 +4,7 @@ class SpeakerForm
   include ActiveModel::Validations
 
   attr_accessor :name,
+                :name_mother_tongue,
                 :email,
                 :sub,
                 :profile,
@@ -105,8 +106,7 @@ class SpeakerForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      puts "conference_id #{conference_id}"
-      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
+      speaker.update!(name: name, name_mother_tongue: name_mother_tongue, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
       @destroy_talks.each do |talk|
         proposal = talk.proposal
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
@@ -147,6 +147,7 @@ class SpeakerForm
   def default_attributes
     {
       name: speaker.name,
+      name_mother_tongue: speaker.name_mother_tongue,
       email: speaker.email,
       sub: speaker.sub,
       profile: speaker.profile,

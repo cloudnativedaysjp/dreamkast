@@ -158,16 +158,19 @@ ActiveRecord::Schema.define(version: 2021_07_31_033738) do
     t.string "label"
     t.string "item_name"
     t.json "params"
+    t.text "description"
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
   end
 
   create_table "proposal_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
+    t.bigint "proposal_item_config_id", null: false
     t.bigint "talk_id", null: false
+    t.string "label"
     t.json "params"
-    t.string "label", null: false
     t.index ["conference_id"], name: "index_proposal_items_on_conference_id"
-    t.index ["talk_id"], name: "index_proposal_items_on_talks_id"
+    t.index ["proposal_item_config_id"], name: "index_proposal_items_on_proposal_item_config_id"
+    t.index ["talk_id"], name: "index_proposal_items_on_talk_id"
   end
 
   create_table "proposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|

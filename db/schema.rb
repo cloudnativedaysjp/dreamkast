@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_31_025418) do
+ActiveRecord::Schema.define(version: 2021_07_31_033738) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -159,6 +159,16 @@ ActiveRecord::Schema.define(version: 2021_07_31_025418) do
     t.string "item_name"
     t.json "params"
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
+  end
+
+  create_table "proposal_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "talk_id", null: false
+    t.string "type"
+    t.json "params"
+    t.string "label", null: false
+    t.index ["conference_id"], name: "index_proposal_items_on_conference_id"
+    t.index ["talk_id"], name: "index_proposal_items_on_talks_id"
   end
 
   create_table "proposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -346,6 +356,7 @@ ActiveRecord::Schema.define(version: 2021_07_31_025418) do
   add_foreign_key "chat_messages", "speakers"
   add_foreign_key "links", "conferences"
   add_foreign_key "proposal_item_configs", "conferences"
+  add_foreign_key "proposal_items", "conferences"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"

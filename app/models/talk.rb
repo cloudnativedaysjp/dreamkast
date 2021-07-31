@@ -15,6 +15,8 @@ class Talk < ApplicationRecord
   has_many :speakers, through: :talks_speakers
   has_many :profiles, through: :registered_talks
 
+  has_many :proposal_items, autosave: true, dependent: :destroy
+
   validates :conference_id, presence: true
   validates :title, presence: true
 

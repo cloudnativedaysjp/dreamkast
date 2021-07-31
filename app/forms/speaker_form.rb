@@ -30,13 +30,12 @@ class SpeakerForm
       @destroy_talks ||= []
       attributes.each do |_i, params|
         if params.key?(:id)
+          # talk is already exists
           if params[:_destroy] == "1"
             @destroy_talks << @speaker.talks.find(params[:id])
           else
             params.delete(:_destroy)
             talk = @speaker.talks.find(params[:id])
-            params[:expected_participants] = params[:expected_participants].map(&:to_i).select{|n| n != 0} if params[:expected_participants].present?
-            params[:execution_phases] = params[:execution_phases].map(&:to_i).select{|n| n != 0}  if params[:execution_phases].present?
             if @sponsor.present? && params[:sponsor_session] == "true"
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
@@ -44,22 +43,34 @@ class SpeakerForm
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
             end
+            @conference.proposal_item_configs.map(&:label).uniq
+            @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+              if talk.proposal_items.find_by(label: label).present?
+                talk.proposal_items.find_by(label: label).update(params:  params[label.pluralize])
+              else
+                talk.proposal_items.build(conference_id: params[:conference_id], label: label, params: params[label.pluralize]) if params[label.pluralize].present?
+              end
+              params.delete(label.pluralize)
+            end
             talk.update(params)
             @talks << talk
           end
         else
+          # talk doesn't exists
           unless params[:_destroy] == "1"
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
-            params[:expected_participants] = params[:expected_participants].map(&:to_i)
-            params[:execution_phases] = params[:execution_phases].map(&:to_i)
             if @sponsor.present? && params[:sponsor_session] == "true"
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
             else
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
+            end
+            t = Talk.new(params)
+            @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+              t.proposal_items.build(conference_id: params[:conference_id], label: label, params: params[label.pluralize]) if params[pluralize].present?
             end
             @talks << Talk.new(params)
           end
@@ -71,9 +82,10 @@ class SpeakerForm
     end
   end
 
-  def initialize(attributes = nil, speaker: Speaker.new, sponsor: nil)
+  def initialize(attributes = nil, speaker: Speaker.new, sponsor: nil, conference: nil)
     @speaker = speaker
     @sponsor = sponsor
+    @conference = conference
     @talks ||= []
     @destroy_talks ||= []
     attributes ||= default_attributes

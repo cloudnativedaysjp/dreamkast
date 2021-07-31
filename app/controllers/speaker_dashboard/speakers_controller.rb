@@ -64,7 +64,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @speaker = Speaker.find(params[:id])
     authorize @speaker
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
     # @speaker_form.load
@@ -118,9 +118,10 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
 
   # Only allow a list of trusted parameters through.
   def speaker_params
-    talks_attributes = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session]
-    talks_attributes.append(@conference.proposal_item_configs.map{|item| [item.label,[]]}.uniq.to_h)
+    talks_attributes = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, :sponsor_session, expected_participant: []]
+    talks_attributes = talks_attributes.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
     params.require(:speaker).permit(:name,
+                                    :name_mother_tongue,
                                     :sub,
                                     :email,
                                     :profile,

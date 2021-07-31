@@ -145,7 +145,5 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
       end
     end
     attr.append(h)
-
-    # attr.append(@conference.proposal_item_configs.map{|item| [item.label.pluralize.to_sym,[]]}.uniq.to_h)
   end
 end

@@ -3,8 +3,13 @@
     <h3 class="py-3">スピーカー情報</h3>
 
     <div class="field pb-3">
-      <%= form.label :name, '名前' %>*
+      <%= form.label :name, 'Your Name - 講演者氏名(英語表記)' %>*
       <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+    </div>
+
+    <div class="field pb-3">
+      <%= form.label :name_mother_tongue, 'Your Name (Kanji) - 講演者氏名(漢字)' %>*
+      <%= form.text_field :name_mother_tongue, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
     </div>
 
     <div class="field pb-3">

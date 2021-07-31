@@ -10,8 +10,8 @@
         <% if talk.proposal.present? %>
           受付状況: <%= proposal_status(talk.proposal) %>
         <% end %>
-        <% if talk.talk_category %>
-          <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time.time_minutes %>分</h6>
+        <% if talk.talk_category.present? %>
+          <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.talk_time&.time_minutes %>分</h6>
         <% end %>
         <p class="card-text"><%= simple_format talk.abstract %></p>
 

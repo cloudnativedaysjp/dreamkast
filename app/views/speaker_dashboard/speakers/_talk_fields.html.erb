@@ -21,6 +21,13 @@
     <%= f.text_area :abstract, {class: "form-control"}  %>
   </div>
 
+  <% if @conference.abbr != 'cicd2021' %>
+    <div class="field pb-3">
+      <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
+      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+    </div>
+  <% end %>
+
   <div class="field pb-3">
     <%= f.label :talk_difficulty_id, "受講者レベル（★★）" %>*
     <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>

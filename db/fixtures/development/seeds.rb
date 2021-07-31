@@ -68,6 +68,19 @@ CI/CD Conferenceは、CI/CDに特化したテックカンファレンスです�
 EOS
   },
   {
+    id: 4,
+    name: "CloudNative Days Tokyo 2021",
+    abbr: "cndt2021",
+    theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+CloudNative Daysは、最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。
+EOS
+  },
+  {
     id: 10,
     name: "Test Event Winter 2020",
     abbr: "tew2020",
@@ -99,6 +112,10 @@ ConferenceDay.seed(
   
   {id: 9, date: "2021-09-03", start_time: "13:00", end_time: "19:00", conference_id: 3, internal: false},
   {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
+
+  {id: 11, date: "2021-11-04", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: false},
+  {id: 12, date: "2021-11-05", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: false},
+  {id: 13, date: "2021-11-01", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -184,6 +201,12 @@ Track.seed(
   { id: 17, number: 1, name: "A", conference_id: 3, video_platform: "vimeo", video_id: "ffffff"},
   { id: 18, number: 2, name: "B", conference_id: 3, video_platform: "vimeo", video_id: "gggggg"},
   { id: 19, number: 3, name: "C", conference_id: 3, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 20, number: 1, name: "A", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 21, number: 2, name: "B", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 22, number: 3, name: "C", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 23, number: 4, name: "D", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 24, number: 5, name: "E", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 25, number: 6, name: "F", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
 )
 
 
@@ -224,7 +247,26 @@ TalkCategory.seed(
   { id: 33, conference_id: 2, name: "NFV / Edge"},
   { id: 34, conference_id: 2, name: "組織論"},
   { id: 35, conference_id: 2, name: "その他"},
-  { id: 36, conference_id: 2, name: "Keynote"}
+  { id: 36, conference_id: 2, name: "Keynote"},
+
+  { id: 37, conference_id: 3, name: "CI / CD"},
+  { id: 38, conference_id: 3, name: "Customizing / Extending"},
+  { id: 39, conference_id: 3, name: "IoT / Edge"},
+  { id: 40, conference_id: 3, name: "Microservices / Services Mesh"},
+  { id: 41, conference_id: 3, name: "ML / HPC"},
+  { id: 42, conference_id: 3, name: "Networking"},
+  { id: 43, conference_id: 3, name: "Operation / Monitoring / Logging"},
+  { id: 44, conference_id: 3, name: "Application / Development"},
+  { id: 45, conference_id: 3, name: "Runtime"},
+  { id: 46, conference_id: 3, name: "Security"},
+  { id: 47, conference_id: 3, name: "Serveless / FaaS"},
+  { id: 48, conference_id: 3, name: "Storage / Database"},
+  { id: 49, conference_id: 3, name: "Architecture Design"},
+  { id: 50, conference_id: 3, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 51, conference_id: 3, name: "NFV / Edge"},
+  { id: 52, conference_id: 3, name: "組織論"},
+  { id: 53, conference_id: 3, name: "その他"},
+  { id: 54, conference_id: 3, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -241,7 +283,10 @@ TalkDifficulty.seed(
   { id: 27, conference_id: 10, name: "初級者"},
   { id: 28, conference_id: 10, name: "中級者"},
   { id: 29, conference_id: 10, name: "上級者"},
-  )
+  { id: 31, conference_id: 4, name: "初級者"},
+  { id: 32, conference_id: 4, name: "中級者"},
+  { id: 33, conference_id: 4, name: "上級者"},
+)
 
 TalkTime.seed(
   { id: 1, conference_id: 2, time_minutes: 5},

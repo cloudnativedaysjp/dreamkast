@@ -1,51 +1,48 @@
 <% @conference.conference_days.each do |conference_day| %>
   <% unless conference_day.internal  %>
   <section class="timetable">
-    <div class="grid" style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 %>">
+    <div class="grid"
+         style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 %>">
       <% ["A","B","C"].each_with_index do |track_name, n| %>
-          <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+          <div class="track <%= 'even' if n.zero? || n.even? %>"
+               style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
-      <% talk_numbers = []; day_slots = [] %>
       <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
         <% 
           row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 13:00")) / 60).to_i + 10
           row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
         %>
         <div class="talk"
-             slot="<%= talk.slot_number %>"
-             style="--track: <%= talk.track.number - 1 %>;
-                    --duration: 60;
-                    --row-start: <%= row_start %>;
-                    --row-end: <%= row_end  %>;">
-          <% day_slot = "#{talk.day}_#{talk.slot_number}" %>
+          slot="<%= talk.slot_number %>"
+          style="--track: <%= talk.track.number - 1 %>;
+                  --duration: 60;
+                  --row-start: <%= row_start %>;
+                  --row-end: <%= row_end  %>;">
+          <% if form %>
+          <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+          <%= form.check_box "talks[#{talk.id}]",
+                              { talk_id: talk.id, checked: talks_checked?(talk.id)},
+                              true,
+                              false %>
+          <% end %>
           <div class="content
-                      <%= 'checked' if @current_user && talks_checked?(talk.id) %>
-                      <%= 'first' unless day_slots.include?(day_slot) %>"
-               slot="<%= talk.slot_number %>"
-               day_slot="<%= day_slot %>"
-               talk_number="<%= talk.talk_number %>">
-            <% unless talk_numbers.include?(talk.talk_number) %>
-              <% if form %>
-                <div class="radio">
-                  <%= form.radio_button "talks[#{day_slot}]",
-                                        talk.track_id.to_s,
-                                        { day_slot: day_slot, checked: talks_checked?(talk.id), talk_number: talk.talk_number} %>
-                  <label for="<%= "talks[#{day_slot}]_#{talk.track_id.to_s}" %>" class="radio-label"></label>
-                </div>
-              <% end %>
-              <% 
-                talk_numbers << talk.talk_number
-                day_slots << day_slot
-              %>
-            <% end %>
+                      <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
+                      talk_id="<%= talk.id %>"
+                      track_number="<%= talk.track.number %>">
             <h6>
-              <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
-              <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
+                <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <%= ' (アーカイブ視聴不可)' unless talk.video_published %>
             </h6>
-
-            <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
+            <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+            <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
+            <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
           </div>
+
+          <% if form %>
+          </label>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -53,5 +50,8 @@
   <% end %>
 <% end %>
 <% if form %>
-  <%= render 'timetable_footer', form: form, information: '視聴したいセッションを選択してください。同一時間帯に1セッションのみ選択可能ですが、選択していないセッションのアーカイブ視聴も可能です(一部除く)。' %>
+  <%= render 'timetable_footer',
+      form: form,
+      information: '視聴したいセッションを選択してください' %>
 <% end %>
+

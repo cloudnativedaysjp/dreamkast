@@ -1,9 +1,5 @@
 <div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
-<div class="container">
-  <h1 class="my-3 text-center">タイムテーブル</h1>
-</div>
-
 <% if @current_user %>
   <%= form_with url: 'profiles/talks', method: :post do |form| %>
     <%= render partial: timetable_partial_name, locals: {conference: @conference, form: form} %>

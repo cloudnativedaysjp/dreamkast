@@ -168,7 +168,6 @@ ActiveRecord::Schema.define(version: 2021_07_31_033738) do
     t.string "label"
     t.json "params"
     t.index ["conference_id"], name: "index_proposal_items_on_conference_id"
-    t.index ["proposal_item_config_id"], name: "index_proposal_items_on_proposal_item_config_id"
     t.index ["talk_id"], name: "index_proposal_items_on_talk_id"
   end
 

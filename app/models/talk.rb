@@ -15,6 +15,8 @@ class Talk < ApplicationRecord
   has_many :speakers, through: :talks_speakers
   has_many :profiles, through: :registered_talks
 
+  has_many :proposal_items, autosave: true, dependent: :destroy
+
   validates :conference_id, presence: true
   validates :title, presence: true
 
@@ -183,6 +185,27 @@ class Talk < ApplicationRecord
 
   def sponsor_session?
     sponsor.present?
+  end
+
+  def create_or_update_proposal_item(label, params)
+    item = proposal_items.find_by(label: label)
+    if item.present?
+      item.update(params:  params)
+    else
+      proposal_items.build(conference_id: conference_id, label: label, params: params)
+    end
+  end
+
+  def proposal_item_value(label)
+    params = proposal_items.find_by(label: label)&.params
+    return nil unless params
+
+    case params
+    when String
+      ProposalItemConfig.find(params.to_i).params
+    when Array
+      params.map{|param| ProposalItemConfig.find(param.to_i).params}
+    end
   end
 
   private

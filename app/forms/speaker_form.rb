@@ -4,6 +4,7 @@ class SpeakerForm
   include ActiveModel::Validations
 
   attr_accessor :name,
+                :name_mother_tongue,
                 :email,
                 :sub,
                 :profile,
@@ -26,17 +27,17 @@ class SpeakerForm
     end
 
     def talks_attributes=(attributes)
+      proposal_item_config_labels = @conference.proposal_item_configs.map(&:label).uniq
       @talks ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
         if params.key?(:id)
+          # talk is already exists
           if params[:_destroy] == "1"
             @destroy_talks << @speaker.talks.find(params[:id])
           else
             params.delete(:_destroy)
             talk = @speaker.talks.find(params[:id])
-            params[:expected_participants] = params[:expected_participants].map(&:to_i).select{|n| n != 0} if params[:expected_participants].present?
-            params[:execution_phases] = params[:execution_phases].map(&:to_i).select{|n| n != 0}  if params[:execution_phases].present?
             if @sponsor.present? && params[:sponsor_session] == "true"
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
@@ -44,16 +45,24 @@ class SpeakerForm
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
             end
+
+            proposal_item_params = {}
+            proposal_item_config_labels.each do |label|
+              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
+            end
+            proposal_item_config_labels.each do |label|
+              talk.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
+            end
+
             talk.update(params)
             @talks << talk
           end
         else
+          # talk doesn't exists
           unless params[:_destroy] == "1"
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
-            params[:expected_participants] = params[:expected_participants].map(&:to_i)
-            params[:execution_phases] = params[:execution_phases].map(&:to_i)
             if @sponsor.present? && params[:sponsor_session] == "true"
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
@@ -61,7 +70,15 @@ class SpeakerForm
               params[:sponsor_id] = nil
               params.delete(:sponsor_session)
             end
-            @talks << Talk.new(params)
+            proposal_item_params = {}
+            proposal_item_config_labels.each do |label|
+              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
+            end
+            t = Talk.new(params)
+            proposal_item_config_labels.each do |label|
+              t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
+            end
+            @talks << t
           end
         end
       end
@@ -71,9 +88,10 @@ class SpeakerForm
     end
   end
 
-  def initialize(attributes = nil, speaker: Speaker.new, sponsor: nil)
+  def initialize(attributes = nil, speaker: Speaker.new, sponsor: nil, conference: nil)
     @speaker = speaker
     @sponsor = sponsor
+    @conference = conference
     @talks ||= []
     @destroy_talks ||= []
     attributes ||= default_attributes
@@ -88,8 +106,7 @@ class SpeakerForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      puts "conference_id #{conference_id}"
-      speaker.update!(name: name, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
+      speaker.update!(name: name, name_mother_tongue: name_mother_tongue, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
       @destroy_talks.each do |talk|
         proposal = talk.proposal
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
@@ -130,6 +147,7 @@ class SpeakerForm
   def default_attributes
     {
       name: speaker.name,
+      name_mother_tongue: speaker.name_mother_tongue,
       email: speaker.email,
       sub: speaker.sub,
       profile: speaker.profile,

@@ -3,27 +3,34 @@
     <h3 class="py-3">スピーカー情報</h3>
 
     <div class="field pb-3">
-      <%= form.label :name, '名前' %>*
+      <%= form.label :name, '講演者氏名（英語表記） - Your Name' %>*
       <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
     </div>
 
     <div class="field pb-3">
-      <%= form.label :profile, 'プロフィール(200文字程度)' %>*
+      <%= form.label :name_mother_tongue, '講演者氏名（漢字）- Name "kanji"' %>*
+      <p class="field-description" style="font-size: 0.7em">If you do not have a Kanji name, please set "N/A"</p>
+      <%= form.text_field :name_mother_tongue, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+    </div>
+
+    <div class="field pb-3">
+      <%= form.label :profile, '講演者プロフィール - Biography' %>*
+      <p class="field-description" style="font-size: 0.7em">200文字程度 (About 400 letters)</p>
       <%= form.text_area :profile, class: "form-control", required: true %>
     </div>
 
     <div class="field pb-3">
-      <%= form.label :company, '会社名 / 所属団体名（★）' %>*
+      <%= form.label :company, '会社名/所属団体名 - Company/Organizations（★）' %>*
       <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
     </div>
 
     <div class="field pb-3">
-      <%= form.label :job_title, '肩書き' %>*
+      <%= form.label :job_title, '肩書き - Job Title' %>*
       <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア'  %>
     </div>
 
     <div class="field pb-3">
-      <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等' %>
+      <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等 - Published Slides, etc.（★）' %>
       <%= form.text_area :additional_documents, class: "form-control", required: false, placeholder: "https://speakerdeck.com/\nhttps://www.slideshare.net/"  %>
     </div>
 
@@ -38,7 +45,7 @@
     </div>
 
     <div class="field pb-3">
-      <%= form.label :avatar, 'プロフィール画像' %>
+      <%= form.label :avatar, '講演者写真 - Photographs' %>
       <% if @speaker && @speaker.avatar_url.present? %>
         <br>
         <%= image_tag @speaker.avatar_url, :size => '80x80' %>

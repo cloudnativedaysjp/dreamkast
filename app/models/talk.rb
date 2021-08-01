@@ -196,6 +196,18 @@ class Talk < ApplicationRecord
     end
   end
 
+  def proposal_item_value(label)
+    params = proposal_items.find_by(label: label)&.params
+    return nil unless params
+
+    case params
+    when String
+      ProposalItemConfig.find(params.to_i).params
+    when Array
+      params.map{|param| ProposalItemConfig.find(param.to_i).params}
+    end
+  end
+
   private
 
   def validate_expected_participants

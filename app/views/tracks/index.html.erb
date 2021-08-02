@@ -48,7 +48,9 @@
               <% if talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
                 <span class="difficulty difficulty_<%= talk_difficulty(talk.id).id %>"><%= talk_difficulty(talk.id).name %></span>
               <% end %>
+              <% if talk.talk_category_id.present? %>
               <span class="difficulty category_<%= talk_category(talk.id).id %>"><%= talk_category(talk.id).name %></span>
+              <% end %>
             </div>
             <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
           <% end %>

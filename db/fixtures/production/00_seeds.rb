@@ -306,6 +306,32 @@ if ENV['REVIEW_APP'] == 'true'
       t.speaker_id = h["speaker_id"]
     end
   end
+
+  # Import CICD2021 Dummy
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks.csv'), headers: true)
+  Talk.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/speakers.csv'), headers: true)
+  Speaker.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks_speakers.csv'), headers: true)
+  csv.each do |row|
+    TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+      h = row.to_hash
+      t.talk_id = h["talk_id"]
+      t.speaker_id = h["speaker_id"]
+    end
+  end
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/proposals.csv'), headers: true)
+  Proposal.seed(csv.map{|line|
+    {
+      id: line["id"],
+      talk_id: line["talk_id"],
+      conference_id: line["conference_id"],
+      status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+    }
+  })
     
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

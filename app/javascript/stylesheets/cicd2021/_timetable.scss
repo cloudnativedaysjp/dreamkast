@@ -13,7 +13,6 @@ section.timetable {
         grid-gap: .125em .25em;
         justify-content: center;
     }
-    
     .track {
         grid-column: calc(var(--track) + 1);
         grid-row: 1 / -1;
@@ -22,7 +21,6 @@ section.timetable {
         justify-content: center;
         background-color: rgba(256, 256, 256, 0.9);
     }
-    
     .keynote {
         grid-column: 2 / -1;
         --start: calc(1 + var(--row-start));
@@ -124,7 +122,6 @@ section.timetable {
             justify-content: left;
         }
     }
-
     .content_caption {
         // -webkit-transition: .3s;
         // transition: .3s;
@@ -140,53 +137,40 @@ section.timetable {
         opacity: 0;
         vertical-align: middle;
     }
-    
     .content_caption span {
         font-size: 0.8em;
     }
-    
     input[type="checkbox"]+.content .content_caption:before {
         content: "選択";
     }
-    
     input[type="checkbox"]:checked+.content .content_caption:before {
         content: "選択解除";
     }
-    
     .content:hover .content_caption {
         opacity: 0.8;
     }
-    
     .checkbox-label input[type=checkbox] {
         visibility: hidden;
     }
-    
-    
     label.checkbox-label {
         display: contents;
     }
-    
     label.checkbox-label input[type="checkbox"]:checked+.content {
         background-color: #DDF;
         border-radius: 5px;
         border: solid 1px $dark-blue;
     }
-    
-    
     .even {
         background-color: rgba(248, 248, 255, 0.8);
     }
-    
     .avatar img {
         border-radius: 50%;
     }
-    
     .card .avatar img {
         border-radius: 50%;
         margin: 10px;
     }
-    
-    .modal-body{
+    .modal-body {
         .category_difficulty {
             margin: 0 0 10px 0;
         }
@@ -199,100 +183,76 @@ section.timetable {
             background: $dark-blue;
             border-radius: 1rem;
         }
-    } 
-    
+    }
     .archivable {
         filter: hue-rotate(0deg);
     }
-    
     .non_archivable {
         filter: hue-rotate(180deg);
     }
-    
     .difficulty_11 {
         filter: hue-rotate(0deg);
     }
-    
     .difficulty_12 {
         filter: hue-rotate(120deg);
     }
-    
     .difficulty_13 {
         filter: hue-rotate(240deg);
     }
-    
     .category_21 {
         filter: hue-rotate(0deg);
     }
-    
     .category_22 {
         filter: hue-rotate(20deg);
     }
-    
     .category_23 {
         filter: hue-rotate(40deg);
     }
-    
     .category_24 {
         filter: hue-rotate(60deg);
     }
-    
     .category_25 {
         filter: hue-rotate(80deg);
     }
-    
     .category_26 {
         filter: hue-rotate(100deg);
     }
-    
     .category_27 {
         filter: hue-rotate(120deg);
     }
-    
     .category_28 {
         filter: hue-rotate(140deg);
     }
-    
     .category_29 {
         filter: hue-rotate(160deg);
     }
-    
     .category_30 {
         filter: hue-rotate(180deg);
     }
-    
     .category_31 {
         filter: hue-rotate(200deg);
     }
-    
     .category_32 {
         filter: hue-rotate(220deg);
     }
-    
     .category_33 {
         filter: hue-rotate(240deg);
     }
-    
     .category_34 {
         filter: hue-rotate(260deg);
     }
-    
     .category_35 {
         filter: hue-rotate(280deg);
     }
-    
     .category_36 {
         filter: hue-rotate(300deg);
     }
-    
     .category_37 {
         filter: hue-rotate(320deg);
     }
-    
     .track_name {
         display: none;
     }
-    
     @media (max-width: 768px) {
         .grid {
             display: block;
@@ -339,8 +299,9 @@ section.timetable {
         h2 {
             margin: 15px 0px 5px 0px;
         }
-    }   
+    }
 }
+
 .timetable-footer {
     position: fixed;
     bottom: 0px;
@@ -348,6 +309,7 @@ section.timetable {
     z-index: 100;
     width: 100%;
     box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
     input {
         border: 1px solid #FFF;
         box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.5);
@@ -355,9 +317,11 @@ section.timetable {
     .information {
         color: #FFF;
         font-size: small;
+        text-align: center;
         line-height: 80%;
     }
 }
+
 input[type="checkbox"]+.content .content_caption:before {
     content: "選択";
 }

@@ -33,7 +33,7 @@
             <h6>
                 <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-                <%= ' (アーカイブ視聴不可)' unless talk.video_published %>
+                <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
             </h6>
             <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
             <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
@@ -52,6 +52,6 @@
 <% if form %>
   <%= render 'timetable_footer',
       form: form,
-      information: '視聴したいセッションを選択してください' %>
+      information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
 <% end %>
 

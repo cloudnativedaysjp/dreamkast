@@ -32,6 +32,10 @@
 
 #speaker-landing {
     line-height: 200%;
+    a {
+        color: $azurite;
+        text-decoration: underline;
+    }
 }
 
 @media (max-width: 992px) {

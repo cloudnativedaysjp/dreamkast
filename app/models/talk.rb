@@ -154,6 +154,9 @@ class Talk < ApplicationRecord
   end
 
   def time
+    # CICD2021は全セッション40分固定で、talk_timeを持たせていないため
+    return 40 if conference.abbr == 'cicd2021'
+
     talk_time.present? ? talk_time.time_minutes : 0
   end
 

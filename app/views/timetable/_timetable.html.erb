@@ -37,7 +37,7 @@
               <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
             </h6>
 
-            <%= render 'talk_category_difficulty', talk: talk %>
+            <%= render 'timetable/talk_category_difficulty', talk: talk %>
 
             <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
           </div>

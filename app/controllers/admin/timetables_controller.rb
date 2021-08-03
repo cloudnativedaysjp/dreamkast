@@ -6,7 +6,7 @@ class Admin::TimetablesController < ApplicationController
   before_action :is_admin?, :set_conference, :set_profile
 
   def index
-    @talks = @conference.talks.where(show_on_timetable: true).order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.show_on_timetable.order('conference_day_id ASC, start_time ASC, track_id ASC')
     @tracks = Track.where(conference_id: @conference.id)
     @conference_form = ConferenceForm.new(conference: @conference)
     respond_to do |format|

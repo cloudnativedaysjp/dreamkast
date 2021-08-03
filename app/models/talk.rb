@@ -39,6 +39,18 @@ class Talk < ApplicationRecord
     includes(:video).where(videos: { on_air: 1 })
   }
 
+  scope :show_on_timetable, -> {
+    includes(:proposal).where(show_on_timetable: true, proposals: { status: :accepted })
+  }
+
+  scope :accepted, -> {
+    includes(:proposal).where(proposals: { status: :accepted })
+  }
+
+  scope :rejected, -> {
+    includes(:proposal).where(proposals: { status: :rejected })
+  }
+
   def self.import(file)
     message = []
 
@@ -154,6 +166,13 @@ class Talk < ApplicationRecord
   end
 
   def time
+    # CICD2021は全セッション40分固定で、talk_timeを持たせていないため
+    return 40 if conference.abbr == 'cicd2021'
+
+    # CNDT2021移行はセッションの時間をProposalItemで管理するので、ProposalItemにsession_timeがあればそこからセッション時間を取得して返す
+    session_time = proposal_items.find_by(label: 'session_time')
+    return ProposalItemConfig.find(session_time.params.to_i).params.split('min')[0].to_i if session_time
+
     talk_time.present? ? talk_time.time_minutes : 0
   end
 

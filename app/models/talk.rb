@@ -39,6 +39,18 @@ class Talk < ApplicationRecord
     includes(:video).where(videos: { on_air: 1 })
   }
 
+  scope :show_on_timetable, -> {
+    includes(:proposal).where(show_on_timetable: true, proposals: { status: :accepted })
+  }
+
+  scope :accepted, -> {
+    includes(:proposal).where(proposals: { status: :accepted })
+  }
+
+  scope :rejected, -> {
+    includes(:proposal).where(proposals: { status: :rejected })
+  }
+
   def self.import(file)
     message = []
 

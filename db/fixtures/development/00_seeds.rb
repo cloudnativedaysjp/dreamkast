@@ -785,6 +785,13 @@ Sponsor.seed(
     conference_id: 3,
     url: "https://developers.cyberagent.co.jp/blog/"
   },
+  {
+    id: 55,
+    name: "LegalForce",
+    abbr: "legalforce",
+    conference_id: 3,
+    url: "https://www.legalforce.co.jp/"
+  },
 )
 
 SponsorType.seed(
@@ -963,6 +970,7 @@ SponsorType.seed(
   [72, 'Gold', 'yumemi', 3],
   [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
+  [75, 'CM', 'legalforce', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1029,7 +1037,8 @@ end
   [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
   [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
   [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
-  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3]
+  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
+  [55, 'legalforce', 'sponsors/cicd2021/legalforce.jpg', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

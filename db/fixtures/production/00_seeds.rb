@@ -971,7 +971,7 @@ end
   [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
   [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
-  [55, 'legalforce', 'sponsors/cicd2021/legalforce.jpg', 3]
+  [55, 'legalforce', 'sponsors/cicd2021/legalforce.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

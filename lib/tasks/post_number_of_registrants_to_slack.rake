@@ -21,15 +21,14 @@ namespace :util do
 
         yesterday_stats = StatsOfRegistrant.where('created_at < ?', 1.days.ago).first
 
-        body = <<-EOS
-#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.number_of_registrants} 人です！
-前日より #{stats.number_of_registrants - yesterday_stats.number_of_registrants} 人増えました！
-        EOS
+        body = []
+        body << "#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.number_of_registrants} 人です！"
+        body << "前日より #{stats.number_of_registrants - yesterday_stats.number_of_registrants} 人増えました！" if yesterday_stats
       rescue => e
         puts e
       end
     end
 
-    slack.post body unless body.empty?
+    slack.post body.join("\n") unless body.empty?
   end
 end

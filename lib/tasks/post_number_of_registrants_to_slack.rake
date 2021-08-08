@@ -9,12 +9,12 @@ namespace :util do
     url = ENV['SLACK_WEBHOOK_URL']
     abbr = ENV['CONFERENCE_ABBR']
     slack = Slack::Incoming::Webhooks.new(url)
+    conference = Conference.find_by(abbr: abbr)
     slack.username = "#{conference.abbr.upcase} 参加者速報"
     body = ''
 
     ActiveRecord::Base.transaction do
       begin
-        conference = Conference.find_by(abbr: abbr)
         conference.profiles.size
         stats = StatsOfRegistrant.new(conference_id: conference.id, number_of_registrants: conference.profiles.size)
         stats.save!

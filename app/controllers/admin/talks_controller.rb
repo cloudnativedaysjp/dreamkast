@@ -13,18 +13,26 @@ class Admin::TalksController < ApplicationController
         head :no_content
 
         filename = "#{@conference.abbr}_talks"
-        columns = %w[title abstract speaker talk_time]
+        columns = %w[id title abstract speaker session_time difficulty category created_at url]
+        labels = @conference.proposal_item_configs.map(&:label).uniq
+        labels.delete('session_time')
+        columns.concat(labels)
 
         csv = CSV.generate do |csv|
           #カラム名を1行目として入れる
           csv << columns
 
           @talks.each do |talk|
-            csv << [talk.title, talk.abstract, talk.speakers.map(&:name).join(", "), talk.time]
+            row = [talk.id, talk.title, talk.abstract, talk.speaker_names.join(", "), talk.time, talk.talk_difficulty.name, talk.talk_category.name, talk.created_at, talk.url]
+            labels.each do |label|
+              v = talk.proposal_item_value(label)
+              row << v.class == Array ? v.join(', ') : v
+            end
+            csv << row
           end
         end
 
-        File.open("./#{filename}.csv", "w", encoding: "SJIS") do |file|
+        File.open("./#{filename}.csv", "w", encoding: "UTF-8") do |file|
           file.write(csv)
         end
         stat = File::stat("./#{filename}.csv")

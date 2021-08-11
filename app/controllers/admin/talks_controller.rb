@@ -26,7 +26,7 @@ class Admin::TalksController < ApplicationController
             row = [talk.id, talk.title, talk.abstract, talk.speaker_names.join(", "), talk.time, talk.talk_difficulty.name, talk.talk_category.name, talk.created_at, talk.speaker_twitter_ids.join(", ")]
             labels.each do |label|
               v = talk.proposal_item_value(label)
-              row << v.class == Array ? v.join(', ') : v
+              row << (v.class == Array ? v.join(', ') : v)
             end
             csv << row
           end

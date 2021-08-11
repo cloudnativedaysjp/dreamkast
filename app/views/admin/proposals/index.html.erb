@@ -6,7 +6,14 @@
   <% end %>
 
   <div class="row">
-    <h2>Talks</h2>
+    <h2>Download Proposals to CSV</h2>
+    <div class="col-12 form-group">
+      <%= link_to 'download', admin_proposals_path(format: :csv) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <h2>Proposals</h2>
     <table class="table table-striped talks_table" >
       <thead>
       <tr>

@@ -141,6 +141,10 @@ class Talk < ApplicationRecord
     speakers.map(&:name)
   end
 
+  def speaker_twitter_ids
+    speakers.map(&:twitter_id)
+  end
+
   def difficulty
     talk_difficulty.present? ? talk_difficulty.name : ''
   end

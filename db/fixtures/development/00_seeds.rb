@@ -1,10 +1,14 @@
+
+DUMMY_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+
 Conference.seed(
   {
     id: 1,
     name: "CloudNative Days Tokyo 2020",
     abbr: "cndt2020",
-    speaker_entry: 0, # disabled
-    attendee_entry: 0, # disabled
+    status: 2, # closed
+    speaker_entry: 0,
+    attendee_entry: 0,
     theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
     copyright: '© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
@@ -20,6 +24,9 @@ EOS
     id: 2,
     name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
+    status: 0, # registered
+    speaker_entry: 1, # enabled
+    attendee_entry: 0, # disabled
     theme: "ともに踏み出す CloudNative祭",
     copyright: '© CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
@@ -48,6 +55,9 @@ EOS
     id: 3,
     name: "CI/CD Conference 2021 by CloudNative Days",
     abbr: "cicd2021",
+    status: 0,
+    speaker_entry: 1,
+    attendee_entry: 0,
     theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cicd2021.md')),
@@ -56,7 +66,42 @@ EOS
     about: <<'EOS'
 CI/CD Conferenceは、CI/CDに特化したテックカンファレンスです。『技術を知り、試して、取り入れる』のコンセプトのもと、参加者が優れたCI/CDの知見を取り入れ、改善を行っていけるイベントを目指しています。そして、ゆくゆくは参加者が登壇者となり、他の人に知見を共有していける、Continuousなイベントでありたいと思っています。
 EOS
-  }
+  },
+  {
+    id: 4,
+    name: "CloudNative Days Tokyo 2021",
+    abbr: "cndt2021",
+    theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+    "CloudNative Days" は最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。
+    今日、多くの技術者、コミュニティ、企業がクラウドネイティブを目指す旅路を歩んでいます。
+
+    それぞれの旅路において、拾い集めた様々な経験、知識、疑問、悩みを共有する"交差点"にして欲しい、そんな思いが"CloudNative Days" には込められています。
+    まだ旅への一歩を踏み出せていない人も、再び旅に出る人も、この"交差点"に集まることで過去を振り返りながら新たなクラウドネイティブの旅をともに歩み進めることができると私達は信じています。
+    
+    旅をする準備をしませんか？ "交差点"で会えるのを楽しみにしています。
+EOS
+  },
+  {
+    id: 10,
+    name: "Test Event Winter 2020",
+    abbr: "tew2020",
+    theme: "これはTestEventWinter2020のテーマです",
+    copyright: '© Test Event Winter 2020 Committee',
+    privacy_policy: 'This is Privacy Policy',
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/development/privacy_policy_for_speaker.md')),
+    coc: 'This is CoC',
+    about: <<'EOS'
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -69,9 +114,14 @@ ConferenceDay.seed(
   {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 8, date: "2021-02-26", start_time: "19:00", end_time: "21:00", conference_id: 2, internal: true}, #Pre event
-    
+
+  
   {id: 9, date: "2021-09-03", start_time: "13:00", end_time: "19:00", conference_id: 3, internal: false},
   {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
+
+  {id: 11, date: "2021-11-04", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: false},
+  {id: 12, date: "2021-11-05", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: false},
+  {id: 13, date: "2021-11-01", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -139,6 +189,7 @@ FormItem.seed(
   { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"}
 )
 
+
 Track.seed(
   { id: 1, number: 1, name: "A", conference_id: 1},
   { id: 2, number: 2, name: "B", conference_id: 1},
@@ -146,16 +197,22 @@ Track.seed(
   { id: 4, number: 4, name: "D", conference_id: 1},
   { id: 5, number: 5, name: "E", conference_id: 1},
   { id: 6, number: 6, name: "F", conference_id: 1},
-  { id: 10, number: 1, name: "A", conference_id: 2},
-  { id: 11, number: 2, name: "B", conference_id: 2},
-  { id: 12, number: 3, name: "C", conference_id: 2},
-  { id: 13, number: 4, name: "D", conference_id: 2},
-  { id: 14, number: 5, name: "E", conference_id: 2},
-  { id: 15, number: 6, name: "F", conference_id: 2},
-  { id: 16, number: 7, name: "G", conference_id: 2},
-  { id: 17, number: 1, name: "A", conference_id: 3},
-  { id: 18, number: 2, name: "B", conference_id: 3},
-  { id: 19, number: 3, name: "C", conference_id: 3},
+  { id: 10, number: 1, name: "A", conference_id: 2, video_platform: "vimeo", video_id: "aaaaaa"},
+  { id: 11, number: 2, name: "B", conference_id: 2, video_platform: "vimeo", video_id: "bbbbbb"},
+  { id: 12, number: 3, name: "C", conference_id: 2, video_platform: "vimeo", video_id: "cccccc"},
+  { id: 13, number: 4, name: "D", conference_id: 2, video_platform: "vimeo", video_id: "dddddd"},
+  { id: 14, number: 5, name: "E", conference_id: 2, video_platform: "vimeo", video_id: "eeeeee"},
+  { id: 15, number: 6, name: "F", conference_id: 2, video_platform: "vimeo", video_id: "ffffff"},
+  { id: 16, number: 7, name: "G", conference_id: 2, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 17, number: 1, name: "A", conference_id: 3, video_platform: "vimeo", video_id: "ffffff"},
+  { id: 18, number: 2, name: "B", conference_id: 3, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 19, number: 3, name: "C", conference_id: 3, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 20, number: 1, name: "A", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 21, number: 2, name: "B", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 22, number: 3, name: "C", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 23, number: 4, name: "D", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 24, number: 5, name: "E", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 25, number: 6, name: "F", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
 )
 
 
@@ -196,7 +253,26 @@ TalkCategory.seed(
   { id: 33, conference_id: 2, name: "NFV / Edge"},
   { id: 34, conference_id: 2, name: "組織論"},
   { id: 35, conference_id: 2, name: "その他"},
-  { id: 36, conference_id: 2, name: "Keynote"}
+  { id: 36, conference_id: 2, name: "Keynote"},
+
+  { id: 37, conference_id: 4, name: "CI / CD"},
+  { id: 38, conference_id: 4, name: "Customizing / Extending"},
+  { id: 39, conference_id: 4, name: "IoT / Edge"},
+  { id: 40, conference_id: 4, name: "Microservices / Services Mesh"},
+  { id: 41, conference_id: 4, name: "ML / HPC"},
+  { id: 42, conference_id: 4, name: "Networking"},
+  { id: 43, conference_id: 4, name: "Operation / Monitoring / Logging"},
+  { id: 44, conference_id: 4, name: "Application / Development"},
+  { id: 45, conference_id: 4, name: "Runtime"},
+  { id: 46, conference_id: 4, name: "Security"},
+  { id: 47, conference_id: 4, name: "Serveless / FaaS"},
+  { id: 48, conference_id: 4, name: "Storage / Database"},
+  { id: 49, conference_id: 4, name: "Architecture Design"},
+  { id: 50, conference_id: 4, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 51, conference_id: 4, name: "NFV / Edge"},
+  { id: 52, conference_id: 4, name: "組織論"},
+  { id: 53, conference_id: 4, name: "その他"},
+  { id: 54, conference_id: 4, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -210,6 +286,12 @@ TalkDifficulty.seed(
   { id: 21, conference_id: 3, name: "初級者"},
   { id: 22, conference_id: 3, name: "中級者"},
   { id: 23, conference_id: 3, name: "上級者"},
+  { id: 27, conference_id: 10, name: "初級者"},
+  { id: 28, conference_id: 10, name: "中級者"},
+  { id: 29, conference_id: 10, name: "上級者"},
+  { id: 31, conference_id: 4, name: "初級者"},
+  { id: 32, conference_id: 4, name: "中級者"},
+  { id: 33, conference_id: 4, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -223,51 +305,113 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
-if ENV['REVIEW_APP'] == 'true'
-  # Import CNDT2020 Dummy
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks.csv'), headers: true)
-  Talk.seed(csv.map(&:to_hash))
 
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/speakers.csv'), headers: true)
-  Speaker.seed(csv.map(&:to_hash))
+# Import CNDT2020 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
 
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks_speakers.csv'), headers: true)
-  csv.each do |row|
-    TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-      h = row.to_hash
-      t.talk_id = h["talk_id"]
-      t.speaker_id = h["speaker_id"]
-    end
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
   end
-
-  # Import CNDO2021 Dummy
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks.csv'), headers: true)
-  Talk.seed(csv.map(&:to_hash))
-
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/speakers.csv'), headers: true)
-  Speaker.seed(csv.map(&:to_hash))
-
-  csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks_speakers.csv'), headers: true)
-  csv.each do |row|
-    TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-      h = row.to_hash
-      t.talk_id = h["talk_id"]
-      t.speaker_id = h["speaker_id"]
-    end
-  end
-    
-  Video.seed(
-    { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
-    { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
-    { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
-    { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
-    { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
-    { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
-    { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
-    { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
-    { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
-  )
 end
+
+# Import CNDO2021 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+# Import CICD2021 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/proposals.csv'), headers: true)
+Proposal.seed(csv.map{|line|
+  {
+    id: line["id"],
+    talk_id: line["talk_id"],
+    conference_id: line["conference_id"],
+    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+  }
+})
+
+Profile.seed(
+  {
+    id: 1,
+    first_name: "夢見",
+    last_name: "太郎",
+    industry_id: 1,
+    sub: "a",
+    occupation: "a",
+    department: "a",
+    email: "xxx@example.com",
+    company_name: "aaa",
+    company_address: "xxx",
+    company_email: "yyy@example.com",
+    company_tel: "123-456-7890",
+    position: "president"
+  }
+)
+
+RegisteredTalk.seed(
+  { id: 1, talk_id: 1, profile_id: 1},
+  { id: 2, talk_id: 7, profile_id: 1},
+  { id: 3, talk_id: 14, profile_id: 1},
+  { id: 4, talk_id: 21, profile_id: 1},
+  { id: 5, talk_id: 28, profile_id: 1},
+  { id: 6, talk_id: 35, profile_id: 1},
+  { id: 7, talk_id: 42, profile_id: 1}
+)
+
+Video.seed(
+  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
+  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
+  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
+  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
+  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
+  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
+  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
+  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
+  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
+  { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+  { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+)
+
+
+Link.seed(
+  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
+)
 
 Sponsor.seed(
   {
@@ -598,7 +742,56 @@ Sponsor.seed(
     abbr: 'lpi',
     conference_id: 2,
     url: 'https://lpi.or.jp/'
-  }
+  },
+  {
+    id: 49,
+    name: "CircleCI合同会社",
+    abbr: "circleci",
+    conference_id: 3,
+    url: "https://circleci.com/ja/customers/"
+  },
+  {
+    id: 50,
+    name: "LINE株式会社",
+    abbr: 'line',
+    conference_id: 3,
+    url: 'https://engineering.linecorp.com/ja/'
+  },
+  {
+    id: 51,
+    name: "日本マイクロソフト株式会社/Microsoft Corporation",
+    abbr: "microsoft",
+    conference_id: 3,
+    url: "https://azure.microsoft.com/ja-jp/developer/"
+  },
+  {
+    id: 52,
+    name: "株式会社ゆめみ",
+    abbr: "yumemi",
+    conference_id: 3,
+    url: "https://www.yumemi.co.jp/"
+  },
+  {
+    id: 53,
+    name: "日本シノプシス合同会社",
+    abbr: "synopsys",
+    conference_id: 3,
+    url: "https://www.synopsys.com/ja-jp/software-integrity.html"
+  },
+  {
+    id: 54,
+    name: "株式会社サイバーエージェント",
+    abbr: "cyberagent",
+    conference_id: 3,
+    url: "https://developers.cyberagent.co.jp/blog/"
+  },
+  {
+    id: 55,
+    name: "LegalForce",
+    abbr: "legalforce",
+    conference_id: 3,
+    url: "https://www.legalforce.co.jp/"
+  },
 )
 
 SponsorType.seed(
@@ -676,6 +869,30 @@ SponsorType.seed(
     conference_id: 2,
     name: "Logo",
     order: 7,
+  },
+  {
+    id: 17,
+    conference_id: 3,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 18,
+    conference_id: 3,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 19,
+    conference_id: 3,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 20,
+    conference_id: 3,
+    name: "CM",
+    order: 4,
   }
 )
 
@@ -745,6 +962,15 @@ SponsorType.seed(
   [65, 'Platinum', 'cloudnative', 2],
   [58, 'Logo', 'lf', 2],
   [66, 'Logo', 'lpi', 2],
+  [67, 'Diamond', 'circleci', 3],
+  [68, 'Diamond', 'microsoft', 3],
+  [69, 'Diamond', 'synopsys', 3],
+  [70, 'Gold', 'line', 3],
+  [71, 'Gold', 'cyberagent', 3],
+  [72, 'Gold', 'yumemi', 3],
+  [73, 'CM', 'line', 3],
+  [74, 'CM', 'yumemi', 3],
+  [75, 'CM', 'legalforce', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -806,6 +1032,13 @@ end
   [46, 'cloudnative', 'sponsors/cndo2021/cloudnative.png', 2],
   [47, 'lf', 'sponsors/cndo2021/lf.png', 2],
   [48, 'lpi', 'sponsors/cndo2021/lpi.png', 2],
+  [49, 'circleci', 'sponsors/cicd2021/circleci.png', 3],
+  [50, 'line', 'sponsors/cicd2021/line.png', 3],
+  [51, 'microsoft', 'sponsors/cicd2021/microsoft.png', 3],
+  [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
+  [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
+  [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
+  [55, 'legalforce', 'sponsors/cicd2021/legalforce.png', 3]
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],
@@ -816,6 +1049,80 @@ end
   )
 end
 
+uploader = SponsorAttachmentFileUploader.new(:store)
+
+logo_image = File.new(Rails.root.join('app/assets/images/trademark.png'))
+uploaded_logo_image = uploader.upload(logo_image)
+
+pdf = File.new(Rails.root.join('app/assets/seeds/dummy.pdf'))
+uploaded_pdf = uploader.upload(pdf)
+
+key_image_1 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_1.jpg'))
+uploaded_key_image_1 = uploader.upload(key_image_1)
+
+key_image_2 = File.new(Rails.root.join('app/assets/seeds/dummy_sponsor_key_image_2.jpg'))
+uploaded_key_image_2 = uploader.upload(key_image_2)
+
+
+
+SponsorAttachment.seed(
+  { id: 7,
+    sponsor_id: 1,
+    type: 'SponsorAttachmentText',
+    text: DUMMY_TEXT
+  },
+  { id: 8,
+    sponsor_id: 1,
+    type: 'SponsorAttachmentPdf',
+    title: 'ダミープレゼンテーション',
+    file_data: uploaded_pdf.to_json
+  },
+  { id: 9,
+    sponsor_id: 1,
+    type: 'SponsorAttachmentVimeo',
+    url: 'https://player.vimeo.com/video/442956490'
+  },
+  { id: 10,
+    sponsor_id: 1,
+    type: 'SponsorAttachmentKeyImage',
+    file_data: uploaded_key_image_1.to_json
+  },
+  { id: 11,
+    sponsor_id: 1,
+    type: 'SponsorAttachmentKeyImage',
+    file_data: uploaded_key_image_2.to_json
+  }
+)
+
+Video.seed(
+  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
+  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},
+  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true, slido_id: "1qev4oju"},
+  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true, slido_id: "tl9tdhei"},
+  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true, slido_id: "raigsrzj"},
+  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true, slido_id: "maxjcvxp"},
+  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false, slido_id: "styoi2cj"},
+  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false, slido_id: "3jtfhpkv"},
+  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false, slido_id: "1qev4oju"},
+  { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+  { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false, slido_id: ""},
+)
+
+
+Link.seed(
+  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
+  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
+)
+
+ChatMessage.seed(
+  {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+  {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+  {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 1},
+  {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 0},
+  {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 1},
+)
+
 Announcement.seed(
   {id: 1, conference_id: 1, publish_time: "2020-08-24 10:00:00", publish: true, body: <<'EOS'
 9/2（水）19:00-20:30に、プレイベントとして、CNDT2020 Rejektsを開催します！CNDT2020にお申込の方はどなたでもご参加できます！ぜひご視聴ください！,
@@ -825,89 +1132,5 @@ EOS
 最終セッションの実施時間を18:00-18:40に変更致しました。それに伴い、イベントの終了時間は19:00となります(ask the speaker含む）
 <a href="https://event.cloudnativedays.jp/cndt2020/talks/66" target="_blank">「Cloud Foundry on K8sでクラウドネイティブ始めませんか？」（有元 久住 / SUSE )</a>のセッション時間が、9/9 16:00-16:40に変更になりました。予定が重複する場合は、登録セッションを変更してください
 EOS
-  }
+}
 )
-
-ProposalItemConfig.seed(
-  {
-    id: 1,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'architect - システム設計'
-  },
-  {
-    id: 2,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'developer - システム開発'
-  },
-  {
-    id: 3,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'app-developer - アプリケーション開発'
-  },
-  {
-    id: 4,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'operator/sys-admin - 運用管理/システム管理'
-  },
-  {
-    id: 5,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'CxO/biz - ビジネス層'
-  },
-  {
-    id: 6,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'expected_participant',
-    item_number: 1,
-    item_name: '想定受講者（★★）',
-    params: 'その他'
-  },
-  {
-    id: 7,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'execution_phase',
-    item_number: 5,
-    item_name: '実行フェーズ（★★）',
-    params: 'Dev/QA（開発環境）'
-  },
-  {
-    id: 8,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'execution_phase',
-    item_number: 5,
-    item_name: '実行フェーズ（★★）',
-    params: 'PoC（検証）'
-  },
-  {
-    id: 9,
-    conference_id: 3,
-    type: 'ProposalItemConfigCheckBox',
-    label: 'execution_phase',
-    item_number: 5,
-    item_name: '実行フェーズ（★★）',
-    params: 'Production（本番環境）'
-  },
-  )

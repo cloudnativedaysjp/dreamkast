@@ -19,6 +19,11 @@ class ContentsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
   end
 
+  def hands_on
+    @conference = Conference.find_by(abbr: params[:event])
+    render :cicd2021_hands_on
+  end
+
   private
     def set_profile
       if @current_user

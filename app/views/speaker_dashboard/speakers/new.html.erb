@@ -1,22 +1,26 @@
 <div class="container">
 
   <% if logged_in? %>
-    <%= render 'form', speaker: @speaker %>
+    <%= render 'form_outer', speaker: @speaker %>
   <% else %>
     <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
       <div class="col-12 my-4">
-        <h2 class="text-center">CI/CD Conference 2021で登壇してみませんか？</h2>
-        <p>クラウドネイティブなアプリケーション開発を実現する上で、CI/CDは欠かせない要素の一つです。<br />
-自分たちのチームやプロダクトにとって最適なCI/CDの形とはなんだろう。こうした究極の問いは、我々実行委員も含め多くのエンジニアが課題に感じているのではないかと思います。例えば、テストの効率的な回し方、チームに適したブランチ戦略、作ったCI/CDパイプラインのリファクタリングなど、悩みは尽きないですよね！
-</p>
-        <p>
-        そこで、<b>2021年9月3日</b>に、CloudNative Daysの特別編として、<b>CI/CD Conference 2021 by CloudNative Days</b>を開催します。CI/CD Conferenceのセッション公募(CFP)に参加して、抱えていた悩みや知見を共有してみませんか？
-        </p>
-        <h4 class="pt-3">セッションの例</h4>
+        <h2 class="text-center">CloudNative Days Tokyo 2021で登壇してみませんか？</h2>
+        <p>毎年実施しているCloudNative Days Tokyoを今年も11月4-5日に開催します！</p>
+        <p>2020年9月に実施されたCloudNative Days Tokyo 2020は、登録者数3500人以上・セッション数70以上の国内最大級イベントとして2日間に渡り開催されました。</p>
+        <p>この一年、クラウドネイティブという言葉はより浸透し、広がりを見せ、各自がそれぞれの思いでクラウドネイティブの道を探索しているかと思います。私達はそれを旅路と捉え、今年のテーマとして掲げることにしました。</p>
+        <p>セッション公募(CFP)に参加して、抱えている悩みや知見を CloudNative Days Tokyo という場所で共有してみませんか？</p>
+
+        <h4 class="pt-3">CloudNative Days Tokyo 2020(昨年度)のセッションの一例</h4>
         <ul>
-          <li>アプリケーション開発者だったけどCI/CD基盤を自分達で構築した話</li>
-          <li>アプリケーション開発に導入したツールをCI/CDパイプラインに組み込んだ話</li>
-          <li>インフラチームが作ったCI/CD基盤の改善点を洗い出してみる話</li>
+          <li>モノリスからクラウドネイティブへ - 設計思想の違いを知り乗り越える</li>
+          <li>どうやって決める？kubernetesでのシークレット管理方法</li>
+          <li>基礎から学ぶ！アプリケーション開発者のためのKubernetes入門</li>
+          <li>How to Schedule Machine Learning Workloads Nicely In Kubernetes</li>
+          <li>Cloud Native環境におけるエンタープライズシステムに対する高可用性実現への取り組み</li>
+          <li>AI 翻訳サービスを FaaS ＆ コンテナ化して UX とコストを改善した話</li>
+          <li>Windowsコンテナってどんな感じ？</li>
+          <li>昨年度のすべてのセッション一覧は<a href="https://event.cloudnativedays.jp/cndt2020/talks">こちら</a></li>
         </ul>
         <p>以下のような方でもご安心ください。運営メンバーの多くがオンラインでの登壇やカンファレンス運営を経験しており、全力でサポートします！</p>
         <ul>
@@ -27,26 +31,14 @@
         <p>皆様のご応募を心よりお待ちしています。</p>
       </div>
       <div class="col-12 my-4">
-        <h2 class="text-center">CI/CD Conference 2021のテーマ<br/>Continuous 〜 技術を知り、試し、取り入れる 〜</h2>
-        <p>CI/CD Conference 2021は、以下の3つのポイントにフォーカスします。</p>
-        <ul>
-          <li>CI/CDのツール、設計、手法の比較や実際の導入事例などを通して、技術を知る</li>
-          <li>チュートリアルやハンズオンを通して、学んだ技術を試す</li>
-          <li>実際に自分たちの組織に技術を取り入れ、実践する</li>
-        </ul>
-        <div class="row">
-          <%= image_tag('cicd2021/continuous_loop.png', class: "col-8 offset-2 col-sm-4 offset-sm-4") %>
-        </div>
-        <p>これらを繰り返していくことで、徐々に知見を広げ、既存の仕組みを改善し続けることができます。</p>
-        <p>もちろん、参加者だけでなく登壇者にもメリットがあります。
-登壇者は、Ask the speaker、SNS、アンケートの結果などを通して参加者から得られたフィードバックを、既存の仕組みの改善に活かすことができます。
-</p>
-        <div class="row">
-          <%= image_tag('cicd2021/continuous_loop_speaker.png', class: "col-8 offset-2 col-sm-4 offset-sm-4") %>
-        </div>
-        <p>こうした取り組みの中で生まれた新たな知見が、次の技術の学びと導入のきっかけとなります。このサイクルを継続的に回していくことが、エンジニア個人と組織、ひいてはクラウドネイティブコミュニティの成長にも繋がると私達は考えます。</p>
-        <p>これからCI/CDを整備していくチーム、CI/CDのさらなる改善を目指すチームなど、サイクルをこなしてきた数は、組織によって様々かもしれません。それぞれの立ち位置に応じた、学びと実践の機会になることが、CI/CD Conference 2021の目標です。</p>
+        <h2 class="text-center">CloudNative Days Tokyo 2021のテーマ<br/>＋Native 〜ともに繋げるクラウドネイティブの世界〜</h2>
+        <p>"CloudNative Days" は最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。</p>
+        <p>今日、多くの技術者、コミュニティ、企業がクラウドネイティブを目指す旅路を歩んでいます。</p>
+        <p>それぞれの旅路において、拾い集めた様々な経験、知識、疑問、悩みを共有する"交差点"にして欲しい、そんな思いが"CloudNative Days" には込められています。</p>
+        <p>まだ旅への一歩を踏み出せていない人も、再び旅に出る人も、この"交差点"に集まることで過去を振り返りながら新たなクラウドネイティブの旅をともに歩み進めることができると私達は信じています。</p>
+        <p>旅をする準備をしませんか？ "交差点"で会えるのを楽しみにしています。</p>
       </div>
+
       <div class="col-12 my-4">
         <h2 class="text-center">エントリーの流れ</h2>
         <ol>
@@ -59,9 +51,9 @@
       <div class="col-12 my-4">
         <h2 class="text-center">スケジュール</h2>
         <ul>
-          <li>2021/6/30（水）	CFPエントリー締め切り</li>
-          <li>2021/7月前半		選考結果をご連絡</li>
-          <li>2021/9/3 (金)		CI/CD Conference開催</li>
+          <li>2021/9/1（水） CFPエントリー締め切り</li>
+          <li>2021/9月中旬 選考結果をご連絡</li>
+          <li>2021/11/4 (木) - 5 (金) CloudNative Days Tokyo 2021開催</li>
         </ul>
       </div>
       <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
@@ -83,16 +75,20 @@
         <p>可能です。エントリーにあたっては、代表者の方がお申し込みください。</p>
 
         <h3>セッションの長さはどのくらいですか？</h3>
-        <p>40分です。</p>
+        <p>20分 または 40分です。</p>
 
         <h3>選考の基準として重視される項目はなんですか？</h3>
         <p>記入欄に、採択への影響度を三段階で表示しています。記載された★マークが多いほど、考慮される度合いが高いです。</p>
 
         <h3>登壇方法は選択できますか？</h3>
-        <p>はい。採択された登壇者は、以下の2つから登壇方法を選ぶことが出来ます。<br/>
-        (1) ご自宅からのリアルタイム配信<br/>
-        (2) 録画による配信（事前に録画データを提供いただきます）
+        <p>はい。採択された登壇者は、以下の3つから登壇方法を選ぶことが出来ます。<br/>
+        (1) 現地会場（東京）でのリアルタイム登壇 <span style="font-size: x-small">※コロナウイルス感染状況によっては、「ご自宅からのリアルタイム配信」のみとさせて頂く場合がございますのでご了承ください</span><br/>
+        (2) ご自宅からのリアルタイム配信<br/>
+        (3) 録画による配信（事前に録画データを提供いただきます）<br/>
         </p>
+
+        <h3>登壇者は東京会場への移動の必要性や、東京近辺の在住・勤務である必要はありますか？</h3>
+        <p>居住地や勤務地などの制限は行っておりません。オンライン配信なども可能なため、様々な地域から参加しやすくなっております。</p>
       </div>
       <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
         <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>

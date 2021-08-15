@@ -6,6 +6,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   # GET :event/speaker_dashboard/speakers/new
   def new
     @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
     if set_current_user
       if Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
@@ -21,11 +22,11 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def edit
     @conference = Conference.find_by(abbr: params[:event])
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
+    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize @speaker
 
     @speaker_form = SpeakerForm.new(speaker: @speaker)
     @speaker_form.load
-
   end
 
   # POST :event/speaker_dashboard/speakers
@@ -33,7 +34,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def create
     @conference = Conference.find_by(abbr: params[:event])
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new())
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new(), conference: @conference)
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
 
@@ -62,7 +63,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @speaker = Speaker.find(params[:id])
     authorize @speaker
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
     @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
     @speaker_form.email = @current_user[:info][:email]
     # @speaker_form.load
@@ -116,6 +117,7 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
   # Only allow a list of trusted parameters through.
   def speaker_params
     params.require(:speaker).permit(:name,
+                                    :name_mother_tongue,
                                     :sub,
                                     :email,
                                     :profile,
@@ -126,6 +128,20 @@ helper_method :speaker_url, :expected_participant_params, :execution_phases_para
                                     :avatar,
                                     :conference_id,
                                     :additional_documents,
-                                    talks_attributes: [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_difficulty_id, :talk_time_id, expected_participants: [], execution_phases: []])
+                                    talks_attributes: talks_attributes)
+  end
+
+  def talks_attributes
+    attr= [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_session]
+    h = {}
+    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+      conf = @conference.proposal_item_configs.find_by(label: label)
+      if conf.class.to_s == 'ProposalItemConfigCheckBox'
+        h[conf.label.pluralize.to_sym] = []
+      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
+        attr << conf.label.pluralize.to_sym
+      end
+    end
+    attr.append(h)
   end
 end

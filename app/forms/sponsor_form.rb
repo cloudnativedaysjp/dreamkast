@@ -4,6 +4,7 @@ class SponsorForm
   include ActiveModel::Validations
 
   attr_accessor :description,
+                :speaker_emails,
                 :booth_published,
                 :sponsor_attachment_key_images,
                 :attachment_text,
@@ -91,7 +92,7 @@ class SponsorForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      sponsor.update!(description: description)
+      sponsor.update!(description: description, speaker_emails: speaker_emails)
 
       if sponsor.booth.present?
         sponsor.booth.update!(published: booth_published)
@@ -146,6 +147,7 @@ class SponsorForm
   def default_attributes
     {
       description: sponsor.description,
+      speaker_emails: sponsor.speaker_emails,
       booth_published: sponsor.booth.present? && sponsor.booth.published.present? ? sponsor.booth.published : nil,
       attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',

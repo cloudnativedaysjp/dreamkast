@@ -1,0 +1,18 @@
+<div class="row speaker-dashboard-form justify-content-center">
+  <div class="col-12 col-lg-8">
+    <h1 class="text-center py-3 entry">スポンサー担当者情報入力フォーム(<%= @sponsor.name %>)</h1>
+    <%= form_with(url: sponsor_url, model: @sponsor_profile, local: true) do |form| %>
+      <section class="speaker-information py-3">
+        <h3 class="py-3">スポンサー担当者情報</h3>
+
+        <div class="field pb-3">
+          <%= form.label :name, '名前' %>*
+          <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+        </div>
+      </section>
+      <div class="actions justify-content-center py-3">
+        <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>

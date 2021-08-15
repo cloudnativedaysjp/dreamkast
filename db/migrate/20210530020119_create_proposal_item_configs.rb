@@ -1,4 +1,4 @@
-class CreateProposalItems < ActiveRecord::Migration[6.0]
+class CreateProposalItemConfigs < ActiveRecord::Migration[6.0]
   def change
     add_column :talks, :expected_participants, :json
     add_column :talks, :execution_phases, :json

@@ -12,17 +12,27 @@
 <div class="talk-field">
 
   <div class="field pb-3">
-    <%= f.label :title, 'セッションタイトル（★★★）' %>*
+    <%= f.label :title, '講演タイトル - Abstract Title（★★★）' %>*
+    <p class="field-description" style="font-size: 0.7em">（最大50文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 100 characters) Include concrete technology names as possible to attract attendees</p>
     <%= f.text_field :title, class: "form-control", required: true %>
   </div>
 
   <div class="field pb-3">
-    <%= f.label :abstract, 'セッション概要（★★★）' %>
+    <%= f.label :abstract, '講演内容 - Abstract（★★★）' %>
+    <p class="field-description" style="font-size: 0.7em">（200文字程度）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (About 400 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
     <%= f.text_area :abstract, {class: "form-control"}  %>
   </div>
 
+  <% if @conference.abbr != 'cicd2021' %>
+    <div class="field pb-3">
+      <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
+      <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
+      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+    </div>
+  <% end %>
+
   <div class="field pb-3">
-    <%= f.label :talk_difficulty_id, "受講者レベル（★★）" %>*
+    <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
     <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
   </div>
 
@@ -33,25 +43,46 @@
   </div>
   <% end %>
 
-  <div class="field pb-3">
-    <%= f.label :expected_participants, "想定受講者（★★）", {class: 'form-check-label'}%>*
-    <div class="form-check">
-      <% expected_participant_params.each do |item| %>
-        <%= f.check_box :expected_participants, {multiple: true}, item.id,  {class: 'form-check-input'} %>
-        <%= f.label :expected_participants, item.params, {class: 'form-check-label'} %><br>
-      <% end %>
-    </div>
-  </div>
+  <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+    <div class="field pb-3">
+      <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
 
-  <div class="field pb-3">
-    <%= f.label :execution_phases, "実行フェーズ（★★）" %>*
-    <div class="form-check">
-      <% execution_phases_params.each do |item| %>
-        <%= f.check_box :execution_phases, {multiple: true}, item.id, {class: "form-control"} %>
-        <%= f.label :execution_phases, item.params, {class: 'form-check-label'} %><br>
+      <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
+        <% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+        <%= label_tag "speaker_talks_attributes_#{f.options[:child_index]}_#{first_item.label}",  first_item.item_name, {class: 'form-check-label'}%>*
+        <div class="form-check">
+          <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
+            <% label = item.label.pluralize.to_sym %>
+            <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
+            <%= check_box_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}][]", item.id, checked, {id: "speaker_talks_attributes_#{f.options[:child_index]}_#{label}", class: 'form-check-input'} %>
+            <%= label label, item.params, {class: 'form-check-label'} %><br>
+          <% end %>
+        </div>
+
+      <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
+        <% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+        <%= label_tag "speaker_talks_attributes_#{f.options[:child_index]}_#{first_item.label}[]",  first_item.item_name, {class: 'form-check-label'}%>*<br>
+        <p class="field-description" style="font-size: 0.7em"><%= first_item.description %></p>
+        <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
+          <% label = first_item.label.pluralize.to_sym %>
+          <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
+          <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked %>
+          <%= label label, item.params, {class: 'form-check-label'} %><br>
+        <% end %>
+      <% else %>
       <% end %>
     </div>
-  </div>
+  <% end %>
+
+  <% if @sponsor %>
+    <div class="field pb-3">
+      <%= f.label :sponsor_session?, "スポンサーセッションですか？", {class: 'form-check-label'}%>
+      <div class="form-check">
+        <%= f.check_box :sponsor_session?, {class: 'form-check-input'}, true, false %>
+        <%= f.label :sponsor_session?, 'はい', {class: 'form-check-label'} %><br>
+      </div>
+    </div>
+  <% end %>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
   <%= f.hidden_field :conference_id, value: @conference.id %>

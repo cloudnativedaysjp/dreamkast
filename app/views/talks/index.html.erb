@@ -35,23 +35,23 @@
             <%= talk.talk_category.name if talk.talk_category.present? %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 4 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.track_name %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.date %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk_start_to_end(talk) %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
             <%= talk.time %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
             <% if @conference.closed? || (@conference.opened? && @current_user) %>
               <% if talk.video_published && talk.video.present? %>
                 <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
@@ -59,7 +59,7 @@
             <% end %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
+          <td id="td-id-<%= (index * 7) + 10 %>" class="td-class-<%= index + 1 %> text-center">
             <% if talk.document_url.present? %>
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>

@@ -13,6 +13,14 @@ class Speaker < ApplicationRecord
   validates :job_title, presence: true
   validates :conference_id, presence: true
 
+  def proposals
+    talks.map(&:proposals)
+  end
+
+  def sponsor_talks
+    talks.filter { |talk| talk.sponsor.present? }
+  end
+
   def self.import(file)
     message = []
 

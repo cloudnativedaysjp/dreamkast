@@ -15,10 +15,12 @@ class Profiles::TalksController < ApplicationController
       RegisteredTalk.where(profile_id: @profile.id).delete_all
 
       if params[:talks].present?
-        if params[:event] == "cndo2021"
+        if params[:event] == "cndt2020"
           params[:talks].each do |key, value|
-            talk_id = key.to_i
-            if talk = Talk.find(talk_id)
+            day, slot = key.split("_")
+            track_id = value
+            
+            Talk.find_by_params(day, slot, track_id).each do |talk|
               RegisteredTalk.create!(
                 profile_id: @profile.id,
                 talk_id: talk.id
@@ -27,10 +29,8 @@ class Profiles::TalksController < ApplicationController
           end
         else
           params[:talks].each do |key, value|
-            day, slot = key.split("_")
-            track_id = value
-            
-            Talk.find_by_params(day, slot, track_id).each do |talk|
+            talk_id = key.to_i
+            if talk = Talk.find(talk_id)
               RegisteredTalk.create!(
                 profile_id: @profile.id,
                 talk_id: talk.id

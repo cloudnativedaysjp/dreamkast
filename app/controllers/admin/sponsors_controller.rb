@@ -41,6 +41,7 @@ class Admin::SponsorsController < ApplicationController
 
   def sponsor_params
     params.require(:sponsor).permit(:description,
+                                    :speaker_emails,
                                     :booth_published,
                                     :attachment_text,
                                     :attachment_vimeo,

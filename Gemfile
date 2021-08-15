@@ -90,3 +90,5 @@ gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
 
 gem 'activerecord-nulldb-adapter'
+
+gem 'slack-incoming-webhooks'

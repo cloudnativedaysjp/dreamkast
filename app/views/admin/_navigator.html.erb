@@ -9,6 +9,7 @@
     <%= render 'admin/nav_item', name: 'AccessLog', path: admin_accesslog_path, active: action_name == 'accesslog' %>
     <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
     <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
+    <%= render 'admin/nav_item', name: 'Proposals', path: admin_proposals_path, active: controller_name == 'proposals' %>
     <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>
     <%= render 'admin/nav_item', name: 'ビデオファイル提出状況', path: admin_videos_path, active: controller_name == 'videos' %>
     <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>

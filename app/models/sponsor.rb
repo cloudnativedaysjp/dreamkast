@@ -12,6 +12,7 @@ class Sponsor < ApplicationRecord
   has_many :sponsor_attachment_key_images
   has_many :sponsors_sponsor_types
   has_many :sponsor_types, through: :sponsors_sponsor_types
+  has_many :talks
 
   def booth_info
     {id: booth.id, opened: booth.published}

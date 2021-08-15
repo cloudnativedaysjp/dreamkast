@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'export_speakers' => 'speakers#export_speakers'
       get 'export_profiles' => 'profiles#export_profiles'
       resources :talks, only: [:index]
+      resources :proposals, only: [:index]
       resources :videos, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
       post 'close_timetable' => 'timetables#close'
       get 'preview_timetable' => 'timetables#preview'
       put 'talks' => 'talks#update_talks'
+      put 'proposals' => 'proposals#update_proposals'
       post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
       post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
       resources :tracks, only: [:index]
@@ -67,6 +69,14 @@ Rails.application.routes.draw do
       resources :video_registrations, only: [:new, :create, :edit, :update]
     end
 
+    namespace :sponsor_dashboards do
+      get '/login' => 'sponsor_dashboards#login'
+      get ':sponsor_id' => 'sponsor_dashboards#show'
+      scope ':sponsor_id' do
+        resources :sponsor_profiles, only: [:new, :edit, :create, :update]
+        resources :speakers, only: [:new, :edit, :create, :update]
+      end
+    end
 
     resources :talks, only: [:show, :index]
     get 'timetables' => 'timetable#index'
@@ -75,6 +85,7 @@ Rails.application.routes.draw do
     get 'tracks/blank' => 'tracks#blank'
     get 'kontest' => 'contents#kontest'
     get 'discussion' => 'contents#discussion'
+    get 'hands-on' => 'contents#hands_on'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

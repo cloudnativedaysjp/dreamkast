@@ -3,7 +3,7 @@ class ConferenceForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :status, :speaker_entry, :attendee_entry, :show_timetable
+  attr_accessor :status, :cfp_result_visible, :speaker_entry, :attendee_entry, :show_timetable, :show_sponsors
 
   delegate :persisted?, to: :conference
 
@@ -16,7 +16,9 @@ class ConferenceForm
 
     def links_attributes=(attributes)
       @links ||= []
-      attributes.each do |i, params|
+      attributes.each do |_i, params|
+        params.transform_keys!(&:to_sym)
+
         if params.key?(:id)
           if params[:_destroy] == "1"
             link = @conference.links.find(params[:id])
@@ -48,7 +50,9 @@ class ConferenceForm
 
     def conference_days_attributes=(attributes)
       @conference_days ||= []
-      attributes.each do |i, params|
+      attributes.each do |_i, params|
+        params.transform_keys!(&:to_sym)
+
         if params.key?(:id)
           if params[:_destroy] == "1"
             link = @conference.conference_days.find(params[:id])
@@ -73,7 +77,7 @@ class ConferenceForm
 
   def initialize(attributes = nil, conference: Conference.new)
     @conference = conference
-    attributes ||= default_attributes
+    attributes = default_attributes.merge(attributes||{})
     super(attributes)
   end
 
@@ -85,7 +89,7 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(status: status, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable)
+      conference.update!(status: status, cfp_result_visible: cfp_result_visible, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable, show_sponsors: show_sponsors)
     end
 
   rescue => e
@@ -109,9 +113,11 @@ class ConferenceForm
   def default_attributes
     {
       status: conference.status,
+      cfp_result_visible: conference.cfp_result_visible,
       speaker_entry: conference.speaker_entry,
       attendee_entry: conference.attendee_entry,
       show_timetable: conference.show_timetable,
+      show_sponsors: conference.show_sponsors,
       links: links,
       conference_days: conference_days
     }

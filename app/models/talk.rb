@@ -4,6 +4,8 @@ class Talk < ApplicationRecord
   belongs_to :conference
   belongs_to :conference_day, optional: true
   belongs_to :track, optional: true
+  belongs_to :sponsor, optional: true
+  has_one :proposal
 
   has_one :video_registration, dependent: :destroy
   has_one :video, dependent: :destroy
@@ -12,6 +14,8 @@ class Talk < ApplicationRecord
   has_many :registered_talks
   has_many :speakers, through: :talks_speakers
   has_many :profiles, through: :registered_talks
+
+  has_many :proposal_items, autosave: true, dependent: :destroy
 
   validates :conference_id, presence: true
   validates :title, presence: true
@@ -35,6 +39,18 @@ class Talk < ApplicationRecord
     includes(:video).where(videos: { on_air: 1 })
   }
 
+  scope :show_on_timetable, -> {
+    includes(:proposal).where(show_on_timetable: true, proposals: { status: :accepted })
+  }
+
+  scope :accepted, -> {
+    includes(:proposal).where(proposals: { status: :accepted })
+  }
+
+  scope :rejected, -> {
+    includes(:proposal).where(proposals: { status: :rejected })
+  }
+
   def self.import(file)
     message = []
 
@@ -56,6 +72,34 @@ class Talk < ApplicationRecord
     end
 
     return message
+  end
+
+  def self.export_csv(conference, talks)
+    filename = "#{conference.abbr}_talks"
+    columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id]
+    labels = conference.proposal_item_configs.map(&:label).uniq
+    labels.delete('session_time')
+    columns.concat(labels)
+
+    csv = CSV.generate do |csv|
+      #カラム名を1行目として入れる
+      csv << columns
+
+      talks.each do |talk|
+        row = [talk.id, talk.title, talk.abstract, talk.speaker_names.join(", "), talk.time, talk.talk_difficulty.name, talk.talk_category.name, talk.created_at, talk.speaker_twitter_ids.join(", ")]
+        labels.each do |label|
+          v = talk.proposal_item_value(label)
+          row << (v.class == Array ? v.join(', ') : v)
+        end
+        csv << row
+      end
+    end
+
+    File.open("./#{filename}.csv", "w", encoding: "UTF-8") do |file|
+      file.write(csv)
+    end
+
+    return filename
   end
 
   def self.updatable_attributes
@@ -125,6 +169,10 @@ class Talk < ApplicationRecord
     speakers.map(&:name)
   end
 
+  def speaker_twitter_ids
+    speakers.map(&:twitter_id)
+  end
+
   def difficulty
     talk_difficulty.present? ? talk_difficulty.name : ''
   end
@@ -150,6 +198,13 @@ class Talk < ApplicationRecord
   end
 
   def time
+    # CICD2021は全セッション40分固定で、talk_timeを持たせていないため
+    return 40 if conference.abbr == 'cicd2021'
+
+    # CNDT2021移行はセッションの時間をProposalItemで管理するので、ProposalItemにsession_timeがあればそこからセッション時間を取得して返す
+    session_time = proposal_items.find_by(label: 'session_time')
+    return ProposalItemConfig.find(session_time.params.to_i).params.split('min')[0].to_i if session_time
+
     talk_time.present? ? talk_time.time_minutes : 0
   end
 
@@ -177,6 +232,31 @@ class Talk < ApplicationRecord
     now = Time.now.in_time_zone('Tokyo')
     etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     return (now.to_i - etime.to_i) >= 600
+  end
+
+  def sponsor_session?
+    sponsor.present?
+  end
+
+  def create_or_update_proposal_item(label, params)
+    item = proposal_items.find_by(label: label)
+    if item.present?
+      item.update(params:  params)
+    else
+      proposal_items.build(conference_id: conference_id, label: label, params: params)
+    end
+  end
+
+  def proposal_item_value(label)
+    params = proposal_items.find_by(label: label)&.params
+    return nil unless params
+
+    case params
+    when String
+      ProposalItemConfig.find(params.to_i).params
+    when Array
+      params.map{|param| ProposalItemConfig.find(param.to_i).params}
+    end
   end
 
   private

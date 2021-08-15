@@ -17,7 +17,11 @@ class TalksController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: event_name)
-    @talks = @conference.talks.where(show_on_timetable: true).order('date ASC').order('start_time ASC')
+    @talks = if @conference.cfp_result_visible
+               @conference.talks.includes(:proposal).where(show_on_timetable: true, proposals: { status: :accepted }).order('date ASC').order('start_time ASC')
+             else
+               @conference.talks.includes(:proposal).where(show_on_timetable: true).order('date ASC').order('start_time ASC')
+             end
   end
 
   private

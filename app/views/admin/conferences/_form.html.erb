@@ -22,6 +22,15 @@
     </div>
   </div>
 
+  <h3>Proposal Result Visible Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.check_box :cfp_result_visible %>
+      <%= form.label :cfp_result_visible, 'Visible' %><br>
+    </div>
+  </div>
+
   <h3>Attendee Entry Status</h3>
 
   <div class="form-row form-group">
@@ -41,6 +50,15 @@
         <%= form.radio_button :show_timetable, key %>
         <%= form.label :show_timetable, key %><br>
       <% end %>
+    </div>
+  </div>
+
+  <h3>Sponsors Visible Status</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.check_box :show_sponsors %>
+      <%= form.label :show_sponsors, 'Visible' %><br>
     </div>
   </div>
 

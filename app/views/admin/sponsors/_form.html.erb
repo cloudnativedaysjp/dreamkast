@@ -6,6 +6,15 @@
     </div>
   </div>
 
+  <h4>Sponsor Speaker List</h4>
+  スポンサーセッションに登壇する人のメールアドレスを入力してください（複数入力可、カンマ区切り）。Dreamkastにログインするのに使用するメールアドレスが必要です。
+  例: alice@example.com,bob@example.com
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= form.text_field :speaker_emails, class: "form-control", id: "descriptionInputForm", rows: "3" %>
+    </div>
+  </div>
+
   <% if @sponsor.booth_sponsor? %>
     <h4>Booth: Key Images</h4>
     <div class="key-image-fields">

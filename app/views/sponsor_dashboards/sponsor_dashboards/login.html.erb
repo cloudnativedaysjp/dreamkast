@@ -1,0 +1,16 @@
+<div class="container speaker-dashboard-form">
+  <h1 class="text-center py-3 entry">スポンサーダッシュボードへログインする</h1>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <div class="row speaker-dashboard-form">
+    <div class="col-12 my-4">
+      <% if !logged_in? %>
+        <%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %>
+      <% end %>
+    </div>
+  </div>
+</div>

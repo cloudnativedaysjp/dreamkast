@@ -6,6 +6,7 @@ class Conference < ApplicationRecord
 
   has_many :form_items
   has_many :conference_days
+  has_many :proposals
   has_many :talks
   has_many :tracks
   has_many :sponsors
@@ -18,4 +19,6 @@ class Conference < ApplicationRecord
   has_many :speakers
   has_many :announcements
   has_many :proposal_item_configs
+  has_many :profiles
+  has_many :stats_of_registrants
 end

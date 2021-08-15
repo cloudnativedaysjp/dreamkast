@@ -1,6 +1,5 @@
 class Admin::TimetablesController < ApplicationController
   include Secured
-  include Logging
   include LogoutHelper
 
   before_action :is_admin?, :set_conference, :set_profile

@@ -1,6 +1,5 @@
 class Admin::AttachmentsController < ApplicationController
   include Secured
-  include Logging
   before_action :set_profile
 
   def show

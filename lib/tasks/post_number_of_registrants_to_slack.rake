@@ -19,7 +19,7 @@ namespace :util do
         stats = StatsOfRegistrant.new(conference_id: conference.id, number_of_registrants: conference.profiles.size)
         stats.save!
 
-        yesterday_stats = StatsOfRegistrant.where('created_at < ?', 1.days.ago).first
+        yesterday_stats = StatsOfRegistrant.where("DATE_FORMAT(created_at, '%Y-%m-%d') = ?", 1.days.ago.to_time.strftime("%Y-%m-%d")).first
 
         body = []
         body << "#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.number_of_registrants} 人です！"

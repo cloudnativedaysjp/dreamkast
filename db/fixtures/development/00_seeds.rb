@@ -792,6 +792,34 @@ Sponsor.seed(
     conference_id: 3,
     url: "https://www.legalforce.co.jp/"
   },
+  {
+    id: 56,
+    name: "GitLab合同会社",
+    abbr: "gitlab",
+    conference_id: 3,
+    url: "https://about.gitlab.com/ja-jp/"
+  },
+  {
+    id: 57,
+    name: "JBCC株式会社",
+    abbr: "jbcc",
+    conference_id: 3,
+    url: "https://www.jbcchd.co.jp/"
+  },
+  {
+    id: 58,
+    name: "グーグル・クラウド・ジャパン合同会社",
+    abbr: "google",
+    conference_id: 3,
+    url: "https://cloudonair.withgoogle.com/events/japan"
+  },
+  {
+    id: 59,
+    name: "クリエーションライン株式会社",
+    abbr: "creationline",
+    conference_id: 3,
+    url: "https://www.creationline.com/"
+  },
 )
 
 SponsorType.seed(
@@ -893,6 +921,12 @@ SponsorType.seed(
     conference_id: 3,
     name: "CM",
     order: 4,
+  },
+  {
+    id: 21,
+    conference_id: 3,
+    name: "Hands-On",
+    order: 5,
   }
 )
 
@@ -971,6 +1005,10 @@ SponsorType.seed(
   [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
   [75, 'CM', 'legalforce', 3],
+  [76, 'Hands-On', 'gitlab', 3],
+  [77, 'Hands-On', 'jbcc', 3],
+  [78, 'Hands-On', 'google', 3],
+  [79, 'Hands-On', 'creationline', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1038,7 +1076,11 @@ end
   [52, 'yumemi', 'sponsors/cicd2021/yumemi.png', 3],
   [53, 'synopsys', 'sponsors/cicd2021/synopsys.png', 3],
   [54, 'cyberagent', 'sponsors/cicd2021/cyberagent.png', 3],
-  [55, 'legalforce', 'sponsors/cicd2021/legalforce.png', 3]
+  [55, 'legalforce', 'sponsors/cicd2021/legalforce.png', 3],
+  [56, 'gitlab', 'sponsors/cicd2021/gitlab.png', 3],
+  [57, 'jbcc', 'sponsors/cicd2021/jbcc.png', 3],
+  [58, 'google', 'sponsors/cicd2021/google.png', 3],
+  [59, 'creationline', 'sponsors/cicd2021/creationline.png', 3],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

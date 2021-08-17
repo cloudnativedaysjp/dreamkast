@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty
+  helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
 
   def render_403
     render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
@@ -59,6 +59,14 @@ class ApplicationController < ActionController::Base
     end
 
     render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
+  end
+
+  # カンファレンス開催前、かつCFP中
+  # カンファレンス開催前、かつ自身がスピーカーの場合(CFP締め切り後)
+  # カンファレンス開催中、かつ自身がスピーカーの場合
+  # カンファレンス開催後、かつ自身がスピーカーの場合（開催後に資料URLを追加することを想定）
+  def display_speaker_dashboard_link?
+    (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
   end
 
   helper_method :sponsor_logo_class, :days

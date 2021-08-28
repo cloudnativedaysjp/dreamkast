@@ -5,9 +5,6 @@
       <div class="block"></div>
 
       <% if logged_in? %>
-        <div id="message_box">
-          <p>Cloud Native Days 2020へようこそ。まずは必要項目を入力してください。</p>
-        </div>
         <%= render 'form', profile: @profile %>
       <% else %>
         <div class="col-12 align-self-baseline my-4 justify-content-center text-center">

@@ -7,16 +7,3 @@
 <% else %>
   <%= render partial: timetable_partial_name, locals: {conference: @conference, form: nil} %>
 <% end %>
-
-
-<% 
-if @current_user
-  if flash.empty?
-    @message_box = "聞きたいセッションを登録しましょう。セッション名をクリックすると詳細が表示されます。"
-  else
-    flash.each do |message_type, message|
-      @message_box = message
-    end
-  end
-end
-%>

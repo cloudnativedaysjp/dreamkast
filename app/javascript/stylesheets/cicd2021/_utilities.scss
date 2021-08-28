@@ -28,7 +28,7 @@ body {
 }
 
 .registration-form {
-    background: rgba(256, 256, 256, 0.8);
+    background: rgba(256, 256, 256, 1);
 }
 
 #notice {
@@ -111,4 +111,9 @@ body {
 
 .secondary-border-top {
     border-top: 3px solid $secondary;
+}
+
+.btn-focus {
+    background-color: $sparkle-pink;
+    color: white;
 }

@@ -112,3 +112,8 @@ body {
 .secondary-border-top {
     border-top: 3px solid $secondary;
 }
+
+.btn-focus {
+    background-color: $primary;
+    color: white;
+}

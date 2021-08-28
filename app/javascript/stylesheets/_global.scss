@@ -1,5 +1,4 @@
 // Global styling for this theme
-
 body,
 html {
     width: 100%;
@@ -7,7 +6,6 @@ html {
 }
 
 //- Custom horizontal rules
-
 hr.divider {
     max-width: 3.25rem;
     border-width: 0.2rem;
@@ -19,13 +17,11 @@ hr.light {
 }
 
 //- Button restyling
-
 .btn {
     font-family: $font-family-sans-serif;
 }
 
 //- Custom XL button styling
-
 .btn-xl {
     padding: 1.25rem 2.25rem;
     font-size: 0.85rem;
@@ -36,7 +32,6 @@ hr.light {
 }
 
 //- Page section styling
-
 .page-section {
     padding: 8rem 0;
 }
@@ -51,7 +46,7 @@ footer {
     margin-top: auto;
 }
 
-footer ul{
+footer ul {
     margin: 0;
     padding: 0;
 }
@@ -62,7 +57,6 @@ footer ul li {
     margin: 0;
     padding: 0;
 }
-
 
 // main layout
 .main-pane .talk {
@@ -103,7 +97,7 @@ footer ul li {
     margin: 0 0 1rem 0rem;
     font-size: medium;
 }
-  
+
 .main-pane .talk .difficulty {
     font-size: x-small;
     padding: 0.2rem;
@@ -137,9 +131,7 @@ footer ul li {
     font-size: 0.9rem;
 }
 
-.sub-pane {
-    
-}
+.sub-pane {}
 
 .sub-pane .social {
     background-color: #FFF;
@@ -174,5 +166,22 @@ footer ul li {
         max-height: 70px;
         max-width: 200px;
         object-fit: contain;
+    }
+}
+
+.other-talks {
+    .talk {
+        padding: 10px;
+        h3 {
+            font-size: medium;
+            font-weight: bold;
+        }
+        h4 {
+            font-size: small;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     }
 }

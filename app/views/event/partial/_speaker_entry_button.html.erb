@@ -1,4 +1,10 @@
 <% if display_speaker_dashboard_link? %>
-  <p class="text-white font-weight-bold">登壇者募集中!</p>
+  <p class="text-white display-4">
+    登壇者募集中!
+    <% if @conference.abbr == 'cndt2021' %>
+    <br/>
+    CFP締切 9/8
+    <% end %>
+  </p>
   <%= link_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl  m-2" } %>
 <% end %>

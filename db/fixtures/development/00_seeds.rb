@@ -24,7 +24,7 @@ EOS
     id: 2,
     name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
-    status: 0, # registered
+    status: 3, # archived
     speaker_entry: 1, # enabled
     attendee_entry: 0, # disabled
     theme: "ともに踏み出す CloudNative祭",

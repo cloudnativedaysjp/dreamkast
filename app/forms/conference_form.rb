@@ -3,7 +3,7 @@ class ConferenceForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :status, :cfp_result_visible, :speaker_entry, :attendee_entry, :show_timetable, :show_sponsors
+  attr_accessor :status, :cfp_result_visible, :speaker_entry, :attendee_entry, :show_timetable, :show_sponsors, :brief
 
   delegate :persisted?, to: :conference
 
@@ -89,7 +89,7 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(status: status, cfp_result_visible: cfp_result_visible, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable, show_sponsors: show_sponsors)
+      conference.update!(status: status, cfp_result_visible: cfp_result_visible, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable, show_sponsors: show_sponsors, brief: brief)
     end
 
   rescue => e
@@ -119,7 +119,8 @@ class ConferenceForm
       show_timetable: conference.show_timetable,
       show_sponsors: conference.show_sponsors,
       links: links,
-      conference_days: conference_days
+      conference_days: conference_days,
+      brief: conference.brief
     }
   end
 end

@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
+  include HomeHelper
   def show
-    @conferences = Conference.all
+    @upcoming = Conference.upcoming
+    @previous = Conference.previous
   end
 end

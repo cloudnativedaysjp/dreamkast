@@ -185,3 +185,22 @@ footer ul li {
         }
     }
 }
+
+.footer-logo img {
+    max-height: 80px;
+    max-width: 200px;
+}
+
+.home {
+    margin-top: 50px;
+    .row {
+        background-color: rgba(256, 256, 256, 0.8);
+    }
+    .logo {
+        max-width: 300px;
+        max-height: 80px;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+}

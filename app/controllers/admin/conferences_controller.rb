@@ -51,6 +51,7 @@ class Admin::ConferencesController < ApplicationController
                                        :attendee_entry,
                                        :show_timetable,
                                        :show_sponsors,
+                                       :brief,
                                        links_attributes: [:id, :title, :url, :description, :_destroy],
                                        conference_days_attributes: [:id, :date])
   end

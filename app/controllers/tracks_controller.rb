@@ -8,26 +8,26 @@ class TracksController < ApplicationController
     if @conference.abbr == "cndo2021" && @conference.opened?
       redirect_to  '/cndo2021/ui/'
     end
-    @current = Video.on_air
-    @tracks = Track.all
+    @current = Video.on_air(@conference)
+    @tracks = @conference.tracks
 
-    @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
-    @talk_categories = TalkCategory.where(conference_id: @conference.id)
-    @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
-    @booths = Booth.where(conference_id: @conference.id, published: true)
+    @talks = @conference.talks.eager_load(:talk_category, :talk_difficulty).all
+    @talk_categories = @conference.talk_categories
+    @talk_difficulties = @conference.talk_difficulties
+    @booths = @conference.booths.published
   end
 
   def waiting
-    @conference = Conference.find_by(abbr: event_name)
+    @conference = Conference.includes(:talks).find_by(abbr: event_name)
     if @conference.opened?
       redirect_to tracks_path
     end
 
-    @announcements = @conference.announcements.where(publish: true)
-    @talks = Talk.eager_load(:talk_category, :talk_difficulty).all
-    @talk_categories = TalkCategory.all
-    @talk_difficulties = TalkDifficulty.all
-    @booths = Booth.where(conference_id: @conference.id, published: true)
+    @announcements = @conference.announcements.published
+    @talks = @conference.talks.eager_load(:talk_category, :talk_difficulty).all
+    @talk_categories = @conference.talk_categories
+    @talk_difficulties = @conference.talk_difficulties
+    @booths = @conference.booths.published
   end
 
   def reload

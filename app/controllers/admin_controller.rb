@@ -8,7 +8,7 @@ class AdminController < ApplicationController
     def show
         @session = session
         @conference = Conference.find_by(abbr: event_name)
-        @current = Video.on_air
+        @current = Video.on_air(@conference)
     end
 
     def accesslog

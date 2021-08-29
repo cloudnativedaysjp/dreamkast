@@ -15,7 +15,7 @@
   <div class="row h-100 align-items-center justify-content-center text-center mt-4">
     <h2 class="col-12">Archives</h2>
     <hr class="divider my-4" />
-    <% @archived.each do |event| %>
+    <% @previous.each do |event| %>
       
       <div class="col-12 my-4">
         <%= link_to "/#{event.abbr}" do %>

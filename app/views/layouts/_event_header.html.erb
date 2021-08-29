@@ -42,6 +42,7 @@
               <li class="nav-item"><%= link_to "Links", links_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
             <% end %>
             <% if event_name == 'cicd2021' %>
+              <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
               <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>
           <% end %>

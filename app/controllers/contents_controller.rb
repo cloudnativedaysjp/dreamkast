@@ -13,6 +13,7 @@ class ContentsController < ApplicationController
 
   def discussion
     @conference = Conference.find_by(abbr: params[:event])
+    render "#{@conference.abbr}_discussion".to_sym
   end
 
   def kontest

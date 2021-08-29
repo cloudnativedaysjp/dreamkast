@@ -5,7 +5,11 @@ class EventController < ApplicationController
   before_action :set_current_user, :set_profile, :set_speaker
 
   def show
-    @conference = Conference.includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image}).order("sponsor_types.order ASC").find_by(abbr: event_name)
+    @conference = Conference
+                  .includes(sponsor_types: {sponsors: :sponsor_attachment_logo_image})
+                  .includes(conference_days: :talks)
+                  .order("sponsor_types.order ASC")
+                  .find_by(abbr: event_name)
     render event_view
   end
 

@@ -1,0 +1,20 @@
+<h3>他にも様々なセッションが目白押し！</h3>
+<div class="card-deck">
+  <% conference.talks.where(show_on_timetable: true).shuffle[0..3].each do |talk| %>
+    <div class="card talk">
+      <a href="<%= url_for(controller: "talks",action: "show", id: talk.id) %>">
+      <h3><%= talk.title %></h3>
+      <% if talk.start_time.present? && 
+              talk.end_time.present? &&
+              talk.conference_day.present? %>
+        <h4>
+          Track <%= talk.track.name %> 
+          <%= talk.conference_day.date.strftime("%Y/%m/%d") %> 
+          <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+        </h4>
+      <% end %>
+      <p><%= talk.abstract[..40] if talk.abstract.present? %></p>
+      </a>
+    </div>
+  <% end %>
+</div>

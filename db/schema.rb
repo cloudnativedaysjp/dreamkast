@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_31_033738) do
+ActiveRecord::Schema.define(version: 2021_08_29_032135) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_07_31_033738) do
     t.integer "show_timetable"
     t.boolean "cfp_result_visible", default: false
     t.boolean "show_sponsors", default: false
+    t.string "brief"
     t.index ["status"], name: "index_conferences_on_status"
   end
 

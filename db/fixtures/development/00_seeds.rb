@@ -89,6 +89,7 @@ EOS
   {
     id: 10,
     name: "Test Event Winter 2020",
+    status: 3, # archived
     abbr: "tew2020",
     theme: "これはTestEventWinter2020のテーマです",
     copyright: '© Test Event Winter 2020 Committee',

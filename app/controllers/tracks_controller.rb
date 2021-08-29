@@ -8,7 +8,7 @@ class TracksController < ApplicationController
     if @conference.abbr == "cndo2021" && @conference.opened?
       redirect_to  '/cndo2021/ui/'
     end
-    @current = Video.on_air
+    @current = Video.on_air(@conference)
     @tracks = Track.all
 
     @talks = Talk.eager_load(:talk_category, :talk_difficulty).all

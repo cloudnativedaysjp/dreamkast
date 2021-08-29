@@ -6,10 +6,4 @@ class TrackChannel < ApplicationCable::Channel
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
-
-  def update
-    ActionCable.server.broadcast(
-      "track_channel", Video.on_air
-    )
-  end
 end

@@ -1,6 +1,6 @@
 <h3>他にも様々なセッションが目白押し！</h3>
 <div class="card-deck">
-  <% conference.talks.shuffle[0..3].each do |talk| %>
+  <% conference.talks.where(show_on_timetable: true).shuffle[0..3].each do |talk| %>
     <div class="card talk">
       <a href="<%= url_for(controller: "talks",action: "show", id: talk.id) %>">
       <h3><%= talk.title %></h3>

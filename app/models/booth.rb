@@ -25,4 +25,8 @@ class Booth < ApplicationRecord
   def key_image_urls
     sponsor.sponsor_attachment_key_images.present? ? sponsor.sponsor_attachment_key_images.map{|image| image.file_url} : []
   end
+
+  scope :published, -> {
+    where(published: true)
+  }
 end

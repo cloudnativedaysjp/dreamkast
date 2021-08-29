@@ -9,7 +9,6 @@ module TalksHelper
         video.talk_id = talk.id
       end
       video.video_id = value[:video_id]
-      video.slido_id = value[:slido_id]
       if value[:on_air]
         video.on_air = true
       else

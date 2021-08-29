@@ -11,8 +11,9 @@ class ChatMessageBroadcastJob < ApplicationJob
       body: msg.body,
       roomType: msg.room_type,
       roomId: msg.room_id,
-      messageType: msg.message_type,
-      replyTo: msg.parent_id
+      createdAt: msg.created_at.utc,
+      replyTo: msg.parent_id,
+      messageType: msg.message_type
     }
   end
 end

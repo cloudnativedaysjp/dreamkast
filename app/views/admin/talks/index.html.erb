@@ -50,7 +50,6 @@
         <th scope="col">Time</th>
         <th scope="col">Video File</th>
         <th scope="col">Vimeo ID</th>
-        <th scope="col">Sli.do ID</th>
         <th scope="col">On Air</th>
       </tr>
       </thead>
@@ -83,10 +82,6 @@
             <td>
               <% video_id = talk.video ? talk.video.video_id : nil %>
               <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "vimeo id", size: "9" %>
-            </td>
-            <td>
-              <% slido_id = talk.video ? talk.video.slido_id : nil %>
-              <%= text_field_tag "video[#{talk.id}][slido_id]", slido_id ,placeholder: "sli.do id", size: "8" %>
             </td>
             <td class="on_air_group btn-group-toggle">
               <% if talk.video %>

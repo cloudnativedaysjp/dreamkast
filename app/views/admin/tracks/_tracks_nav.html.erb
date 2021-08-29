@@ -22,7 +22,6 @@
           <th scope="col">Speakers</th>
           <th scope="col">Title</th>
           <th scope="col">Vimeo ID</th>
-          <th scope="col">Sli.do ID</th>
           <th scope="col">On Air</th>
         </tr>
         </thead>
@@ -39,10 +38,6 @@
                 <% if video_id != '' %>
                   <%=link_to "link", "https://player.vimeo.com/video/#{video_id}" %>
                 <% end %>
-              </td>
-              <td>
-                <% slido_id = talk.video ? talk.video.slido_id : nil %>
-                <%= text_field_tag "video[#{talk.id}][slido_id]", slido_id ,placeholder: "sli.do id", size: "8" %>
               </td>
               <td class="on_air_group btn-group-toggle">
                 <% if talk.video %>

@@ -4,7 +4,7 @@ class Video < ApplicationRecord
   belongs_to :talk
 
   def self.on_air(conference)
-    current = conference.talks.accepted.map(&:video).select(&:on_air)
+    current = conference.talks.accepted.map(&:video).compact.select(&:on_air)
     list = {}
     list['current'] = []
     current.each do |video|

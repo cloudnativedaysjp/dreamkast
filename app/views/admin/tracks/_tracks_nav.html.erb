@@ -11,6 +11,9 @@
     <% talks = Talk.where(conference_id: conference.id, conference_day_id: conference_day.id, track_id: track.id).order('conference_day_id ASC, start_time ASC, track_id ASC') %>
     <div class="tab-pane fade show <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>" role="tabpanel" aria-labelledby="nav-<%= conference_day.date %>-<%= track.number %>-tab">
       <%= form_with(url: admin_tracks_path, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put", class: "talk_list_form") do |f| %>
+        Track Video ID: <%= text_field_tag "track[video_id]", track.video_id, placeholder: "vimeo id", size: "9" %>
+        <%= hidden_field_tag "track[id]", track.id %>
+
         <table class="table table-striped talks_table" >
         <thead>
         <tr>

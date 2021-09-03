@@ -1016,7 +1016,6 @@ SponsorType.seed(
   [70, 'Gold', 'line', 3],
   [71, 'Gold', 'cyberagent', 3],
   [72, 'Gold', 'yumemi', 3],
-  [73, 'CM', 'line', 3],
   [74, 'CM', 'yumemi', 3],
   [75, 'CM', 'legalforce', 3],
   [76, 'Hands-On', 'gitlab', 3],

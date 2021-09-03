@@ -753,6 +753,13 @@ Sponsor.seed(
     conference_id: 3,
     url: "https://www.creationline.com/"
   },
+  {
+    id: 60,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 3,
+    url: 'https://plaid.co.jp/'
+  },
 )
 
 SponsorType.seed(
@@ -860,6 +867,12 @@ SponsorType.seed(
     conference_id: 3,
     name: "Hands-On",
     order: 5,
+  },
+  {
+    id: 22,
+    conference_id: 3,
+    name: "Tool",
+    order: 6,
   }
 )
 
@@ -942,6 +955,7 @@ SponsorType.seed(
   [77, 'Hands-On', 'jbcc', 3],
   [78, 'Hands-On', 'google', 3],
   [79, 'Hands-On', 'creationline', 3],
+  [80, 'Tool', 'plaid', 3],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1014,6 +1028,7 @@ end
   [57, 'jbcc', 'sponsors/cicd2021/jbcc.png', 3],
   [58, 'google', 'sponsors/cicd2021/google.png', 3],
   [59, 'creationline', 'sponsors/cicd2021/creationline.png', 3],
+  [60, 'plaid', 'sponsors/cicd2021/plaid.png', 3],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

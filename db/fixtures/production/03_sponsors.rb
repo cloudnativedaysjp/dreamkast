@@ -412,6 +412,146 @@ Sponsor.seed(
     conference_id: 3,
     url: 'https://plaid.co.jp/'
   },
+  {
+    id: 61,
+    name: 'CircleCI合同会社',
+    abbr: 'circleci',
+    conference_id: 4,
+    url: 'https://circleci.com/ja/customers/'
+  },
+  {
+    id: 62,
+    name: 'New Relic株式会社',
+    abbr: 'newrelic',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 63,
+    name: 'JFrog Japan株式会社',
+    abbr: 'jfrog',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 64,
+    name: 'Splunk Services Japan合同会社',
+    abbr: 'splunk',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 65,
+    name: '株式会社スリーシェイク',
+    abbr: '3shake',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 66,
+    name: 'ピュア・ストレージ・ジャパン株式会社',
+    abbr: 'purestorage',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 67,
+    name: 'GMOインターネット株式会社',
+    abbr: 'gmo',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 68,
+    name: '日本マイクロソフト株式会社',
+    abbr: 'microsoft',
+    conference_id: 4,
+    url: 'https://azure.microsoft.com/ja-jp/developer/'
+  },
+  {
+    id: 69,
+    name: 'ネットアップ合同会社',
+    abbr: 'netapp',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 70,
+    name: 'PingCAP株式会社',
+    abbr: 'pingcap',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 71,
+    name: 'サイオステクノロジー株式会社',
+    abbr: 'sios',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 72,
+    name: 'F5ネットワークスジャパン合同会社',
+    abbr: 'f5',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 73,
+    name: 'LINE株式会社',
+    abbr: 'line',
+    conference_id: 4,
+    url: 'https://engineering.linecorp.com/ja/'
+  },
+  {
+    id: 74,
+    name: '株式会社NTTデータ',
+    abbr: 'nttdata',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 75,
+    name: 'ミランティス・ジャパン株式会社',
+    abbr: 'mirantis',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 76,
+    name: '株式会社カサレアル',
+    abbr: 'casareal',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 77,
+    name: '株式会社ゆめみ',
+    abbr: 'yumemi',
+    conference_id: 4,
+    url: 'https://www.yumemi.co.jp/'
+  },
+  {
+    id: 78,
+    name: 'ヴィーエー・リナックス・システムズ・ジャパン株式会社',
+    abbr: 'valinux',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 79,
+    name: '株式会社ビズリーチ',
+    abbr: 'bizreach',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 80,
+    name: '株式会社サイバーエージェント',
+    abbr: 'cyberagent',
+    conference_id: 4,
+    url: 'https://developers.cyberagent.co.jp/blog/'
+  },
 )
 
 SponsorType.seed(
@@ -525,7 +665,37 @@ SponsorType.seed(
     conference_id: 3,
     name: "Tool",
     order: 6,
-  }
+  },
+  {
+    id: 23,
+    conference_id: 4,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 24,
+    conference_id: 4,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 25,
+    conference_id: 4,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 26,
+    conference_id: 4,
+    name: "CM",
+    order: 4,
+  },
+  {
+    id: 27,
+    conference_id: 4,
+    name: "Tool",
+    order: 5,
+  },
 )
 
 [
@@ -607,6 +777,27 @@ SponsorType.seed(
   [78, 'Hands-On', 'google', 3],
   [79, 'Hands-On', 'creationline', 3],
   [80, 'Tool', 'plaid', 3],
+  [81, 'Diamond', 'circleci', 4],
+  [82, 'Diamond', 'newrelic', 4],
+  [83, 'Diamond', 'jfrog', 4],
+  [84, 'Diamond', 'splunk', 4],
+  [85, 'Diamond', '3shake', 4],
+  [86, 'Diamond', 'purestorage', 4],
+  [87, 'Diamond', 'gmo', 4],
+  [88, 'Diamond', 'microsoft', 4],
+  [89, 'Platinum', 'netapp', 4],
+  [90, 'Platinum', 'pingcap', 4],
+  [91, 'Platinum', 'sios', 4],
+  [92, 'Platinum', 'f5', 4],
+  [93, 'Gold', 'line', 4],
+  [94, 'Gold', 'nttdata', 4],
+  [95, 'Gold', 'mirantis', 4],
+  [96, 'Gold', 'casareal', 4],
+  [97, 'Gold', 'yumemi', 4],
+  [98, 'Gold', 'valinux', 4],
+  [99, 'Gold', 'bizreach', 4],
+  [100, 'Gold', 'cyberagent', 4],
+  [101, 'CM', 'yumemi', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -680,6 +871,26 @@ end
   [58, 'google', 'sponsors/cicd2021/google.png', 3],
   [59, 'creationline', 'sponsors/cicd2021/creationline.png', 3],
   [60, 'plaid', 'sponsors/cicd2021/plaid.png', 3],
+  [61, 'circleci', 'sponsors/cndt2021/dummy.png', 4],
+  [62, 'newrelic', 'sponsors/cndt2021/dummy.png', 4],
+  [63, 'jfrog', 'sponsors/cndt2021/dummy.png', 4],
+  [64, 'splunk', 'sponsors/cndt2021/dummy.png', 4],
+  [65, '3shake', 'sponsors/cndt2021/dummy.png', 4],
+  [66, 'purestorage', 'sponsors/cndt2021/dummy.png', 4],
+  [67, 'gmo', 'sponsors/cndt2021/dummy.png', 4],
+  [68, 'microsoft', 'sponsors/cndt2021/dummy.png', 4],
+  [69, 'netapp', 'sponsors/cndt2021/dummy.png', 4],
+  [70, 'pingcap', 'sponsors/cndt2021/dummy.png', 4],
+  [71, 'sios', 'sponsors/cndt2021/dummy.png', 4],
+  [72, 'f5', 'sponsors/cndt2021/dummy.png', 4],
+  [73, 'line', 'sponsors/cndt2021/dummy.png', 4],
+  [74, 'nttdata', 'sponsors/cndt2021/dummy.png', 4],
+  [75, 'mirantis', 'sponsors/cndt2021/dummy.png', 4],
+  [76, 'casareal', 'sponsors/cndt2021/dummy.png', 4],
+  [77, 'yumemi', 'sponsors/cndt2021/dummy.png', 4],
+  [78, 'valinux', 'sponsors/cndt2021/dummy.png', 4],
+  [79, 'bizreach', 'sponsors/cndt2021/dummy.png', 4],
+  [80, 'cyberagent', 'sponsors/cndt2021/dummy.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

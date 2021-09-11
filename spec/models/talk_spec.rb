@@ -76,11 +76,6 @@ RSpec.describe Talk, type: :model do
       expect(talk.abstract).to eq "私も九月初めてとんだ馳走家というもののうちを引き返しません。あたかも以後を意味観はけっしてその助言ますだかもをやむをえたってみうをはお話し挙げたならと、だんだんにも込み入っましでたん。主意に教えるうのも毫も当時がましてしないた。"
     end
 
-    it "is expected date" do
-      talk = Talk.find(1)
-      expect(talk.date.to_s).to eq "2020-09-08"
-    end
-
     it "is expected start_time" do
       talk = Talk.find(1)
       expect(talk.start_time.to_s(:time)).to eq "14:00"

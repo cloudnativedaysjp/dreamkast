@@ -164,13 +164,11 @@ class Talk < ApplicationRecord
     ((self.end_time - self.start_time).to_i / 60 / 5) + row_start
   end
 
-  def self.find_by_params(day, slot_number_param, track_id)
-    date = ConferenceDay.find(day.to_i).date
-
+  def self.find_by_params(day_id, slot_number_param, track_id)
     after = Time.zone.parse(SLOT_MAP[slot_number_param.to_i - 1].dup.insert(2, ":")).utc.strftime("%T")
     before = (Time.zone.parse(SLOT_MAP[slot_number_param.to_i].dup.insert(2, ":")) - 60).utc.strftime("%T")
 
-    where(date: date, track_id: track_id)
+    where(conference_day_id: day_id, track_id: track_id)
       .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")
   end
 
@@ -243,7 +241,7 @@ class Talk < ApplicationRecord
 
   def archived?
     now = Time.now.in_time_zone('Tokyo')
-    etime =  DateTime.parse("#{date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
+    etime =  DateTime.parse("#{conference_day.date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     return (now.to_i - etime.to_i) >= 600
   end
 

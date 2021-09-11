@@ -40,7 +40,7 @@
           </td>
 
           <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
-            <%= talk.date %>
+            <%= talk.conference_day ? talk.conference_day.date : '' %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">

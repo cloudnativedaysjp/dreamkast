@@ -120,7 +120,6 @@ class Talk < ApplicationRecord
       "track_id",
       "talk_category_id",
       "talk_difficulty_id",
-      "date",
       "conference_day_id",
       "start_time",
       "end_time",

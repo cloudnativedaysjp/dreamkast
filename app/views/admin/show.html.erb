@@ -14,7 +14,7 @@
     <li>タイムテーブルを表示: <%= @conference.show_timetable %></li>
     <li>スポンサーを表示: <%= @conference.show_sponsors ? '表示' : '非表示' %></li>
   </ul>
-  <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id) %>
+  <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id), class: 'btn btn-primary' %>
 
   <hr>
 

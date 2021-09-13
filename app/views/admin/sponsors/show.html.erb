@@ -1,5 +1,5 @@
 <%= render 'admin/layout' do %>
-  <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id) %>
+  <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id), class: "btn btn-primary" %>
 
   <%= render 'booths/booth', sponsor: @sponsor %>
 <% end %>

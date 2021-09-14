@@ -16,7 +16,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
           redirect_to sponsor_dashboards_path
         end
 
-        unless @sponsor.speaker_emails&.downcase.include?(@current_user[:info][:email])
+        unless @sponsor.speaker_emails && @sponsor.speaker_emails.downcase.include?(@current_user[:info][:email])
           redirect_to "/#{@conference.abbr}/sponsor_dashboards/login", notice: 'ログインが許可されていません'
         end
       end

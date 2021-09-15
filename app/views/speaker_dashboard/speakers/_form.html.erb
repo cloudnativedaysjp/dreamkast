@@ -64,7 +64,7 @@
       <% end %>
     </div>
 
-    <% if @conference.speaker_entry_enabled? || admin? %>
+    <% if @conference.speaker_entry_enabled? || @sponsor || admin? %>
       <% if action_name == "new" || form.object.talks.size < 3 %>
         <p class="alert alert-info">追加ボタンを押すとセッションを最大3件まで登録できます。またエントリー後にダッシュボードから更新可能です。</p>
         <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>

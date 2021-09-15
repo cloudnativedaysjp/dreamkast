@@ -53,7 +53,7 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
             get '/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'
             expect(response).to be_successful
             expect(response).to have_http_status '200'
-            expect(response.body).to include 'スポンサー担当者情報入力フォーム(スポンサー1株式会社)'
+            expect(response.body).to include 'スポンサー担当者情報フォーム(スポンサー1株式会社)'
           end
         end
       end

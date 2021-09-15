@@ -3,14 +3,16 @@
     <%= link_to 'スポンサーセッションを登録する', new_sponsor_dashboards_speaker_path %>
   </div>
 <% else %>
-  <h2 class="py-3 pl-2"><%= @sponsor_profile.name %>さんのスピーカープロフィール</h2>
+  スポンサー担当者名: <%= @sponsor_profile.name %> ( <%= link_to 'Edit', edit_sponsor_dashboards_sponsor_profile_path(id: @sponsor_profile.id) %> )
+
+  <h2 class="py-3 pl-2">スピーカープロフィール</h2>
   <div class="col-12 mb-4">
     <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
   </div>
 
-  <h3 class="py-3 pl-2"><%= @sponsor_profile.name %>さんのセッション一覧</h3>
+  <h3 class="py-3 pl-2">セッション一覧</h3>
   <div class="col-12 mb-4">
-    ※ スポンサーセッション、公募セッション両方が表示されます
+    ※ 現在ログインしている人に紐付くスポンサーセッション、公募セッション両方が表示されます
   </div>
 
   <div class="col-12 mb-4">

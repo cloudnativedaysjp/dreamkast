@@ -29,6 +29,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
   def edit
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor_profile = SponsorProfile.find_by(conference_id: @conference.id, id: params[:id])
+    @sponsor = @sponsor_profile.sponsor
     authorize @sponsor_profile
   end
 
@@ -58,11 +59,14 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
   # PATCH/PUT :event/sponsor_dashboard/speakers/1
   # PATCH/PUT :event/sponsor_dashboard/speakers/1.json
   def update
+    @conference = Conference.find_by(abbr: params[:event])
+    @sponsor_profile = SponsorProfile.find_by(conference_id: @conference.id, id: params[:id])
+
     authorize @sponsor_profile
 
     respond_to do |format|
       if @sponsor_profile.update(sponsor_profile_params)
-        format.html { redirect_to sponsor_dashboard_path, notice: 'Speaker was successfully updated.' }
+        format.html { redirect_to sponsor_dashboards_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @speaker }
       else
         format.html { render :edit }

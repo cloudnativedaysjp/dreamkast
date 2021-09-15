@@ -573,6 +573,27 @@ Sponsor.seed(
     conference_id: 4,
     url: ''
   },
+  {
+    id: 84,
+    name: 'ヴイエムウェア株式会社',
+    abbr: 'vmware',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 85,
+    name: 'レッドハット株式会社',
+    abbr: 'redhat',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 86,
+    name: 'さくらインターネット株式会社',
+    abbr: 'sakura',
+    conference_id: 4,
+    url: ''
+  },
 )
 
 SponsorType.seed(
@@ -819,9 +840,12 @@ SponsorType.seed(
   [99, 'Gold', 'bizreach', 4],
   [100, 'Gold', 'cyberagent', 4],
   [101, 'CM', 'yumemi', 4],
-  [102, 'PLATINUM', 'scsk', 4],
-  [103, 'GOLD', 'standby', 4],
-  [104, 'PLATINUM', 'freee', 4],
+  [102, 'Platinum', 'scsk', 4],
+  [103, 'Gold', 'standby', 4],
+  [104, 'Platinum', 'freee', 4],
+  [105, 'Platinum', 'vmware', 4],
+  [106, 'Diamond', 'redhat', 4],
+  [107, 'CM', 'sakura', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -918,6 +942,9 @@ end
   [81, 'scsk', 'sponsors/cndt2021/dummy.png', 4],
   [82, 'standby', 'sponsors/cndt2021/dummy.png', 4],
   [83, 'freee', 'sponsors/cndt2021/dummy.png', 4],
+  [84, 'vmware', 'sponsors/cndt2021/dummy.png', 4],
+  [85, 'redhat', 'sponsors/cndt2021/dummy.png', 4],
+  [86, 'sakura', 'sponsors/cndt2021/dummy.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

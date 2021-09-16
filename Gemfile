@@ -92,3 +92,8 @@ gem 'aws-sdk-rails'
 gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
+
+# Amazon X-Ray
+gem 'aws-xray-sdk'
+gem 'oj', platform: :mri
+gem 'jrjackson', platform: :jruby

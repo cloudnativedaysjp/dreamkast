@@ -17,10 +17,10 @@ class Profiles::TalksController < ApplicationController
       if params[:talks].present?
         if params[:event] == "cndt2020"
           params[:talks].each do |key, value|
-            day, slot = key.split("_")
+            day_id, slot = key.split("_")
             track_id = value
             
-            Talk.find_by_params(day, slot, track_id).each do |talk|
+            Talk.find_by_params(day_id, slot, track_id).each do |talk|
               RegisteredTalk.create!(
                 profile_id: @profile.id,
                 talk_id: talk.id

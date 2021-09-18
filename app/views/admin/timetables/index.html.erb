@@ -30,12 +30,12 @@
             <td><h5><%= talk.title %></h5></td>
             <td>
               <div class="field">
-                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, value: talk.track_id, class: "form-control" %>
+                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, { include_blank: true, selected: talk.track_id }, class: "form-control" %>
               </div>
             </td>
             <td>
               <div class="field">
-                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, value: talk.conference_day_id, class: "form-control", placeholder: 'XXXX-YY-ZZ '  %>
+                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, { include_blank: true, selected: talk.conference_day_id }, {class: "form-control"} %>
               </div>
             </td>
             <td>

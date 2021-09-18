@@ -64,7 +64,7 @@
             </td>
             <td><%= talk.track.present? ? talk.track.name : "" %></td>
             <td>
-              <%= talk.date %>
+              <%= talk.conference_day.date %>
               <% if talk.start_time.present? && talk.start_time.present? %>
                 <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
               <% end %>

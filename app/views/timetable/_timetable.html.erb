@@ -7,7 +7,7 @@
   </section>
   <section class="timetable">
     <div class="grid" style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 6) + 1 %>">
-      <% ["A","B","C","D","E","F"].each_with_index do |track_name, n| %>
+      <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
           <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 

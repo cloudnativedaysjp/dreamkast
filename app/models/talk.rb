@@ -131,10 +131,6 @@ class Talk < ApplicationRecord
     ]
   end
 
-  def day
-    return self.conference_day_id
-  end
-
   def track_name
     track.present? ? track.name : ''
   end
@@ -148,11 +144,11 @@ class Talk < ApplicationRecord
   end
 
   def talk_number
-    return day.to_s + self.track.name + slot_number
+    return conference_day_id.to_s + self.track.name + slot_number
   end
 
   def day_slot
-    return self.day.to_s + "_" + self.slot_number
+    return self.conference_day_id.to_s + "_" + self.slot_number
   end
 
   def row_start

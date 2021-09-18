@@ -88,12 +88,12 @@ RSpec.describe Talk, type: :model do
 
     it "returns day 1" do
       talk = Talk.find(1)
-      expect(talk.day).to eq 1
+      expect(talk.conference_day_id).to eq 1
     end
 
     it "returns day 2" do
       talk = Talk.find(3)
-      expect(talk.day).to eq 2
+      expect(talk.conference_day_id).to eq 2
     end
 
     it "is expected track.name" do

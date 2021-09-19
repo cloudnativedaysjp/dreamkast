@@ -7,28 +7,29 @@ namespace :util do
     Rails.logger.level = Logger::DEBUG
 
     url = ENV['SLACK_WEBHOOK_URL']
-    abbr = ENV['CONFERENCE_ABBR']
-    slack = Slack::Incoming::Webhooks.new(url)
-    conference = Conference.find_by(abbr: abbr)
-    slack.username = "#{conference.abbr.upcase} 参加者速報"
-    body = ''
+    conferences = Conference.where(status: 0).or(Conference.where(status: 1)).or(Conference.where(status: 2))
 
-    ActiveRecord::Base.transaction do
-      begin
-        conference.profiles.size
-        stats = StatsOfRegistrant.new(conference_id: conference.id, number_of_registrants: conference.profiles.size)
-        stats.save!
+    conferences.each do |conference|
+      slack = Slack::Incoming::Webhooks.new(url)
+      slack.username = "#{conference.abbr.upcase} 参加者速報"
+      body = ''
 
-        yesterday_stats = StatsOfRegistrant.where("DATE_FORMAT(created_at, '%Y-%m-%d') = ?", 1.days.ago.to_time.strftime("%Y-%m-%d")).first
+      ActiveRecord::Base.transaction do
+        begin
+          stats = StatsOfRegistrant.new(conference_id: conference.id, number_of_registrants: conference.profiles.size)
+          stats.save!
 
-        body = []
-        body << "#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.number_of_registrants} 人です！"
-        body << "前日より #{stats.number_of_registrants - yesterday_stats.number_of_registrants} 人増えました！" if yesterday_stats
-      rescue => e
-        puts e
+          yesterday_stats = StatsOfRegistrant.where("conference_id = ? AND DATE_FORMAT(created_at, '%Y-%m-%d') = ?", conference.id, 1.days.ago.to_time.strftime("%Y-%m-%d")).first
+
+          body = []
+          body << "#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.number_of_registrants} 人です！"
+          body << "前日より #{stats.number_of_registrants - yesterday_stats.number_of_registrants} 人増えました！" if yesterday_stats
+        rescue => e
+          puts e
+        end
       end
-    end
 
-    slack.post body.join("\n") unless body.empty?
+      slack.post body.join("\n") unless body.empty?
+    end
   end
 end

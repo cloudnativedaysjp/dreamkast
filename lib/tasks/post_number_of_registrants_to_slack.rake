@@ -7,7 +7,7 @@ namespace :util do
     Rails.logger.level = Logger::DEBUG
 
     url = ENV['SLACK_WEBHOOK_URL']
-    conferences = Conference.where(status: 0).or(Conference.where(status: 1)).or(Conference.where(status: 2))
+    conferences = Conference.unarchived
 
     conferences.each do |conference|
       slack = Slack::Incoming::Webhooks.new(url)

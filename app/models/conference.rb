@@ -29,4 +29,8 @@ class Conference < ApplicationRecord
   scope :previous, -> {
     merge(where(status: 2).or(where(status: 3)))
   }
+
+  scope :unarchived, -> {
+    merge(where(status: 0).or(where(status: 1)).or(where(status: 2)))
+  }
 end

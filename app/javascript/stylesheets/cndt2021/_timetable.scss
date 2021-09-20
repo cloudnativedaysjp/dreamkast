@@ -177,20 +177,6 @@ section.timetable {
         border-radius: 50%;
         margin: 10px;
     }
-    .modal-body {
-        .category_difficulty {
-            margin: 0 0 10px 0;
-        }
-        .difficulty {
-            padding: 0.2rem;
-            margin: 0;
-            word-wrap: break-word;
-            word-break: break-all;
-            color: #FFF;
-            background: $dark-blue;
-            border-radius: 1rem;
-        }
-    }
     .archivable {
         filter: hue-rotate(0deg);
     }
@@ -306,6 +292,21 @@ section.timetable {
         h2 {
             margin: 15px 0px 5px 0px;
         }
+    }
+}
+
+.modal-body {
+    .category_difficulty {
+        margin: 0 0 10px 0;
+    }
+    .difficulty {
+        padding: 0.2rem;
+        margin: 0;
+        word-wrap: break-word;
+        word-break: break-all;
+        color: #FFF;
+        background: $dark-blue;
+        border-radius: 1rem;
     }
 }
 

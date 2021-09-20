@@ -365,6 +365,33 @@ Proposal.seed(csv.map{|line|
   }
 })
 
+# Import CNDT2021 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/proposals.csv'), headers: true)
+Proposal.seed(csv.map{|line|
+  {
+    id: line["id"],
+    talk_id: line["talk_id"],
+    conference_id: line["conference_id"],
+    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+  }
+})
+
+# Mock profile
 Profile.seed(
   {
     id: 1,
@@ -436,13 +463,13 @@ Link.seed(
   {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
 )
 
-ChatMessage.seed(
-  {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
-  {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
-  {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 1},
-  {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 0},
-  {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 1},
-)
+# ChatMessage.seed(
+#   {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+#   {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
+#   {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 1},
+#   {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 0},
+#   {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 1},
+# )
 
 Announcement.seed(
   {id: 1, conference_id: 1, publish_time: "2020-08-24 10:00:00", publish: true, body: <<'EOS'

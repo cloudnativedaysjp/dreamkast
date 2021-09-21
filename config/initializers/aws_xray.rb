@@ -7,3 +7,11 @@ Rails.application.config.xray = {
   active_record: true,
   context_missing: 'LOG_ERROR'
 }
+
+opts = {  } # aws-xray-sdk options hash
+
+if ENV['AWS_XRAY_DAEMON_ADDRESS']
+  opts[:daemon_address] = ENV['AWS_XRAY_DAEMON_ADDRESS']
+end
+
+Rails.application.config.xray = opts

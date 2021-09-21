@@ -107,3 +107,7 @@ gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 
 gem 'active_hash'
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-jaeger'
+gem 'opentelemetry-instrumentation-all'
+

@@ -1,0 +1,51 @@
+<%= render 'admin/layout' do %>
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-md-6 registration-form py-3 px-md-5">
+
+      <h2>AdminProfile 登録情報変更</h2>
+
+      <%= form_with(url: admin_admin_profile_path, model: @admin_profile, local: true, class: "needs-validation") do |form| %>
+        <% if @admin_profile.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger" role="alert">
+            <h5>入力内容にエラーがあります:</h5>
+            <ul>
+              <% @admin_profile.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field pb-3">
+          <%= form.label :avatar, 'Profile Image' %>
+          <% if @admin_profile && @admin_profile.avatar_url.present? %>
+            <br>
+            <%= image_tag @admin_profile.avatar_url, :size => '80x80' %>
+          <% end %>
+          <%= form.hidden_field :avatar, value: @admin_profile && @admin_profile.avatar_url.present? ? @admin_profile.avatar_data : '' %>
+          <%= form.file_field :avatar, class: "form-control"  %>
+        </div>
+
+        <div class="form-row form-group">
+          <%= form.label :name, "Name" %>*
+          <%= form.text_field :name, required: true, class: "form-control" %>
+        </div>
+
+        <div class="form-row form-group">
+          <%= form.label :twitter_id, "Twitter ID" %>
+          <%= form.text_field :twitter_id, class: "form-control" %>
+        </div>
+
+        <div class="form-row form-group">
+          <%= form.label :github_id, "GitHub ID" %>
+          <%= form.text_field :github_id, class: "form-control" %>
+        </div>
+
+        <div class="form-row form-group justify-content-md-center py-20">
+          <%= form.submit "Update", class: "btn btn-primary form-control" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+<% end %>

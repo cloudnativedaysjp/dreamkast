@@ -1,9 +1,6 @@
 class Admin::TalksController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
@@ -42,11 +39,5 @@ class Admin::TalksController < ApplicationController
       TalksSpeaker.import(params[:file])
       redirect_to '/admin/talks', notice: 'CSVの読み込みが完了しました'
     end
-  end
-
-  private
-
-  def is_admin?
-    raise Forbidden unless admin?
   end
 end

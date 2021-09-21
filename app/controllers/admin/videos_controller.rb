@@ -1,8 +1,6 @@
 class Admin::VideosController < ApplicationController
-  include Secured
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @talks = @conference.talks

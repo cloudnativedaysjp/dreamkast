@@ -1,8 +1,6 @@
 class Admin::AnnouncementsController < ApplicationController
-  include Secured
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @announcements = @conference.announcements
@@ -65,10 +63,6 @@ class Admin::AnnouncementsController < ApplicationController
     when 'edit'
       "/#{params[:event]}/admin/announcements/#{params[:id]}"
     end
-  end
-
-  def is_admin?
-    raise Forbidden unless admin?
   end
 
   def announcement_params

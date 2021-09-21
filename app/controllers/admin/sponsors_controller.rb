@@ -1,9 +1,6 @@
 class Admin::SponsorsController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @sponsor_types = @conference.sponsor_types.order(order: "ASC")
@@ -34,10 +31,6 @@ class Admin::SponsorsController < ApplicationController
   end
 
   private
-
-  def is_admin?
-    raise Forbidden unless admin?
-  end
 
   def sponsor_params
     params.require(:sponsor).permit(:description,

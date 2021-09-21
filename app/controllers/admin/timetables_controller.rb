@@ -1,9 +1,8 @@
 class Admin::TimetablesController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
 
-  before_action :is_admin?, :set_conference, :set_profile
+  before_action :set_profile
 
   def index
     @talks = @conference.talks.show_on_timetable.order('conference_day_id ASC, start_time ASC, track_id ASC')

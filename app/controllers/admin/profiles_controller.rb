@@ -1,7 +1,5 @@
 class Admin::ProfilesController < ApplicationController
-  include Secured
-
-  before_action :is_admin?, :set_conference
+  include SecuredAdmin
 
   def export_profiles
     profiles = Profile.export(@conference.id)

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     get 'admin/export_statistics' => 'admin#export_statistics'
     delete 'admin/destroy_user' => 'admin#destroy_user'
     namespace :admin do
+      resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :show, :edit, :update]
       resources :booths, only: [:index, :show]
       resources :conferences, only: [:index, :show, :edit, :update]

@@ -1,9 +1,6 @@
 class Admin::TracksController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @tracks = @conference.tracks
@@ -18,10 +15,5 @@ class Admin::TracksController < ApplicationController
         format.js
       end
     end
-  end
-  private
-
-  def is_admin?
-    raise Forbidden unless admin?
   end
 end

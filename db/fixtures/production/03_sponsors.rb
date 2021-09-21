@@ -594,6 +594,20 @@ Sponsor.seed(
     conference_id: 4,
     url: ''
   },
+  {
+    id: 87,
+    name: 'トレンドマイクロ株式会社',
+    abbr: 'trendmicro',
+    conference_id: 4,
+    url: ''
+  },
+  {
+    id: 88,
+    name: "日本シノプシス合同会社",
+    abbr: "synopsys",
+    conference_id: 4,
+    url: ""
+  },
 )
 
 SponsorType.seed(
@@ -847,6 +861,8 @@ SponsorType.seed(
   [106, 'Diamond', 'redhat', 4],
   [107, 'CM', 'sakura', 4],
   [108, 'CM', '3shake', 4],
+  [109, 'Platinum', 'trendmicro', 4],
+  [110, 'Platinum', 'synopsys', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -946,6 +962,8 @@ end
   [84, 'vmware', 'sponsors/cndt2021/dummy.png', 4],
   [85, 'redhat', 'sponsors/cndt2021/dummy.png', 4],
   [86, 'sakura', 'sponsors/cndt2021/dummy.png', 4],
+  [87, 'trendmicro', 'sponsors/cndt2021/dummy.png', 4],
+  [88, 'synopsys', 'sponsors/cndt2021/dummy.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

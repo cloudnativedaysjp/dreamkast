@@ -2,7 +2,7 @@ module SecuredAdmin
     extend ActiveSupport::Concern
   
     included do
-      before_action :set_conference, :logged_in_using_omniauth?, :is_admin?, :ensure_admin_profile, if: :use_secured_before_action?
+      before_action :set_conference, :logged_in_using_omniauth?, :is_admin?, :get_or_create_admin_profile, if: :use_secured_before_action?
       helper_method :admin?, :speaker?
     end
 
@@ -38,7 +38,7 @@ module SecuredAdmin
       @current_user ||= session[:userinfo]
     end
 
-    def ensure_admin_profile
+    def get_or_create_admin_profile
       @admin_profile ||= AdminProfile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
 
       if admin? && @admin_profile.blank?

@@ -1,5 +1,4 @@
-<% @conference.conference_days.each do |conference_day| %>
-  <% unless conference_day.internal  %>
+<% @conference.externals.each do |conference_day| %>
   <section class="timetable">
     <h2 class="date"><%= conference_day.date.to_s %></h2>
     <div class="grid"
@@ -48,7 +47,6 @@
       <% end %>
     </div>
   </section>
-  <% end %>
 <% end %>
 <% if form %>
   <%= render 'timetable_footer',

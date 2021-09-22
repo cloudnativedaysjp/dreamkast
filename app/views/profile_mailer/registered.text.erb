@@ -1,5 +1,21 @@
 こんにちは、<%= @profile.last_name %> <%= @profile.first_name %> さん。
 
-<%= @conference.name %>にご登録いただきありがとうございます。
+この度は<%= @conference.name %>にご登録いただき
+まことにありがとうございます。
+
+<%= @conference.name %> は11月4日(木)12時から
+2日間にわたり開催されます。 時間になりましたら
+CloudNative Days サイトにログインしていただくと
+そのまま視聴画面に切り替わります。
+
+開催まではログインすると参加者ダッシュボードが表示されます。
+そこから登録したセッションの確認・変更を行うことができます。
+
+またプレイベント・共催イベントなど、実行委員会からお知らせを
+させていただく事もございます。
+ぜひ時々ダッシュボードをチェックしてみてください。
+https://event.cloudnativedays.jp/cndt2021
+
+それでは、<%= @profile.last_name %> <%= @profile.first_name %> さんのご参加を心からお待ちしております！
 
 <%= render '/layouts/footer' %>

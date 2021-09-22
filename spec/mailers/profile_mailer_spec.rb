@@ -1,9 +1,5 @@
 require "rails_helper"
 
-RSpec.configure do |config|
-  config.include Mail::Matchers, type: :mailer
-end
-
 RSpec.describe ProfileMailer, type: :mailer do
   before do
 

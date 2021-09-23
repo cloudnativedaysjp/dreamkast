@@ -2,7 +2,7 @@ require 'opentelemetry/sdk'
 require 'opentelemetry/exporter/jaeger'
 require 'opentelemetry/instrumentation/all'
 
-ENV['OTEL_SERVICE_NAME'] = 'dreamkast'
+ENV['OTEL_SERVICE_NAME'] = "dreamkast-#{ENV['RAILS_ENV']}"
 ENV['OTEL_SERVICE_VERSION'] = '0.1.0'
 
 OpenTelemetry::SDK.configure do |c|
@@ -14,4 +14,4 @@ OpenTelemetry::SDK.configure do |c|
     )
   end
 
-tracer = OpenTelemetry.tracer_provider.tracer('dreamkast', '0.1.0')
+tracer = OpenTelemetry.tracer_provider.tracer( "dreamkast-#{ENV['RAILS_ENV']}", '0.1.0')

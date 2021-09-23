@@ -60,6 +60,8 @@ Rails.application.routes.draw do
       put 'tracks' => 'tracks#update_tracks'
       resources :attachments, only: [:show]
       put 'video_registrations' => 'video_registrations#bulk_update'
+      get 'team' => 'teams#show'
+      put 'team' => 'teams#update'
     end
 
     get '/team' => 'teams#show'

@@ -18,5 +18,6 @@
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
     <%= render 'admin/nav_item', name: 'Booths', path: admin_booths_path, active: controller_name == 'booths' || action_name == 'show_booth' %>
     <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
+    <%= render 'admin/nav_item', name: 'Edit Admin Profile', path: edit_admin_admin_profile_path(id: @admin_profile), active: action_name == 'administrators' %>
   </ul>
 </nav>

@@ -1,8 +1,6 @@
 class Admin::LinksController < ApplicationController
-  include Secured
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @links = Link.where(conference_id: @conference.id)
@@ -14,10 +12,6 @@ class Admin::LinksController < ApplicationController
   end
 
   private
-
-  def is_admin?
-    raise Forbidden unless admin?
-  end
 
   def conference_params
     params.require(:conference).permit(:status)

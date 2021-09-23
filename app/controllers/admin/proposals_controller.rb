@@ -1,9 +1,6 @@
 class Admin::ProposalsController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @proposals = @conference.proposals
@@ -28,11 +25,5 @@ class Admin::ProposalsController < ApplicationController
       proposal.save
     end
     redirect_to admin_proposals_url, notice: "配信設定を更新しました"
-  end
-
-  private
-
-  def is_admin?
-    raise Forbidden unless admin?
   end
 end

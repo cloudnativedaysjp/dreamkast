@@ -1,9 +1,6 @@
 class Admin::SpeakersController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
     @speakers = @conference.speakers
@@ -61,10 +58,6 @@ class Admin::SpeakersController < ApplicationController
   end
 
   private
-
-  def is_admin?
-    raise Forbidden unless admin?
-  end
 
   def speaker_params
     params.require(:speaker).permit(:name,

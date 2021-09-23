@@ -1,8 +1,6 @@
 class Admin::VideoRegistrationsController < ApplicationController
-  include Secured
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def bulk_update
     params[:video_registration].each do |id, value|

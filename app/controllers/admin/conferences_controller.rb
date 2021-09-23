@@ -1,9 +1,6 @@
 class Admin::ConferencesController < ApplicationController
-  include Secured
-  include Logging
+  include SecuredAdmin
   include LogoutHelper
-
-  before_action :is_admin?, :set_conference
 
   def index
   end
@@ -39,10 +36,6 @@ class Admin::ConferencesController < ApplicationController
   end
 
   private
-
-  def is_admin?
-    raise Forbidden unless admin?
-  end
 
   def conference_params
     params.require(:conference).permit(:status,

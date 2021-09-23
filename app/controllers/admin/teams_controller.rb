@@ -3,7 +3,7 @@ class Admin::TeamsController < ApplicationController
   include LogoutHelper
 
   def show
-    @admin_profiles = @conference.admin_profiles.where(show_on_team_page: true).order(name: 'ASC')
+    @admin_profiles = @conference.admin_profiles.order(name: 'ASC')
   end
 
   def update

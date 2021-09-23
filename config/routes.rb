@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       put 'video_registrations' => 'video_registrations#bulk_update'
     end
 
+    get '/team' => 'teams#show'
+
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
     resources :speakers, only: [:index, :show]
     get '/speaker_dashboard' => 'speaker_dashboards#show'

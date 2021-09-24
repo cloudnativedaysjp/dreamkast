@@ -41,12 +41,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     respond_to do |format|
       if r = @speaker_form.save
         r.each do |talk|
-          begin
-            # TODO: 非同期実行
-            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_now
-          rescue => e
-            logger.error "Failed to send mail: #{e.message}"
-          end
+          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
         format.html { redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
@@ -73,12 +68,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     respond_to do |format|
       if r = @speaker_form.save
         r.each do |talk|
-          begin
-            # TODO: 非同期実行
-            SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_now unless exists_talks.include?(talk.id)
-          rescue => e
-            logger.error "Failed to send mail: #{e.message}"
-          end
+          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
         end
         format.html { redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully updated.' }
       else

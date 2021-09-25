@@ -28,6 +28,34 @@ services:
       - "3000:3000"
     depends_on:
       - db
+  mail-worker:
+    build: .
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue mail"
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      SENTRY_DSN: ${SENTRY_DSN}
+      S3_REGION: ap-northeast-1
+      S3_BUCKET: ${S3_BUCKET}
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ap-northeast-1
+      MYSQL_HOST: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dreamkast
+      REDIS_URL: redis://redis:6379
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      SQS_MAIL_QUEUE_URL: ${SQS_MAIL_QUEUE_URL}
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /app/tmp
+    depends_on:
+      - db
   db:
     image: mysql:8
     environment:

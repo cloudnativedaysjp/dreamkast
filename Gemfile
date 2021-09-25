@@ -96,3 +96,5 @@ gem 'slack-incoming-webhooks'
 gem "octokit", "~> 4.0"
 
 gem 'active_hash'
+
+gem 'aws-xray', require: ['aws/xray/rails', 'aws/xray/hooks/net_http']

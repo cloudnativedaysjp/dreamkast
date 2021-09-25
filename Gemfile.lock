@@ -101,6 +101,8 @@ GEM
       rack (~> 2)
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
+    aws-xray (0.38.0)
+      rack
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -381,6 +383,7 @@ DEPENDENCIES
   awesome_nested_set
   aws-sdk-rails
   aws-sdk-s3 (~> 1.14)
+  aws-xray
   bootsnap (>= 1.4.2)
   bullet
   byebug

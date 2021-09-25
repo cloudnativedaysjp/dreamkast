@@ -15,6 +15,9 @@ class TelValidator < ActiveModel::EachValidator
 end
 
 class Profile < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :company_address_prefecture, :shortcuts => [:name]
+
   belongs_to :conference
   has_many :registered_talks
   has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks
@@ -43,7 +46,7 @@ class Profile < ApplicationRecord
   end
 
   def self.export(event_id)
-    attr = %w[id email 名 姓 業種 職種 勤務先名/学校名 勤務先メールアドレス 勤務先住所 勤務先電話番号 勤務先部署・所属/学部・学科・学年 勤務先役職]
+    attr = %w[id email 名 姓 業種 職種 勤務先名/学校名 勤務先メールアドレス 勤務先都道府県 勤務先住所 勤務先電話番号 勤務先部署・所属/学部・学科・学年 勤務先役職]
     all = CSV.generate do |csv|
       csv << attr
       Profile.where(conference_id: event_id).each do |speaker|
@@ -56,6 +59,7 @@ class Profile < ApplicationRecord
           speaker.occupation,
           speaker.company_name,
           speaker.company_email,
+          speaker.company_address_prefecture_name,
           speaker.company_address,
           speaker.company_tel,
           speaker.department,

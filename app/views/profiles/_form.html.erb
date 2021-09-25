@@ -45,8 +45,13 @@
   </div>
 
   <div class="form-row form-group">
+    <%= form.label :company_address_prefecture_id, "勤務先都道府県(国外の場合は `国外` を選択してください)" %>*
+    <%= form.collection_select :company_address_prefecture_id, CompanyAddressPrefecture.all, :id, :name, {prompt: ""}, {required: true, class: "form-control"} %>
+  </div>
+
+  <div class="form-row form-group">
     <%= form.label :company_address, "勤務先住所" %>*
-    <%= form.text_field :company_address, required: true, class: "form-control", placeholder: "東京都港区○○" %>
+    <%= form.text_field :company_address, required: true, class: "form-control", placeholder: "港区○○" %>
   </div>
 
   <div class="form-row form-group">

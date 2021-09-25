@@ -41,7 +41,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     respond_to do |format|
       if r = @speaker_form.save
         r.each do |talk|
-          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver
+          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
         format.html { redirect_to "/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
@@ -68,7 +68,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     respond_to do |format|
       if r = @speaker_form.save
         r.each do |talk|
-          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver unless exists_talks.include?(talk.id)
+          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
         end
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @speaker }

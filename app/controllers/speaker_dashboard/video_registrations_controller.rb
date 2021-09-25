@@ -53,7 +53,7 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
     respond_to do |format|
       if @video_registration.update(video_registrations_params)
 
-        SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver
+        SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver_later
 
         format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
         format.json { render :show, status: :ok, location: @talk }

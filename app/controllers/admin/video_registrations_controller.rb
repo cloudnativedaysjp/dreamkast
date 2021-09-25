@@ -19,7 +19,7 @@ class Admin::VideoRegistrationsController < ApplicationController
           begin
             speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
             talk = video_registration.talk
-            SpeakerMailer.video_uploaded(speaker, talk, @video_registration).deliver_now
+            SpeakerMailer.video_uploaded(speaker, talk, @video_registration).deliver_later
           rescue => e
             logger.error "Failed to send mail: #{e.message}"
           end

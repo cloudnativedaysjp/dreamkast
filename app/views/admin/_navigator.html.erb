@@ -14,6 +14,7 @@
     <%= render 'admin/nav_item', name: 'ビデオファイル提出状況', path: admin_videos_path, active: controller_name == 'videos' %>
     <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
     <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
+    <%= render 'admin/nav_item', name: 'IVS', path: admin_live_stream_ivs_path, active: action_name == 'live_stream_ivs' %>
     <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
     <%= render 'admin/nav_item', name: 'Booths', path: admin_booths_path, active: controller_name == 'booths' || action_name == 'show_booth' %>

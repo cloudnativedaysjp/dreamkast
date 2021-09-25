@@ -62,6 +62,10 @@ Rails.application.routes.draw do
       put 'video_registrations' => 'video_registrations#bulk_update'
       get 'team' => 'teams#show'
       put 'team' => 'teams#update'
+
+      resources :live_stream_ivs, only: [:index, :create]
+      post 'bulk_create_ivs' => 'live_stream_ivs#bulk_create'
+      post 'bulk_delete_ivs' => 'live_stream_ivs#bulk_delete'
     end
 
     get '/team' => 'teams#show'

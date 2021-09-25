@@ -1,0 +1,45 @@
+<%= render 'admin/layout' do %>
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <h2>Live Stream IVS</h2>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <%= form_with(url: admin_bulk_create_ivs_path, model: @ivs, local: true) do |form| %>
+        <%= form.submit '各トラック毎のIVSを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <h3>Track毎のIVS一覧</h3>
+
+  <%= form_with(url: admin_bulk_delete_ivs_path, model: @ivs, local: true) do |form| %>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Track</th>
+        <th scope="col">Name</th>
+        <th scope="col">ARN</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @ivss.each do |ivs| %>
+        <tr>
+          <td>
+            <input type="checkbox" name="ivs[<%= ivs.id %>]">
+          </td>
+
+          <td><%= ivs.track.name %></td>
+          <td><%= ivs.name %></td>
+          <td><%= ivs.channel_arn %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= form.submit '選択したIVSを削除する', class: "btn btn-danger" %>
+  <% end %>
+
+<% end %>

@@ -103,6 +103,7 @@ class ProfilesController < ApplicationController
         :company_name,
         :company_email,
         :company_address,
+        :company_address_prefecture_id,
         :company_tel,
         :department,
         :position,

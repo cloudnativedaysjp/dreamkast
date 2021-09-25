@@ -15,6 +15,9 @@ class TelValidator < ActiveModel::EachValidator
 end
 
 class Profile < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :company_address_prefecture, :shortcuts => [:name]
+
   belongs_to :conference
   has_many :registered_talks
   has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks

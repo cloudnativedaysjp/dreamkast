@@ -19,5 +19,6 @@
     <%= render 'admin/nav_item', name: 'Booths', path: admin_booths_path, active: controller_name == 'booths' || action_name == 'show_booth' %>
     <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
     <%= render 'admin/nav_item', name: 'Edit Admin Profile', path: edit_admin_admin_profile_path(id: @admin_profile), active: action_name == 'administrators' %>
+    <%= render 'admin/nav_item', name: 'Edit Team Page', path: admin_team_path, active: controller_name == 'teams' %>
   </ul>
 </nav>

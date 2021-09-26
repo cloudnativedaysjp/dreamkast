@@ -94,7 +94,9 @@ gem 'activerecord-nulldb-adapter'
 gem 'slack-incoming-webhooks'
 
 gem "octokit", "~> 4.0"
+
+gem 'active_hash'
+
 gem 'opentelemetry-sdk'
 gem 'opentelemetry-exporter-jaeger'
 gem 'opentelemetry-instrumentation-all'
-

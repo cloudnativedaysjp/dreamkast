@@ -21,6 +21,7 @@ class Conference < ApplicationRecord
   has_many :proposal_item_configs
   has_many :profiles
   has_many :stats_of_registrants
+  has_many :admin_profiles
 
   scope :upcoming, -> {
     merge(where(status: 0).or(where(status: 1)))

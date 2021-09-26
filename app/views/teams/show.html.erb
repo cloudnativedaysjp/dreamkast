@@ -1,0 +1,19 @@
+<div class="container white_background">
+  <h1 class="my-3 text-center">Team</h1>
+
+  <div id="team-members" class="row row-cols-1 row-cols-sm-3">
+
+    <% @admin_profiles.each do |admin_profile| %>
+      <div class="col mb-4">
+        <div class="card">
+          <%= image_tag admin_profile.avatar_or_dummy_url, class: 'card-img-top' %>
+          <div class="card-body">
+            <h5 class="card-title"><%= admin_profile.name %></h5>
+            <p class="card-text"><%= admin_profile.twitter_link %> <%= admin_profile.github_link %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

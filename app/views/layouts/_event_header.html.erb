@@ -35,16 +35,19 @@
               </div>
             </li>
 
-            <% if event_name == 'cndt2020' %>
+            <% case event_name %>
+            <% when 'cndt2020' %>
               <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
               <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
               <li class="nav-item"><%= link_to "Kontest", kontest_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
               <li class="nav-item"><%= link_to "Links", links_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
-            <% end %>
-            <% if event_name == 'cicd2021' %>
+            <% when 'cicd2021' %>
               <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
               <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
+            <% when 'cndt2021' %>
+              <li class="nav-item"><%= link_to "Team", team_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
+
           <% end %>
         <% end %>
         <li class="nav-item dropdown">

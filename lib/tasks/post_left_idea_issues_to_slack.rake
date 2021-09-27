@@ -19,7 +19,7 @@ namespace :util do
     payload = "作成後 #{5} 日以上アサインが決まっていない idea issueがあります〜〜\n担当チーム、担当者をアサインしたらideaラベルを外してね。"
     attachments = []
 
-    result = client.search_issues("repo:cloudnativedaysjp/cndt2021 is:issue is:open created:>#{created} label:idea")
+    result = client.search_issues("repo:cloudnativedaysjp/cndt2021 is:issue is:open created:<#{created} label:idea no:assignee")
     result.items.each do |issue|
       attachments << {
         title: "#{issue.number} #{issue.title}",

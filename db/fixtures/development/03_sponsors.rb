@@ -963,7 +963,7 @@ end
   [76, 'casareal', 'sponsors/cndt2021/casareal.png', 4],
   [77, 'yumemi', 'sponsors/cndt2021/yumemi.png', 4],
   [78, 'valinux', 'sponsors/cndt2021/dummy.png', 4],
-  [79, 'bizreach', 'sponsors/cndt2021/bizreach.png', 4],
+  [79, 'bizreach', 'sponsors/cndt2021/bizreach.jpg', 4],
   [80, 'cyberagent', 'sponsors/cndt2021/cyberagent.png', 4],
   [81, 'scsk', 'sponsors/cndt2021/scsk.png', 4],
   [82, 'standby', 'sponsors/cndt2021/standby.png', 4],

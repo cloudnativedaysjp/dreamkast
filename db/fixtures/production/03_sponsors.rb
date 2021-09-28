@@ -944,7 +944,6 @@ end
   [58, 'google', 'sponsors/cicd2021/google.png', 3],
   [59, 'creationline', 'sponsors/cicd2021/creationline.png', 3],
   [60, 'plaid', 'sponsors/cicd2021/plaid.png', 3],
-
   [61, 'circleci', 'sponsors/cndt2021/circleci.png', 4],
   [62, 'newrelic', 'sponsors/cndt2021/newrelic.png', 4],
   [63, 'jfrog', 'sponsors/cndt2021/jfrog.png', 4],
@@ -963,7 +962,7 @@ end
   [76, 'casareal', 'sponsors/cndt2021/casareal.png', 4],
   [77, 'yumemi', 'sponsors/cndt2021/yumemi.png', 4],
   [78, 'valinux', 'sponsors/cndt2021/dummy.png', 4],
-  [79, 'bizreach', 'sponsors/cndt2021/bizreach.png', 4],
+  [79, 'bizreach', 'sponsors/cndt2021/bizreach.jpg', 4],
   [80, 'cyberagent', 'sponsors/cndt2021/cyberagent.png', 4],
   [81, 'scsk', 'sponsors/cndt2021/scsk.png', 4],
   [82, 'standby', 'sponsors/cndt2021/standby.png', 4],

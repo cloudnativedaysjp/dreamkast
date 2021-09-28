@@ -608,6 +608,13 @@ Sponsor.seed(
     conference_id: 4,
     url: ""
   },
+  {
+    id: 89,
+    name: "株式会社LegalForce",
+    abbr: "legalforce",
+    conference_id: 4,
+    url: "https://www.legalforce.co.jp/"
+  },
 )
 
 SponsorType.seed(
@@ -863,6 +870,7 @@ SponsorType.seed(
   [108, 'CM', '3shake', 4],
   [109, 'Platinum', 'trendmicro', 4],
   [110, 'Platinum', 'synopsys', 4],
+  [111, 'CM', 'legalforce', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -964,6 +972,7 @@ end
   [86, 'sakura', 'sponsors/cndt2021/dummy.png', 4],
   [87, 'trendmicro', 'sponsors/cndt2021/dummy.png', 4],
   [88, 'synopsys', 'sponsors/cndt2021/dummy.png', 4],
+  [89, 'legalforce', 'sponsors/cndt2021/dummy.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

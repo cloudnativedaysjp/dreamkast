@@ -3,10 +3,6 @@
     <% if @conference.speaker_entry_enabled? %>
     登壇者募集中!
     <% end %>
-    <% if @conference.abbr == 'cndt2021' %>
-    <br/>
-    CFP締切 9/8
-    <% end %>
   </p>
   <%= link_to speaker_entry_button_name, speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl  m-2" } %>
 <% end %>

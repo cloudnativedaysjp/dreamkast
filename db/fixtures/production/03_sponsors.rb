@@ -424,28 +424,28 @@ Sponsor.seed(
     name: 'New Relic株式会社',
     abbr: 'newrelic',
     conference_id: 4,
-    url: ''
+    url: 'https://newrelic.com/jp/events'
   },
   {
     id: 63,
     name: 'JFrog Japan株式会社',
     abbr: 'jfrog',
     conference_id: 4,
-    url: ''
+    url: 'https://jfrog.com/ja/devops-tools/'
   },
   {
     id: 64,
     name: 'Splunk Services Japan合同会社',
     abbr: 'splunk',
     conference_id: 4,
-    url: ''
+    url: 'https://www.splunk.com/ja_jp'
   },
   {
     id: 65,
     name: '株式会社スリーシェイク',
     abbr: '3shake',
     conference_id: 4,
-    url: ''
+    url: 'https://www.purestorage.com/jp/ '
   },
   {
     id: 66,
@@ -459,7 +459,7 @@ Sponsor.seed(
     name: 'GMOインターネット株式会社',
     abbr: 'gmo',
     conference_id: 4,
-    url: ''
+    url: 'https://developers.gmo.jp/'
   },
   {
     id: 68,
@@ -473,28 +473,28 @@ Sponsor.seed(
     name: 'ネットアップ合同会社',
     abbr: 'netapp',
     conference_id: 4,
-    url: ''
+    url: 'https://www.netapp.com/ja/'
   },
   {
     id: 70,
     name: 'PingCAP株式会社',
     abbr: 'pingcap',
     conference_id: 4,
-    url: ''
+    url: 'https://pingcap.co.jp'
   },
   {
     id: 71,
     name: 'サイオステクノロジー株式会社',
     abbr: 'sios',
     conference_id: 4,
-    url: ''
+    url: 'https://container.sios.jp/'
   },
   {
     id: 72,
     name: 'F5ネットワークスジャパン合同会社',
     abbr: 'f5',
     conference_id: 4,
-    url: ''
+    url: 'https://www.nginx.co.jp/'
   },
   {
     id: 73,
@@ -508,21 +508,21 @@ Sponsor.seed(
     name: '株式会社NTTデータ',
     abbr: 'nttdata',
     conference_id: 4,
-    url: ''
+    url: 'https://www.nttdata.com/jp/ja/'
   },
   {
     id: 75,
     name: 'ミランティス・ジャパン株式会社',
     abbr: 'mirantis',
     conference_id: 4,
-    url: ''
+    url: 'https://www.mirantis.co.jp/'
   },
   {
     id: 76,
     name: '株式会社カサレアル',
     abbr: 'casareal',
     conference_id: 4,
-    url: ''
+    url: 'https://www.casareal.co.jp/'
   },
   {
     id: 77,
@@ -536,14 +536,14 @@ Sponsor.seed(
     name: 'ヴィーエー・リナックス・システムズ・ジャパン株式会社',
     abbr: 'valinux',
     conference_id: 4,
-    url: ''
+    url: 'https://www.valinux.co.jp/'
   },
   {
     id: 79,
     name: '株式会社ビズリーチ',
     abbr: 'bizreach',
     conference_id: 4,
-    url: ''
+    url: 'https://www.visional.inc/ja/index.html'
   },
   {
     id: 80,
@@ -557,56 +557,56 @@ Sponsor.seed(
     name: 'SCSK株式会社',
     abbr: 'scsk',
     conference_id: 4,
-    url: ''
+    url: 'https://www.scsk.jp/sp/sysdig/'
   },
   {
     id: 82,
     name: '株式会社スタンバイ',
     abbr: 'standby',
     conference_id: 4,
-    url: ''
+    url: 'https://stanby.co.jp/'
   },
   {
     id: 83,
     name: 'freee 株式会社',
     abbr: 'freee',
     conference_id: 4,
-    url: ''
+    url: 'https://corp.freee.co.jp/'
   },
   {
     id: 84,
     name: 'ヴイエムウェア株式会社',
     abbr: 'vmware',
     conference_id: 4,
-    url: ''
+    url: 'https://tanzu.vmware.com/jp/tanzu'
   },
   {
     id: 85,
     name: 'レッドハット株式会社',
     abbr: 'redhat',
     conference_id: 4,
-    url: ''
+    url: 'https://www.redhat.com/ja/global/japan'
   },
   {
     id: 86,
     name: 'さくらインターネット株式会社',
     abbr: 'sakura',
     conference_id: 4,
-    url: ''
+    url: 'https://www.sakura.ad.jp'
   },
   {
     id: 87,
     name: 'トレンドマイクロ株式会社',
     abbr: 'trendmicro',
     conference_id: 4,
-    url: ''
+    url: 'https://www.trendmicro.com/ja_jp/business.html'
   },
   {
     id: 88,
     name: "日本シノプシス合同会社",
     abbr: "synopsys",
     conference_id: 4,
-    url: ""
+    url: "https://www.synopsys.com/ja-jp/software-integrity.html"
   },
   {
     id: 89,

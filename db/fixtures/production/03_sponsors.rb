@@ -615,6 +615,13 @@ Sponsor.seed(
     conference_id: 4,
     url: "https://www.legalforce.co.jp/"
   },
+  {
+    id: 90,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 4,
+    url: 'https://plaid.co.jp/'
+  }
 )
 
 SponsorType.seed(
@@ -974,6 +981,7 @@ end
   [87, 'trendmicro', 'sponsors/cndt2021/trendmicro.png', 4],
   [88, 'synopsys', 'sponsors/cndt2021/synopsys.png', 4],
   [89, 'legalforce', 'sponsors/cndt2021/legalforce.jpg', 4],
+  [90, 'plaid', 'sponsors/cndt2021/plaid.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

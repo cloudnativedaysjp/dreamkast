@@ -953,7 +953,7 @@ end
   [66, 'purestorage', 'sponsors/cndt2021/purestorage.png', 4],
   [67, 'gmo', 'sponsors/cndt2021/gmo.png', 4],
   [68, 'microsoft', 'sponsors/cndt2021/microsoft.png', 4],
-  [69, 'netapp', 'sponsors/cndt2021/dummy.png', 4],
+  [69, 'netapp', 'sponsors/cndt2021/netapp.png', 4],
   [70, 'pingcap', 'sponsors/cndt2021/pingcap.png', 4],
   [71, 'sios', 'sponsors/cndt2021/sios.png', 4],
   [72, 'f5', 'sponsors/cndt2021/nginx.png', 4],

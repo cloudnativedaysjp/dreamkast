@@ -445,14 +445,14 @@ Sponsor.seed(
     name: '株式会社スリーシェイク',
     abbr: '3shake',
     conference_id: 4,
-    url: 'https://www.purestorage.com/jp/ '
+    url: 'https://3-shake.com/'
   },
   {
     id: 66,
     name: 'ピュア・ストレージ・ジャパン株式会社',
     abbr: 'purestorage',
     conference_id: 4,
-    url: ''
+    url: 'https://www.purestorage.com/jp/'
   },
   {
     id: 67,
@@ -871,6 +871,7 @@ SponsorType.seed(
   [109, 'Platinum', 'trendmicro', 4],
   [110, 'Platinum', 'synopsys', 4],
   [111, 'CM', 'legalforce', 4],
+  [112, 'Tool', 'plaid', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -970,7 +971,7 @@ end
   [84, 'vmware', 'sponsors/cndt2021/vmware.png', 4],
   [85, 'redhat', 'sponsors/cndt2021/redhat.png', 4],
   [86, 'sakura', 'sponsors/cndt2021/sakura.png', 4],
-  [87, 'trendmicro', 'sponsors/cndt2021/freee.png', 4],
+  [87, 'trendmicro', 'sponsors/cndt2021/trendmicro.png', 4],
   [88, 'synopsys', 'sponsors/cndt2021/synopsys.png', 4],
   [89, 'legalforce', 'sponsors/cndt2021/legalforce.jpg', 4],
 ].each do |logo|

@@ -445,14 +445,14 @@ Sponsor.seed(
     name: '株式会社スリーシェイク',
     abbr: '3shake',
     conference_id: 4,
-    url: 'https://www.purestorage.com/jp/ '
+    url: 'https://3-shake.com/'
   },
   {
     id: 66,
     name: 'ピュア・ストレージ・ジャパン株式会社',
     abbr: 'purestorage',
     conference_id: 4,
-    url: ''
+    url: 'https://www.purestorage.com/jp/'
   },
   {
     id: 67,
@@ -871,6 +871,7 @@ SponsorType.seed(
   [109, 'Platinum', 'trendmicro', 4],
   [110, 'Platinum', 'synopsys', 4],
   [111, 'CM', 'legalforce', 4],
+  [112, 'Tool', 'plaid', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])

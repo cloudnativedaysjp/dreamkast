@@ -11,7 +11,7 @@
 
       <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
         <% 
-          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 13:00")) / 60).to_i + 10
+          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60).to_i + 10
           row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
         %>
         <div class="talk"

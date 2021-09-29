@@ -120,8 +120,8 @@ ConferenceDay.seed(
   {id: 9, date: "2021-09-03", start_time: "13:00", end_time: "19:00", conference_id: 3, internal: false},
   {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
 
-  {id: 11, date: "2021-11-04", start_time: "12:00", end_time: "19:00", conference_id: 4, internal: false},
-  {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:00", conference_id: 4, internal: false},
+  {id: 11, date: "2021-11-04", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
+  {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-11-01", start_time: "13:00", end_time: "19:00", conference_id: 4, internal: true}, #Pre event
 )
 

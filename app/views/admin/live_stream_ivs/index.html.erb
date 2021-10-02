@@ -11,6 +11,12 @@
         <%= form.submit '各トラック毎のIVSを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
       <% end %>
     </div>
+
+    <div class="col-10 mb-3 d-flex align-items-center">
+      <div class="col-12 form-group">
+        <%= link_to 'Download IVS Resources as json', admin_live_stream_ivs_path(format: :json), class: "btn btn-primary" %>
+      </div>
+    </div>
   </div>
 
   <h3>Track毎のIVS一覧</h3>

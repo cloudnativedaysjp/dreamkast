@@ -4,6 +4,18 @@ class Admin::LiveStreamIvsController < ApplicationController
   def index
     @ivs = LiveStreamIvs.new
     @ivss = @conference.tracks.map(&:live_stream_ivs).compact
+    respond_to do |format|
+      format.html { render :index }
+      format.json do
+        head :no_content
+        body = render_to_string 'admin/live_stream_ivs/index.json.jbuilder'
+
+        Tempfile.open("ivss") do |file|
+          file.write(body)
+          send_file(file.path, filename: "ivs_list.json", length: file.size)
+        end
+      end
+    end
   end
 
   def create

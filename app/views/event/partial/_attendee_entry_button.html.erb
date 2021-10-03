@@ -1,10 +1,10 @@
 <% if (conference.registered? || conference.opened?) && conference.attendee_entry_enabled? %>
     <% if logged_in? && @profile.present? %>
-      <%= link_to 'ダッシュボード', dashboard_path, {method: :get, class: "btn btn-secondary btn-xl m-2 block" } %>
+      <%= link_to 'ダッシュボード', dashboard_path, {method: :get, class: "btn btn-entry btn-xl m-2 block" } %>
     <% else %>
-      <%= link_to '参加申し込み', registration_path, {method: :get, class: "btn btn-focus btn-xl m-2 block" } %>
+      <%= link_to '参加申し込み', registration_path, {method: :get, class: "btn btn-entry btn-xl m-2 block" } %>
     <% end %>
   <% if @conference.show_timetable_enabled? %>
-      <%= link_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-secondary btn-xl m-2 block" } %>
+      <%= link_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-entry btn-xl m-2 block" } %>
   <% end %>
 <% end %>

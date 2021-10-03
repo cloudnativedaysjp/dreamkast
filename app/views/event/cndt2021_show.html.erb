@@ -49,7 +49,8 @@
       </div>
     </section>
 
-    <!-- About-->
+    <!-- Speakers -->
+    <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
     <section class="page-section" id="speakers">
       <div class="container">
         <div class="row justify-content-center">
@@ -57,19 +58,20 @@
             <h2 class="text-black mt-0">Speakers</h2>
             <hr class="divider  my-4" />
             <ul class="">
-              <% @conference.talks.each do |talk| %>
+              <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
                   <li>
                     <%= image_tag speaker.avatar_or_dummy_url, :size => '100x100', class: "rounded-circle" %><br/>
                     <%= speaker&.name %>
                   </li>
                 <% end %>
-            <% end %>
+              <% end %>
             </ul>
           </div>
         </div>
       </div>
     </section>
+    <% end %>
 
     <!-- About-->
     <section class="page-section" id="about">

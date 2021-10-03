@@ -42,8 +42,9 @@ class Admin::LiveStreamIvsController < ApplicationController
         @ivs = LiveStreamIvs.new
         @ivs.conference_id = @conference.id
         @ivs.track_id = track.id
+        track.video_platform = 'ivs'
 
-        unless @ivs.save
+        unless @ivs.save && track.save
           messages << talk.errors
         end
       end

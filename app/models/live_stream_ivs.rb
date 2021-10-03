@@ -34,7 +34,7 @@ class LiveStreamIvs < LiveStream
   end
 
   def playback_url
-    params['playback_url']
+    params.dig('channel', 'playback_url')
   end
 
   def ingest_endpoint

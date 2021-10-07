@@ -72,6 +72,11 @@ services:
     image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ui:main
     ports:
     - 3001:3001
+  sqs:
+    image: roribio16/alpine-sqs
+    ports:
+    - 9324:9324
+    - 9325:9325
 volumes:
   mysql-data:
   redis-data:

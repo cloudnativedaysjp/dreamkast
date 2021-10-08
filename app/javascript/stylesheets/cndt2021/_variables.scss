@@ -10,13 +10,12 @@ $umemurasaki: #A8497A;
 $usubeni: #C299AE;
 $azurite: #254099;
 $matcha: #D4CDB0;
-
 $text: #444;
 //- Override primary color
 $primary: $gunjyo;
 $secondary: $umemurasaki;
 //- Override font system
-$font-family-sans-serif: "Merriweather Sans",
+$font-family-sans-serif: "din-2014",
 -apple-system,
 BlinkMacSystemFont,
 "Segoe UI",
@@ -29,7 +28,7 @@ sans-serif,
 "Segoe UI Emoji",
 "Segoe UI Symbol",
 "Noto Color Emoji";
-$font-family-serif: "Merriweather",
+$font-family-serif: "din-2014",
 -apple-system,
 BlinkMacSystemFont,
 "Segoe UI",

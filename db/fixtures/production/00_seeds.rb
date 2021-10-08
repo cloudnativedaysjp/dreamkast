@@ -332,6 +332,22 @@ if ENV['REVIEW_APP'] == 'true'
       status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
     }
   })
+
+  # Import CNDT2021 Dummy into review app
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks.csv'), headers: true)
+  Talk.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/speakers.csv'), headers: true)
+  Speaker.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks_speakers.csv'), headers: true)
+  csv.each do |row|
+    TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+      h = row.to_hash
+      t.talk_id = h["talk_id"]
+      t.speaker_id = h["speaker_id"]
+    end
+  end
     
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

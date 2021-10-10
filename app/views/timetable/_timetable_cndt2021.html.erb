@@ -3,7 +3,6 @@
     <h2 class="date"><%= conference_day.date.to_s %></h2>
     <div class="grid"
          style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 %>">
-      <div class="track date" style="--track: 0">hoge</div>
       <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
           <div class="track <%= 'even' if n.zero? || n.even? %>"
                style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -22,14 +21,15 @@
           <% if form %>
           <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
           <%= form.check_box "talks[#{talk.id}]",
-                              { talk_id: talk.id, checked: talks_checked?(talk.id)},
+                              { talk_id: talk.id, checked: talks_checked?(talk.id), style: "display: none"},
                               true,
                               false %>
           <% end %>
           <div class="content
                       <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
                       talk_id="<%= talk.id %>"
-                      track_number="<%= talk.track.number %>">
+                      track_number="<%= talk.track.number %>"
+               style="margin-top:0">
             <h6>
                 <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>

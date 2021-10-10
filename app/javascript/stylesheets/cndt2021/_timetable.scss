@@ -120,13 +120,6 @@ section.timetable {
             justify-content: left;
         }
     }
-    .keynote {
-        @extend .content;
-        background-color: #FFF999;
-        &:hover {
-            background-color: #FFD700;
-        }
-    }
     .content_caption {
         // -webkit-transition: .3s;
         // transition: .3s;
@@ -164,10 +157,6 @@ section.timetable {
         background-color: #DDF;
         border-radius: 5px;
         border: solid 1px $dark-blue;
-    }
-    label.checkbox-label input[type="checkbox"]:checked+.keynote{
-        background-color: #FFB500;
-        border: solid 1px #F4A460;
     }
     .even {
         background-color: rgba(248, 248, 255, 0.8);

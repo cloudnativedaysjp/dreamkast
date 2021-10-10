@@ -25,7 +25,7 @@
                               true,
                               false %>
           <% end %>
-          <div class="<%= talk.talk_category_id == 54 ? "keynote" : "content" %>
+          <div class="content
                       <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
                       talk_id="<%= talk.id %>"
                       track_number="<%= talk.track.number %>"
@@ -33,6 +33,7 @@
             <h6>
                 <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
                 <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
             </h6>
             <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>

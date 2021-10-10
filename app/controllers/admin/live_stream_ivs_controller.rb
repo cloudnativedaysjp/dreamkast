@@ -38,7 +38,6 @@ class Admin::LiveStreamIvsController < ApplicationController
 
   def bulk_create
     messages = []
-    # @conference.tracks.first].each do |track|
     @conference.tracks.each do |track|
       unless track.live_stream_ivs.present?
         ivs = LiveStreamIvsForTrack.new
@@ -59,14 +58,12 @@ class Admin::LiveStreamIvsController < ApplicationController
         ivs.talk_id = talk.id
 
         unless ivs.save
-          p ivs.errors
           messages << talk.errors
         end
       end
     end
 
     respond_to do |format|
-      p messages
       if messages.size == 0
         format.html { redirect_to admin_live_stream_ivs_path, notice: 'IVS successfully created.' }
       else

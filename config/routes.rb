@@ -45,7 +45,7 @@ Rails.application.routes.draw do
       get 'export_profiles' => 'profiles#export_profiles'
       resources :talks, only: [:index]
       resources :proposals, only: [:index]
-      resources :videos, only: [:index]
+      resources :videos, only: [:index, :edit, :update]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
       resources :announcements

@@ -2,32 +2,26 @@ class LiveStreamIvs < LiveStream
   belongs_to :conference
 
   before_create do
-    # resp = ivs_client.create_channel(
-    #   name: channel_name,
-    #   latency_mode: "LOW",
-    #   type: "STANDARD",
-    #   authorized: false,
-    #   tags: {
-    #     "Environment" => env_name_for_tag
-    #   }
-    # )
-    #
-    # self.params = {
-    #   channel: resp.channel,
-    #   stream_key: resp.stream_key
-    # }
+    resp = ivs_client.create_channel(
+      name: channel_name,
+      latency_mode: "LOW",
+      type: "STANDARD",
+      authorized: false,
+      tags: {
+        "Environment" => env_name_for_tag
+      }
+    )
+
     self.params = {
-      channel: {
-        name: channel_name,
-      },
-      stream_key: {}
+      channel: resp.channel,
+      stream_key: resp.stream_key
     }
   end
 
   before_destroy do
-    # ivs_client.delete_channel(arn: channel_arn) if channel_arn
-  # rescue Aws::IVS::Errors::ResourceNotFoundException => e
-  #   logger.error "IVS Resource Not Found: #{e.message}"
+    ivs_client.delete_channel(arn: channel_arn) if channel_arn
+  rescue Aws::IVS::Errors::ResourceNotFoundException => e
+    logger.error "IVS Resource Not Found: #{e.message}"
   end
 
   def name
@@ -40,6 +34,10 @@ class LiveStreamIvs < LiveStream
 
   def playback_url
     params.dig('channel', 'playback_url')
+  end
+
+  def recording_configuration_arn
+    params.dig('channel', 'recording_configuration_arn')
   end
 
   def ingest_endpoint

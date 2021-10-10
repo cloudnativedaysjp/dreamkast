@@ -51,6 +51,7 @@
         <th scope="col">Video File</th>
         <th scope="col">Vimeo ID</th>
         <th scope="col">On Air</th>
+        <th scope="col">Edit Archive</th>
       </tr>
       </thead>
       <tbody>
@@ -90,6 +91,7 @@
                 </label>
               <% end %>
             </td>
+            <td><%= link_to 'Edit', edit_admin_video_path(id: talk.video.id) %></td>
           </tr>
         <% end %>
       <% end %>

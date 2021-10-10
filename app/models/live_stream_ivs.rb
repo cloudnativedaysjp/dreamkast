@@ -1,28 +1,33 @@
 class LiveStreamIvs < LiveStream
   belongs_to :conference
-  belongs_to :track
 
   before_create do
-    resp = ivs_client.create_channel(
-      name: "#{env_name_for_tag}_#{conference.abbr}_track#{track.name}",
-      latency_mode: "LOW",
-      type: "STANDARD",
-      authorized: false,
-      tags: {
-        "Environment" => env_name_for_tag
-      }
-    )
-
+    # resp = ivs_client.create_channel(
+    #   name: channel_name,
+    #   latency_mode: "LOW",
+    #   type: "STANDARD",
+    #   authorized: false,
+    #   tags: {
+    #     "Environment" => env_name_for_tag
+    #   }
+    # )
+    #
+    # self.params = {
+    #   channel: resp.channel,
+    #   stream_key: resp.stream_key
+    # }
     self.params = {
-      channel: resp.channel,
-      stream_key: resp.stream_key
+      channel: {
+        name: channel_name,
+      },
+      stream_key: {}
     }
   end
 
   before_destroy do
-    ivs_client.delete_channel(arn: channel_arn) if channel_arn
-  rescue Aws::IVS::Errors::ResourceNotFoundException => e
-    logger.error "IVS Resource Not Found: #{e.message}"
+    # ivs_client.delete_channel(arn: channel_arn) if channel_arn
+  # rescue Aws::IVS::Errors::ResourceNotFoundException => e
+  #   logger.error "IVS Resource Not Found: #{e.message}"
   end
 
   def name
@@ -46,6 +51,10 @@ class LiveStreamIvs < LiveStream
   end
 
   private
+
+  def channel_name
+    "default"
+  end
 
   def ivs_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])

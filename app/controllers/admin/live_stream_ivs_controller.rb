@@ -2,8 +2,9 @@ class Admin::LiveStreamIvsController < ApplicationController
   include SecuredAdmin
 
   def index
-    @ivs = LiveStreamIvs.new
-    @ivss = @conference.tracks.map(&:live_stream_ivs).compact
+    @ivs = LiveStreamIvsForTrack.new
+    @ivss_for_tracks = @conference.tracks.map(&:live_stream_ivs).compact
+    @ivss_for_talks = @conference.talks.map(&:live_stream_ivs).compact
     respond_to do |format|
       format.html { render :index }
       format.json do
@@ -37,20 +38,35 @@ class Admin::LiveStreamIvsController < ApplicationController
 
   def bulk_create
     messages = []
+    # @conference.tracks.first].each do |track|
     @conference.tracks.each do |track|
       unless track.live_stream_ivs.present?
-        @ivs = LiveStreamIvs.new
-        @ivs.conference_id = @conference.id
-        @ivs.track_id = track.id
+        ivs = LiveStreamIvsForTrack.new
+        ivs.conference_id = @conference.id
+        ivs.track_id = track.id
         track.video_platform = 'ivs'
 
-        unless @ivs.save && track.save
+        unless ivs.save && track.save
+          messages << talk.errors
+        end
+      end
+    end
+
+    @conference.talks.each do |talk|
+      unless talk.live_stream_ivs.present?
+        ivs = LiveStreamIvsForArchive.new
+        ivs.conference_id = @conference.id
+        ivs.talk_id = talk.id
+
+        unless ivs.save
+          p ivs.errors
           messages << talk.errors
         end
       end
     end
 
     respond_to do |format|
+      p messages
       if messages.size == 0
         format.html { redirect_to admin_live_stream_ivs_path, notice: 'IVS successfully created.' }
       else

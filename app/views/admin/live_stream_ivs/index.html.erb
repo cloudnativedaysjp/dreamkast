@@ -32,13 +32,44 @@
       </tr>
       </thead>
       <tbody>
-      <% @ivss.each do |ivs| %>
+      <% @ivss_for_tracks.each do |ivs| %>
         <tr>
           <td>
             <input type="checkbox" name="ivs[<%= ivs.id %>]">
           </td>
 
           <td><%= ivs.track.name %></td>
+          <td><%= ivs.name %></td>
+          <td><%= ivs.channel_arn %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= form.submit '選択したIVSを削除する', class: "btn btn-danger" %>
+  <% end %>
+
+  <br>
+
+  <h3>Talk毎のIVS一覧</h3>
+
+  <%= form_with(url: admin_bulk_delete_ivs_path, model: @ivs, local: true) do |form| %>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Talk</th>
+        <th scope="col">Name</th>
+        <th scope="col">ARN</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @ivss_for_talks.each do |ivs| %>
+        <tr>
+          <td>
+            <input type="checkbox" name="ivs[<%= ivs.id %>]">
+          </td>
+
+          <td><%= ivs.talk.id %></td>
           <td><%= ivs.name %></td>
           <td><%= ivs.channel_arn %></td>
         </tr>

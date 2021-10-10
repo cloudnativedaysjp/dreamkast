@@ -9,6 +9,7 @@ class Talk < ApplicationRecord
 
   has_one :video_registration, dependent: :destroy
   has_one :video, dependent: :destroy
+  has_one :live_stream_ivs, :class_name => "LiveStreamIvsForArchive"
   belongs_to :talk_time, optional: true
   has_many :talks_speakers
   has_many :registered_talks

@@ -143,10 +143,12 @@ ActiveRecord::Schema.define(version: 2021_09_25_101618) do
 
   create_table "live_streams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.bigint "track_id", null: false
+    t.bigint "track_id"
+    t.bigint "talk_id"
     t.string "type"
     t.json "params"
     t.index ["conference_id"], name: "index_live_streams_on_conference_id"
+    t.index ["talk_id"], name: "index_live_streams_on_talk_id"
     t.index ["track_id"], name: "index_live_streams_on_track_id"
   end
 
@@ -381,6 +383,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_101618) do
   add_foreign_key "chat_messages", "speakers"
   add_foreign_key "links", "conferences"
   add_foreign_key "live_streams", "conferences"
+  add_foreign_key "live_streams", "talks"
   add_foreign_key "live_streams", "tracks"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"

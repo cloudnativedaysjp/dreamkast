@@ -4,7 +4,7 @@ class Admin::LiveStreamIvsController < ApplicationController
   def index
     @ivs = LiveStreamIvsForTrack.new
     @ivss_for_tracks = @conference.tracks.map(&:live_stream_ivs).compact
-    @ivss_for_talks = @conference.talks.map(&:live_stream_ivs).compact
+    @ivss_for_talks = @conference.talks.show_on_timetable.map(&:live_stream_ivs).compact
     respond_to do |format|
       format.html { render :index }
       format.json do
@@ -53,7 +53,7 @@ class Admin::LiveStreamIvsController < ApplicationController
 
     @conference.talks.each do |talk|
       unless talk.live_stream_ivs.present?
-        ivs = LiveStreamIvsForArchive.new
+        ivs = LiveStreamIvsForArchive.new(recording_configuration_arn: 'arn:aws:ivs:us-east-1:607167088920:recording-configuration/6SKIZJxMPxSO')
         ivs.conference_id = @conference.id
         ivs.talk_id = talk.id
 

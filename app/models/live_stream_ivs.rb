@@ -1,27 +1,40 @@
 class LiveStreamIvs < LiveStream
   belongs_to :conference
 
-  before_create do
-    resp = ivs_client.create_channel(
-      name: channel_name,
-      latency_mode: "LOW",
-      type: "STANDARD",
-      authorized: false,
-      tags: {
-        "Environment" => env_name_for_tag
-      }
-    )
+  attr_accessor :recording_configuration_arn
 
+  before_create do
+    # param = {name: channel_name,
+    #   latency_mode: "LOW",
+    #   type: "STANDARD",
+    #   authorized: false,
+    #   tags: {
+    #     "Environment" => env_name_for_tag
+    #   }
+    # }
+    # param[:recording_configuration_arn] = @recording_configuration_arn if @recording_configuration_arn
+    #
+    # resp = ivs_client.create_channel(param)
+    #
+    # self.params = {
+    #   channel: resp.channel,
+    #   stream_key: resp.stream_key
+    # }
     self.params = {
-      channel: resp.channel,
-      stream_key: resp.stream_key
+      channel: {name: ''},
+      stream_key: {}
     }
   end
 
+  def initialize(recording_configuration_arn)
+    @recording_configuration_arn = recording_configuration_arn
+    super
+  end
+
   before_destroy do
-    ivs_client.delete_channel(arn: channel_arn) if channel_arn
-  rescue Aws::IVS::Errors::ResourceNotFoundException => e
-    logger.error "IVS Resource Not Found: #{e.message}"
+    # ivs_client.delete_channel(arn: channel_arn) if channel_arn
+  # rescue Aws::IVS::Errors::ResourceNotFoundException => e
+  #   logger.error "IVS Resource Not Found: #{e.message}"
   end
 
   def name
@@ -37,6 +50,7 @@ class LiveStreamIvs < LiveStream
   end
 
   def recording_configuration_arn
+    p 'aaaaaaaaaa'
     params.dig('channel', 'recording_configuration_arn')
   end
 

@@ -11,7 +11,7 @@ section.timetable {
     }
     .grid {
         display: grid;
-        grid-template-rows: repeat(var(--rows), 2px);
+        grid-template-rows: repeat(var(--rows), 3px);
         grid-template-columns: repeat(6, minmax(180px, 240px));
         grid-auto-columns: 100px;
         overflow-x: auto;
@@ -27,15 +27,6 @@ section.timetable {
         align-items: start;
         justify-content: center;
         background-color: rgba(256, 256, 256, 0.9);
-    }
-    .keynote {
-        grid-column: 2 / -1;
-        --start: calc(1 + var(--row-start));
-        --end: calc(1 + var(--row-end));
-        grid-row: var(--start)/var(--end);
-        z-index: 1;
-        background-color: rgba(256, 256, 256, 0.8);
-        border-radius: 5px;
     }
     .talk {
         --start: calc(1 + var(--track));

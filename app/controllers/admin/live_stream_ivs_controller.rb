@@ -38,22 +38,22 @@ class Admin::LiveStreamIvsController < ApplicationController
 
   def bulk_create
     messages = []
-    @conference.tracks.each do |track|
-      unless track.live_stream_ivs.present?
-        ivs = LiveStreamIvsForTrack.new
-        ivs.conference_id = @conference.id
-        ivs.track_id = track.id
-        track.video_platform = 'ivs'
-
-        unless ivs.save && track.save
-          messages << talk.errors
-        end
-      end
-    end
-
-    @conference.talks.each do |talk|
+    # @conference.tracks.each do |track|
+    #   unless track.live_stream_ivs.present?
+    #     ivs = LiveStreamIvsForTrack.new
+    #     ivs.conference_id = @conference.id
+    #     ivs.track_id = track.id
+    #     track.video_platform = 'ivs'
+    #
+    #     unless ivs.save && track.save
+    #       messages << talk.errors
+    #     end
+    #   end
+    # end
+    #
+    [@conference.talks.first].each do |talk|
       unless talk.live_stream_ivs.present?
-        ivs = LiveStreamIvsForArchive.new(recording_configuration_arn: 'arn:aws:ivs:us-east-1:607167088920:recording-configuration/6SKIZJxMPxSO')
+        ivs = LiveStreamIvsForArchive.new(recording_configuration_arn: recording_configuration_arn)
         ivs.conference_id = @conference.id
         ivs.talk_id = talk.id
 
@@ -73,8 +73,13 @@ class Admin::LiveStreamIvsController < ApplicationController
   end
 
   def bulk_delete
-    params[:ivs].each_key do |id, _|
-      ivs = LiveStreamIvs.find(id)
+    params[:ivs_for_track]&.each_key do |id, _|
+      ivs = LiveStreamIvsForTrack.find(id)
+      ivs.destroy
+    end
+
+    params[:ivs_for_archive]&.each_key do |id, _|
+      ivs = LiveStreamIvsForArchive.find(id)
       ivs.destroy
     end
 
@@ -83,4 +88,18 @@ class Admin::LiveStreamIvsController < ApplicationController
     end
   end
 
+  private
+
+  def recording_configuration_arn
+    case
+    when ENV['REVIEW_APP'] == 'true'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    when ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
+    when ENV['S3_BUCKET'] == 'dreamkast-prd-bucket'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
+    else
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    end
+  end
 end

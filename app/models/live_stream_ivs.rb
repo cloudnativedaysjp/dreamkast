@@ -4,26 +4,26 @@ class LiveStreamIvs < LiveStream
   attr_accessor :recording_configuration_arn
 
   before_create do
-    # param = {name: channel_name,
-    #   latency_mode: "LOW",
-    #   type: "STANDARD",
-    #   authorized: false,
-    #   tags: {
-    #     "Environment" => env_name_for_tag
-    #   }
-    # }
-    # param[:recording_configuration_arn] = @recording_configuration_arn if @recording_configuration_arn
-    #
-    # resp = ivs_client.create_channel(param)
-    #
-    # self.params = {
-    #   channel: resp.channel,
-    #   stream_key: resp.stream_key
-    # }
-    self.params = {
-      channel: {name: ''},
-      stream_key: {}
+    param = {name: channel_name,
+      latency_mode: "LOW",
+      type: "STANDARD",
+      authorized: false,
+      tags: {
+        "Environment" => env_name_for_tag
+      }
     }
+    param[:recording_configuration_arn] = @recording_configuration_arn if @recording_configuration_arn
+
+    resp = ivs_client.create_channel(param)
+
+    self.params = {
+      channel: resp.channel,
+      stream_key: resp.stream_key
+    }
+    # self.params = {
+    #   channel: {name: ''},
+    #   stream_key: {}
+    # }
   end
 
   def initialize(recording_configuration_arn)

@@ -91,7 +91,9 @@
                 </label>
               <% end %>
             </td>
+            <% if talk.video.present? %>
             <td><%= link_to 'Edit', edit_admin_video_path(id: talk.video.id) %></td>
+            <% end %>
           </tr>
         <% end %>
       <% end %>

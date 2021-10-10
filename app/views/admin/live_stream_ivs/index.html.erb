@@ -35,7 +35,7 @@
       <% @ivss_for_tracks.each do |ivs| %>
         <tr>
           <td>
-            <input type="checkbox" name="ivs[<%= ivs.id %>]">
+            <input type="checkbox" name="ivs_for_track[<%= ivs.id %>]">
           </td>
 
           <td><%= ivs.track.name %></td>
@@ -66,7 +66,7 @@
       <% @ivss_for_talks.each do |ivs| %>
         <tr>
           <td>
-            <input type="checkbox" name="ivs[<%= ivs.id %>]">
+            <input type="checkbox" name="ivs_for_archive[<%= ivs.id %>]">
           </td>
 
           <td><%= ivs.talk.id %></td>

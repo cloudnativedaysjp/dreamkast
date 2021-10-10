@@ -28,15 +28,6 @@ section.timetable {
         justify-content: center;
         background-color: rgba(256, 256, 256, 0.9);
     }
-    .keynote {
-        grid-column: 2 / -1;
-        --start: calc(1 + var(--row-start));
-        --end: calc(1 + var(--row-end));
-        grid-row: var(--start)/var(--end);
-        z-index: 1;
-        background-color: rgba(256, 256, 256, 0.8);
-        border-radius: 5px;
-    }
     .talk {
         --start: calc(1 + var(--track));
         --end: calc(2 + var(--track));
@@ -129,6 +120,13 @@ section.timetable {
             justify-content: left;
         }
     }
+    .keynote {
+        @extend .content;
+        background-color: #FFF999;
+        &:hover {
+            background-color: #FFD700;
+        }
+    }
     .content_caption {
         // -webkit-transition: .3s;
         // transition: .3s;
@@ -166,6 +164,10 @@ section.timetable {
         background-color: #DDF;
         border-radius: 5px;
         border: solid 1px $dark-blue;
+    }
+    label.checkbox-label input[type="checkbox"]:checked+.keynote{
+        background-color: #FFB500;
+        border: solid 1px #F4A460;
     }
     .even {
         background-color: rgba(248, 248, 255, 0.8);

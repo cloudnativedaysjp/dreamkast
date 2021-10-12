@@ -170,6 +170,13 @@
     margin: 0 auto;
 }
 
+.information {
+    a {
+        color: $azurite ;
+        border-bottom: 2px solid;
+    }
+}
+
 // .speaker-dashboard-form .field {
 //     margin-bottom: 10px;
 // }

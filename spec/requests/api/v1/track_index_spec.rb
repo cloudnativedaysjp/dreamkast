@@ -14,7 +14,7 @@ describe TalksController, type: :request do
       assert_response_schema_confirm
     end
 
-    it 'successed request' do
+    it 'succeed request' do
       get '/api/v1/tracks?eventAbbr=cndt2020'
       expect(response.status).to eq 200
     end

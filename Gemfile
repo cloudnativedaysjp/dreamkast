@@ -95,4 +95,6 @@ gem 'slack-incoming-webhooks'
 
 gem "octokit", "~> 4.0"
 
+gem "aws-sdk-ivs"
+
 gem 'active_hash'

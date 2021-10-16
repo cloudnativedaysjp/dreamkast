@@ -76,6 +76,9 @@ GEM
     aws-sdk-dynamodb (1.59.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-ivs (1.9.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.42.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
@@ -373,6 +376,7 @@ DEPENDENCIES
   active_hash
   activerecord-nulldb-adapter
   awesome_nested_set
+  aws-sdk-ivs
   aws-sdk-rails
   aws-sdk-s3 (~> 1.14)
   bootsnap (>= 1.4.2)

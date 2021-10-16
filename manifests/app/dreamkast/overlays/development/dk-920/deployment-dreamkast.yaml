@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dreamkast
+    tier: dreamkast
+  name: dreamkast
+spec:
+  selector:
+    matchLabels:
+      app: dreamkast
+      tier: dreamkast
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: dreamkast
+        tier: dreamkast
+    spec:
+      initContainers:
+      - name: initdb
+        image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ecs:main
+        imagePullPolicy: Always
+        command: ["/bin/bash", "-c"]
+        args:
+        - bundle exec rails db:migrate;
+          bundle exec rails db:seed_fu;
+        env:
+        - name: RAILS_ENV
+          value: "production"
+        - name: MYSQL_HOST
+          value: "dreamkast-mysql"
+        - name: REDIS_URL
+          value: "redis://dreamkast-redis:6379"
+        - name: SENTRY_DSN
+          value: "https://443f0535beb64cd8b2e995d001e0903b@o414348.ingest.sentry.io/5350644"
+        - name: S3_BUCKET
+          value: "dreamkast-test-bucket"
+        - name: S3_REGION
+          value: ap-northeast-1
+        - name: SQS_MAIL_QUEUE_URL
+          value: "https://sqs.ap-northeast-1.amazonaws.com/607167088920/devMailQueue.fifo"
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rails-app-secret
+              key: rails-app-secret
+        - name: AUTH0_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_CLIENT_ID
+        - name: AUTH0_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_CLIENT_SECRET
+        - name: AUTH0_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_DOMAIN
+        - name: REVIEW_APP
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: REVIEW_APP
+      containers:
+      - name: dreamkast
+        image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ecs:main
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 3000
+        env:
+        - name: RAILS_ENV
+          value: "production"
+        - name: MYSQL_HOST
+          value: "dreamkast-mysql"
+        - name: REDIS_URL
+          value: "redis://dreamkast-redis:6379"
+        - name: SENTRY_DSN
+          value: "https://443f0535beb64cd8b2e995d001e0903b@o414348.ingest.sentry.io/5350644"
+        - name: S3_BUCKET
+          value: "dreamkast-test-bucket"
+        - name: S3_REGION
+          value: ap-northeast-1
+        - name: SQS_MAIL_QUEUE_URL
+          value: "https://sqs.ap-northeast-1.amazonaws.com/607167088920/devMailQueue.fifo"
+        - name: AWS_REGION
+          value: ap-northeast-1
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rails-app-secret
+              key: rails-app-secret
+        - name: AUTH0_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_CLIENT_ID
+        - name: AUTH0_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_CLIENT_SECRET
+        - name: AUTH0_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: AUTH0_DOMAIN
+        - name: REVIEW_APP
+          valueFrom:
+            secretKeyRef:
+              name: dreamkast-secret
+              key: REVIEW_APP
+        livenessProbe:
+          httpGet:
+            port: 3000
+            path: /
+          failureThreshold: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            port: 3000
+            path: /
+          failureThreshold: 5
+          periodSeconds: 10
+        startupProbe:
+          httpGet:
+            port: 3000
+            path: /
+          failureThreshold: 30
+          periodSeconds: 10

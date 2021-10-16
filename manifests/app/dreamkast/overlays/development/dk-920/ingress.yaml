@@ -1,0 +1,28 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: dreamkast
+  labels:
+    app: dreamkast
+spec:
+  virtualhost:
+    fqdn: dreamkast-dk-920.dev.cloudnativedays.jp
+    tls:
+      secretName: cert-manager/wildcard-dev-cloudnativedays-jp
+  routes:
+    - conditions:
+      - prefix: /
+      services:
+      - name: dreamkast
+        port: 80
+    - conditions:
+      - prefix: /cable
+      enableWebsockets: true
+      services:
+      - name: dreamkast
+        port: 80
+    - conditions: #TODO: Need to resolve this hardcoded routing
+      - prefix: /cicd2021/ui
+      services:
+      - name: dreamkast-ui
+        port: 3001

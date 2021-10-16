@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dreamkast-redis
+  labels:
+    app: dreamkast
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: dreamkast
+    tier: redis
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dreamkast-redis
+  labels:
+    app: dreamkast
+spec:
+  selector:
+    matchLabels:
+      app: dreamkast
+      tier: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: dreamkast
+        tier: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:6.0.5
+        command:
+          - redis-server
+          - "/redis-master/redis.conf"
+        env:
+        - name: MASTER
+          value: "true"
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: "100Mi"
+        volumeMounts:
+        - mountPath: /redis-master-data
+          name: data
+        - mountPath: /redis-master
+          name: config
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: redis-config
+            items:
+            - key: redis.conf
+              path: redis.conf
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+data:
+  redis.conf: |
+    maxmemory 2mb
+    maxmemory-policy allkeys-lru

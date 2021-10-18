@@ -4,9 +4,9 @@ class TracksController < ApplicationController
 
   def index
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
-    # TODO: cicd2021固有の処理をやめる
-    if @conference.abbr == "cicd2021" && @conference.opened?
-      redirect_to  '/cicd2021/ui/'
+    # TODO: cndt2021固有の処理をやめる
+    if @conference.abbr == "cndt2021" && @conference.opened?
+      redirect_to  '/cndt2021/ui/'
     end
     @current = Video.on_air(@conference)
     @tracks = @conference.tracks

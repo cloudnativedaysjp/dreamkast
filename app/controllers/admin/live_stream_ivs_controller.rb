@@ -4,6 +4,8 @@ class Admin::LiveStreamIvsController < ApplicationController
   def index
     @ivs = LiveStreamIvs.new
     @ivss = @conference.tracks.map(&:live_stream_ivs).compact
+
+    @media_lives = @conference.tracks.map(&:live_stream_media_live).compact
     respond_to do |format|
       format.html { render :index }
       format.json do
@@ -46,6 +48,16 @@ class Admin::LiveStreamIvsController < ApplicationController
 
         unless @ivs.save && track.save
           messages << talk.errors
+        end
+      end
+    end
+
+    @conference.tracks.each do |track|
+      unless track.live_stream_media_live.present?
+        media_live = LiveStreamMediaLive.new(conference: @conference, track: track)
+
+        unless media_live.save
+          messages << media_live.errors
         end
       end
     end

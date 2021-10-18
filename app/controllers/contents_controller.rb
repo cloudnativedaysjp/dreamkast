@@ -22,7 +22,7 @@ class ContentsController < ApplicationController
 
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
-    render :cicd2021_hands_on
+    render "#{@conference.abbr}_hands_on".to_sym
   end
 
   private

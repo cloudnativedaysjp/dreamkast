@@ -621,6 +621,13 @@ Sponsor.seed(
     abbr: 'Plaid',
     conference_id: 4,
     url: 'https://plaid.co.jp/'
+  },
+  {
+    id: 91,
+    name: 'Kong Inc',
+    abbr: 'kong',
+    conference_id: 4,
+    url: 'https://jp.konghq.com/'
   }
 )
 
@@ -879,6 +886,7 @@ SponsorType.seed(
   [110, 'Platinum', 'synopsys', 4],
   [111, 'CM', 'legalforce', 4],
   [112, 'Tool', 'plaid', 4],
+  [113, 'Platinum', 'kong', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -982,6 +990,7 @@ end
   [88, 'synopsys', 'sponsors/cndt2021/synopsys.png', 4],
   [89, 'legalforce', 'sponsors/cndt2021/legalforce.png', 4],
   [90, 'plaid', 'sponsors/cndt2021/plaid.png', 4],
+  [91, 'kong', 'sponsors/cndt2021/kong.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

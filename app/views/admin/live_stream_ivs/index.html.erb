@@ -45,7 +45,7 @@
       <% end %>
       </tbody>
     </table>
-    <%= form.submit '選択したIVSを削除する', class: "btn btn-danger" %>
+    <%= form.submit '選択したIVSを削除する', class: "btn btn-danger", data: { confirm: '本当に削除しますか？' }  %>
   <% end %>
 
 <% end %>

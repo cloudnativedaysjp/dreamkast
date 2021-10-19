@@ -628,7 +628,77 @@ Sponsor.seed(
     abbr: 'kong',
     conference_id: 4,
     url: 'https://jp.konghq.com/'
-  }
+  },
+  {
+    id: 92,
+    name: 'Linux Foundation',
+    abbr: 'lf',
+    conference_id: 4,
+    url: 'https://www.linuxfoundation.jp/'
+  },
+  {
+    id: 93,
+    name: 'LPI Japan',
+    abbr: 'lpi',
+    conference_id: 4,
+    url: 'https://lpi.or.jp/'
+  },
+  {
+    id: 94,
+    name: 'ThinkIT',
+    abbr: 'thinkit',
+    conference_id: 4,
+    url: 'https://thinkit.co.jp/'
+  },
+  {
+    id: 95,
+    name: 'ZDnet',
+    abbr: 'zdnet',
+    conference_id: 4,
+    url: 'https://japan.zdnet.com/'
+  },
+  {
+    id: 96,
+    name: '日本オラクル株式会社',
+    abbr: 'oracle',
+    conference_id: 4,
+    url: 'https://www.oracle.com/jp/contact-us/about/'
+  },
+  {
+    id: 97,
+    name: 'SUSE ソフトウエアソリューションズジャパン株式会社',
+    abbr: 'suse',
+    conference_id: 4,
+    url: 'https://rancher.com'
+  },
+  {
+    id: 98,
+    name: 'アマゾン ウェブ サービス ジャパン株式会社',
+    abbr: 'aws',
+    conference_id: 4,
+    url: 'https://aws.amazon.com/jp/containers/'
+  },
+  {
+    id: 99,
+    name: 'クリエーションライン株式会社',
+    abbr: 'creationline',
+    conference_id: 4,
+    url: 'https://www.creationline.com/'
+  },
+  {
+    id: 100,
+    name: 'GitLab合同会社',
+    abbr: 'gitlab',
+    conference_id: 4,
+    url: 'https://about.gitlab.com/ja-jp/'
+  },
+  {
+    id: 101,
+    name: 'Elastic',
+    abbr: 'elastic',
+    conference_id: 4,
+    url: 'https://www.elastic.co/jp/'
+  },
 )
 
 SponsorType.seed(
@@ -773,6 +843,18 @@ SponsorType.seed(
     name: "Tool",
     order: 5,
   },
+  {
+    id: 28,
+    conference_id: 4,
+    name: "Hands-On",
+    order: 6,
+  },
+  {
+    id: 29,
+    conference_id: 4,
+    name: "Media",
+    order: 7,
+  },
 )
 
 [
@@ -868,7 +950,7 @@ SponsorType.seed(
   [92, 'Platinum', 'f5', 4],
   [93, 'Gold', 'line', 4],
   [94, 'Gold', 'nttdata', 4],
-  [95, 'Gold', 'mirantis', 4],
+  [95, 'Platinum', 'mirantis', 4],
   [96, 'Gold', 'casareal', 4],
   [97, 'Gold', 'yumemi', 4],
   [98, 'Gold', 'valinux', 4],
@@ -887,6 +969,19 @@ SponsorType.seed(
   [111, 'CM', 'legalforce', 4],
   [112, 'Tool', 'plaid', 4],
   [113, 'Platinum', 'kong', 4],
+  [114, 'Media', 'lf', 4],
+  [115, 'Media', 'lpi', 4],
+  [116, 'Media', 'thinkit', 4],
+  [117, 'Media', 'zdnet', 4],
+  [118, 'Hands-On', 'oracle', 4],
+  [119, 'Hands-On', 'newrelic', 4],
+  [120, 'Hands-On', 'redhat', 4],
+  [121, 'Hands-On', 'suse', 4],
+  [122, 'Hands-On', 'purestorage', 4],
+  [123, 'Hands-On', 'aws', 4],
+  [124, 'Hands-On', 'creationline', 4],
+  [125, 'Hands-On', 'gitlab', 4],
+  [126, 'Hands-On', 'elastic', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -992,6 +1087,16 @@ end
   [89, 'legalforce', 'sponsors/cndt2021/legalforce.png', 4],
   [90, 'plaid', 'sponsors/cndt2021/plaid.png', 4],
   [91, 'kong', 'sponsors/cndt2021/kong.png', 4],
+  [92, 'lf', 'sponsors/cndt2021/lf.png', 4],
+  [93, 'lpi', 'sponsors/cndt2021/lpi.png', 4],
+  [94, 'thinkit', 'sponsors/cndt2021/thinkit.png', 4],
+  [95, 'zdnet', 'sponsors/cndt2021/zdnet.png', 4],
+  [96, 'oracle', 'sponsors/cndt2021/oracle.png', 4],
+  [97, 'suse', 'sponsors/cndt2021/suse.png', 4],
+  [98, 'aws', 'sponsors/cndt2021/aws.png', 4],
+  [99, 'creationline', 'sponsors/cndt2021/creationline.png', 4],
+  [100, 'gitlab', 'sponsors/cndt2021/gitlab.png', 4],
+  [101, 'elastic', 'sponsors/cndt2021/elastic.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

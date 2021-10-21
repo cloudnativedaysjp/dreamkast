@@ -1,7 +1,26 @@
 <div class="container tracks">
+
+  <% if @speaker.present? %>
+    <div class="row h-100 align-items-center justify-content-center text-center mt-3">
+      <div class="col-12 align-self-center">
+        <%= button_to 'スピーカーの方へ : スピーカープロフィール、セッション情報の確認・更新はこちら', speaker_dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row">
     <div id="main-pane" class="col-12 col-md-8">
-      <div class="information">
+      <div class="mt-3">
+        <h4>スケジュール</h4>
+        <ul>
+          <% @conference.conference_days.externals.each do |day| %>
+            <li><%= day.date %>: <%= day.start_time.strftime("%H:%M") + "-" + day.end_time.strftime("%H:%M") %></li>
+          <% end %>
+        </ul>
+        配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。
+      </div>
+
+      <div class="information mt-3">
         <h4>運営からのお知らせ</h4>
         <ul>
           <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
@@ -46,25 +65,17 @@
       </div>
     </div>
     <div id="sub-pane" class="col-12 col-md-4">
-      <div class="social">
+      <div class="social mt-3">
         <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <% if @conference.opened? %>
-      <div class="col-12 mb-3 py-1 my-3 text-center booths-header">
-        <h4>↓ ブースにお立ち寄りください ↓</h4>
-      </div>
-
-      <div class="col-12 mb-3">
-        <%= render 'booth_section' %>
-      </div>
-    <% else %>
-      <div class="col-12">
-        <h4 class="text-center booths-header"><%= @conference.name %> is not opened.</h4>
-      </div>
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
     <% end %>
   </div>
 

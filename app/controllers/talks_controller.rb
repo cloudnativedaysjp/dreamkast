@@ -1,6 +1,6 @@
 class TalksController < ApplicationController
   include Secured
-  before_action :set_profile
+  before_action :set_profile, :set_speaker
   helper_method :talk_start_to_end
 
   def logged_in_using_omniauth?

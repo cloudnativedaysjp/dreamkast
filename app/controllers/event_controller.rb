@@ -1,17 +1,22 @@
 class EventController < ApplicationController
   include Secured
+  include SponsorHelper
   include ActionView::Helpers::UrlHelper
 
   before_action :set_current_user, :set_profile, :set_speaker
 
   def show
     @conference = Conference
-                  .includes(sponsor_types: [{sponsors: :sponsor_attachment_logo_image}, :sponsors_sponsor_types])
-                  .order("sponsor_types.order ASC")
-                  .find_by(abbr: event_name)
-    @talks = @conference.talks.accepted.includes(:talks_speakers, :speakers)
+                    .includes(sponsor_types: [{sponsors: :sponsor_attachment_logo_image}, :sponsors_sponsor_types])
+                    .order("sponsor_types.order ASC")
+                    .find_by(abbr: event_name)
+    if logged_in? and (@conference.registered? || @conference.opened?)
+      redirect_to  "/#{@conference.abbr}/dashboard"
+    else
+      @talks = @conference.talks.accepted.includes(:talks_speakers, :speakers)
 
-    render event_view
+      render event_view
+    end
   end
 
   def set_current_user
@@ -26,19 +31,6 @@ class EventController < ApplicationController
 
   def coc
     @conference = Conference.find_by(abbr: params[:event])
-  end
-
-  def sponsor_logo_class(sponsor_type)
-    case sponsor_type.name
-    when "Diamond", "Special Collaboration"
-      "col-12 col-md-4 my-3 m-md-3"
-    when "Platinum"
-      "col-12 col-md-3 my-3 m-md-3"
-    when "Gold", "Booth", "Mini Session", "CM", "Tool", "Logo"
-      "col-12 col-md-2 my-3 m-md-3"
-    else
-      "col-12 col-md-3 my-3 m-md-3"
-    end
   end
 
   private

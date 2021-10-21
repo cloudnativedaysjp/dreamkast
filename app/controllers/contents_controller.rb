@@ -1,6 +1,6 @@
 class ContentsController < ApplicationController
   include Secured
-  before_action :set_profile
+  before_action :set_profile, :set_speaker
 
   def logged_in_using_omniauth?
     if session[:userinfo].present?

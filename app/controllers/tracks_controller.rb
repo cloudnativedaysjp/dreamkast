@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
   include Secured
-  before_action :set_profile
+  before_action :set_profile, :set_speaker
 
   def index
     @conference = Conference.includes(:talks).find_by(abbr: event_name)

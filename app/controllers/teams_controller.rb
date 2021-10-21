@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   include Secured
-  before_action :set_conference
+  before_action :set_conference, :set_profile, :set_speaker
 
   def logged_in_using_omniauth?
     if session[:userinfo].present?

@@ -44,17 +44,20 @@
   <% if event_name %>
     <footer class="bg-light py-4">
     <div class="container">
-      <div class="row justify-content-center">
-        <h3 class="col-12 text-center my-4">Upcoming Events</h3>
-        <% Conference.upcoming.each do |conference| %>
-          <div class="col-12 col-md-6 footer-logo">
-            <%= link_to("/#{conference.abbr}") do %>
-              <%= image_tag "#{conference.abbr}/header_logo.png", class: "d-block mx-auto" %>
-            <% end %>
-            <p class="text-center mt-1"><%= conference.brief if conference.brief.present? %></p>
-          </div>
-        <% end %>
-      </div>
+      <% upcoming = Conference.upcoming.merge(Conference.where.not(abbr: event_name)) %>
+      <% if upcoming.size > 0 %>
+        <div class="row justify-content-center">
+          <h3 class="col-12 text-center my-4">Upcoming Events</h3>
+          <% Conference.upcoming.merge(Conference.where.not(abbr: event_name)).each do |conference| %>
+            <div class="col-12 col-md-6 footer-logo">
+              <%= link_to("/#{conference.abbr}") do %>
+                <%= image_tag "#{conference.abbr}/header_logo.png", class: "d-block mx-auto" %>
+              <% end %>
+              <p class="text-center mt-1"><%= conference.brief if conference.brief.present? %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
       <div class="row justify-content-center">
         <div class="col-12 col-md-6">
           <ul class="justify-content-md-center">

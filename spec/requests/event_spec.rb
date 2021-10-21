@@ -41,10 +41,9 @@ describe EventController, type: :request do
 
         it "returns a success response with event top page" do
           get '/cndt2020'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to include 'CloudNative Days Tokyo 2020'
-          expect(response.body).to include 'スピーカーとしてエントリー'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '302'
+          expect(response).to redirect_to '/cndt2020/dashboard'
         end
       end
 
@@ -56,10 +55,9 @@ describe EventController, type: :request do
 
         it "returns a success response with event top page" do
           get '/cndt2020'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to include 'CloudNative Days Tokyo 2020'
-          expect(response.body).to include 'スピーカーダッシュボード'
+          expect(response).to_not be_successful
+          expect(response).to have_http_status '302'
+          expect(response).to redirect_to '/cndt2020/dashboard'
         end
       end
     end

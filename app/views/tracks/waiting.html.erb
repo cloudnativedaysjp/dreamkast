@@ -53,14 +53,10 @@
   </div>
 
   <div class="row">
-    <% if @conference.opened? %>
-      <div class="col-12 mb-3 py-1 my-3 text-center booths-header">
-        <h4>↓ ブースにお立ち寄りください ↓</h4>
-      </div>
-
-      <div class="col-12 mb-3">
-        <%= render 'booth_section' %>
-      </div>
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
     <% end %>
   </div>
 

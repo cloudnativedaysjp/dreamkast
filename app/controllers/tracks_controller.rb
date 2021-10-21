@@ -1,5 +1,6 @@
 class TracksController < ApplicationController
   include Secured
+  include SponsorHelper
   before_action :set_profile, :set_speaker
 
   def index

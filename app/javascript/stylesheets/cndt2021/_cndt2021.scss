@@ -150,7 +150,8 @@
 }
 
 .speaker-dashboard-form ul {
-    font-size: larger;
+    font-size: larger
+;
     margin: 1em 0;
 }
 
@@ -171,6 +172,9 @@
 }
 
 .information {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 300px;
     a {
         color: $azurite ;
         border-bottom: 2px solid;

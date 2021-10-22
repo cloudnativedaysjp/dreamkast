@@ -25,6 +25,11 @@ class ContentsController < ApplicationController
     render "#{@conference.abbr}_hands_on".to_sym
   end
 
+  def job_board
+    @conference = Conference.find_by(abbr: params[:event])
+    render "#{@conference.abbr}_job_board".to_sym
+  end
+
   private
     def set_profile
       if @current_user

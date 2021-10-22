@@ -8,6 +8,7 @@ class LiveStreamIvs < LiveStream
       latency_mode: "LOW",
       type: "STANDARD",
       authorized: false,
+      recording_configuration_arn: recording_configuration_arn,
       tags: {
         "Environment" => env_name_for_tag
       }
@@ -66,6 +67,21 @@ class LiveStreamIvs < LiveStream
       'production'
     else
       'others'
+    end
+  end
+
+  def recording_configuration_arn
+    case env_name_for_tag
+    when 'production'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
+    when 'staging'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
+    when 'review_app'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    when 'others'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    else
+      ''
     end
   end
 end

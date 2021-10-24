@@ -95,6 +95,7 @@ Rails.application.routes.draw do
     get 'kontest' => 'contents#kontest'
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
+    get 'job-board' => 'contents#job_board'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

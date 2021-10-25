@@ -30,11 +30,18 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def playback_url
-    params&.dig('channel', 'destinations')[0]['settings'][0]['url'].gsub('s3://', '')
+    cloudfront_url = "https://#{cloudfront_domain_name}"
+    object_key = params&.dig('channel', 'destinations')[0]['settings'][0]['url'].gsub("s3://#{bucket_name}/", '')
+
+    "#{cloudfront_url}/#{object_key}.m3u8"
   end
 
-  def ingest_endpoint
-    params&.dig('input', 'destinations')[0]['url']
+  def destination
+    params&.dig('channel', 'destinations')[0].dig('settings')[0]['url']
+  end
+
+  def status
+    params&.dig('status')
   end
 
   def create_media_live_resources
@@ -71,7 +78,76 @@ class LiveStreamMediaLive < LiveStream
     logger.error "#{e.message}"
   end
 
+  def start_recording
+    media_live_client.start_channel(channel_id: channel_id)
+    media_live_client.wait_until(:channel_running, channel_id: channel_id) do |w|
+      w.max_attempts = 60
+      w.delay = 10
+    end
+
+    params[:status] = 'channel_running'
+    self.update!(params: params)
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace
+
+    params[:status] = 'error'
+    params[:error] = e.message
+    self.update!(params: params)
+  end
+
+  def stop_recording
+    media_live_client.stop_channel(channel_id: channel_id)
+    media_live_client.wait_until(:channel_stopped, channel_id: channel_id) do |w|
+      w.max_attempts = 60
+      w.delay = 10
+    end
+
+    params[:status] = 'channel_stopped'
+    self.update!(params: params)
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace
+
+    params[:status] = 'error'
+    params[:error] = e.message
+    self.update!(params: params)
+  end
+
+  def set_recording_target_talk(talk_id)
+    resp = media_live_client.update_channel(
+      {
+        channel_id: channel_id,
+        destinations: [
+          {
+            id: "5ari39",
+            media_package_settings: [],
+            settings: [
+              {
+                url: "#{destination_base}/talks/#{talk_id}"
+              }
+            ]
+          }
+        ]
+      }
+    )
+    params[:channel] = resp.channel
+    params[:status] = 'ok'
+    self.update!(params: params)
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+
+    params[:status] = 'error'
+    params[:error] = e.message
+    self.update!(params: params)
+  end
+
   private
+
+  def destination_base
+    "s3://#{bucket_name}/medialive/#{conference.abbr}"
+  end
 
   def media_live_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
@@ -105,6 +181,19 @@ class LiveStreamMediaLive < LiveStream
       "dreamkast-ivs-stream-archive-dev"
     else
       "dreamkast-ivs-stream-archive-dev"
+    end
+  end
+
+  def cloudfront_domain_name
+    case env_name_for_tag
+    when 'review_app'
+      'd1jzp6sbtx9by.cloudfront.net'
+    when 'staging'
+      ''
+    when 'production'
+      ''
+    else
+      'd1jzp6sbtx9by.cloudfront.net'
     end
   end
 

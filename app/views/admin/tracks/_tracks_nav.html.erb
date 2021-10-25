@@ -1,64 +1,64 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <% conference.tracks.each_with_index do |track, index| %>
-      <a class="nav-item nav-link <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>-tab" data-toggle="tab" href="#nav-<%= conference_day.date %>-<%= track.number %>" role="tab" aria-controls="nav-<%= conference_day.date %>-<%= track.number %>" aria-selected="true"><%= track.name %></a>
+    <% conference.tracks.each do |track| %>
+      <%= link_to track.name, admin_tracks_path(date: @date, track_name: track.name),
+                  {
+                    class: "nav-item nav-link #{active_track_tab?(track) ? 'active' : '' }",
+                    id: "nav-#{conference_day.date}-#{track.number}-tab",
+                    role: "tab",
+                    'aria-controls': "nav-#{conference_day.date}-#{track.number}",
+                    'aria-selected': "true"
+                  }
+      %>
     <% end %>
   </div>
 </nav>
 
-<div class="tab-content" id="nav-tabContent">
-  <% conference.tracks.each_with_index do |track, index| %>
-    <% talks = Talk.where(conference_id: conference.id, conference_day_id: conference_day.id, track_id: track.id).order('conference_day_id ASC, start_time ASC, track_id ASC') %>
-    <div class="tab-pane fade show <%= index == 0 ? 'active' : '' %>" id="nav-<%= conference_day.date %>-<%= track.number %>" role="tabpanel" aria-labelledby="nav-<%= conference_day.date %>-<%= track.number %>-tab">
-      <%= form_with(url: admin_tracks_path, id: "talk_list_#{conference_day.date}_#{track.number}", method: "put", class: "talk_list_form") do |f| %>
-        Track Video ID: <%= text_field_tag "track[video_id]", track.video_id, placeholder: "vimeo id", size: "9" %> <% if track.video_id != '' %>( <%= link_to "link", "https://player.vimeo.com/video/#{track.video_id}" %>  ) <% end %> <br>
+<%= form_with(url: admin_tracks_path, id: "talk_list_#{conference_day.date}_#{@track.number}", method: "put", class: "talk_list_form") do |f| %>
+  Track Video ID: <%= text_field_tag "track[video_id]", @track.video_id, placeholder: "vimeo id", size: "9" %> <% if @track.video_id != '' %>( <%= link_to "link", "https://player.vimeo.com/video/#{@track.video_id}" %>  ) <% end %> <br>
 
-        <%= hidden_field_tag "track[id]", track.id %>
+  <%= hidden_field_tag "track[id]", @track.id %>
 
-        <table class="table table-striped talks_table" >
-        <thead>
-        <tr>
-          <th scope="col">Time</th>
-          <th scope="col">Speakers</th>
-          <th scope="col">Title</th>
-          <th scope="col">Vimeo ID</th>
-          <th scope="col">On Air</th>
-        </tr>
-        </thead>
-        <tbody>
-          <% talks.each do |talk| %>
-            <tr>
-              <td><%= talk.start_to_end %></td>
-              <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-              <td><h5><%= talk.title %></h5></td>
-              <td>
-                <% video_id = talk.video ? talk.video.video_id : nil %>
-                <%= text_field_tag "video[#{talk.id}][video_id]", video_id, placeholder: "vimeo id", size: "9" %>
-                <br>
-                <% if video_id != '' %>
-                  <%=link_to "link", "https://player.vimeo.com/video/#{video_id}" %>
-                <% end %>
-              </td>
-              <td class="on_air_group btn-group-toggle">
-                <% if talk.video %>
-                  <label class="btn on_air_button <%= "active" if talk.video.on_air %>" id="button_<%= talk.id %>">
-                    <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track.name %>>
-                  </label>
-                <% end %>
-              </td>
-            </tr>
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">Time</th>
+      <th scope="col">Speakers</th>
+      <th scope="col">Title</th>
+      <th scope="col">Vimeo ID</th>
+      <th scope="col">On Air</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @talks.each do |talk| %>
+      <tr>
+        <td><%= talk.start_to_end %></td>
+        <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+        <td><h5><%= talk.title %></h5></td>
+        <td>
+          <% video_id = talk.video ? talk.video.video_id : nil %>
+          <%= text_field_tag "video[#{talk.id}][video_id]", video_id, placeholder: "vimeo id", size: "9" %>
+          <br>
+          <% if video_id != '' %>
+            <%=link_to "link", "https://player.vimeo.com/video/#{video_id}" %>
           <% end %>
-          </tbody>
-        </table>
+        </td>
+        <td class="on_air_group btn-group-toggle">
+          <% if talk.video %>
+            <label class="btn on_air_button <%= "active" if talk.video.on_air %>" id="button_<%= talk.id %>">
+              <input type="checkbox" name="video[<%= talk.id %>][on_air]" class="" <%= "checked" if talk.video.on_air %> autocomplete="off" track_name=<%= talk.track.name %>>
+            </label>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-        ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
-        ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
-        <div class="p-4 text-center">
-          <%= f.submit('保存', class: "btn btn-danger transit_button" ) %>
-          <br/><span> ※視聴者にも設定が配信されます</span>
-        </div>
-      <% end %>
-
-    </div>
-  <% end %>
-</div>
+  ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
+  ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
+  <div class="p-4 text-center">
+    <%= f.submit('保存', class: "btn btn-danger transit_button" ) %>
+    <br/><span> ※視聴者にも設定が配信されます</span>
+  </div>
+<% end %>

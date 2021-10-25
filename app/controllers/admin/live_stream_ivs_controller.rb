@@ -52,16 +52,6 @@ class Admin::LiveStreamIvsController < ApplicationController
       end
     end
 
-    @conference.tracks.each do |track|
-      unless track.live_stream_media_live.present?
-        media_live = LiveStreamMediaLive.new(conference: @conference, track: track)
-
-        unless media_live.save
-          messages << media_live.errors
-        end
-      end
-    end
-
     respond_to do |format|
       if messages.size == 0
         format.html { redirect_to admin_live_stream_ivs_path, notice: 'IVS successfully created.' }

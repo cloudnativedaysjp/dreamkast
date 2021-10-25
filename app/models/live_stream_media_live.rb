@@ -2,56 +2,73 @@ class LiveStreamMediaLive < LiveStream
   belongs_to :conference
   belongs_to :track
 
-  before_create do
+  before_destroy do
+    delete_media_live_resources
+  rescue  => e
+    logger.error e.message
+  end
+
+  def initialize(attributes = nil)
+    @params = {}
+    super
+  end
+
+  def channel_name
+    params&.dig('channel', 'name')
+  end
+
+  def channel_id
+    params&.dig('channel', 'id')
+  end
+
+  def input_id
+    params&.dig('input', 'id')
+  end
+
+  def input_name
+    params&.dig('input', 'name')
+  end
+
+  def playback_url
+    params&.dig('channel', 'destinations')[0]['settings'][0]['url'].gsub('s3://', '')
+  end
+
+  def ingest_endpoint
+    params&.dig('input', 'destinations')[0]['url']
+  end
+
+  def create_media_live_resources
     input_resp = media_live_client.create_input(create_input_params)
+
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
+
     media_live_client.wait_until(:channel_created, channel_id: channel_resp.channel['id']) do |w|
-      w.max_attempts = 30
-      w.delay = 5
+      w.max_attempts = 60
+      w.delay = 10
     end
 
-    self.params = {
+    params = {
       input: input_resp.input,
       channel: channel_resp.channel
     }
+    self.update!(params: params)
   rescue => e
-    p e
+    logger.error e.message
+    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
   end
 
-  before_destroy do
+  def delete_media_live_resources(input_id: nil, channel_id: nil)
+    input_id = self.input_id unless input_id
+    channel_id = self.channel_id unless channel_id
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
     media_live_client.wait_until(:channel_deleted, channel_id: channel_id) do |w|
       w.max_attempts = 30
       w.delay = 5
     end
 
-    media_live_client.delete_input(input_id: input_id) if channel_id
-  rescue Aws::IVS::Errors::ResourceNotFoundException => e
-    logger.error "IVS Resource Not Found: #{e.message}"
-  end
-
-  def channel_name
-    params.dig('channel', 'name')
-  end
-
-  def channel_id
-    params.dig('channel', 'id')
-  end
-
-  def input_id
-    params.dig('input', 'id')
-  end
-
-  def input_name
-    params.dig('input', 'name')
-  end
-
-  def playback_url
-    params.dig('channel', 'destinations')[0]['settings'][0]['url'].gsub('s3://', '')
-  end
-
-  def ingest_endpoint
-    params.dig('input', 'destinations')[0]['url']
+    media_live_client.delete_input(input_id: input_id)if input_id
+  rescue => e
+    logger.error "#{e.message}"
   end
 
   private

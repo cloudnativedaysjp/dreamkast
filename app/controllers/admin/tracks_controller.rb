@@ -3,7 +3,9 @@ class Admin::TracksController < ApplicationController
   include LogoutHelper
 
   def index
-    @tracks = @conference.tracks
+    @date = params[:date]
+    @track_name = params[:track_name]
+    @track = @conference.tracks.find_by(name: @track_name)
   end
 
   def update_tracks
@@ -15,5 +17,13 @@ class Admin::TracksController < ApplicationController
         format.js
       end
     end
+  end
+
+  private
+
+  helper_method :active_date_tab?
+
+  def active_date_tab?(conference_day)
+    conference_day.date.strftime("%Y-%m-%d") == @date
   end
 end

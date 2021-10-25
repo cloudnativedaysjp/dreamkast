@@ -2,8 +2,16 @@
   <div id="alert-pane"></div>
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <% @conference.conference_days.each_with_index do |day, index| %>
-        <a class="nav-item nav-link <%= index == 0 ? 'active' : '' %>" id="nav-<%= day.date %>-tab" data-toggle="tab" href="#nav-<%= day.date %>" role="tab" aria-controls="nav-<%= day.date %>" aria-selected="true"><%= day.date %></a>
+      <% @conference.conference_days.each do |day| %>
+        <%= link_to day.date, admin_tracks_path(date: day.date.strftime("%Y-%m-%d"), track_name: @conference.tracks.first.name),
+                    {
+                      class: "nav-item nav-link #{active_date_tab?(day)? 'active' : ''}",
+                      id: "nav-#{day.date}-tab",
+                      role: "tab",
+                      'aria-controls': "nav-#{day.date}",
+                      'aria-selected': "true",
+                    }
+        %>
       <% end %>
     </div>
   </nav>

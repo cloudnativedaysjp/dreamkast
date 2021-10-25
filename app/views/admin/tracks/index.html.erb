@@ -17,8 +17,8 @@
   </nav>
 
   <div class="tab-content" id="nav-tabContent">
-    <% @conference.conference_days.each_with_index do |day, index| %>
-      <div class="tab-pane fade show  <%= index == 0 ? 'active' : '' %>" id="nav-<%= day.date %>" role="tabpanel" aria-labelledby="nav-<%= day.date %>-tab">
+    <% @conference.conference_days.each do |day| %>
+      <div class="tab-pane fade show  <%= active_date_tab?(day) ? 'active' : '' %>" id="nav-<%= day.date %>" role="tabpanel" aria-labelledby="nav-<%= day.date %>-tab">
         <%= render 'admin/tracks/tracks_nav', conference: @conference, conference_day: day %>
       </div>
     <% end %>

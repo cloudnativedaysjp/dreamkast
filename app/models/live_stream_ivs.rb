@@ -18,6 +18,8 @@ class LiveStreamIvs < LiveStream
       channel: resp.channel,
       stream_key: resp.stream_key
     }
+  rescue => e
+    logger.error e.message
   end
 
   before_destroy do

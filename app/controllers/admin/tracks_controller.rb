@@ -3,8 +3,8 @@ class Admin::TracksController < ApplicationController
   include LogoutHelper
 
   def index
-    @date = params[:date]
-    @track_name = params[:track_name]
+    @date = params[:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @track_name = params[:track_name] || @conference.tracks.first.name
     @track = @conference.tracks.find_by(name: @track_name)
     @talks = @conference.talks.where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id).order('conference_day_id ASC, start_time ASC, track_id ASC')
   end

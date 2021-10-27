@@ -10,6 +10,12 @@ class LiveStreamMediaLive < LiveStream
     logger.error e.message
   end
 
+  STATUS_WAITING_TO_START = 'waiting_to_start'
+  STATUS_WAITING_TO_STOP = 'waiting_to_stop'
+  STATUS_CHANNEL_RUNNING = 'channel_running'
+  STATUS_CHANNEL_STOPPED = 'channel_stopped'
+  STATUS_ERROR = 'error'
+
   def initialize(attributes = nil)
     @params = {}
     super
@@ -90,10 +96,10 @@ class LiveStreamMediaLive < LiveStream
       w.max_attempts = 60
       w.delay = 10
     end
-    params[:status] = 'waiting_to_start'
+    params[:status] = STATUS_WAITING_TO_STOP
     self.update!(params: params)
 
-    params[:status] = 'channel_running'
+    params[:status] = STATUS_CHANNEL_RUNNING
     self.update!(params: params)
   rescue => e
     logger.error e.message
@@ -110,16 +116,16 @@ class LiveStreamMediaLive < LiveStream
       w.max_attempts = 60
       w.delay = 10
     end
-    params[:status] = 'waiting_to_stop'
+    params[:status] = STATUS_WAITING_TO_STOP
     self.update!(params: params)
 
-    params[:status] = 'channel_stopped'
+    params[:status] = STATUS_CHANNEL_STOPPED
     self.update!(params: params)
   rescue => e
     logger.error e.message
     logger.error e.backtrace
 
-    params[:status] = 'error'
+    params[:status] = STATUS_ERROR
     params[:error] = e.message
     self.update!(params: params)
   end
@@ -142,14 +148,14 @@ class LiveStreamMediaLive < LiveStream
       }
     )
     params[:channel] = resp.channel
-    params[:status] = 'ok'
+    params[:status] = resp.channel[:status]
     params[:talk_id] = talk_id
     self.update!(params: params)
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    params[:status] = 'error'
+    params[:status] = STATUS_ERROR
     params[:error] = e.message
     self.update!(params: params)
   end

@@ -90,6 +90,8 @@ class LiveStreamMediaLive < LiveStream
       w.max_attempts = 60
       w.delay = 10
     end
+    params[:status] = 'waiting_to_start'
+    self.update!(params: params)
 
     params[:status] = 'channel_running'
     self.update!(params: params)
@@ -108,6 +110,8 @@ class LiveStreamMediaLive < LiveStream
       w.max_attempts = 60
       w.delay = 10
     end
+    params[:status] = 'waiting_to_stop'
+    self.update!(params: params)
 
     params[:status] = 'channel_stopped'
     self.update!(params: params)

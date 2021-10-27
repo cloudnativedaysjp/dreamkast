@@ -22,7 +22,7 @@ class Admin::TracksController < ApplicationController
 
   private
 
-  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :recording_url, :confirm_message, :alert_type, :recording?
+  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :recording_url, :confirm_message, :alert_type, :recording?, :waiting_to_start?, :waiting_to_stop?, :recording_control_button_label
 
   def active_date_tab?(conference_day)
     conference_day.date.strftime("%Y-%m-%d") == @date
@@ -69,5 +69,27 @@ class Admin::TracksController < ApplicationController
 
   def recording?(talk)
     @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'channel_running'
+  end
+
+  def waiting_to_start?(talk)
+    @track.live_stream_media_live.recording_talk_id == talk.id &&
+      @track.live_stream_media_live.status == 'waiting_to_start'
+  end
+
+  def waiting_to_stop?(talk)
+    @track.live_stream_media_live.recording_talk_id == talk.id &&
+      @track.live_stream_media_live.status == 'waiting_to_stop'
+  end
+
+  def recording_control_button_label(talk)
+    if @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'channel_running'
+      'Recording'
+    elsif @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'waiting_to_start'
+      'Waiting to start recording'
+    elsif @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'waiting_to_stop'
+      'Waiting to stop recording'
+    else
+      'Start Record'
+    end
   end
 end

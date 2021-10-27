@@ -22,7 +22,7 @@ class Admin::TracksController < ApplicationController
 
   private
 
-  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :confirm_message
+  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :confirm_message, :alert_type
 
   def active_date_tab?(conference_day)
     conference_day.date.strftime("%Y-%m-%d") == @date
@@ -42,9 +42,20 @@ class Admin::TracksController < ApplicationController
 
   def confirm_message(talk)
     if talk.video.on_air?
-      "#{talk.speaker_names.join(',')} #{talk.title} \nをOffAirに切り替えます"
+      "Waitingに切り替えます:\n#{talk.speaker_names.join(',')} #{talk.title}"
     else
-      "#{talk.speaker_names.join(',')} #{talk.title} \nをOnAirに切り替えます"
+      "OnAirに切り替えます:\n#{talk.speaker_names.join(',')} #{talk.title}"
+    end
+  end
+
+  def alert_type(message_type)
+    case message_type
+    when 'notice'
+      'success'
+    when 'danger'
+      'danger'
+    else
+      'primary'
     end
   end
 end

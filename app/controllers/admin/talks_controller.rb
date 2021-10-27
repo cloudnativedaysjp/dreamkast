@@ -24,24 +24,22 @@ class Admin::TalksController < ApplicationController
 
   def start_on_air
     talk = Talk.find( params[:talk][:id])
+    ActiveRecord::Base.transaction do
+      talk.conference_day
+      talk.track
+      other_talk_in_track = @conference.tracks.find_by(name: talk.track.name).talks
+                                       .select{|t| t.conference_day.id == talk.conference_day.id && t.id != talk.id}
+      other_talk_in_track.each do |talk|
+        video = talk.video
+        video.on_air = false
+        video.save!
+      end
 
-    talk.conference_day
-    talk.track
-    if @conference.tracks.find_by(name: talk.track.name).talks
-                  .select{|t| t.conference_day.id == talk.conference_day.id && t.id != talk.id}
-                  .map(&:video)
-                  .map(&:on_air)
-                  .any?
-      flash[:danger] = "他にOnAir中のセッションがあります。"
-      redirect_to admin_tracks_path
-    else
-
-
-
-    talk.conference_day
-    video = talk.video
-    video.on_air = true
-    video.save!
+      talk.conference_day
+      video = talk.video
+      video.on_air = true
+      video.save!
+    end
 
     ActionCable.server.broadcast(
       "track_channel", Video.on_air(conference)
@@ -50,9 +48,8 @@ class Admin::TalksController < ApplicationController
       "on_air_#{conference.abbr}", Video.on_air_v2
     )
 
-    flash[:notice] = "配信設定を更新しました"
+    flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
     redirect_to admin_tracks_path
-    end
   end
 
   def stop_on_air
@@ -68,7 +65,8 @@ class Admin::TalksController < ApplicationController
       "on_air_#{conference.abbr}", Video.on_air_v2
     )
 
-    redirect_to admin_tracks_path, notice: "配信設定を更新しました"
+    flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+    redirect_to admin_tracks_path
   end
 
   def bulk_insert_talks

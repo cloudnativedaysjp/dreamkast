@@ -22,7 +22,7 @@ class Admin::TracksController < ApplicationController
 
   private
 
-  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :confirm_message, :alert_type
+  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :recording_url, :confirm_message, :alert_type, :recording?
 
   def active_date_tab?(conference_day)
     conference_day.date.strftime("%Y-%m-%d") == @date
@@ -37,6 +37,14 @@ class Admin::TracksController < ApplicationController
       admin_stop_on_air_path
     else
       admin_start_on_air_path
+    end
+  end
+
+  def recording_url(talk)
+    if recording?(talk)
+      admin_stop_recording_path
+    else
+      admin_start_recording_path
     end
   end
 
@@ -57,5 +65,9 @@ class Admin::TracksController < ApplicationController
     else
       'primary'
     end
+  end
+
+  def recording?(talk)
+    @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'channel_running'
   end
 end

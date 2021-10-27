@@ -69,6 +69,19 @@ class Admin::TalksController < ApplicationController
     redirect_to admin_tracks_path
   end
 
+  def start_recording
+    talk = Talk.find( params[:talk][:id])
+    talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
+    StartRecordingJob.perform_later(talk)
+    redirect_to admin_tracks_path
+  end
+
+  def stop_recording
+    talk = Talk.find(params[:talk][:id])
+    StopRecordingJob.perform_later(talk)
+    redirect_to admin_tracks_path
+  end
+
   def bulk_insert_talks
     unless params[:file]
       redirect_to '/admin/talks', notice: "アップロードするファイルを選択してください"

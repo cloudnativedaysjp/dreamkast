@@ -21,6 +21,7 @@
     <th scope="col">Speakers</th>
     <th scope="col">Title</th>
     <th scope="col">On Air</th>
+    <th scope="col">Recording</th>
   </tr>
   </thead>
 
@@ -38,6 +39,23 @@
               <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
                            id: "button_#{talk.id}",
                            class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
+                           autocomplete: "off",
+                           track_name: talk.track.name,
+                           talk_id: talk.id,
+                           data: { confirm: confirm_message(talk) }
+              %>
+            </div>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+         <% if talk.video %>
+          <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+            <%= f.hidden_field "talk[id]", value: talk.id %>
+            <div class="on_air_group btn-group-toggle">
+              <%= f.submit recording?(talk) ? 'Recording' : 'Start Record',
+                           id: "button_#{talk.id}",
+                           class: "btn btn-#{recording?(talk) ? 'danger' : 'secondary'} on_air_button #{recording?(talk) ? 'active' : ''}",
                            autocomplete: "off",
                            track_name: talk.track.name,
                            talk_id: talk.id,

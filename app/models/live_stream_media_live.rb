@@ -1,3 +1,5 @@
+require "aws-sdk-medialive"
+
 class LiveStreamMediaLive < LiveStream
   belongs_to :conference
   belongs_to :track
@@ -42,6 +44,10 @@ class LiveStreamMediaLive < LiveStream
 
   def status
     params&.dig('status')
+  end
+
+  def recording_talk_id
+    params&.dig('talk_id')
   end
 
   def create_media_live_resources
@@ -133,6 +139,7 @@ class LiveStreamMediaLive < LiveStream
     )
     params[:channel] = resp.channel
     params[:status] = 'ok'
+    params[:talk_id] = talk_id
     self.update!(params: params)
   rescue => e
     logger.error e.message

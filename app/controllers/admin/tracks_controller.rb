@@ -22,7 +22,17 @@ class Admin::TracksController < ApplicationController
 
   private
 
-  helper_method :active_date_tab?, :active_track_tab?, :on_air_url, :recording_url, :confirm_message, :alert_type, :recording?, :waiting_to_start?, :waiting_to_stop?, :recording_control_button_label
+  helper_method :active_date_tab?,
+                :active_track_tab?,
+                :on_air_url,
+                :recording_url,
+                :confirm_message,
+                :alert_type,
+                :recording?,
+                :waiting_to_start?,
+                :waiting_to_stop?,
+                :recording_control_button_label,
+                :already_recorded?
 
   def active_date_tab?(conference_day)
     conference_day.date.strftime("%Y-%m-%d") == @date
@@ -91,5 +101,9 @@ class Admin::TracksController < ApplicationController
     else
       'Start Record'
     end
+  end
+
+  def already_recorded?(talk)
+    talk.video.video_id.present?
   end
 end

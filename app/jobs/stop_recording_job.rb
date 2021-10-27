@@ -11,6 +11,8 @@ class StopRecordingJob < ApplicationJob
     logger.info "Perform StopRecordingJob: talk_id=#{talk.id}"
     talk.track.live_stream_media_live.stop_recording
 
+    talk.video.update!(site: 's3', video_id: talk.track.live_stream_media_live.playback_url)
+
     payload = {
       event: 'channel_stopped',
       channel_id: talk.track.live_stream_media_live.channel_id,

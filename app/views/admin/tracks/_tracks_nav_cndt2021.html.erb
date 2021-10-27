@@ -50,24 +50,28 @@
       </td>
       <td>
         <% if talk.video %>
-          <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
-            <%= f.hidden_field "talk[id]", value: talk.id %>
-            <div class="on_air_group btn-group-toggle">
-              <% if waiting_to_start?(talk) || waiting_to_stop?(talk) %>
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              <% end %>
+          <% if already_recorded?(talk) %>
+            <div class="btn btn-primary">録画済み</div>
+          <% else %>
+            <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+              <%= f.hidden_field "talk[id]", value: talk.id %>
+              <div class="on_air_group btn-group-toggle">
+                <% if waiting_to_start?(talk) || waiting_to_stop?(talk) %>
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                <% end %>
 
-              <%= f.submit recording_control_button_label(talk),
-                           id: "button_#{talk.id}",
-                           class: "btn btn-#{recording?(talk) ? 'danger' : 'secondary'} on_air_button #{recording?(talk) ? 'active' : ''}",
-                           autocomplete: "off",
-                           track_name: talk.track.name,
-                           talk_id: talk.id,
-                           data: { confirm: confirm_message(talk) }
-              %>
-            </div>
+                <%= f.submit recording_control_button_label(talk),
+                             id: "button_#{talk.id}",
+                             class: "btn btn-#{recording?(talk) ? 'danger' : 'secondary'} on_air_button #{recording?(talk) ? 'active' : ''}",
+                             autocomplete: "off",
+                             track_name: talk.track.name,
+                             talk_id: talk.id,
+                             data: { confirm: confirm_message(talk), disable_with: "送信中..."}
+                %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
       </td>

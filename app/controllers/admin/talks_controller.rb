@@ -23,22 +23,15 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
-    talk = Talk.find( params[:talk][:id])
+    talk = Talk.find(params[:talk][:id])
     ActiveRecord::Base.transaction do
-      talk.conference_day
-      talk.track
       other_talk_in_track = @conference.tracks.find_by(name: talk.track.name).talks
                                        .select{|t| t.conference_day.id == talk.conference_day.id && t.id != talk.id}
       other_talk_in_track.each do |talk|
-        video = talk.video
-        video.on_air = false
-        video.save!
+        talk.video.update!(on_air: false)
       end
 
-      talk.conference_day
-      video = talk.video
-      video.on_air = true
-      video.save!
+      talk.video.update!(on_air: true)
     end
 
     ActionCable.server.broadcast(
@@ -54,9 +47,7 @@ class Admin::TalksController < ApplicationController
 
   def stop_on_air
     talk = Talk.find(params[:talk][:id])
-    video = talk.video
-    video.on_air = false
-    video.save!
+    talk.video.update!(on_air: false)
 
     ActionCable.server.broadcast(
       "track_channel", Video.on_air(conference)

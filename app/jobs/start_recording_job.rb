@@ -5,7 +5,11 @@ class StartRecordingJob < ApplicationJob
   include LogoutHelper
 
   queue_as :default
-  self.queue_adapter = :async
+  self.queue_adapter = if ENV['RAILS_ENV'] == 'production'
+                         :amazon_sqs
+                       else
+                         :async
+                       end
 
   def perform(*args)
     talk = args[0]

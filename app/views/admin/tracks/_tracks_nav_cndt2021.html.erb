@@ -1,12 +1,3 @@
-<% flash.each do |message_type, message| %>
-  <div class="alert alert-<%= alert_type(message_type) %>" role="alert">
-    <%= message %>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-<% end %>
-
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <% conference.tracks.each do |track| %>

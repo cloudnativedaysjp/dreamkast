@@ -1,0 +1,62 @@
+<% flash.each do |message_type, message| %>
+  <div class="alert alert-<%= message_type %>" role="alert">
+    <%= message %>
+  </div>
+<% end %>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <% conference.tracks.each do |track| %>
+      <%= link_to track.name, admin_tracks_path(date: @date, track_name: track.name),
+                  {
+                    class: "nav-item nav-link #{active_track_tab?(track) ? 'active' : '' }",
+                    id: "nav-#{conference_day.date}-#{track.number}-tab",
+                    role: "tab",
+                    'aria-controls': "nav-#{conference_day.date}-#{track.number}",
+                    'aria-selected': "true"
+                  }
+      %>
+    <% end %>
+  </div>
+</nav>
+
+<table class="table table-striped talks_table" >
+  <thead>
+  <tr>
+    <th scope="col">Time</th>
+    <th scope="col">Speakers</th>
+    <th scope="col">Title</th>
+    <th scope="col">On Air</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @talks.each do |talk| %>
+    <tr>
+      <td><%= talk.start_to_end %></td>
+      <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+      <td><h5><%= talk.title %></h5></td>
+      <td >
+        <% if talk.video %>
+          <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+            <%= f.hidden_field "talk[id]", value: talk.id %>
+            <div class="on_air_group btn-group-toggle">
+              <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
+                           id: "button_#{talk.id}",
+                           class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
+                           autocomplete: "off",
+                           track_name: talk.track.name,
+                           talk_id: talk.id,
+                           data: { confirm: confirm_message(talk) }
+              %>
+            </div>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
+※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)

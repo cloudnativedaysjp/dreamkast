@@ -704,7 +704,7 @@ Sponsor.seed(
     name: 'クラウドフレアジャパン株式会社',
     abbr: 'cloudflare',
     conference_id: 4,
-    url: 'https://event.cloudnativedays.jp/cndt2021' #dummy
+    url: 'https://www.cloudflare.com/ja-jp/'
   },
 )
 
@@ -990,6 +990,7 @@ SponsorType.seed(
   [125, 'Hands-On', 'gitlab', 4],
   [126, 'Hands-On', 'elastic', 4],
   [127, 'Platinum', 'cloudflare', 4],
+  [128, 'CM', 'gmo', 4],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1104,7 +1105,7 @@ end
   [99, 'creationline', 'sponsors/cndt2021/creationline.png', 4],
   [100, 'gitlab', 'sponsors/cndt2021/gitlab.png', 4],
   [101, 'elastic', 'sponsors/cndt2021/elastic.png', 4],
-  [102, 'cloudflare', 'sponsors/cndt2021/dummy.png', 4], #dummy
+  [102, 'cloudflare', 'sponsors/cndt2021/cloudflare.png', 4],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

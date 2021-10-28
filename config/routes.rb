@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       post 'close_timetable' => 'timetables#close'
       get 'preview_timetable' => 'timetables#preview'
       put 'talks' => 'talks#update_talks'
+      post 'start_on_air' => 'talks#start_on_air'
+      post 'stop_on_air' => 'talks#stop_on_air'
       put 'proposals' => 'proposals#update_proposals'
       post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
       post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'

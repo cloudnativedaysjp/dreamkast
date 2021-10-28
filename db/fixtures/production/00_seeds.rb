@@ -348,6 +348,16 @@ if ENV['REVIEW_APP'] == 'true'
       t.speaker_id = h["speaker_id"]
     end
   end
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/proposals.csv'), headers: true)
+  Proposal.seed(csv.map{|line|
+    {
+      id: line["id"],
+      talk_id: line["talk_id"],
+      conference_id: line["conference_id"],
+      status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+    }
+  })
     
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

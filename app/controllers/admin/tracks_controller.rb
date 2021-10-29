@@ -78,25 +78,29 @@ class Admin::TracksController < ApplicationController
   end
 
   def recording?(talk)
-    @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'channel_running'
+    media_live.present? &&
+      media_live.recording_talk_id == talk.id &&
+      media_live.status == 'channel_running'
   end
 
   def waiting_to_start?(talk)
-    @track.live_stream_media_live.recording_talk_id == talk.id &&
-      @track.live_stream_media_live.status == 'waiting_to_start'
+    media_live.present? &&
+      media_live.recording_talk_id == talk.id &&
+      media_live.status == 'waiting_to_start'
   end
 
   def waiting_to_stop?(talk)
-    @track.live_stream_media_live.recording_talk_id == talk.id &&
-      @track.live_stream_media_live.status == 'waiting_to_stop'
+    media_live.present? &&
+      media_live.recording_talk_id == talk.id &&
+      media_live.status == 'waiting_to_stop'
   end
 
   def recording_control_button_label(talk)
-    if @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'channel_running'
+    if media_live && media_live.recording_talk_id == talk.id && media_live.status == 'channel_running'
       'Recording'
-    elsif @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'waiting_to_start'
+    elsif media_live && media_live.recording_talk_id == talk.id && media_live.status == 'waiting_to_start'
       'Waiting to start recording'
-    elsif @track.live_stream_media_live.recording_talk_id == talk.id && @track.live_stream_media_live.status == 'waiting_to_stop'
+    elsif media_live && media_live.recording_talk_id == talk.id && media_live.status == 'waiting_to_stop'
       'Waiting to stop recording'
     else
       'Start Record'
@@ -105,5 +109,9 @@ class Admin::TracksController < ApplicationController
 
   def already_recorded?(talk)
     talk.video.video_id.present?
+  end
+
+  def media_live
+    @track.live_stream_media_live
   end
 end

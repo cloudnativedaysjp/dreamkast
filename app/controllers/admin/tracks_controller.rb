@@ -27,6 +27,7 @@ class Admin::TracksController < ApplicationController
                 :on_air_url,
                 :recording_url,
                 :confirm_message,
+                :confirm_recording_message,
                 :alert_type,
                 :recording?,
                 :waiting_to_start?,
@@ -66,6 +67,14 @@ class Admin::TracksController < ApplicationController
     end
   end
 
+  def confirm_recording_message(talk)
+    if talk.video.on_air?
+      "録画開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
+    else
+      "録画開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
+    end
+  end
+
   def alert_type(message_type)
     case message_type
     when 'notice'
@@ -77,30 +86,36 @@ class Admin::TracksController < ApplicationController
     end
   end
 
+  def idle?(talk)
+    media_live &&
+      media_live.recording_talk_id == talk.id &&
+      media_live.channel_state == LiveStreamMediaLive::CHANNEL_IDLE
+  end
+
   def recording?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.status == 'channel_running'
+      media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
   end
 
   def waiting_to_start?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.status == 'waiting_to_start'
+      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STARTING
   end
 
   def waiting_to_stop?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.status == 'waiting_to_stop'
+      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STOPPING
   end
 
   def recording_control_button_label(talk)
-    if media_live && media_live.recording_talk_id == talk.id && media_live.status == 'channel_running'
+    if recording?(talk)
       'Recording'
-    elsif media_live && media_live.recording_talk_id == talk.id && media_live.status == 'waiting_to_start'
+    elsif waiting_to_start?(talk)
       'Waiting to start recording'
-    elsif media_live && media_live.recording_talk_id == talk.id && media_live.status == 'waiting_to_stop'
+    elsif waiting_to_stop?(talk)
       'Waiting to stop recording'
     else
       'Start Record'

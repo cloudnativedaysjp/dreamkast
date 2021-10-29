@@ -10,11 +10,19 @@ class LiveStreamMediaLive < LiveStream
     logger.error e.message
   end
 
-  STATUS_WAITING_TO_START = 'waiting_to_start'
-  STATUS_WAITING_TO_STOP = 'waiting_to_stop'
-  STATUS_CHANNEL_RUNNING = 'channel_running'
-  STATUS_CHANNEL_STOPPED = 'channel_stopped'
-  STATUS_ERROR = 'error'
+  CHANNEL_CREATING = "CREATING"
+  CHANNEL_CREATE_FAILED = "CREATE_FAILED"
+  CHANNEL_IDLE = "IDLE"
+  CHANNEL_STARTING = "STARTING"
+  CHANNEL_RUNNING = "RUNNING"
+  CHANNEL_RECOVERING = "RECOVERING"
+  CHANNEL_STOPPING = "STOPPING"
+  CHANNEL_DELETING = "DELETING"
+  CHANNEL_DELETED = "DELETED"
+  CHANNEL_UPDATING = "UPDATING"
+  CHANNEL_UPDATE_FAILED = "UPDATE_FAILED"
+  ERROR = 'ERROR'
+
 
   def initialize(attributes = nil)
     @params = {}
@@ -48,8 +56,8 @@ class LiveStreamMediaLive < LiveStream
     params&.dig('channel', 'destinations')[0].dig('settings')[0]['url']
   end
 
-  def status
-    params&.dig('status')
+  def channel_state
+    params&.dig('channel', 'state')
   end
 
   def recording_talk_id
@@ -90,43 +98,47 @@ class LiveStreamMediaLive < LiveStream
     logger.error "#{e.message}"
   end
 
-  def start_recording
-    media_live_client.start_channel(channel_id: channel_id)
+  def start_channel
+    resp = media_live_client.start_channel(channel_id: channel_id)
+    params[:channel] = resp.to_h
+    self.update!(params: params)
+  end
+
+  def wait_running
     media_live_client.wait_until(:channel_running, channel_id: channel_id) do |w|
       w.max_attempts = 60
       w.delay = 10
     end
-    params[:status] = STATUS_WAITING_TO_STOP
-    self.update!(params: params)
 
-    params[:status] = STATUS_CHANNEL_RUNNING
-    self.update!(params: params)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace
-
-    params[:status] = 'error'
-    params[:error] = e.message
+    resp = media_live_client.describe_channel(channel_id: channel_id)
+    params[:channel] = resp.to_h
     self.update!(params: params)
   end
 
-  def stop_recording
-    media_live_client.stop_channel(channel_id: channel_id)
+  def stop_channel
+    resp = media_live_client.stop_channel(channel_id: channel_id)
+    params[:channel] = resp.to_h
+    self.update!(params: params)
+  end
+
+  def wait_stopped
     media_live_client.wait_until(:channel_stopped, channel_id: channel_id) do |w|
       w.max_attempts = 60
       w.delay = 10
     end
-    params[:status] = STATUS_WAITING_TO_STOP
-    self.update!(params: params)
 
-    params[:status] = STATUS_CHANNEL_STOPPED
+    resp = media_live_client.describe_channel(channel_id: channel_id)
+    params[:channel] = resp.to_h
     self.update!(params: params)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace
+  end
 
-    params[:status] = STATUS_ERROR
-    params[:error] = e.message
+  def reset
+    resp = media_live_client.describe_channel(
+      {
+        channel_id: channel_id,
+      }
+    )
+    params['channel'] = resp.to_h
     self.update!(params: params)
   end
 
@@ -148,16 +160,11 @@ class LiveStreamMediaLive < LiveStream
       }
     )
     params[:channel] = resp.channel
-    params[:status] = resp.channel[:status]
     params[:talk_id] = talk_id
     self.update!(params: params)
   rescue => e
     logger.error e.message
     logger.error e.backtrace.join("\n")
-
-    params[:status] = STATUS_ERROR
-    params[:error] = e.message
-    self.update!(params: params)
   end
 
   private

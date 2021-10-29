@@ -62,19 +62,28 @@ class Admin::TalksController < ApplicationController
 
   def start_recording
     talk = Talk.find( params[:talk][:id])
-    if talk.track.live_stream_media_live.status != LiveStreamMediaLive::STATUS_CHANNEL_STOPPED
-      flash[:danger] = "MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
+    media_live = talk.track.live_stream_media_live
+    unless media_live
+      flash[:danger] = "LiveStreamMediaLiveリソースが存在していません。AdminのIVSメニューから作成してください"
+      redirect_to admin_tracks_path
+    end
+
+    if media_live.channel_state != LiveStreamMediaLive::CHANNEL_IDLE
+      flash[:danger] = "Channel Stateが #{media_live.channel_state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
       redirect_to admin_tracks_path
     else
       talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
-      StartRecordingJob.perform_later(talk)
+      talk.track.live_stream_media_live.start_channel
+
+      WaitChannelRunningJob.perform_later(talk)
       redirect_to admin_tracks_path
     end
   end
 
   def stop_recording
     talk = Talk.find(params[:talk][:id])
-    StopRecordingJob.perform_later(talk)
+    talk.track.live_stream_media_live.stop_channel
+    WaitChannelStoppedJob.perform_later(talk)
     redirect_to admin_tracks_path
   end
 

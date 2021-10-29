@@ -17,6 +17,7 @@
 <table class="table table-striped talks_table" >
   <thead>
   <tr>
+    <th scope="col">Talk ID</th>
     <th scope="col">Time</th>
     <th scope="col">Speakers</th>
     <th scope="col">Title</th>
@@ -28,6 +29,7 @@
   <tbody>
   <% @talks.each do |talk| %>
     <tr>
+      <td><%= talk.id %></td>
       <td><%= talk.start_to_end %></td>
       <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
       <td><h5><%= talk.title %></h5></td>
@@ -82,3 +84,11 @@
 
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
+
+<br><br>
+<h4>以下デバッグ用の情報</h4>
+<ul>
+  <li>Channel State: <%= @track.live_stream_media_live.channel_state %></li>
+  <li>Channel URL: <%= link_to "https://ap-northeast-1.console.aws.amazon.com/medialive/home?region=ap-northeast-1#!/channels/#{@track.live_stream_media_live.channel_id}" %></li>
+  <li>Channel Destination: <%= @track.live_stream_media_live.destination %></li>
+</ul>

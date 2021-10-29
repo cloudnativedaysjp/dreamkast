@@ -69,9 +69,9 @@ class Admin::TracksController < ApplicationController
 
   def confirm_recording_message(talk)
     if talk.video.on_air?
-      "録画開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
+      "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
     else
-      "録画開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
+      "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"
     end
   end
 

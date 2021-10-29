@@ -78,19 +78,19 @@ class Admin::TracksController < ApplicationController
   end
 
   def recording?(talk)
-    media_live.present? &&
+    media_live &&
       media_live.recording_talk_id == talk.id &&
       media_live.status == 'channel_running'
   end
 
   def waiting_to_start?(talk)
-    media_live.present? &&
+    media_live &&
       media_live.recording_talk_id == talk.id &&
       media_live.status == 'waiting_to_start'
   end
 
   def waiting_to_stop?(talk)
-    media_live.present? &&
+    media_live &&
       media_live.recording_talk_id == talk.id &&
       media_live.status == 'waiting_to_stop'
   end

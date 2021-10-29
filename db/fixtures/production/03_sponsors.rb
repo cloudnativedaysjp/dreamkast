@@ -957,7 +957,7 @@ SponsorType.seed(
   [92, 'Platinum', 'f5', 4],
   [93, 'Gold', 'line', 4],
   [94, 'Gold', 'nttdata', 4],
-  [95, 'Gold', 'mirantis', 4],
+  [95, 'Platinum', 'mirantis', 4],
   [96, 'Gold', 'casareal', 4],
   [97, 'Gold', 'yumemi', 4],
   [98, 'Gold', 'valinux', 4],

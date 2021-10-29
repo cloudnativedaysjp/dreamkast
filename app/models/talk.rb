@@ -51,6 +51,10 @@ class Talk < ApplicationRecord
     includes(:proposal).where(proposals: { status: :rejected })
   }
 
+  scope :accepted_and_intermission, -> {
+    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
+  }
+
   def self.import(file)
     message = []
 

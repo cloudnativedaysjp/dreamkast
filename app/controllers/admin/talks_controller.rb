@@ -3,7 +3,7 @@ class Admin::TalksController < ApplicationController
   include LogoutHelper
 
   def index
-    @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.accepted_and_intermission.order('conference_day_id ASC, start_time ASC, track_id ASC')
     respond_to do |format|
       format.html
       format.csv do
@@ -62,9 +62,14 @@ class Admin::TalksController < ApplicationController
 
   def start_recording
     talk = Talk.find( params[:talk][:id])
-    talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
-    StartRecordingJob.perform_later(talk)
-    redirect_to admin_tracks_path
+    if talk.track.live_stream_media_live.status != LiveStreamMediaLive::STATUS_CHANNEL_STOPPED
+      flash[:danger] = "MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
+      redirect_to admin_tracks_path
+    else
+      talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
+      StartRecordingJob.perform_later(talk)
+      redirect_to admin_tracks_path
+    end
   end
 
   def stop_recording

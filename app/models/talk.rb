@@ -74,8 +74,8 @@ class Talk < ApplicationRecord
     return message
   end
 
-  def self.export_csv(conference, talks)
-    filename = "#{conference.abbr}_talks"
+  def self.export_csv(conference, talks, track_name="all", date="all")
+    filename = "#{conference.abbr}_#{track_name}_#{date}_talks"
     columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company]
     labels = conference.proposal_item_configs.map(&:label).uniq
     labels.delete('session_time')

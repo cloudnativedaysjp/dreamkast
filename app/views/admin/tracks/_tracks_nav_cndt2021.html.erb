@@ -49,7 +49,7 @@
         <% end %>
       </td>
       <td>
-        <% if talk.video %>
+        <% if talk.video && talk.speakers.size > 0 %>
           <% if already_recorded?(talk) %>
             <div class="btn btn-primary">録画済み</div>
           <% else %>

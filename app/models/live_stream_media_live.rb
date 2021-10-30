@@ -74,9 +74,10 @@ class LiveStreamMediaLive < LiveStream
       w.delay = 10
     end
 
+    channel_resp = media_live_client.describe_channel(channel_id: channel_id)
     params = {
       input: input_resp.input,
-      channel: channel_resp.channel
+      channel: channel_resp.to_h
     }
     self.update!(params: params)
   rescue => e

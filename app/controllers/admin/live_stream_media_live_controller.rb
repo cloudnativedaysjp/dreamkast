@@ -24,4 +24,14 @@ class Admin::LiveStreamMediaLiveController < ApplicationController
       format.html { redirect_to admin_live_stream_ivs_path, notice: '' }
     end
   end
+
+  def sync
+    @conference.live_stream_media_live.each do |media_live|
+      media_live.sync_channel_from_aws
+    end
+
+    respond_to do |format|
+      format.html { redirect_to admin_live_stream_ivs_path, notice: '' }
+    end
+  end
 end

@@ -133,7 +133,7 @@ class LiveStreamMediaLive < LiveStream
     self.update!(params: params)
   end
 
-  def reset
+  def sync_channel_from_aws
     resp = media_live_client.describe_channel(
       {
         channel_id: channel_id,

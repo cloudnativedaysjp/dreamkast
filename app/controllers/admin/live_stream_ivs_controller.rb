@@ -1,5 +1,6 @@
 class Admin::LiveStreamIvsController < ApplicationController
   include SecuredAdmin
+  include MediaLiveHelper
 
   def index
     @ivs = LiveStreamIvs.new
@@ -76,44 +77,6 @@ class Admin::LiveStreamIvsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to admin_live_stream_ivs_path, notice: '' }
-    end
-  end
-
-  private
-
-  def get_media_live_inputs_from_aws(input_ids=[])
-    inputs = []
-    next_token = ''
-    while true
-      resp = media_live_client.list_inputs(next_token: next_token)
-      inputs.concat(resp.inputs)
-      break unless resp.next_token
-      next_token = resp.next_token
-    end
-
-    inputs.select{ |input| input_ids.include?(input.id) }
-  end
-
-  def get_media_live_channels_from_aws(channel_ids=[])
-    channels = []
-    next_token = ''
-    while true
-      resp = media_live_client.list_channels(next_token: next_token)
-      channels.concat(resp.channels)
-      break unless resp.next_token
-      next_token = resp.next_token
-    end
-
-    channels.select{ |channel| channel_ids.include?(channel.id) }
-  end
-
-
-  def media_live_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-    if creds.set?
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1', credentials: creds)
-    else
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1')
     end
   end
 end

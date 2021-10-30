@@ -153,14 +153,4 @@ class Admin::TracksController < ApplicationController
   def media_live
     @track.live_stream_media_live
   end
-
-
-  def media_live_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-    if creds.set?
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1', credentials: creds)
-    else
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1')
-    end
-  end
 end

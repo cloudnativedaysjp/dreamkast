@@ -1,6 +1,8 @@
 require "aws-sdk-medialive"
 
 class LiveStreamMediaLive < LiveStream
+  include MediaLiveHelper
+
   belongs_to :conference
   belongs_to :track
 
@@ -79,10 +81,7 @@ class LiveStreamMediaLive < LiveStream
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
 
-    media_live_client.wait_until(:channel_created, channel_id: channel_resp.channel['id']) do |w|
-      w.max_attempts = 60
-      w.delay = 10
-    end
+    wait_until(:channel_created, channel_resp.channel['id'])
 
     channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
     params = {
@@ -101,10 +100,7 @@ class LiveStreamMediaLive < LiveStream
     input_id = self.input_id unless input_id
     channel_id = self.channel_id unless channel_id
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
-    media_live_client.wait_until(:channel_deleted, channel_id: channel_id) do |w|
-      w.max_attempts = 30
-      w.delay = 5
-    end
+    wait_until(:channel_deleted, channel_id)
 
     media_live_client.delete_input(input_id: input_id)if input_id
   rescue => e
@@ -157,15 +153,6 @@ class LiveStreamMediaLive < LiveStream
 
   def destination_base
     "s3://#{bucket_name}/medialive/#{conference.abbr}"
-  end
-
-  def media_live_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-    if creds.set?
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1', credentials: creds)
-    else
-      Aws::MediaLive::Client.new(region: 'ap-northeast-1')
-    end
   end
 
   def env_name_for_tag

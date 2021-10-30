@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :viewer_count do
-    conference_id { 1 }
-    track_id { 1 }
-    stream_type { "MyString" }
-    talk_id { 1 }
-    count { 1 }
+  factory :cndt2021_viewer_count, class: ViewerCount do
+    conference_id { 4 }
+    track_id { 11 }
+    stream_type { "IVS" }
+    talk_id { 12 }
+    count { 2 }
   end
 end

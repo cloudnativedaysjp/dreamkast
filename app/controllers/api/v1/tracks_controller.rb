@@ -9,4 +9,9 @@ class Api::V1::TracksController < ApplicationController
     @track = Track.find(params[:id])
     render 'api/v1/tracks/show.json.jbuilder'
   end
+
+  def viewer_count
+    @count = ViewerCount.where(track_id: params[:id]).order(created_at: :desc).limit(1)[0]
+    render 'api/v1/tracks/viewer_count.json.jbuilder'
+  end
 end

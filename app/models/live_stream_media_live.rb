@@ -152,7 +152,7 @@ class LiveStreamMediaLive < LiveStream
             media_package_settings: [],
             settings: [
               {
-                url: "#{destination_base}/talks/#{talk_id}"
+                url: "#{destination_base}/talks/#{talk_id}/playlist"
               }
             ]
           }

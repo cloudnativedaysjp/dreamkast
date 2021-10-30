@@ -1,16 +1,18 @@
 class LiveStreamIvs < LiveStream
+  include EnvHelper
+
   belongs_to :conference
   belongs_to :track
 
   before_create do
     resp = ivs_client.create_channel(
-      name: "#{env_name_for_tag}_#{conference.abbr}_track#{track.name}",
+      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
       latency_mode: "LOW",
       type: "STANDARD",
       authorized: false,
       recording_configuration_arn: recording_configuration_arn,
       tags: {
-        "Environment" => env_name_for_tag
+        "Environment" => env_name
       }
     )
 
@@ -59,21 +61,8 @@ class LiveStreamIvs < LiveStream
     end
   end
 
-  def env_name_for_tag
-    case
-    when ENV['REVIEW_APP'] == 'true'
-      'review_app'
-    when ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
-      'staging'
-    when ENV['S3_BUCKET'] == 'dreamkast-prd-bucket'
-      'production'
-    else
-      'others'
-    end
-  end
-
   def recording_configuration_arn
-    case env_name_for_tag
+    case env_name
     when 'production'
       'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
     when 'staging'

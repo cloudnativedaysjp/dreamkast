@@ -2,6 +2,7 @@ require "aws-sdk-medialive"
 
 class LiveStreamMediaLive < LiveStream
   include MediaLiveHelper
+  include EnvHelper
 
   belongs_to :conference
   belongs_to :track
@@ -96,13 +97,10 @@ class LiveStreamMediaLive < LiveStream
     delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
   end
 
-  def delete_media_live_resources(input_id: nil, channel_id: nil)
-    input_id = self.input_id unless input_id
-    channel_id = self.channel_id unless channel_id
+  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id)
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
     wait_until(:channel_deleted, channel_id)
-
-    media_live_client.delete_input(input_id: input_id)if input_id
+    media_live_client.delete_input(input_id: input_id) if input_id
   rescue => e
     logger.error "#{e.message}"
   end
@@ -116,7 +114,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def set_recording_target_talk(talk_id)
-    resp = media_live_client.update_channel(
+    media_live_client.update_channel(
       {
         channel_id: channel_id,
         destinations: [
@@ -145,21 +143,8 @@ class LiveStreamMediaLive < LiveStream
     "s3://#{bucket_name}/medialive/#{conference.abbr}"
   end
 
-  def env_name_for_tag
-    case
-    when ENV['REVIEW_APP'] == 'true'
-      'review_app'
-    when ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
-      'staging'
-    when ENV['S3_BUCKET'] == 'dreamkast-prd-bucket'
-      'production'
-    else
-      'others'
-    end
-  end
-
   def bucket_name
-    case env_name_for_tag
+    case env_name
     when 'production'
       "dreamkast-ivs-stream-archive-prd"
     when 'staging'
@@ -172,7 +157,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def cloudfront_domain_name
-    case env_name_for_tag
+    case env_name
     when 'review_app'
       'd1jzp6sbtx9by.cloudfront.net'
     when 'staging'
@@ -186,7 +171,7 @@ class LiveStreamMediaLive < LiveStream
 
   def create_input_params
     {
-      name: "#{env_name_for_tag}_#{conference.abbr}_track#{track.name}",
+      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
       type: "RTMP_PULL",
       sources: [
         {
@@ -198,7 +183,7 @@ class LiveStreamMediaLive < LiveStream
 
   def create_channel_params(input_id, input_name)
     {
-      name: "#{env_name_for_tag}_#{conference.abbr}_track#{track.name}",
+      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
       role_arn: "arn:aws:iam::607167088920:role/MediaLiveAccessRole",
       channel_class: "SINGLE_PIPELINE",
       destinations: [

@@ -417,7 +417,7 @@ components:
           type: number
         viewer_count:
           type: number
-      conference_id:
+      example:
         id: 4
         track_id: 20
         talk_id: 123

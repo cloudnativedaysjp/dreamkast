@@ -46,6 +46,14 @@ class LiveStreamIvs < LiveStream
     params['stream_key']
   end
 
+  def get_stream
+    ivs_client.get_stream(channel_arn: self.channel_arn)
+  end
+
+  def viewer_count
+    self.get_stream.stream.viewer_count
+  end
+
   private
 
   def ivs_client

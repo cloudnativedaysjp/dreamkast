@@ -205,6 +205,9 @@ class LiveStreamMediaLive < LiveStream
           input_settings: {
             caption_selectors: [],
             audio_selectors: [
+              {
+                name: "aaa"
+              }
             ],
             deblock_filter: "DISABLED",
             denoise_filter: "DISABLED",
@@ -221,7 +224,14 @@ class LiveStreamMediaLive < LiveStream
         resolution: "HD"
       },
       encoder_settings: {
-        audio_descriptions: [],
+        audio_descriptions: [
+          {
+            audio_selector_name: "aaa",
+            audio_type_control: "FOLLOW_INPUT",
+            language_code_control: "FOLLOW_INPUT",
+            name: "audio_mrnccr"
+          }
+        ],
         caption_descriptions: [],
         output_groups: [
           {
@@ -270,7 +280,7 @@ class LiveStreamMediaLive < LiveStream
             outputs: [
               {
                 audio_description_names: [
-                  # "audio_4735wd"
+                  "audio_mrnccr"
                 ],
                 caption_description_names: [],
                 output_name: "g1wlm",

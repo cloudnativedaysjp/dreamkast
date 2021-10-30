@@ -3,7 +3,7 @@ require "aws-sdk-medialive"
 class WaitChannelRunningJob < ApplicationJob
   include LogoutHelper
 
-  queue_as :default
+  queue_as ENV['RAILS_ENV'] == 'production' ? :media_live : :default
   self.queue_adapter = if ENV['RAILS_ENV'] == 'production'
                          :amazon_sqs
                        else

@@ -1,2 +1,3 @@
 queues:
   mail: <%= ENV["SQS_MAIL_QUEUE_URL"] %>
+  media_live: <%= ENV["SQS_MAIL_QUEUE_URL"] %>

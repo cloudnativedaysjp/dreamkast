@@ -23,6 +23,7 @@ class LiveStreamMediaLive < LiveStream
   CHANNEL_UPDATE_FAILED = "UPDATE_FAILED"
   ERROR = 'ERROR'
 
+  attr_accessor :channel, :input
 
   def initialize(attributes = nil)
     @params = {}
@@ -30,19 +31,23 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def channel_name
-    params&.dig('channel', 'name')
+    self.channel.name
   end
 
   def channel_id
-    params&.dig('channel', 'id')
+    params&.dig('channel_id')
+  end
+
+  def channel_state
+    self.channel.state
   end
 
   def input_id
-    params&.dig('input', 'id')
+    params&.dig('input_id')
   end
 
   def input_name
-    params&.dig('input', 'name')
+    self.input.name
   end
 
   def playback_url
@@ -56,9 +61,6 @@ class LiveStreamMediaLive < LiveStream
     params&.dig('channel', 'destinations')[0].dig('settings')[0]['url']
   end
 
-  def channel_state
-    params&.dig('channel', 'state')
-  end
 
   def recording_talk_id
     params&.dig('talk_id')
@@ -76,8 +78,10 @@ class LiveStreamMediaLive < LiveStream
 
     channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
     params = {
-      input: input_resp.input,
-      channel: channel_resp.to_h
+      input_id: input_resp.input.id,
+      input_arn: input_resp.input.arn,
+      channel_id: channel_resp.id,
+      channel_arn: channel_resp.arn,
     }
     self.update!(params: params)
   rescue => e

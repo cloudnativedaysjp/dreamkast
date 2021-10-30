@@ -6,6 +6,13 @@ class Admin::LiveStreamIvsController < ApplicationController
     @ivss = @conference.tracks.map(&:live_stream_ivs).compact
 
     @media_lives = @conference.tracks.map(&:live_stream_media_live).compact
+    get_media_live_channels_from_aws(@media_lives.map(&:channel_id)).each do |channel|
+      @media_lives.find{ |media_live| media_live.channel_id == channel.id }.channel = channel
+    end
+    get_media_live_inputs_from_aws(@media_lives.map(&:input_id)).each do |input|
+      @media_lives.find{ |media_live| media_live.input_id == input.id }.input = input
+    end
+
     respond_to do |format|
       format.html { render :index }
       format.json do
@@ -72,4 +79,41 @@ class Admin::LiveStreamIvsController < ApplicationController
     end
   end
 
+  private
+
+  def get_media_live_inputs_from_aws(input_ids=[])
+    inputs = []
+    next_token = ''
+    while true
+      resp = media_live_client.list_inputs(next_token: next_token)
+      inputs.concat(resp.inputs)
+      break unless resp.next_token
+      next_token = resp.next_token
+    end
+
+    inputs.select{ |input| input_ids.include?(input.id) }
+  end
+
+  def get_media_live_channels_from_aws(channel_ids=[])
+    channels = []
+    next_token = ''
+    while true
+      resp = media_live_client.list_channels(next_token: next_token)
+      channels.concat(resp.channels)
+      break unless resp.next_token
+      next_token = resp.next_token
+    end
+
+    channels.select{ |channel| channel_ids.include?(channel.id) }
+  end
+
+
+  def media_live_client
+    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+    if creds.set?
+      Aws::MediaLive::Client.new(region: 'ap-northeast-1', credentials: creds)
+    else
+      Aws::MediaLive::Client.new(region: 'ap-northeast-1')
+    end
+  end
 end

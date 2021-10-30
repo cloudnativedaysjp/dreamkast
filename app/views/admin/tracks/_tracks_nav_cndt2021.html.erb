@@ -88,7 +88,9 @@
 <br><br>
 <h4>以下デバッグ用の情報</h4>
 <ul>
-  <li>Channel State: <%= @track.live_stream_media_live.channel_state %></li>
-  <li>Channel URL: <%= link_to "https://ap-northeast-1.console.aws.amazon.com/medialive/home?region=ap-northeast-1#!/channels/#{@track.live_stream_media_live.channel_id}" %></li>
-  <li>Channel Destination: <%= @track.live_stream_media_live.destination %></li>
+  <% if @track.live_stream_media_live %>
+    <li>Channel State: <%= @track.live_stream_media_live.channel_state %></li>
+    <li>Channel URL: <%= link_to "https://ap-northeast-1.console.aws.amazon.com/medialive/home?region=ap-northeast-1#!/channels/#{@track.live_stream_media_live.channel_id}" %></li>
+    <li>Channel Destination: <%= @track.live_stream_media_live.destination %></li>
+  <% end %>
 </ul>

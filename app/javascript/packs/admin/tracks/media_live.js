@@ -11,8 +11,3 @@ $(function(){
     })
   }, 10000);
 });
-
-function update_debug_info(data) {
-  document.getElementById("debug_channel_state").innerHTML = 'Channel State: ' + data.state;
-  document.getElementById("debug_channel_destination").innerHTML = 'Channel Destination: ' + data.destinations[0].settings[0].url;
-}

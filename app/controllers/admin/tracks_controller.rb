@@ -7,7 +7,7 @@ class Admin::TracksController < ApplicationController
     @conference_day = @conference.conference_days.select{|day| day.date.strftime("%Y-%m-%d") == @date }.first
     @track_name = params[:track_name] || @conference.tracks.first.name
     @track = @conference.tracks.find_by(name: @track_name)
-    @track.live_stream_media_live.get_channel_from_aws
+    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
     @talks = @conference
               .talks
               .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)

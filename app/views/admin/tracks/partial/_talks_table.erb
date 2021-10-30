@@ -8,6 +8,8 @@
       <% if talk.video %>
         <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
           <%= f.hidden_field "talk[id]", value: talk.id %>
+          <%= f.hidden_field "talk[date]", value: conference_day.date %>
+          <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
           <div class="on_air_group btn-group-toggle">
             <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
                          id: "button_#{talk.id}",

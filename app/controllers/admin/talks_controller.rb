@@ -23,6 +23,9 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+
     talk = Talk.find(params[:talk][:id])
     ActiveRecord::Base.transaction do
       other_talk_in_track = @conference.tracks.find_by(name: talk.track.name).talks
@@ -42,10 +45,13 @@ class Admin::TalksController < ApplicationController
     )
 
     flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-    redirect_to admin_tracks_path
+    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
   end
 
   def stop_on_air
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+
     talk = Talk.find(params[:talk][:id])
     talk.video.update!(on_air: false)
 
@@ -57,34 +63,39 @@ class Admin::TalksController < ApplicationController
     )
 
     flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-    redirect_to admin_tracks_path
+    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
   end
 
   def start_recording
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+
     talk = Talk.find( params[:talk][:id])
     media_live = talk.track.live_stream_media_live
     unless media_live
       flash[:danger] = "LiveStreamMediaLiveリソースが存在していません。AdminのIVSメニューから作成してください"
-      redirect_to admin_tracks_path
+      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
     end
 
     media_live.get_channel_from_aws
 
     if media_live.channel_state != LiveStreamMediaLive::CHANNEL_IDLE
       flash[:danger] = "Channel Stateが #{media_live.channel_state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
-      redirect_to admin_tracks_path
+      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
     else
       talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
       talk.track.live_stream_media_live.start_channel
 
-      redirect_to admin_tracks_path
+      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
     end
   end
 
   def stop_recording
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
     talk = Talk.find(params[:talk][:id])
     talk.track.live_stream_media_live.stop_channel
-    redirect_to admin_tracks_path
+    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
   end
 
   def bulk_insert_talks

@@ -6,14 +6,11 @@ class CreateMediaLiveJob < ApplicationJob
 
   def perform(*args)
     logger.info "Perform CreateMediaLiveJob"
-    conference = args[0]
-    track = args[1]
+    conference, track = args
 
     media_live = LiveStreamMediaLive.new(conference: conference, track: track)
 
-    unless media_live.save
-      logger.error "Failed to create LiveStreamMediaLive: #{media_live.errors}"
-    end
+    logger.error "Failed to create LiveStreamMediaLive: #{media_live.errors}" unless media_live.save
 
     media_live.create_media_live_resources
   rescue => e

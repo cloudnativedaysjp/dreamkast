@@ -72,7 +72,6 @@ Rails.application.routes.draw do
       post 'bulk_delete_ivs' => 'live_stream_ivs#bulk_delete'
       post 'bulk_create_media_live' => 'live_stream_media_live#bulk_create'
       post 'bulk_delete_media_live' => 'live_stream_media_live#bulk_delete'
-      post 'sync_media_live' => 'live_stream_media_live#sync'
     end
 
     get '/team' => 'teams#show'

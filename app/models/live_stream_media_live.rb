@@ -115,16 +115,6 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.stop_channel(channel_id: channel_id)
   end
 
-  def sync_channel_from_aws
-    resp = media_live_client.describe_channel(
-      {
-        channel_id: channel_id,
-      }
-    )
-    params['channel'] = resp.to_h
-    self.update!(params: params)
-  end
-
   def set_recording_target_talk(talk_id)
     resp = media_live_client.update_channel(
       {

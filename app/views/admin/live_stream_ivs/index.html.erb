@@ -55,12 +55,6 @@
     <% end %>
   </div>
 
-  <div class="col-10 mb-3 d-flex align-items-center">
-    <%= form_with(url: admin_sync_media_live_path, local: true) do |form| %>
-      <%= form.submit 'Channel情報をAWSと同期', class: "btn btn-primary" %>
-    <% end %>
-  </div>
-
   <%= form_with(url: admin_bulk_delete_media_live_path, local: true) do |form| %>
     <table class="table table-striped talks_table" >
       <thead>

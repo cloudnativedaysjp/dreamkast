@@ -85,6 +85,15 @@
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
 
+<div class="row">
+  <div class="col-12 mt-4">
+    <h2>Download talks in this track</h2>
+    <div class="col-12 form-group">
+      <%= link_to 'Download CSV', admin_tracks_path(format: "csv", date: @date, track_name: @track.name), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
 <br><br>
 <h4>以下デバッグ用の情報</h4>
 <ul>

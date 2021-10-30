@@ -31,7 +31,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def channel_name
-    self.channel.name
+    self.channel&.name
   end
 
   def channel_id
@@ -39,7 +39,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def channel_state
-    self.channel.state
+    self.channel&.state
   end
 
   def input_id
@@ -47,7 +47,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def input_name
-    self.input.name
+    self.input&.name
   end
 
   def playback_url
@@ -58,7 +58,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def destination
-    params&.dig('channel', 'destinations')[0].dig('settings')[0]['url']
+    self.channel&.destinations[0].settings[0].url
   end
 
 

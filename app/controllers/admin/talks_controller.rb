@@ -84,7 +84,6 @@ class Admin::TalksController < ApplicationController
   def stop_recording
     talk = Talk.find(params[:talk][:id])
     talk.track.live_stream_media_live.stop_channel
-    WaitChannelStoppedJob.perform_later(talk)
     redirect_to admin_tracks_path
   end
 

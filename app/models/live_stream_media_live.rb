@@ -115,32 +115,8 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.start_channel(channel_id: channel_id)
   end
 
-  def wait_running
-    media_live_client.wait_until(:channel_running, channel_id: channel_id) do |w|
-      w.max_attempts = 60
-      w.delay = 10
-    end
-
-    resp = media_live_client.describe_channel(channel_id: channel_id)
-    params[:channel] = resp.to_h
-    self.update!(params: params)
-  end
-
   def stop_channel
-    resp = media_live_client.stop_channel(channel_id: channel_id)
-    params[:channel] = resp.to_h
-    self.update!(params: params)
-  end
-
-  def wait_stopped
-    media_live_client.wait_until(:channel_stopped, channel_id: channel_id) do |w|
-      w.max_attempts = 60
-      w.delay = 10
-    end
-
-    resp = media_live_client.describe_channel(channel_id: channel_id)
-    params[:channel] = resp.to_h
-    self.update!(params: params)
+    media_live_client.stop_channel(channel_id: channel_id)
   end
 
   def sync_channel_from_aws

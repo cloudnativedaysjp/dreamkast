@@ -30,6 +30,14 @@ class LiveStreamMediaLive < LiveStream
     super
   end
 
+  def get_input_from_aws
+    self.input = media_live_client.describe_input(input_id: input_id)
+  end
+
+  def get_channel_from_aws
+    self.channel = media_live_client.describe_channel(channel_id: channel_id)
+  end
+
   def channel_name
     self.channel&.name
   end
@@ -104,9 +112,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def start_channel
-    resp = media_live_client.start_channel(channel_id: channel_id)
-    params[:channel] = resp.to_h
-    self.update!(params: params)
+    media_live_client.start_channel(channel_id: channel_id)
   end
 
   def wait_running
@@ -164,7 +170,6 @@ class LiveStreamMediaLive < LiveStream
         ]
       }
     )
-    params[:channel] = resp.channel
     params[:talk_id] = talk_id
     self.update!(params: params)
   rescue => e

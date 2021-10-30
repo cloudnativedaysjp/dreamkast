@@ -1,0 +1,7 @@
+recording_group_target = document.getElementById('talks_table_tbody');
+html = "<%= j(render partial: 'admin/tracks/partial/talks_table', locals: {conference_day: @conference_day}) %>"
+recording_group_target.innerHTML = html
+
+debug_media_live_information_target = document.getElementById('debug_media_live_information');
+html = "<%= j(render partial: 'admin/tracks/partial/debug_media_live_information') %>";
+debug_media_live_information_target.innerHTML = html;

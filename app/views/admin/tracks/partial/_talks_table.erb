@@ -1,0 +1,52 @@
+<% @talks.each do |talk| %>
+  <tr>
+    <td><%= talk.id %></td>
+    <td><%= talk.start_to_end %></td>
+    <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+    <td><h5><%= talk.title %></h5></td>
+    <td >
+      <% if talk.video %>
+        <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+          <%= f.hidden_field "talk[id]", value: talk.id %>
+          <div class="on_air_group btn-group-toggle">
+            <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
+                         id: "button_#{talk.id}",
+                         class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
+                         autocomplete: "off",
+                         track_name: talk.track.name,
+                         talk_id: talk.id,
+                         data: { confirm: confirm_message(talk) }
+            %>
+          </div>
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <% if talk.video && talk.speakers.size > 0 %>
+        <% if already_recorded?(talk) %>
+          <div class="btn btn-primary">録画済み</div>
+        <% else %>
+          <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+            <%= f.hidden_field "talk[id]", value: talk.id %>
+            <div class="on_air_group btn-group-toggle">
+              <% if waiting_to_start?(talk) || waiting_to_stop?(talk) %>
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              <% end %>
+
+              <%= f.submit recording_control_button_label(talk),
+                           id: "recording_button_#{talk.id}",
+                           class: "btn btn-#{recording?(talk) ? 'danger' : 'secondary'} on_air_button #{recording?(talk) ? 'active' : ''}",
+                           autocomplete: "off",
+                           track_name: talk.track.name,
+                           talk_id: talk.id,
+                           data: { confirm: confirm_recording_message(talk), disable_with: "送信中..."}
+              %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

@@ -68,6 +68,8 @@ class Admin::TalksController < ApplicationController
       redirect_to admin_tracks_path
     end
 
+    media_live.get_channel_from_aws
+
     if media_live.channel_state != LiveStreamMediaLive::CHANNEL_IDLE
       flash[:danger] = "Channel Stateが #{media_live.channel_state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
       redirect_to admin_tracks_path
@@ -75,7 +77,6 @@ class Admin::TalksController < ApplicationController
       talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
       talk.track.live_stream_media_live.start_channel
 
-      WaitChannelRunningJob.perform_later(talk)
       redirect_to admin_tracks_path
     end
   end

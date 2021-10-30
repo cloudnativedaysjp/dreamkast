@@ -95,6 +95,8 @@ class Admin::TalksController < ApplicationController
     @track_name = params[:talk][:track_name] || @conference.tracks.first.name
     talk = Talk.find(params[:talk][:id])
     talk.track.live_stream_media_live.stop_channel
+    talk.track.live_stream_media_live.get_channel_from_aws
+    talk.video.update!(site: 's3', video_id: talk.track.live_stream_media_live.playback_url)
     redirect_to admin_tracks_path(date: @date, track_name: @track_name)
   end
 

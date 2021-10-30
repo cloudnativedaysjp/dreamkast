@@ -63,7 +63,7 @@ class LiveStreamMediaLive < LiveStream
 
   def playback_url
     cloudfront_url = "https://#{cloudfront_domain_name}"
-    object_key = params&.dig('channel', 'destinations')[0]['settings'][0]['url'].gsub("s3://#{bucket_name}/", '')
+    object_key = destination.gsub("s3://#{bucket_name}/", '')
 
     "#{cloudfront_url}/#{object_key}.m3u8"
   end

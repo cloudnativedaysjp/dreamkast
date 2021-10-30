@@ -25,7 +25,7 @@
     </td>
     <td>
       <% if talk.video && talk.speakers.size > 0 %>
-        <% if already_recorded?(talk) %>
+        <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
           <div class="btn btn-primary">録画済み</div>
         <% else %>
           <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>

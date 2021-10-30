@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_25_101618) do
+ActiveRecord::Schema.define(version: 2021_10_30_082839) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -370,6 +370,19 @@ ActiveRecord::Schema.define(version: 2021_09_25_101618) do
     t.string "video_id"
     t.string "slido_id"
     t.text "video_file_data"
+  end
+
+  create_table "viewer_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "conference_id"
+    t.integer "track_id"
+    t.string "stream_type"
+    t.integer "talk_id"
+    t.integer "count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_viewer_counts_on_conference_id"
+    t.index ["talk_id"], name: "index_viewer_counts_on_talk_id"
+    t.index ["track_id"], name: "index_viewer_counts_on_track_id"
   end
 
   add_foreign_key "admin_profiles", "conferences"

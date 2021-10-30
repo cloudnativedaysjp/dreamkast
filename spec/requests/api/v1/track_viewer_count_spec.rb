@@ -19,6 +19,10 @@ describe TracksController, type: :request do
       get '/api/v1/tracks/11/viewer_count'
       expect(response.status).to eq 200
     end
+
+    it 'return 404' do
+      get '/api/v1/tracks/200/viewer_count'
+      expect(response.status).to eq 404
+    end
   end
 end
-

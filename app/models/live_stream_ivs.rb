@@ -43,7 +43,7 @@ class LiveStreamIvs < LiveStream
   end
 
   def ingest_endpoint
-    params['ingest_endpoint']
+    params.dig('channel', 'ingest_endpoint')
   end
 
   def stream_key
@@ -56,6 +56,10 @@ class LiveStreamIvs < LiveStream
 
   def viewer_count
     self.get_stream.stream.viewer_count
+  end
+
+  def ingest_url
+    "rtmps://#{ingest_endpoint}:443/app/#{params.dig('stream_key', 'value')}"
   end
 
   private

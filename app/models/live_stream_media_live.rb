@@ -119,7 +119,7 @@ class LiveStreamMediaLive < LiveStream
         channel_id: channel_id,
         destinations: [
           {
-            id: "5ari39",
+            id: "destination1",
             media_package_settings: [],
             settings: [
               {

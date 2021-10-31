@@ -30,6 +30,8 @@
         <% else %>
           <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>
             <%= f.hidden_field "talk[id]", value: talk.id %>
+            <%= f.hidden_field "talk[date]", value: conference_day.date %>
+            <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
             <div class="on_air_group btn-group-toggle">
               <% if waiting_to_start?(talk) || waiting_to_stop?(talk) %>
                 <div class="spinner-border" role="status">

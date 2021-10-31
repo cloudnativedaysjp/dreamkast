@@ -85,37 +85,63 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_recording
-    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
-    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
-
     talk = Talk.find( params[:talk][:id])
-    media_live = talk.track.live_stream_media_live
+
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @conference_day = @conference.conference_days.select{|day| day.date.strftime("%Y-%m-%d") == @date }.first
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+    @track = talk.track
+    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
+    @talks = @conference
+               .talks
+               .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
+               .order('conference_day_id ASC, start_time ASC, track_id ASC')
+
+    media_live = @track.live_stream_media_live
     unless media_live
       flash[:danger] = "LiveStreamMediaLiveリソースが存在していません。AdminのIVSメニューから作成してください"
-      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+      respond_to do |format|
+        format.js { render 'admin/tracks/index.js' }
+      end
     end
 
     media_live.get_channel_from_aws
 
     if media_live.channel_state != LiveStreamMediaLive::CHANNEL_IDLE
       flash[:danger] = "Channel Stateが #{media_live.channel_state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
-      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+      respond_to do |format|
+        format.js { render 'admin/tracks/index.js' }
+      end
     else
-      talk.track.live_stream_media_live.set_recording_target_talk(talk.id)
-      talk.track.live_stream_media_live.start_channel
+      @track.live_stream_media_live.set_recording_target_talk(talk.id)
+      @track.live_stream_media_live.start_channel
+      @track.live_stream_media_live.get_channel_from_aws
 
-      redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+      respond_to do |format|
+        format.js { render 'admin/tracks/index.js' }
+      end
     end
   end
 
   def stop_recording
-    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
-    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
     talk = Talk.find(params[:talk][:id])
-    talk.track.live_stream_media_live.stop_channel
-    talk.track.live_stream_media_live.get_channel_from_aws
+
+    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @conference_day = @conference.conference_days.select{|day| day.date.strftime("%Y-%m-%d") == @date }.first
+    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+    @track = talk.track
+    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
+    @talks = @conference
+               .talks
+               .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
+               .order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @track.live_stream_media_live.stop_channel
+    @track.live_stream_media_live.get_channel_from_aws
     talk.video.update!(site: 's3', video_id: talk.track.live_stream_media_live.playback_url)
-    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+
+    respond_to do |format|
+      format.js { render 'admin/tracks/index.js' }
+    end
   end
 
   def bulk_insert_talks

@@ -50,11 +50,7 @@ module TalksTable
 
   def confirm_recording_message(track, talk)
     if media_live && media_live.recording_talk_id != talk.id
-      if track.live_stream_media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
         "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
-      else
-        "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"
-      end
     else
       if track.live_stream_media_live && track.live_stream_media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
         "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"

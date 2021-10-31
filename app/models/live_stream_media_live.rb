@@ -228,6 +228,19 @@ class LiveStreamMediaLive < LiveStream
           {
             audio_selector_name: "aaa",
             audio_type_control: "FOLLOW_INPUT",
+            codec_settings: {
+              aac_settings: {
+                bitrate: 96000,
+                coding_mode: "CODING_MODE_2_0",
+                input_type: "NORMAL",
+                profile: "LC",
+                rate_control_mode: "CBR",
+                raw_format: "NONE",
+                sample_rate: 48000,
+                spec: "MPEG4"
+              }
+            },
+
             language_code_control: "FOLLOW_INPUT",
             name: "audio_mrnccr"
           }
@@ -283,7 +296,7 @@ class LiveStreamMediaLive < LiveStream
                   "audio_mrnccr"
                 ],
                 caption_description_names: [],
-                output_name: "g1wlm",
+                output_name: "_1280x720_3300k",
                 output_settings: {
                   hls_output_settings: {
                     h265_packaging_type: "HVC1",
@@ -293,6 +306,7 @@ class LiveStreamMediaLive < LiveStream
                         m3u_8_settings: {
                           audio_frames_per_pes: 4,
                           audio_pids: "492-498",
+                          ecm_pid: "8182",
                           nielsen_id_3_behavior: "NO_PASSTHROUGH",
                           pcr_control: "PCR_EVERY_PES_PACKET",
                           pmt_pid: "480",
@@ -305,10 +319,10 @@ class LiveStreamMediaLive < LiveStream
                         }
                       }
                     },
-                    name_modifier: "_1"
+                    name_modifier: "_1280x720_3300k"
                   }
                 },
-                video_description_name: "video_rf5ut5"
+                video_description_name: "_1280x720_3300k"
               }
             ]
           }
@@ -318,10 +332,44 @@ class LiveStreamMediaLive < LiveStream
         },
         video_descriptions: [
           {
-            name: "video_rf5ut5",
+            name: "_1280x720_3300k",
+            height: 720,
+            width: 1280,
             respond_to_afd: "NONE",
             scaling_behavior: "DEFAULT",
-            sharpness: 50
+            sharpness: 50,
+            codec_settings: {
+              h264_settings: {
+                adaptive_quantization: "HIGH",
+                afd_signaling: "NONE",
+                bitrate: 3300000,
+                color_metadata: "INSERT",
+                entropy_encoding: "CABAC",
+                flicker_aq: "ENABLED",
+                force_field_pictures: "DISABLED",
+                framerate_control: "SPECIFIED",
+                framerate_denominator: 1001,
+                framerate_numerator: 30000,
+                gop_b_reference: "DISABLED",
+                gop_closed_cadence: 1,
+                gop_num_b_frames: 3,
+                gop_size: 60,
+                gop_size_units: "FRAMES",
+                level: "H264_LEVEL_4_1",
+                look_ahead_rate_control: "HIGH",
+                num_ref_frames: 1,
+                par_control: "INITIALIZE_FROM_SOURCE",
+                profile: "HIGH",
+                rate_control_mode: "CBR",
+                scan_type: "PROGRESSIVE",
+                scene_change_detect: "ENABLED",
+                spatial_aq: "ENABLED",
+                subgop_length: "FIXED",
+                syntax: "DEFAULT",
+                temporal_aq: "ENABLED",
+                timecode_insertion: "DISABLED"
+              }
+            },
           }
         ]
       }

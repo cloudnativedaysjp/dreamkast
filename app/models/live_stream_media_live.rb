@@ -161,9 +161,9 @@ class LiveStreamMediaLive < LiveStream
     when 'review_app'
       'd1jzp6sbtx9by.cloudfront.net'
     when 'staging'
-      ''
+      'd3i2o0iduabu0p.cloudfront.net'
     when 'production'
-      ''
+      'd3pun3ptcv21q4.cloudfront.net'
     else
       'd1jzp6sbtx9by.cloudfront.net'
     end

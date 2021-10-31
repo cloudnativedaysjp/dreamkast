@@ -276,24 +276,6 @@ class LiveStreamMediaLive < LiveStream
             },
             language_code_control: "FOLLOW_INPUT",
             name: "audio_3"
-          },
-          {
-            audio_selector_name: "aaa",
-            audio_type_control: "FOLLOW_INPUT",
-            codec_settings: {
-              aac_settings: {
-                bitrate: 128000,
-                coding_mode: "CODING_MODE_2_0",
-                input_type: "NORMAL",
-                profile: "LC",
-                rate_control_mode: "CBR",
-                raw_format: "NONE",
-                sample_rate: 48000,
-                spec: "MPEG4"
-              }
-            },
-            language_code_control: "FOLLOW_INPUT",
-            name: "audio_4"
           }
         ],
         caption_descriptions: [],
@@ -428,37 +410,6 @@ class LiveStreamMediaLive < LiveStream
                   }
                 },
                 video_description_name: "video_480p30"
-              },
-              {
-                audio_description_names: ["audio_4"],
-                caption_description_names: [],
-                output_name: "_240p30",
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: "HVC1",
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: "program_audio",
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: "492-498",
-                          ecm_pid: "8182",
-                          nielsen_id_3_behavior: "NO_PASSTHROUGH",
-                          pcr_control: "PCR_EVERY_PES_PACKET",
-                          pmt_pid: "480",
-                          program_num: 1,
-                          scte_35_behavior: "NO_PASSTHROUGH",
-                          scte_35_pid: "500",
-                          timed_metadata_behavior: "NO_PASSTHROUGH",
-                          timed_metadata_pid: "502",
-                          video_pid: "481"
-                        }
-                      }
-                    },
-                    name_modifier: "_240p30"
-                  }
-                },
-                video_description_name: "video_240p30"
               }
             ]
           }

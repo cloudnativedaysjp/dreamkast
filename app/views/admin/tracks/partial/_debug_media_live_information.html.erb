@@ -1,0 +1,7 @@
+<ul>
+  <% if @track.live_stream_media_live %>
+    <li id='debug_channel_state'>Channel State: <%= @track.live_stream_media_live.channel_state %></li>
+    <li>Channel URL: <%= link_to "https://ap-northeast-1.console.aws.amazon.com/medialive/home?region=ap-northeast-1#!/channels/#{@track.live_stream_media_live.channel_id}" %></li>
+    <li id='debug_channel_destination'>Channel Destination: <%= @track.live_stream_media_live.destination %></li>
+  <% end %>
+</ul>

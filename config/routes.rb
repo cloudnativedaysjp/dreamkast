@@ -55,6 +55,8 @@ Rails.application.routes.draw do
       put 'talks' => 'talks#update_talks'
       post 'start_on_air' => 'talks#start_on_air'
       post 'stop_on_air' => 'talks#stop_on_air'
+      post 'start_recording' => 'talks#start_recording'
+      post 'stop_recording' => 'talks#stop_recording'
       put 'proposals' => 'proposals#update_proposals'
       post 'bulk_insert_talks' => 'talks#bulk_insert_talks'
       post 'bulk_insert_talks_speaker' => 'talks#bulk_insert_talks_speaker'
@@ -68,6 +70,8 @@ Rails.application.routes.draw do
       resources :live_stream_ivs, only: [:index, :create]
       post 'bulk_create_ivs' => 'live_stream_ivs#bulk_create'
       post 'bulk_delete_ivs' => 'live_stream_ivs#bulk_delete'
+      post 'bulk_create_media_live' => 'live_stream_media_live#bulk_create'
+      post 'bulk_delete_media_live' => 'live_stream_media_live#bulk_delete'
     end
 
     get '/team' => 'teams#show'

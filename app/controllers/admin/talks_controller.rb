@@ -1,6 +1,7 @@
 class Admin::TalksController < ApplicationController
   include SecuredAdmin
   include LogoutHelper
+  include TalksTable
 
   def index
     @talks = @conference.talks.accepted_and_intermission.order('conference_day_id ASC, start_time ASC, track_id ASC')
@@ -24,8 +25,14 @@ class Admin::TalksController < ApplicationController
 
   def start_on_air
     @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @conference_day = @conference.conference_days.select{|day| day.date.strftime("%Y-%m-%d") == @date }.first
     @track_name = params[:talk][:track_name] || @conference.tracks.first.name
-
+    @track = @conference.tracks.find_by(name: @track_name)
+    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
+    @talks = @conference
+               .talks
+               .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
+               .order('conference_day_id ASC, start_time ASC, track_id ASC')
     talk = Talk.find(params[:talk][:id])
     ActiveRecord::Base.transaction do
       other_talk_in_track = @conference.tracks.find_by(name: talk.track.name).talks
@@ -45,12 +52,21 @@ class Admin::TalksController < ApplicationController
     )
 
     flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+    respond_to do |format|
+      format.js { render 'admin/tracks/index.js' }
+    end
   end
 
   def stop_on_air
     @date = params[:talk][:date] || @conference.conference_days.first.date.strftime("%Y-%m-%d")
+    @conference_day = @conference.conference_days.select{|day| day.date.strftime("%Y-%m-%d") == @date }.first
     @track_name = params[:talk][:track_name] || @conference.tracks.first.name
+    @track = @conference.tracks.find_by(name: @track_name)
+    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
+    @talks = @conference
+               .talks
+               .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
+               .order('conference_day_id ASC, start_time ASC, track_id ASC')
 
     talk = Talk.find(params[:talk][:id])
     talk.video.update!(on_air: false)
@@ -63,7 +79,9 @@ class Admin::TalksController < ApplicationController
     )
 
     flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-    redirect_to admin_tracks_path(date: @date, track_name: @track_name)
+    respond_to do |format|
+      format.js { render 'admin/tracks/index.js' }
+    end
   end
 
   def start_recording

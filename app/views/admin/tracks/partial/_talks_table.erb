@@ -1,4 +1,4 @@
-<% @talks.each do |talk| %>
+<% talks.each do |talk| %>
   <tr>
     <td><%= talk.id %></td>
     <td><%= talk.start_to_end %></td>
@@ -6,7 +6,7 @@
     <td><h5><%= talk.title %></h5></td>
     <td >
       <% if talk.video %>
-        <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+        <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>
           <%= f.hidden_field "talk[id]", value: talk.id %>
           <%= f.hidden_field "talk[date]", value: conference_day.date %>
           <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
@@ -17,7 +17,7 @@
                          autocomplete: "off",
                          track_name: talk.track.name,
                          talk_id: talk.id,
-                         data: { confirm: confirm_message(talk) }
+                         data: { confirm: confirm_message(talk), type: "script" }
             %>
           </div>
         <% end %>
@@ -28,7 +28,7 @@
         <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
           <div class="btn btn-primary">録画済み</div>
         <% else %>
-          <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{@track.number}", method: "post", class: "talk_list_form") do |f| %>
+          <%= form_with(url: recording_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>
             <%= f.hidden_field "talk[id]", value: talk.id %>
             <div class="on_air_group btn-group-toggle">
               <% if waiting_to_start?(talk) || waiting_to_stop?(talk) %>
@@ -44,7 +44,7 @@
                              autocomplete: "off",
                              track_name: talk.track.name,
                              talk_id: talk.id,
-                             data: { confirm: confirm_recording_message(@track, talk), disable_with: "送信中..."}
+                             data: { confirm: confirm_recording_message(track, talk), disable_with: "送信中..."}
                 %>
               <% end %>
             </div>

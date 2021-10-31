@@ -1,12 +1,7 @@
 <%= render 'admin/layout' do %>
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-<%= alert_type(message_type) %>" role="alert">
-      <%= message %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
+  <div id="messages">
+    <%= render 'admin/tracks/partial/messages' %>
+  </div>
 
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">

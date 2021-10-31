@@ -105,4 +105,20 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { false }
   end
+
+  factory :cndt2021_talk1, class: Talk do
+    id { 12 }
+    title { "talk1" }
+    start_time { "12:30" }
+    end_time { "12:40" }
+    abstract { "あいうえおかきくけこさしすせそ" }
+    conference_id { 4 }
+    conference_day_id { 10 }
+    talk_difficulty_id { 10 }
+    talk_category_id { 10 }
+    track_id { 11 }
+    show_on_timetable { true }
+    video_published { true }
+    document_url { "http://" }
+  end
 end

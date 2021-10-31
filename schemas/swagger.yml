@@ -100,6 +100,28 @@ paths:
           description: Invalid params supplied
         '404':
           description: Track not found
+  /api/v1/tracks/{trackId}/viewer_count:
+    get:
+      tags:
+        - Track
+      parameters:
+        - name: trackId
+          in: path
+          description: ID of track
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViewerCount'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Track not found
   /api/v1/talks:
     get:
       tags:
@@ -383,6 +405,26 @@ components:
       required:
         - id
         - name
+    ViewerCount:
+      type: object
+      additionalProperties: false
+      properties:
+        conference_id:
+          type: number
+        track_id:
+          type: number
+        talk_id:
+          type: number
+        viewer_count:
+          type: number
+      example:
+        id: 4
+        track_id: 20
+        talk_id: 123
+        viewer_count: 6
+      required:
+        - track_id
+        - viewer_count
     Talk:
       type: object
       additionalProperties: false

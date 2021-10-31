@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :sponsors, only: [:index]
       resources :chat_messages, only: [:index, :create, :update]
       resources :booths, only: [:show]
+      get 'tracks/:id/viewer_count' => 'tracks#viewer_count'
     end
   end
 

@@ -13,7 +13,8 @@
 }
 
 .on_air_group .on_air_button {
-    background-color: $secondary;
+    background-color: #6c757d;
+    border-color: #6c757d;
 }
 
 .on_air_group .on_air_button:after {
@@ -23,6 +24,7 @@
 
 .on_air_group .active {
     background-color: $danger;
+    border-color: $danger;
 }
 
 .on_air_group .active:after {

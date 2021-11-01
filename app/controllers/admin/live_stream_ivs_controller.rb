@@ -47,7 +47,8 @@ class Admin::LiveStreamIvsController < ApplicationController
 
   def bulk_create
     messages = []
-    @conference.tracks.each do |track|
+    # @conference.tracks.each do |track|
+    [Track.find(20), Track.find(21)].each do |track|
       unless track.live_stream_ivs.present?
         @ivs = LiveStreamIvs.new
         @ivs.conference_id = @conference.id

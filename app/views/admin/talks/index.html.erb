@@ -12,37 +12,12 @@
     </div>
   </div>
 
-  <!-- TODO: CNDOというよりはカンファレンスのスタイルで条件分岐できるようにする -->
-  <% unless @conference.abbr == 'cndo2021' %>
-    <div class="row">
-      <h2>Bulk insert TALKS from CSV</h2>
-      <div class="col-12 form-group">
-        
-        <%= form_with(url: admin_bulk_insert_talks_path, multipart: true) do |form| %>
-          <%= form.file_field :file %>
-          <%= form.submit "インポート" %>
-          ※ Bulk insertを行うと既存のレコードは全て削除されます。
-        <% end %>
-      </div>
-    </div>
-    <div class="row">
-      <h2>Bulk insert TALKS-SPEAKER from CSV</h2>
-      <div class="col-12 form-group">
-        
-        <%= form_with(url: admin_bulk_insert_talks_speaker_path, multipart: true) do |form| %>
-          <%= form.file_field :file %>
-          <%= form.submit "インポート" %>
-          ※ Bulk insertを行うと既存のレコードは全て削除されます。
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
   <div class="row">
     <h2>Talks</h2>
     <table class="table table-striped talks_table" >
       <thead>
       <tr>
+        <th scope="col">ID</th>
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Track</th>
@@ -57,6 +32,7 @@
       <%= form_with(url: admin_talks_path, local: true, id: "talk_list", method: "put") do |f| %>
         <% @talks.each do |talk| %>
           <tr>
+            <td><%= talk.id %></td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>
               <h5><%= talk.title %></h5>

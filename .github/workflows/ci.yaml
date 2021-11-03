@@ -36,10 +36,10 @@ jobs:
     - name: yarn install
       run: |
         yarn
-    - name: Set up Ruby 2.7.2
+    - name: Set up Ruby 3.0.2
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.2
+        ruby-version: 3.0.2
     - uses: actions/cache@v2
       with:
         path: vendor/bundle

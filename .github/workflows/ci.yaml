@@ -52,8 +52,15 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run tests
       shell: bash
+      env:
+        COVERAGE: true
       run: |
         bundle exec rake webpacker:compile
         bundle exec rails db:create RAILS_ENV=test
         bundle exec rails db:environment:set RAILS_ENV=test
         bundle exec rspec
+    - name: Simplecov Report
+      uses: aki77/simplecov-report-action@v1
+      with:
+        failedThreshold: 25
+        token: ${{ secrets.GITHUB_TOKEN }}

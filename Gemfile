@@ -37,6 +37,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'committee'
   gem 'committee-rails'
+  gem 'simplecov'
 end
 
 group :development do

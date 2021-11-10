@@ -54,7 +54,7 @@ $ bundle install
 $ bundle exec rake webpacker:compile
 ```
 
-Then, create `.env-local` file and fill these values. If you don't know correct values, please ask us. 
+Then, create `.env-local` file and fill these values. If you don't know correct values, please ask us.
 
 ```
 export AUTH0_CLIENT_ID=
@@ -71,6 +71,8 @@ export MYSQL_PASSWORD=password
 export MYSQL_DATABASE=dreamkast
 export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
+export SQS_MAIL_QUEUE_URL=http://localhost:9324/queue/default
+export SQS_CHAT_QUEUE_URL=http://localhost:9324/queue/chat
 ```
 
 Next, configure awscli and logged in registry using it.
@@ -108,4 +110,8 @@ $ bundle exec rails db:migrate
 $ bundle exec rails db:seed
 ```
 
+## Mock SQS for local chat development
 
+```
+aws --endpoint-url http://localhost:9324 sqs create-queue --queue-name chat
+```

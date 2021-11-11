@@ -1,0 +1,107 @@
+class VideoRegistration < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[VideoRegistration, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor talk_id(): Integer
+  def talk_id_changed?: () -> bool
+  def talk_id_change: () -> [ Integer?, Integer? ]
+  def talk_id_will_change!: () -> void
+  def talk_id_was: () -> Integer?
+  def talk_id_previously_changed?: () -> bool
+  def talk_id_previous_change: () -> Array[Integer?]?
+  def talk_id_previously_was: () -> Integer?
+  def talk_id_before_last_save: () -> Integer?
+  def talk_id_change_to_be_saved: () -> Array[Integer?]?
+  def talk_id_in_database: () -> Integer?
+  def saved_change_to_talk_id: () -> Array[Integer?]?
+  def saved_change_to_talk_id?: () -> bool
+  def will_save_change_to_talk_id?: () -> bool
+  def restore_talk_id!: () -> void
+  def clear_talk_id_change: () -> void
+
+  attr_accessor url(): String?
+  def url_changed?: () -> bool
+  def url_change: () -> [ String?, String? ]
+  def url_will_change!: () -> void
+  def url_was: () -> String?
+  def url_previously_changed?: () -> bool
+  def url_previous_change: () -> Array[String?]?
+  def url_previously_was: () -> String?
+  def url_before_last_save: () -> String?
+  def url_change_to_be_saved: () -> Array[String?]?
+  def url_in_database: () -> String?
+  def saved_change_to_url: () -> Array[String?]?
+  def saved_change_to_url?: () -> bool
+  def will_save_change_to_url?: () -> bool
+  def restore_url!: () -> void
+  def clear_url_change: () -> void
+
+  attr_accessor status(): String
+  def status_changed?: () -> bool
+  def status_change: () -> [ String?, String? ]
+  def status_will_change!: () -> void
+  def status_was: () -> String?
+  def status_previously_changed?: () -> bool
+  def status_previous_change: () -> Array[String?]?
+  def status_previously_was: () -> String?
+  def status_before_last_save: () -> String?
+  def status_change_to_be_saved: () -> Array[String?]?
+  def status_in_database: () -> String?
+  def saved_change_to_status: () -> Array[String?]?
+  def saved_change_to_status?: () -> bool
+  def will_save_change_to_status?: () -> bool
+  def restore_status!: () -> void
+  def clear_status_change: () -> void
+
+  def talk: () -> Talk
+  def talk=: (Talk?) -> Talk?
+  def reload_talk: () -> Talk?
+  def build_talk: (untyped) -> Talk
+  def create_talk: (untyped) -> Talk
+  def create_talk!: (untyped) -> Talk
+
+  def not_submitted!: () -> bool
+  def not_submitted?: () -> bool
+  def submitted!: () -> bool
+  def submitted?: () -> bool
+  def confirmed!: () -> bool
+  def confirmed?: () -> bool
+  def self.not_submitted: () -> ActiveRecord_Relation
+  def self.submitted: () -> ActiveRecord_Relation
+  def self.confirmed: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def not_submitted: () -> ActiveRecord_Relation
+
+    def submitted: () -> ActiveRecord_Relation
+
+    def confirmed: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[VideoRegistration, Integer]
+    include Enumerable[VideoRegistration]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[VideoRegistration, Integer]
+  end
+end

@@ -1,0 +1,160 @@
+class ProposalItemConfig < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[ProposalItemConfig, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor conference_id(): Integer
+  def conference_id_changed?: () -> bool
+  def conference_id_change: () -> [ Integer?, Integer? ]
+  def conference_id_will_change!: () -> void
+  def conference_id_was: () -> Integer?
+  def conference_id_previously_changed?: () -> bool
+  def conference_id_previous_change: () -> Array[Integer?]?
+  def conference_id_previously_was: () -> Integer?
+  def conference_id_before_last_save: () -> Integer?
+  def conference_id_change_to_be_saved: () -> Array[Integer?]?
+  def conference_id_in_database: () -> Integer?
+  def saved_change_to_conference_id: () -> Array[Integer?]?
+  def saved_change_to_conference_id?: () -> bool
+  def will_save_change_to_conference_id?: () -> bool
+  def restore_conference_id!: () -> void
+  def clear_conference_id_change: () -> void
+
+  attr_accessor type(): String?
+  def type_changed?: () -> bool
+  def type_change: () -> [ String?, String? ]
+  def type_will_change!: () -> void
+  def type_was: () -> String?
+  def type_previously_changed?: () -> bool
+  def type_previous_change: () -> Array[String?]?
+  def type_previously_was: () -> String?
+  def type_before_last_save: () -> String?
+  def type_change_to_be_saved: () -> Array[String?]?
+  def type_in_database: () -> String?
+  def saved_change_to_type: () -> Array[String?]?
+  def saved_change_to_type?: () -> bool
+  def will_save_change_to_type?: () -> bool
+  def restore_type!: () -> void
+  def clear_type_change: () -> void
+
+  attr_accessor item_number(): Integer?
+  def item_number_changed?: () -> bool
+  def item_number_change: () -> [ Integer?, Integer? ]
+  def item_number_will_change!: () -> void
+  def item_number_was: () -> Integer?
+  def item_number_previously_changed?: () -> bool
+  def item_number_previous_change: () -> Array[Integer?]?
+  def item_number_previously_was: () -> Integer?
+  def item_number_before_last_save: () -> Integer?
+  def item_number_change_to_be_saved: () -> Array[Integer?]?
+  def item_number_in_database: () -> Integer?
+  def saved_change_to_item_number: () -> Array[Integer?]?
+  def saved_change_to_item_number?: () -> bool
+  def will_save_change_to_item_number?: () -> bool
+  def restore_item_number!: () -> void
+  def clear_item_number_change: () -> void
+
+  attr_accessor label(): String?
+  def label_changed?: () -> bool
+  def label_change: () -> [ String?, String? ]
+  def label_will_change!: () -> void
+  def label_was: () -> String?
+  def label_previously_changed?: () -> bool
+  def label_previous_change: () -> Array[String?]?
+  def label_previously_was: () -> String?
+  def label_before_last_save: () -> String?
+  def label_change_to_be_saved: () -> Array[String?]?
+  def label_in_database: () -> String?
+  def saved_change_to_label: () -> Array[String?]?
+  def saved_change_to_label?: () -> bool
+  def will_save_change_to_label?: () -> bool
+  def restore_label!: () -> void
+  def clear_label_change: () -> void
+
+  attr_accessor item_name(): String?
+  def item_name_changed?: () -> bool
+  def item_name_change: () -> [ String?, String? ]
+  def item_name_will_change!: () -> void
+  def item_name_was: () -> String?
+  def item_name_previously_changed?: () -> bool
+  def item_name_previous_change: () -> Array[String?]?
+  def item_name_previously_was: () -> String?
+  def item_name_before_last_save: () -> String?
+  def item_name_change_to_be_saved: () -> Array[String?]?
+  def item_name_in_database: () -> String?
+  def saved_change_to_item_name: () -> Array[String?]?
+  def saved_change_to_item_name?: () -> bool
+  def will_save_change_to_item_name?: () -> bool
+  def restore_item_name!: () -> void
+  def clear_item_name_change: () -> void
+
+  attr_accessor params(): untyped?
+  def params_changed?: () -> bool
+  def params_change: () -> [ untyped?, untyped? ]
+  def params_will_change!: () -> void
+  def params_was: () -> untyped?
+  def params_previously_changed?: () -> bool
+  def params_previous_change: () -> Array[untyped?]?
+  def params_previously_was: () -> untyped?
+  def params_before_last_save: () -> untyped?
+  def params_change_to_be_saved: () -> Array[untyped?]?
+  def params_in_database: () -> untyped?
+  def saved_change_to_params: () -> Array[untyped?]?
+  def saved_change_to_params?: () -> bool
+  def will_save_change_to_params?: () -> bool
+  def restore_params!: () -> void
+  def clear_params_change: () -> void
+
+  attr_accessor description(): String?
+  def description_changed?: () -> bool
+  def description_change: () -> [ String?, String? ]
+  def description_will_change!: () -> void
+  def description_was: () -> String?
+  def description_previously_changed?: () -> bool
+  def description_previous_change: () -> Array[String?]?
+  def description_previously_was: () -> String?
+  def description_before_last_save: () -> String?
+  def description_change_to_be_saved: () -> Array[String?]?
+  def description_in_database: () -> String?
+  def saved_change_to_description: () -> Array[String?]?
+  def saved_change_to_description?: () -> bool
+  def will_save_change_to_description?: () -> bool
+  def restore_description!: () -> void
+  def clear_description_change: () -> void
+
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ProposalItemConfig, Integer]
+    include Enumerable[ProposalItemConfig]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ProposalItemConfig, Integer]
+  end
+end

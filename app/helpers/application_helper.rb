@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def authenticate
     return if logged_in?
-    redirect_to root_path, alert: 'ログインしてください'
+    redirect_to(root_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044")
   end
 
   def message_box
@@ -19,10 +19,9 @@ module ApplicationHelper
       @message_box = "#{Conference.find(1).name}へようこそ"
       cls = "d-none"
     end
-    return "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
+    "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
   end
 
-  
   def site_name
     if event_name && Conference.find_by(abbr: event_name).present?
       Conference.find_by(abbr: event_name).name
@@ -31,7 +30,7 @@ module ApplicationHelper
     end
   end
 
-  def full_title(page_title = '')
+  def full_title(page_title = "")
     if event_name && Conference.find_by(abbr: event_name).present?
       base_title = Conference.find_by(abbr: event_name).name
       if page_title.empty?
@@ -48,44 +47,44 @@ module ApplicationHelper
     if event_name && Conference.find_by(abbr: event_name).present? && FileTest.exist?("#{Rails.root}/app/assets/images/#{event_name}/header_logo.png")
       image_url("#{event_name}/trademark.png")
     else
-      image_url('trademark.png')
+      image_url("trademark.png")
     end
   end
 
   def link_to_add_pdf_fields(name, f, association, **args)
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id
-    fields = f.fields_for(association, new_object, :child_index => id) do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_pdf_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")}, style: args[:style])
+    link_to(name, "#", class: "add_pdf_fields " + args[:class], data: { id: id, fields: fields.gsub("\n", "") }, style: args[:style])
   end
 
   def link_to_add_key_image_fields(name, f, association, **args)
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id
-    fields = f.fields_for(association, new_object, :child_index => id) do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_key_image_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")}, style: args[:style])
+    link_to(name, "#", class: "add_key_image_fields " + args[:class], data: { id: id, fields: fields.gsub("\n", "") }, style: args[:style])
   end
 
   def link_to_add_link_fields(name, f, association, **args)
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id
-    fields = f.fields_for(association, new_object, :child_index => id) do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_link_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")}, style: args[:style])
+    link_to(name, "#", class: "add_link_fields " + args[:class], data: { id: id, fields: fields.gsub("\n", "") }, style: args[:style])
   end
 
   def link_to_add_conference_day_fields(name, f, association, **args)
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id
-    fields = f.fields_for(association, new_object, :child_index => id) do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+    fields = f.fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(name, '#', class: "add_conference_day_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")}, style: args[:style])
+    link_to(name, "#", class: "add_conference_day_fields " + args[:class], data: { id: id, fields: fields.gsub("\n", "") }, style: args[:style])
   end
 
   def markdown(text)
@@ -106,10 +105,10 @@ module ApplicationHelper
   end
 
   def event_js_path
-    if Conference.all.map{|conf| conf.abbr }.include?(event_name) && event_name != 'cndt2020'
-      return event_name
+    if Conference.all.map { |conf| conf.abbr }.include?(event_name) && event_name != "cndt2020"
+      event_name
     else
-      return "application"
+      "application"
     end
   end
 end

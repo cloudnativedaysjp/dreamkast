@@ -6,7 +6,7 @@ class TracksController < ApplicationController
   def index
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
     if @conference.opened?
-      redirect_to  "/#{@conference.abbr}/ui/"
+      redirect_to("/#{@conference.abbr}/ui/")
     end
     @current = Video.on_air(@conference)
     @tracks = @conference.tracks
@@ -20,7 +20,7 @@ class TracksController < ApplicationController
   def waiting
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
     if @conference.opened?
-      redirect_to tracks_path
+      redirect_to(tracks_path)
     end
 
     @announcements = @conference.announcements.published
@@ -31,16 +31,17 @@ class TracksController < ApplicationController
   end
 
   def reload
-    ActionCable.server.broadcast("waiting_channel","aaa");
-    render plain: "OK"
+    ActionCable.server.broadcast("waiting_channel", "aaa");
+    render(plain: "OK")
   end
 
   def blank
     @msg = params.key?(:msg) ? params[:msg] : "No content"
-    render :layout => false
+    render(layout: false)
   end
 
   private
+
   def set_profile
     if @current_user
       @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)

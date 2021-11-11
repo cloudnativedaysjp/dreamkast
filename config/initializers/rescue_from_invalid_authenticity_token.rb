@@ -1,1 +1,1 @@
-Rails.application.config.middleware.insert_before OmniAuth::Builder, RescueFromInvalidAuthenticityToken
+Rails.application.config.middleware.insert_before(OmniAuth::Builder, RescueFromInvalidAuthenticityToken)

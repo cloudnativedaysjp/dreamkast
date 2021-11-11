@@ -1,0 +1,239 @@
+# from https://github.com/googleapis/ruby-style
+#
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.5
+
+# Enforcing a blank line often worsens vertical layout.
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+# For the extra line between copyright and code.
+Layout/EmptyLines:
+  Enabled: false
+
+# This tends to be problematic, especially for nested hashes. In many cases,
+# our code adheres to the "table" style, but we do not want to enforce it.
+Layout/HashAlignment:
+  Enabled: false
+
+# Our current preferred line length.
+Layout/LineLength:
+  Max: 120
+
+# Added in Rubocop 1.7
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+
+# Added in Rubocop 1.7
+Lint/AmbiguousAssignment:
+  Enabled: true
+
+# Added in Rubocop 1.8
+Lint/DeprecatedConstants:
+  Enabled: true
+
+# Added in Rubocop 1.3
+Lint/DuplicateBranch:
+  Enabled: true
+
+# Added in Rubocop 1.1
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+
+# Added in Rubocop 1.1
+Lint/EmptyBlock:
+  Enabled: true
+
+# Added in Rubocop 1.3
+Lint/EmptyClass:
+  Enabled: true
+
+# Added in Rubocop 1.8
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+
+# Added in Rubocop 1.2
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+
+# Added in Rubocop 1.9
+Lint/NumberedParameterAssignment:
+  Enabled: true
+
+# Added in Rubocop 1.9
+Lint/OrAssignmentToConstant:
+  Enabled: true
+
+# Added in Rubocop 1.8
+Lint/RedundantDirGlobSort:
+  Enabled: true
+
+# Added in Rubocop 1.9
+Lint/SymbolConversion:
+  Enabled: true
+
+# Added in Rubocop 1.1
+Lint/ToEnumArguments:
+  Enabled: true
+
+# Added in Rubocop 1.9
+Lint/TripleQuotes:
+  Enabled: true
+
+# Added in Rubocop 1.5
+Lint/UnexpectedBlockArity:
+  Enabled: true
+
+# Added in Rubocop 1.1
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 25
+
+# Sometimes problematic for API calls which might have a lot of parameters,
+# and for generated code.
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+# Does not allow distinguishing verbs (e.g. is vs has). Also causes problems
+# for generated code that might have generated method names.
+Naming/PredicateName:
+  Enabled: false
+
+# Numbers are occasionally semantically useful in names, and also occasionally
+# appear in generated code.
+Naming/VariableNumber:
+  Enabled: false
+
+# Better to separate accessors for yardoc and type declarations.
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
+# Added in Rubocop 1.1
+Style/ArgumentsForwarding:
+  Enabled: true
+
+# Problematic for generated code which might include unicode in comments.
+Style/AsciiComments:
+  Enabled: false
+
+# There are cases where we use the === operator as a general interface, e.g.
+# when specifying type checker objects.
+Style/CaseEquality:
+  Enabled: false
+
+# Added in Rubocop 1.2
+Style/CollectionCompact:
+  Enabled: true
+
+# Added in Rubocop 1.1
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+
+# We prefer consistent method indentation.
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+# Added in Rubocop 1.8
+Style/EndlessMethod:
+  Enabled: true
+
+# Frozen string literals are no more as of Ruby 3.
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Added in Rubocop 1.7
+Style/HashExcept:
+  Enabled: true
+
+# It is sometimes preferable to use the non-modifier form even for single-line
+# expressions, for readability.
+Style/IfUnlessModifier:
+  Enabled: false
+
+# Added in Rubocop 1.9
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+
+# We adopt Seattle-style paren usage
+Style/MethodCallWithArgsParentheses:
+  AllowParenthesesInCamelCaseMethod: true
+  AllowParenthesesInChaining: true
+  AllowParenthesesInMultilineCall: true
+  Enabled: true
+  EnforcedStyle: require_parentheses
+
+# We adopt Seattle-style paren usage
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+
+# Enable use of the different semantics of module_function and extend self.
+Style/ModuleFunction:
+  Enabled: false
+
+# Added in Rubocop 1.2
+Style/NegatedIfElseCondition:
+  Enabled: true
+
+# Added in Rubocop 1.3
+Style/NilLambda:
+  Enabled: true
+
+# Added in Rubocop 1.4
+Style/RedundantArgument:
+  Enabled: true
+
+# Disabled because we prefer to keep begin-end blocks in memoization for
+# readability (see https://github.com/rubocop/rubocop/pull/9602).
+Style/RedundantBegin:
+  Enabled: false
+
+# The idiom is useful in a variety of cases. We prefer to allow it.
+Style/RescueModifier:
+  Enabled: false
+
+# We prefer standardizing on double-quoted strings for readability.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Added in Rubocop 1.1
+Style/SwapValues:
+  Enabled: true
+
+# We prefer traditional bracket style for all arrays.
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+# There are some cases where a full method shows intent better than an attr.
+Style/TrivialAccessors:
+  Enabled: false
+
+# We prefer traditional bracket style for all arrays.
+Style/WordArray:
+  EnforcedStyle: brackets

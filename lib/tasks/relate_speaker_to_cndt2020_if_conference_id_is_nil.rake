@@ -6,9 +6,9 @@ namespace :db do
 
     ActiveRecord::Base.transaction do
       begin
-        p Speaker.where(conference_id: nil).update_all(conference_id: 1)
+        p(Speaker.where(conference_id: nil).update_all(conference_id: 1))
       rescue => e
-        puts e
+        puts(e)
       end
     end
   end

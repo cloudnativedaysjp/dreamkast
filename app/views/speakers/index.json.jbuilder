@@ -1,1 +1,1 @@
-json.array! @speakers, partial: "speakers/speaker", as: :speaker
+json.array!(@speakers, partial: "speakers/speaker", as: :speaker)

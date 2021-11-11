@@ -1,6 +1,6 @@
 class OnAirChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "on_air_#{params["eventAbbr"]}"
+    stream_from("on_air_#{params["eventAbbr"]}")
   end
 
   def unsubscribed

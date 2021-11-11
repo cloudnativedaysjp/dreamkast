@@ -1,8 +1,8 @@
 class ChatMessage < ApplicationRecord
   acts_as_nested_set
 
-  after_create_commit { ChatMessageBroadcastJob.perform_later self }
-  after_update_commit { ChatMessageBroadcastJob.perform_later self }
+  after_create_commit { ChatMessageBroadcastJob.perform_later(self) }
+  after_update_commit { ChatMessageBroadcastJob.perform_later(self) }
 
   belongs_to :profile
 

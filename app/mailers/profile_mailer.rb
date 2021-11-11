@@ -1,5 +1,5 @@
 class ProfileMailer < ApplicationMailer
-  layout 'mailer'
+  layout "mailer"
 
   def registered(profile, conference)
     @profile = profile

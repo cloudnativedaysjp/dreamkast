@@ -13,7 +13,7 @@ class ContentsController < ApplicationController
 
   def discussion
     @conference = Conference.find_by(abbr: params[:event])
-    render "#{@conference.abbr}_discussion".to_sym
+    render("#{@conference.abbr}_discussion".to_sym)
   end
 
   def kontest
@@ -22,18 +22,19 @@ class ContentsController < ApplicationController
 
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
-    render "#{@conference.abbr}_hands_on".to_sym
+    render("#{@conference.abbr}_hands_on".to_sym)
   end
 
   def job_board
     @conference = Conference.find_by(abbr: params[:event])
-    render "#{@conference.abbr}_job_board".to_sym
+    render("#{@conference.abbr}_job_board".to_sym)
   end
 
   private
-    def set_profile
-      if @current_user
-        @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-      end
+
+  def set_profile
+    if @current_user
+      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
     end
+  end
 end

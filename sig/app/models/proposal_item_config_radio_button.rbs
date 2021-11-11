@@ -1,0 +1,2 @@
+class ProposalItemConfigRadioButton < ProposalItemConfig
+end

@@ -1,0 +1,2 @@
+class ProposalItemConfigCheckBox < ProposalItemConfig
+end

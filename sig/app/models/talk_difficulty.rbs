@@ -1,0 +1,2 @@
+class TalkDifficulty < ApplicationRecord
+end

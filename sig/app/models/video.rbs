@@ -1,0 +1,5 @@
+class Video < ApplicationRecord
+  def self.on_air: (untyped conference) -> untyped
+
+  def self.on_air_v2: () -> untyped
+end

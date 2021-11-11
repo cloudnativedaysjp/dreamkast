@@ -1,0 +1,5 @@
+class Sponsor < ApplicationRecord
+  def booth_info: () -> { id: untyped, opened: untyped }
+
+  def booth_sponsor?: () -> (::TrueClass | ::FalseClass)
+end

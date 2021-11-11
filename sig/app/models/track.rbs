@@ -1,0 +1,3 @@
+class Track < ApplicationRecord
+  def on_air_talk: () -> (nil | untyped)
+end

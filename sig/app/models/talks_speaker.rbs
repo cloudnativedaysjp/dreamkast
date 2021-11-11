@@ -1,0 +1,5 @@
+class TalksSpeaker < ApplicationRecord
+  def self.import: (untyped file) -> untyped
+
+  def self.updatable_attributes: () -> ::Array["talk_id" | "speaker_id"]
+end

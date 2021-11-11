@@ -52,6 +52,9 @@ group :development do
   gem 'debase'
   gem 'pry-rails'
   gem 'bullet'
+
+  gem 'steep', require: false
+  gem 'rbs_rails', require: false
 end
 
 group :test do

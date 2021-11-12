@@ -14,13 +14,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join("tmp", "caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -51,7 +51,7 @@ Rails.application.configure do
 
   config.hosts << "host.docker.internal"
   # config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
-  config.action_cable.allowed_request_origins = [ 'http://host.docker.internal:3000/*', 'http://localhost:8080' ]
+  config.action_cable.allowed_request_origins = ["http://host.docker.internal:3000/*", "http://localhost:8080"]
 
 
   # Debug mode disables concatenation and preprocessing of assets.
@@ -68,8 +68,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.web_console.whitelisted_ips = '0.0.0.0/0' #追記
-  config.web_console.permissions = '0.0.0.0/0'
+  config.web_console.whitelisted_ips = "0.0.0.0/0" # 追記
+  config.web_console.permissions = "0.0.0.0/0"
 
   config.after_initialize do
     Bullet.enable = true # Bulletプラグインを有効

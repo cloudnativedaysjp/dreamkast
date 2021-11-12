@@ -1,6 +1,6 @@
 class WaitingChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "waiting_channel"
+    stream_from("waiting_channel")
   end
 
   def unsubscribed

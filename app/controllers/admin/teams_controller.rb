@@ -3,12 +3,12 @@ class Admin::TeamsController < ApplicationController
   include LogoutHelper
 
   def show
-    @admin_profiles = @conference.admin_profiles.order(name: 'ASC')
+    @admin_profiles = @conference.admin_profiles.order(name: "ASC")
   end
 
   def update
     ActiveRecord::Base.transaction do
-      params['team'].each do |k, v|
+      params["team"].each do |k, v|
         admin_profile = AdminProfile.find(k)
         if admin_profile.present?
           admin_profile.show_on_team_page = v
@@ -17,8 +17,8 @@ class Admin::TeamsController < ApplicationController
       end
     end
 
-    redirect_to admin_team_path
+    redirect_to(admin_team_path)
   rescue => e
-    redirect_to admin_team_path, notice: "更新に失敗しました: #{e}"
+    redirect_to(admin_team_path, notice: "更新に失敗しました: #{e}")
   end
 end

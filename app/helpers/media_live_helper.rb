@@ -1,16 +1,16 @@
 module MediaLiveHelper
   def media_live_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+    creds = Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])
     if creds.set?
-      Aws::MediaLive::Client.new(region: 'us-east-1', credentials: creds)
+      Aws::MediaLive::Client.new(region: "us-east-1", credentials: creds)
     else
-      Aws::MediaLive::Client.new(region: 'us-east-1')
+      Aws::MediaLive::Client.new(region: "us-east-1")
     end
   end
 
-  def get_media_live_inputs_from_aws(input_ids=[])
+  def get_media_live_inputs_from_aws(input_ids = [])
     inputs = []
-    next_token = ''
+    next_token = ""
     while true
       resp = media_live_client.list_inputs(next_token: next_token)
       inputs.concat(resp.inputs)
@@ -18,12 +18,12 @@ module MediaLiveHelper
       next_token = resp.next_token
     end
 
-    inputs.select{ |input| input_ids.include?(input.id) }
+    inputs.select { |input| input_ids.include?(input.id) }
   end
 
-  def get_media_live_channels_from_aws(channel_ids=[])
+  def get_media_live_channels_from_aws(channel_ids = [])
     channels = []
-    next_token = ''
+    next_token = ""
     while true
       resp = media_live_client.list_channels(next_token: next_token)
       channels.concat(resp.channels)
@@ -31,7 +31,7 @@ module MediaLiveHelper
       next_token = resp.next_token
     end
 
-    channels.select{ |channel| channel_ids.include?(channel.id) }
+    channels.select { |channel| channel_ids.include?(channel.id) }
   end
 
   def wait_until(waiter_name, channel_id)

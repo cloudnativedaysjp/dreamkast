@@ -3,15 +3,15 @@ class SponsorForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :description,
-                :speaker_emails,
-                :booth_published,
-                :sponsor_attachment_key_images,
-                :attachment_text,
-                :attachment_vimeo,
-                :attachment_zoom,
-                :attachment_miro,
-                :sponsor_attachment_pdfs
+  attr_accessor :description
+  attr_accessor :speaker_emails
+  attr_accessor :booth_published
+  attr_accessor :sponsor_attachment_key_images
+  attr_accessor :attachment_text
+  attr_accessor :attachment_vimeo
+  attr_accessor :attachment_zoom
+  attr_accessor :attachment_miro
+  attr_accessor :sponsor_attachment_pdfs
 
   delegate :persisted?, to: :sponsor
 
@@ -24,7 +24,7 @@ class SponsorForm
 
     def sponsor_attachment_key_images_attributes=(attributes)
       @sponsor_attachment_key_images ||= []
-      attributes.each do |i, params|
+      attributes.each do |_i, params|
         if params.key?(:id)
           if params[:_destroy] == "1"
             image = @sponsor.sponsor_attachment_key_images.find(params[:id])
@@ -42,7 +42,7 @@ class SponsorForm
         end
       end
     rescue => e
-      puts e
+      puts(e)
       false
     end
   end
@@ -74,7 +74,7 @@ class SponsorForm
         end
       end
     rescue => e
-      puts e
+      puts(e)
       false
     end
   end
@@ -88,6 +88,7 @@ class SponsorForm
   def sponsor
     @sponsor
   end
+
   def save
     return if invalid?
 
@@ -127,7 +128,7 @@ class SponsorForm
       end
     end
   rescue => e
-    puts e
+    puts(e)
     false
   end
 
@@ -149,10 +150,10 @@ class SponsorForm
       description: sponsor.description,
       speaker_emails: sponsor.speaker_emails,
       booth_published: sponsor.booth.present? && sponsor.booth.published.present? ? sponsor.booth.published : nil,
-      attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
-      attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
-      attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',
-      attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : '',
+      attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : "",
+      attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : "",
+      attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : "",
+      attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : "",
       sponsor_attachment_key_images: sponsor_attachment_key_images,
       sponsor_attachment_pdfs: sponsor_attachment_pdfs
     }

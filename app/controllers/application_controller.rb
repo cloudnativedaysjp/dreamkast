@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def user_not_authorized
-    render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
   end
 
   def home_controller?
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   # ActiveRecordの機能でもうちょっといい感じにかける気はする…
   def talks_checked?(talk_id)
-    @profile.talks.select{|talk| talk.id == talk_id}.present?
+    @profile.talks.select { |talk| talk.id == talk_id }.present?
   end
 
   def talk_category(talk)
@@ -45,20 +45,20 @@ class ApplicationController < ActionController::Base
   helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
 
   def render_403
-    render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
   end
 
   def render_404
-    render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_404", status: 404, layout: "application", content_type: "text/html")
   end
 
   def render_500(e = nil)
     if e
-      logger.error "Rendering 500 with exception: #{e.message}"
-      logger.error e.backtrace.join("\n")
+      logger.error("Rendering 500 with exception: #{e.message}")
+      logger.error(e.backtrace.join("\n"))
     end
 
-    render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_500", status: 500, layout: "application", content_type: "text/html")
   end
 
   # カンファレンス開催前、かつCFP中
@@ -70,6 +70,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :sponsor_logo_class, :days
+
   private
 
   def set_raven_context
@@ -79,7 +80,7 @@ class ApplicationController < ActionController::Base
 
   def event_exists?
     if event_name && Conference.where(abbr: event_name).empty?
-      raise ActiveRecord::RecordNotFound
+      raise(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -88,13 +89,13 @@ class ApplicationController < ActionController::Base
     d = @conference.conference_days.where(internal: false)
     if d.length == 1
       day = day_of_the_week[d.first.date.cwday - 1]
-      return d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
+      d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
     else
       first = d.order(:date).first
       fday = day_of_the_week[first.date.cwday - 1]
       last = d.order(:date).last
       lday = day_of_the_week[last.date.cwday - 1]
-      return "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
+      "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
     end
   end
 

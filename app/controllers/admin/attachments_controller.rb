@@ -4,7 +4,7 @@ class Admin::AttachmentsController < ApplicationController
 
   def show
     pdf = SponsorAttachmentPdf.find(params[:id])
-    redirect_to pdf.file_url
+    redirect_to(pdf.file_url)
   end
 
   private

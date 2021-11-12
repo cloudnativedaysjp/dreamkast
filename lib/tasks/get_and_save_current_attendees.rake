@@ -27,9 +27,9 @@ namespace :util do
           )
           vc.save!
         rescue Aws::IVS::Errors::ChannelNotBroadcasting
-          puts ivs.channel_arn + " is not currently online"
+          puts(ivs.channel_arn + " is not currently online")
         rescue => e
-          puts "Unknown error" + e.to_s
+          puts("Unknown error" + e.to_s)
         end
       end
     end

@@ -4,7 +4,7 @@ class Profiles::TalksController < ApplicationController
 
   def new
     @talks = Talk.all
-    #register
+    # register
   end
 
   def edit
@@ -19,7 +19,7 @@ class Profiles::TalksController < ApplicationController
           params[:talks].each do |key, value|
             day_id, slot = key.split("_")
             track_id = value
-            
+
             Talk.find_by_params(day_id, slot, track_id).each do |talk|
               RegisteredTalk.create!(
                 profile_id: @profile.id,
@@ -28,7 +28,7 @@ class Profiles::TalksController < ApplicationController
             end
           end
         else
-          params[:talks].each do |key, value|
+          params[:talks].each do |key, _value|
             talk_id = key.to_i
             if talk = Talk.find(talk_id)
               RegisteredTalk.create!(
@@ -40,29 +40,29 @@ class Profiles::TalksController < ApplicationController
         end
       end
     end
-      redirect_to dashboard_path
-    rescue => e
-      redirect_to timetables_path, notice: 'セッション登録に失敗しました'
+    redirect_to(dashboard_path)
+  rescue => e
+    redirect_to(timetables_path, notice: "\u30BB\u30C3\u30B7\u30E7\u30F3\u767B\u9332\u306B\u5931\u6557\u3057\u307E\u3057\u305F")
   end
 
   def update
-   
   end
 
   def destroy
     @talk.destroy
     respond_to do |format|
-      format.html { redirect_to talks_url, notice: 'Talk was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to(talks_url, notice: "Talk was successfully destroyed.") }
+      format.json { head(:no_content) }
     end
   end
 
   private
-    def set_profile
-      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
 
-    def talk_params
-      params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
-    end
+  def set_profile
+    @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+  end
+
+  def talk_params
+    params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
+  end
 end

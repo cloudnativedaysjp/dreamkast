@@ -1,0 +1,30 @@
+inherit_from:
+  - .googlestyle.yaml
+  - .rubocop_todo.yml
+
+AllCops:
+  NewCops: disable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+  Exclude:
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/*"
+    - "node_modules/**/*"
+    - "Gemfile"
+
+# テストは長文がアサーションに必要な場合もあるため一旦無視
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*"
+
+# 非直感的なネーミングを強制されるため無効
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+# do-end と ブラケットが混在するため無効
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/MethodDefParentheses:
+  EnforcedStyle: require_parentheses

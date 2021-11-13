@@ -6,15 +6,15 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
   # GET :event/speaker_dashboard/video_registrations
   def new
     @talk = Talk.find(params[:talk_id])
-    authorize @talk
+    authorize(@talk)
 
-    @video_registration = VideoRegistration.new()
+    @video_registration = VideoRegistration.new
   end
 
   # POST :event/speaker_dashboard/video_registrations
   def create
     @talk = Talk.find(video_registrations_params[:talk_id])
-    authorize @talk
+    authorize(@talk)
 
     @video_registration = VideoRegistration.new(video_registrations_params.merge(status: 1))
 
@@ -28,11 +28,11 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
         #   logger.error "Failed to send mail: #{e.message}"
         # end
 
-        format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
-        format.json { render :show, status: :ok, location: @video_registration }
+        format.html { redirect_to(speaker_dashboard_path, notice: "Speaker was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @video_registration) }
       else
-        format.html { render :edit }
-        format.json { render json: @video_registration.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json { render(json: @video_registration.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -41,25 +41,25 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
   def edit
     @video_registration = VideoRegistration.find_by(id: params[:id])
     @talk = @video_registration.talk
-    authorize @talk
+    authorize(@talk)
   end
 
   # PATCH/PUT :event/speaker_dashboard/videos/1
   def update
     @video_registration = VideoRegistration.find(params[:id])
     @talk = @video_registration.talk
-    authorize @talk
+    authorize(@talk)
 
     respond_to do |format|
       if @video_registration.update(video_registrations_params)
 
         SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver_later
 
-        format.html { redirect_to speaker_dashboard_path, notice: 'Speaker was successfully updated.' }
-        format.json { render :show, status: :ok, location: @talk }
+        format.html { redirect_to(speaker_dashboard_path, notice: "Speaker was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @talk) }
       else
-        format.html { render :edit }
-        format.json { render json: @talk.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json { render(json: @talk.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -70,9 +70,9 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
 
   def video_registration_url
     case action_name
-    when 'new'
+    when "new"
       "/#{params[:event]}/speaker_dashboard/video_registrations"
-    when 'edit'
+    when "edit"
       "/#{params[:event]}/speaker_dashboard/video_registrations/#{params[:id]}"
     end
   end

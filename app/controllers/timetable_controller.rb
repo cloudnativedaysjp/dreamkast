@@ -28,8 +28,8 @@ class TimetableController < ApplicationController
   end
 
   def timetable_partial_name
-    if @params[:event] == 'cndt2020'
-      'timetable'
+    if @params[:event] == "cndt2020"
+      "timetable"
     else
       "timetable_#{@params[:event]}"
     end

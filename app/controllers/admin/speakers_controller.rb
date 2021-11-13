@@ -23,38 +23,38 @@ class Admin::SpeakersController < ApplicationController
 
     respond_to do |format|
       if @speaker_form.save
-        format.html { redirect_to admin_speakers_path, notice: "Speaker #{@speaker.name} (id: #{@speaker.id})was successfully updated." }
-        format.json { render :show, status: :ok, location: @speaker }
+        format.html { redirect_to(admin_speakers_path, notice: "Speaker #{@speaker.name} (id: #{@speaker.id})was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @speaker) }
       else
-        format.html { render :edit }
-        format.json { render json: @speaker.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json { render(json: @speaker.errors, status: :unprocessable_entity) }
       end
     end
   end
 
   def bulk_insert_speakers
     unless params[:file]
-      redirect_to admin_speakers_path, notice: "アップロードするファイルを選択してください"
+      redirect_to(admin_speakers_path, notice: "アップロードするファイルを選択してください")
     else
       message = Speaker.import(params[:file])
       if message.size == 0
-        notice = 'CSVの読み込みが完了しました'
+        notice = "CSV\u306E\u8AAD\u307F\u8FBC\u307F\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F"
       else
         notice = message.join(" / ")
       end
-      redirect_to '/admin/speakers', notice: notice
+      redirect_to("/admin/speakers", notice: notice)
     end
   end
 
   def export_speakers
     all = Speaker.export
     filename = "./tmp/speaker.csv"
-    File.open(filename, 'w') do |file|
+    File.open(filename, "w") do |file|
       file.write(all)
     end
     # ダウンロード
-    stat = File::stat(filename)
-    send_file(filename, :filename => "speaker-#{Time.now.strftime("%F")}.csv", :length => stat.size)
+    stat = File.stat(filename)
+    send_file(filename, filename: "speaker-#{Time.now.strftime("%F")}.csv", length: stat.size)
   end
 
   private
@@ -77,11 +77,10 @@ class Admin::SpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when 'new'
+    when "new"
       "/#{params[:event]}/admin/speaker"
-    when 'edit'
+    when "edit"
       "/#{params[:event]}/admin/speakers/#{params[:id]}"
     end
   end
 end
-

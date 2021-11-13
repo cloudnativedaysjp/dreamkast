@@ -15,15 +15,15 @@ class Sponsor < ApplicationRecord
   has_many :talks
 
   def booth_info
-    {id: booth.id, opened: booth.published}
+    { id: booth.id, opened: booth.published }
   end
 
   def booth_sponsor?
-    self.sponsor_types.each do |type|
-      if type.name == 'Booth'
+    sponsor_types.each do |type|
+      if type.name == "Booth"
         return true
       end
     end
-    return false
+    false
   end
 end

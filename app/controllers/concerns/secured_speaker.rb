@@ -5,12 +5,12 @@ module SecuredSpeaker
     before_action :logged_in_using_omniauth?
     helper_method :admin?, :speaker?
   end
-  
+
   def logged_in_using_omniauth?
     if logged_in?
       set_current_user
     else
-      redirect_to "/#{params[:event]}/speaker_dashboard"
+      redirect_to("/#{params[:event]}/speaker_dashboard")
     end
   end
 

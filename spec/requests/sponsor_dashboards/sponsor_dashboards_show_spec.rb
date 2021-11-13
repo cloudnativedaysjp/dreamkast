@@ -1,21 +1,21 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe SponsorDashboards::SponsorDashboardsController, type: :request do
-  admin_userinfo = {userinfo: {info: {email: "alice@example.com"}, extra: {raw_info: {sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"]}}}}
+  admin_userinfo = { userinfo: { info: { email: "alice@example.com" }, extra: { raw_info: { sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"] } } } }
   describe "GET sponsor_dashboards#show" do
     let!(:cndt2020) { create(:cndt2020, :registered) }
 
     shared_examples_for :redirect_to_login_page do
       it "redirect to login page" do
-        get '/cndt2020/sponsor_dashboards/1'
-        expect(response).to_not be_successful
-        expect(response).to have_http_status '302'
-        expect(response).to redirect_to('/cndt2020/sponsor_dashboards/login')
+        get "/cndt2020/sponsor_dashboards/1"
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status("302"))
+        expect(response).to(redirect_to("/cndt2020/sponsor_dashboards/login"))
       end
     end
 
     describe "user isn't sponsor's speaker" do
-      let!(:sponsor) { create(:sponsor)}
+      let!(:sponsor) { create(:sponsor) }
 
       describe "sponsor profile isn't created yet" do
         describe "sponsor doesn't logged in" do
@@ -23,7 +23,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe "sponsor logged in" do
-          before { allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(admin_userinfo) }
+          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
 
           it_should_behave_like :redirect_to_login_page
         end
@@ -31,7 +31,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
     end
 
     describe "user is sponsor's speaker" do
-      let!(:sponsor) { create(:sponsor)}
+      let!(:sponsor) { create(:sponsor) }
 
       describe "sponsor profile isn't created yet" do
         describe "sponsor doesn't logged in" do
@@ -39,7 +39,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe "sponsor logged in" do
-          before { allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(admin_userinfo) }
+          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
 
           it_should_behave_like :redirect_to_login_page
         end
@@ -53,13 +53,13 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe "sponsor logged in" do
-          before { allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(admin_userinfo) }
+          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
 
           it "returns a forbidden response with 403 status code" do
-            get '/cndt2020/sponsor_dashboards/1'
-            expect(response).to be_successful
-            expect(response).to have_http_status '200'
-            expect(response.body).to include 'スポンサーダッシュボード'
+            get "/cndt2020/sponsor_dashboards/1"
+            expect(response).to(be_successful)
+            expect(response).to(have_http_status("200"))
+            expect(response.body).to(include("\u30B9\u30DD\u30F3\u30B5\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"))
           end
         end
       end

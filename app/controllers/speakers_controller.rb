@@ -37,11 +37,11 @@ class SpeakersController < ApplicationController
 
     respond_to do |format|
       if @speaker.save
-        format.html { redirect_to @speaker, notice: 'Speaker was successfully created.' }
-        format.json { render :show, status: :created, location: @speaker }
+        format.html { redirect_to(@speaker, notice: "Speaker was successfully created.") }
+        format.json { render(:show, status: :created, location: @speaker) }
       else
-        format.html { render :new }
-        format.json { render json: @speaker.errors, status: :unprocessable_entity }
+        format.html { render(:new) }
+        format.json { render(json: @speaker.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -51,11 +51,11 @@ class SpeakersController < ApplicationController
   def update
     respond_to do |format|
       if @speaker.update(speaker_params)
-        format.html { redirect_to @speaker, notice: 'Speaker was successfully updated.' }
-        format.json { render :show, status: :ok, location: @speaker }
+        format.html { redirect_to(@speaker, notice: "Speaker was successfully updated.") }
+        format.json { render(:show, status: :ok, location: @speaker) }
       else
-        format.html { render :edit }
-        format.json { render json: @speaker.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json { render(json: @speaker.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -65,12 +65,13 @@ class SpeakersController < ApplicationController
   def destroy
     @speaker.destroy
     respond_to do |format|
-      format.html { redirect_to speakers_url, notice: 'Speaker was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to(speakers_url, notice: "Speaker was successfully destroyed.") }
+      format.json { head(:no_content) }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_speaker
     @speaker = Speaker.find(params[:id])

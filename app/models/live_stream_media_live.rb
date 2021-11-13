@@ -9,8 +9,8 @@ class LiveStreamMediaLive < LiveStream
 
   before_destroy do
     delete_media_live_resources
-  rescue  => e
-    logger.error e.message
+  rescue => e
+    logger.error(e.message)
   end
 
   CHANNEL_CREATING = "CREATING"
@@ -24,9 +24,10 @@ class LiveStreamMediaLive < LiveStream
   CHANNEL_DELETED = "DELETED"
   CHANNEL_UPDATING = "UPDATING"
   CHANNEL_UPDATE_FAILED = "UPDATE_FAILED"
-  ERROR = 'ERROR'
+  ERROR = "ERROR"
 
-  attr_accessor :channel, :input
+  attr_accessor :channel
+  attr_accessor :input
 
   def initialize(attributes = nil)
     @params = {}
@@ -42,39 +43,38 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def channel_name
-    self.channel&.name
+    channel&.name
   end
 
   def channel_id
-    params&.dig('channel_id')
+    params&.dig("channel_id")
   end
 
   def channel_state
-    self.channel&.state
+    channel&.state
   end
 
   def input_id
-    params&.dig('input_id')
+    params&.dig("input_id")
   end
 
   def input_name
-    self.input&.name
+    input&.name
   end
 
   def playback_url
     cloudfront_url = "https://#{cloudfront_domain_name}"
-    object_key = destination.gsub("s3://#{bucket_name}/", '')
+    object_key = destination.gsub("s3://#{bucket_name}/", "")
 
     "#{cloudfront_url}/#{object_key}.m3u8"
   end
 
   def destination
-    self.channel&.destinations[0].settings[0].url
+    channel&.destinations[0].settings[0].url
   end
 
-
   def recording_talk_id
-    params&.dig('talk_id')
+    params&.dig("talk_id")
   end
 
   def create_media_live_resources
@@ -82,18 +82,18 @@ class LiveStreamMediaLive < LiveStream
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
 
-    wait_until(:channel_created, channel_resp.channel['id'])
+    wait_until(:channel_created, channel_resp.channel["id"])
 
-    channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
+    channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel["id"])
     params = {
       input_id: input_resp.input.id,
       input_arn: input_resp.input.arn,
       channel_id: channel_resp.id,
       channel_arn: channel_resp.arn,
     }
-    self.update!(params: params)
+    update!(params: params)
   rescue => e
-    logger.error e.message
+    logger.error(e.message)
     delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
   end
 
@@ -102,7 +102,7 @@ class LiveStreamMediaLive < LiveStream
     wait_until(:channel_deleted, channel_id)
     media_live_client.delete_input(input_id: input_id) if input_id
   rescue => e
-    logger.error "#{e.message}"
+    logger.error(e.message.to_s)
   end
 
   def start_channel
@@ -131,10 +131,10 @@ class LiveStreamMediaLive < LiveStream
       }
     )
     params[:talk_id] = talk_id
-    self.update!(params: params)
+    update!(params: params)
   rescue => e
-    logger.error e.message
-    logger.error e.backtrace.join("\n")
+    logger.error(e.message)
+    logger.error(e.backtrace.join("\n"))
   end
 
   private
@@ -145,11 +145,11 @@ class LiveStreamMediaLive < LiveStream
 
   def bucket_name
     case env_name
-    when 'production'
+    when "production"
       "dreamkast-ivs-stream-archive-prd"
-    when 'staging'
+    when "staging"
       "dreamkast-ivs-stream-archive-stg"
-    when 'review_app'
+    when "review_app"
       "dreamkast-ivs-stream-archive-dev"
     else
       "dreamkast-ivs-stream-archive-dev"
@@ -158,14 +158,14 @@ class LiveStreamMediaLive < LiveStream
 
   def cloudfront_domain_name
     case env_name
-    when 'review_app'
-      'd1jzp6sbtx9by.cloudfront.net'
-    when 'staging'
-      'd3i2o0iduabu0p.cloudfront.net'
-    when 'production'
-      'd3pun3ptcv21q4.cloudfront.net'
+    when "review_app"
+      "d1jzp6sbtx9by.cloudfront.net"
+    when "staging"
+      "d3i2o0iduabu0p.cloudfront.net"
+    when "production"
+      "d3pun3ptcv21q4.cloudfront.net"
     else
-      'd1jzp6sbtx9by.cloudfront.net'
+      "d1jzp6sbtx9by.cloudfront.net"
     end
   end
 
@@ -239,7 +239,9 @@ class LiveStreamMediaLive < LiveStream
                 rate_control_mode: "CBR",
                 raw_format: "NONE",
                 sample_rate: 48000,
-                spec: "MPEG4" } },
+                spec: "MPEG4"
+              }
+            },
             language_code_control: "FOLLOW_INPUT",
             name: "audio_1"
           },
@@ -255,7 +257,9 @@ class LiveStreamMediaLive < LiveStream
                 rate_control_mode: "CBR",
                 raw_format: "NONE",
                 sample_rate: 48000,
-                spec: "MPEG4" } },
+                spec: "MPEG4"
+              }
+            },
             language_code_control: "FOLLOW_INPUT",
             name: "audio_2"
           },
@@ -289,10 +293,10 @@ class LiveStreamMediaLive < LiveStream
                 caption_language_setting: "OMIT",
                 client_cache: "ENABLED",
                 codec_specification: "RFC_4281",
-                destination: { :destination_ref_id => "destination1" },
+                destination: { destination_ref_id: "destination1" },
                 directory_structure: "SINGLE_DIRECTORY",
                 discontinuity_tags: "INSERT",
-                hls_cdn_settings: { :hls_s3_settings => {} },
+                hls_cdn_settings: { hls_s3_settings: {} },
                 hls_id_3_segment_tagging: "DISABLED",
                 i_frame_only_playlists: "DISABLED",
                 incomplete_segment_behavior: "AUTO",

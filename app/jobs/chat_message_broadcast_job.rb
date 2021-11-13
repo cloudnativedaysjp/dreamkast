@@ -5,8 +5,8 @@ class ChatMessageBroadcastJob < ApplicationJob
   def perform(*args)
     msg = args[0]
     channel_name = "chat_channel_#{msg.room_type}#{msg.room_id}"
-    ActionCable.server.broadcast channel_name, {
-      id: msg.id,
+    ActionCable.server.broadcast(channel_name, {
+                                   id: msg.id,
       profileId: msg.profile_id,
       speakerId: msg.speaker_id,
       body: msg.body,
@@ -15,6 +15,6 @@ class ChatMessageBroadcastJob < ApplicationJob
       createdAt: msg.created_at.utc,
       replyTo: msg.parent_id,
       messageType: msg.message_type
-    }
+                                 })
   end
 end

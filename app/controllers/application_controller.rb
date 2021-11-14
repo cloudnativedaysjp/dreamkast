@@ -3,7 +3,7 @@ class Forbidden < ActionController::ActionControllerError; end
 class ApplicationController < ActionController::Base
   include Pundit
 
-  before_action :set_raven_context, :event_exists?
+  before_action :set_sentry_context, :event_exists?
 
   unless Rails.env.development?
     rescue_from Exception, with: :render_500
@@ -73,9 +73,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_raven_context
-    Raven.user_context(id: session[:current_user_id]) # or anything else in session
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  def set_sentry_context
+    Sentry.with_scope do |scope|
+      scope.set_user(id: session[:current_user_id])
+      scope.set_extras(params: params.to_unsafe_h, url: request.url)
+    end
   end
 
   def event_exists?

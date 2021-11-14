@@ -72,7 +72,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "mysql2", "~> 0.5.3"
 
-gem "sentry-raven"
+gem "sentry-ruby"
+gem "sentry-rails"
 
 gem "redis-rails"
 

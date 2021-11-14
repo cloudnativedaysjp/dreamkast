@@ -47,6 +47,7 @@ class Admin::SpeakersController < ApplicationController
 
   def speaker_params
     params.require(:speaker).permit(:name,
+                                    :name_mother_tongue,
                                     :sub,
                                     :email,
                                     :profile,

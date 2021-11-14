@@ -69,4 +69,15 @@ FactoryBot.define do
     job_title { "job_title" }
     conference_id { 1 }
   end
+
+  factory :speaker_mike, class: Speaker do
+    id { 3 }
+    sub { "github" }
+    email { "mike@example.com" }
+    name { "Mike" }
+    profile { "This is profile" }
+    company { "company" }
+    job_title { "job_title" }
+    conference_id { 4 }
+  end
 end

@@ -42,6 +42,7 @@
           <td><%= speaker.twitter_id %></td>
           <td><%= speaker.github_id %></td>
           <td><%= link_to 'Edit', "speakers/#{speaker.id}/edit" %></td>
+          <td><%= link_to 'Notice', "speaker_announcements/new?speaker_id=#{speaker.id}" %></td>
         </tr>
       <% end %>
       </tbody>

@@ -20,6 +20,20 @@
         配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。
       </div>
 
+      <% unless @speaker.nil? %>
+        <div class="information mt-4" id="speaker_notice">
+          <h4><%= "#{@speaker.name}様へのお知らせ" %></h4>
+          <ul>
+            <% @speaker_announcements.order(publish_time: 'DESC').each do |announcement| %>
+              <li>
+                <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+                <%= simple_format announcement.body %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <div class="information mt-3">
         <h4>運営からのお知らせ</h4>
         <ul>

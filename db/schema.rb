@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_30_082839) do
+ActiveRecord::Schema.define(version: 2021_11_14_010021) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -211,6 +211,20 @@ ActiveRecord::Schema.define(version: 2021_10_30_082839) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "speaker_announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "speaker_id", null: false
+    t.string "speaker_name", null: false
+    t.datetime "publish_time", null: false
+    t.text "body", null: false
+    t.boolean "open", default: false
+    t.boolean "publish", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
+    t.index ["speaker_id"], name: "index_speaker_announcements_on_speaker_id"
+  end
+
   create_table "speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "profile"
@@ -397,6 +411,8 @@ ActiveRecord::Schema.define(version: 2021_10_30_082839) do
   add_foreign_key "live_streams", "tracks"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
+  add_foreign_key "speaker_announcements", "conferences"
+  add_foreign_key "speaker_announcements", "speakers"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"

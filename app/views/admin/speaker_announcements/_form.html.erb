@@ -1,0 +1,29 @@
+<%= form_with(url: speaker_announcement_url, model: @speaker_announcement, local: true) do |form| %>
+  <section class="speaker-information py-3">
+
+    <div class="field">
+      <%= form.label :publish_time, '公開日' %>*<br/>
+      <%= form.datetime_select :publish_time, class: 'form-control' %>
+    </div>
+
+    <div class="field">
+      <%= form.label :speaker_id, '登壇者' %>*<br/>
+      <%= form.hidden_field :speaker_id, value: @speaker.id, class: 'form-control' %>
+      <%= form.text_field :speaker_name, value: @speaker.name, readonly: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :body, 'アナウンス内容' %>*
+      <%= form.text_area :body, class: "form-control", required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :publish, '公開・非公開' %>*<br/>
+      <%= form.select :publish, {'非公開': 0, '公開': 1}, class: "form-control", required: true %>
+    </div>
+
+    <div class="actions justify-content-center py-3">
+      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    </div>
+  </section>
+<% end %>

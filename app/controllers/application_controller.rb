@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render(template: "errors/error_404", status: 404, layout: "application", content_type: "text/html")
+    render(template: "errors/error_404", status: 404, layout: "application", content_type: "text/html", formats: :html)
   end
 
   def render_500(e = nil)

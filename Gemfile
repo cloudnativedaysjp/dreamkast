@@ -56,7 +56,8 @@ group :development do
   gem 'pry-rails'
   gem 'bullet'
 
-  gem 'steep', require: false
+  gem 'rbs', '1.7.0.beta.2'
+  gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
 end
 

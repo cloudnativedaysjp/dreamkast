@@ -1,0 +1,9 @@
+module ActiveHash
+  module Associations
+    module ActiveRecordExtensions
+    end
+  end
+
+  class Base
+  end
+end

@@ -9,7 +9,7 @@ class Talk < ApplicationRecord
 
   def track_name: () -> untyped
 
-  def slot_number: () -> untyped
+  def slot_number: () -> String
 
   def talk_number: () -> untyped
 

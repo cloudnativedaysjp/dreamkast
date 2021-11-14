@@ -3,7 +3,7 @@ class LiveStreamIvs < LiveStream
 
   def name: () -> untyped
 
-  def channel_arn: () -> untyped
+  def channel_arn: () -> string
 
   def playback_url: () -> untyped
 

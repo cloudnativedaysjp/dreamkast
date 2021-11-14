@@ -33,7 +33,7 @@ class Talk < ApplicationRecord
   validate :validate_expected_participants
   validate :validate_execution_phases
 
-  SLOT_MAP = ["1200","1400","1500","1600","1700","1800","1900","2000"]
+  SLOT_MAP = ["1200", "1400", "1500", "1600", "1700", "1800", "1900", "2000"]
 
   scope :on_air, -> {
     includes(:video).where(videos: { on_air: 1 })
@@ -52,7 +52,7 @@ class Talk < ApplicationRecord
   }
 
   scope :accepted_and_intermission, -> {
-    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
+    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: "intermission")))
   }
 
   def self.import(file)
@@ -71,22 +71,22 @@ class Talk < ApplicationRecord
       if message.size == 0
         message << "Talk CSVのインポートに成功しました"
       else
-        raise ActiveRecord::Rollback 
+        raise(ActiveRecord::Rollback)
       end
     end
 
-    return message
+    message
   end
 
-  def self.export_csv(conference, talks, track_name="all", date="all")
+  def self.export_csv(conference, talks, track_name = "all", date = "all")
     filename = "#{conference.abbr}_#{date}_#{track_name}"
     columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]
     labels = conference.proposal_item_configs.map(&:label).uniq
-    labels.delete('session_time')
+    labels.delete("session_time")
     columns.concat(labels)
 
     csv = CSV.generate do |csv|
-      #カラム名を1行目として入れる
+      # カラム名を1行目として入れる
       csv << columns
 
       talks.each do |talk|
@@ -103,7 +103,7 @@ class Talk < ApplicationRecord
                talk.start_to_end]
         labels.each do |label|
           v = talk.proposal_item_value(label)
-          row << (v.class == Array ? v.join(', ') : v)
+          row << (v.instance_of?(Array) ? v.join(", ") : v)
         end
         csv << row
       end
@@ -113,7 +113,7 @@ class Talk < ApplicationRecord
       file.write(csv)
     end
 
-    return filename
+    filename
   end
 
   def self.updatable_attributes
@@ -137,31 +137,31 @@ class Talk < ApplicationRecord
   end
 
   def track_name
-    track.present? ? track.name : ''
+    track.present? ? track.name : ""
   end
 
   def slot_number
     SLOT_MAP.each_with_index do |time, index|
-      if time > self.start_time.to_time.strftime("%H%M")
+      if time > start_time.to_time.strftime("%H%M")
         return index.to_s
       end
     end
   end
 
   def talk_number
-    return conference_day_id.to_s + self.track.name + slot_number
+    conference_day_id.to_s + track.name + slot_number
   end
 
   def day_slot
-    return self.conference_day_id.to_s + "_" + self.slot_number
+    conference_day_id.to_s + "_" + slot_number
   end
 
   def row_start
-    ((self.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60 / 5).to_i + 1
+    ((start_time.in_time_zone("Asia/Tokyo") - Time.zone.parse("2000-01-01 12:00")) / 60 / 5).to_i + 1
   end
 
   def row_end
-    ((self.end_time - self.start_time).to_i / 60 / 5) + row_start
+    ((end_time - start_time).to_i / 60 / 5) + row_start
   end
 
   def self.find_by_params(day_id, slot_number_param, track_id)
@@ -185,11 +185,11 @@ class Talk < ApplicationRecord
   end
 
   def difficulty
-    talk_difficulty.present? ? talk_difficulty.name : ''
+    talk_difficulty.present? ? talk_difficulty.name : ""
   end
 
   def category
-    talk_category.present? ? talk_category.name : ''
+    talk_category.present? ? talk_category.name : ""
   end
 
   def duration
@@ -201,20 +201,20 @@ class Talk < ApplicationRecord
   end
 
   def video_platform
-    video.present? ? video.site : ''
+    video.present? ? video.site : ""
   end
 
   def video_id
-    video.present? ? video.video_id : ''
+    video.present? ? video.video_id : ""
   end
 
   def time
     # CICD2021は全セッション40分固定で、talk_timeを持たせていないため
-    return 40 if conference.abbr == 'cicd2021'
+    return 40 if conference.abbr == "cicd2021"
 
     # CNDT2021移行はセッションの時間をProposalItemで管理するので、ProposalItemにsession_timeがあればそこからセッション時間を取得して返す
-    session_time = proposal_items.find_by(label: 'session_time')
-    return ProposalItemConfig.find(session_time.params.to_i).params.split('min')[0].to_i if session_time
+    session_time = proposal_items.find_by(label: "session_time")
+    return ProposalItemConfig.find(session_time.params.to_i).params.split("min")[0].to_i if session_time
 
     talk_time.present? ? talk_time.time_minutes : 0
   end
@@ -223,26 +223,26 @@ class Talk < ApplicationRecord
     if start_time.present? && end_time.present?
       start_time.strftime("%H:%M") + "-" + end_time.strftime("%H:%M")
     else
-      ''
+      ""
     end
   end
 
   def expected_participant_params
-    self.expected_participants.filter_map do |e|
+    expected_participants.filter_map do |e|
       ProposalItemConfig.find(e).params unless e == 0
     end
   end
 
   def execution_phase_params
-    self.execution_phases.filter_map do |e|
+    execution_phases.filter_map do |e|
       ProposalItemConfig.find(e).params unless e == 0
     end
   end
 
   def archived?
-    now = Time.now.in_time_zone('Tokyo')
-    etime =  DateTime.parse("#{conference_day.date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
-    return (now.to_i - etime.to_i) >= 600
+    now = Time.now.in_time_zone("Tokyo")
+    etime = DateTime.parse("#{conference_day.date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
+    (now.to_i - etime.to_i) >= 600
   end
 
   def sponsor_session?
@@ -252,7 +252,7 @@ class Talk < ApplicationRecord
   def create_or_update_proposal_item(label, params)
     item = proposal_items.find_by(label: label)
     if item.present?
-      item.update(params:  params)
+      item.update(params: params)
     else
       proposal_items.build(conference_id: conference_id, label: label, params: params)
     end
@@ -266,17 +266,17 @@ class Talk < ApplicationRecord
     when String
       ProposalItemConfig.find(params.to_i).params
     when Array
-      params.map{|param| ProposalItemConfig.find(param.to_i).params}
+      params.map { |param| ProposalItemConfig.find(param.to_i).params }
     end
   end
 
   private
 
   def validate_expected_participants
-    errors.add(:base, '想定受講者は最低1項目選択してください') if expected_participants&.empty?
+    errors.add(:base, "\u60F3\u5B9A\u53D7\u8B1B\u8005\u306F\u6700\u4F4E1\u9805\u76EE\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044") if expected_participants && expected_participants.empty?
   end
 
   def validate_execution_phases
-    errors.add(:base, '実行フェーズは最低1項目選択してください') if execution_phases&.empty?
+    errors.add(:base, "\u5B9F\u884C\u30D5\u30A7\u30FC\u30BA\u306F\u6700\u4F4E1\u9805\u76EE\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044") if execution_phases && execution_phases.empty?
   end
 end

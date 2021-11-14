@@ -9,11 +9,11 @@ class Track < ApplicationRecord
       return nil
     end
     if on_air_talks.size >= 2
-      raise Exception
+      raise(Exception)
     end
     if on_air_talks.size == 0
       return nil
     end
-    return on_air_talks.first
+    on_air_talks.first
   end
 end

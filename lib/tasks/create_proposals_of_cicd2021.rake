@@ -6,7 +6,7 @@ namespace :db do
 
     ActiveRecord::Base.transaction do
       begin
-        conference = Conference.find_by(abbr: 'cicd2021')
+        conference = Conference.find_by(abbr: "cicd2021")
         conference.talks.each do |talk|
           if talk.proposal.nil?
             proposal = Proposal.new(conference_id: conference.id, talk_id: talk.id, status: 0)
@@ -14,7 +14,7 @@ namespace :db do
           end
         end
       rescue => e
-        puts e
+        puts(e)
       end
     end
   end

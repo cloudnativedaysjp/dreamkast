@@ -4,8 +4,8 @@ class Admin::VideoRegistrationsController < ApplicationController
 
   def bulk_update
     params[:video_registration].each do |id, value|
-      puts "id: #{id}"
-      puts "value: #{value}"
+      puts("id: #{id}")
+      puts("value: #{value}")
 
       video_registration = VideoRegistration.find(id)
       old = video_registration.status
@@ -21,11 +21,11 @@ class Admin::VideoRegistrationsController < ApplicationController
             talk = video_registration.talk
             SpeakerMailer.video_uploaded(speaker, talk, @video_registration).deliver_later
           rescue => e
-            logger.error "Failed to send mail: #{e.message}"
+            logger.error("Failed to send mail: #{e.message}")
           end
         end
       end
     end
-    redirect_to admin_videos_path, notice: "配信設定を更新しました"
+    redirect_to(admin_videos_path, notice: "配信設定を更新しました")
   end
 end

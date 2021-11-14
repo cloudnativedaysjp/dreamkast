@@ -12,6 +12,6 @@ class TalksSpeaker < ApplicationRecord
   end
 
   def self.updatable_attributes
-    ["talk_id","speaker_id"]
+    ["talk_id", "speaker_id"]
   end
 end

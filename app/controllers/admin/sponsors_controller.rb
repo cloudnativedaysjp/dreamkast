@@ -23,9 +23,9 @@ class Admin::SponsorsController < ApplicationController
 
     respond_to do |format|
       if @sponsor_form.save
-        format.html { redirect_to admin_sponsor_url(event: params[:event], id:params[:id]), notice: "Sponsor was successfully updated." }
+        format.html { redirect_to(admin_sponsor_url(event: params[:event], id: params[:id]), notice: "Sponsor was successfully updated.") }
       else
-        format.html { render :edit }
+        format.html { render(:edit) }
       end
     end
   end

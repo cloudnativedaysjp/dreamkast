@@ -5,7 +5,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
   def show
     @sponsor = Sponsor.find(params[:sponsor_id])
     unless logged_in? && @sponsor.present? && @sponsor_profile.present?
-      redirect_to sponsor_dashboards_login_path
+      redirect_to(sponsor_dashboards_login_path)
     else
       @speaker = @conference.speakers.find_by(email: @current_user[:info][:email])
     end
@@ -13,13 +13,13 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   def login
     if logged_in?
-      @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").first
+      @sponsor = Sponsor.where(conference_id: @conference.id).where("speaker_emails like(?)", "%#{@current_user[:info][:email]}%").first
       if @sponsor.nil?
-        raise Forbidden
+        raise(Forbidden)
       elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
-        redirect_to new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id)
+        redirect_to(new_sponsor_dashboards_sponsor_profile_path(sponsor_id: @sponsor.id))
       elsif logged_in? && @sponsor.present? && @sponsor_profile.present?
-        redirect_to sponsor_dashboards_path(sponsor_id: @sponsor.id)
+        redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id))
       end
     end
   end
@@ -52,23 +52,22 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   def video_registration_status(video_registration)
     if video_registration.submitted?
-      '提出されたビデオファイルの確認中です。'
+      "\u63D0\u51FA\u3055\u308C\u305F\u30D3\u30C7\u30AA\u30D5\u30A1\u30A4\u30EB\u306E\u78BA\u8A8D\u4E2D\u3067\u3059\u3002"
     elsif video_registration.confirmed?
-      '提出されたビデオファイルの確認が完了しました。'
+      "\u63D0\u51FA\u3055\u308C\u305F\u30D3\u30C7\u30AA\u30D5\u30A1\u30A4\u30EB\u306E\u78BA\u8A8D\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F\u3002"
     end
   end
 
-
   def proposal_status(proposal)
-    return 'エントリー済み' unless @conference.cfp_result_visible
+    return "\u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F" unless @conference.cfp_result_visible
 
     case proposal.status
-    when 'registered'
-      'エントリー済み'
-    when 'accepted'
-      '採択'
-    when 'rejected'
-      '不採択'
+    when "registered"
+      "\u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F"
+    when "accepted"
+      "\u63A1\u629E"
+    when "rejected"
+      "\u4E0D\u63A1\u629E"
     end
   end
 end

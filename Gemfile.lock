@@ -62,6 +62,9 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     awesome_nested_set (3.3.1)
       activerecord (>= 4.0.0, < 7.0)
@@ -412,6 +415,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash
   activerecord-nulldb-adapter
+  annotate
   awesome_nested_set
   aws-sdk-ivs
   aws-sdk-medialive

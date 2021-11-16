@@ -55,6 +55,7 @@ group :development do
   gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
+  gem 'annotate', require: false
 end
 
 group :test do

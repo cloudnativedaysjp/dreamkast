@@ -50,13 +50,6 @@ jobs:
       run: |
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
-        git submodule init
-        git submodule update
-    - name: Check Type
-      run: |
-        git submodule init
-        git submodule update
-        bundle exec steep check
     - name: Run rubocop
       run: |
         bundle exec rubocop

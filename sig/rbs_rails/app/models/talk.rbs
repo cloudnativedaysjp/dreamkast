@@ -343,23 +343,6 @@ class Talk < ApplicationRecord
   def restore_sponsor_id!: () -> void
   def clear_sponsor_id_change: () -> void
 
-  attr_accessor order(): Integer?
-  def order_changed?: () -> bool
-  def order_change: () -> [ Integer?, Integer? ]
-  def order_will_change!: () -> void
-  def order_was: () -> Integer?
-  def order_previously_changed?: () -> bool
-  def order_previous_change: () -> Array[Integer?]?
-  def order_previously_was: () -> Integer?
-  def order_before_last_save: () -> Integer?
-  def order_change_to_be_saved: () -> Array[Integer?]?
-  def order_in_database: () -> Integer?
-  def saved_change_to_order: () -> Array[Integer?]?
-  def saved_change_to_order?: () -> bool
-  def will_save_change_to_order?: () -> bool
-  def restore_order!: () -> void
-  def clear_order_change: () -> void
-
   def talks_speakers: () -> TalksSpeaker::ActiveRecord_Associations_CollectionProxy
   def talks_speakers=: (TalksSpeaker::ActiveRecord_Associations_CollectionProxy | Array[TalksSpeaker]) -> (TalksSpeaker::ActiveRecord_Associations_CollectionProxy | Array[TalksSpeaker])
   def talks_speaker_ids: () -> Array[Integer]

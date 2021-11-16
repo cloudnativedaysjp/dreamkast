@@ -290,40 +290,6 @@ class Profile < ApplicationRecord
   def restore_company_address_prefecture_id!: () -> void
   def clear_company_address_prefecture_id_change: () -> void
 
-  attr_accessor first_name_kana(): String?
-  def first_name_kana_changed?: () -> bool
-  def first_name_kana_change: () -> [ String?, String? ]
-  def first_name_kana_will_change!: () -> void
-  def first_name_kana_was: () -> String?
-  def first_name_kana_previously_changed?: () -> bool
-  def first_name_kana_previous_change: () -> Array[String?]?
-  def first_name_kana_previously_was: () -> String?
-  def first_name_kana_before_last_save: () -> String?
-  def first_name_kana_change_to_be_saved: () -> Array[String?]?
-  def first_name_kana_in_database: () -> String?
-  def saved_change_to_first_name_kana: () -> Array[String?]?
-  def saved_change_to_first_name_kana?: () -> bool
-  def will_save_change_to_first_name_kana?: () -> bool
-  def restore_first_name_kana!: () -> void
-  def clear_first_name_kana_change: () -> void
-
-  attr_accessor last_name_kana(): String?
-  def last_name_kana_changed?: () -> bool
-  def last_name_kana_change: () -> [ String?, String? ]
-  def last_name_kana_will_change!: () -> void
-  def last_name_kana_was: () -> String?
-  def last_name_kana_previously_changed?: () -> bool
-  def last_name_kana_previous_change: () -> Array[String?]?
-  def last_name_kana_previously_was: () -> String?
-  def last_name_kana_before_last_save: () -> String?
-  def last_name_kana_change_to_be_saved: () -> Array[String?]?
-  def last_name_kana_in_database: () -> String?
-  def saved_change_to_last_name_kana: () -> Array[String?]?
-  def saved_change_to_last_name_kana?: () -> bool
-  def will_save_change_to_last_name_kana?: () -> bool
-  def restore_last_name_kana!: () -> void
-  def clear_last_name_kana_change: () -> void
-
   def registered_talks: () -> RegisteredTalk::ActiveRecord_Associations_CollectionProxy
   def registered_talks=: (RegisteredTalk::ActiveRecord_Associations_CollectionProxy | Array[RegisteredTalk]) -> (RegisteredTalk::ActiveRecord_Associations_CollectionProxy | Array[RegisteredTalk])
   def registered_talk_ids: () -> Array[Integer]

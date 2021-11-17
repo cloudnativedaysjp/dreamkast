@@ -79,5 +79,14 @@ FactoryBot.define do
     company { "company" }
     job_title { "job_title" }
     conference_id { 4 }
+
+    trait :with_speaker_announcement do
+      id { 4 }
+      after(:build) do |speaker|
+        speaker_announcement = FactoryBot.create(:speaker_announcement, :published)
+        speaker.speaker_announcements << speaker_announcement
+        FactoryBot.create(:speaker_announcement_middle, { speaker: speaker, speaker_announcement: speaker_announcement })
+      end
+    end
   end
 end

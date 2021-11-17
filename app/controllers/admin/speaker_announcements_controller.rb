@@ -7,20 +7,21 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def new
-    @speaker = Speaker.find(params[:speaker_id])
+    @speakers = [Speaker.find(params[:speaker_id])] unless params[:speaker_id].nil?
     @speaker_announcement = SpeakerAnnouncement.new
+    @speaker_announcement.speaker_announcement_middles.build
   end
 
   def edit
     @speaker_announcement = SpeakerAnnouncement.find_by(conference_id: @conference.id, id: params[:id])
-    @speaker = @speaker_announcement.speaker
+    @speakers = @speaker_announcement.speakers
   end
 
   def create
-    @speaker_announcement = SpeakerAnnouncement.new(speaker_announcement_params.merge(conference_id: @conference.id))
+    @speaker_announcement = SpeakerAnnouncement.create(speaker_announcement_params.merge(conference_id: @conference.id))
 
     respond_to do |format|
-      if @speaker_announcement.save
+      if @speaker_announcement
         format.html { redirect_to(admin_speaker_announcements_path, notice: "Speaker was successfully updated.") }
         format.json { render(:show, status: :ok, location: @speaker_announcement) }
       else
@@ -68,6 +69,6 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def speaker_announcement_params
-    params.require(:speaker_announcement).permit(:publish_time, :body, :publish, :speaker_name, :speaker_id, :conference_id)
+    params.require(:speaker_announcement).permit(:conference_id, :publish_time, :body, :publish, :speaker_names, speaker_announcement_middles_attributes: [:id, :speaker_id, :_destroy])
   end
 end

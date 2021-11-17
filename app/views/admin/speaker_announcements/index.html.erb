@@ -1,6 +1,8 @@
 <%= render 'admin/layout' do %>
   <h1>Speaker Announcement</h1>
 
+  <%= link_to 'New AllSpeaekersAnnouncement', new_admin_speaker_announcement_path, class: "btn btn-primary" %>
+
   <table class="table table-striped talks_table" >
     <thead>
     <tr>
@@ -17,7 +19,7 @@
         <td>
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
         <td>
-          <%= announcement.speaker_name %>
+          <%= announcement.format_speaker_names %>
         </td>
         <td>
           <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>

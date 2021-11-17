@@ -25,6 +25,39 @@ RSpec.describe(TracksController, type: :request) do
           get "/cndt2020/dashboard"
           expect(response.body).to(include('<a class="dropdown-item" href="/cndt2020/admin">管理画面</a>'))
         end
+
+        context "user is speaker" do
+          before do
+            @alice = create(:speaker_alice)
+          end
+          it "exists speaker" do
+            get "/cndt2020/dashboard"
+            expect(response).to(be_successful)
+            expect(controller.instance_variable_get("@speaker").name).to(eq("Alice"))
+          end
+
+          context "wnen announcement is not published" do
+            before do
+              create(:speaker_announcement, :cndt2020, speakers: [@alice])
+            end
+            it "not exists speaker_announcements" do
+              get "/cndt2020/dashboard"
+              expect(response).to(be_successful)
+              expect(controller.instance_variable_get("@speaker_announcements").size).to(eq(0))
+            end
+          end
+
+          context "when announcement is published" do
+            before do
+              create(:speaker_announcement, :cndt2020, :published, speakers: [@alice])
+            end
+            it "exists speaker_announcements" do
+              get "/cndt2020/dashboard"
+              expect(response).to(be_successful)
+              expect(controller.instance_variable_get("@speaker_announcements").size).to(eq(1))
+            end
+          end
+        end
       end
 
       context "user is not admin" do

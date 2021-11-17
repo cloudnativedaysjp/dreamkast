@@ -6,11 +6,41 @@
       <%= form.datetime_select :publish_time, class: 'form-control' %>
     </div>
 
-    <div class="field">
-      <%= form.label :speaker_id, '登壇者' %>*<br/>
-      <%= form.hidden_field :speaker_id, value: @speaker.id, class: 'form-control' %>
-      <%= form.text_field :speaker_name, value: @speaker.name, readonly: true %>
-    </div>
+    <% if @speakers.blank? || @speakers.nil? %>
+      <div class="field">
+        <%= form.label :speaker_id, '登壇者' %>*<br/>
+        <% Speaker.all.pluck(:id).each do |speaker_id| %>
+          <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
+            <%= speaker_anouncemet.hidden_field :speaker_id, value: speaker_id, class: 'form-control' %>
+          <% end %>
+        <% end %>
+        <%= form.text_field :speaker_names, value: "全員", readonly: true %>
+      </div>
+    <% else %>
+      <% if action == "new" %>
+        <div class="field">
+          <%= form.label :speaker_id, '登壇者' %>*<br/>
+
+          <!-- @speakers.length == 1 -->
+          <% @speakers.each do |speaker| %>
+            <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
+              <%= speaker_anouncemet.hidden_field :speaker_id, value: speaker.id %>
+              <%= form.text_field :speaker_names, value: speaker.name, readonly: true %><br/>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="field">
+          <%= form.label :speaker_id, '登壇者' %>*<br/>
+          <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
+            <%= speaker_anouncemet.hidden_field :speaker_id %>
+          <% end %>
+          <% @speakers.each do |speaker| %>
+            <%= form.text_field :speaker_names, value: speaker.name, readonly: true %><br/>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
 
     <div class="field">
       <%= form.label :body, 'アナウンス内容' %>*

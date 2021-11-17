@@ -10,12 +10,10 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
   let(:default_param) {
     {
       conference_id: conf.id,
-      speaker_id: speaker.id,
-      speaker_name: speaker.name,
+      speaker_names: speaker.name,
       publish_time: Time.now,
       body: "test",
-      publish: false,
-      open: false
+      publish: false
     }
   }
   describe "validation" do
@@ -32,16 +30,9 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
         }
         it { expect(subject.id).to(be_falsey) }
       end
-      context "with nil speaker_id" do
+      context "with nil speaker_names" do
         let(:param) {
-          default_param[:speaker_id] = nil
-          default_param
-        }
-        it { expect(subject.id).to(be_falsey) }
-      end
-      context "with nil speaker_name" do
-        let(:param) {
-          default_param[:speaker_name] = nil
+          default_param[:speaker_names] = nil
           default_param
         }
         it { expect(subject.id).to(be_falsey) }
@@ -72,6 +63,10 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
         it { expect(described_class.all.size).to(eq(2)) }
         it { expect(subject.size).to(eq(1)) }
       end
+    end
+    describe "#format_speaker_namess" do
+      pending "wait to impl"
+      subject { described_class.create(param).format_speaker_namess }
     end
   end
 end

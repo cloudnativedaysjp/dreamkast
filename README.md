@@ -90,7 +90,7 @@ $ docker-compose up -d db redis nginx ui
 Run the application
 
 ```
-$ ./entryponit.sh
+$ ./entrypoint.sh
 ```
 
 ## For local development

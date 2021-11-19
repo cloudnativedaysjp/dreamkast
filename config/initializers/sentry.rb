@@ -1,5 +1,5 @@
 Sentry.init do |config|
   config.dsn = ENV["SENTRY_DSN"]
+  config.environment = ENV["DREAMKAST_NAMESPACE"]
+  # config.environments = ['staging', 'production']
 end
-
-Sentry.set_tags(dreamkast_namespace: ENV["DREAMKAST_NAMESPACE"])

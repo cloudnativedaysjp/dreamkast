@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def event_name
     params[:event]
   end
-  
+
   def production?
     env_name == "production"
   end

@@ -56,7 +56,7 @@ class Conference < ApplicationRecord
   }
 
   scope :previous, -> {
-    merge(where(status: 2).or(where(status: 3)).joins(:conference_days)).order("conference_days.date desc").to_a.uniq
+    merge(where(status: 2).or(where(status: 3))).order(id: :desc)
   }
 
   scope :unarchived, -> {

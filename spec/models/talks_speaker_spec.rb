@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: talks_speakers
+#
+#  id         :bigint           not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  speaker_id :integer
+#  talk_id    :integer
+#
 require "rails_helper"
 
 RSpec.describe(TalksSpeaker, type: :model) do

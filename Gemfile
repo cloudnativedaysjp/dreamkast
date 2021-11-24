@@ -55,10 +55,10 @@ group :development do
   gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
-
   gem 'rbs', '1.7.0.beta.2'
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
+  gem 'annotate', require: false
 end
 
 group :test do
@@ -76,7 +76,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "mysql2", "~> 0.5.3"
 
-gem "sentry-raven"
+gem "sentry-ruby"
+gem "sentry-rails"
 
 gem "redis-rails"
 
@@ -109,3 +110,7 @@ gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 
 gem 'active_hash'
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-jaeger'
+gem 'opentelemetry-instrumentation-all'
+

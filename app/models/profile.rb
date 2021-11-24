@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                            :bigint           not null, primary key
+#  company_address               :string(255)
+#  company_email                 :string(255)
+#  company_name                  :string(255)
+#  company_tel                   :string(255)
+#  department                    :string(255)
+#  email                         :string(255)
+#  first_name                    :string(255)
+#  last_name                     :string(255)
+#  occupation                    :string(255)
+#  position                      :string(255)
+#  sub                           :string(255)
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  company_address_prefecture_id :string(255)
+#  conference_id                 :integer
+#  industry_id                   :integer
+#
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

@@ -34,7 +34,3 @@ module Cndtattend
     config.action_cable.mount_path = "/cable"
   end
 end
-
-Raven.configure do |config|
-  config.dsn = ENV["SENTRY_DSN"]
-end

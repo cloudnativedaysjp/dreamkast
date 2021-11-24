@@ -10,7 +10,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build-deploy:
+  run-test:
     runs-on: ubuntu-18.04
     if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:

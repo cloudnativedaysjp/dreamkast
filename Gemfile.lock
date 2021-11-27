@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/soutaro/steep.git
+  revision: 5458787ed7cfd02de783fd6d31a3aed5041cef4d
+  specs:
+    steep (0.46.0)
+      activesupport (>= 5.1)
+      language_server-protocol (>= 3.15, < 4.0)
+      listen (~> 3.0)
+      parallel (>= 1.0.0)
+      parser (>= 3.0)
+      rainbow (>= 2.2.2, < 4.0)
+      rbs (>= 1.6.0)
+      terminal-table (>= 2, < 4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -168,6 +182,7 @@ GEM
     jmespath (1.4.0)
     json_schema (0.20.9)
     jwt (2.2.2)
+    language_server-protocol (3.16.0.3)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -416,6 +431,10 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rbs (1.7.0.beta.2)
+    rbs_rails (0.9.0)
+      parser
+      rbs (>= 1)
     redcarpet (3.5.1)
     redis (4.2.1)
     redis-actionpack (5.2.0)
@@ -527,6 +546,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
     thor (1.1.0)
     thread_safe (0.3.6)
     thrift (0.15.0)
@@ -597,6 +618,8 @@ DEPENDENCIES
   rack-timeout
   rails (~> 6.0.3, >= 6.0.3.1)
   rails_autolink
+  rbs (= 1.7.0.beta.2)
+  rbs_rails
   redcarpet
   redis-rails
   rexml (~> 3.2, >= 3.2.4)
@@ -616,6 +639,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
+  steep!
   turbolinks (~> 5)
   tzinfo-data
   uppy-s3_multipart (~> 0.3)

@@ -55,6 +55,9 @@ group :development do
   gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
+  gem 'rbs', '1.7.0.beta.2'
+  gem 'steep', github: 'soutaro/steep', require: false
+  gem 'rbs_rails', require: false
   gem 'annotate', require: false
 end
 

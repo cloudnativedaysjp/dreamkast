@@ -1,0 +1,2 @@
+class ProposalItemConfig < ApplicationRecord
+end

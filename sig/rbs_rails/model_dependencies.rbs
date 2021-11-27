@@ -1,0 +1,8 @@
+class ApplicationRecord < ActiveRecord::Base
+end
+class ProposalItemConfig < ApplicationRecord
+end
+class SponsorAttachment < ApplicationRecord
+end
+class LiveStream < ApplicationRecord
+end

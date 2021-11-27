@@ -1,0 +1,461 @@
+class Conference < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Conference, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor name(): String?
+  def name_changed?: () -> bool
+  def name_change: () -> [ String?, String? ]
+  def name_will_change!: () -> void
+  def name_was: () -> String?
+  def name_previously_changed?: () -> bool
+  def name_previous_change: () -> Array[String?]?
+  def name_previously_was: () -> String?
+  def name_before_last_save: () -> String?
+  def name_change_to_be_saved: () -> Array[String?]?
+  def name_in_database: () -> String?
+  def saved_change_to_name: () -> Array[String?]?
+  def saved_change_to_name?: () -> bool
+  def will_save_change_to_name?: () -> bool
+  def restore_name!: () -> void
+  def clear_name_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor abbr(): String?
+  def abbr_changed?: () -> bool
+  def abbr_change: () -> [ String?, String? ]
+  def abbr_will_change!: () -> void
+  def abbr_was: () -> String?
+  def abbr_previously_changed?: () -> bool
+  def abbr_previous_change: () -> Array[String?]?
+  def abbr_previously_was: () -> String?
+  def abbr_before_last_save: () -> String?
+  def abbr_change_to_be_saved: () -> Array[String?]?
+  def abbr_in_database: () -> String?
+  def saved_change_to_abbr: () -> Array[String?]?
+  def saved_change_to_abbr?: () -> bool
+  def will_save_change_to_abbr?: () -> bool
+  def restore_abbr!: () -> void
+  def clear_abbr_change: () -> void
+
+  attr_accessor status(): String
+  def status_changed?: () -> bool
+  def status_change: () -> [ String?, String? ]
+  def status_will_change!: () -> void
+  def status_was: () -> String?
+  def status_previously_changed?: () -> bool
+  def status_previous_change: () -> Array[String?]?
+  def status_previously_was: () -> String?
+  def status_before_last_save: () -> String?
+  def status_change_to_be_saved: () -> Array[String?]?
+  def status_in_database: () -> String?
+  def saved_change_to_status: () -> Array[String?]?
+  def saved_change_to_status?: () -> bool
+  def will_save_change_to_status?: () -> bool
+  def restore_status!: () -> void
+  def clear_status_change: () -> void
+
+  attr_accessor theme(): String?
+  def theme_changed?: () -> bool
+  def theme_change: () -> [ String?, String? ]
+  def theme_will_change!: () -> void
+  def theme_was: () -> String?
+  def theme_previously_changed?: () -> bool
+  def theme_previous_change: () -> Array[String?]?
+  def theme_previously_was: () -> String?
+  def theme_before_last_save: () -> String?
+  def theme_change_to_be_saved: () -> Array[String?]?
+  def theme_in_database: () -> String?
+  def saved_change_to_theme: () -> Array[String?]?
+  def saved_change_to_theme?: () -> bool
+  def will_save_change_to_theme?: () -> bool
+  def restore_theme!: () -> void
+  def clear_theme_change: () -> void
+
+  attr_accessor about(): String?
+  def about_changed?: () -> bool
+  def about_change: () -> [ String?, String? ]
+  def about_will_change!: () -> void
+  def about_was: () -> String?
+  def about_previously_changed?: () -> bool
+  def about_previous_change: () -> Array[String?]?
+  def about_previously_was: () -> String?
+  def about_before_last_save: () -> String?
+  def about_change_to_be_saved: () -> Array[String?]?
+  def about_in_database: () -> String?
+  def saved_change_to_about: () -> Array[String?]?
+  def saved_change_to_about?: () -> bool
+  def will_save_change_to_about?: () -> bool
+  def restore_about!: () -> void
+  def clear_about_change: () -> void
+
+  attr_accessor privacy_policy(): String?
+  def privacy_policy_changed?: () -> bool
+  def privacy_policy_change: () -> [ String?, String? ]
+  def privacy_policy_will_change!: () -> void
+  def privacy_policy_was: () -> String?
+  def privacy_policy_previously_changed?: () -> bool
+  def privacy_policy_previous_change: () -> Array[String?]?
+  def privacy_policy_previously_was: () -> String?
+  def privacy_policy_before_last_save: () -> String?
+  def privacy_policy_change_to_be_saved: () -> Array[String?]?
+  def privacy_policy_in_database: () -> String?
+  def saved_change_to_privacy_policy: () -> Array[String?]?
+  def saved_change_to_privacy_policy?: () -> bool
+  def will_save_change_to_privacy_policy?: () -> bool
+  def restore_privacy_policy!: () -> void
+  def clear_privacy_policy_change: () -> void
+
+  attr_accessor coc(): String?
+  def coc_changed?: () -> bool
+  def coc_change: () -> [ String?, String? ]
+  def coc_will_change!: () -> void
+  def coc_was: () -> String?
+  def coc_previously_changed?: () -> bool
+  def coc_previous_change: () -> Array[String?]?
+  def coc_previously_was: () -> String?
+  def coc_before_last_save: () -> String?
+  def coc_change_to_be_saved: () -> Array[String?]?
+  def coc_in_database: () -> String?
+  def saved_change_to_coc: () -> Array[String?]?
+  def saved_change_to_coc?: () -> bool
+  def will_save_change_to_coc?: () -> bool
+  def restore_coc!: () -> void
+  def clear_coc_change: () -> void
+
+  attr_accessor copyright(): String?
+  def copyright_changed?: () -> bool
+  def copyright_change: () -> [ String?, String? ]
+  def copyright_will_change!: () -> void
+  def copyright_was: () -> String?
+  def copyright_previously_changed?: () -> bool
+  def copyright_previous_change: () -> Array[String?]?
+  def copyright_previously_was: () -> String?
+  def copyright_before_last_save: () -> String?
+  def copyright_change_to_be_saved: () -> Array[String?]?
+  def copyright_in_database: () -> String?
+  def saved_change_to_copyright: () -> Array[String?]?
+  def saved_change_to_copyright?: () -> bool
+  def will_save_change_to_copyright?: () -> bool
+  def restore_copyright!: () -> void
+  def clear_copyright_change: () -> void
+
+  attr_accessor privacy_policy_for_speaker(): String?
+  def privacy_policy_for_speaker_changed?: () -> bool
+  def privacy_policy_for_speaker_change: () -> [ String?, String? ]
+  def privacy_policy_for_speaker_will_change!: () -> void
+  def privacy_policy_for_speaker_was: () -> String?
+  def privacy_policy_for_speaker_previously_changed?: () -> bool
+  def privacy_policy_for_speaker_previous_change: () -> Array[String?]?
+  def privacy_policy_for_speaker_previously_was: () -> String?
+  def privacy_policy_for_speaker_before_last_save: () -> String?
+  def privacy_policy_for_speaker_change_to_be_saved: () -> Array[String?]?
+  def privacy_policy_for_speaker_in_database: () -> String?
+  def saved_change_to_privacy_policy_for_speaker: () -> Array[String?]?
+  def saved_change_to_privacy_policy_for_speaker?: () -> bool
+  def will_save_change_to_privacy_policy_for_speaker?: () -> bool
+  def restore_privacy_policy_for_speaker!: () -> void
+  def clear_privacy_policy_for_speaker_change: () -> void
+
+  attr_accessor speaker_entry(): String?
+  def speaker_entry_changed?: () -> bool
+  def speaker_entry_change: () -> [ String?, String? ]
+  def speaker_entry_will_change!: () -> void
+  def speaker_entry_was: () -> String?
+  def speaker_entry_previously_changed?: () -> bool
+  def speaker_entry_previous_change: () -> Array[String?]?
+  def speaker_entry_previously_was: () -> String?
+  def speaker_entry_before_last_save: () -> String?
+  def speaker_entry_change_to_be_saved: () -> Array[String?]?
+  def speaker_entry_in_database: () -> String?
+  def saved_change_to_speaker_entry: () -> Array[String?]?
+  def saved_change_to_speaker_entry?: () -> bool
+  def will_save_change_to_speaker_entry?: () -> bool
+  def restore_speaker_entry!: () -> void
+  def clear_speaker_entry_change: () -> void
+
+  attr_accessor attendee_entry(): String?
+  def attendee_entry_changed?: () -> bool
+  def attendee_entry_change: () -> [ String?, String? ]
+  def attendee_entry_will_change!: () -> void
+  def attendee_entry_was: () -> String?
+  def attendee_entry_previously_changed?: () -> bool
+  def attendee_entry_previous_change: () -> Array[String?]?
+  def attendee_entry_previously_was: () -> String?
+  def attendee_entry_before_last_save: () -> String?
+  def attendee_entry_change_to_be_saved: () -> Array[String?]?
+  def attendee_entry_in_database: () -> String?
+  def saved_change_to_attendee_entry: () -> Array[String?]?
+  def saved_change_to_attendee_entry?: () -> bool
+  def will_save_change_to_attendee_entry?: () -> bool
+  def restore_attendee_entry!: () -> void
+  def clear_attendee_entry_change: () -> void
+
+  attr_accessor show_timetable(): String?
+  def show_timetable_changed?: () -> bool
+  def show_timetable_change: () -> [ String?, String? ]
+  def show_timetable_will_change!: () -> void
+  def show_timetable_was: () -> String?
+  def show_timetable_previously_changed?: () -> bool
+  def show_timetable_previous_change: () -> Array[String?]?
+  def show_timetable_previously_was: () -> String?
+  def show_timetable_before_last_save: () -> String?
+  def show_timetable_change_to_be_saved: () -> Array[String?]?
+  def show_timetable_in_database: () -> String?
+  def saved_change_to_show_timetable: () -> Array[String?]?
+  def saved_change_to_show_timetable?: () -> bool
+  def will_save_change_to_show_timetable?: () -> bool
+  def restore_show_timetable!: () -> void
+  def clear_show_timetable_change: () -> void
+
+  attr_accessor cfp_result_visible(): bool?
+  def cfp_result_visible_changed?: () -> bool
+  def cfp_result_visible_change: () -> [ bool?, bool? ]
+  def cfp_result_visible_will_change!: () -> void
+  def cfp_result_visible_was: () -> bool?
+  def cfp_result_visible_previously_changed?: () -> bool
+  def cfp_result_visible_previous_change: () -> Array[bool?]?
+  def cfp_result_visible_previously_was: () -> bool?
+  def cfp_result_visible_before_last_save: () -> bool?
+  def cfp_result_visible_change_to_be_saved: () -> Array[bool?]?
+  def cfp_result_visible_in_database: () -> bool?
+  def saved_change_to_cfp_result_visible: () -> Array[bool?]?
+  def saved_change_to_cfp_result_visible?: () -> bool
+  def will_save_change_to_cfp_result_visible?: () -> bool
+  def restore_cfp_result_visible!: () -> void
+  def clear_cfp_result_visible_change: () -> void
+  attr_accessor cfp_result_visible?(): bool
+
+  attr_accessor show_sponsors(): bool?
+  def show_sponsors_changed?: () -> bool
+  def show_sponsors_change: () -> [ bool?, bool? ]
+  def show_sponsors_will_change!: () -> void
+  def show_sponsors_was: () -> bool?
+  def show_sponsors_previously_changed?: () -> bool
+  def show_sponsors_previous_change: () -> Array[bool?]?
+  def show_sponsors_previously_was: () -> bool?
+  def show_sponsors_before_last_save: () -> bool?
+  def show_sponsors_change_to_be_saved: () -> Array[bool?]?
+  def show_sponsors_in_database: () -> bool?
+  def saved_change_to_show_sponsors: () -> Array[bool?]?
+  def saved_change_to_show_sponsors?: () -> bool
+  def will_save_change_to_show_sponsors?: () -> bool
+  def restore_show_sponsors!: () -> void
+  def clear_show_sponsors_change: () -> void
+  attr_accessor show_sponsors?(): bool
+
+  attr_accessor brief(): String?
+  def brief_changed?: () -> bool
+  def brief_change: () -> [ String?, String? ]
+  def brief_will_change!: () -> void
+  def brief_was: () -> String?
+  def brief_previously_changed?: () -> bool
+  def brief_previous_change: () -> Array[String?]?
+  def brief_previously_was: () -> String?
+  def brief_before_last_save: () -> String?
+  def brief_change_to_be_saved: () -> Array[String?]?
+  def brief_in_database: () -> String?
+  def saved_change_to_brief: () -> Array[String?]?
+  def saved_change_to_brief?: () -> bool
+  def will_save_change_to_brief?: () -> bool
+  def restore_brief!: () -> void
+  def clear_brief_change: () -> void
+
+  def form_items: () -> FormItem::ActiveRecord_Associations_CollectionProxy
+  def form_items=: (FormItem::ActiveRecord_Associations_CollectionProxy | Array[FormItem]) -> (FormItem::ActiveRecord_Associations_CollectionProxy | Array[FormItem])
+  def form_item_ids: () -> Array[Integer]
+  def form_item_ids=: (Array[Integer]) -> Array[Integer]
+  def conference_days: () -> ConferenceDay::ActiveRecord_Associations_CollectionProxy
+  def conference_days=: (ConferenceDay::ActiveRecord_Associations_CollectionProxy | Array[ConferenceDay]) -> (ConferenceDay::ActiveRecord_Associations_CollectionProxy | Array[ConferenceDay])
+  def conference_day_ids: () -> Array[Integer]
+  def conference_day_ids=: (Array[Integer]) -> Array[Integer]
+  def proposals: () -> Proposal::ActiveRecord_Associations_CollectionProxy
+  def proposals=: (Proposal::ActiveRecord_Associations_CollectionProxy | Array[Proposal]) -> (Proposal::ActiveRecord_Associations_CollectionProxy | Array[Proposal])
+  def proposal_ids: () -> Array[Integer]
+  def proposal_ids=: (Array[Integer]) -> Array[Integer]
+  def talks: () -> Talk::ActiveRecord_Associations_CollectionProxy
+  def talks=: (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk]) -> (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk])
+  def talk_ids: () -> Array[Integer]
+  def talk_ids=: (Array[Integer]) -> Array[Integer]
+  def tracks: () -> Track::ActiveRecord_Associations_CollectionProxy
+  def tracks=: (Track::ActiveRecord_Associations_CollectionProxy | Array[Track]) -> (Track::ActiveRecord_Associations_CollectionProxy | Array[Track])
+  def track_ids: () -> Array[Integer]
+  def track_ids=: (Array[Integer]) -> Array[Integer]
+  def sponsors: () -> Sponsor::ActiveRecord_Associations_CollectionProxy
+  def sponsors=: (Sponsor::ActiveRecord_Associations_CollectionProxy | Array[Sponsor]) -> (Sponsor::ActiveRecord_Associations_CollectionProxy | Array[Sponsor])
+  def sponsor_ids: () -> Array[Integer]
+  def sponsor_ids=: (Array[Integer]) -> Array[Integer]
+  def sponsor_types: () -> SponsorType::ActiveRecord_Associations_CollectionProxy
+  def sponsor_types=: (SponsorType::ActiveRecord_Associations_CollectionProxy | Array[SponsorType]) -> (SponsorType::ActiveRecord_Associations_CollectionProxy | Array[SponsorType])
+  def sponsor_type_ids: () -> Array[Integer]
+  def sponsor_type_ids=: (Array[Integer]) -> Array[Integer]
+  def booths: () -> Booth::ActiveRecord_Associations_CollectionProxy
+  def booths=: (Booth::ActiveRecord_Associations_CollectionProxy | Array[Booth]) -> (Booth::ActiveRecord_Associations_CollectionProxy | Array[Booth])
+  def booth_ids: () -> Array[Integer]
+  def booth_ids=: (Array[Integer]) -> Array[Integer]
+  def links: () -> Link::ActiveRecord_Associations_CollectionProxy
+  def links=: (Link::ActiveRecord_Associations_CollectionProxy | Array[Link]) -> (Link::ActiveRecord_Associations_CollectionProxy | Array[Link])
+  def link_ids: () -> Array[Integer]
+  def link_ids=: (Array[Integer]) -> Array[Integer]
+  def talk_times: () -> TalkTime::ActiveRecord_Associations_CollectionProxy
+  def talk_times=: (TalkTime::ActiveRecord_Associations_CollectionProxy | Array[TalkTime]) -> (TalkTime::ActiveRecord_Associations_CollectionProxy | Array[TalkTime])
+  def talk_time_ids: () -> Array[Integer]
+  def talk_time_ids=: (Array[Integer]) -> Array[Integer]
+  def talk_categories: () -> TalkCategory::ActiveRecord_Associations_CollectionProxy
+  def talk_categories=: (TalkCategory::ActiveRecord_Associations_CollectionProxy | Array[TalkCategory]) -> (TalkCategory::ActiveRecord_Associations_CollectionProxy | Array[TalkCategory])
+  def talk_category_ids: () -> Array[Integer]
+  def talk_category_ids=: (Array[Integer]) -> Array[Integer]
+  def talk_difficulties: () -> TalkDifficulty::ActiveRecord_Associations_CollectionProxy
+  def talk_difficulties=: (TalkDifficulty::ActiveRecord_Associations_CollectionProxy | Array[TalkDifficulty]) -> (TalkDifficulty::ActiveRecord_Associations_CollectionProxy | Array[TalkDifficulty])
+  def talk_difficulty_ids: () -> Array[Integer]
+  def talk_difficulty_ids=: (Array[Integer]) -> Array[Integer]
+  def speakers: () -> Speaker::ActiveRecord_Associations_CollectionProxy
+  def speakers=: (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker]) -> (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker])
+  def speaker_ids: () -> Array[Integer]
+  def speaker_ids=: (Array[Integer]) -> Array[Integer]
+  def announcements: () -> Announcement::ActiveRecord_Associations_CollectionProxy
+  def announcements=: (Announcement::ActiveRecord_Associations_CollectionProxy | Array[Announcement]) -> (Announcement::ActiveRecord_Associations_CollectionProxy | Array[Announcement])
+  def announcement_ids: () -> Array[Integer]
+  def announcement_ids=: (Array[Integer]) -> Array[Integer]
+  def proposal_item_configs: () -> ProposalItemConfig::ActiveRecord_Associations_CollectionProxy
+  def proposal_item_configs=: (ProposalItemConfig::ActiveRecord_Associations_CollectionProxy | Array[ProposalItemConfig]) -> (ProposalItemConfig::ActiveRecord_Associations_CollectionProxy | Array[ProposalItemConfig])
+  def proposal_item_config_ids: () -> Array[Integer]
+  def proposal_item_config_ids=: (Array[Integer]) -> Array[Integer]
+  def profiles: () -> Profile::ActiveRecord_Associations_CollectionProxy
+  def profiles=: (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile]) -> (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile])
+  def profile_ids: () -> Array[Integer]
+  def profile_ids=: (Array[Integer]) -> Array[Integer]
+  def stats_of_registrants: () -> StatsOfRegistrant::ActiveRecord_Associations_CollectionProxy
+  def stats_of_registrants=: (StatsOfRegistrant::ActiveRecord_Associations_CollectionProxy | Array[StatsOfRegistrant]) -> (StatsOfRegistrant::ActiveRecord_Associations_CollectionProxy | Array[StatsOfRegistrant])
+  def stats_of_registrant_ids: () -> Array[Integer]
+  def stats_of_registrant_ids=: (Array[Integer]) -> Array[Integer]
+  def admin_profiles: () -> AdminProfile::ActiveRecord_Associations_CollectionProxy
+  def admin_profiles=: (AdminProfile::ActiveRecord_Associations_CollectionProxy | Array[AdminProfile]) -> (AdminProfile::ActiveRecord_Associations_CollectionProxy | Array[AdminProfile])
+  def admin_profile_ids: () -> Array[Integer]
+  def admin_profile_ids=: (Array[Integer]) -> Array[Integer]
+  def live_stream_media_live: () -> LiveStreamMediaLive::ActiveRecord_Associations_CollectionProxy
+  def live_stream_media_live=: (LiveStreamMediaLive::ActiveRecord_Associations_CollectionProxy | Array[LiveStreamMediaLive]) -> (LiveStreamMediaLive::ActiveRecord_Associations_CollectionProxy | Array[LiveStreamMediaLive])
+  def live_stream_media_live_ids: () -> Array[Integer]
+  def live_stream_media_live_ids=: (Array[Integer]) -> Array[Integer]
+
+  def registered!: () -> bool
+  def registered?: () -> bool
+  def opened!: () -> bool
+  def opened?: () -> bool
+  def closed!: () -> bool
+  def closed?: () -> bool
+  def archived!: () -> bool
+  def archived?: () -> bool
+  def speaker_entry_disabled!: () -> bool
+  def speaker_entry_disabled?: () -> bool
+  def speaker_entry_enabled!: () -> bool
+  def speaker_entry_enabled?: () -> bool
+  def attendee_entry_disabled!: () -> bool
+  def attendee_entry_disabled?: () -> bool
+  def attendee_entry_enabled!: () -> bool
+  def attendee_entry_enabled?: () -> bool
+  def show_timetable_disabled!: () -> bool
+  def show_timetable_disabled?: () -> bool
+  def show_timetable_enabled!: () -> bool
+  def show_timetable_enabled?: () -> bool
+  def self.registered: () -> ActiveRecord_Relation
+  def self.opened: () -> ActiveRecord_Relation
+  def self.closed: () -> ActiveRecord_Relation
+  def self.archived: () -> ActiveRecord_Relation
+  def self.speaker_entry_disabled: () -> ActiveRecord_Relation
+  def self.speaker_entry_enabled: () -> ActiveRecord_Relation
+  def self.attendee_entry_disabled: () -> ActiveRecord_Relation
+  def self.attendee_entry_enabled: () -> ActiveRecord_Relation
+  def self.show_timetable_disabled: () -> ActiveRecord_Relation
+  def self.show_timetable_enabled: () -> ActiveRecord_Relation
+  def self.upcoming: () -> ActiveRecord_Relation
+  def self.previous: () -> ActiveRecord_Relation
+  def self.unarchived: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def registered: () -> ActiveRecord_Relation
+
+    def opened: () -> ActiveRecord_Relation
+
+    def closed: () -> ActiveRecord_Relation
+
+    def archived: () -> ActiveRecord_Relation
+
+    def speaker_entry_disabled: () -> ActiveRecord_Relation
+
+    def speaker_entry_enabled: () -> ActiveRecord_Relation
+
+    def attendee_entry_disabled: () -> ActiveRecord_Relation
+
+    def attendee_entry_enabled: () -> ActiveRecord_Relation
+
+    def show_timetable_disabled: () -> ActiveRecord_Relation
+
+    def show_timetable_enabled: () -> ActiveRecord_Relation
+
+    def upcoming: () -> ActiveRecord_Relation
+
+    def previous: () -> ActiveRecord_Relation
+
+    def unarchived: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Conference, Integer]
+    include Enumerable[Conference]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Conference, Integer]
+  end
+end

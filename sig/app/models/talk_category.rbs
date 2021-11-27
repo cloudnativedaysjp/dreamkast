@@ -1,0 +1,2 @@
+class TalkCategory < ApplicationRecord
+end

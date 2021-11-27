@@ -1,0 +1,288 @@
+class Speaker < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Speaker, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor name(): String?
+  def name_changed?: () -> bool
+  def name_change: () -> [ String?, String? ]
+  def name_will_change!: () -> void
+  def name_was: () -> String?
+  def name_previously_changed?: () -> bool
+  def name_previous_change: () -> Array[String?]?
+  def name_previously_was: () -> String?
+  def name_before_last_save: () -> String?
+  def name_change_to_be_saved: () -> Array[String?]?
+  def name_in_database: () -> String?
+  def saved_change_to_name: () -> Array[String?]?
+  def saved_change_to_name?: () -> bool
+  def will_save_change_to_name?: () -> bool
+  def restore_name!: () -> void
+  def clear_name_change: () -> void
+
+  attr_accessor profile(): String?
+  def profile_changed?: () -> bool
+  def profile_change: () -> [ String?, String? ]
+  def profile_will_change!: () -> void
+  def profile_was: () -> String?
+  def profile_previously_changed?: () -> bool
+  def profile_previous_change: () -> Array[String?]?
+  def profile_previously_was: () -> String?
+  def profile_before_last_save: () -> String?
+  def profile_change_to_be_saved: () -> Array[String?]?
+  def profile_in_database: () -> String?
+  def saved_change_to_profile: () -> Array[String?]?
+  def saved_change_to_profile?: () -> bool
+  def will_save_change_to_profile?: () -> bool
+  def restore_profile!: () -> void
+  def clear_profile_change: () -> void
+
+  attr_accessor company(): String?
+  def company_changed?: () -> bool
+  def company_change: () -> [ String?, String? ]
+  def company_will_change!: () -> void
+  def company_was: () -> String?
+  def company_previously_changed?: () -> bool
+  def company_previous_change: () -> Array[String?]?
+  def company_previously_was: () -> String?
+  def company_before_last_save: () -> String?
+  def company_change_to_be_saved: () -> Array[String?]?
+  def company_in_database: () -> String?
+  def saved_change_to_company: () -> Array[String?]?
+  def saved_change_to_company?: () -> bool
+  def will_save_change_to_company?: () -> bool
+  def restore_company!: () -> void
+  def clear_company_change: () -> void
+
+  attr_accessor job_title(): String?
+  def job_title_changed?: () -> bool
+  def job_title_change: () -> [ String?, String? ]
+  def job_title_will_change!: () -> void
+  def job_title_was: () -> String?
+  def job_title_previously_changed?: () -> bool
+  def job_title_previous_change: () -> Array[String?]?
+  def job_title_previously_was: () -> String?
+  def job_title_before_last_save: () -> String?
+  def job_title_change_to_be_saved: () -> Array[String?]?
+  def job_title_in_database: () -> String?
+  def saved_change_to_job_title: () -> Array[String?]?
+  def saved_change_to_job_title?: () -> bool
+  def will_save_change_to_job_title?: () -> bool
+  def restore_job_title!: () -> void
+  def clear_job_title_change: () -> void
+
+  attr_accessor twitter_id(): String?
+  def twitter_id_changed?: () -> bool
+  def twitter_id_change: () -> [ String?, String? ]
+  def twitter_id_will_change!: () -> void
+  def twitter_id_was: () -> String?
+  def twitter_id_previously_changed?: () -> bool
+  def twitter_id_previous_change: () -> Array[String?]?
+  def twitter_id_previously_was: () -> String?
+  def twitter_id_before_last_save: () -> String?
+  def twitter_id_change_to_be_saved: () -> Array[String?]?
+  def twitter_id_in_database: () -> String?
+  def saved_change_to_twitter_id: () -> Array[String?]?
+  def saved_change_to_twitter_id?: () -> bool
+  def will_save_change_to_twitter_id?: () -> bool
+  def restore_twitter_id!: () -> void
+  def clear_twitter_id_change: () -> void
+
+  attr_accessor github_id(): String?
+  def github_id_changed?: () -> bool
+  def github_id_change: () -> [ String?, String? ]
+  def github_id_will_change!: () -> void
+  def github_id_was: () -> String?
+  def github_id_previously_changed?: () -> bool
+  def github_id_previous_change: () -> Array[String?]?
+  def github_id_previously_was: () -> String?
+  def github_id_before_last_save: () -> String?
+  def github_id_change_to_be_saved: () -> Array[String?]?
+  def github_id_in_database: () -> String?
+  def saved_change_to_github_id: () -> Array[String?]?
+  def saved_change_to_github_id?: () -> bool
+  def will_save_change_to_github_id?: () -> bool
+  def restore_github_id!: () -> void
+  def clear_github_id_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor avatar_data(): String?
+  def avatar_data_changed?: () -> bool
+  def avatar_data_change: () -> [ String?, String? ]
+  def avatar_data_will_change!: () -> void
+  def avatar_data_was: () -> String?
+  def avatar_data_previously_changed?: () -> bool
+  def avatar_data_previous_change: () -> Array[String?]?
+  def avatar_data_previously_was: () -> String?
+  def avatar_data_before_last_save: () -> String?
+  def avatar_data_change_to_be_saved: () -> Array[String?]?
+  def avatar_data_in_database: () -> String?
+  def saved_change_to_avatar_data: () -> Array[String?]?
+  def saved_change_to_avatar_data?: () -> bool
+  def will_save_change_to_avatar_data?: () -> bool
+  def restore_avatar_data!: () -> void
+  def clear_avatar_data_change: () -> void
+
+  attr_accessor conference_id(): Integer?
+  def conference_id_changed?: () -> bool
+  def conference_id_change: () -> [ Integer?, Integer? ]
+  def conference_id_will_change!: () -> void
+  def conference_id_was: () -> Integer?
+  def conference_id_previously_changed?: () -> bool
+  def conference_id_previous_change: () -> Array[Integer?]?
+  def conference_id_previously_was: () -> Integer?
+  def conference_id_before_last_save: () -> Integer?
+  def conference_id_change_to_be_saved: () -> Array[Integer?]?
+  def conference_id_in_database: () -> Integer?
+  def saved_change_to_conference_id: () -> Array[Integer?]?
+  def saved_change_to_conference_id?: () -> bool
+  def will_save_change_to_conference_id?: () -> bool
+  def restore_conference_id!: () -> void
+  def clear_conference_id_change: () -> void
+
+  attr_accessor email(): String?
+  def email_changed?: () -> bool
+  def email_change: () -> [ String?, String? ]
+  def email_will_change!: () -> void
+  def email_was: () -> String?
+  def email_previously_changed?: () -> bool
+  def email_previous_change: () -> Array[String?]?
+  def email_previously_was: () -> String?
+  def email_before_last_save: () -> String?
+  def email_change_to_be_saved: () -> Array[String?]?
+  def email_in_database: () -> String?
+  def saved_change_to_email: () -> Array[String?]?
+  def saved_change_to_email?: () -> bool
+  def will_save_change_to_email?: () -> bool
+  def restore_email!: () -> void
+  def clear_email_change: () -> void
+
+  attr_accessor sub(): String?
+  def sub_changed?: () -> bool
+  def sub_change: () -> [ String?, String? ]
+  def sub_will_change!: () -> void
+  def sub_was: () -> String?
+  def sub_previously_changed?: () -> bool
+  def sub_previous_change: () -> Array[String?]?
+  def sub_previously_was: () -> String?
+  def sub_before_last_save: () -> String?
+  def sub_change_to_be_saved: () -> Array[String?]?
+  def sub_in_database: () -> String?
+  def saved_change_to_sub: () -> Array[String?]?
+  def saved_change_to_sub?: () -> bool
+  def will_save_change_to_sub?: () -> bool
+  def restore_sub!: () -> void
+  def clear_sub_change: () -> void
+
+  attr_accessor additional_documents(): String?
+  def additional_documents_changed?: () -> bool
+  def additional_documents_change: () -> [ String?, String? ]
+  def additional_documents_will_change!: () -> void
+  def additional_documents_was: () -> String?
+  def additional_documents_previously_changed?: () -> bool
+  def additional_documents_previous_change: () -> Array[String?]?
+  def additional_documents_previously_was: () -> String?
+  def additional_documents_before_last_save: () -> String?
+  def additional_documents_change_to_be_saved: () -> Array[String?]?
+  def additional_documents_in_database: () -> String?
+  def saved_change_to_additional_documents: () -> Array[String?]?
+  def saved_change_to_additional_documents?: () -> bool
+  def will_save_change_to_additional_documents?: () -> bool
+  def restore_additional_documents!: () -> void
+  def clear_additional_documents_change: () -> void
+
+  attr_accessor name_mother_tongue(): String?
+  def name_mother_tongue_changed?: () -> bool
+  def name_mother_tongue_change: () -> [ String?, String? ]
+  def name_mother_tongue_will_change!: () -> void
+  def name_mother_tongue_was: () -> String?
+  def name_mother_tongue_previously_changed?: () -> bool
+  def name_mother_tongue_previous_change: () -> Array[String?]?
+  def name_mother_tongue_previously_was: () -> String?
+  def name_mother_tongue_before_last_save: () -> String?
+  def name_mother_tongue_change_to_be_saved: () -> Array[String?]?
+  def name_mother_tongue_in_database: () -> String?
+  def saved_change_to_name_mother_tongue: () -> Array[String?]?
+  def saved_change_to_name_mother_tongue?: () -> bool
+  def will_save_change_to_name_mother_tongue?: () -> bool
+  def restore_name_mother_tongue!: () -> void
+  def clear_name_mother_tongue_change: () -> void
+
+  def talks_speakers: () -> TalksSpeaker::ActiveRecord_Associations_CollectionProxy
+  def talks_speakers=: (TalksSpeaker::ActiveRecord_Associations_CollectionProxy | Array[TalksSpeaker]) -> (TalksSpeaker::ActiveRecord_Associations_CollectionProxy | Array[TalksSpeaker])
+  def talks_speaker_ids: () -> Array[Integer]
+  def talks_speaker_ids=: (Array[Integer]) -> Array[Integer]
+  def talks: () -> Talk::ActiveRecord_Associations_CollectionProxy
+  def talks=: (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk]) -> (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk])
+  def talk_ids: () -> Array[Integer]
+  def talk_ids=: (Array[Integer]) -> Array[Integer]
+
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Speaker, Integer]
+    include Enumerable[Speaker]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Speaker, Integer]
+  end
+end

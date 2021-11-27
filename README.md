@@ -101,11 +101,32 @@ Run Webpack dev server in case you want to edit JavaScript.
 $ ./bin/webpack-dev-server
 ```
 
+
+
+## Ruby Type
+
+### Generate RBS files for Rails
+
+https://github.com/pocke/rbs_rails
+
+Generate RBS files for Rails (e.g. ActiveRecord models) to  under`sig/rbs_rails/`. You don't need update files by this rake task because these are auto geretated files.
+
+```
+$ rake rbs_rails:all
+```
+
+### Generate RBS files for your application code
+
+If you want to generate RBS for your application code, you can use `rbs prototype` . This command generate prototype RBS file by your code. You can edit generated RBS file.
+
+```
+$ rbs prototype rb ./app/models/access_log.rb > sig/app/models/access_log.rbs
+```
+
 ## DB migration and to add seed data
 
 ```
 $ bundle exec rails db:migrate
 $ bundle exec rails db:seed
 ```
-
 

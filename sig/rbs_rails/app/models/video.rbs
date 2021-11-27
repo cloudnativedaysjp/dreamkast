@@ -1,0 +1,195 @@
+class Video < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Video, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor talk_id(): Integer?
+  def talk_id_changed?: () -> bool
+  def talk_id_change: () -> [ Integer?, Integer? ]
+  def talk_id_will_change!: () -> void
+  def talk_id_was: () -> Integer?
+  def talk_id_previously_changed?: () -> bool
+  def talk_id_previous_change: () -> Array[Integer?]?
+  def talk_id_previously_was: () -> Integer?
+  def talk_id_before_last_save: () -> Integer?
+  def talk_id_change_to_be_saved: () -> Array[Integer?]?
+  def talk_id_in_database: () -> Integer?
+  def saved_change_to_talk_id: () -> Array[Integer?]?
+  def saved_change_to_talk_id?: () -> bool
+  def will_save_change_to_talk_id?: () -> bool
+  def restore_talk_id!: () -> void
+  def clear_talk_id_change: () -> void
+
+  attr_accessor site(): String?
+  def site_changed?: () -> bool
+  def site_change: () -> [ String?, String? ]
+  def site_will_change!: () -> void
+  def site_was: () -> String?
+  def site_previously_changed?: () -> bool
+  def site_previous_change: () -> Array[String?]?
+  def site_previously_was: () -> String?
+  def site_before_last_save: () -> String?
+  def site_change_to_be_saved: () -> Array[String?]?
+  def site_in_database: () -> String?
+  def saved_change_to_site: () -> Array[String?]?
+  def saved_change_to_site?: () -> bool
+  def will_save_change_to_site?: () -> bool
+  def restore_site!: () -> void
+  def clear_site_change: () -> void
+
+  attr_accessor url(): String?
+  def url_changed?: () -> bool
+  def url_change: () -> [ String?, String? ]
+  def url_will_change!: () -> void
+  def url_was: () -> String?
+  def url_previously_changed?: () -> bool
+  def url_previous_change: () -> Array[String?]?
+  def url_previously_was: () -> String?
+  def url_before_last_save: () -> String?
+  def url_change_to_be_saved: () -> Array[String?]?
+  def url_in_database: () -> String?
+  def saved_change_to_url: () -> Array[String?]?
+  def saved_change_to_url?: () -> bool
+  def will_save_change_to_url?: () -> bool
+  def restore_url!: () -> void
+  def clear_url_change: () -> void
+
+  attr_accessor on_air(): bool?
+  def on_air_changed?: () -> bool
+  def on_air_change: () -> [ bool?, bool? ]
+  def on_air_will_change!: () -> void
+  def on_air_was: () -> bool?
+  def on_air_previously_changed?: () -> bool
+  def on_air_previous_change: () -> Array[bool?]?
+  def on_air_previously_was: () -> bool?
+  def on_air_before_last_save: () -> bool?
+  def on_air_change_to_be_saved: () -> Array[bool?]?
+  def on_air_in_database: () -> bool?
+  def saved_change_to_on_air: () -> Array[bool?]?
+  def saved_change_to_on_air?: () -> bool
+  def will_save_change_to_on_air?: () -> bool
+  def restore_on_air!: () -> void
+  def clear_on_air_change: () -> void
+  attr_accessor on_air?(): bool
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor video_id(): String?
+  def video_id_changed?: () -> bool
+  def video_id_change: () -> [ String?, String? ]
+  def video_id_will_change!: () -> void
+  def video_id_was: () -> String?
+  def video_id_previously_changed?: () -> bool
+  def video_id_previous_change: () -> Array[String?]?
+  def video_id_previously_was: () -> String?
+  def video_id_before_last_save: () -> String?
+  def video_id_change_to_be_saved: () -> Array[String?]?
+  def video_id_in_database: () -> String?
+  def saved_change_to_video_id: () -> Array[String?]?
+  def saved_change_to_video_id?: () -> bool
+  def will_save_change_to_video_id?: () -> bool
+  def restore_video_id!: () -> void
+  def clear_video_id_change: () -> void
+
+  attr_accessor slido_id(): String?
+  def slido_id_changed?: () -> bool
+  def slido_id_change: () -> [ String?, String? ]
+  def slido_id_will_change!: () -> void
+  def slido_id_was: () -> String?
+  def slido_id_previously_changed?: () -> bool
+  def slido_id_previous_change: () -> Array[String?]?
+  def slido_id_previously_was: () -> String?
+  def slido_id_before_last_save: () -> String?
+  def slido_id_change_to_be_saved: () -> Array[String?]?
+  def slido_id_in_database: () -> String?
+  def saved_change_to_slido_id: () -> Array[String?]?
+  def saved_change_to_slido_id?: () -> bool
+  def will_save_change_to_slido_id?: () -> bool
+  def restore_slido_id!: () -> void
+  def clear_slido_id_change: () -> void
+
+  attr_accessor video_file_data(): String?
+  def video_file_data_changed?: () -> bool
+  def video_file_data_change: () -> [ String?, String? ]
+  def video_file_data_will_change!: () -> void
+  def video_file_data_was: () -> String?
+  def video_file_data_previously_changed?: () -> bool
+  def video_file_data_previous_change: () -> Array[String?]?
+  def video_file_data_previously_was: () -> String?
+  def video_file_data_before_last_save: () -> String?
+  def video_file_data_change_to_be_saved: () -> Array[String?]?
+  def video_file_data_in_database: () -> String?
+  def saved_change_to_video_file_data: () -> Array[String?]?
+  def saved_change_to_video_file_data?: () -> bool
+  def will_save_change_to_video_file_data?: () -> bool
+  def restore_video_file_data!: () -> void
+  def clear_video_file_data_change: () -> void
+
+  def talk: () -> Talk
+  def talk=: (Talk?) -> Talk?
+  def reload_talk: () -> Talk?
+  def build_talk: (untyped) -> Talk
+  def create_talk: (untyped) -> Talk
+  def create_talk!: (untyped) -> Talk
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Video, Integer]
+    include Enumerable[Video]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Video, Integer]
+  end
+end

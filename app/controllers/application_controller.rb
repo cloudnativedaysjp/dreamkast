@@ -1,6 +1,7 @@
 class Forbidden < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
+  include EnvHelper
   include Pundit
 
   before_action :set_sentry_context, :event_exists?
@@ -29,6 +30,10 @@ class ApplicationController < ActionController::Base
     params[:event]
   end
 
+  def production?
+    env_name == "production"
+  end
+
   # ActiveRecordの機能でもうちょっといい感じにかける気はする…
   def talks_checked?(talk_id)
     @profile.talks.select { |talk| talk.id == talk_id }.present?
@@ -42,7 +47,7 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
+  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
 
   def render_403
     render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")

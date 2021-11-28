@@ -9,7 +9,7 @@
     <% if @speakers.blank? || @speakers.nil? %>
       <div class="field">
         <%= form.label :speaker_id, '登壇者' %>*<br/>
-        <% Speaker.all.pluck(:id).each do |speaker_id| %>
+        <% Speaker.where(conference_id: @conference.id).pluck(:id).each do |speaker_id| %>
           <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
             <%= speaker_anouncemet.hidden_field :speaker_id, value: speaker_id, class: 'form-control' %>
           <% end %>

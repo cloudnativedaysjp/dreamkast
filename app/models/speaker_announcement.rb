@@ -12,6 +12,10 @@ class SpeakerAnnouncement < ApplicationRecord
     where(publish: true)
   }
 
+  scope :find_by_speaker, lambda { |speaker_id|
+    joins(:speaker_announcement_middles).where(speaker_announcement_middles: { speaker_id: speaker_id }, publish: true)
+  }
+
   # TODO: 複数人アナウンス時にカンマセパレートを行う
   # 現時点では1ユーザー名しかないのでそのまま返す
   def format_speaker_names

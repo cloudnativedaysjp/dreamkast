@@ -30,7 +30,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
-  fifo-worker: &worker
+  fifo-worker:
     build: .
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
     environment:

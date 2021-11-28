@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: sponsors
+#
+#  id             :bigint           not null, primary key
+#  abbr           :string(255)
+#  description    :text(65535)
+#  name           :string(255)
+#  speaker_emails :string(255)
+#  url            :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  conference_id  :bigint           not null
+#
+# Indexes
+#
+#  index_sponsors_on_conference_id  (conference_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (conference_id => conferences.id)
+#
 class Sponsor < ApplicationRecord
   belongs_to :conference
 
@@ -15,15 +37,15 @@ class Sponsor < ApplicationRecord
   has_many :talks
 
   def booth_info
-    {id: booth.id, opened: booth.published}
+    { id: booth.id, opened: booth.published }
   end
 
   def booth_sponsor?
-    self.sponsor_types.each do |type|
-      if type.name == 'Booth'
+    sponsor_types.each do |type|
+      if type.name == "Booth"
         return true
       end
     end
-    return false
+    false
   end
 end

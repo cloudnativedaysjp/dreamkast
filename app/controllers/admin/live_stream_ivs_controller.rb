@@ -8,17 +8,17 @@ class Admin::LiveStreamIvsController < ApplicationController
 
     @media_lives = @conference.tracks.map(&:live_stream_media_live).compact
     get_media_live_channels_from_aws(@media_lives.map(&:channel_id)).each do |channel|
-      @media_lives.find{ |media_live| media_live.channel_id == channel.id }.channel = channel
+      @media_lives.find { |media_live| media_live.channel_id == channel.id }.channel = channel
     end
     get_media_live_inputs_from_aws(@media_lives.map(&:input_id)).each do |input|
-      @media_lives.find{ |media_live| media_live.input_id == input.id }.input = input
+      @media_lives.find { |media_live| media_live.input_id == input.id }.input = input
     end
 
     respond_to do |format|
-      format.html { render :index }
+      format.html { render(:index) }
       format.json do
-        head :no_content
-        body = render_to_string 'admin/live_stream_ivs/index.json.jbuilder'
+        head(:no_content)
+        body = render_to_string("admin/live_stream_ivs/index.json.jbuilder")
 
         Tempfile.open("ivss") do |file|
           file.write(body)
@@ -36,11 +36,11 @@ class Admin::LiveStreamIvsController < ApplicationController
     }
     respond_to do |format|
       if @ivs.save
-        format.html { redirect_to admin_live_stream_ivs_path, notice: 'IVS successfully created.' }
-        format.json { render :index, status: :ok, location: @ivs }
+        format.html { redirect_to(admin_live_stream_ivs_path, notice: "IVS successfully created.") }
+        format.json { render(:index, status: :ok, location: @ivs) }
       else
-        format.html { render :index }
-        format.json { render json: @ivs.errors, status: :unprocessable_entity }
+        format.html { render(:index) }
+        format.json { render(json: @ivs.errors, status: :unprocessable_entity) }
       end
     end
   end
@@ -52,7 +52,7 @@ class Admin::LiveStreamIvsController < ApplicationController
         @ivs = LiveStreamIvs.new
         @ivs.conference_id = @conference.id
         @ivs.track_id = track.id
-        track.video_platform = 'ivs'
+        track.video_platform = "ivs"
 
         unless @ivs.save && track.save
           messages << talk.errors
@@ -62,9 +62,9 @@ class Admin::LiveStreamIvsController < ApplicationController
 
     respond_to do |format|
       if messages.size == 0
-        format.html { redirect_to admin_live_stream_ivs_path, notice: 'IVS successfully created.' }
+        format.html { redirect_to(admin_live_stream_ivs_path, notice: "IVS successfully created.") }
       else
-        format.html { render :index }
+        format.html { render(:index) }
       end
     end
   end
@@ -76,7 +76,7 @@ class Admin::LiveStreamIvsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to admin_live_stream_ivs_path, notice: '' }
+      format.html { redirect_to(admin_live_stream_ivs_path, notice: "") }
     end
   end
 end

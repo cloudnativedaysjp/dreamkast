@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe TimetableController, type: :request do
-  subject(:alice_session) { {userinfo: {info: {email: "alice@example.com", extra: {sub: "alice"}}, extra: {raw_info: {sub: "alice", "https://cloudnativedays.jp/roles" => roles}}} } }
-  subject(:bob_session) { {userinfo: {info: {email: "bob@example.com", extra: {sub: "bob"}}, extra: {raw_info: {sub: "bob", "https://cloudnativedays.jp/roles" => roles}}} } }
+  subject(:alice_session) { { userinfo: { info: { email: "alice@example.com", extra: { sub: "alice" } }, extra: { raw_info: { sub: "alice", "https://cloudnativedays.jp/roles" => roles } } } } }
+  subject(:bob_session) { { userinfo: { info: { email: "bob@example.com", extra: { sub: "bob" } }, extra: { raw_info: { sub: "bob", "https://cloudnativedays.jp/roles" => roles } } } } }
   let(:roles) { [] }
 
   describe "GET #index" do
@@ -18,66 +18,66 @@ describe TimetableController, type: :request do
     let!(:talk_rejekt) { create(:talk_rejekt) }
     let!(:cm) { create(:talk_cm) }
 
-    describe 'not logged in' do
-      context 'get exists event\'s timetables' do
+    describe "not logged in" do
+      context "get exists event's timetables" do
         it "returns a success response without form" do
-          get '/cndt2020/timetables'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to_not include '<form action="profiles/talks"'
-          expect(response.body).to include talk1.title
-          expect(response.body).to include talk2.title
-          expect(response.body).to_not include talk_rejekt.title
-          expect(response.body).to_not include cm.title
+          get "/cndt2020/timetables"
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
+          expect(response.body).to_not(include('<form action="profiles/talks"'))
+          expect(response.body).to(include(talk1.title))
+          expect(response.body).to(include(talk2.title))
+          expect(response.body).to_not(include(talk_rejekt.title))
+          expect(response.body).to_not(include(cm.title))
         end
       end
 
-      context 'get not exists event\'s timetables' do
+      context "get not exists event's timetables" do
         it "returns not found response" do
-          get '/not_found/timetables'
-          expect(response).to_not be_successful
-          expect(response).to have_http_status '404'
+          get "/not_found/timetables"
+          expect(response).to_not(be_successful)
+          expect(response).to(have_http_status("404"))
         end
       end
     end
 
-    describe 'logged in and not registered' do
+    describe "logged in and not registered" do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: "alice@example.com" } }))
       end
 
       it "redirect to /cndt2020/registration" do
-        get '/cndt2020/timetables'
-        expect(response).to_not be_successful
-        expect(response).to have_http_status '302'
-        expect(response).to redirect_to '/cndt2020/registration'
+        get "/cndt2020/timetables"
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status("302"))
+        expect(response).to(redirect_to("/cndt2020/registration"))
       end
     end
 
-    describe 'logged in' do
+    describe "logged in" do
       before do
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(alice_session)
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(alice_session))
       end
 
-      context 'get exists event\'s timetables' do
+      context "get exists event's timetables" do
         it "returns a success response with form" do
-          get '/cndt2020/timetables'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to include '<form action="profiles/talks"'
-          expect(response.body).to include talk1.title
-          expect(response.body).to include talk2.title
-          expect(response.body).to_not include talk_rejekt.title
+          get "/cndt2020/timetables"
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
+          expect(response.body).to(include('<form action="profiles/talks"'))
+          expect(response.body).to(include(talk1.title))
+          expect(response.body).to(include(talk2.title))
+          expect(response.body).to_not(include(talk_rejekt.title))
         end
       end
 
 
-      context 'get not exists event\'s timetables' do
+      context "get not exists event's timetables" do
         it "returns not found response" do
-          get '/not_found/timetables'
-          expect(response).to_not be_successful
-          expect(response).to have_http_status '404'
+          get "/not_found/timetables"
+          expect(response).to_not(be_successful)
+          expect(response).to(have_http_status("404"))
         end
       end
     end
@@ -93,50 +93,48 @@ describe TimetableController, type: :request do
     let!(:cndo_talk1) { create(:cndo_talk1) }
     let!(:cndo_talk2) { create(:cndo_talk2) }
 
-    describe 'not logged in' do
-      context 'get exists event\'s timetables' do
+    describe "not logged in" do
+      context "get exists event's timetables" do
         it "returns a success response without form" do
-          get '/cndo2021/timetables'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to_not include '<form action="profiles/talks"'
-          expect(response.body).to include cndo_talk1.title
-          expect(response.body).to include cndo_talk2.title
+          get "/cndo2021/timetables"
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
+          expect(response.body).to_not(include('<form action="profiles/talks"'))
+          expect(response.body).to(include(cndo_talk1.title))
+          expect(response.body).to(include(cndo_talk2.title))
         end
       end
     end
 
-    describe 'logged in and not registered' do
+    describe "logged in and not registered" do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(userinfo: {info: {email: "alice@example.com"}})
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: "alice@example.com" } }))
       end
 
       it "redirect to /cndo2021/registration" do
-        get '/cndo2021/timetables'
-        expect(response).to_not be_successful
-        expect(response).to have_http_status '302'
-        expect(response).to redirect_to '/cndo2021/registration'
+        get "/cndo2021/timetables"
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status("302"))
+        expect(response).to(redirect_to("/cndo2021/registration"))
       end
     end
 
-    describe 'logged in' do
+    describe "logged in" do
       before do
         create(:bob, :on_cndo2021)
-        allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(bob_session)
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(bob_session))
       end
 
-      context 'get exists event\'s timetables' do
+      context "get exists event's timetables" do
         it "returns a success response with form" do
-          get '/cndo2021/timetables'
-          expect(response).to be_successful
-          expect(response).to have_http_status '200'
-          expect(response.body).to include '<form action="profiles/talks"'
-          expect(response.body).to include cndo_talk1.title
-          expect(response.body).to include cndo_talk2.title
+          get "/cndo2021/timetables"
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
+          expect(response.body).to(include('<form action="profiles/talks"'))
+          expect(response.body).to(include(cndo_talk1.title))
+          expect(response.body).to(include(cndo_talk2.title))
         end
       end
     end
   end
-
-  
 end

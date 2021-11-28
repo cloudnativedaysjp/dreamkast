@@ -1,0 +1,2 @@
+class SponsorAttachment < ApplicationRecord
+end

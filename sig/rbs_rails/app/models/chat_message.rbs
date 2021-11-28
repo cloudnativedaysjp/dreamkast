@@ -1,0 +1,300 @@
+class ChatMessage < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[ChatMessage, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor conference_id(): Integer
+  def conference_id_changed?: () -> bool
+  def conference_id_change: () -> [ Integer?, Integer? ]
+  def conference_id_will_change!: () -> void
+  def conference_id_was: () -> Integer?
+  def conference_id_previously_changed?: () -> bool
+  def conference_id_previous_change: () -> Array[Integer?]?
+  def conference_id_previously_was: () -> Integer?
+  def conference_id_before_last_save: () -> Integer?
+  def conference_id_change_to_be_saved: () -> Array[Integer?]?
+  def conference_id_in_database: () -> Integer?
+  def saved_change_to_conference_id: () -> Array[Integer?]?
+  def saved_change_to_conference_id?: () -> bool
+  def will_save_change_to_conference_id?: () -> bool
+  def restore_conference_id!: () -> void
+  def clear_conference_id_change: () -> void
+
+  attr_accessor profile_id(): Integer?
+  def profile_id_changed?: () -> bool
+  def profile_id_change: () -> [ Integer?, Integer? ]
+  def profile_id_will_change!: () -> void
+  def profile_id_was: () -> Integer?
+  def profile_id_previously_changed?: () -> bool
+  def profile_id_previous_change: () -> Array[Integer?]?
+  def profile_id_previously_was: () -> Integer?
+  def profile_id_before_last_save: () -> Integer?
+  def profile_id_change_to_be_saved: () -> Array[Integer?]?
+  def profile_id_in_database: () -> Integer?
+  def saved_change_to_profile_id: () -> Array[Integer?]?
+  def saved_change_to_profile_id?: () -> bool
+  def will_save_change_to_profile_id?: () -> bool
+  def restore_profile_id!: () -> void
+  def clear_profile_id_change: () -> void
+
+  attr_accessor speaker_id(): Integer?
+  def speaker_id_changed?: () -> bool
+  def speaker_id_change: () -> [ Integer?, Integer? ]
+  def speaker_id_will_change!: () -> void
+  def speaker_id_was: () -> Integer?
+  def speaker_id_previously_changed?: () -> bool
+  def speaker_id_previous_change: () -> Array[Integer?]?
+  def speaker_id_previously_was: () -> Integer?
+  def speaker_id_before_last_save: () -> Integer?
+  def speaker_id_change_to_be_saved: () -> Array[Integer?]?
+  def speaker_id_in_database: () -> Integer?
+  def saved_change_to_speaker_id: () -> Array[Integer?]?
+  def saved_change_to_speaker_id?: () -> bool
+  def will_save_change_to_speaker_id?: () -> bool
+  def restore_speaker_id!: () -> void
+  def clear_speaker_id_change: () -> void
+
+  attr_accessor body(): String?
+  def body_changed?: () -> bool
+  def body_change: () -> [ String?, String? ]
+  def body_will_change!: () -> void
+  def body_was: () -> String?
+  def body_previously_changed?: () -> bool
+  def body_previous_change: () -> Array[String?]?
+  def body_previously_was: () -> String?
+  def body_before_last_save: () -> String?
+  def body_change_to_be_saved: () -> Array[String?]?
+  def body_in_database: () -> String?
+  def saved_change_to_body: () -> Array[String?]?
+  def saved_change_to_body?: () -> bool
+  def will_save_change_to_body?: () -> bool
+  def restore_body!: () -> void
+  def clear_body_change: () -> void
+
+  attr_accessor parent_id(): Integer?
+  def parent_id_changed?: () -> bool
+  def parent_id_change: () -> [ Integer?, Integer? ]
+  def parent_id_will_change!: () -> void
+  def parent_id_was: () -> Integer?
+  def parent_id_previously_changed?: () -> bool
+  def parent_id_previous_change: () -> Array[Integer?]?
+  def parent_id_previously_was: () -> Integer?
+  def parent_id_before_last_save: () -> Integer?
+  def parent_id_change_to_be_saved: () -> Array[Integer?]?
+  def parent_id_in_database: () -> Integer?
+  def saved_change_to_parent_id: () -> Array[Integer?]?
+  def saved_change_to_parent_id?: () -> bool
+  def will_save_change_to_parent_id?: () -> bool
+  def restore_parent_id!: () -> void
+  def clear_parent_id_change: () -> void
+
+  attr_accessor lft(): Integer
+  def lft_changed?: () -> bool
+  def lft_change: () -> [ Integer?, Integer? ]
+  def lft_will_change!: () -> void
+  def lft_was: () -> Integer?
+  def lft_previously_changed?: () -> bool
+  def lft_previous_change: () -> Array[Integer?]?
+  def lft_previously_was: () -> Integer?
+  def lft_before_last_save: () -> Integer?
+  def lft_change_to_be_saved: () -> Array[Integer?]?
+  def lft_in_database: () -> Integer?
+  def saved_change_to_lft: () -> Array[Integer?]?
+  def saved_change_to_lft?: () -> bool
+  def will_save_change_to_lft?: () -> bool
+  def restore_lft!: () -> void
+  def clear_lft_change: () -> void
+
+  attr_accessor rgt(): Integer
+  def rgt_changed?: () -> bool
+  def rgt_change: () -> [ Integer?, Integer? ]
+  def rgt_will_change!: () -> void
+  def rgt_was: () -> Integer?
+  def rgt_previously_changed?: () -> bool
+  def rgt_previous_change: () -> Array[Integer?]?
+  def rgt_previously_was: () -> Integer?
+  def rgt_before_last_save: () -> Integer?
+  def rgt_change_to_be_saved: () -> Array[Integer?]?
+  def rgt_in_database: () -> Integer?
+  def saved_change_to_rgt: () -> Array[Integer?]?
+  def saved_change_to_rgt?: () -> bool
+  def will_save_change_to_rgt?: () -> bool
+  def restore_rgt!: () -> void
+  def clear_rgt_change: () -> void
+
+  attr_accessor depth(): Integer
+  def depth_changed?: () -> bool
+  def depth_change: () -> [ Integer?, Integer? ]
+  def depth_will_change!: () -> void
+  def depth_was: () -> Integer?
+  def depth_previously_changed?: () -> bool
+  def depth_previous_change: () -> Array[Integer?]?
+  def depth_previously_was: () -> Integer?
+  def depth_before_last_save: () -> Integer?
+  def depth_change_to_be_saved: () -> Array[Integer?]?
+  def depth_in_database: () -> Integer?
+  def saved_change_to_depth: () -> Array[Integer?]?
+  def saved_change_to_depth?: () -> bool
+  def will_save_change_to_depth?: () -> bool
+  def restore_depth!: () -> void
+  def clear_depth_change: () -> void
+
+  attr_accessor children_count(): Integer
+  def children_count_changed?: () -> bool
+  def children_count_change: () -> [ Integer?, Integer? ]
+  def children_count_will_change!: () -> void
+  def children_count_was: () -> Integer?
+  def children_count_previously_changed?: () -> bool
+  def children_count_previous_change: () -> Array[Integer?]?
+  def children_count_previously_was: () -> Integer?
+  def children_count_before_last_save: () -> Integer?
+  def children_count_change_to_be_saved: () -> Array[Integer?]?
+  def children_count_in_database: () -> Integer?
+  def saved_change_to_children_count: () -> Array[Integer?]?
+  def saved_change_to_children_count?: () -> bool
+  def will_save_change_to_children_count?: () -> bool
+  def restore_children_count!: () -> void
+  def clear_children_count_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor room_type(): String?
+  def room_type_changed?: () -> bool
+  def room_type_change: () -> [ String?, String? ]
+  def room_type_will_change!: () -> void
+  def room_type_was: () -> String?
+  def room_type_previously_changed?: () -> bool
+  def room_type_previous_change: () -> Array[String?]?
+  def room_type_previously_was: () -> String?
+  def room_type_before_last_save: () -> String?
+  def room_type_change_to_be_saved: () -> Array[String?]?
+  def room_type_in_database: () -> String?
+  def saved_change_to_room_type: () -> Array[String?]?
+  def saved_change_to_room_type?: () -> bool
+  def will_save_change_to_room_type?: () -> bool
+  def restore_room_type!: () -> void
+  def clear_room_type_change: () -> void
+
+  attr_accessor room_id(): Integer?
+  def room_id_changed?: () -> bool
+  def room_id_change: () -> [ Integer?, Integer? ]
+  def room_id_will_change!: () -> void
+  def room_id_was: () -> Integer?
+  def room_id_previously_changed?: () -> bool
+  def room_id_previous_change: () -> Array[Integer?]?
+  def room_id_previously_was: () -> Integer?
+  def room_id_before_last_save: () -> Integer?
+  def room_id_change_to_be_saved: () -> Array[Integer?]?
+  def room_id_in_database: () -> Integer?
+  def saved_change_to_room_id: () -> Array[Integer?]?
+  def saved_change_to_room_id?: () -> bool
+  def will_save_change_to_room_id?: () -> bool
+  def restore_room_id!: () -> void
+  def clear_room_id_change: () -> void
+
+  attr_accessor message_type(): String?
+  def message_type_changed?: () -> bool
+  def message_type_change: () -> [ String?, String? ]
+  def message_type_will_change!: () -> void
+  def message_type_was: () -> String?
+  def message_type_previously_changed?: () -> bool
+  def message_type_previous_change: () -> Array[String?]?
+  def message_type_previously_was: () -> String?
+  def message_type_before_last_save: () -> String?
+  def message_type_change_to_be_saved: () -> Array[String?]?
+  def message_type_in_database: () -> String?
+  def saved_change_to_message_type: () -> Array[String?]?
+  def saved_change_to_message_type?: () -> bool
+  def will_save_change_to_message_type?: () -> bool
+  def restore_message_type!: () -> void
+  def clear_message_type_change: () -> void
+
+  def children: () -> ChatMessage::ActiveRecord_Associations_CollectionProxy
+  def children=: (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage]) -> (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage])
+  def child_ids: () -> Array[Integer]
+  def child_ids=: (Array[Integer]) -> Array[Integer]
+
+  def parent: () -> ChatMessage
+  def parent=: (ChatMessage?) -> ChatMessage?
+  def reload_parent: () -> ChatMessage?
+  def build_parent: (untyped) -> ChatMessage
+  def create_parent: (untyped) -> ChatMessage
+  def create_parent!: (untyped) -> ChatMessage
+  def profile: () -> Profile
+  def profile=: (Profile?) -> Profile?
+  def reload_profile: () -> Profile?
+  def build_profile: (untyped) -> Profile
+  def create_profile: (untyped) -> Profile
+  def create_profile!: (untyped) -> Profile
+
+  def chat!: () -> bool
+  def chat?: () -> bool
+  def qa!: () -> bool
+  def qa?: () -> bool
+  def self.chat: () -> ActiveRecord_Relation
+  def self.qa: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def chat: () -> ActiveRecord_Relation
+
+    def qa: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ChatMessage, Integer]
+    include Enumerable[ChatMessage]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ChatMessage, Integer]
+  end
+end

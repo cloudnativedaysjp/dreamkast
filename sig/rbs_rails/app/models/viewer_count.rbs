@@ -1,0 +1,153 @@
+class ViewerCount < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[ViewerCount, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor conference_id(): Integer?
+  def conference_id_changed?: () -> bool
+  def conference_id_change: () -> [ Integer?, Integer? ]
+  def conference_id_will_change!: () -> void
+  def conference_id_was: () -> Integer?
+  def conference_id_previously_changed?: () -> bool
+  def conference_id_previous_change: () -> Array[Integer?]?
+  def conference_id_previously_was: () -> Integer?
+  def conference_id_before_last_save: () -> Integer?
+  def conference_id_change_to_be_saved: () -> Array[Integer?]?
+  def conference_id_in_database: () -> Integer?
+  def saved_change_to_conference_id: () -> Array[Integer?]?
+  def saved_change_to_conference_id?: () -> bool
+  def will_save_change_to_conference_id?: () -> bool
+  def restore_conference_id!: () -> void
+  def clear_conference_id_change: () -> void
+
+  attr_accessor track_id(): Integer?
+  def track_id_changed?: () -> bool
+  def track_id_change: () -> [ Integer?, Integer? ]
+  def track_id_will_change!: () -> void
+  def track_id_was: () -> Integer?
+  def track_id_previously_changed?: () -> bool
+  def track_id_previous_change: () -> Array[Integer?]?
+  def track_id_previously_was: () -> Integer?
+  def track_id_before_last_save: () -> Integer?
+  def track_id_change_to_be_saved: () -> Array[Integer?]?
+  def track_id_in_database: () -> Integer?
+  def saved_change_to_track_id: () -> Array[Integer?]?
+  def saved_change_to_track_id?: () -> bool
+  def will_save_change_to_track_id?: () -> bool
+  def restore_track_id!: () -> void
+  def clear_track_id_change: () -> void
+
+  attr_accessor stream_type(): String?
+  def stream_type_changed?: () -> bool
+  def stream_type_change: () -> [ String?, String? ]
+  def stream_type_will_change!: () -> void
+  def stream_type_was: () -> String?
+  def stream_type_previously_changed?: () -> bool
+  def stream_type_previous_change: () -> Array[String?]?
+  def stream_type_previously_was: () -> String?
+  def stream_type_before_last_save: () -> String?
+  def stream_type_change_to_be_saved: () -> Array[String?]?
+  def stream_type_in_database: () -> String?
+  def saved_change_to_stream_type: () -> Array[String?]?
+  def saved_change_to_stream_type?: () -> bool
+  def will_save_change_to_stream_type?: () -> bool
+  def restore_stream_type!: () -> void
+  def clear_stream_type_change: () -> void
+
+  attr_accessor talk_id(): Integer?
+  def talk_id_changed?: () -> bool
+  def talk_id_change: () -> [ Integer?, Integer? ]
+  def talk_id_will_change!: () -> void
+  def talk_id_was: () -> Integer?
+  def talk_id_previously_changed?: () -> bool
+  def talk_id_previous_change: () -> Array[Integer?]?
+  def talk_id_previously_was: () -> Integer?
+  def talk_id_before_last_save: () -> Integer?
+  def talk_id_change_to_be_saved: () -> Array[Integer?]?
+  def talk_id_in_database: () -> Integer?
+  def saved_change_to_talk_id: () -> Array[Integer?]?
+  def saved_change_to_talk_id?: () -> bool
+  def will_save_change_to_talk_id?: () -> bool
+  def restore_talk_id!: () -> void
+  def clear_talk_id_change: () -> void
+
+  attr_accessor count(): Integer?
+  def count_changed?: () -> bool
+  def count_change: () -> [ Integer?, Integer? ]
+  def count_will_change!: () -> void
+  def count_was: () -> Integer?
+  def count_previously_changed?: () -> bool
+  def count_previous_change: () -> Array[Integer?]?
+  def count_previously_was: () -> Integer?
+  def count_before_last_save: () -> Integer?
+  def count_change_to_be_saved: () -> Array[Integer?]?
+  def count_in_database: () -> Integer?
+  def saved_change_to_count: () -> Array[Integer?]?
+  def saved_change_to_count?: () -> bool
+  def will_save_change_to_count?: () -> bool
+  def restore_count!: () -> void
+  def clear_count_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ViewerCount, Integer]
+    include Enumerable[ViewerCount]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[ViewerCount, Integer]
+  end
+end

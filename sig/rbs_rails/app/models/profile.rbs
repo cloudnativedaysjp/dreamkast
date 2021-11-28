@@ -1,0 +1,340 @@
+class Profile < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Profile, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor sub(): String?
+  def sub_changed?: () -> bool
+  def sub_change: () -> [ String?, String? ]
+  def sub_will_change!: () -> void
+  def sub_was: () -> String?
+  def sub_previously_changed?: () -> bool
+  def sub_previous_change: () -> Array[String?]?
+  def sub_previously_was: () -> String?
+  def sub_before_last_save: () -> String?
+  def sub_change_to_be_saved: () -> Array[String?]?
+  def sub_in_database: () -> String?
+  def saved_change_to_sub: () -> Array[String?]?
+  def saved_change_to_sub?: () -> bool
+  def will_save_change_to_sub?: () -> bool
+  def restore_sub!: () -> void
+  def clear_sub_change: () -> void
+
+  attr_accessor email(): String?
+  def email_changed?: () -> bool
+  def email_change: () -> [ String?, String? ]
+  def email_will_change!: () -> void
+  def email_was: () -> String?
+  def email_previously_changed?: () -> bool
+  def email_previous_change: () -> Array[String?]?
+  def email_previously_was: () -> String?
+  def email_before_last_save: () -> String?
+  def email_change_to_be_saved: () -> Array[String?]?
+  def email_in_database: () -> String?
+  def saved_change_to_email: () -> Array[String?]?
+  def saved_change_to_email?: () -> bool
+  def will_save_change_to_email?: () -> bool
+  def restore_email!: () -> void
+  def clear_email_change: () -> void
+
+  attr_accessor last_name(): String?
+  def last_name_changed?: () -> bool
+  def last_name_change: () -> [ String?, String? ]
+  def last_name_will_change!: () -> void
+  def last_name_was: () -> String?
+  def last_name_previously_changed?: () -> bool
+  def last_name_previous_change: () -> Array[String?]?
+  def last_name_previously_was: () -> String?
+  def last_name_before_last_save: () -> String?
+  def last_name_change_to_be_saved: () -> Array[String?]?
+  def last_name_in_database: () -> String?
+  def saved_change_to_last_name: () -> Array[String?]?
+  def saved_change_to_last_name?: () -> bool
+  def will_save_change_to_last_name?: () -> bool
+  def restore_last_name!: () -> void
+  def clear_last_name_change: () -> void
+
+  attr_accessor first_name(): String?
+  def first_name_changed?: () -> bool
+  def first_name_change: () -> [ String?, String? ]
+  def first_name_will_change!: () -> void
+  def first_name_was: () -> String?
+  def first_name_previously_changed?: () -> bool
+  def first_name_previous_change: () -> Array[String?]?
+  def first_name_previously_was: () -> String?
+  def first_name_before_last_save: () -> String?
+  def first_name_change_to_be_saved: () -> Array[String?]?
+  def first_name_in_database: () -> String?
+  def saved_change_to_first_name: () -> Array[String?]?
+  def saved_change_to_first_name?: () -> bool
+  def will_save_change_to_first_name?: () -> bool
+  def restore_first_name!: () -> void
+  def clear_first_name_change: () -> void
+
+  attr_accessor industry_id(): Integer?
+  def industry_id_changed?: () -> bool
+  def industry_id_change: () -> [ Integer?, Integer? ]
+  def industry_id_will_change!: () -> void
+  def industry_id_was: () -> Integer?
+  def industry_id_previously_changed?: () -> bool
+  def industry_id_previous_change: () -> Array[Integer?]?
+  def industry_id_previously_was: () -> Integer?
+  def industry_id_before_last_save: () -> Integer?
+  def industry_id_change_to_be_saved: () -> Array[Integer?]?
+  def industry_id_in_database: () -> Integer?
+  def saved_change_to_industry_id: () -> Array[Integer?]?
+  def saved_change_to_industry_id?: () -> bool
+  def will_save_change_to_industry_id?: () -> bool
+  def restore_industry_id!: () -> void
+  def clear_industry_id_change: () -> void
+
+  attr_accessor occupation(): String?
+  def occupation_changed?: () -> bool
+  def occupation_change: () -> [ String?, String? ]
+  def occupation_will_change!: () -> void
+  def occupation_was: () -> String?
+  def occupation_previously_changed?: () -> bool
+  def occupation_previous_change: () -> Array[String?]?
+  def occupation_previously_was: () -> String?
+  def occupation_before_last_save: () -> String?
+  def occupation_change_to_be_saved: () -> Array[String?]?
+  def occupation_in_database: () -> String?
+  def saved_change_to_occupation: () -> Array[String?]?
+  def saved_change_to_occupation?: () -> bool
+  def will_save_change_to_occupation?: () -> bool
+  def restore_occupation!: () -> void
+  def clear_occupation_change: () -> void
+
+  attr_accessor company_name(): String?
+  def company_name_changed?: () -> bool
+  def company_name_change: () -> [ String?, String? ]
+  def company_name_will_change!: () -> void
+  def company_name_was: () -> String?
+  def company_name_previously_changed?: () -> bool
+  def company_name_previous_change: () -> Array[String?]?
+  def company_name_previously_was: () -> String?
+  def company_name_before_last_save: () -> String?
+  def company_name_change_to_be_saved: () -> Array[String?]?
+  def company_name_in_database: () -> String?
+  def saved_change_to_company_name: () -> Array[String?]?
+  def saved_change_to_company_name?: () -> bool
+  def will_save_change_to_company_name?: () -> bool
+  def restore_company_name!: () -> void
+  def clear_company_name_change: () -> void
+
+  attr_accessor company_email(): String?
+  def company_email_changed?: () -> bool
+  def company_email_change: () -> [ String?, String? ]
+  def company_email_will_change!: () -> void
+  def company_email_was: () -> String?
+  def company_email_previously_changed?: () -> bool
+  def company_email_previous_change: () -> Array[String?]?
+  def company_email_previously_was: () -> String?
+  def company_email_before_last_save: () -> String?
+  def company_email_change_to_be_saved: () -> Array[String?]?
+  def company_email_in_database: () -> String?
+  def saved_change_to_company_email: () -> Array[String?]?
+  def saved_change_to_company_email?: () -> bool
+  def will_save_change_to_company_email?: () -> bool
+  def restore_company_email!: () -> void
+  def clear_company_email_change: () -> void
+
+  attr_accessor company_address(): String?
+  def company_address_changed?: () -> bool
+  def company_address_change: () -> [ String?, String? ]
+  def company_address_will_change!: () -> void
+  def company_address_was: () -> String?
+  def company_address_previously_changed?: () -> bool
+  def company_address_previous_change: () -> Array[String?]?
+  def company_address_previously_was: () -> String?
+  def company_address_before_last_save: () -> String?
+  def company_address_change_to_be_saved: () -> Array[String?]?
+  def company_address_in_database: () -> String?
+  def saved_change_to_company_address: () -> Array[String?]?
+  def saved_change_to_company_address?: () -> bool
+  def will_save_change_to_company_address?: () -> bool
+  def restore_company_address!: () -> void
+  def clear_company_address_change: () -> void
+
+  attr_accessor company_tel(): String?
+  def company_tel_changed?: () -> bool
+  def company_tel_change: () -> [ String?, String? ]
+  def company_tel_will_change!: () -> void
+  def company_tel_was: () -> String?
+  def company_tel_previously_changed?: () -> bool
+  def company_tel_previous_change: () -> Array[String?]?
+  def company_tel_previously_was: () -> String?
+  def company_tel_before_last_save: () -> String?
+  def company_tel_change_to_be_saved: () -> Array[String?]?
+  def company_tel_in_database: () -> String?
+  def saved_change_to_company_tel: () -> Array[String?]?
+  def saved_change_to_company_tel?: () -> bool
+  def will_save_change_to_company_tel?: () -> bool
+  def restore_company_tel!: () -> void
+  def clear_company_tel_change: () -> void
+
+  attr_accessor department(): String?
+  def department_changed?: () -> bool
+  def department_change: () -> [ String?, String? ]
+  def department_will_change!: () -> void
+  def department_was: () -> String?
+  def department_previously_changed?: () -> bool
+  def department_previous_change: () -> Array[String?]?
+  def department_previously_was: () -> String?
+  def department_before_last_save: () -> String?
+  def department_change_to_be_saved: () -> Array[String?]?
+  def department_in_database: () -> String?
+  def saved_change_to_department: () -> Array[String?]?
+  def saved_change_to_department?: () -> bool
+  def will_save_change_to_department?: () -> bool
+  def restore_department!: () -> void
+  def clear_department_change: () -> void
+
+  attr_accessor position(): String?
+  def position_changed?: () -> bool
+  def position_change: () -> [ String?, String? ]
+  def position_will_change!: () -> void
+  def position_was: () -> String?
+  def position_previously_changed?: () -> bool
+  def position_previous_change: () -> Array[String?]?
+  def position_previously_was: () -> String?
+  def position_before_last_save: () -> String?
+  def position_change_to_be_saved: () -> Array[String?]?
+  def position_in_database: () -> String?
+  def saved_change_to_position: () -> Array[String?]?
+  def saved_change_to_position?: () -> bool
+  def will_save_change_to_position?: () -> bool
+  def restore_position!: () -> void
+  def clear_position_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor conference_id(): Integer?
+  def conference_id_changed?: () -> bool
+  def conference_id_change: () -> [ Integer?, Integer? ]
+  def conference_id_will_change!: () -> void
+  def conference_id_was: () -> Integer?
+  def conference_id_previously_changed?: () -> bool
+  def conference_id_previous_change: () -> Array[Integer?]?
+  def conference_id_previously_was: () -> Integer?
+  def conference_id_before_last_save: () -> Integer?
+  def conference_id_change_to_be_saved: () -> Array[Integer?]?
+  def conference_id_in_database: () -> Integer?
+  def saved_change_to_conference_id: () -> Array[Integer?]?
+  def saved_change_to_conference_id?: () -> bool
+  def will_save_change_to_conference_id?: () -> bool
+  def restore_conference_id!: () -> void
+  def clear_conference_id_change: () -> void
+
+  attr_accessor company_address_prefecture_id(): String?
+  def company_address_prefecture_id_changed?: () -> bool
+  def company_address_prefecture_id_change: () -> [ String?, String? ]
+  def company_address_prefecture_id_will_change!: () -> void
+  def company_address_prefecture_id_was: () -> String?
+  def company_address_prefecture_id_previously_changed?: () -> bool
+  def company_address_prefecture_id_previous_change: () -> Array[String?]?
+  def company_address_prefecture_id_previously_was: () -> String?
+  def company_address_prefecture_id_before_last_save: () -> String?
+  def company_address_prefecture_id_change_to_be_saved: () -> Array[String?]?
+  def company_address_prefecture_id_in_database: () -> String?
+  def saved_change_to_company_address_prefecture_id: () -> Array[String?]?
+  def saved_change_to_company_address_prefecture_id?: () -> bool
+  def will_save_change_to_company_address_prefecture_id?: () -> bool
+  def restore_company_address_prefecture_id!: () -> void
+  def clear_company_address_prefecture_id_change: () -> void
+
+  def registered_talks: () -> RegisteredTalk::ActiveRecord_Associations_CollectionProxy
+  def registered_talks=: (RegisteredTalk::ActiveRecord_Associations_CollectionProxy | Array[RegisteredTalk]) -> (RegisteredTalk::ActiveRecord_Associations_CollectionProxy | Array[RegisteredTalk])
+  def registered_talk_ids: () -> Array[Integer]
+  def registered_talk_ids=: (Array[Integer]) -> Array[Integer]
+  def talks: () -> Talk::ActiveRecord_Associations_CollectionProxy
+  def talks=: (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk]) -> (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk])
+  def talk_ids: () -> Array[Integer]
+  def talk_ids=: (Array[Integer]) -> Array[Integer]
+  def agreements: () -> Agreement::ActiveRecord_Associations_CollectionProxy
+  def agreements=: (Agreement::ActiveRecord_Associations_CollectionProxy | Array[Agreement]) -> (Agreement::ActiveRecord_Associations_CollectionProxy | Array[Agreement])
+  def agreement_ids: () -> Array[Integer]
+  def agreement_ids=: (Array[Integer]) -> Array[Integer]
+  def form_items: () -> FormItem::ActiveRecord_Associations_CollectionProxy
+  def form_items=: (FormItem::ActiveRecord_Associations_CollectionProxy | Array[FormItem]) -> (FormItem::ActiveRecord_Associations_CollectionProxy | Array[FormItem])
+  def form_item_ids: () -> Array[Integer]
+  def form_item_ids=: (Array[Integer]) -> Array[Integer]
+  def chat_messages: () -> ChatMessage::ActiveRecord_Associations_CollectionProxy
+  def chat_messages=: (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage]) -> (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage])
+  def chat_message_ids: () -> Array[Integer]
+  def chat_message_ids=: (Array[Integer]) -> Array[Integer]
+
+  def company_address_prefecture: () -> CompanyAddressPrefecture
+  def company_address_prefecture=: (CompanyAddressPrefecture?) -> CompanyAddressPrefecture?
+  def reload_company_address_prefecture: () -> CompanyAddressPrefecture?
+  def build_company_address_prefecture: (untyped) -> CompanyAddressPrefecture
+  def create_company_address_prefecture: (untyped) -> CompanyAddressPrefecture
+  def create_company_address_prefecture!: (untyped) -> CompanyAddressPrefecture
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Profile, Integer]
+    include Enumerable[Profile]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Profile, Integer]
+  end
+end

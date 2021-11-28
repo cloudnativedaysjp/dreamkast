@@ -3,7 +3,13 @@ class ConferenceForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :status, :cfp_result_visible, :speaker_entry, :attendee_entry, :show_timetable, :show_sponsors, :brief
+  attr_accessor :status
+  attr_accessor :cfp_result_visible
+  attr_accessor :speaker_entry
+  attr_accessor :attendee_entry
+  attr_accessor :show_timetable
+  attr_accessor :show_sponsors
+  attr_accessor :brief
 
   delegate :persisted?, to: :conference
 
@@ -36,7 +42,7 @@ class ConferenceForm
         end
       end
     rescue => e
-      puts e
+      puts(e)
       false
     end
   end
@@ -70,14 +76,14 @@ class ConferenceForm
         end
       end
     rescue => e
-      puts e
+      puts(e)
       false
     end
   end
 
   def initialize(attributes = nil, conference: Conference.new)
     @conference = conference
-    attributes = default_attributes.merge(attributes||{})
+    attributes = default_attributes.merge(attributes || {})
     super(attributes)
   end
 
@@ -91,9 +97,8 @@ class ConferenceForm
     ActiveRecord::Base.transaction do
       conference.update!(status: status, cfp_result_visible: cfp_result_visible, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable, show_sponsors: show_sponsors, brief: brief)
     end
-
   rescue => e
-    puts e
+    puts(e)
     false
   end
 

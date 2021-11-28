@@ -1,0 +1,2 @@
+class SponsorType < ApplicationRecord
+end

@@ -50,7 +50,7 @@ module TalksTable
 
   def confirm_recording_message(track, talk)
     if media_live && media_live.recording_talk_id != talk.id
-        "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
+      "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
     else
       if track.live_stream_media_live && track.live_stream_media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
         "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"
@@ -62,12 +62,12 @@ module TalksTable
 
   def alert_type(message_type)
     case message_type
-    when 'notice'
-      'success'
-    when 'danger'
-      'danger'
+    when "notice"
+      "success"
+    when "danger"
+      "danger"
     else
-      'primary'
+      "primary"
     end
   end
 
@@ -97,13 +97,13 @@ module TalksTable
 
   def recording_control_button_label(talk)
     if recording?(talk)
-      'Recording'
+      "Recording"
     elsif waiting_to_start?(talk)
-      'Waiting to start recording'
+      "Waiting to start recording"
     elsif waiting_to_stop?(talk)
-      'Waiting to stop recording'
+      "Waiting to stop recording"
     else
-      'Start Record'
+      "Start Record"
     end
   end
 

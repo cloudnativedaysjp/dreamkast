@@ -215,6 +215,7 @@ paths:
           content:
             application/json:
               schema:
+                type: array
                 items:
                   $ref: '#/components/schemas/ChatMessage'
         '400':
@@ -528,7 +529,7 @@ components:
         - $ref: '#/components/schemas/ChatMessageProperties'
       required:
         - eventAbbr
-        - talkId
+        - roomId
         - body
         - messageType
       example:
@@ -552,6 +553,7 @@ components:
           type: number
         speakerId:
           type: number
+          nullable: true
         eventAbbr:
           type: string
         roomId:
@@ -565,6 +567,9 @@ components:
         messageType:
           type: string
           enum: [chat, qa]
+        replyTo:
+          type: number
+          nullable: true
     Sponsor:
       type: object
       additionalProperties: false

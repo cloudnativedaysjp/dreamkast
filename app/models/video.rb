@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: videos
+#
+#  id              :bigint           not null, primary key
+#  on_air          :boolean
+#  site            :string(255)
+#  url             :string(255)
+#  video_file_data :text(65535)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  slido_id        :string(255)
+#  talk_id         :integer
+#  video_id        :string(255)
+#
 class Video < ApplicationRecord
   include VideoFileUploader::Attachment(:video_file)
 
@@ -6,10 +21,10 @@ class Video < ApplicationRecord
   def self.on_air(conference)
     current = conference.talks.accepted.map(&:video).compact.select(&:on_air)
     list = {}
-    list['current'] = []
+    list["current"] = []
     current.each do |video|
       if video.talk.track.present?
-        list['current'][video.talk.track.number - 1] = {
+        list["current"][video.talk.track.number - 1] = {
           video_id: video.video_id,
           site: video.site,
           slido_id: video.slido_id,
@@ -18,14 +33,14 @@ class Video < ApplicationRecord
           start_time: video.talk.start_time&.strftime("%H:%M"),
           end_time: video.talk.end_time&.strftime("%H:%M"),
           abstract: video.talk.abstract,
-          track_name: video.talk.track.present? ? video.talk.track.name : '',
-          track_number: video.talk.track.present? ? video.talk.track.number : '',
+          track_name: video.talk.track.present? ? video.talk.track.name : "",
+          track_number: video.talk.track.present? ? video.talk.track.number : "",
           track_id: video.talk.track_id,
-          speakers: video.talk.speakers.map{|speaker| speaker.name}.join("/")
+          speakers: video.talk.speakers.map { |speaker| speaker.name }.join("/")
         }
       end
     end
-    return list
+    list
   end
 
   def self.on_air_v2
@@ -51,10 +66,10 @@ class Video < ApplicationRecord
           talkDifficulty: talk.difficulty,
           talkCategory: talk.category,
           onAir: talk.on_air?,
-          documentUrl: talk.document_url ? talk.document_url : '',
+          documentUrl: talk.document_url || "",
         }
       end
     end
-    return res
+    res
   end
 end

@@ -1,6 +1,28 @@
-require 'rails_helper'
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                            :bigint           not null, primary key
+#  company_address               :string(255)
+#  company_email                 :string(255)
+#  company_name                  :string(255)
+#  company_tel                   :string(255)
+#  department                    :string(255)
+#  email                         :string(255)
+#  first_name                    :string(255)
+#  last_name                     :string(255)
+#  occupation                    :string(255)
+#  position                      :string(255)
+#  sub                           :string(255)
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  company_address_prefecture_id :string(255)
+#  conference_id                 :integer
+#  industry_id                   :integer
+#
+require "rails_helper"
 
-RSpec.describe Profile, type: :model do
+RSpec.describe(Profile, type: :model) do
   before do
     create(:cndt2020)
 
@@ -20,40 +42,40 @@ RSpec.describe Profile, type: :model do
       conference_id: 1
     )
   end
-  
+
   it "is valid with a all params" do
-    expect(@profile).to be_valid
+    expect(@profile).to(be_valid)
   end
 
   [:sub, :email, :first_name, :last_name, :industry_id, :occupation, :company_name, :company_email,
-    :company_address, :company_tel, :department, :position].each do |param|
+   :company_address, :company_tel, :department, :position].each do |param|
     it "is invalid without #{param}" do
       @profile[param] = nil
-      expect(@profile).to be_invalid
+      expect(@profile).to(be_invalid)
     end
   end
 
   it "is invalid if email is not a valid format" do
     @profile[:email] = "foobar"
-    expect(@profile).to be_invalid
+    expect(@profile).to(be_invalid)
   end
 
   it "is invalid if company_email is not a valid format" do
     @profile[:email] = "foobar"
-    expect(@profile).to be_invalid
+    expect(@profile).to(be_invalid)
   end
 
   ["090-1234-5678", "09012345678", "+81-90-1234-5678", "+819012345678"].each do |tel|
     it "is valid if company_tel is a valid number" do
       @profile[:company_tel] = tel
-      expect(@profile).to be_valid
+      expect(@profile).to(be_valid)
     end
   end
 
   ["xxxxx", "09012345678X", "☀", "amsy0810"].each do |tel|
     it "is invalid if company_tel is a invalid number" do
       @profile[:company_tel] = tel
-      expect(@profile).to be_invalid
+      expect(@profile).to(be_invalid)
     end
   end
 end

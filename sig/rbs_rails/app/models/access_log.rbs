@@ -1,0 +1,160 @@
+class AccessLog < ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[AccessLog, ActiveRecord_Relation, Integer]
+
+  attr_accessor id(): Integer
+  def id_changed?: () -> bool
+  def id_change: () -> [ Integer?, Integer? ]
+  def id_will_change!: () -> void
+  def id_was: () -> Integer?
+  def id_previously_changed?: () -> bool
+  def id_previous_change: () -> Array[Integer?]?
+  def id_previously_was: () -> Integer?
+  def id_before_last_save: () -> Integer?
+  def id_change_to_be_saved: () -> Array[Integer?]?
+  def id_in_database: () -> Integer?
+  def saved_change_to_id: () -> Array[Integer?]?
+  def saved_change_to_id?: () -> bool
+  def will_save_change_to_id?: () -> bool
+  def restore_id!: () -> void
+  def clear_id_change: () -> void
+
+  attr_accessor name(): String?
+  def name_changed?: () -> bool
+  def name_change: () -> [ String?, String? ]
+  def name_will_change!: () -> void
+  def name_was: () -> String?
+  def name_previously_changed?: () -> bool
+  def name_previous_change: () -> Array[String?]?
+  def name_previously_was: () -> String?
+  def name_before_last_save: () -> String?
+  def name_change_to_be_saved: () -> Array[String?]?
+  def name_in_database: () -> String?
+  def saved_change_to_name: () -> Array[String?]?
+  def saved_change_to_name?: () -> bool
+  def will_save_change_to_name?: () -> bool
+  def restore_name!: () -> void
+  def clear_name_change: () -> void
+
+  attr_accessor sub(): String?
+  def sub_changed?: () -> bool
+  def sub_change: () -> [ String?, String? ]
+  def sub_will_change!: () -> void
+  def sub_was: () -> String?
+  def sub_previously_changed?: () -> bool
+  def sub_previous_change: () -> Array[String?]?
+  def sub_previously_was: () -> String?
+  def sub_before_last_save: () -> String?
+  def sub_change_to_be_saved: () -> Array[String?]?
+  def sub_in_database: () -> String?
+  def saved_change_to_sub: () -> Array[String?]?
+  def saved_change_to_sub?: () -> bool
+  def will_save_change_to_sub?: () -> bool
+  def restore_sub!: () -> void
+  def clear_sub_change: () -> void
+
+  attr_accessor page(): String?
+  def page_changed?: () -> bool
+  def page_change: () -> [ String?, String? ]
+  def page_will_change!: () -> void
+  def page_was: () -> String?
+  def page_previously_changed?: () -> bool
+  def page_previous_change: () -> Array[String?]?
+  def page_previously_was: () -> String?
+  def page_before_last_save: () -> String?
+  def page_change_to_be_saved: () -> Array[String?]?
+  def page_in_database: () -> String?
+  def saved_change_to_page: () -> Array[String?]?
+  def saved_change_to_page?: () -> bool
+  def will_save_change_to_page?: () -> bool
+  def restore_page!: () -> void
+  def clear_page_change: () -> void
+
+  attr_accessor ip(): String?
+  def ip_changed?: () -> bool
+  def ip_change: () -> [ String?, String? ]
+  def ip_will_change!: () -> void
+  def ip_was: () -> String?
+  def ip_previously_changed?: () -> bool
+  def ip_previous_change: () -> Array[String?]?
+  def ip_previously_was: () -> String?
+  def ip_before_last_save: () -> String?
+  def ip_change_to_be_saved: () -> Array[String?]?
+  def ip_in_database: () -> String?
+  def saved_change_to_ip: () -> Array[String?]?
+  def saved_change_to_ip?: () -> bool
+  def will_save_change_to_ip?: () -> bool
+  def restore_ip!: () -> void
+  def clear_ip_change: () -> void
+
+  attr_accessor created_at(): ActiveSupport::TimeWithZone
+  def created_at_changed?: () -> bool
+  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def created_at_will_change!: () -> void
+  def created_at_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_previously_changed?: () -> bool
+  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_created_at?: () -> bool
+  def will_save_change_to_created_at?: () -> bool
+  def restore_created_at!: () -> void
+  def clear_created_at_change: () -> void
+
+  attr_accessor updated_at(): ActiveSupport::TimeWithZone
+  def updated_at_changed?: () -> bool
+  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+  def updated_at_will_change!: () -> void
+  def updated_at_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_previously_changed?: () -> bool
+  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+  def saved_change_to_updated_at?: () -> bool
+  def will_save_change_to_updated_at?: () -> bool
+  def restore_updated_at!: () -> void
+  def clear_updated_at_change: () -> void
+
+  attr_accessor profile_id(): Integer?
+  def profile_id_changed?: () -> bool
+  def profile_id_change: () -> [ Integer?, Integer? ]
+  def profile_id_will_change!: () -> void
+  def profile_id_was: () -> Integer?
+  def profile_id_previously_changed?: () -> bool
+  def profile_id_previous_change: () -> Array[Integer?]?
+  def profile_id_previously_was: () -> Integer?
+  def profile_id_before_last_save: () -> Integer?
+  def profile_id_change_to_be_saved: () -> Array[Integer?]?
+  def profile_id_in_database: () -> Integer?
+  def saved_change_to_profile_id: () -> Array[Integer?]?
+  def saved_change_to_profile_id?: () -> bool
+  def will_save_change_to_profile_id?: () -> bool
+  def restore_profile_id!: () -> void
+  def clear_profile_id_change: () -> void
+
+  def profile: () -> Profile
+  def profile=: (Profile?) -> Profile?
+  def reload_profile: () -> Profile?
+  def build_profile: (untyped) -> Profile
+  def create_profile: (untyped) -> Profile
+  def create_profile!: (untyped) -> Profile
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[AccessLog, Integer]
+    include Enumerable[AccessLog]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[AccessLog, Integer]
+  end
+end

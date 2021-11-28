@@ -46,3 +46,6 @@ public/uploads/*
 
 .DS_Store
 /config/credentials/production.key
+vendor
+
+.gem_rbs_collection

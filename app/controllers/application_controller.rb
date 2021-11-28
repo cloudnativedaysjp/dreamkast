@@ -1,9 +1,10 @@
 class Forbidden < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
+  include EnvHelper
   include Pundit
 
-  before_action :set_raven_context, :event_exists?
+  before_action :set_sentry_context, :event_exists?
 
   unless Rails.env.development?
     rescue_from Exception, with: :render_500
@@ -14,7 +15,7 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def user_not_authorized
-    render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
   end
 
   def home_controller?
@@ -29,9 +30,13 @@ class ApplicationController < ActionController::Base
     params[:event]
   end
 
+  def production?
+    env_name == "production"
+  end
+
   # ActiveRecordの機能でもうちょっといい感じにかける気はする…
   def talks_checked?(talk_id)
-    @profile.talks.select{|talk| talk.id == talk_id}.present?
+    @profile.talks.select { |talk| talk.id == talk_id }.present?
   end
 
   def talk_category(talk)
@@ -42,23 +47,23 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
+  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
 
   def render_403
-    render template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
   end
 
   def render_404
-    render template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_404", status: 404, layout: "application", content_type: "text/html", formats: :html)
   end
 
   def render_500(e = nil)
     if e
-      logger.error "Rendering 500 with exception: #{e.message}"
-      logger.error e.backtrace.join("\n")
+      logger.error("Rendering 500 with exception: #{e.message}")
+      logger.error(e.backtrace.join("\n"))
     end
 
-    render template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html'
+    render(template: "errors/error_500", status: 500, layout: "application", content_type: "text/html")
   end
 
   # カンファレンス開催前、かつCFP中
@@ -70,16 +75,19 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :sponsor_logo_class, :days
+
   private
 
-  def set_raven_context
-    Raven.user_context(id: session[:current_user_id]) # or anything else in session
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  def set_sentry_context
+    Sentry.with_scope do |scope|
+      scope.set_user(id: session[:current_user_id])
+      scope.set_extras(params: params.to_unsafe_h, url: request.url)
+    end
   end
 
   def event_exists?
     if event_name && Conference.where(abbr: event_name).empty?
-      raise ActiveRecord::RecordNotFound
+      raise(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -88,13 +96,13 @@ class ApplicationController < ActionController::Base
     d = @conference.conference_days.where(internal: false)
     if d.length == 1
       day = day_of_the_week[d.first.date.cwday - 1]
-      return d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
+      d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
     else
       first = d.order(:date).first
       fday = day_of_the_week[first.date.cwday - 1]
       last = d.order(:date).last
       lday = day_of_the_week[last.date.cwday - 1]
-      return "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
+      "#{first.date.strftime("%Y年%m月%d日")}(#{fday})〜#{last.date.strftime("%Y年%m月%d日")}(#{lday})"
     end
   end
 

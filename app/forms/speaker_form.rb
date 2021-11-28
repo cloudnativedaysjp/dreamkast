@@ -3,19 +3,19 @@ class SpeakerForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :name,
-                :name_mother_tongue,
-                :email,
-                :sub,
-                :profile,
-                :company,
-                :job_title,
-                :twitter_id,
-                :github_id,
-                :avatar,
-                :conference_id,
-                :additional_documents,
-                :talks
+  attr_accessor :name
+  attr_accessor :name_mother_tongue
+  attr_accessor :email
+  attr_accessor :sub
+  attr_accessor :profile
+  attr_accessor :company
+  attr_accessor :job_title
+  attr_accessor :twitter_id
+  attr_accessor :github_id
+  attr_accessor :avatar
+  attr_accessor :conference_id
+  attr_accessor :additional_documents
+  attr_accessor :talks
 
   delegate :persisted?, to: :speaker
 
@@ -83,7 +83,7 @@ class SpeakerForm
         end
       end
     rescue => e
-      puts e
+      puts(e)
       false
     end
   end
@@ -106,7 +106,8 @@ class SpeakerForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      speaker.update!(name: name, name_mother_tongue: name_mother_tongue, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id, sub: sub, email: email, additional_documents: additional_documents)
+      speaker.update!(name: name, name_mother_tongue: name_mother_tongue, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id,
+                      sub: sub, email: email, additional_documents: additional_documents)
       @destroy_talks.each do |talk|
         proposal = talk.proposal
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
@@ -128,7 +129,7 @@ class SpeakerForm
       end
     end
   rescue => e
-    puts "failed to save: #{e}"
+    puts("failed to save: #{e}")
     false
   end
 

@@ -1,0 +1,2 @@
+class SponsorAttachmentZoom < SponsorAttachment
+end

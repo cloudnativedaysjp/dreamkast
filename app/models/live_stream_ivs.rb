@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: live_streams
+#
+#  id            :bigint           not null, primary key
+#  params        :json
+#  type          :string(255)
+#  conference_id :bigint           not null
+#  track_id      :bigint           not null
+#
+# Indexes
+#
+#  index_live_streams_on_conference_id  (conference_id)
+#  index_live_streams_on_track_id       (track_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (track_id => tracks.id)
+#
 class LiveStreamIvs < LiveStream
   include EnvHelper
 
@@ -21,41 +41,41 @@ class LiveStreamIvs < LiveStream
       stream_key: resp.stream_key
     }
   rescue => e
-    logger.error e.message
+    logger.error(e.message)
   end
 
   before_destroy do
     ivs_client.delete_channel(arn: channel_arn) if channel_arn
   rescue Aws::IVS::Errors::ResourceNotFoundException => e
-    logger.error "IVS Resource Not Found: #{e.message}"
+    logger.error("IVS Resource Not Found: #{e.message}")
   end
 
   def name
-    params.dig('channel', 'name')
+    params.dig("channel", "name")
   end
 
   def channel_arn
-    params.dig('channel', 'arn')
+    params.dig("channel", "arn")
   end
 
   def playback_url
-    params.dig('channel', 'playback_url')
+    params.dig("channel", "playback_url")
   end
 
   def ingest_endpoint
-    params.dig('channel', 'ingest_endpoint')
+    params.dig("channel", "ingest_endpoint")
   end
 
   def stream_key
-    params['stream_key']
+    params["stream_key"]
   end
 
   def get_stream
-    ivs_client.get_stream(channel_arn: self.channel_arn)
+    ivs_client.get_stream(channel_arn: channel_arn)
   end
 
   def viewer_count
-    self.get_stream.stream.viewer_count
+    get_stream.stream.viewer_count
   end
 
   def ingest_url
@@ -65,26 +85,26 @@ class LiveStreamIvs < LiveStream
   private
 
   def ivs_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+    creds = Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])
     if creds.set?
-      Aws::IVS::Client.new(region: 'us-east-1', credentials: creds)
+      Aws::IVS::Client.new(region: "us-east-1", credentials: creds)
     else
-      Aws::IVS::Client.new(region: 'us-east-1')
+      Aws::IVS::Client.new(region: "us-east-1")
     end
   end
 
   def recording_configuration_arn
     case env_name
-    when 'production'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
-    when 'staging'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
-    when 'review_app'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
-    when 'others'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    when "production"
+      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP"
+    when "staging"
+      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ"
+    when "review_app"
+      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg"
+    when "others"
+      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg"
     else
-      ''
+      ""
     end
   end
 end

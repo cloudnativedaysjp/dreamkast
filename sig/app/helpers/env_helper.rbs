@@ -1,0 +1,3 @@
+module EnvHelper
+  def env_name: () -> String
+end

@@ -1,0 +1,2 @@
+class SponsorAttachmentMiro < SponsorAttachment
+end

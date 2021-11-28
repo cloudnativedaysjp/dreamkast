@@ -1,0 +1,2 @@
+class AccessLog < ApplicationRecord
+end

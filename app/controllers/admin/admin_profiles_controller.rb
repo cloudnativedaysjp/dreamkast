@@ -7,9 +7,9 @@ class Admin::AdminProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @admin_profile.update(admin_profile_params)
-        format.html { redirect_to edit_admin_admin_profile_path(id: @admin_profile.id)}
+        format.html { redirect_to(edit_admin_admin_profile_path(id: @admin_profile.id)) }
       else
-        format.html { render :edit }
+        format.html { render(:edit) }
       end
     end
   end

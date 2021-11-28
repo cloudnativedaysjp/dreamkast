@@ -1,0 +1,21 @@
+class Speaker < ApplicationRecord
+  include ActionView::Helpers::UrlHelper
+
+  def proposals: () -> untyped
+
+  def sponsor_talks: () -> untyped
+
+  def self.import: (untyped file) -> untyped
+
+  def self.export: () -> untyped
+
+  def self.updatable_attributes: () -> ::Array["id" | "conference_id" | "name" | "profile" | "company" | "job_title" | "twitter_id" | "github_id" | "avatar_data"]
+
+  def has_avatar?: () -> untyped
+
+  def avatar_or_dummy_url: () -> untyped
+
+  def twitter_link: () -> untyped
+
+  def github_link: () -> untyped
+end

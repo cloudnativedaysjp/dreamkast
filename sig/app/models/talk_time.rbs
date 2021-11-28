@@ -1,0 +1,2 @@
+class TalkTime < ApplicationRecord
+end

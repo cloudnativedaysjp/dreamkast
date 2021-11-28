@@ -7,14 +7,14 @@ namespace :db do
     ActiveRecord::Base.transaction do
       begin
         Talk.where(conference_id: 3).each do |talk|
-          assumed_visitor = talk.proposal_items.find_by(label: 'assumed_visitor').params
-          talk.proposal_items.find_by(label: 'assumed_visitor').update!(params: assumed_visitor.select{|i| !i.to_i.zero?})
+          assumed_visitor = talk.proposal_items.find_by(label: "assumed_visitor").params
+          talk.proposal_items.find_by(label: "assumed_visitor").update!(params: assumed_visitor.select { |i| !i.to_i.zero? })
 
-          execution_phase= talk.proposal_items.find_by(label: 'execution_phase').params
-          talk.proposal_items.find_by(label: 'execution_phase').update!(params: execution_phase.select{|i| !i.to_i.zero?})
+          execution_phase = talk.proposal_items.find_by(label: "execution_phase").params
+          talk.proposal_items.find_by(label: "execution_phase").update!(params: execution_phase.select { |i| !i.to_i.zero? })
         end
       rescue => e
-        puts e
+        puts(e)
       end
     end
   end

@@ -10,7 +10,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build-deploy:
+  run-test:
     runs-on: ubuntu-18.04
     if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
@@ -36,10 +36,10 @@ jobs:
     - name: yarn install
       run: |
         yarn
-    - name: Set up Ruby 2.7.2
+    - name: Set up Ruby 3.0.2
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.2
+        ruby-version: 3.0.2
     - uses: actions/cache@v2
       with:
         path: vendor/bundle
@@ -50,6 +50,9 @@ jobs:
       run: |
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
+    - name: Run rubocop
+      run: |
+        bundle exec rubocop
     - name: Run tests
       shell: bash
       env:

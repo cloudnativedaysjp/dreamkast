@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id                            :bigint           not null, primary key
+#  company_address               :string(255)
+#  company_email                 :string(255)
+#  company_name                  :string(255)
+#  company_tel                   :string(255)
+#  department                    :string(255)
+#  email                         :string(255)
+#  first_name                    :string(255)
+#  last_name                     :string(255)
+#  occupation                    :string(255)
+#  position                      :string(255)
+#  sub                           :string(255)
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  company_address_prefecture_id :string(255)
+#  conference_id                 :integer
+#  industry_id                   :integer
+#
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -16,11 +38,11 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to_active_hash :company_address_prefecture, :shortcuts => [:name]
+  belongs_to_active_hash :company_address_prefecture, shortcuts: [:name]
 
   belongs_to :conference
   has_many :registered_talks
-  has_many :talks, -> {order('conference_day_id ASC, start_time ASC')}, through: :registered_talks
+  has_many :talks, -> { order("conference_day_id ASC, start_time ASC") }, through: :registered_talks
   has_many :agreements
   has_many :form_items, through: :agreements
   has_many :chat_messages
@@ -47,7 +69,7 @@ class Profile < ApplicationRecord
 
   def self.export(event_id)
     attr = %w[id email 名 姓 業種 職種 勤務先名/学校名 勤務先メールアドレス 勤務先都道府県 勤務先住所 勤務先電話番号 勤務先部署・所属/学部・学科・学年 勤務先役職]
-    all = CSV.generate do |csv|
+    CSV.generate do |csv|
       csv << attr
       Profile.where(conference_id: event_id).each do |speaker|
         csv << [
@@ -67,6 +89,5 @@ class Profile < ApplicationRecord
         ]
       end
     end
-    return all
   end
 end

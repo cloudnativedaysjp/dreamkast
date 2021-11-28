@@ -7,11 +7,11 @@ namespace :db do
     ActiveRecord::Base.transaction do
       begin
         Talk.where(conference_id: 3).each do |talk|
-          ProposalItem.new(conference_id: 3, talk_id: talk.id, label: 'assumed_visitor', params: talk.expected_participants).save!
-          ProposalItem.new(conference_id: 3, talk_id: talk.id, label: 'execution_phase', params: talk.execution_phases).save!
+          ProposalItem.new(conference_id: 3, talk_id: talk.id, label: "assumed_visitor", params: talk.expected_participants).save!
+          ProposalItem.new(conference_id: 3, talk_id: talk.id, label: "execution_phase", params: talk.execution_phases).save!
         end
       rescue => e
-        puts e
+        puts(e)
       end
     end
   end

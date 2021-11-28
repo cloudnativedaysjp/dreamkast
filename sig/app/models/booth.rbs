@@ -1,0 +1,13 @@
+class Booth < ApplicationRecord
+  def sponsor_text: () -> untyped
+
+  def logo_url: () -> untyped
+
+  def vimeo_url: () -> untyped
+
+  def miro_url: () -> untyped
+
+  def pdf_urls: () -> untyped
+
+  def key_image_urls: () -> untyped
+end

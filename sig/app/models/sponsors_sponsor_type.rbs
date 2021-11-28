@@ -1,0 +1,3 @@
+class SponsorsSponsorType < ApplicationRecord
+  def self.updatable_attributes: () -> ::Array["sponsor_id" | "sponsor_type_id"]
+end

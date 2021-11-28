@@ -189,23 +189,34 @@ class LiveStreamMediaLive < LiveStream
     end
   end
 
+  def resource_name
+    name = env_name == "review_app" ? "review_app_#{review_app_number}" : env_name
+    "#{name}_#{conference.abbr}_track#{track.name}"
+  end
+
   def create_input_params
+    tags = {"Environment" => env_name}
+    tags["ReviewAppNumber"] = review_app_number.to_s
     {
-      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
+      name: resource_name,
       type: "RTMP_PULL",
       sources: [
         {
           url: track.live_stream_ivs.playback_url
         }
-      ]
+      ],
+      tags: tags
     }
   end
 
   def create_channel_params(input_id, input_name)
+    tags = {"Environment" => env_name}
+    tags["ReviewAppNumber"] = review_app_number.to_s
     {
-      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
+      name: resource_name,
       role_arn: "arn:aws:iam::607167088920:role/MediaLiveAccessRole",
       channel_class: "SINGLE_PIPELINE",
+      tags: tags,
       destinations: [
         {
           id: "destination1",

@@ -25,15 +25,15 @@ class LiveStreamIvs < LiveStream
   belongs_to :track
 
   before_create do
+    tags = {"Environment" => env_name}
+    tags["ReviewAppNumber"] = review_app_number.to_s
     resp = ivs_client.create_channel(
-      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
+      name: channel_name,
       latency_mode: "LOW",
       type: "STANDARD",
       authorized: false,
       recording_configuration_arn: recording_configuration_arn,
-      tags: {
-        "Environment" => env_name
-      }
+      tags: tags
     )
 
     self.params = {
@@ -83,6 +83,11 @@ class LiveStreamIvs < LiveStream
   end
 
   private
+
+  def channel_name
+    name = env_name == "review_app" ? "review_app_#{review_app_number}" : env_name
+    "#{name}_#{conference.abbr}_track#{track.name}"
+  end
 
   def ivs_client
     creds = Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])

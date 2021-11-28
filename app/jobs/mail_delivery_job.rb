@@ -1,5 +1,5 @@
 class MailDeliveryJob < ApplicationJob
-  queue_as :mail
+  queue_as :fifo
   self.queue_adapter = :amazon_sqs
 
   discard_on ActiveRecord::ActiveRecordError

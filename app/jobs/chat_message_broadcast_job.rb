@@ -1,6 +1,6 @@
 class ChatMessageBroadcastJob < ApplicationJob
-  queue_as :default
-  self.queue_adapter = :async
+  queue_as :fifo
+  self.queue_adapter = :amazon_sqs
 
   def perform(*args)
     msg = args[0]

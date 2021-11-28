@@ -85,29 +85,6 @@ class Talk < ApplicationRecord
     includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: "intermission")))
   }
 
-  def self.import(file)
-    message = []
-
-    transaction do
-      destroy_all
-
-      CSV.foreach(file.path, headers: true) do |row|
-        talk = new
-        talk.attributes = row.to_hash.slice(*updatable_attributes)
-        unless talk.save
-          message << "Error id: #{talk.id} - #{talk.errors.messages}"
-        end
-      end
-      if message.size == 0
-        message << "Talk CSVのインポートに成功しました"
-      else
-        raise(ActiveRecord::Rollback)
-      end
-    end
-
-    message
-  end
-
   def self.export_csv(conference, talks, track_name = "all", date = "all")
     filename = "#{conference.abbr}_#{date}_#{track_name}"
     columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]

@@ -143,23 +143,4 @@ class Admin::TalksController < ApplicationController
       format.js { render("admin/tracks/index.js") }
     end
   end
-
-  def bulk_insert_talks
-    unless params[:file]
-      redirect_to("/admin/talks", notice: "アップロードするファイルを選択してください")
-    else
-      message = Talk.import(params[:file])
-      notice = message.join(" / ")
-      redirect_to("/admin/talks", notice: notice)
-    end
-  end
-
-  def bulk_insert_talks_speaker
-    unless params[:file]
-      redirect_to("/admin/talks", notice: "アップロードするファイルを選択してください")
-    else
-      TalksSpeaker.import(params[:file])
-      redirect_to("/admin/talks", notice: "CSV\u306E\u8AAD\u307F\u8FBC\u307F\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F")
-    end
-  end
 end

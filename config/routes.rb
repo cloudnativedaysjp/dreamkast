@@ -41,7 +41,6 @@ Rails.application.routes.draw do
       resources :booths, only: [:index, :show]
       resources :conferences, only: [:index, :show, :edit, :update]
       resources :speakers, only: [:index, :edit, :update]
-      post "bulk_insert_speakers" => "speakers#bulk_insert_speakers"
       get "export_speakers" => "speakers#export_speakers"
       get "export_profiles" => "profiles#export_profiles"
       resources :talks, only: [:index]
@@ -59,8 +58,6 @@ Rails.application.routes.draw do
       post "start_recording" => "talks#start_recording"
       post "stop_recording" => "talks#stop_recording"
       put "proposals" => "proposals#update_proposals"
-      post "bulk_insert_talks" => "talks#bulk_insert_talks"
-      post "bulk_insert_talks_speaker" => "talks#bulk_insert_talks_speaker"
       resources :tracks, only: [:index]
       put "tracks" => "tracks#update_tracks"
       resources :attachments, only: [:show]

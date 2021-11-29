@@ -25,7 +25,7 @@ class LiveStreamIvs < LiveStream
   belongs_to :track
 
   before_create do
-    tags = {"Environment" => env_name}
+    tags = { "Environment" => env_name }
     tags["ReviewAppNumber"] = review_app_number.to_s
     resp = ivs_client.create_channel(
       name: channel_name,

@@ -195,7 +195,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_input_params
-    tags = {"Environment" => env_name}
+    tags = { "Environment" => env_name }
     tags["ReviewAppNumber"] = review_app_number.to_s
     {
       name: resource_name,
@@ -210,7 +210,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_channel_params(input_id, input_name)
-    tags = {"Environment" => env_name}
+    tags = { "Environment" => env_name }
     tags["ReviewAppNumber"] = review_app_number.to_s
     {
       name: resource_name,

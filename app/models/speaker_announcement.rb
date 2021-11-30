@@ -2,7 +2,6 @@ class SpeakerAnnouncement < ApplicationRecord
   belongs_to :conference
   has_many :speaker_announcement_middles, dependent: :destroy
   has_many :speakers, through: :speaker_announcement_middles
-  accepts_nested_attributes_for :speaker_announcement_middles, allow_destroy: true
 
   validates :speaker_names, presence: true
   validates :publish_time, presence: true

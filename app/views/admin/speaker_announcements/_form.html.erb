@@ -10,36 +10,20 @@
       <div class="field">
         <%= form.label :speaker_id, '登壇者' %>*<br/>
         <% Speaker.where(conference_id: @conference.id).pluck(:id).each do |speaker_id| %>
-          <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
-            <%= speaker_anouncemet.hidden_field :speaker_id, value: speaker_id, class: 'form-control' %>
-          <% end %>
+          <%= form.hidden_field :speaker_ids, multiple: true, value: speaker_id, class: 'form-control' %>
         <% end %>
         <%= form.text_field :speaker_names, value: "全員", readonly: true %>
       </div>
     <% else %>
-      <% if action == "new" %>
         <div class="field">
           <%= form.label :speaker_id, '登壇者' %>*<br/>
 
           <!-- @speakers.length == 1 -->
           <% @speakers.each do |speaker| %>
-            <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
-              <%= speaker_anouncemet.hidden_field :speaker_id, value: speaker.id %>
-              <%= form.text_field :speaker_names, value: speaker.name, readonly: true %><br/>
-            <% end %>
+            <%= form.hidden_field :speaker_ids, multiple: true, value: speaker.id %>
           <% end %>
+          <%= form.text_field :speaker_names, value: @speakers.length == 1 ? @speakers[0].name : "全員", readonly: true %><br/>
         </div>
-      <% else %>
-        <div class="field">
-          <%= form.label :speaker_id, '登壇者' %>*<br/>
-          <%= form.fields_for :speaker_announcement_middles do |speaker_anouncemet| %>
-            <%= speaker_anouncemet.hidden_field :speaker_id %>
-          <% end %>
-          <% @speakers.each do |speaker| %>
-            <%= form.text_field :speaker_names, value: speaker.name, readonly: true %><br/>
-          <% end %>
-        </div>
-      <% end %>
     <% end %>
 
     <div class="field">

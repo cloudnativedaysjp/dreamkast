@@ -19,7 +19,6 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   def create
     @speaker_announcement = SpeakerAnnouncement.create(speaker_announcement_params.merge(conference_id: @conference.id))
-
     respond_to do |format|
       if @speaker_announcement
         format.html { redirect_to(admin_speaker_announcements_path, notice: "Speaker was successfully updated.") }
@@ -69,6 +68,6 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def speaker_announcement_params
-    params.require(:speaker_announcement).permit(:conference_id, :publish_time, :body, :publish, :speaker_names, speaker_announcement_middles_attributes: [:id, :speaker_id, :_destroy])
+    params.require(:speaker_announcement).permit(:conference_id, :publish_time, :body, :publish, :speaker_names, speaker_ids: [])
   end
 end

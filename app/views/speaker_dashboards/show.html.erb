@@ -12,6 +12,14 @@
         <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
       </div>
 
+      <h2 class="py-3 pl-2"><%= "#{@speaker.name}様へのお知らせ" %></h2>
+      <div class="col-12 mb-4">
+
+        <div class="information mt-4" id="speaker_notice">
+          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
+        </div>
+      </div>
+
       <h2 class="py-3 pl-2">エントリー済みセッション一覧</h2>
       <div class="col-12 mb-4">
         <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>

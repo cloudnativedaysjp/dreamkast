@@ -1,0 +1,8 @@
+<ul>
+  <% speaker_announcements.order(publish_time: 'DESC').uniq.each do |announcement| %>
+    <li>
+      <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+      <%= simple_format announcement.body %>
+    </li>
+  <% end %>
+</ul>

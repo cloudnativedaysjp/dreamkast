@@ -23,14 +23,7 @@
       <% unless @speaker.nil? %>
         <div class="information mt-4" id="speaker_notice">
           <h4><%= "#{@speaker.name}様へのお知らせ" %></h4>
-          <ul>
-            <% @speaker_announcements.order(publish_time: 'DESC').uniq.each do |announcement| %>
-              <li>
-                <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
-                <%= simple_format announcement.body %>
-              </li>
-            <% end %>
-          </ul>
+          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
         </div>
       <% end %>
 

@@ -190,8 +190,11 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def resource_name
-    name = review_app? ? "review_app_#{review_app_number}" : env_name
-    "#{name}_#{conference.abbr}_track#{track.name}"
+    if review_app?
+      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
+    else
+      "#{env_name}_#{conference.abbr}_track#{track.name}"
+    end
   end
 
   def create_input_params

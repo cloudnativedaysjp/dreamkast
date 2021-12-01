@@ -189,23 +189,37 @@ class LiveStreamMediaLive < LiveStream
     end
   end
 
+  def resource_name
+    if review_app?
+      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
+    else
+      "#{env_name}_#{conference.abbr}_track#{track.name}"
+    end
+  end
+
   def create_input_params
+    tags = { "Environment" => env_name }
+    tags["ReviewAppNumber"] = review_app_number.to_s
     {
-      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
+      name: resource_name,
       type: "RTMP_PULL",
       sources: [
         {
           url: track.live_stream_ivs.playback_url
         }
-      ]
+      ],
+      tags: tags
     }
   end
 
   def create_channel_params(input_id, input_name)
+    tags = { "Environment" => env_name }
+    tags["ReviewAppNumber"] = review_app_number.to_s
     {
-      name: "#{env_name}_#{conference.abbr}_track#{track.name}",
+      name: resource_name,
       role_arn: "arn:aws:iam::607167088920:role/MediaLiveAccessRole",
       channel_class: "SINGLE_PIPELINE",
+      tags: tags,
       destinations: [
         {
           id: "destination1",
@@ -442,131 +456,55 @@ class LiveStreamMediaLive < LiveStream
           source: "EMBEDDED"
         },
         video_descriptions: [
-          {
-            name: "video_1080p30",
-            height: 1080,
-            width: 1920,
-            codec_settings: {
-              h264_settings: {
-                adaptive_quantization: "HIGH",
-                afd_signaling: "NONE",
-                bitrate: 5000000,
-                color_metadata: "INSERT",
-                entropy_encoding: "CABAC",
-                flicker_aq: "ENABLED",
-                force_field_pictures: "DISABLED",
-                framerate_control: "SPECIFIED",
-                framerate_denominator: 1,
-                framerate_numerator: 30,
-                gop_b_reference: "ENABLED",
-                gop_closed_cadence: 1,
-                gop_num_b_frames: 3,
-                gop_size: 60,
-                gop_size_units: "FRAMES",
-                level: "H264_LEVEL_AUTO",
-                look_ahead_rate_control: "HIGH",
-                num_ref_frames: 3,
-                par_control: "INITIALIZE_FROM_SOURCE",
-                profile: "HIGH",
-                rate_control_mode: "CBR",
-                scan_type: "PROGRESSIVE",
-                scene_change_detect: "ENABLED",
-                slices: 1,
-                spatial_aq: "ENABLED",
-                subgop_length: "FIXED",
-                syntax: "DEFAULT",
-                temporal_aq: "ENABLED",
-                timecode_insertion: "DISABLED"
-              }
-            },
-            respond_to_afd: "NONE",
-            scaling_behavior: "DEFAULT",
-            sharpness: 50
-          },
-          {
-            name: "video_720p30",
-            height: 720,
-            width: 1280,
-            codec_settings: {
-              h264_settings: {
-                adaptive_quantization: "HIGH",
-                afd_signaling: "NONE",
-                bitrate: 3000000,
-                color_metadata: "INSERT",
-                entropy_encoding: "CABAC",
-                flicker_aq: "ENABLED",
-                force_field_pictures: "DISABLED",
-                framerate_control: "SPECIFIED",
-                framerate_denominator: 1,
-                framerate_numerator: 30,
-                gop_b_reference: "ENABLED",
-                gop_closed_cadence: 1,
-                gop_num_b_frames: 3,
-                gop_size: 60,
-                gop_size_units: "FRAMES",
-                level: "H264_LEVEL_AUTO",
-                look_ahead_rate_control: "HIGH",
-                num_ref_frames: 3,
-                par_control: "INITIALIZE_FROM_SOURCE",
-                profile: "HIGH",
-                rate_control_mode: "CBR",
-                scan_type: "PROGRESSIVE",
-                scene_change_detect: "ENABLED",
-                slices: 1,
-                spatial_aq: "ENABLED",
-                subgop_length: "FIXED",
-                syntax: "DEFAULT",
-                temporal_aq: "ENABLED",
-                timecode_insertion: "DISABLED"
-              }
-            },
-            respond_to_afd: "NONE",
-            scaling_behavior: "DEFAULT",
-            sharpness: 100
-          },
-          {
-            name: "video_480p30",
-            height: 480,
-            width: 854,
-            codec_settings: {
-              h264_settings: {
-                adaptive_quantization: "HIGH",
-                afd_signaling: "NONE",
-                bitrate: 1500000,
-                color_metadata: "INSERT",
-                entropy_encoding: "CABAC",
-                flicker_aq: "ENABLED",
-                force_field_pictures: "DISABLED",
-                framerate_control: "SPECIFIED",
-                framerate_denominator: 1,
-                framerate_numerator: 30,
-                gop_b_reference: "ENABLED",
-                gop_closed_cadence: 1,
-                gop_num_b_frames: 3,
-                gop_size: 60,
-                gop_size_units: "FRAMES",
-                level: "H264_LEVEL_AUTO",
-                look_ahead_rate_control: "HIGH",
-                num_ref_frames: 3,
-                par_control: "INITIALIZE_FROM_SOURCE",
-                profile: "MAIN",
-                rate_control_mode: "CBR",
-                scan_type: "PROGRESSIVE",
-                scene_change_detect: "ENABLED",
-                slices: 1,
-                spatial_aq: "ENABLED",
-                subgop_length: "FIXED",
-                syntax: "DEFAULT",
-                temporal_aq: "ENABLED",
-                timecode_insertion: "DISABLED"
-              }
-            },
-            respond_to_afd: "NONE",
-            scaling_behavior: "STRETCH_TO_OUTPUT",
-            sharpness: 100,
-          },
+          video_description("video_1080p30", 1080, 1920, 5000000, 50),
+          video_description("video_720p30", 720, 1280, 3000000, 100),
+          video_description("video_480p30", 480, 854, 1500000, 100)
         ]
       }
+    }
+  end
+
+  def video_description(name, height, width, bitrate, sharpness)
+    {
+      name: name,
+      height: height,
+      width: width,
+      codec_settings: {
+        h264_settings: {
+          adaptive_quantization: "HIGH",
+          afd_signaling: "NONE",
+          bitrate: bitrate,
+          color_metadata: "INSERT",
+          entropy_encoding: "CABAC",
+          flicker_aq: "ENABLED",
+          force_field_pictures: "DISABLED",
+          framerate_control: "SPECIFIED",
+          framerate_denominator: 1,
+          framerate_numerator: 30,
+          gop_b_reference: "ENABLED",
+          gop_closed_cadence: 1,
+          gop_num_b_frames: 3,
+          gop_size: 60,
+          gop_size_units: "FRAMES",
+          level: "H264_LEVEL_AUTO",
+          look_ahead_rate_control: "HIGH",
+          num_ref_frames: 3,
+          par_control: "INITIALIZE_FROM_SOURCE",
+          profile: "HIGH",
+          rate_control_mode: "CBR",
+          scan_type: "PROGRESSIVE",
+          scene_change_detect: "ENABLED",
+          slices: 1,
+          spatial_aq: "ENABLED",
+          subgop_length: "FIXED",
+          syntax: "DEFAULT",
+          temporal_aq: "ENABLED",
+          timecode_insertion: "DISABLED"
+        }
+      },
+      respond_to_afd: "NONE",
+      scaling_behavior: "DEFAULT",
+      sharpness: sharpness
     }
   end
 end

@@ -85,7 +85,7 @@ class LiveStreamIvs < LiveStream
   private
 
   def channel_name
-    name = env_name == "review_app" ? "review_app_#{review_app_number}" : env_name
+    name = review_app? ? "review_app_#{review_app_number}" : env_name
     "#{name}_#{conference.abbr}_track#{track.name}"
   end
 

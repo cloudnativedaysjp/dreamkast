@@ -41,6 +41,10 @@ class Speaker < ApplicationRecord
     talks.filter { |talk| talk.sponsor.present? }
   end
 
+  def avatar_public_id
+    'uploads/' + JSON.parse(avatar_data)['id']
+  end
+
   def self.export
     CSV.generate do |csv|
       csv << updatable_attributes

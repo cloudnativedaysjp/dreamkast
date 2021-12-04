@@ -46,11 +46,11 @@
 
     <div class="field pb-3">
       <%= form.label :avatar, '講演者写真 - Photographs' %>
-      <% if @speaker && @speaker.avatar_url.present? %>
+      <% if @speaker && @speaker.avatar_public_id.present? %>
         <br>
-        <%= image_tag @speaker.avatar_url, :size => '80x80' %>
+        <%= cl_image_tag @speaker.avatar_public_id, height: 80, width: 80, crop: 'lfill', gravity: 'face' %>
       <% end %>
-      <%= form.hidden_field :avatar, value: @speaker && @speaker.avatar_url.present? ? @speaker.avatar_data : '' %>
+      <%= form.hidden_field :avatar, value: @speaker && @speaker.avatar_public_id.present? ? @speaker.avatar_data : '' %>
       <%= form.file_field :avatar, class: "form-control"  %>
     </div>
   </section>
@@ -80,7 +80,7 @@
       <%= markdown @conference.privacy_policy_for_speaker %>
     </div>
   </section>
-      
+
   <div class="actions justify-content-center py-3">
     <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
   </div>

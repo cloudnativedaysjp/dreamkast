@@ -1,13 +1,18 @@
 require "shrine"
 require "shrine/storage/file_system"
 require "shrine/storage/s3"
+require "shrine/storage/cloudinary"
 require "shrine/plugins/presign_endpoint"
 require "uppy/s3_multipart"
 
 if Rails.env.development? || Rails.env.test? || ENV["AWS_ACCESS_KEY_ID"]
+  # Shrine.storages = {
+  #   cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
+  #   store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
+  # }
   Shrine.storages = {
-    cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
-    store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),
+    cache: Shrine::Storage::Cloudinary.new(prefix: "uploads/cache"), # for direct uploads
+    store: Shrine::Storage::Cloudinary.new(prefix: "uploads"),
   }
 else
   s3_options = {}

@@ -87,6 +87,19 @@ EOS
 EOS
   },
   {
+    id: 5,
+    name: "Observability Conference 2022 by CloudNative Days",
+    abbr: "o11y2022",
+    theme: "Observabilityやるぞ(仮)",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+    CICD conferenceのテーマがここに入るよ
+EOS
+  },
+  {
     id: 10,
     name: "Test Event Winter 2020",
     status: 3, # archived
@@ -123,6 +136,9 @@ ConferenceDay.seed(
   {id: 11, date: "2021-11-04", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
+
+  {id: 14, date: "2022-03-11", start_time: "13:00", end_time: "19:00", conference_id: 5, internal: false},
+  {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -293,6 +309,9 @@ TalkDifficulty.seed(
   { id: 31, conference_id: 4, name: "初級者"},
   { id: 32, conference_id: 4, name: "中級者"},
   { id: 33, conference_id: 4, name: "上級者"},
+  { id: 41, conference_id: 5, name: "初級者"},
+  { id: 42, conference_id: 5, name: "中級者"},
+  { id: 43, conference_id: 5, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -390,6 +409,8 @@ Proposal.seed(csv.map{|line|
     status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
   }
 })
+
+# TODO: Need to add o11y2022 Dummy
 
 # Mock profile
 Profile.seed(

@@ -5,15 +5,14 @@ $purple: #BD4392;
 $dark-blue: #206A9B;
 $brown: #5c4d42;
 // CNDT2021 Theme color
-$gunjyo: #465DAA;
-$umemurasaki: #A8497A;
-$usubeni: #C299AE;
-$azurite: #254099;
-$matcha: #D4CDB0;
-$text: #444;
+$cobalt-green: #3ab483;
+$naples-yellow: #f2be3f;
+$poppy-red: #e9474d;
+$graphite: #2f3136;
 //- Override primary color
-$primary: $gunjyo;
-$secondary: $umemurasaki;
+$primary: $cobalt-green;
+$secondary: $poppy-red;
+$text: $graphite;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,

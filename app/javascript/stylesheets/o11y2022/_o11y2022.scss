@@ -13,7 +13,7 @@
         z-index: 2;
     }
     .btn-entry {
-        background-color: $umemurasaki;
+        background-color: $cobalt-green;
         color: white;
         font-size: medium;
         font-weight: lighter;
@@ -28,7 +28,7 @@
             font-size: x-large;
         }
         &:hover {
-            background-color: $usubeni;
+            background-color: $cobalt-green;
         }
     }
     #speakers {
@@ -115,7 +115,7 @@
 #speaker-landing {
     line-height: 200%;
     a {
-        color: $azurite;
+        color: $cobalt-green;
         text-decoration: underline;
     }
 }
@@ -150,8 +150,7 @@
 }
 
 .speaker-dashboard-form ul {
-    font-size: larger
-;
+    font-size: larger;
     margin: 1em 0;
 }
 
@@ -176,19 +175,19 @@
     overflow-y: scroll;
     height: 300px;
     a {
-        color: $azurite ;
+        color: $cobalt-green;
         border-bottom: 2px solid;
     }
 }
 
 .handson-session {
-    margin : 50px 0 50px 0;
-    padding : 50px 0 0 0;
+    margin: 50px 0 50px 0;
+    padding: 50px 0 0 0;
     border-top: 1px solid #222222;
 }
 
 .alert-url {
-  color: #ff0000;
+    color: #ff0000;
 }
 
 // .speaker-dashboard-form .field {

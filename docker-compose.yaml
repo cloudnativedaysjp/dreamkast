@@ -42,7 +42,7 @@ services:
     depends_on:
       - db
   db:
-    image: mysql:8
+    image: mariadb:10.7.1
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dreamkast

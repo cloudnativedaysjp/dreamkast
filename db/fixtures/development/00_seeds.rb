@@ -55,7 +55,7 @@ EOS
     id: 3,
     name: "CI/CD Conference 2021 by CloudNative Days",
     abbr: "cicd2021",
-    status: 0,
+    status: 2, # closed
     speaker_entry: 1,
     attendee_entry: 0,
     theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
@@ -71,6 +71,7 @@ EOS
     id: 4,
     name: "CloudNative Days Tokyo 2021",
     abbr: "cndt2021",
+    status: 2, # closed
     theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),

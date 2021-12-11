@@ -42,7 +42,7 @@ services:
     depends_on:
       - db
   db:
-    image: mariadb:10.7.1
+    image: mysql/mysql-server:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dreamkast
@@ -54,6 +54,7 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
     volumes:
     - mysql-data:/var/lib/mysql
+    - ./db/docker-entrypoint-initdb.d/1_allow-host-ip.sql:/docker-entrypoint-initdb.d/1_allow-host-ip.sql
     ports:
     - "3306:3306"
   redis:

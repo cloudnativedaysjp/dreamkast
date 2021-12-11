@@ -27,6 +27,8 @@ class TalksController < ApplicationController
 
   private
 
+  helper_method :display_video?
+
   def talk_params
     params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
   end
@@ -42,6 +44,12 @@ class TalksController < ApplicationController
       talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M")
     else
       ""
+    end
+  end
+
+  def display_video?(conference, talk)
+    if (conference.closed? && @current_user) || (conference.opened? && @current_user) || conference.archived?
+      talk.video_published && talk.video.present? && talk.archived?
     end
   end
 end

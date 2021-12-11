@@ -5,7 +5,7 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "4.2.2",
+    "@rails/webpacker": "5.4.3",
     "@uppy/aws-s3-multipart": "^1.8.12",
     "@uppy/core": "^1.16.0",
     "@uppy/dashboard": "^1.16.0",

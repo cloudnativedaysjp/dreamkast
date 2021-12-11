@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:experimental
 
-FROM node:12.18.2-slim as node
+FROM node:16.13.1-slim as node
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install shared-mime-info
 RUN bundle install
 
 FROM ruby:3.0.2 as asset-compile
-ENV YARN_VERSION 1.22.4
+ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
@@ -34,7 +34,7 @@ RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS
 
 FROM ruby:3.0.2-slim
 
-ENV YARN_VERSION 1.22.4
+ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \

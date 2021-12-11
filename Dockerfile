@@ -10,7 +10,7 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
 FROM ruby:3.0.2 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
-RUN apt-get update && apt-get install shared-mime-info
+RUN apt-get update && apt-get install shared-mime-info libmariadb3
 RUN bundle install
 
 FROM ruby:3.0.2 as asset-compile
@@ -43,7 +43,7 @@ ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabl
 WORKDIR /app
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
-COPY --from=fetch-lib /usr/lib/x86_64-linux-gnu/libmariadb.so.3 /usr/lib/x86_64-linux-gnu/libmariadb.so.3
+RUN apt-get update && apt-get -y install libmariadb3 && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY . .
 COPY --from=asset-compile /app/public /app/public
 EXPOSE 3000

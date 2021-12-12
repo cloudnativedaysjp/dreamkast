@@ -97,14 +97,15 @@ EOS
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     about: <<'EOS'
-    Observability Conference（O11yCon）は、オブザーバリティ（可観測性）に特化したテックカンファレンスです。どのようなツールがあるのか・実業務での活用事例、そしてそもそも Observability とは何なのか。それぞれの情報を共有し、Observabilityに対する理解を深め合いましょう。
+    Observability Conference（O11yCon）は、オブザーバビリティ（可観測性）に特化したテックカンファレンスです。
+
+    どのようなツールがあるのか・実業務での活用事例、そしてそもそも オブザーバビリティとは何なのか。
     
-    そうして得られた知見を、今度は皆さん自身のシステム/アプリケーションに活かすことで、より実体や現状が高い解像度ではっきりと見えてくるはずです。
+    それぞれの情報を共有し、オブザーバビリティに対する理解を深め合いましょう。そうして得られた知見を、今度は皆さん自身のシステム/アプリケーションに活かすことで、より実体や現状が高い解像度ではっきりと見えてくるはずです。
     
     まさに、知らなかったことを知ることで、見えていないものが見えるようになります。
     
-    さまざまなロールの垣根を超えて、ともに Observability の道を明らかにしていきましょう。
-    
+    さまざまなロールの垣根を超えて、ともにオブザーバビリティの道を明らかにしていきましょう。
 EOS
   },
   {

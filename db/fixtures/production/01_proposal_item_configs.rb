@@ -361,4 +361,61 @@ ProposalItemConfig.seed(
     item_name: '登壇方法',
     params: '事前収録'
   },
+  {
+    id: 40,
+    conference_id: 4,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'All okay - スライド・動画両方ともに公開可',
+    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
+  },
+  {
+    id: 41,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'Only Slide - スライドのみ公開可'
+  },
+  {
+    id: 42,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+  },
+  {
+    id: 43,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'その他'
+  },
+
+  {
+    id: 44,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'session_time',
+    item_number: 4,
+    item_name: '必要とする講演時間 - Session time you need（★）',
+    params: '40min (full session)',
+    description: 'ワークショップやLTなどを希望される場合はその他に希望時間を記入してください - If you are requesting a workshop or LT etc, please fill in the desired time in addition'
+  },
+  {
+    id: 45,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'session_time',
+    item_number: 4,
+    item_name: '必要とする講演時間 - Session time you need（★）',
+    params: '20min (half session)'
+  },
 )

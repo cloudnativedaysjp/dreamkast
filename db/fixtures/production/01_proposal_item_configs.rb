@@ -250,7 +250,7 @@ ProposalItemConfig.seed(
     item_number: 5,
     item_name: '講演言語 - Language（★）',
     params: 'EN'
-  }
+  },
   
   # o11y2022
   {

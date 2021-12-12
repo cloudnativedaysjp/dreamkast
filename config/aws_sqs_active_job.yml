@@ -1,2 +1,2 @@
 queues:
-  fifo: <%= ENV["SQS_FIFO_QUEUE_URL"] %>
+  fifo: <%= sqs_queue_url %>

@@ -26,5 +26,9 @@ Naming/MemoizedInstanceVariableName:
 Style/BlockDelimiters:
   Enabled: false
 
+# 必ずしも文字列を破壊的に操作したくない場合があるため
+Style/StringConcatenation:
+  Enabled: false
+
 Style/MethodDefParentheses:
   EnforcedStyle: require_parentheses

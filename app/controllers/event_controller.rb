@@ -10,7 +10,7 @@ class EventController < ApplicationController
                   .includes(sponsor_types: [{ sponsors: :sponsor_attachment_logo_image }, :sponsors_sponsor_types])
                   .order("sponsor_types.order ASC")
                   .find_by(abbr: event_name)
-    if logged_in? and (@conference.registered? || @conference.opened?)
+    if !@conference.speaker_entry_enabled? and logged_in? and (@conference.registered? || @conference.opened?)
       redirect_to("/#{@conference.abbr}/dashboard")
     else
       @talks = @conference.talks.accepted.includes(:talks_speakers, :speakers)

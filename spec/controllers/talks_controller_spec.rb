@@ -129,4 +129,78 @@ RSpec.describe(TalksController, type: :controller) do
       expect(response).to(redirect_to(talks_url))
     end
   end
+
+  describe "display_video?" do
+    let!(:category) { create(:talk_category1, conference: conference) }
+    let!(:difficulty) { create(:talk_difficulties1, conference: conference) }
+    let!(:talk1) { create(:talk1, conference: conference) }
+    let!(:talk2) { create(:talk2, conference: conference) }
+    let!(:video) { create(:video) }
+
+    context "user logged in" do
+      before do
+        allow_any_instance_of(TalksController).to(receive(:logged_in?).and_return(true))
+      end
+
+      context "conference is registered" do
+        let!(:conference) { create(:cndt2020, :registered) }
+
+        context "talk is video_published, video is present and talk is archived" do
+          before do
+            allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
+          end
+
+          it "returns false" do
+            controller = TalksController.new
+            expect(controller.display_video?(conference, talk1)).to(be_falsey)
+          end
+        end
+      end
+
+      context "conference is opened" do
+        let!(:conference) { create(:cndt2020, :opened) }
+
+        context "talk is video_published, video is present and talk is archived" do
+          before do
+            allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
+          end
+
+          it "returns true" do
+            controller = TalksController.new
+            expect(controller.display_video?(conference, talk1)).to(be_truthy)
+          end
+        end
+      end
+
+      context "conference is closed" do
+        let!(:conference) { create(:cndt2020, :closed) }
+
+        context "talk is video_published, video is present and talk is archived" do
+          before do
+            allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
+          end
+
+          it "returns true" do
+            controller = TalksController.new
+            expect(controller.display_video?(conference, talk1)).to(be_truthy)
+          end
+        end
+      end
+
+      context "conference is archived" do
+        let!(:conference) { create(:cndt2020, :archived) }
+
+        context "talk is video_published, video is present and talk is archived" do
+          before do
+            allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
+          end
+
+          it "returns true" do
+            controller = TalksController.new
+            expect(controller.display_video?(conference, talk1)).to(be_truthy)
+          end
+        end
+      end
+    end
+  end
 end

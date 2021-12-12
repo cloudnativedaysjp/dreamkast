@@ -29,7 +29,15 @@ class TalksController < ApplicationController
 
   def display_video?(conference, talk)
     if (conference.closed? && logged_in?) || (conference.opened? && logged_in?) || conference.archived?
-      talk.video_published && talk.video.present? && talk.archived?
+      if talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
+        if talk.proposal_items.empty?
+          false
+        else
+          talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL)&.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any?
+        end
+      else
+        (talk.video_published && talk.video.present? && talk.archived?)
+      end
     else
       false
     end

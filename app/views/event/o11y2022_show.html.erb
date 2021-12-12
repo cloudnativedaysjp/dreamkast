@@ -1,34 +1,35 @@
 <div id="<%= @conference.abbr %>" >
   <div class="contents">
 
-    <section class="page-section" id="masthead">
+    <section id="masthead">
       <div class="container">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 col-sm-8 align-self-end">
-              <h2 class="text-white font-weight-bold">
-                <span class="font-weight-light">+Native</span><br />
-                ともに繋げる<br />
-                クラウド<br />
-                ネイティブの<br />
-                世界<br />
-              </h2>
-              <h1 class="text-white font-weight-bold"><%= @conference.name %></h1>
+        &nbsp;
+      </div>
+    </section>
+
+    <section class="page-section mt-4 pt-4" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 my-4">
+            <h1 class="text-center">2022/03/11(Fri)</h1>
+            <h2 class="text-center">有明セントラルタワーホール＆カンファレンス<br/>+<br/>オンライン</h2>
           </div>
-          <div class="col-12 col-sm-4 align-self-end">
-              <p class="text-white date">
-                11/04<br/>
-                11/05
-              </p>
-              <p class="text-white">
-              オンライン開催<br/>
-              参加費無料
-              </p>
-              <p class="text-white">
-              #CNDT2021
-              </p>
-              <% if @conference.closed? || @conference.archived? %>
-                <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
-              <% end %>
+          <div class="col-12 col-md-8 my-4 pt-4">
+            <h1><span class="red-underline">知らないことを知り</span>、<span class="yellow-underline">見えていないものを見る</span></h1>
+            <% @conference.about.split("\n").each do |line| %>
+              <p><%= line %></p>
+            <% end %>
+          </div>
+          <div class="col-12 col-md-4  my-4 pt-4">
+            <%= image_tag 'o11y2022/inspector.jpg' %>
+          </div>
+          <div class="col-12 col-md-4 mt-4">
+            <%= image_tag 'o11y2022/real.jpg' %>
+          </div>
+          <div class="col-12 col-md-8 mt-4">
+            <h1><span class="green-underline">ハイブリッド開催</span></h1>
+            <p>Observability Conference 2022では、リアル会場とオンラインどちらも選択出来る、ハイブリッドなカンファレンスを目指します。</p>
+            <p>リアル会場で登壇者と参加者、参加者同士のコミュニケーションを深めていくのも良し。オンラインで、場所にとらわれず自由なスタイルで参加してもよし。どちらが優れているかではなく、ライフスタイルに合わせて参加方法を選択できる。そんなイベントを目指しています。</p>
           </div>
         </div>
       </div>
@@ -72,21 +73,6 @@
       </div>
     </section>
     <% end %>
-
-    <!-- About-->
-    <section class="page-section" id="about">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <h2 class="text-black mt-0">About</h2>
-            <hr class="divider  my-4" />
-            <% @conference.about.split("\n").each do |line| %>
-              <p class="text-black-75 mb-4 text-center"><%= line %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <% if @conference.show_sponsors %>
       <section class="page-section" id="sponsors">

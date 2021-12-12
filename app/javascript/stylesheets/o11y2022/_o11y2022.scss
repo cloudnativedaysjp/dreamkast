@@ -1,6 +1,6 @@
-#cndt2021 {
+#o11y2022 {
     //height: 100vh;
-    background: linear-gradient(-45deg, rgba(33, 33, 33, 0.6), rgba(100, 100, 100, 0.6));
+    background-color: #FFF;
     position: relative;
     #about {
         background-color: $white
@@ -44,17 +44,24 @@
         }
         li {
             list-style: none;
-            img {}
         }
     }
 }
 
-#cndt2021 #masthead {
-    background: linear-gradient(to bottom, rgba(66, 58, 87, 0.7), rgba(66, 58, 87, 0.9)), url(../images/cndt2021/masthead.jpg);
+#o11y2022 #masthead {
+    background-color: #FFF;
+    background: url(../images/o11y2022/masthead.jpg);
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    background-size: contain;
+    width: 100%;
+    min-height: 300px;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    &:hover {
+        filter: blur(0px);
+        -webkit-filter: blur(0px);
+    }
     h1 {
         font-size: 1.5em;
     }
@@ -66,6 +73,7 @@
         font-weight: lighter;
     }
     @media (min-width: 576px) {
+        min-height: 300px;
         h1 {
             font-size: 1.2em;
         }
@@ -78,6 +86,7 @@
         }
     }
     @media (min-width: 768px) {
+        min-height: 400px;
         h1 {
             font-size: 1.5em;
             text-align: left;
@@ -92,6 +101,7 @@
         }
     }
     @media (min-width: 992px) {
+        min-height: 500px;
         h1 {
             font-size: 2.5em;
             text-align: left;
@@ -104,6 +114,13 @@
             font-size: 5em;
             font-weight: lighter;
         }
+    }
+}
+
+#o11y2022 #about {
+    img {
+        width: 100%;
+        filter: drop-shadow(5px 5px 5px #999);
     }
 }
 
@@ -195,4 +212,8 @@
 // }
 .white_background {
     background: rgba(255, 255, 255, 0.95);
+}
+
+.page-section {
+    padding: 4rem 0;
 }

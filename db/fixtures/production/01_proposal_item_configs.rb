@@ -251,4 +251,114 @@ ProposalItemConfig.seed(
     item_name: '講演言語 - Language（★）',
     params: 'EN'
   }
+  
+  # o11y2022
+  {
+    id: 28,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'architect - システム設計'
+  },
+  {
+    id: 29,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'developer - システム開発'
+  },
+  {
+    id: 30,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'app-developer - アプリケーション開発'
+  },
+  {
+    id: 31,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'operator/sys-admin - 運用管理/システム管理'
+  },
+  {
+    id: 32,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'CxO/biz - ビジネス層'
+  },
+  {
+    id: 33,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'その他'
+  },
+  {
+    id: 34,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Dev/QA（開発環境）'
+  },
+  {
+    id: 35,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'PoC（検証）'
+  },
+  {
+    id: 36,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Production（本番環境）'
+  },
+  {
+    id: 37,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: '現地登壇'
+  },
+  {
+    id: 38,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: 'オンライン登壇'
+  },
+  {
+    id: 39,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: '事前収録'
+  },
 )

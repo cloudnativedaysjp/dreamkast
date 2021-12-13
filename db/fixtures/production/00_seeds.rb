@@ -76,6 +76,27 @@ EOS
     旅をする準備をしませんか？ "交差点"で会えるのを楽しみにしています。
 EOS
   },
+  {
+    id: 5,
+    name: "Observability Conference 2022 by CloudNative Days",
+    abbr: "o11y2022",
+    theme: "Observe the Observability 〜知らないことを知り、見えていないものを見る〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    about: <<'EOS'
+    Observability Conference（O11yCon）は、オブザーバビリティ（可観測性）に特化したテックカンファレンスです。
+
+    どのようなツールがあるのか・実業務での活用事例、そしてそもそも オブザーバビリティとは何なのか。
+    
+    それぞれの情報を共有し、オブザーバビリティに対する理解を深め合いましょう。そうして得られた知見を、今度は皆さん自身のシステム/アプリケーションに活かすことで、より実体や現状が高い解像度ではっきりと見えてくるはずです。
+    
+    まさに、知らなかったことを知ることで、見えていないものが見えるようになります。
+    
+    さまざまなロールの垣根を超えて、ともにオブザーバビリティの道を明らかにしていきましょう。
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -95,6 +116,9 @@ ConferenceDay.seed(
   {id: 11, date: "2021-11-04", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
+
+  {id: 14, date: "2022-03-11", start_time: "13:00", end_time: "19:00", conference_id: 5, internal: false},
+  {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event  
 )
 
 Industry.seed(
@@ -261,6 +285,9 @@ TalkDifficulty.seed(
   { id: 31, conference_id: 4, name: "初級者"},
   { id: 32, conference_id: 4, name: "中級者"},
   { id: 33, conference_id: 4, name: "上級者"},
+  { id: 41, conference_id: 5, name: "初級者"},
+  { id: 42, conference_id: 5, name: "中級者"},
+  { id: 43, conference_id: 5, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -358,6 +385,8 @@ if ENV['REVIEW_APP'] == 'true'
       status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
     }
   })
+
+  # TODO: Need to add o11y2022 Dummy for review app
     
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

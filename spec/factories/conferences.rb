@@ -52,14 +52,17 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
     trait :opened do
       status { 1 }
+      speaker_entry { 0 } # Generally, speaker_entry should be disabled while conference is opened
     end
 
     trait :closed do
       status { 2 }
+      speaker_entry { 0 }
     end
 
     trait :archived do
       status { 3 }
+      speaker_entry { 0 }
     end
 
     trait :speaker_entry_enabled do

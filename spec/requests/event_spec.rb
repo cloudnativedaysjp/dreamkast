@@ -33,7 +33,7 @@ describe EventController, type: :request do
       end
     end
 
-    describe "logged in" do
+    describe "logged in and speaker_entry is enabled" do
       describe "not registered" do
         before do
           allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
@@ -41,9 +41,8 @@ describe EventController, type: :request do
 
         it "returns a success response with event top page" do
           get "/cndt2020"
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status("302"))
-          expect(response).to(redirect_to("/cndt2020/dashboard"))
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
         end
       end
 
@@ -55,10 +54,42 @@ describe EventController, type: :request do
 
         it "returns a success response with event top page" do
           get "/cndt2020"
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status("302"))
-          expect(response).to(redirect_to("/cndt2020/dashboard"))
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status("200"))
         end
+      end
+    end
+  end
+
+  describe "logged in and speaker_entry is disabled" do
+    before do
+      create(:cndt2020, :speaker_entry_disabled)
+    end
+
+    describe "not registered" do
+      before do
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+      end
+
+      it "returns a success response with event top page" do
+        get "/cndt2020"
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status("302"))
+        expect(response).to(redirect_to("/cndt2020/dashboard"))
+      end
+    end
+
+    describe "registered" do
+      before do
+        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        create(:speaker_alice)
+      end
+
+      it "returns a success response with event top page" do
+        get "/cndt2020"
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status("302"))
+        expect(response).to(redirect_to("/cndt2020/dashboard"))
       end
     end
   end

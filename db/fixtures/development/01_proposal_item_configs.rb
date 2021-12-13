@@ -363,7 +363,7 @@ ProposalItemConfig.seed(
   },
   {
     id: 40,
-    conference_id: 4,
+    conference_id: 5,
     type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
     item_number: 3,

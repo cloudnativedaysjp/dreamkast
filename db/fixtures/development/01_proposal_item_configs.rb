@@ -340,7 +340,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: '現地登壇'
   },
   {
@@ -349,7 +349,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: 'オンライン登壇'
   },
   {
@@ -358,7 +358,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: '事前収録'
   },
   {

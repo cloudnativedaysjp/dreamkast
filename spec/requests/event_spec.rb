@@ -33,7 +33,11 @@ describe EventController, type: :request do
       end
     end
 
-    describe "logged in and speaker_entry is enabled" do
+    context "when logged in and speaker_entry is enabled" do
+       context "when not registerd" do
+       ...
+       end
+     end
       describe "not registered" do
         before do
           allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))

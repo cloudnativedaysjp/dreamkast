@@ -9,7 +9,7 @@ describe EventController, type: :request do
       create(:cndt2020)
     end
 
-    describe "not logged in" do
+    context "not logged in" do
       it "returns a success response with event top page" do
         get "/cndt2020"
         expect(response).to(be_successful)
@@ -34,11 +34,7 @@ describe EventController, type: :request do
     end
 
     context "when logged in and speaker_entry is enabled" do
-       context "when not registerd" do
-       ...
-       end
-     end
-      describe "not registered" do
+      context "not registered" do
         before do
           allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
         end
@@ -50,7 +46,7 @@ describe EventController, type: :request do
         end
       end
 
-      describe "registered" do
+      context "registered" do
         before do
           allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
           create(:speaker_alice)
@@ -70,7 +66,7 @@ describe EventController, type: :request do
       create(:cndt2020, :speaker_entry_disabled)
     end
 
-    describe "not registered" do
+    context "not registered" do
       before do
         allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
       end
@@ -83,7 +79,7 @@ describe EventController, type: :request do
       end
     end
 
-    describe "registered" do
+    context "registered" do
       before do
         allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
         create(:speaker_alice)

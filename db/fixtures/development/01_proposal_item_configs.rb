@@ -398,24 +398,4 @@ ProposalItemConfig.seed(
     item_name: 'スライドと動画の公開可否（★★）',
     params: 'その他'
   },
-
-  {
-    id: 44,
-    conference_id: 5,
-    type: 'ProposalItemConfigRadioButton',
-    label: 'session_time',
-    item_number: 4,
-    item_name: '必要とする講演時間 - Session time you need（★）',
-    params: '40min (full session)',
-    description: 'ワークショップやLTなどを希望される場合はその他に希望時間を記入してください - If you are requesting a workshop or LT etc, please fill in the desired time in addition'
-  },
-  {
-    id: 45,
-    conference_id: 5,
-    type: 'ProposalItemConfigRadioButton',
-    label: 'session_time',
-    item_number: 4,
-    item_name: '必要とする講演時間 - Session time you need（★）',
-    params: '20min (half session)'
-  },
 )

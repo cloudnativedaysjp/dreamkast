@@ -20,12 +20,38 @@ RSpec.describe(ProfileMailer, type: :mailer) do
   end
 
   describe "#registered" do
-    let!(:conference) { create(:cndt2021) }
+    describe "one day event" do
+      let!(:conference) { create(:one_day) }
 
-    subject(:mail) { described_class.registered(@profile, conference).deliver_now }
+      subject(:mail) { described_class.registered(@profile, conference).deliver_now }
 
-    it { is_expected.to(have_sent_email.with_subject("#{conference.name}への登録ありがとうございます")) }
-    it { is_expected.to(have_sent_email.to(@profile.email)) }
-    it { is_expected.to(have_sent_email.from("noreply@mail.cloudnativedays.jp")) }
+      it { is_expected.to(have_sent_email.with_subject("#{conference.name}への登録ありがとうございます")) }
+      it { is_expected.to(have_sent_email.to(@profile.email)) }
+      it { is_expected.to(have_sent_email.from("noreply@mail.cloudnativedays.jp")) }
+
+
+      it { expect(mail.body.encoded).to(include("こんにちは、Tester Test さん。")) }
+      it { expect(mail.body.encoded).to(include("この度はOne Day Conferenceにご登録いただき、誠にありがとうございます。")) }
+      it { expect(mail.body.encoded).to(include("One Day Conference は3月11日(木)13時に開催されます")) }
+      it { expect(mail.body.encoded).to(include("https://event.cloudnativedays.jp/oneday")) }
+      it { expect(mail.body.encoded).to(include("それでは、Tester Test さんのご参加を心からお待ちしております！")) }
+    end
+
+    describe "two day event" do
+      let!(:conference) { create(:cndt2021) }
+
+      subject(:mail) { described_class.registered(@profile, conference).deliver_now }
+
+      it { is_expected.to(have_sent_email.with_subject("#{conference.name}への登録ありがとうございます")) }
+      it { is_expected.to(have_sent_email.to(@profile.email)) }
+      it { is_expected.to(have_sent_email.from("noreply@mail.cloudnativedays.jp")) }
+
+
+      it { expect(mail.body.encoded).to(include("こんにちは、Tester Test さん。")) }
+      it { expect(mail.body.encoded).to(include("この度はCloudNative Days Tokyo 2021にご登録いただき、誠にありがとうございます。")) }
+      it { expect(mail.body.encoded).to(include("CloudNative Days Tokyo 2021 は3月11日(木)13時から2日間にわたり開催されます。")) }
+      it { expect(mail.body.encoded).to(include("https://event.cloudnativedays.jp/cndt2021")) }
+      it { expect(mail.body.encoded).to(include("それでは、Tester Test さんのご参加を心からお待ちしております！")) }
+    end
   end
 end

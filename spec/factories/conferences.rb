@@ -125,6 +125,20 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     end
   end
 
+  factory :one_day, class: Conference do
+    id { 3 }
+    name { "One Day Conference" }
+    abbr { "oneday" }
+    status { 2 }
+    speaker_entry { 1 }
+    attendee_entry { 1 }
+    show_timetable { 1 }
+
+    after(:build) do |conference|
+      create(:one_day1)
+    end
+  end
+
   factory :cndt2021, class: Conference do
     id { 4 }
     name { "CloudNative Days Tokyo 2021" }

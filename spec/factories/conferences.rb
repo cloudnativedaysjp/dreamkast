@@ -126,7 +126,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
   end
 
   factory :one_day, class: Conference do
-    id { 3 }
     name { "One Day Conference" }
     abbr { "oneday" }
     status { 2 }
@@ -134,8 +133,22 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     attendee_entry { 1 }
     show_timetable { 1 }
 
-    after(:build) do |_conference|
-      create(:one_day1)
+    after(:create) do |conference|
+      create(:one_day1, conference: conference)
+    end
+  end
+
+  factory :two_day, class: Conference do
+    name { "Two Day Conference" }
+    abbr { "twoday" }
+    status { 2 }
+    speaker_entry { 1 }
+    attendee_entry { 1 }
+    show_timetable { 1 }
+
+    after(:create) do |conference|
+      create(:two_day1, conference: conference)
+      create(:two_day1, conference: conference)
     end
   end
 
@@ -158,9 +171,9 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     end
 
-    after(:build) do |_conference|
-      create(:cndt2021_day1)
-      create(:cndt2021_day2)
+    after(:build) do |conference|
+      create(:cndt2021_day1, conference: conference)
+      create(:cndt2021_day2, conference: conference)
     end
   end
 end

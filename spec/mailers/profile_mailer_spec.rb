@@ -38,7 +38,7 @@ RSpec.describe(ProfileMailer, type: :mailer) do
     end
 
     describe "two day event" do
-      let!(:conference) { create(:cndt2021) }
+      let!(:conference) { create(:two_day) }
 
       subject(:mail) { described_class.registered(@profile, conference).deliver_now }
 
@@ -48,9 +48,9 @@ RSpec.describe(ProfileMailer, type: :mailer) do
 
 
       it { expect(mail.body.encoded).to(include("こんにちは、Tester Test さん。")) }
-      it { expect(mail.body.encoded).to(include("この度はCloudNative Days Tokyo 2021にご登録いただき、誠にありがとうございます。")) }
-      it { expect(mail.body.encoded).to(include("CloudNative Days Tokyo 2021 は3月11日(木)13時から2日間にわたり開催されます。")) }
-      it { expect(mail.body.encoded).to(include("https://event.cloudnativedays.jp/cndt2021")) }
+      it { expect(mail.body.encoded).to(include("この度はTwo Day Conferenceにご登録いただき、誠にありがとうございます。")) }
+      it { expect(mail.body.encoded).to(include("Two Day Conference は3月11日(木)13時から2日間にわたり開催されます。")) }
+      it { expect(mail.body.encoded).to(include("https://event.cloudnativedays.jp/twoday")) }
       it { expect(mail.body.encoded).to(include("それでは、Tester Test さんのご参加を心からお待ちしております！")) }
     end
   end

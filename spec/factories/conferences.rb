@@ -134,7 +134,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     attendee_entry { 1 }
     show_timetable { 1 }
 
-    after(:build) do |conference|
+    after(:build) do |_conference|
       create(:one_day1)
     end
   end
@@ -158,7 +158,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     end
 
-    after(:build) do |conference|
+    after(:build) do |_conference|
       create(:cndt2021_day1)
       create(:cndt2021_day2)
     end

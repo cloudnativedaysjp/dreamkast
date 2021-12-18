@@ -82,8 +82,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     end
 
     after(:build) do |conference|
-      create(:day1)
-      create(:day2)
+      create(:day1, conference: conference)
+      create(:day2, conference: conference)
       create(:track, id: 1, number: 1, name: "A", conference_id: conference.id, video_id: "video_1")
       create(:track, id: 2, number: 2, name: "B", conference_id: conference.id, video_id: "video_2")
       create(:track, id: 3, number: 3, name: "C", conference_id: conference.id, video_id: "video_3")
@@ -113,8 +113,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     end
 
     after(:build) do |conference|
-      create(:cndo_day1)
-      create(:cndo_day2)
+      create(:cndo_day1, conference: conference)
+      create(:cndo_day2, conference: conference)
       create(:track, id: 10, number: 1, name: "A", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 11, number: 2, name: "B", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 12, number: 3, name: "C", conference_id: conference.id, video_id: "video_7")

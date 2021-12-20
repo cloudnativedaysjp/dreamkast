@@ -7,12 +7,12 @@ describe TimetableController, type: :request do
 
   describe "GET #index" do
     before do
-      create(:cndt2020)
-      create(:rejekt)
+      create(:rejekt, conference: conference)
       create(:talk_category1)
       create(:talk_difficulties1)
     end
 
+    let!(:conference) { create(:cndt2020) }
     let!(:talk1) { create(:talk1) }
     let!(:talk2) { create(:talk2) }
     let!(:talk_rejekt) { create(:talk_rejekt) }

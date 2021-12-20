@@ -59,4 +59,42 @@ FactoryBot.define do
     end_time { "11:00:00" }
     internal { false }
   end
+
+  factory :one_day1, class: ConferenceDay do
+    date { "2021-03-11" }
+    start_time { "13:00" }
+    end_time { "19:00" }
+    internal { false }
+  end
+
+  factory :two_day1, class: ConferenceDay do
+    date { "2021-03-11" }
+    start_time { "13:00" }
+    end_time { "19:00" }
+    internal { false }
+  end
+
+  factory :two_day2, class: ConferenceDay do
+    date { "2021-03-12" }
+    start_time { "13:00" }
+    end_time { "19:00" }
+    internal { false }
+  end
+  factory :cndt2021_day1, class: ConferenceDay do
+    id { 13 }
+    conference_id { 4 }
+    date { "2021-03-11" }
+    start_time { "13:00" }
+    end_time { "19:00" }
+    internal { false }
+  end
+
+  factory :cndt2021_day2, class: ConferenceDay do
+    id { 14 }
+    conference_id { 4 }
+    date { "2021-03-12" }
+    start_time { "13:00" }
+    end_time { "19:00" }
+    internal { false }
+  end
 end

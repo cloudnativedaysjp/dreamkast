@@ -82,8 +82,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     end
 
     after(:build) do |conference|
-      create(:day1)
-      create(:day2)
+      create(:day1, conference: conference)
+      create(:day2, conference: conference)
       create(:track, id: 1, number: 1, name: "A", conference_id: conference.id, video_id: "video_1")
       create(:track, id: 2, number: 2, name: "B", conference_id: conference.id, video_id: "video_2")
       create(:track, id: 3, number: 3, name: "C", conference_id: conference.id, video_id: "video_3")
@@ -113,8 +113,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     end
 
     after(:build) do |conference|
-      create(:cndo_day1)
-      create(:cndo_day2)
+      create(:cndo_day1, conference: conference)
+      create(:cndo_day2, conference: conference)
       create(:track, id: 10, number: 1, name: "A", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 11, number: 2, name: "B", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 12, number: 3, name: "C", conference_id: conference.id, video_id: "video_7")
@@ -122,6 +122,33 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 14, number: 5, name: "E", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 15, number: 6, name: "F", conference_id: conference.id, video_id: "video_7")
       create(:track, id: 16, number: 7, name: "G", conference_id: conference.id, video_id: "video_7")
+    end
+  end
+
+  factory :one_day, class: Conference do
+    name { "One Day Conference" }
+    abbr { "oneday" }
+    status { 2 }
+    speaker_entry { 1 }
+    attendee_entry { 1 }
+    show_timetable { 1 }
+
+    after(:create) do |conference|
+      create(:one_day1, conference: conference)
+    end
+  end
+
+  factory :two_day, class: Conference do
+    name { "Two Day Conference" }
+    abbr { "twoday" }
+    status { 2 }
+    speaker_entry { 1 }
+    attendee_entry { 1 }
+    show_timetable { 1 }
+
+    after(:create) do |conference|
+      create(:two_day1, conference: conference)
+      create(:two_day1, conference: conference)
     end
   end
 
@@ -142,6 +169,11 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    end
+
+    after(:build) do |conference|
+      create(:cndt2021_day1, conference: conference)
+      create(:cndt2021_day2, conference: conference)
     end
   end
 end

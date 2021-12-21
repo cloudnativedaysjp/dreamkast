@@ -2,7 +2,6 @@ namespace :aws do
   task delete_review_app_resources: :environment do
     include(MediaLiveHelper)
     include(EnvHelper)
-    Rails.logger.level = Logger::DEBUG
 
     exit unless review_app?
 

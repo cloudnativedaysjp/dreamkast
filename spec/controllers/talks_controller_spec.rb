@@ -240,14 +240,14 @@ RSpec.describe(TalksController, type: :controller) do
     shared_examples_for :return_true do
       it "returns true" do
         controller = TalksController.new
-        expect(controller.display_video?(conference, talk1)).to(be_truthy)
+        expect(controller.display_video?(talk1)).to(be_truthy)
       end
     end
 
     shared_examples_for :return_false do
       it "returns false" do
         controller = TalksController.new
-        expect(controller.display_video?(conference, talk1)).to(be_falsey)
+        expect(controller.display_video?(talk1)).to(be_falsey)
       end
     end
 

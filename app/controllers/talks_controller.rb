@@ -27,8 +27,8 @@ class TalksController < ApplicationController
 
   helper_method :display_video?
 
-  def display_video?(conference, talk)
-    if (conference.closed? && logged_in?) || (conference.opened? && logged_in?) || conference.archived?
+  def display_video?(talk)
+    if (talk.conference.closed? && logged_in?) || (talk.conference.opened? && logged_in?) || talk.conference.archived?
       if talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
         if talk.proposal_items.empty?
           false

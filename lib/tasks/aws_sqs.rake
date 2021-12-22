@@ -1,13 +1,12 @@
-namespace :dev_sqs do
+namespace :aws_sqs do
   desc "create review_app linked sqs"
   task create_sqs: :environment do
     include EnvHelper
-    Rails.logger.level = Logger::DEBUG
 
     exit unless review_app?
 
     cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-    queue_name = ENV["DREAMKAST_NAMESPACE"] + ".fifo"
+    queue_name = ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}"+ ".fifo"
     result = cli.create_queue(
       {
         queue_name: queue_name,
@@ -23,12 +22,11 @@ namespace :dev_sqs do
 
   task delete_sqs: :environment do
     include(EnvHelper)
-    Rails.logger.level = Logger::DEBUG
 
     exit unless review_app?
 
     cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-    result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + ".fifo" })
+    result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}"+ ".fifo" })
     response = cli.delete_queue({ queue_url: result.queue_url })
     raise(response.error) unless response.successful?
   rescue Aws::SQS::Errors::NonExistentQueue
@@ -41,7 +39,7 @@ namespace :dev_sqs do
     def queue_url
       if review_app?
         cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-        result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + ".fifo" })
+        result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}" + ".fifo" })
         raise(result.error) unless result.successful?
         result.queue_url
       else

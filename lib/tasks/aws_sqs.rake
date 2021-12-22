@@ -6,7 +6,7 @@ namespace :aws_sqs do
     exit unless review_app?
 
     cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-    queue_name = ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}"+ ".fifo"
+    queue_name = "review_app_#{review_app_number}" + ".fifo"
     result = cli.create_queue(
       {
         queue_name: queue_name,
@@ -14,6 +14,10 @@ namespace :aws_sqs do
           DelaySeconds: "0",
           FifoQueue: true.to_s,
           ContentBasedDeduplication: false.to_s
+        },
+        tags: {
+          Environment: env_name,
+          ReviewAppNumber: review_app_number.to_s
         }
       }
     )
@@ -26,7 +30,7 @@ namespace :aws_sqs do
     exit unless review_app?
 
     cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-    result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}"+ ".fifo" })
+    result = cli.get_queue_url({ queue_name: "review_app_#{review_app_number}" + ".fifo" })
     response = cli.delete_queue({ queue_url: result.queue_url })
     raise(response.error) unless response.successful?
   rescue Aws::SQS::Errors::NonExistentQueue
@@ -39,7 +43,7 @@ namespace :aws_sqs do
     def queue_url
       if review_app?
         cli = Aws::SQS::Client.new(region: "ap-northeast-1")
-        result = cli.get_queue_url({ queue_name: ENV["DREAMKAST_NAMESPACE"] + "_#{review_app_number}" + ".fifo" })
+        result = cli.get_queue_url({ queue_name: "review_app_#{review_app_number}" + ".fifo" })
         raise(result.error) unless result.successful?
         result.queue_url
       else

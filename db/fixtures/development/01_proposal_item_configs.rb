@@ -182,7 +182,9 @@ ProposalItemConfig.seed(
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
     params: 'All okay - スライド・動画両方ともに公開可',
-    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
+    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.',
+    key: VideoAndSlidePublished::ALL_OK,
+    value: 'All okay - スライド・動画両方ともに公開可'
   },
   {
     id: 21,
@@ -191,7 +193,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'Only Slide - スライドのみ公開可'
+    params: 'Only Slide - スライドのみ公開可',
+    key: VideoAndSlidePublished::ONLY_SLIDE,
+    value: 'Only Slide - スライドのみ公開可'
   },
   {
     id: 22,
@@ -200,7 +204,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
+    key: VideoAndSlidePublished::ALL_NG,
+    value: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   },
   {
     id: 23,
@@ -209,7 +215,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'その他'
+    params: 'その他',
+    key: VideoAndSlidePublished::OTHERS,
+    value: 'その他'
   },
 
   {

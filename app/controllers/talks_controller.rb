@@ -25,6 +25,25 @@ class TalksController < ApplicationController
              end
   end
 
+  helper_method :display_video?
+
+  def display_video?(talk)
+    if (talk.conference.closed? && logged_in?) || (talk.conference.opened? && logged_in?) || talk.conference.archived?
+      if talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
+        if talk.proposal_items.empty?
+          false
+        else
+          proposal_item = talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL) || []
+          proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any?
+        end
+      else
+        (talk.video_published && talk.video.present? && talk.archived?)
+      end
+    else
+      false
+    end
+  end
+
   private
 
   def talk_params

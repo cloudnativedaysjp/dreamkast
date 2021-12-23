@@ -43,6 +43,14 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { true }
     document_url { "http://" }
+
+    trait :video_published do
+      video_published { true }
+    end
+
+    trait :video_not_published do
+      video_published { false }
+    end
   end
 
   factory :talk2, class: Talk do

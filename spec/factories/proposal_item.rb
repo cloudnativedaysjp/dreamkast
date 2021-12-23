@@ -21,5 +21,26 @@
 #
 #  fk_rails_...  (conference_id => conferences.id)
 #
-class ProposalItemConfigRadioButton < ProposalItemConfig
+FactoryBot.define do
+  factory :proposal_item_whether_it_can_be_published, class: ProposalItem do
+    id { 3 }
+    conference_id { 1 }
+    label { "whether_it_can_be_published" }
+
+    trait :all_ok do
+      params { "3" }
+    end
+
+    trait :only_slide do
+      params { "4" }
+    end
+
+    trait :only_video do
+      params { "5" }
+    end
+
+    trait :all_ng do
+      params { "5" }
+    end
+  end
 end

@@ -1,10 +1,10 @@
 こんにちは、<%= @speaker.name %> さん。
 <%= @conference.name %> のプロポーザルを以下の内容で受け付けました。
 
-タイトル:     <%= @talk.title %>
-概要:         <%= @talk.abstract %>
+タイトル: <%= @talk.title %>
+概要: <%= @talk.abstract %>
 受講者レベル: <%= @talk.difficulty %>
-資料URL:      <%= @talk.document_url %>
+資料URL: <%= @talk.document_url %>
 <% @talk.selected_proposal_items.each do |k, v| %>
 <%= k %>: <%= v %>
 <% end %>

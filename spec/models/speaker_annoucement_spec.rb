@@ -1,12 +1,8 @@
 require "rails_helper"
 
 RSpec.describe(SpeakerAnnouncement, type: :model) do
-  before do
-    @conference = create(:cndt2021)
-    @speaker = create(:speaker_mike)
-  end
-  let(:conf) { @conference }
-  let(:speaker) { @speaker }
+  let(:conf) { create(:cndt2021) }
+  let(:speaker) { create(:speaker_mike) }
   let(:default_param) {
     {
       conference_id: conf.id,
@@ -49,16 +45,16 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       subject { described_class.published }
       context " when publish is true" do
         before do
-          create(:speaker_announcement)
-          create(:speaker_announcement, :published)
+          create(:speaker_announcement, conference: conf)
+          create(:speaker_announcement, :published, conference: conf)
         end
         it { expect(described_class.all.size).to(eq(2)) }
         it { expect(subject.size).to(eq(1)) }
       end
       context " when publish is false" do
         before do
-          create(:speaker_announcement)
-          create(:speaker_announcement, :published)
+          create(:speaker_announcement, conference: conf)
+          create(:speaker_announcement, :published, conference: conf)
         end
         it { expect(described_class.all.size).to(eq(2)) }
         it { expect(subject.size).to(eq(1)) }

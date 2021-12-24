@@ -182,7 +182,9 @@ ProposalItemConfig.seed(
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
     params: 'All okay - スライド・動画両方ともに公開可',
-    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
+    key: 'All okay - スライド・動画両方ともに公開可',
+    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.',
+    value: VideoAndSlidePublished::ALL_OK
   },
   {
     id: 21,
@@ -191,7 +193,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'Only Slide - スライドのみ公開可'
+    params: 'Only Slide - スライドのみ公開可',
+    key: 'Only Slide - スライドのみ公開可',
+    value: VideoAndSlidePublished::ONLY_SLIDE
   },
   {
     id: 22,
@@ -200,7 +204,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
+    key: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
+    value: VideoAndSlidePublished::ALL_NG
   },
   {
     id: 23,
@@ -209,7 +215,9 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    params: 'その他'
+    params: 'その他',
+    key: 'その他',
+    value: VideoAndSlidePublished::OTHERS
   },
 
   {
@@ -250,5 +258,152 @@ ProposalItemConfig.seed(
     item_number: 5,
     item_name: '講演言語 - Language（★）',
     params: 'EN'
-  }
+  },
+  
+  # o11y2022
+  {
+    id: 28,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'architect - システム設計'
+  },
+  {
+    id: 29,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'developer - システム開発'
+  },
+  {
+    id: 30,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'app-developer - アプリケーション開発'
+  },
+  {
+    id: 31,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'operator/sys-admin - 運用管理/システム管理'
+  },
+  {
+    id: 32,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'CxO/biz - ビジネス層'
+  },
+  {
+    id: 33,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'assumed_visitor',
+    item_number: 1,
+    item_name: '想定受講者（★★）',
+    params: 'その他'
+  },
+  {
+    id: 34,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Dev/QA（開発環境）'
+  },
+  {
+    id: 35,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'PoC（検証）'
+  },
+  {
+    id: 36,
+    conference_id: 5,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'execution_phase',
+    item_number: 5,
+    item_name: '実行フェーズ（★★）',
+    params: 'Production（本番環境）'
+  },
+  {
+    id: 37,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: '現地登壇'
+  },
+  {
+    id: 38,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: 'オンライン登壇'
+  },
+  {
+    id: 39,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'presentation_method',
+    item_number: 6,
+    item_name: '登壇方法',
+    params: '事前収録'
+  },
+  {
+    id: 40,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'All okay - スライド・動画両方ともに公開可',
+    description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
+  },
+  {
+    id: 41,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'Only Slide - スライドのみ公開可'
+  },
+  {
+    id: 42,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+  },
+  {
+    id: 43,
+    conference_id: 5,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
+    params: 'その他'
+  },
 )

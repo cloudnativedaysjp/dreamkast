@@ -1,13 +1,11 @@
-<% if talk.video_published && talk.video.present? && talk.archived? %>
-  <div class="mb-2">
-    <video
-      id="my-player"
-      class="video-js vjs-default-skin"
-      data-setup='{"fluid": true}'
-      controls
-      preload="auto"
-    >
-      <source src="<%= talk.video.video_id %>" type="application/x-mpegURL" />
-    </video>
-  </div>
-<% end %>
+<div class="mb-2">
+  <video
+    id="my-player"
+    class="video-js vjs-default-skin"
+    data-setup='{"fluid": true}'
+    controls
+    preload="auto"
+  >
+    <source src="<%= talk.video.video_id %>" type="application/x-mpegURL" />
+  </video>
+</div>

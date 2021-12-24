@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_104537) do
+ActiveRecord::Schema.define(version: 2021_12_11_104841) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -184,6 +184,8 @@ ActiveRecord::Schema.define(version: 2021_11_15_104537) do
     t.string "item_name"
     t.json "params"
     t.text "description"
+    t.string "key"
+    t.string "value"
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
   end
 

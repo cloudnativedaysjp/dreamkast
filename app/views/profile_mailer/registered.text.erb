@@ -1,8 +1,17 @@
+<% days = %w(日 月 火 水 木 金 土) %>
+
 こんにちは、<%= @profile.last_name %> <%= @profile.first_name %> さん。
 
 この度は<%= @conference.name %>にご登録いただき、誠にありがとうございます。
 
-<%= @conference.name %> は11月4日(木)12時から2日間にわたり開催されます。
+<%- conference_days = @conference.conference_days -%>
+<%- first_day = conference_days.first -%>
+<%- day_of_the_week =  days[first_day.date.strftime("%w").to_i] -%>
+<%- if conference_days.length == 1 -%>
+<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H")}" %>時に開催されます。
+<%- else -%>
+<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H")}" %>時から<%= conference_days.length %>日間にわたり開催されます。
+<%- end -%>
 時間になりましたら CloudNative Days サイトにログインしていただくと
 そのまま視聴画面に切り替わります。
 
@@ -11,7 +20,7 @@
 
 またプレイベント・共催イベントなど、実行委員会からお知らせをさせていただく事もございます。
 ぜひ時々ダッシュボードをチェックしてみてください。
-https://event.cloudnativedays.jp/cndt2021
+https://event.cloudnativedays.jp/<%= @conference.abbr %>
 
 それでは、<%= @profile.last_name %> <%= @profile.first_name %> さんのご参加を心からお待ちしております！
 

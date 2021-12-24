@@ -1,0 +1,220 @@
+#o11y2022 {
+    //height: 100vh;
+    background-color: #FFF;
+    position: relative;
+    #about {
+        background-color: $white
+    }
+    #entry {
+        background-color: $white
+    }
+    .contents {
+        position: relative;
+        z-index: 2;
+    }
+    .btn-entry {
+        background-color: $cobalt-green;
+        color: white;
+        font-size: medium;
+        font-weight: lighter;
+        padding: 1em 2em;
+        @media (min-width: 576px) {
+            font-size: medium;
+        }
+        @media (min-width: 768px) {
+            font-size: large;
+        }
+        @media (min-width: 992px) {
+            font-size: x-large;
+        }
+        &:hover {
+            background-color: $cobalt-green;
+        }
+    }
+    #speakers {
+        background-color: $white;
+        @media (max-width: 576px) {
+            display: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        li {
+            list-style: none;
+        }
+    }
+}
+
+#o11y2022 #masthead {
+    background-color: #FFF;
+    background: url(../images/o11y2022/masthead.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    min-height: 300px;
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+    &:hover {
+        filter: blur(0px);
+        -webkit-filter: blur(0px);
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+    .date {
+        font-size: 3em;
+        font-weight: lighter;
+    }
+    @media (min-width: 576px) {
+        min-height: 300px;
+        h1 {
+            font-size: 1.2em;
+        }
+        h2 {
+            font-size: 2em;
+        }
+        .date {
+            font-size: 3em;
+            font-weight: lighter;
+        }
+    }
+    @media (min-width: 768px) {
+        min-height: 400px;
+        h1 {
+            font-size: 1.5em;
+            text-align: left;
+        }
+        h2 {
+            font-size: 3em;
+            text-align: left;
+        }
+        .date {
+            font-size: 4em;
+            font-weight: lighter;
+        }
+    }
+    @media (min-width: 992px) {
+        min-height: 500px;
+        margin-top: 3em;
+        h1 {
+            font-size: 2.5em;
+            text-align: left;
+        }
+        h2 {
+            font-size: 5em;
+            text-align: left;
+        }
+        .date {
+            font-size: 5em;
+            font-weight: lighter;
+        }
+    }
+}
+
+#o11y2022 #about {
+    img {
+        width: 100%;
+        filter: drop-shadow(5px 5px 5px #999);
+    }
+}
+
+// Speaker Dashboard
+.speaker-dashboard-form {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#speaker-landing {
+    line-height: 200%;
+    a {
+        color: $cobalt-green;
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 992px) {
+    #speaker-landing {
+        line-height: 130%;
+    }
+}
+
+.speaker-dashboard-form h2 {
+    font-weight: bold;
+}
+
+.speaker-dashboard-form h3 {
+    font-weight: bold;
+}
+
+.speaker-dashboard-form h4 {
+    font-weight: bold;
+    font-size: large;
+}
+
+.speaker-dashboard-form p {
+    font-size: large;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form ol {
+    font-size: larger;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form ul {
+    font-size: larger;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form .privacy p {
+    font-size: small;
+}
+
+.speaker-dashboard-form:before h1 {
+    font-size: small;
+}
+
+.entry {
+    font-size: xx-large;
+}
+
+.speaker-dashboard-form .centered-image {
+    margin: 0 auto;
+}
+
+.information {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 300px;
+    a {
+        color: $cobalt-green;
+        border-bottom: 2px solid;
+    }
+}
+
+.handson-session {
+    margin: 50px 0 50px 0;
+    padding: 50px 0 0 0;
+    border-top: 1px solid #222222;
+}
+
+.alert-url {
+    color: #ff0000;
+}
+
+// .speaker-dashboard-form .field {
+//     margin-bottom: 10px;
+// }
+.white_background {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.page-section {
+    padding: 4rem 0;
+}

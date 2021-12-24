@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:experimental
 
-FROM node:12.18.2-slim as node
+FROM node:16.13.1-slim as node
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
@@ -10,11 +10,11 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
 FROM ruby:3.0.2 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
-RUN apt-get update && apt-get install shared-mime-info
+RUN apt-get update && apt-get install shared-mime-info libmariadb3
 RUN bundle install
 
 FROM ruby:3.0.2 as asset-compile
-ENV YARN_VERSION 1.22.4
+ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
@@ -34,7 +34,7 @@ RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS
 
 FROM ruby:3.0.2-slim
 
-ENV YARN_VERSION 1.22.4
+ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
@@ -43,7 +43,7 @@ ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabl
 WORKDIR /app
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
-COPY --from=fetch-lib /usr/lib/x86_64-linux-gnu/libmariadb.so.3 /usr/lib/x86_64-linux-gnu/libmariadb.so.3
+RUN apt-get update && apt-get -y install libmariadb3 && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY . .
 COPY --from=asset-compile /app/public /app/public
 EXPOSE 3000

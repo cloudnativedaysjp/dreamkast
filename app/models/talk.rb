@@ -285,9 +285,9 @@ class Talk < ApplicationRecord
       return r unless params
       case params
       when String
-        r[proposal_item_config.item_name] = params
+        r[proposal_item_config.item_name] = ProposalItemConfig.find(params).params
       when Array
-        r[proposal_item_config.item_name] = params.join(", ")
+        r[proposal_item_config.item_name] = ProposalItemConfig.where(params).map(&:params).join(", ")
       end
     end
     r

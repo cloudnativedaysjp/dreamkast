@@ -29,4 +29,12 @@ module SecuredSpeaker
   def speaker?
     @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{@conference.abbr.upcase}-Speaker")
   end
+
+  def prepare_create
+    if logged_in?
+      set_current_user
+    else
+      redirect_to("/#{params[:event]}/speakers/guidance")
+    end
+  end
 end

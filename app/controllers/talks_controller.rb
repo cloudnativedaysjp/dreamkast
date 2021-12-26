@@ -25,7 +25,7 @@ class TalksController < ApplicationController
              end
   end
 
-  helper_method :display_video?
+  helper_method :display_video?, :display_document?
 
   def display_video?(talk)
     if (talk.conference.closed? && logged_in?) || (talk.conference.opened? && logged_in?) || talk.conference.archived?
@@ -41,6 +41,21 @@ class TalksController < ApplicationController
       end
     else
       false
+    end
+  end
+
+  def display_document?(talk)
+    if (talk.conference.closed? && logged_in?) || (talk.conference.opened? && logged_in?) || talk.conference.archived?
+      if talk.document_url.present? && talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
+        if talk.proposal_items.empty?
+          false
+        else
+          proposal_item = talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL) || []
+          proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_SLIDE].include?(config.key.to_i) }.any?
+        end
+      else
+        false
+      end
     end
   end
 

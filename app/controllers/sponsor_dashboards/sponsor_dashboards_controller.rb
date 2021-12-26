@@ -8,6 +8,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
       redirect_to(sponsor_dashboards_login_path)
     else
       @speaker = @conference.speakers.find_by(email: @current_user[:info][:email])
+      @talks = @speaker ? @speaker.talks.sponsor : []
     end
   end
 

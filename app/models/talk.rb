@@ -85,6 +85,15 @@ class Talk < ApplicationRecord
     includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
   }
 
+  scope :not_sponsor, -> {
+    where(sponsor_id: nil)
+  }
+
+  scope :sponsor, -> {
+    where.not(sponsor_id: nil)
+  }
+
+
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
     columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]

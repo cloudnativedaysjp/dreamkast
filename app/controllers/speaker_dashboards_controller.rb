@@ -15,6 +15,7 @@ class SpeakerDashboardsController < ApplicationController
     @conference ||= Conference.find_by(abbr: params[:event])
     if @current_user
       @speaker = Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+      @talks = @speaker ? @speaker.talks.not_sponsor : []
     end
   end
 

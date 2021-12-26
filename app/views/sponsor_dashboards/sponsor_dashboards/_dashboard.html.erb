@@ -10,10 +10,7 @@
     <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
   </div>
 
-  <h3 class="py-3 pl-2">セッション一覧</h3>
-  <div class="col-12 mb-4">
-    ※ 現在ログインしている人に紐付くスポンサーセッション、公募セッション両方が表示されます
-  </div>
+  <h3 class="py-3 pl-2">スポンサーセッション一覧</h3>
 
   <div class="col-12 mb-4">
     <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>

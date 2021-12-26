@@ -287,7 +287,11 @@ class Talk < ApplicationRecord
       when String
         r[proposal_item_config.item_name] = ProposalItemConfig.find(params).params
       when Array
-        r[proposal_item_config.item_name] = ProposalItemConfig.where(params).map(&:params).join(", ")
+        f = ProposalItemConfig.where(id: params.shift)
+        a = params.inject(f) do |self_obj, id|
+          self_obj.or(ProposalItemConfig.where(id: id))
+        end
+        r[proposal_item_config.item_name] = a.map(&:params).join(", ")
       end
     end
     r

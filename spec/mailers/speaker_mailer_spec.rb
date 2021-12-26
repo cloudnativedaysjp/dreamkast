@@ -29,12 +29,20 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       let!(:proposal_config_checkbox_1_a) { create(:check_box_item_config_1, conference: conference, params: "1-A") }
       let!(:proposal_config_checkbox_1_b) { create(:check_box_item_config_1, conference: conference, params: "1-B") }
 
-      describe "select one item" do
+      describe "select one item (1-A)" do
         let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_a.id.to_s]) }
 
         it_should_behave_like :has_basic_information
 
         it { expect(mail.body.encoded).to(include("チェックボックス1: 1-A")) }
+      end
+
+      describe "select one item (1-B)" do
+        let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_b.id.to_s]) }
+
+        it_should_behave_like :has_basic_information
+
+        it { expect(mail.body.encoded).to(include("チェックボックス1: 1-B")) }
       end
 
       describe "select two item" do

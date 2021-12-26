@@ -49,7 +49,7 @@ class TalksController < ApplicationController
   # CFP募集期間中はスピーカー登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def new_user?
-    (speaker? && set_conference.registered?) || super
+    (speaker? && set_conference.speaker_entry_enabled?) || super
   end
 
   def speaker?

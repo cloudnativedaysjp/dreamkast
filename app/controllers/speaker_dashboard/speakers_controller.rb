@@ -1,7 +1,15 @@
 class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
 
-  skip_before_action :logged_in_using_omniauth?, only: [:new]
+  skip_before_action :logged_in_using_omniauth?, only: [:new, :guidance]
+  before_action :set_current_user, only: [:guidance]
+  before_action :prepare_create, only: [:new]
+
+  # GET :event/speaker_dashboard/speakers/guidance
+  def guidance
+    return redirect_to(speakers_entry_path) if from_auth0?(params)
+    @conference = Conference.find_by(abbr: params[:event])
+  end
 
   # GET :event/speaker_dashboard/speakers/new
   def new
@@ -83,6 +91,10 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   private
 
   helper_method :speaker_url, :expected_participant_params, :execution_phases_params
+
+  def from_auth0?(params)
+    params[:state].present?
+  end
 
   def speaker_url
     case action_name

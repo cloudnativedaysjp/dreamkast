@@ -277,6 +277,26 @@ class Talk < ApplicationRecord
     end
   end
 
+  def selected_proposal_items
+    r = {}
+    conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number|
+      proposal_item_config = conference.proposal_item_configs.find_by(item_number: item_number)
+      params = proposal_items.find_by(label: proposal_item_config.label)&.params
+      return r unless params
+      case params
+      when String
+        r[proposal_item_config.item_name] = ProposalItemConfig.find(params).params
+      when Array
+        f = ProposalItemConfig.where(id: params.shift)
+        a = params.inject(f) do |self_obj, id|
+          self_obj.or(ProposalItemConfig.where(id: id))
+        end
+        r[proposal_item_config.item_name] = a.map(&:params).join(", ")
+      end
+    end
+    r
+  end
+
   private
 
   def validate_expected_participants

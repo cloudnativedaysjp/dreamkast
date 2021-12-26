@@ -22,6 +22,34 @@
 #  fk_rails_...  (conference_id => conferences.id)
 #
 FactoryBot.define do
+  factory :check_box_item_config_1, class: ProposalItemConfig do
+    type { "ProposalItemConfigCheckBox" }
+    label { "check_box_item_1" }
+    item_number { 1 }
+    item_name { "チェックボックス1" }
+  end
+
+  factory :check_box_item_config_2, class: ProposalItemConfig do
+    type { "ProposalItemConfigCheckBox" }
+    label { "check_box_item_2" }
+    item_number { 2 }
+    item_name { "チェックボックス2" }
+  end
+
+  factory :radio_button_item_config_3, class: ProposalItemConfig do
+    type { "ProposalItemConfigRadioButton" }
+    label { "radio_button_item_3" }
+    item_number { 3 }
+    item_name { "ラジオボタン3" }
+  end
+
+  factory :radio_button_item_config_4, class: ProposalItemConfig do
+    type { "ProposalItemConfigRadioButton" }
+    label { "radio_button_item_4" }
+    item_number { 4 }
+    item_name { "ラジオボタン4" }
+  end
+
   factory :proposal_item_configs_expected_participant, class: ProposalItemConfig do
     id { 1 }
     conference_id { 1 }

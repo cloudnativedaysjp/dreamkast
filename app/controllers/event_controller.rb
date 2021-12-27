@@ -39,9 +39,13 @@ class EventController < ApplicationController
     false
   end
 
-  helper_method :speaker_entry_button_name
+  helper_method :speaker_entry_button_name, :speaker_entry_button_path
 
   def speaker_entry_button_name
     @speaker.present? ? "\u30B9\u30D4\u30FC\u30AB\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9" : "\u30B9\u30D4\u30FC\u30AB\u30FC\u3068\u3057\u3066\u30A8\u30F3\u30C8\u30EA\u30FC"
+  end
+
+  def speaker_entry_button_path
+    @speaker.present? ? speaker_dashboard_path : speakers_guidance_path
   end
 end

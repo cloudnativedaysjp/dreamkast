@@ -18,6 +18,11 @@ Layout/LineLength:
   Exclude:
     - "spec/**/*"
 
+# テストはブロック内の行数が増える場合もあるため
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
 # 非直感的なネーミングを強制されるため無効
 Naming/MemoizedInstanceVariableName:
   Enabled: false

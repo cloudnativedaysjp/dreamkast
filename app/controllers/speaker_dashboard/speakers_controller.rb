@@ -48,6 +48,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
     respond_to do |format|
       if r = @speaker_form.save
+        @speaker = Speaker.find_by(email: @speaker_form.email)
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end

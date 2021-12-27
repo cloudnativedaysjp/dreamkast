@@ -117,9 +117,9 @@ class SpeakerForm
       end
       @talks.each do |talk|
         if talk.persisted?
-          talk.save!
+          talk.save!(context: :entry_form)
         else
-          talk.save!
+          talk.save!(context: :entry_form)
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
 

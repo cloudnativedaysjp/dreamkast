@@ -60,8 +60,7 @@ class Talk < ApplicationRecord
   # validates :conference_day_id, presence: true
   # validates :start_time, presence: true
   # validates :end_time, presence: true
-  validate :validate_expected_participants
-  validate :validate_execution_phases
+  validate :validate_proposal_item_configs, on: :entry_form
 
   SLOT_MAP = ['1200', '1400', '1500', '1600', '1700', '1800', '1900', '2000']
 
@@ -235,15 +234,11 @@ class Talk < ApplicationRecord
   end
 
   def expected_participant_params
-    expected_participants.filter_map do |e|
-      ProposalItemConfig.find(e).params unless e == 0
-    end
+    proposal_item_value('assumed_visitor')
   end
 
   def execution_phase_params
-    execution_phases.filter_map do |e|
-      ProposalItemConfig.find(e).params unless e == 0
-    end
+    proposal_item_value('execution_phase')
   end
 
   def archived?
@@ -299,11 +294,12 @@ class Talk < ApplicationRecord
 
   private
 
-  def validate_expected_participants
-    errors.add(:base, '想定受講者は最低1項目選択してください') if expected_participants && expected_participants.empty?
-  end
-
-  def validate_execution_phases
-    errors.add(:base, '実行フェーズは最低1項目選択してください') if execution_phases && execution_phases.empty?
+  def validate_proposal_item_configs
+    expected = conference.proposal_item_configs.pluck(:label).uniq
+    shorted_items = expected - proposal_items.map(&:label)
+    shorted_items.each { |e|
+      short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
+      errors.add(:base, "#{short}は最低1項目選択してください")
+    }
   end
 end

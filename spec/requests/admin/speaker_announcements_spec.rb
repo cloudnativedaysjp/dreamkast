@@ -25,20 +25,31 @@ describe Admin::SpeakerAnnouncementsController, type: :request do
       end
 
       context "user is registered" do
-        before do
-          create(:alice, :on_cndt2020)
-          create(:speaker_announcement, :cndt2020, :published)
-        end
+        before { create(:alice, :on_cndt2020) }
 
         context "user is admin" do
           let(:roles) { ["CNDT2020-Admin"] }
 
-          it "returns a success response" do
-            subject
-            expect(response).to(be_successful)
-            expect(response).to(have_http_status("200"))
-            expect(controller.instance_variable_get("@speaker_announcements").first.conference_id).to(eq(1))
-            expect(controller.instance_variable_get("@speaker_announcements").first.speaker_names).to(eq("mike"))
+          context "published" do
+            before { create(:speaker_announcement, :cndt2020, :published) }
+            it "has 公開済み announcement" do
+              subject
+              expect(response).to(be_successful)
+              expect(response).to(have_http_status("200"))
+              expect(response.body).to(include("mike"))
+              expect(response.body).to(include("公開済み"))
+            end
+
+            context "not published" do
+              before { create(:speaker_announcement, :cndt2020) }
+              it "has 非公開 announcement" do
+                subject
+                expect(response).to(be_successful)
+                expect(response).to(have_http_status("200"))
+                expect(response.body).to(include("mike"))
+                expect(response.body).to(include("非公開"))
+              end
+            end
           end
         end
 

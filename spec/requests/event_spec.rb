@@ -43,6 +43,7 @@ describe EventController, type: :request do
           get "/cndt2020"
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
+          expect(response.body).to(include('data-method="get" href="/cndt2020/speakers/guidance"'))
         end
       end
 
@@ -56,6 +57,7 @@ describe EventController, type: :request do
           get "/cndt2020"
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
+          expect(response.body).to(include('data-method="get" href="/cndt2020/speaker_dashboard"'))
         end
       end
     end

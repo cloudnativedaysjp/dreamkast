@@ -7,7 +7,7 @@ class Auth0Controller < ApplicationController
     # Redirect to the URL you want after successful auth
 
     if request.env["omniauth.origin"]
-      redirect_to(request.env["omniauth.origin"].to_s)
+      redirect_to("#{request.env['omniauth.origin']}?state=#{params[:state]}")
     else
       redirect_to("/")
     end

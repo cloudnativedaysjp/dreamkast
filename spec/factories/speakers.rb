@@ -78,7 +78,7 @@ FactoryBot.define do
     profile { "This is profile" }
     company { "company" }
     job_title { "job_title" }
-    conference_id { 4 }
+    conference_id { 1 }
 
     trait :with_speaker_announcement do
       id { 4 }

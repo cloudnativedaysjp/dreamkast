@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe(TracksController, type: :request) do
-  subject(:session) { { userinfo: { info: { email: "alice@example.com", extra: { sub: "aaa" } }, extra: { raw_info: { sub: "aaa", "https://cloudnativedays.jp/roles" => roles } } } } }
+  subject { get "/cndt2020/dashboard" }
+  let!(:session) { { userinfo: { info: { email: "alice@example.com", extra: { sub: "aaa" } }, extra: { raw_info: { sub: "aaa", "https://cloudnativedays.jp/roles" => roles } } } } }
   let(:roles) { [] }
 
   describe "GET /:event/dashboard" do
@@ -16,59 +17,71 @@ RSpec.describe(TracksController, type: :request) do
         let(:roles) { ["CNDT2020-Admin"] }
 
         it "return a success response" do
-          get "/cndt2020/dashboard"
+          subject
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
         end
 
         it "link to admin is displayed" do
-          get "/cndt2020/dashboard"
+          subject
           expect(response.body).to(include('<a class="dropdown-item" href="/cndt2020/admin">管理画面</a>'))
         end
 
         context "user is speaker" do
-          before do
-            @alice = create(:speaker_alice)
-          end
-          it "exists speaker" do
-            get "/cndt2020/dashboard"
+          let!(:alice) { create(:speaker_alice) }
+          it "show speaker" do
+            subject
             expect(response).to(be_successful)
-            expect(controller.instance_variable_get("@speaker").name).to(eq("Alice"))
+            expect(response.body).to(include("<h4>Alice様へのお知らせ</h4>"))
           end
 
           context "wnen announcement is not published" do
             before do
-              create(:speaker_announcement, :cndt2020, speakers: [@alice])
+              create(:speaker_announcement, speakers: [alice])
             end
             it "not exists speaker_announcements" do
-              get "/cndt2020/dashboard"
+              subject
               expect(response).to(be_successful)
-              expect(controller.instance_variable_get("@speaker_announcements").size).to(eq(0))
+              expect(response.body).to(include("<h4>Alice様へのお知らせ</h4>"))
+              expect(response.body).not_to(include("<p>test_announcement</p>"))
             end
           end
 
           context "when announcement is published" do
             before do
-              create(:speaker_announcement, :cndt2020, :published, speakers: [@alice])
+              create(:speaker_announcement, :published, speakers: [alice])
+              create(:speaker_announcement, :speaker_mike, speakers: [create(:speaker_mike)])
             end
-            it "exists speaker_announcements" do
-              get "/cndt2020/dashboard"
+
+            it "show only alice's announcements" do
+              subject
               expect(response).to(be_successful)
-              expect(controller.instance_variable_get("@speaker_announcements").size).to(eq(1))
+              expect(response.body).to(include("<h4>Alice様へのお知らせ</h4>"))
+              expect(response.body).to(include("<p>test announcement for alice</p>"))
+              expect(response.body).not_to(include("<p>test announcement for mike</p>"))
+              expect(SpeakerAnnouncement.where(publish: true).size).to(eq(2))
             end
+          end
+        end
+
+        context "user is not speaker" do
+          it "not show speaker_announcements" do
+            subject
+            expect(response).to(be_successful)
+            expect(response.body).not_to(include("<h4>Alice様へのお知らせ</h4>"))
           end
         end
       end
 
       context "user is not admin" do
         it "return a success response" do
-          get "/cndt2020/dashboard"
+          subject
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
         end
 
         it "link to admin is not displayed" do
-          get "/cndt2020/dashboard"
+          subject
           expect(response.body).to_not(include('<a class="dropdown-item" href="/admin">管理画面</a>'))
         end
       end
@@ -89,7 +102,7 @@ RSpec.describe(TracksController, type: :request) do
 
       context "get exists event's dashboard" do
         it "redirect to top page a success response" do
-          get "/cndt2020/dashboard"
+          subject
           expect(response).to_not(be_successful)
           expect(response).to(have_http_status("302"))
           expect(response).to(redirect_to("/cndt2020"))

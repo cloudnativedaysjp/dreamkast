@@ -55,6 +55,17 @@ FactoryBot.define do
         proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 2)
       end
     end
+
+    trait :with_sponsor_session do
+      after(:build) do |speaker|
+        sponsor = create(:sponsor)
+        talk = create(:sponsor_session, sponsor: sponsor)
+        speaker.talks << talk
+        create(:talks_speakers, { talk: talk, speaker: speaker })
+        create(:proposal, :with_cndt2021, talk: talk, status: 0)
+      end
+    end
+
   end
 
   factory :talks_speakers, class: TalksSpeaker

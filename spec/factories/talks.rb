@@ -159,4 +159,17 @@ FactoryBot.define do
     video_published { true }
     document_url { 'http://' }
   end
+
+  factory :sponsor_session, class: Talk do
+    title { 'sponsor_session' }
+    start_time { '12:30' }
+    end_time { '12:40' }
+    conference_id { 1 }
+    conference_day_id { 1 }
+    talk_difficulty_id { 1 }
+    track_id { 1 }
+    show_on_timetable { true }
+    video_published { true }
+    document_url { 'http://' }
+  end
 end

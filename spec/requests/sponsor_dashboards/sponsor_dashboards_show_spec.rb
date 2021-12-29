@@ -14,6 +14,20 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
       end
     end
 
+    shared_examples_for :response_includes_proposal_title_and_entry_status do |title, entry_status|
+      it 'include information about proposal' do
+        get '/cndt2020/sponsor_dashboards/1'
+        expect(response.body).to(include(title))
+        expect(response.body).to(include(entry_status))
+      end
+    end
+    shared_examples_for :response_does_not_include_proposal_title do |title|
+      it 'include information about proposal' do
+        get '/cndt2020/sponsor_dashboards/1'
+        expect(response.body).to_not(include(title))
+      end
+    end
+
     describe "user isn't sponsor's speaker" do
       let!(:sponsor) { create(:sponsor) }
 
@@ -60,6 +74,25 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
             expect(response).to(be_successful)
             expect(response).to(have_http_status('200'))
             expect(response.body).to(include('スポンサーダッシュボード'))
+          end
+
+          context 'sponsor has sponsor session and has registered proposal ' do
+            before do
+              create(:talks_speakers, { talk: talk, speaker: speaker })
+              create(:proposal, :with_cndt2021, talk: talk, status: 0)
+            end
+            let(:speaker) { create(:speaker_alice, :with_talk1_registered) }
+            let(:talk) { create(:sponsor_session, sponsor: sponsor) }
+
+            it 'returns successfull' do
+              get '/cndt2020/sponsor_dashboards/1'
+              expect(response).to(be_successful)
+              expect(response).to(have_http_status('200'))
+              expect(response.body).to(include('スポンサーダッシュボード'))
+            end
+
+            it_should_behave_like :response_does_not_include_proposal_title, 'talk1'
+            it_should_behave_like :response_includes_proposal_title_and_entry_status, 'sponsor_session', '受付状況: エントリー済み'
           end
         end
       end

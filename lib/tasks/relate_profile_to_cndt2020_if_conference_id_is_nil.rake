@@ -1,5 +1,5 @@
 namespace :db do
-  desc "relate_profile_to_cndt2021_if_conference_id_is_nil"
+  desc 'relate_profile_to_cndt2021_if_conference_id_is_nil'
   task relate_profile_to_cndt2021_if_conference_id_is_nil: :environment do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     Rails.logger.level = Logger::DEBUG

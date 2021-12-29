@@ -18,10 +18,10 @@ class TalksController < ApplicationController
   def index
     @conference = Conference.find_by(abbr: event_name)
     @talks = if @conference.cfp_result_visible
-               @conference.talks.joins("LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id").includes(:proposal).where(show_on_timetable: true,
-                                                                                                                                              proposals: { status: :accepted }).order("conference_days.date ASC").order("talks.start_time ASC")
+               @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id').includes(:proposal).where(show_on_timetable: true,
+                                                                                                                                              proposals: { status: :accepted }).order('conference_days.date ASC').order('talks.start_time ASC')
              else
-               @conference.talks.joins("LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id").includes(:proposal).where(show_on_timetable: true).order("conference_days.date ASC").order("talks.start_time ASC")
+               @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id').includes(:proposal).where(show_on_timetable: true).order('conference_days.date ASC').order('talks.start_time ASC')
              end
   end
 
@@ -84,9 +84,9 @@ class TalksController < ApplicationController
 
   def talk_start_to_end(talk)
     if talk.start_time.present? && talk.end_time.present?
-      talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M")
+      talk.start_time.strftime('%H:%M') + '-' + talk.end_time.strftime('%H:%M')
     else
-      ""
+      ''
     end
   end
 end

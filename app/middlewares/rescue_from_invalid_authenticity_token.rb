@@ -7,6 +7,6 @@ class RescueFromInvalidAuthenticityToken
     # yield
     @app.call(env)
   rescue ActionController::InvalidAuthenticityToken
-    [302, { "Location" => "/", "Content-Type" => "text/html" }, ["Invalid Authenticity Token"]]
+    [302, { 'Location' => '/', 'Content-Type' => 'text/html' }, ['Invalid Authenticity Token']]
   end
 end

@@ -1,5 +1,5 @@
 namespace :util do
-  desc "get_and_save_current_attendees"
+  desc 'get_and_save_current_attendees'
   task get_and_save_current_attendees: :environment do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     Rails.logger.level = Logger::DEBUG
@@ -27,9 +27,9 @@ namespace :util do
           )
           vc.save!
         rescue Aws::IVS::Errors::ChannelNotBroadcasting
-          puts(ivs.channel_arn + " is not currently online")
+          puts(ivs.channel_arn + ' is not currently online')
         rescue => e
-          puts("Unknown error" + e.to_s)
+          puts('Unknown error' + e.to_s)
         end
       end
     end

@@ -6,6 +6,6 @@ module SpeakersHelper
       puts("speaker_dashboard/speakers/#{association.to_s.singularize}_fields")
       render("speaker_dashboard/speakers/#{association.to_s.singularize}_fields", f: builder)
     end
-    link_to(name, "#", class: "add_talk_fields " + args[:class], data: { id: id, fields: fields.gsub("\n", "") }, style: args[:style])
+    link_to(name, '#', class: 'add_talk_fields ' + args[:class], data: { id: id, fields: fields.gsub("\n", '') }, style: args[:style])
   end
 end

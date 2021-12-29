@@ -23,7 +23,7 @@
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-      record.errors[attribute] << (options[:message] || "はメールアドレスではありません")
+      record.errors[attribute] << (options[:message] || 'はメールアドレスではありません')
     end
   end
 end
@@ -31,7 +31,7 @@ end
 class TelValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A[-+0-9]*\z/i
-      record.errors[attribute] << (options[:message] || "は正しい電話番号ではありません")
+      record.errors[attribute] << (options[:message] || 'は正しい電話番号ではありません')
     end
   end
 end
@@ -42,7 +42,7 @@ class Profile < ApplicationRecord
 
   belongs_to :conference
   has_many :registered_talks
-  has_many :talks, -> { order("conference_day_id ASC, start_time ASC") }, through: :registered_talks
+  has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
   has_many :agreements
   has_many :form_items, through: :agreements
   has_many :chat_messages

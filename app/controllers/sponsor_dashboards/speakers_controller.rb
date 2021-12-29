@@ -43,7 +43,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
-        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: "Speaker was successfully created.") }
+        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully created.') }
         format.json { render(:show, status: :created, location: @speaker) }
       else
         format.html { render(:new) }
@@ -70,7 +70,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
         end
-        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully updated.') }
       else
         format.html { render(:edit) }
       end
@@ -83,9 +83,9 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers"
-    when "edit", "update"
+    when 'edit', 'update'
       "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers/#{params[:id]}"
     end
   end
@@ -97,11 +97,11 @@ class SponsorDashboards::SpeakersController < ApplicationController
   end
 
   def expected_participant_params
-    @conference.proposal_item_configs.where(label: "expected_participant")
+    @conference.proposal_item_configs.where(label: 'expected_participant')
   end
 
   def execution_phases_params
-    @conference.proposal_item_configs.where(label: "execution_phase")
+    @conference.proposal_item_configs.where(label: 'execution_phase')
   end
 
   # Only allow a list of trusted parameters through.
@@ -126,9 +126,9 @@ class SponsorDashboards::SpeakersController < ApplicationController
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label: label)
-      if conf.class.to_s == "ProposalItemConfigCheckBox"
+      if conf.class.to_s == 'ProposalItemConfigCheckBox'
         h[conf.label.pluralize.to_sym] = []
-      elsif conf.class.to_s == "ProposalItemConfigRadioButton"
+      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
         attr << conf.label.pluralize.to_sym
       end
     end

@@ -11,11 +11,11 @@ namespace :aws do
   end
 
   def ivs_client
-    creds = Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])
+    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::IVS::Client.new(region: "us-east-1", credentials: creds)
+      Aws::IVS::Client.new(region: 'us-east-1', credentials: creds)
     else
-      Aws::IVS::Client.new(region: "us-east-1")
+      Aws::IVS::Client.new(region: 'us-east-1')
     end
   end
 
@@ -23,7 +23,7 @@ namespace :aws do
     client = ivs_client
 
     channels = []
-    next_token = ""
+    next_token = ''
     loop do
       resp = client.list_channels(next_token: next_token)
       channels.concat(resp.channels)
@@ -32,12 +32,12 @@ namespace :aws do
     end
 
     r = channels.select do |channel|
-      channel.tags["Environment"] == "review_app" && channel.tags["ReviewAppNumber"] == review_app_num.to_s
+      channel.tags['Environment'] == 'review_app' && channel.tags['ReviewAppNumber'] == review_app_num.to_s
     end
 
     r.each do |channel|
       puts("#{ENV['DRY_RUN'] == 'false' ? '' : '[DRY_RUN] '}Delete IVS Channel: #{channel.arn} (#{channel.name})")
-      if ENV["DRY_RUN"] == "false"
+      if ENV['DRY_RUN'] == 'false'
         client.delete_channel(arn: channel.arn)
       end
     end

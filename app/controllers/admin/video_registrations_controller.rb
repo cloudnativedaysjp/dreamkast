@@ -26,6 +26,6 @@ class Admin::VideoRegistrationsController < ApplicationController
         end
       end
     end
-    redirect_to(admin_videos_path, notice: "配信設定を更新しました")
+    redirect_to(admin_videos_path, notice: '配信設定を更新しました')
   end
 end

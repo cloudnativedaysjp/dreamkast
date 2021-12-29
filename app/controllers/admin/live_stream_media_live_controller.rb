@@ -10,7 +10,7 @@ class Admin::LiveStreamMediaLiveController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(admin_live_stream_ivs_path, notice: "IVS successfully created.") }
+      format.html { redirect_to(admin_live_stream_ivs_path, notice: 'IVS successfully created.') }
     end
   end
 
@@ -21,7 +21,7 @@ class Admin::LiveStreamMediaLiveController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(admin_live_stream_ivs_path, notice: "") }
+      format.html { redirect_to(admin_live_stream_ivs_path, notice: '') }
     end
   end
 end

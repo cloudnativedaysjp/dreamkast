@@ -21,14 +21,14 @@ class Admin::ConferencesController < ApplicationController
       if @conference_form.save
         if @conference.opened?
           path = "/#{@conference.abbr}/#{@conference.abbr == 'cndt2020' ? 'tracks' : 'ui/'}"
-          ActionCable.server.broadcast("waiting_channel", { msg: "redirect to tracks", redirectTo: path })
+          ActionCable.server.broadcast('waiting_channel', { msg: 'redirect to tracks', redirectTo: path })
         end
-        redirect_path = if referrer_controller == "admin/proposals"
+        redirect_path = if referrer_controller == 'admin/proposals'
                           admin_proposals_path
                         else
                           admin_path
                         end
-        format.html { redirect_to(redirect_path, notice: "Conference was successfully updated.") }
+        format.html { redirect_to(redirect_path, notice: 'Conference was successfully updated.') }
       else
         format.html { render(:edit) }
       end

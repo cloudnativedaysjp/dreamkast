@@ -26,7 +26,7 @@ class ConferenceForm
         params.transform_keys!(&:to_sym)
 
         if params.key?(:id)
-          if params[:_destroy] == "1"
+          if params[:_destroy] == '1'
             link = @conference.links.find(params[:id])
             link.destroy
           else
@@ -60,7 +60,7 @@ class ConferenceForm
         params.transform_keys!(&:to_sym)
 
         if params.key?(:id)
-          if params[:_destroy] == "1"
+          if params[:_destroy] == '1'
             link = @conference.conference_days.find(params[:id])
             link.destroy
           else

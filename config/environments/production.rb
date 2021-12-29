@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  if ENV["REVIEW_APP"]
+  if ENV['REVIEW_APP']
     config.consider_all_requests_local       = true
   else
     config.consider_all_requests_local       = false
@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -87,7 +87,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -117,9 +117,9 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   OmniAuth.config.on_failure = Proc.new do |env|
-    message_key = env["omniauth.error.type"]
-    error_description = Rack::Utils.escape(env["omniauth.error"].error_reason)
+    message_key = env['omniauth.error.type']
+    error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)
     new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}&error_description=#{error_description}"
-    Rack::Response.new(["302 Moved"], 302, "Location" => new_path).finish
+    Rack::Response.new(['302 Moved'], 302, 'Location' => new_path).finish
   end
 end

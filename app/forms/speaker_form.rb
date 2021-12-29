@@ -33,12 +33,12 @@ class SpeakerForm
       attributes.each do |_i, params|
         if params.key?(:id)
           # talk is already exists
-          if params[:_destroy] == "1"
+          if params[:_destroy] == '1'
             @destroy_talks << @speaker.talks.find(params[:id])
           else
             params.delete(:_destroy)
             talk = @speaker.talks.find(params[:id])
-            if @sponsor.present? && params[:sponsor_session] == "true"
+            if @sponsor.present? && params[:sponsor_session] == 'true'
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
             else
@@ -59,11 +59,11 @@ class SpeakerForm
           end
         else
           # talk doesn't exists
-          unless params[:_destroy] == "1"
+          unless params[:_destroy] == '1'
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
-            if @sponsor.present? && params[:sponsor_session] == "true"
+            if @sponsor.present? && params[:sponsor_session] == 'true'
               params[:sponsor_id] = @sponsor.id
               params.delete(:sponsor_session)
             else

@@ -25,12 +25,12 @@ class LiveStreamIvs < LiveStream
   belongs_to :track
 
   before_create do
-    tags = { "Environment" => env_name }
-    tags["ReviewAppNumber"] = review_app_number.to_s
+    tags = { 'Environment' => env_name }
+    tags['ReviewAppNumber'] = review_app_number.to_s
     resp = ivs_client.create_channel(
       name: channel_name,
-      latency_mode: "LOW",
-      type: "STANDARD",
+      latency_mode: 'LOW',
+      type: 'STANDARD',
       authorized: false,
       recording_configuration_arn: recording_configuration_arn,
       tags: tags
@@ -51,23 +51,23 @@ class LiveStreamIvs < LiveStream
   end
 
   def name
-    params.dig("channel", "name")
+    params.dig('channel', 'name')
   end
 
   def channel_arn
-    params.dig("channel", "arn")
+    params.dig('channel', 'arn')
   end
 
   def playback_url
-    params.dig("channel", "playback_url")
+    params.dig('channel', 'playback_url')
   end
 
   def ingest_endpoint
-    params.dig("channel", "ingest_endpoint")
+    params.dig('channel', 'ingest_endpoint')
   end
 
   def stream_key
-    params["stream_key"]
+    params['stream_key']
   end
 
   def get_stream
@@ -93,26 +93,26 @@ class LiveStreamIvs < LiveStream
   end
 
   def ivs_client
-    creds = Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"])
+    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::IVS::Client.new(region: "us-east-1", credentials: creds)
+      Aws::IVS::Client.new(region: 'us-east-1', credentials: creds)
     else
-      Aws::IVS::Client.new(region: "us-east-1")
+      Aws::IVS::Client.new(region: 'us-east-1')
     end
   end
 
   def recording_configuration_arn
     case env_name
-    when "production"
-      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP"
-    when "staging"
-      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ"
-    when "review_app"
-      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg"
-    when "others"
-      "arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg"
+    when 'production'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
+    when 'staging'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
+    when 'review_app'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    when 'others'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
     else
-      ""
+      ''
     end
   end
 end

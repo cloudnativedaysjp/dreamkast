@@ -17,7 +17,7 @@
 #  index_viewer_counts_on_talk_id        (talk_id)
 #  index_viewer_counts_on_track_id       (track_id)
 #
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe(ViewerCount, type: :model) do
   pending "add some examples to (or delete) #{__FILE__}"

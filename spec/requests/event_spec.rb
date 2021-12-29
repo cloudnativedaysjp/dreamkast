@@ -15,7 +15,7 @@ describe EventController, type: :request do
         expect(response).to(be_successful)
         expect(response).to(have_http_status("200"))
         expect(response.body).to(include("CloudNative Days Tokyo 2020"))
-        expect(response.body).to(include("\u30B9\u30D4\u30FC\u30AB\u30FC\u3068\u3057\u3066\u30A8\u30F3\u30C8\u30EA\u30FC"))
+        expect(response.body).to(include("スピーカーとしてエントリー"))
       end
 
       it "returns a success response with privacy policy" do
@@ -29,7 +29,7 @@ describe EventController, type: :request do
         get "/cndt2020/coc"
         expect(response).to(be_successful)
         expect(response).to(have_http_status("200"))
-        expect(response.body).to(include("\u884C\u52D5\u898F\u7BC4"))
+        expect(response.body).to(include("行動規範"))
       end
     end
 

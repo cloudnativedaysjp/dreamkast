@@ -42,7 +42,7 @@ class Profiles::TalksController < ApplicationController
     end
     redirect_to(dashboard_path)
   rescue => e
-    redirect_to(timetables_path, notice: "\u30BB\u30C3\u30B7\u30E7\u30F3\u767B\u9332\u306B\u5931\u6557\u3057\u307E\u3057\u305F")
+    redirect_to(timetables_path, notice: "セッション登録に失敗しました")
   end
 
   def update

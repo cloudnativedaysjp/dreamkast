@@ -42,7 +42,7 @@ describe SpeakerDashboardsController, type: :request do
           get "/cndt2020/speaker_dashboard"
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
-          expect(response.body).to(include("\u30B9\u30D4\u30FC\u30AB\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"))
+          expect(response.body).to(include("スピーカーダッシュボード"))
         end
       end
 
@@ -56,7 +56,7 @@ describe SpeakerDashboardsController, type: :request do
             get "/cndt2020/speaker_dashboard"
             expect(response).to(be_successful)
             expect(response).to(have_http_status("200"))
-            expect(response.body).to(include("\u30B9\u30D4\u30FC\u30AB\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"))
+            expect(response.body).to(include("スピーカーダッシュボード"))
             expect(response.body).to(include("entry"))
           end
         end
@@ -68,7 +68,7 @@ describe SpeakerDashboardsController, type: :request do
 
           it "response includes header text" do
             get "/cndt2020/speaker_dashboard"
-            expect(response.body).to(include("\u30B9\u30D4\u30FC\u30AB\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"))
+            expect(response.body).to(include("スピーカーダッシュボード"))
           end
           it_should_behave_like :request_is_successful
           it_should_behave_like :response_includes_edit_button
@@ -92,7 +92,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_does_not_include_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1"
+          it_should_behave_like :response_does_not_include_proposal_title_and_entry_status, "talk1", "受付状況"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -102,7 +102,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: エントリー済み"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -112,7 +112,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u63A1\u629E"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: 採択"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -122,7 +122,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u4E0D\u63A1\u629E"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: 不採択"
           it_should_behave_like :response_includes_edit_button
         end
       end
@@ -138,7 +138,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_does_not_include_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1"
+          it_should_behave_like :response_does_not_include_proposal_title_and_entry_status, "talk1", "受付状況"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -148,7 +148,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: エントリー済み"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -158,7 +158,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: エントリー済み"
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -168,7 +168,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "\u53D7\u4ED8\u72B6\u6CC1: \u30A8\u30F3\u30C8\u30EA\u30FC\u6E08\u307F"
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, "talk1", "受付状況: エントリー済み"
           it_should_behave_like :response_includes_edit_button
         end
       end

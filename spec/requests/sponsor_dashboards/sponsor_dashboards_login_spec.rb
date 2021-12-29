@@ -13,7 +13,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
           get "/cndt2020/sponsor_dashboards/login"
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
-          expect(response.body).to(include("\u30B9\u30DD\u30F3\u30B5\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9\u3078\u30ED\u30B0\u30A4\u30F3\u3059\u308B"))
+          expect(response.body).to(include("スポンサーダッシュボードへログインする"))
         end
       end
 
@@ -38,7 +38,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
           get "/cndt2020/sponsor_dashboards/login"
           expect(response).to(be_successful)
           expect(response).to(have_http_status("200"))
-          expect(response.body).to(include("\u30B9\u30DD\u30F3\u30B5\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9\u3078\u30ED\u30B0\u30A4\u30F3\u3059\u308B"))
+          expect(response.body).to(include("スポンサーダッシュボードへログインする"))
         end
       end
 

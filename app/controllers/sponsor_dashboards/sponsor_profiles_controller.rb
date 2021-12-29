@@ -17,7 +17,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
         end
 
         unless @sponsor.speaker_emails && @sponsor.speaker_emails.downcase.include?(@current_user[:info][:email].downcase)
-          redirect_to("/#{@conference.abbr}/sponsor_dashboards/login", notice: "\u30ED\u30B0\u30A4\u30F3\u304C\u8A31\u53EF\u3055\u308C\u3066\u3044\u307E\u305B\u3093")
+          redirect_to("/#{@conference.abbr}/sponsor_dashboards/login", notice: "ログインが許可されていません")
         end
       end
     end
@@ -38,7 +38,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.where(conference_id: @conference.id).where("speaker_emails like(?)", "%#{@current_user[:info][:email]}%").first
     unless @sponsor
-      redirect_to("/#{@conference.abbr}/sponsor_dashboards", notice: "\u30ED\u30B0\u30A4\u30F3\u304C\u8A31\u53EF\u3055\u308C\u3066\u3044\u307E\u305B\u3093")
+      redirect_to("/#{@conference.abbr}/sponsor_dashboards", notice: "ログインが許可されていません")
     else
       @sponsor_profile = SponsorProfile.new(sponsor_profile_params.merge(conference_id: @conference.id))
       @sponsor_profile.sub = @current_user[:extra][:raw_info][:sub]

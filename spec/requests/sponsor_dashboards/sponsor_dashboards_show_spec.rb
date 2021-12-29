@@ -59,7 +59,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
             get "/cndt2020/sponsor_dashboards/1"
             expect(response).to(be_successful)
             expect(response).to(have_http_status("200"))
-            expect(response.body).to(include("\u30B9\u30DD\u30F3\u30B5\u30FC\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9"))
+            expect(response.body).to(include("スポンサーダッシュボード"))
           end
         end
       end

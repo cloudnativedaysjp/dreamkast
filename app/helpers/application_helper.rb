@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def authenticate
     return if logged_in?
-    redirect_to(root_path, alert: "\u30ED\u30B0\u30A4\u30F3\u3057\u3066\u304F\u3060\u3055\u3044")
+    redirect_to(root_path, alert: "ログインしてください")
   end
 
   def message_box

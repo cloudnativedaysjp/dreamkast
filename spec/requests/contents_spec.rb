@@ -63,7 +63,7 @@ describe ContentsController, type: :request do
         get "/cndt2020/discussion"
         expect(response).to(be_successful)
         expect(response).to(have_http_status("200"))
-        expect(response.body).to(include("\u66F8\u304D\u8FBC\u3080"))
+        expect(response.body).to(include("書き込む"))
       end
     end
 
@@ -90,7 +90,7 @@ describe ContentsController, type: :request do
         get "/cndt2020/discussion"
         expect(response).to(be_successful)
         expect(response).to(have_http_status("200"))
-        expect(response.body).to(include("\u4F7F\u3044\u65B9"))
+        expect(response.body).to(include("使い方"))
       end
     end
   end

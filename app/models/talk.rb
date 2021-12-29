@@ -300,10 +300,10 @@ class Talk < ApplicationRecord
   private
 
   def validate_expected_participants
-    errors.add(:base, "\u60F3\u5B9A\u53D7\u8B1B\u8005\u306F\u6700\u4F4E1\u9805\u76EE\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044") if expected_participants && expected_participants.empty?
+    errors.add(:base, "想定受講者は最低1項目選択してください") if expected_participants && expected_participants.empty?
   end
 
   def validate_execution_phases
-    errors.add(:base, "\u5B9F\u884C\u30D5\u30A7\u30FC\u30BA\u306F\u6700\u4F4E1\u9805\u76EE\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044") if execution_phases && execution_phases.empty?
+    errors.add(:base, "実行フェーズは最低1項目選択してください") if execution_phases && execution_phases.empty?
   end
 end

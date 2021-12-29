@@ -11,7 +11,7 @@ describe ProfilesController, type: :request do
         get "/cndt2020/registration"
         expect(response).to(be_successful)
         expect(response).to(have_http_status("200"))
-        expect(response.body).to(include("\u30ED\u30B0\u30A4\u30F3"))
+        expect(response.body).to(include("ログイン"))
       end
     end
 

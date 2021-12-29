@@ -61,7 +61,7 @@ describe TalksController, type: :request do
             get "/cndt2020/talks/2"
             expect(response).to(be_successful)
             expect(response).to(have_http_status("200"))
-            expect(response.body).to(include("\u30BF\u30A4\u30E0\u30C6\u30FC\u30D6\u30EB"))
+            expect(response.body).to(include("タイムテーブル"))
             expect(response.body).to(include(talk2.title))
           end
 

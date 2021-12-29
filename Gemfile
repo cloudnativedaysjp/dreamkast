@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
+gem 'rails'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
@@ -55,7 +55,7 @@ group :development do
   gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
-  gem 'rbs', '1.7.0.beta.2'
+  gem 'rbs'
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
   gem 'annotate', require: false

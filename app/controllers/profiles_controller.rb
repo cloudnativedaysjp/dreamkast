@@ -25,11 +25,11 @@ class ProfilesController < ApplicationController
     @profile.email = @current_user[:info][:email]
 
     if @profile.save
-      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params["require_email"]
-      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params["require_tel"]
-      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params["require_posting"]
-      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params["agree_ms"]
-      Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params["agree_ms_cndo2021"]
+      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
       ProfileMailer.registered(@profile, @conference).deliver_later
       redirect_to("/#{event_name}/timetables")
     else
@@ -71,9 +71,9 @@ class ProfilesController < ApplicationController
 
   def profile_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/profiles"
-    when "edit"
+    when 'edit'
       "/#{params[:event]}/profiles/#{params[:id]}"
     end
   end
@@ -85,7 +85,7 @@ class ProfilesController < ApplicationController
   def find_profile
     @found_profile = Profile.find(parmas[:id])
     unless @found_profile
-      format.json { render(json: "Not found", status: :not_found) }
+      format.json { render(json: 'Not found', status: :not_found) }
     end
   end
 

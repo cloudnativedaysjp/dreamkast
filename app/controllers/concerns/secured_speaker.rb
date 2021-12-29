@@ -23,11 +23,11 @@ module SecuredSpeaker
   end
 
   def admin?
-    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{@conference.abbr.upcase}-Admin")
+    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{@conference.abbr.upcase}-Speaker")
+    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Speaker")
   end
 
   def prepare_create

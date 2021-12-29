@@ -1,1 +1,1 @@
-json.partial!("speakers/speaker", speaker: @speaker)
+json.partial!('speakers/speaker', speaker: @speaker)

@@ -1,2 +1,2 @@
-require "rbs_rails/rake_task"
+require 'rbs_rails/rake_task'
 RbsRails::RakeTask.new

@@ -26,7 +26,7 @@ class SponsorForm
       @sponsor_attachment_key_images ||= []
       attributes.each do |_i, params|
         if params.key?(:id)
-          if params[:_destroy] == "1"
+          if params[:_destroy] == '1'
             image = @sponsor.sponsor_attachment_key_images.find(params[:id])
             image.destroy
           else
@@ -58,7 +58,7 @@ class SponsorForm
       @sponsor_attachment_pdfs ||= []
       attributes.each do |_i, params|
         if params.key?(:id)
-          if params[:_destroy] == "1"
+          if params[:_destroy] == '1'
             image = @sponsor.sponsor_attachment_pdfs.find(params[:id])
             image.destroy
           else
@@ -150,10 +150,10 @@ class SponsorForm
       description: sponsor.description,
       speaker_emails: sponsor.speaker_emails,
       booth_published: sponsor.booth.present? && sponsor.booth.published.present? ? sponsor.booth.published : nil,
-      attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : "",
-      attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : "",
-      attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : "",
-      attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : "",
+      attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
+      attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
+      attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',
+      attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : '',
       sponsor_attachment_key_images: sponsor_attachment_key_images,
       sponsor_attachment_pdfs: sponsor_attachment_pdfs
     }

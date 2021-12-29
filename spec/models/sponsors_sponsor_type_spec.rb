@@ -8,7 +8,7 @@
 #  sponsor_id      :integer
 #  sponsor_type_id :integer
 #
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe(SponsorsSponsorType, type: :model) do
   pending "add some examples to (or delete) #{__FILE__}"

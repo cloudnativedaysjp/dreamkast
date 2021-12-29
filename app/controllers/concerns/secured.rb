@@ -20,18 +20,18 @@ module Secured
 
   def new_user?
     if session[:userinfo].present? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
-      unless ["profiles"].include?(controller_name)
+      unless ['profiles'].include?(controller_name)
         redirect_to("/#{params[:event]}/registration")
       end
     end
   end
 
   def admin?
-    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{conference.abbr.upcase}-Admin")
+    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    @current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"].include?("#{conference.abbr.upcase}-Speaker")
+    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
   end
 
   def conference

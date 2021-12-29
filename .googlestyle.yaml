@@ -220,7 +220,7 @@ Style/RescueModifier:
 
 # We prefer standardizing on double-quoted strings for readability.
 Style/StringLiterals:
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 # Added in Rubocop 1.1
 Style/SwapValues:

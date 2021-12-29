@@ -19,7 +19,7 @@ class Admin::AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to(admin_announcements_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
         format.html { render(:edit) }
@@ -33,7 +33,7 @@ class Admin::AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.update(announcement_params)
-        format.html { redirect_to(admin_announcements_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
         format.html { render(:edit) }
@@ -47,7 +47,7 @@ class Admin::AnnouncementsController < ApplicationController
     @announcement.destroy
 
     respond_to do |format|
-      format.html { redirect_to(admin_announcements_path, notice: "Announcement was successfully destroyed.") }
+      format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end
@@ -58,9 +58,9 @@ class Admin::AnnouncementsController < ApplicationController
 
   def announcement_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/admin/announcements"
-    when "edit"
+    when 'edit'
       "/#{params[:event]}/admin/announcements/#{params[:id]}"
     end
   end

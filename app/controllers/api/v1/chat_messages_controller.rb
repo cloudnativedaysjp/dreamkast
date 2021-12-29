@@ -13,7 +13,7 @@ class Api::V1::ChatMessagesController < ApplicationController
     query[:created_at] = params[:createdFrom] if params[:createdFrom]
     query[:reply_to] = params[:replyTo] if params[:replyTo]
     @chat_messages = ChatMessage.where(query)
-    render("api/v1/chat_messages/index.json.jbuilder")
+    render('api/v1/chat_messages/index.json.jbuilder')
   end
 
   def create
@@ -47,7 +47,7 @@ class Api::V1::ChatMessagesController < ApplicationController
   end
 
   def not_authorized
-    render(json: { error: "Unauthorized" }, status: 403)
+    render(json: { error: 'Unauthorized' }, status: 403)
   end
 
   def event_name

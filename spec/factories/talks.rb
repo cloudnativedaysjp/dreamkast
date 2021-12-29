@@ -31,10 +31,10 @@
 FactoryBot.define do
   factory :talk1, class: Talk do
     id { 1 }
-    title { "talk1" }
-    start_time { "12:00" }
-    end_time { "12:40" }
-    abstract { "あいうえおかきくけこさしすせそ" }
+    title { 'talk1' }
+    start_time { '12:00' }
+    end_time { '12:40' }
+    abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 1 }
     conference_day_id { 1 }
     talk_difficulty_id { 1 }
@@ -42,7 +42,7 @@ FactoryBot.define do
     track_id { 1 }
     show_on_timetable { true }
     video_published { true }
-    document_url { "http://" }
+    document_url { 'http://' }
 
     trait :video_published do
       video_published { true }
@@ -55,12 +55,12 @@ FactoryBot.define do
 
   factory :talk2, class: Talk do
     id { 2 }
-    title { "talk2" }
-    start_time { "12:00" }
-    end_time { "12:40" }
+    title { 'talk2' }
+    start_time { '12:00' }
+    end_time { '12:40' }
     conference_id { 1 }
     conference_day_id { 2 }
-    abstract { "あいうえおかきくけこ" }
+    abstract { 'あいうえおかきくけこ' }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
@@ -70,12 +70,12 @@ FactoryBot.define do
 
   factory :talk3, class: Talk do
     id { 5 }
-    title { "talk3" }
-    start_time { "13:00" }
-    end_time { "13:40" }
+    title { 'talk3' }
+    start_time { '13:00' }
+    end_time { '13:40' }
     conference_id { 1 }
     conference_day_id { 2 }
-    abstract { "track3 talk" }
+    abstract { 'track3 talk' }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 3 }
@@ -86,12 +86,12 @@ FactoryBot.define do
 
   factory :talk_rejekt, class: Talk do
     id { 3 }
-    title { "Rejected Talk" }
-    start_time { "19:00" }
-    end_time { "21:00" }
+    title { 'Rejected Talk' }
+    start_time { '19:00' }
+    end_time { '21:00' }
     conference_id { 1 }
     conference_day_id { 3 }
-    abstract { "残念ながらRejekted" }
+    abstract { '残念ながらRejekted' }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
@@ -100,12 +100,12 @@ FactoryBot.define do
 
   factory :talk_cm, class: Talk do
     id { 4 }
-    title { "CM" }
-    start_time { "10:00" }
-    end_time { "11:00" }
+    title { 'CM' }
+    start_time { '10:00' }
+    end_time { '11:00' }
     conference_id { 1 }
     conference_day_id { 3 }
-    abstract { "CMCMCMCMCMCM" }
+    abstract { 'CMCMCMCMCMCM' }
     talk_difficulty_id { 1 }
     talk_category_id { 1 }
     track_id { 1 }
@@ -115,10 +115,10 @@ FactoryBot.define do
 
   factory :cndo_talk1, class: Talk do
     id { 10 }
-    title { "talk1" }
-    start_time { "12:30" }
-    end_time { "12:40" }
-    abstract { "あいうえおかきくけこさしすせそ" }
+    title { 'talk1' }
+    start_time { '12:30' }
+    end_time { '12:40' }
+    abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 2 }
     conference_day_id { 10 }
     talk_difficulty_id { 10 }
@@ -126,17 +126,17 @@ FactoryBot.define do
     track_id { 10 }
     show_on_timetable { true }
     video_published { true }
-    document_url { "http://" }
+    document_url { 'http://' }
   end
 
   factory :cndo_talk2, class: Talk do
     id { 11 }
-    title { "talk2" }
-    start_time { "12:30" }
-    end_time { "12:40" }
+    title { 'talk2' }
+    start_time { '12:30' }
+    end_time { '12:40' }
     conference_id { 2 }
     conference_day_id { 11 }
-    abstract { "あいうえおかきくけこ" }
+    abstract { 'あいうえおかきくけこ' }
     talk_difficulty_id { 10 }
     talk_category_id { 10 }
     track_id { 10 }
@@ -146,10 +146,10 @@ FactoryBot.define do
 
   factory :cndt2021_talk1, class: Talk do
     id { 12 }
-    title { "talk1" }
-    start_time { "12:30" }
-    end_time { "12:40" }
-    abstract { "あいうえおかきくけこさしすせそ" }
+    title { 'talk1' }
+    start_time { '12:30' }
+    end_time { '12:40' }
+    abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 4 }
     conference_day_id { 10 }
     talk_difficulty_id { 10 }
@@ -157,6 +157,6 @@ FactoryBot.define do
     track_id { 11 }
     show_on_timetable { true }
     video_published { true }
-    document_url { "http://" }
+    document_url { 'http://' }
   end
 end

@@ -1,7 +1,7 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
-require "csv"
+require 'rails/all'
+require 'csv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 
 module Cndtattend
   class Application < Rails::Application
-    config.time_zone = "Asia/Tokyo"
+    config.time_zone = 'Asia/Tokyo'
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults(6.0)
 
@@ -28,9 +28,9 @@ module Cndtattend
     end
 
     config.i18n.default_locale = :ja
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.yml").to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
     config.active_model.i18n_customize_full_message = true
     config.autoload_paths << "#{Rails.root}/app/middlewares"
-    config.action_cable.mount_path = "/cable"
+    config.action_cable.mount_path = '/cable'
   end
 end

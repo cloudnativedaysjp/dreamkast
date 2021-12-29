@@ -17,7 +17,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
         end
 
         unless @sponsor.speaker_emails && @sponsor.speaker_emails.downcase.include?(@current_user[:info][:email].downcase)
-          redirect_to("/#{@conference.abbr}/sponsor_dashboards/login", notice: "ログインが許可されていません")
+          redirect_to("/#{@conference.abbr}/sponsor_dashboards/login", notice: 'ログインが許可されていません')
         end
       end
     end
@@ -36,9 +36,9 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
   # POST :event/sponsor_dashboard/sponsor_profiles
   def create
     @conference = Conference.find_by(abbr: params[:event])
-    @sponsor = Sponsor.where(conference_id: @conference.id).where("speaker_emails like(?)", "%#{@current_user[:info][:email]}%").first
+    @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").first
     unless @sponsor
-      redirect_to("/#{@conference.abbr}/sponsor_dashboards", notice: "ログインが許可されていません")
+      redirect_to("/#{@conference.abbr}/sponsor_dashboards", notice: 'ログインが許可されていません')
     else
       @sponsor_profile = SponsorProfile.new(sponsor_profile_params.merge(conference_id: @conference.id))
       @sponsor_profile.sub = @current_user[:extra][:raw_info][:sub]
@@ -48,7 +48,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
 
       respond_to do |format|
         if @sponsor_profile.save
-          format.html { redirect_to("/#{@conference.abbr}/sponsor_dashboards/#{@sponsor.id}", notice: "Speaker was successfully created.") }
+          format.html { redirect_to("/#{@conference.abbr}/sponsor_dashboards/#{@sponsor.id}", notice: 'Speaker was successfully created.') }
         else
           format.html { render(:new) }
         end
@@ -66,7 +66,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
 
     respond_to do |format|
       if @sponsor_profile.update(sponsor_profile_params)
-        format.html { redirect_to(sponsor_dashboards_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(sponsor_dashboards_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @speaker) }
       else
         format.html { render(:edit) }
@@ -81,9 +81,9 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
 
   def sponsor_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/sponsor_profiles"
-    when "edit", "update"
+    when 'edit', 'update'
       "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/sponsor_profiles/#{params[:id]}"
     end
   end

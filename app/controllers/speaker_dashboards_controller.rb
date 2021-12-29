@@ -32,22 +32,22 @@ class SpeakerDashboardsController < ApplicationController
 
   def video_registration_status(video_registration)
     if video_registration.submitted?
-      "提出されたビデオファイルの確認中です。"
+      '提出されたビデオファイルの確認中です。'
     elsif video_registration.confirmed?
-      "提出されたビデオファイルの確認が完了しました。"
+      '提出されたビデオファイルの確認が完了しました。'
     end
   end
 
   def proposal_status(proposal)
-    return "エントリー済み" unless @conference.cfp_result_visible
+    return 'エントリー済み' unless @conference.cfp_result_visible
 
     case proposal.status
-    when "registered"
-      "エントリー済み"
-    when "accepted"
-      "採択"
-    when "rejected"
-      "不採択"
+    when 'registered'
+      'エントリー済み'
+    when 'accepted'
+      '採択'
+    when 'rejected'
+      '不採択'
     end
   end
 end

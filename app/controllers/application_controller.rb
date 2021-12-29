@@ -15,15 +15,15 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def user_not_authorized
-    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
+    render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end
 
   def home_controller?
-    controller_name == "home"
+    controller_name == 'home'
   end
 
   def admin_controller?
-    controller_name == "admin"
+    controller_name == 'admin'
   end
 
   def event_name
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def production?
-    env_name == "production"
+    env_name == 'production'
   end
 
   # ActiveRecordの機能でもうちょっといい感じにかける気はする…
@@ -50,11 +50,11 @@ class ApplicationController < ActionController::Base
   helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
 
   def render_403
-    render(template: "errors/error_403", status: 403, layout: "application", content_type: "text/html")
+    render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end
 
   def render_404
-    render(template: "errors/error_404", status: 404, layout: "application", content_type: "text/html", formats: :html)
+    render(template: 'errors/error_404', status: 404, layout: 'application', content_type: 'text/html', formats: :html)
   end
 
   def render_500(e = nil)
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
       logger.error(e.backtrace.join("\n"))
     end
 
-    render(template: "errors/error_500", status: 500, layout: "application", content_type: "text/html")
+    render(template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html')
   end
 
   # カンファレンス開催前、かつCFP中
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
     d = @conference.conference_days.where(internal: false)
     if d.length == 1
       day = day_of_the_week[d.first.date.cwday - 1]
-      d.first.date.strftime("%Y年%m月%d日") + "(#{day})"
+      d.first.date.strftime('%Y年%m月%d日') + "(#{day})"
     else
       first = d.order(:date).first
       fday = day_of_the_week[first.date.cwday - 1]

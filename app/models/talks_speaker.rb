@@ -13,6 +13,6 @@ class TalksSpeaker < ApplicationRecord
   belongs_to :speaker, optional: true
 
   def self.updatable_attributes
-    ["talk_id", "speaker_id"]
+    ['talk_id', 'speaker_id']
   end
 end

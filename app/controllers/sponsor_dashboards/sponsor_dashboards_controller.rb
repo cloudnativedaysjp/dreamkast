@@ -13,7 +13,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   def login
     if logged_in?
-      @sponsor = Sponsor.where(conference_id: @conference.id).where("speaker_emails like(?)", "%#{@current_user[:info][:email]}%").first
+      @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").first
       if @sponsor.nil?
         raise(Forbidden)
       elsif logged_in? && @sponsor.present? && @sponsor_profile.nil?
@@ -52,22 +52,22 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   def video_registration_status(video_registration)
     if video_registration.submitted?
-      "提出されたビデオファイルの確認中です。"
+      '提出されたビデオファイルの確認中です。'
     elsif video_registration.confirmed?
-      "提出されたビデオファイルの確認が完了しました。"
+      '提出されたビデオファイルの確認が完了しました。'
     end
   end
 
   def proposal_status(proposal)
-    return "エントリー済み" unless @conference.cfp_result_visible
+    return 'エントリー済み' unless @conference.cfp_result_visible
 
     case proposal.status
-    when "registered"
-      "エントリー済み"
-    when "accepted"
-      "採択"
-    when "rejected"
-      "不採択"
+    when 'registered'
+      'エントリー済み'
+    when 'accepted'
+      '採択'
+    when 'rejected'
+      '不採択'
     end
   end
 end

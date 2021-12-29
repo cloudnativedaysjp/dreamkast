@@ -5,7 +5,7 @@ class Admin::TimetablesController < ApplicationController
   before_action :set_profile
 
   def index
-    @talks = @conference.talks.show_on_timetable.order("conference_day_id ASC, start_time ASC, track_id ASC")
+    @talks = @conference.talks.show_on_timetable.order('conference_day_id ASC, start_time ASC, track_id ASC')
     @tracks = Track.where(conference_id: @conference.id)
     @conference_form = ConferenceForm.new(conference: @conference)
     respond_to do |format|
@@ -17,14 +17,14 @@ class Admin::TimetablesController < ApplicationController
     @talks = []
     talks_params.each do |id, talk_param|
       talk = Talk.find(id)
-      end_time = ""
-      if talk_param[:start_time] != ""
+      end_time = ''
+      if talk_param[:start_time] != ''
         end_time = (Time.parse(talk_param[:start_time]) + (talk.time.to_i * 60)).to_s(:db)
       end
       talk.update(talk_param.merge(end_time: end_time))
       @talks << talk
     end
-    redirect_to(admin_timetables_path, notice: "タイムテーブルを更新しました")
+    redirect_to(admin_timetables_path, notice: 'タイムテーブルを更新しました')
   end
 
   def publish
@@ -32,7 +32,7 @@ class Admin::TimetablesController < ApplicationController
 
     respond_to do |format|
       if @conference.update(show_timetable: 1)
-        format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: "Timetable has published.") }
+        format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: 'Timetable has published.') }
       else
         format.html { render(:edit) }
       end
@@ -44,7 +44,7 @@ class Admin::TimetablesController < ApplicationController
 
     respond_to do |format|
       if @conference.update(show_timetable: 0)
-        format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: "Timetable has closed.") }
+        format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: 'Timetable has closed.') }
       else
         format.html { render(:edit) }
       end
@@ -52,7 +52,7 @@ class Admin::TimetablesController < ApplicationController
   end
 
   def preview
-    @talks = @conference.talks.order("conference_day_id ASC, start_time ASC, track_id ASC")
+    @talks = @conference.talks.order('conference_day_id ASC, start_time ASC, track_id ASC')
     @tracks = Track.where(conference_id: @conference.id)
     @talk_categories = TalkCategory.where(conference_id: @conference.id)
     @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
@@ -75,10 +75,10 @@ class Admin::TimetablesController < ApplicationController
   end
 
   def timetable_partial_name
-    if params[:event] == "cndo2021"
-      "timetable_cndo2021"
+    if params[:event] == 'cndo2021'
+      'timetable_cndo2021'
     else
-      "timetable"
+      'timetable'
     end
   end
 end

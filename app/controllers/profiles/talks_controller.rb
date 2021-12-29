@@ -15,9 +15,9 @@ class Profiles::TalksController < ApplicationController
       RegisteredTalk.where(profile_id: @profile.id).delete_all
 
       if params[:talks].present?
-        if params[:event] == "cndt2020"
+        if params[:event] == 'cndt2020'
           params[:talks].each do |key, value|
-            day_id, slot = key.split("_")
+            day_id, slot = key.split('_')
             track_id = value
 
             Talk.find_by_params(day_id, slot, track_id).each do |talk|
@@ -42,7 +42,7 @@ class Profiles::TalksController < ApplicationController
     end
     redirect_to(dashboard_path)
   rescue => e
-    redirect_to(timetables_path, notice: "セッション登録に失敗しました")
+    redirect_to(timetables_path, notice: 'セッション登録に失敗しました')
   end
 
   def update
@@ -51,7 +51,7 @@ class Profiles::TalksController < ApplicationController
   def destroy
     @talk.destroy
     respond_to do |format|
-      format.html { redirect_to(talks_url, notice: "Talk was successfully destroyed.") }
+      format.html { redirect_to(talks_url, notice: 'Talk was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end

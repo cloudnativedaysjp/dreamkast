@@ -8,7 +8,7 @@
 #  profile_id :integer
 #  talk_id    :integer
 #
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe(RegisteredTalk, type: :model) do
   pending "add some examples to (or delete) #{__FILE__}"

@@ -37,3 +37,6 @@ Style/StringConcatenation:
 
 Style/MethodDefParentheses:
   EnforcedStyle: require_parentheses
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes

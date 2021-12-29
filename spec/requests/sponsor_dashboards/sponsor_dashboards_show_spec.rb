@@ -14,6 +14,15 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
       end
     end
 
+    shared_examples_for :returns_successfully do
+      it 'returns successfully' do
+        get '/cndt2020/sponsor_dashboards/1'
+        expect(response).to(be_successful)
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to(include('スポンサーダッシュボード'))
+      end
+    end
+
     shared_examples_for :response_includes_proposal_title_and_entry_status do |title, entry_status|
       it 'include information about proposal' do
         get '/cndt2020/sponsor_dashboards/1'
@@ -21,6 +30,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         expect(response.body).to(include(entry_status))
       end
     end
+
     shared_examples_for :response_does_not_include_proposal_title do |title|
       it 'include information about proposal' do
         get '/cndt2020/sponsor_dashboards/1'
@@ -45,7 +55,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
     end
 
     describe "user is sponsor's speaker" do
-      let!(:sponsor) { create(:sponsor) }
+      let!(:sponsor) { create(:sponsor, conference: cndt2020) }
 
       describe "sponsor profile isn't created yet" do
         describe "sponsor doesn't logged in" do
@@ -69,12 +79,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         describe 'sponsor logged in' do
           before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
 
-          it 'returns a forbidden response with 403 status code' do
-            get '/cndt2020/sponsor_dashboards/1'
-            expect(response).to(be_successful)
-            expect(response).to(have_http_status('200'))
-            expect(response.body).to(include('スポンサーダッシュボード'))
-          end
+          it_should_behave_like :returns_successfully
 
           context 'sponsor has sponsor session and has registered proposal ' do
             before do
@@ -84,13 +89,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
             let(:speaker) { create(:speaker_alice, :with_talk1_registered) }
             let(:talk) { create(:sponsor_session, sponsor: sponsor) }
 
-            it 'returns successfull' do
-              get '/cndt2020/sponsor_dashboards/1'
-              expect(response).to(be_successful)
-              expect(response).to(have_http_status('200'))
-              expect(response.body).to(include('スポンサーダッシュボード'))
-            end
-
+            it_should_behave_like :returns_successfully
             it_should_behave_like :response_does_not_include_proposal_title, 'talk1'
             it_should_behave_like :response_includes_proposal_title_and_entry_status, 'sponsor_session', '受付状況: エントリー済み'
           end

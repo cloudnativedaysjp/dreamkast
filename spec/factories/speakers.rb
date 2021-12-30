@@ -65,7 +65,6 @@ FactoryBot.define do
         create(:proposal, :with_cndt2021, talk: talk, status: 0)
       end
     end
-
   end
 
   factory :talks_speakers, class: TalksSpeaker

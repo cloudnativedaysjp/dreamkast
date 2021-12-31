@@ -22,6 +22,7 @@ require 'aws-sdk-medialive'
 
 class LiveStreamMediaLive < LiveStream
   include MediaLiveHelper
+  include SsmHelper
   include EnvHelper
 
   belongs_to :conference
@@ -98,7 +99,10 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_media_live_resources
+    track.live_stream_media_package.get_channel_from_aws
+
     input_resp = media_live_client.create_input(create_input_params)
+    create_parameter("/medialive/#{resource_name}", track.live_stream_media_package.ingest_endpoint_password)
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
 
@@ -121,6 +125,7 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
     wait_until(:channel_deleted, channel_id)
     media_live_client.delete_input(input_id: input_id) if input_id
+    delete_parameter("/medialive/#{resource_name}")
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -202,17 +207,19 @@ class LiveStreamMediaLive < LiveStream
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     {
       name: resource_name,
-      type: 'RTMP_PULL',
-      sources: [
+      type: 'RTMP_PUSH',
+      destinations: [
         {
-          url: track.live_stream_ivs.playback_url
+          stream_name: 'aaa/bvbb',
         }
       ],
+      input_security_groups: ['8926492'],
       tags: tags
     }
   end
 
   def create_channel_params(input_id, input_name)
+    track.live_stream_media_package.get_channel_from_aws
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
 
@@ -221,13 +228,25 @@ class LiveStreamMediaLive < LiveStream
       role_arn: 'arn:aws:iam::607167088920:role/MediaLiveAccessRole',
       channel_class: 'SINGLE_PIPELINE',
       tags: tags,
+
       destinations: [
         {
           id: 'destination1',
+          settings: [
+            {
+              url: track.live_stream_media_package.ingest_endpoint_url,
+              username: track.live_stream_media_package.ingest_endpoint_username,
+              password_param:  "/medialive/#{resource_name}"
+            }
+          ]
+        },
+        {
+          id: 'destination2',
           media_package_settings: [],
           settings: [
             {
-              url: "s3://#{bucket_name}/medialive/#{conference.abbr}"
+              url: "rtmps://#{track.live_stream_ivs.ingest_endpoint}:443/app/",
+              stream_name: track.live_stream_ivs.stream_key['value']
             }
           ]
         }
@@ -241,7 +260,7 @@ class LiveStreamMediaLive < LiveStream
             caption_selectors: [],
             audio_selectors: [
               {
-                name: 'aaa'
+                name: 'Default'
               }
             ],
             deblock_filter: 'DISABLED',
@@ -262,206 +281,243 @@ class LiveStreamMediaLive < LiveStream
 
       encoder_settings: {
         audio_descriptions: [
+          # For MediaPackage
+          audio_description('audio_1', 192000, 48000),
+          audio_description('audio_2', 192000, 48000),
+          audio_description('audio_3', 128000, 48000),
+          # For IVS
           {
-            audio_selector_name: 'aaa',
+            name: 'audio_al2b0j',
+            audio_selector_name: 'Default',
             audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 192000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_1'
-          },
-          {
-            audio_selector_name: 'aaa',
-            audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 192000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_2'
-          },
-          {
-            audio_selector_name: 'aaa',
-            audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 128000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_3'
+            language_code_control: 'FOLLOW_INPUT'
           }
         ],
         caption_descriptions: [],
         output_groups: [
-          {
-            name: 'HD',
-            output_group_settings: {
-              hls_group_settings: {
-                ad_markers: [],
-                caption_language_mappings: [],
-                caption_language_setting: 'OMIT',
-                client_cache: 'ENABLED',
-                codec_specification: 'RFC_4281',
-                destination: { destination_ref_id: 'destination1' },
-                directory_structure: 'SINGLE_DIRECTORY',
-                discontinuity_tags: 'INSERT',
-                hls_cdn_settings: { hls_s3_settings: {} },
-                hls_id_3_segment_tagging: 'DISABLED',
-                i_frame_only_playlists: 'DISABLED',
-                incomplete_segment_behavior: 'AUTO',
-                index_n_segments: 600,
-                input_loss_action: 'EMIT_OUTPUT',
-                iv_in_manifest: 'INCLUDE',
-                iv_source: 'FOLLOWS_SEGMENT_NUMBER',
-                keep_segments: 700,
-                manifest_compression: 'NONE',
-                manifest_duration_format: 'INTEGER',
-                mode: 'VOD',
-                output_selection: 'MANIFESTS_AND_SEGMENTS',
-                program_date_time: 'EXCLUDE',
-                program_date_time_period: 600,
-                redundant_manifest: 'DISABLED',
-                segment_length: 6,
-                segmentation_mode: 'USE_SEGMENT_DURATION',
-                segments_per_subdirectory: 10000,
-                stream_inf_resolution: 'INCLUDE',
-                timed_metadata_id_3_frame: 'PRIV',
-                timed_metadata_id_3_period: 10,
-                ts_file_mode: 'SEGMENTED_FILES'
-              }
-            },
-            outputs: [
-              {
-                audio_description_names: ['audio_1'],
-                caption_description_names: [],
-                output_name: '_1080p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_1080p30'
-                  }
-                },
-                video_description_name: 'video_1080p30'
-              },
-              {
-                audio_description_names: ['audio_2'],
-                caption_description_names: [],
-                output_name: '_720p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_720p30'
-                  }
-                },
-                video_description_name: 'video_720p30'
-              },
-              {
-                audio_description_names: ['audio_3'],
-                caption_description_names: [],
-                output_name: '_480p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_480p30'
-                  }
-                },
-                video_description_name: 'video_480p30'
-              }
-            ]
-          }
+          output_to_mediapackage,
+          output_to_ivs
         ],
         timecode_config: {
           source: 'EMBEDDED'
         },
         video_descriptions: [
+          # For MediaPackage
           video_description('video_1080p30', 1080, 1920, 5000000, 50),
           video_description('video_720p30', 720, 1280, 3000000, 100),
-          video_description('video_480p30', 480, 854, 1500000, 100)
+          video_description('video_480p30', 480, 854, 1500000, 100),
+          # For IVS
+          {
+            name: 'video_ue3og',
+            respond_to_afd: 'NONE',
+            scaling_behavior: 'DEFAULT',
+            sharpness: 50
+          }
         ]
       }
+    }
+  end
+
+  def audio_description(name, bitrate, sample_rate)
+    {
+      name: name,
+        audio_selector_name: 'Default',
+        audio_type_control: 'FOLLOW_INPUT',
+        codec_settings:
+          {
+            aac_settings:
+              {
+                bitrate: bitrate,
+                coding_mode: 'CODING_MODE_2_0',
+                input_type: 'NORMAL',
+                profile: 'LC',
+                rate_control_mode: 'CBR',
+                raw_format: 'NONE',
+                sample_rate: sample_rate,
+                spec: 'MPEG4'
+              }
+          },
+        language_code_control: 'FOLLOW_INPUT'
+    }
+  end
+
+  def output_groups
+    [
+      output_to_mediapackage,
+      output_to_ivs
+    ]
+  end
+
+  def output_to_mediapackage
+    {
+      name: 'To MediaPackage',
+      output_group_settings: {
+        hls_group_settings: {
+          ad_markers: [],
+          caption_language_mappings: [],
+          caption_language_setting: 'OMIT',
+          client_cache: 'ENABLED',
+          codec_specification: 'RFC_4281',
+          destination: { destination_ref_id: 'destination1' },
+          directory_structure: 'SINGLE_DIRECTORY',
+          discontinuity_tags: 'INSERT',
+          hls_cdn_settings: {
+            hls_webdav_settings: {
+              connection_retry_interval: 1,
+              filecache_duration: 300,
+              http_transfer_mode: 'NON_CHUNKED',
+              num_retries: 10,
+              restart_delay: 15
+            }
+          },
+          hls_id_3_segment_tagging: 'DISABLED',
+          i_frame_only_playlists: 'DISABLED',
+          incomplete_segment_behavior: 'AUTO',
+          index_n_segments: 10,
+          input_loss_action: 'EMIT_OUTPUT',
+          iv_in_manifest: 'INCLUDE',
+          iv_source: 'FOLLOWS_SEGMENT_NUMBER',
+          keep_segments: 21,
+          manifest_compression: 'NONE',
+          manifest_duration_format: 'INTEGER',
+          mode: 'LIVE',
+          output_selection: 'MANIFESTS_AND_SEGMENTS',
+          program_date_time: 'EXCLUDE',
+          program_date_time_period: 600,
+          redundant_manifest: 'DISABLED',
+          segment_length: 6,
+          segmentation_mode: 'USE_SEGMENT_DURATION',
+          segments_per_subdirectory: 10000,
+          stream_inf_resolution: 'INCLUDE',
+          timed_metadata_id_3_frame: 'PRIV',
+          timed_metadata_id_3_period: 10,
+          ts_file_mode: 'SEGMENTED_FILES'
+        }
+      },
+      outputs: [
+        {
+          audio_description_names: ['audio_1'],
+          caption_description_names: [],
+          output_settings: {
+            hls_output_settings: {
+              hls_settings: {
+                standard_hls_settings: {
+                  audio_rendition_sets: 'program_audio',
+                  m3u_8_settings: {
+                    audio_frames_per_pes: 4,
+                    audio_pids: '492-498',
+                    ecm_pid: '8182',
+                    pcr_control: 'PCR_EVERY_PES_PACKET',
+                    pmt_pid: '480',
+                    program_num: 1,
+                    scte_35_behavior: 'NO_PASSTHROUGH',
+                    scte_35_pid: '500',
+                    timed_metadata_behavior: 'NO_PASSTHROUGH',
+                    timed_metadata_pid: '502',
+                    video_pid: '481'
+                  }
+                }
+              },
+              name_modifier: '_1080p30'
+            }
+          },
+          video_description_name: 'video_1080p30'
+        },
+        {
+          audio_description_names: ['audio_2'],
+          caption_description_names: [],
+          output_settings: {
+            hls_output_settings: {
+              hls_settings: {
+                standard_hls_settings: {
+                  audio_rendition_sets: 'program_audio',
+                  m3u_8_settings: {
+                    audio_frames_per_pes: 4,
+                    audio_pids: '492-498',
+                    ecm_pid: '8182',
+                    pcr_control: 'PCR_EVERY_PES_PACKET',
+                    pmt_pid: '480',
+                    program_num: 1,
+                    scte_35_behavior: 'NO_PASSTHROUGH',
+                    scte_35_pid: '500',
+                    timed_metadata_behavior: 'NO_PASSTHROUGH',
+                    timed_metadata_pid: '502',
+                    video_pid: '481'
+                  }
+                }
+              },
+              name_modifier: '_720p30'
+            }
+          },
+          video_description_name: 'video_720p30'
+        },
+        {
+          audio_description_names: ['audio_3'],
+          caption_description_names: [],
+          output_settings: {
+            hls_output_settings: {
+              hls_settings: {
+                standard_hls_settings: {
+                  audio_rendition_sets: 'program_audio',
+                  m3u_8_settings: {
+                    audio_frames_per_pes: 4,
+                    audio_pids: '492-498',
+                    ecm_pid: '8182',
+                    pcr_control: 'PCR_EVERY_PES_PACKET',
+                    pmt_pid: '480',
+                    program_num: 1,
+                    scte_35_behavior: 'NO_PASSTHROUGH',
+                    scte_35_pid: '500',
+                    timed_metadata_behavior: 'NO_PASSTHROUGH',
+                    timed_metadata_pid: '502',
+                    video_pid: '481'
+                  }
+                }
+              },
+              name_modifier: '_480p30'
+            }
+          },
+          video_description_name: 'video_480p30'
+        }
+      ]
+    }
+  end
+
+  def output_to_ivs
+    {
+      name: 'To IVS',
+      output_group_settings:
+        {
+          rtmp_group_settings:
+            {
+              ad_markers: [],
+              authentication_scheme: 'COMMON',
+              cache_full_behavior: 'DISCONNECT_IMMEDIATELY',
+              cache_length: 30,
+              caption_data: 'ALL',
+              input_loss_action: 'EMIT_OUTPUT',
+              restart_delay: 15
+            }
+        },
+      outputs:
+        [
+          {
+            audio_description_names: ['audio_al2b0j'],
+            caption_description_names: [],
+            output_name: 'destination2',
+            output_settings: {
+              rtmp_output_settings: {
+                certificate_mode: 'VERIFY_AUTHENTICITY',
+                connection_retry_interval: 2,
+                destination: {
+                  destination_ref_id: 'destination2'
+                },
+                num_retries: 10
+              }
+            },
+            video_description_name: 'video_ue3og'
+          }
+        ]
     }
   end
 
@@ -478,7 +534,6 @@ class LiveStreamMediaLive < LiveStream
           color_metadata: 'INSERT',
           entropy_encoding: 'CABAC',
           flicker_aq: 'ENABLED',
-          force_field_pictures: 'DISABLED',
           framerate_control: 'SPECIFIED',
           framerate_denominator: 1,
           framerate_numerator: 30,
@@ -490,21 +545,22 @@ class LiveStreamMediaLive < LiveStream
           level: 'H264_LEVEL_AUTO',
           look_ahead_rate_control: 'HIGH',
           num_ref_frames: 3,
-          par_control: 'INITIALIZE_FROM_SOURCE',
-          profile: 'HIGH',
+          par_control: 'SPECIFIED',
+          par_denominator: 3,
+          par_numerator: 4,
+          profile: 'MAIN',
           rate_control_mode: 'CBR',
           scan_type: 'PROGRESSIVE',
           scene_change_detect: 'ENABLED',
           slices: 1,
           spatial_aq: 'ENABLED',
-          subgop_length: 'FIXED',
           syntax: 'DEFAULT',
           temporal_aq: 'ENABLED',
           timecode_insertion: 'DISABLED'
         }
       },
       respond_to_afd: 'NONE',
-      scaling_behavior: 'DEFAULT',
+      scaling_behavior: 'STRETCH_TO_OUTPUT',
       sharpness: sharpness
     }
   end

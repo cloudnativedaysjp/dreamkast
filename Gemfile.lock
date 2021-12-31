@@ -123,6 +123,9 @@ GEM
     aws-sdk-sqs (1.36.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-ssm (1.112.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sigv4 (~> 1.1)
     aws-sessionstore-dynamodb (2.0.1)
       aws-sdk-dynamodb (~> 1)
       rack (~> 2)
@@ -599,6 +602,7 @@ DEPENDENCIES
   aws-sdk-mediapackage
   aws-sdk-rails
   aws-sdk-s3 (~> 1.14)
+  aws-sdk-ssm
   bootsnap (>= 1.4.2)
   bullet
   byebug

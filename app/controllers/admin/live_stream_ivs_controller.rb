@@ -1,6 +1,7 @@
 class Admin::LiveStreamIvsController < ApplicationController
   include SecuredAdmin
   include MediaLiveHelper
+  include MediaPackageHelper
 
   def index
     @ivs = LiveStreamIvs.new
@@ -12,6 +13,11 @@ class Admin::LiveStreamIvsController < ApplicationController
     end
     get_media_live_inputs_from_aws(@media_lives.map(&:input_id)).each do |input|
       @media_lives.find { |media_live| media_live.input_id == input.id }.input = input
+    end
+
+    @media_packages = @conference.tracks.map(&:live_stream_media_package).compact
+    get_media_package_channels_from_aws(@media_packages.map(&:channel_id)).each do |channel|
+      @media_packages.find { |media_package| media_package.channel_id == channel.id }.channel = channel
     end
 
     respond_to do |format|

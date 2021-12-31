@@ -103,6 +103,9 @@ GEM
     aws-sdk-medialive (1.73.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-mediapackage (1.40.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-rails (3.6.0)
       aws-record (~> 2)
       aws-sdk-ses (~> 1)
@@ -593,6 +596,7 @@ DEPENDENCIES
   awesome_nested_set
   aws-sdk-ivs
   aws-sdk-medialive
+  aws-sdk-mediapackage
   aws-sdk-rails
   aws-sdk-s3 (~> 1.14)
   bootsnap (>= 1.4.2)

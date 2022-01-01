@@ -384,90 +384,9 @@ class LiveStreamMediaLive < LiveStream
         }
       },
       outputs: [
-        {
-          audio_description_names: ['audio_1'],
-          caption_description_names: [],
-          output_settings: {
-            hls_output_settings: {
-              hls_settings: {
-                standard_hls_settings: {
-                  audio_rendition_sets: 'program_audio',
-                  m3u_8_settings: {
-                    audio_frames_per_pes: 4,
-                    audio_pids: '492-498',
-                    ecm_pid: '8182',
-                    pcr_control: 'PCR_EVERY_PES_PACKET',
-                    pmt_pid: '480',
-                    program_num: 1,
-                    scte_35_behavior: 'NO_PASSTHROUGH',
-                    scte_35_pid: '500',
-                    timed_metadata_behavior: 'NO_PASSTHROUGH',
-                    timed_metadata_pid: '502',
-                    video_pid: '481'
-                  }
-                }
-              },
-              name_modifier: '_1080p30'
-            }
-          },
-          video_description_name: 'video_1080p30'
-        },
-        {
-          audio_description_names: ['audio_2'],
-          caption_description_names: [],
-          output_settings: {
-            hls_output_settings: {
-              hls_settings: {
-                standard_hls_settings: {
-                  audio_rendition_sets: 'program_audio',
-                  m3u_8_settings: {
-                    audio_frames_per_pes: 4,
-                    audio_pids: '492-498',
-                    ecm_pid: '8182',
-                    pcr_control: 'PCR_EVERY_PES_PACKET',
-                    pmt_pid: '480',
-                    program_num: 1,
-                    scte_35_behavior: 'NO_PASSTHROUGH',
-                    scte_35_pid: '500',
-                    timed_metadata_behavior: 'NO_PASSTHROUGH',
-                    timed_metadata_pid: '502',
-                    video_pid: '481'
-                  }
-                }
-              },
-              name_modifier: '_720p30'
-            }
-          },
-          video_description_name: 'video_720p30'
-        },
-        {
-          audio_description_names: ['audio_3'],
-          caption_description_names: [],
-          output_settings: {
-            hls_output_settings: {
-              hls_settings: {
-                standard_hls_settings: {
-                  audio_rendition_sets: 'program_audio',
-                  m3u_8_settings: {
-                    audio_frames_per_pes: 4,
-                    audio_pids: '492-498',
-                    ecm_pid: '8182',
-                    pcr_control: 'PCR_EVERY_PES_PACKET',
-                    pmt_pid: '480',
-                    program_num: 1,
-                    scte_35_behavior: 'NO_PASSTHROUGH',
-                    scte_35_pid: '500',
-                    timed_metadata_behavior: 'NO_PASSTHROUGH',
-                    timed_metadata_pid: '502',
-                    video_pid: '481'
-                  }
-                }
-              },
-              name_modifier: '_480p30'
-            }
-          },
-          video_description_name: 'video_480p30'
-        }
+        output(['audio_1'], '_1080p30', 'video_1080p30'),
+        output(['audio_2'], '_720p30', 'video_720p30'),
+        output(['audio_3'], '_480p30', 'video_480p30')
       ]
     }
   end
@@ -507,6 +426,37 @@ class LiveStreamMediaLive < LiveStream
             video_description_name: 'video_ue3og'
           }
         ]
+    }
+  end
+
+  def output(audio_names, name_modifier, video_description_name)
+    {
+      audio_description_names: audio_names,
+          caption_description_names: [],
+          output_settings: {
+            hls_output_settings: {
+              hls_settings: {
+                standard_hls_settings: {
+                  audio_rendition_sets: 'program_audio',
+                  m3u_8_settings: {
+                    audio_frames_per_pes: 4,
+                    audio_pids: '492-498',
+                    ecm_pid: '8182',
+                    pcr_control: 'PCR_EVERY_PES_PACKET',
+                    pmt_pid: '480',
+                    program_num: 1,
+                    scte_35_behavior: 'NO_PASSTHROUGH',
+                    scte_35_pid: '500',
+                    timed_metadata_behavior: 'NO_PASSTHROUGH',
+                    timed_metadata_pid: '502',
+                    video_pid: '481'
+                  }
+                }
+              },
+              name_modifier: name_modifier
+            }
+          },
+          video_description_name: video_description_name
     }
   end
 

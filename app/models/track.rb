@@ -15,7 +15,7 @@ class Track < ApplicationRecord
   has_many :talks
   has_one :live_stream_ivs
   has_one :live_stream_media_live
-  has_one :live_stream_media_package
+  has_one :media_package_channel
 
   def on_air_talk
     on_air_talks = talks.includes(:video).map(&:video).select { |v| v && v.on_air }

@@ -6,8 +6,9 @@ class DeleteMediaPackageJob < ApplicationJob
 
   def perform(*args)
     logger.info('Perform DeleteMediaPackageJob')
-    media_package = args[0]
-    media_package.destroy
+    channel = args[0]
+    channel.media_package_origin_endpoints.each(&:destroy)
+    channel.destroy
   rescue => e
     logger.error(e.message)
   end

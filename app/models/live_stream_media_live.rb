@@ -47,9 +47,6 @@ class LiveStreamMediaLive < LiveStream
   CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'
   ERROR = 'ERROR'
 
-  attr_accessor :channel
-  attr_accessor :input
-
   def initialize(attributes = nil)
     @params = {}
     super
@@ -61,6 +58,18 @@ class LiveStreamMediaLive < LiveStream
 
   def get_channel_from_aws
     self.channel = media_live_client.describe_channel(channel_id: channel_id)
+  end
+
+  def input
+    @input ||= media_live_client.describe_input(input_id: input_id)
+  rescue => e
+    logger.error(e.message.to_s)
+  end
+
+  def channel
+    @channel ||= media_live_client.describe_channel(channel_id: channel_id)
+  rescue => e
+    logger.error(e.message.to_s)
   end
 
   def channel_id
@@ -87,7 +96,7 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_media_live_resources
-    create_parameter("/medialive/#{resource_name}", track.live_stream_media_package.ingest_endpoint_password)
+    create_parameter("/medialive/#{resource_name}", track.media_package_channel.ingest_endpoint_password)
 
     input_resp = media_live_client.create_input(create_input_params)
     params = {}
@@ -222,8 +231,8 @@ class LiveStreamMediaLive < LiveStream
           id: 'destination1',
           settings: [
             {
-              url: track.live_stream_media_package.ingest_endpoint_url,
-              username: track.live_stream_media_package.ingest_endpoint_username,
+              url: track.media_package_channel.ingest_endpoint_url,
+              username: track.media_package_channel.ingest_endpoint_username,
               password_param:  "/medialive/#{resource_name}"
             }
           ]

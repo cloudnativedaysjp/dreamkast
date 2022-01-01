@@ -15,10 +15,8 @@ class Admin::LiveStreamIvsController < ApplicationController
       @media_lives.find { |media_live| media_live.input_id == input.id }.input = input
     end
 
-    @media_packages = @conference.tracks.map(&:live_stream_media_package).compact
-    @media_packages.each do |media_package|
-      media_package.channel
-    end
+    @media_package_channels = @conference.tracks.map(&:media_package_channel).compact
+    @media_package_channels.each(&:channel)
 
     respond_to do |format|
       format.html { render(:index) }

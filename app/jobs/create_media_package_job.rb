@@ -8,11 +8,13 @@ class CreateMediaPackageJob < ApplicationJob
     logger.info('Perform CreateMediaPackageJob')
     conference, track = args
 
-    media_package = LiveStreamMediaPackage.new(conference: conference, track: track)
+    channel = MediaPackageChannel.new(conference: conference, track: track)
+    logger.error("Failed to create MediaPackageChannel: #{channel.errors}") unless channel.save
+    channel.create_media_package_resources
 
-    logger.error("Failed to create LiveStreamMediaPackage: #{media_package.errors}") unless media_package.save
-
-    media_package.create_media_package_resources
+    endpoint = MediaPackageOriginEndpoint.new(conference: conference, media_package_channel: channel)
+    logger.error("Failed to create MediaPackageChannel: #{endpoint.errors}") unless endpoint.save
+    endpoint.create_media_package_resources
   rescue => e
     logger.error(e.message)
   end

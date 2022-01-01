@@ -3,7 +3,6 @@ class Admin::LiveStreamMediaLiveController < ApplicationController
 
   def bulk_create
     @conference.tracks.each do |track|
-      # [Track.find(20), Track.find(21)].each do |track|
       unless track.live_stream_media_live.present?
         CreateMediaLiveJob.perform_later(@conference, track)
       end

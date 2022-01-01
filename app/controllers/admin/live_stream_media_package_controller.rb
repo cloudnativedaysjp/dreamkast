@@ -2,9 +2,8 @@ class Admin::LiveStreamMediaPackageController < ApplicationController
   include SecuredAdmin
 
   def bulk_create
-    [@conference.tracks.first].each do |track|
-      # [Track.find(20), Track.find(21)].each do |track|
-      unless track.live_stream_media_package.present?
+    @conference.tracks.each do |track|
+      unless track.media_package_channel.present?
         CreateMediaPackageJob.perform_later(@conference, track)
       end
     end
@@ -16,7 +15,7 @@ class Admin::LiveStreamMediaPackageController < ApplicationController
 
   def bulk_delete
     params[:media_package].each_key do |id, _|
-      media_live = LiveStreamMediaPackage.find(id)
+      media_live = MediaPackageChannel.find(id)
       DeleteMediaPackageJob.perform_later(media_live)
     end
 

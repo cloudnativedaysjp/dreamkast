@@ -107,8 +107,8 @@ class Admin::TalksController < ApplicationController
 
     media_live.get_channel_from_aws
 
-    if media_live.channel_state != LiveStreamMediaLive::CHANNEL_IDLE
-      flash[:danger] = "Channel Stateが #{media_live.channel_state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
+    if media_live.channel.state != LiveStreamMediaLive::CHANNEL_IDLE
+      flash[:danger] = "Channel Stateが #{media_live.channel.state}です。MediaLiveの録画処理が完全に停止するまで録画は開始できません。"
       respond_to do |format|
         format.js { render('admin/tracks/index.js') }
       end

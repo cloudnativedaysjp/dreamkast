@@ -52,7 +52,7 @@ module TalksTable
     if media_live && media_live.recording_talk_id != talk.id
       "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
     else
-      if track.live_stream_media_live && track.live_stream_media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
+      if track.live_stream_media_live && track.live_stream_media_live.channel.state == LiveStreamMediaLive::CHANNEL_RUNNING
         "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"
       else
         "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
@@ -74,25 +74,25 @@ module TalksTable
   def idle?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_IDLE
+      media_live.channel.state == LiveStreamMediaLive::CHANNEL_IDLE
   end
 
   def recording?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
+      media_live.channel.state == LiveStreamMediaLive::CHANNEL_RUNNING
   end
 
   def waiting_to_start?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STARTING
+      media_live.channel.state == LiveStreamMediaLive::CHANNEL_STARTING
   end
 
   def waiting_to_stop?(talk)
     media_live &&
       media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STOPPING
+      media_live.channel.state == LiveStreamMediaLive::CHANNEL_STOPPING
   end
 
   def recording_control_button_label(talk)

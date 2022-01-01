@@ -63,24 +63,12 @@ class LiveStreamMediaLive < LiveStream
     self.channel = media_live_client.describe_channel(channel_id: channel_id)
   end
 
-  def channel_name
-    channel&.name
-  end
-
   def channel_id
     params&.dig('channel_id')
   end
 
-  def channel_state
-    channel&.state
-  end
-
   def input_id
     params&.dig('input_id')
-  end
-
-  def input_name
-    input&.name
   end
 
   def playback_url
@@ -202,9 +190,12 @@ class LiveStreamMediaLive < LiveStream
     end
   end
 
-  def create_input_params
+  def tags
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
+  end
+
+  def create_input_params
     {
       name: resource_name,
       type: 'RTMP_PUSH',
@@ -220,8 +211,6 @@ class LiveStreamMediaLive < LiveStream
 
   def create_channel_params(input_id, input_name)
     track.live_stream_media_package.get_channel_from_aws
-    tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
 
     {
       name: resource_name,

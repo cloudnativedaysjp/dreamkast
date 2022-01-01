@@ -87,32 +87,33 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_media_live_resources
-    track.live_stream_media_package.get_channel_from_aws
-
-    input_resp = media_live_client.create_input(create_input_params)
     create_parameter("/medialive/#{resource_name}", track.live_stream_media_package.ingest_endpoint_password)
 
+    input_resp = media_live_client.create_input(create_input_params)
+    params = {}
+    params[:input_id] = input_resp.input.id
+    params[:input_arn] = input_resp.input.arn
+    update!(params: params)
+
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
-
     wait_until(:channel_created, channel_resp.channel['id'])
-
     channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
-    params = {
-      input_id: input_resp.input.id,
-      input_arn: input_resp.input.arn,
-      channel_id: channel_resp.id,
-      channel_arn: channel_resp.arn,
-    }
+    params[:channel_id] = channel_resp.id
+    params[:channel_arn] = channel_resp.arn
     update!(params: params)
   rescue => e
     logger.error(e.message)
-    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
+    delete_media_live_resources
   end
 
-  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id)
-    media_live_client.delete_channel(channel_id: channel_id) if channel_id
-    wait_until(:channel_deleted, channel_id)
-    media_live_client.delete_input(input_id: input_id) if input_id
+  def delete_media_live_resources
+    if channel_id
+      media_live_client.delete_channel(channel_id: channel_id)
+      wait_until(:channel_deleted, channel_id)
+    end
+    if input_id
+      media_live_client.delete_input(input_id: input_id)
+    end
     delete_parameter("/medialive/#{resource_name}")
   rescue => e
     logger.error(e.message.to_s)
@@ -210,8 +211,6 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_channel_params(input_id, input_name)
-    track.live_stream_media_package.get_channel_from_aws
-
     {
       name: resource_name,
       role_arn: 'arn:aws:iam::607167088920:role/MediaLiveAccessRole',

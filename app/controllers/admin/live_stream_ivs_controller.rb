@@ -16,8 +16,8 @@ class Admin::LiveStreamIvsController < ApplicationController
     end
 
     @media_packages = @conference.tracks.map(&:live_stream_media_package).compact
-    get_media_package_channels_from_aws(@media_packages.map(&:channel_id)).each do |channel|
-      @media_packages.find { |media_package| media_package.channel_id == channel.id }.channel = channel
+    @media_packages.each do |media_package|
+      media_package.channel
     end
 
     respond_to do |format|

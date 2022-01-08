@@ -29,6 +29,10 @@ FactoryBot.define do
     trait :published do
       publish { true }
     end
+    trait :published_all do
+      to_all { true }
+      publish { true }
+    end
     trait :speaker_mike do
       body { 'test announcement for mike' }
       publish { true }

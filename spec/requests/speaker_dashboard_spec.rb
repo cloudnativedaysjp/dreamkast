@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe SpeakerDashboardsController, type: :request do
-  admin_userinfo = { userinfo: { info: { email: "alice@example.com" }, extra: { raw_info: { sub: "aaaa", "https://cloudnativedays.jp/roles" => ["CNDT2020-Admin"] } } } }
-  subject { get "/cndt2020/speaker_dashboard" }
-  describe "GET speaker_dashboards#show" do
+  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
+  subject { get '/cndt2020/speaker_dashboard' }
+  describe 'GET speaker_dashboards#show' do
     shared_examples_for :request_is_successful do
       it 'request is successful' do
         get '/cndt2020/speaker_dashboard'
@@ -175,7 +175,7 @@ describe SpeakerDashboardsController, type: :request do
       end
     end
 
-    describe "speaker announcement showing" do
+    describe 'speaker announcement showing' do
       before do
         create(:cndt2020)
         create(:alice, :on_cndt2020)
@@ -183,18 +183,18 @@ describe SpeakerDashboardsController, type: :request do
       end
       let!(:alice) { create(:speaker_alice) }
 
-      context "wnen announcement is not published" do
+      context 'wnen announcement is not published' do
         before { create(:speaker_announcement, speakers: [alice]) }
 
-        it "not exists speaker_announcements" do
+        it 'not exists speaker_announcements' do
           subject
           expect(response).to(be_successful)
           expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
-          expect(response.body).not_to(include("<p>test announcementf for alice</p>"))
+          expect(response.body).not_to(include('<p>test announcementf for alice</p>'))
         end
       end
 
-      context "when announcement is published" do
+      context 'when announcement is published' do
         before do
           create(:speaker_announcement, :published, speakers: [alice])
           create(:speaker_announcement, :speaker_mike, speakers: [create(:speaker_mike)])
@@ -204,8 +204,8 @@ describe SpeakerDashboardsController, type: :request do
           subject
           expect(response).to(be_successful)
           expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
-          expect(response.body).to(include("<p>test announcement for alice</p>"))
-          expect(response.body).not_to(include("<p>test announcement for mike</p>"))
+          expect(response.body).to(include('<p>test announcement for alice</p>'))
+          expect(response.body).not_to(include('<p>test announcement for mike</p>'))
           expect(SpeakerAnnouncement.where(publish: true).size).to(eq(2))
         end
       end

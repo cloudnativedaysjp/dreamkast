@@ -21,7 +21,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
     @speaker_announcement = SpeakerAnnouncement.create(speaker_announcement_params.merge(conference_id: @conference.id))
     respond_to do |format|
       if @speaker_announcement
-        format.html { redirect_to(admin_speaker_announcements_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(admin_speaker_announcements_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @speaker_announcement) }
       else
         format.html { render(:edit) }
@@ -35,7 +35,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @speaker_announcement.update(speaker_announcement_params)
-        format.html { redirect_to(admin_speaker_announcements_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(admin_speaker_announcements_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @speaker_announcement) }
       else
         format.html { render(:edit) }
@@ -49,7 +49,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
     @speaker_announcement.destroy
 
     respond_to do |format|
-      format.html { redirect_to(admin_speaker_announcements_path, notice: "Announcement was successfully destroyed.") }
+      format.html { redirect_to(admin_speaker_announcements_path, notice: 'Announcement was successfully destroyed.') }
       format.json { head(:no_content) }
     end
   end
@@ -60,9 +60,9 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   def speaker_announcement_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/admin/speaker_announcements"
-    when "edit"
+    when 'edit'
       "/#{params[:event]}/admin/speaker_announcements/#{params[:id]}"
     end
   end

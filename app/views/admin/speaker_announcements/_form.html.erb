@@ -39,7 +39,7 @@
 
     <div class="field">
       <%= form.label :publish, '公開・非公開' %>*<br/>
-      <%= form.select :publish, {'非公開': false, '公開': true}, value: (@speaker_announcement.publish if @speaker_announcement), class: "form-control", required: true %>
+      <%= form.select :publish, {'非公開': false, '公開': true}, class: "form-control", required: true %>
     </div>
 
     <div class="actions justify-content-center py-3">

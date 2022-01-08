@@ -69,12 +69,12 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
     end
 
     describe '#speaker_names' do
-      context 'when has no speakers' do
-        let!(:announce) { create(:speaker_announcement, :published) }
+      context 'when to all speakers' do
+        let!(:announce) { create(:speaker_announcement, :published_all) }
         it { expect(announce.speaker_names).to(eq('全員')) }
       end
 
-      context 'when has speakers alice' do
+      context 'when to speaker alice' do
         let!(:announce) { create(:speaker_announcement, :published, speakers: [create(:speaker_alice)]) }
         it { expect(announce.speaker_names).to(eq('Alice')) }
       end

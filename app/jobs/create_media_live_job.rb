@@ -5,7 +5,7 @@ class CreateMediaLiveJob < ApplicationJob
   self.queue_adapter = :async
 
   def perform(*args)
-    logger.info("Perform CreateMediaLiveJob")
+    logger.info('Perform CreateMediaLiveJob')
     conference, track = args
 
     media_live = LiveStreamMediaLive.new(conference: conference, track: track)

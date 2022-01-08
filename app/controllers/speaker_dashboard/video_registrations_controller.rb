@@ -28,7 +28,7 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
         #   logger.error "Failed to send mail: #{e.message}"
         # end
 
-        format.html { redirect_to(speaker_dashboard_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(speaker_dashboard_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @video_registration) }
       else
         format.html { render(:edit) }
@@ -55,7 +55,7 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
 
         SpeakerMailer.video_uploaded(speaker, @talk, @video_registration).deliver_later
 
-        format.html { redirect_to(speaker_dashboard_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(speaker_dashboard_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @talk) }
       else
         format.html { render(:edit) }
@@ -70,9 +70,9 @@ class SpeakerDashboard::VideoRegistrationsController < ApplicationController
 
   def video_registration_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/speaker_dashboard/video_registrations"
-    when "edit"
+    when 'edit'
       "/#{params[:event]}/speaker_dashboard/video_registrations/#{params[:id]}"
     end
   end

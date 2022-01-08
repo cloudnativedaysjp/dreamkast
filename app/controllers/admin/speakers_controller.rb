@@ -34,8 +34,8 @@ class Admin::SpeakersController < ApplicationController
 
   def export_speakers
     all = Speaker.export
-    filename = "./tmp/speaker.csv"
-    File.open(filename, "w") do |file|
+    filename = './tmp/speaker.csv'
+    File.open(filename, 'w') do |file|
       file.write(all)
     end
     # ダウンロード
@@ -64,9 +64,9 @@ class Admin::SpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/admin/speaker"
-    when "edit"
+    when 'edit'
       "/#{params[:event]}/admin/speakers/#{params[:id]}"
     end
   end

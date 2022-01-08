@@ -10,7 +10,7 @@ class AdminController < ApplicationController
 
   def accesslog
     # TODO: pagenation入れる
-    @logs = AccessLog.all.order(id: "DESC").limit(50)
+    @logs = AccessLog.all.order(id: 'DESC').limit(50)
   end
 
   def destroy_user
@@ -28,11 +28,11 @@ class AdminController < ApplicationController
   end
 
   def export_statistics
-    f = Tempfile.create("statistics.csv")
+    f = Tempfile.create('statistics.csv')
     @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: params[:event])
-    CSV.open(f.path, "wb") do |csv|
+    CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item count]
-      csv << ["", "registered_user_count", Profile.where(conference_id: @conference.id).count]
+      csv << ['', 'registered_user_count', Profile.where(conference_id: @conference.id).count]
       @conference.talks.each do |talk|
         csv << %W[#{talk.id} #{talk.title} #{talk.registered_talks.size}]
       end

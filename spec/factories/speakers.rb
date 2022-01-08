@@ -21,12 +21,12 @@
 FactoryBot.define do
   factory :speaker_alice, class: Speaker do
     id { 1 }
-    sub { "aaa" }
-    email { "alice@example.com" }
-    name { "Alice" }
-    profile { "This is profile" }
-    company { "company" }
-    job_title { "job_title" }
+    sub { 'aaa' }
+    email { 'alice@example.com' }
+    name { 'Alice' }
+    profile { 'This is profile' }
+    company { 'company' }
+    job_title { 'job_title' }
     conference_id { 1 }
 
     trait :with_talk1_registered do
@@ -61,12 +61,12 @@ FactoryBot.define do
 
   factory :speaker_bob, class: Speaker do
     id { 2 }
-    sub { "bbb" }
-    email { "bar@example.com" }
-    name { "Bob" }
-    profile { "This is profile" }
-    company { "company" }
-    job_title { "job_title" }
+    sub { 'bbb' }
+    email { 'bar@example.com' }
+    name { 'Bob' }
+    profile { 'This is profile' }
+    company { 'company' }
+    job_title { 'job_title' }
     conference_id { 1 }
   end
 

@@ -17,7 +17,7 @@ module TalksTable
   end
 
   def active_date_tab?(conference_day)
-    conference_day.date.strftime("%Y-%m-%d") == @date
+    conference_day.date.strftime('%Y-%m-%d') == @date
   end
 
   def active_track_tab?(track)
@@ -62,12 +62,12 @@ module TalksTable
 
   def alert_type(message_type)
     case message_type
-    when "notice"
-      "success"
-    when "danger"
-      "danger"
+    when 'notice'
+      'success'
+    when 'danger'
+      'danger'
     else
-      "primary"
+      'primary'
     end
   end
 
@@ -97,13 +97,13 @@ module TalksTable
 
   def recording_control_button_label(talk)
     if recording?(talk)
-      "Recording"
+      'Recording'
     elsif waiting_to_start?(talk)
-      "Waiting to start recording"
+      'Waiting to start recording'
     elsif waiting_to_stop?(talk)
-      "Waiting to stop recording"
+      'Waiting to stop recording'
     else
-      "Start Record"
+      'Start Record'
     end
   end
 

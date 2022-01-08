@@ -32,12 +32,12 @@ class TracksController < ApplicationController
   end
 
   def reload
-    ActionCable.server.broadcast("waiting_channel", "aaa");
-    render(plain: "OK")
+    ActionCable.server.broadcast('waiting_channel', 'aaa');
+    render(plain: 'OK')
   end
 
   def blank
-    @msg = params.key?(:msg) ? params[:msg] : "No content"
+    @msg = params.key?(:msg) ? params[:msg] : 'No content'
     render(layout: false)
   end
 

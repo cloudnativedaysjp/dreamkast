@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :boothe do
     sponsor { nil }
-    published { "" }
+    published { '' }
   end
 end

@@ -5,7 +5,7 @@ class DeleteMediaLiveJob < ApplicationJob
   self.queue_adapter = :async
 
   def perform(*args)
-    logger.info("Perform DeleteMediaLiveJob")
+    logger.info('Perform DeleteMediaLiveJob')
     media_live = args[0]
     media_live.destroy
   rescue => e

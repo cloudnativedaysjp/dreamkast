@@ -1,7 +1,15 @@
 class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
 
-  skip_before_action :logged_in_using_omniauth?, only: [:new]
+  skip_before_action :logged_in_using_omniauth?, only: [:new, :guidance]
+  before_action :set_current_user, only: [:guidance]
+  before_action :prepare_create, only: [:new]
+
+  # GET :event/speaker_dashboard/speakers/guidance
+  def guidance
+    return redirect_to(speakers_entry_path) if from_auth0?(params)
+    @conference = Conference.find_by(abbr: params[:event])
+  end
 
   # GET :event/speaker_dashboard/speakers/new
   def new
@@ -40,10 +48,11 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
     respond_to do |format|
       if r = @speaker_form.save
+        @speaker = Speaker.find_by(email: @speaker_form.email)
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
-        format.html { redirect_to("/#{@conference.abbr}/speaker_dashboard", notice: "Speaker was successfully created.") }
+        format.html { redirect_to("/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.') }
         format.json { render(:show, status: :created, location: @speaker) }
       else
         format.html { render(:new) }
@@ -70,7 +79,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
         end
-        format.html { redirect_to(speaker_dashboard_path, notice: "Speaker was successfully updated.") }
+        format.html { redirect_to(speaker_dashboard_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @speaker) }
       else
         format.html { render(:edit) }
@@ -83,11 +92,15 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   helper_method :speaker_url, :expected_participant_params, :execution_phases_params
 
+  def from_auth0?(params)
+    params[:state].present?
+  end
+
   def speaker_url
     case action_name
-    when "new"
+    when 'new'
       "/#{params[:event]}/speaker_dashboard/speakers"
-    when "edit", "update"
+    when 'edit', 'update'
       "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"
     end
   end
@@ -99,11 +112,11 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   def expected_participant_params
-    @conference.proposal_item_configs.where(label: "expected_participant")
+    @conference.proposal_item_configs.where(label: 'expected_participant')
   end
 
   def execution_phases_params
-    @conference.proposal_item_configs.where(label: "execution_phase")
+    @conference.proposal_item_configs.where(label: 'execution_phase')
   end
 
   # Only allow a list of trusted parameters through.
@@ -128,9 +141,9 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label: label)
-      if conf.class.to_s == "ProposalItemConfigCheckBox"
+      if conf.class.to_s == 'ProposalItemConfigCheckBox'
         h[conf.label.pluralize.to_sym] = []
-      elsif conf.class.to_s == "ProposalItemConfigRadioButton"
+      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
         attr << conf.label.pluralize.to_sym
       end
     end

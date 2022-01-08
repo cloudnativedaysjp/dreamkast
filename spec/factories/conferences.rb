@@ -28,12 +28,12 @@
 FactoryBot.define do
   factory :cndt2020, class: Conference do
     id { 1 }
-    name { "CloudNative Days Tokyo 2020" }
-    abbr { "cndt2020" }
+    name { 'CloudNative Days Tokyo 2020' }
+    abbr { 'cndt2020' }
     theme { "\u3053\u308C\u306FTestEventAutumn2020\u306E\u30C6\u30FC\u30DE\u3067\u3059" }
     copyright { "\u00A9 Test Event Autumn 2020 Committee" }
-    privacy_policy { "This is Privacy Policy" }
-    privacy_policy_for_speaker { "This is Privacy Policy for speaker" }
+    privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 0 }
     speaker_entry { 1 }
     attendee_entry { 1 }
@@ -44,7 +44,7 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     end
-    coc { "this is coc" }
+    coc { 'this is coc' }
 
     trait :registered do
       status { 0 }
@@ -84,23 +84,23 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     after(:build) do |conference|
       create(:day1, conference: conference)
       create(:day2, conference: conference)
-      create(:track, id: 1, number: 1, name: "A", conference_id: conference.id, video_id: "video_1")
-      create(:track, id: 2, number: 2, name: "B", conference_id: conference.id, video_id: "video_2")
-      create(:track, id: 3, number: 3, name: "C", conference_id: conference.id, video_id: "video_3")
-      create(:track, id: 4, number: 4, name: "D", conference_id: conference.id, video_id: "video_4")
-      create(:track, id: 5, number: 5, name: "E", conference_id: conference.id, video_id: "video_5")
-      create(:track, id: 6, number: 6, name: "F", conference_id: conference.id, video_id: "video_6")
+      create(:track, id: 1, number: 1, name: 'A', conference_id: conference.id, video_id: 'video_1')
+      create(:track, id: 2, number: 2, name: 'B', conference_id: conference.id, video_id: 'video_2')
+      create(:track, id: 3, number: 3, name: 'C', conference_id: conference.id, video_id: 'video_3')
+      create(:track, id: 4, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_4')
+      create(:track, id: 5, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_5')
+      create(:track, id: 6, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_6')
     end
   end
 
   factory :cndo2021, class: Conference do
     id { 2 }
-    name { "CloudNative Days Online 2021" }
-    abbr { "cndo2021" }
+    name { 'CloudNative Days Online 2021' }
+    abbr { 'cndo2021' }
     theme { "\u3053\u308C\u306FTestEventAutumn2020\u306E\u30C6\u30FC\u30DE\u3067\u3059" }
     copyright { "\u00A9 Test Event Autumn 2020 Committee" }
-    privacy_policy { "This is Privacy Policy" }
-    privacy_policy_for_speaker { "This is Privacy Policy for speaker" }
+    privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 2 }
     speaker_entry { 1 }
     attendee_entry { 1 }
@@ -115,19 +115,19 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     after(:build) do |conference|
       create(:cndo_day1, conference: conference)
       create(:cndo_day2, conference: conference)
-      create(:track, id: 10, number: 1, name: "A", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 11, number: 2, name: "B", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 12, number: 3, name: "C", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 13, number: 4, name: "D", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 14, number: 5, name: "E", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 15, number: 6, name: "F", conference_id: conference.id, video_id: "video_7")
-      create(:track, id: 16, number: 7, name: "G", conference_id: conference.id, video_id: "video_7")
+      create(:track, id: 10, number: 1, name: 'A', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 11, number: 2, name: 'B', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 12, number: 3, name: 'C', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 13, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 14, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 15, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_7')
+      create(:track, id: 16, number: 7, name: 'G', conference_id: conference.id, video_id: 'video_7')
     end
   end
 
   factory :one_day, class: Conference do
-    name { "One Day Conference" }
-    abbr { "oneday" }
+    name { 'One Day Conference' }
+    abbr { 'oneday' }
     status { 2 }
     speaker_entry { 1 }
     attendee_entry { 1 }
@@ -139,8 +139,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
   end
 
   factory :two_day, class: Conference do
-    name { "Two Day Conference" }
-    abbr { "twoday" }
+    name { 'Two Day Conference' }
+    abbr { 'twoday' }
     status { 2 }
     speaker_entry { 1 }
     attendee_entry { 1 }
@@ -154,12 +154,12 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
   factory :cndt2021, class: Conference do
     id { 4 }
-    name { "CloudNative Days Tokyo 2021" }
-    abbr { "cndt2021" }
+    name { 'CloudNative Days Tokyo 2021' }
+    abbr { 'cndt2021' }
     theme { "\u3053\u308C\u306FTestEventAutumn2021\u306E\u30C6\u30FC\u30DE\u3067\u3059" }
     copyright { "\u00A9 Test Event Autumn 2021 Committee" }
-    privacy_policy { "This is Privacy Policy" }
-    privacy_policy_for_speaker { "This is Privacy Policy for speaker" }
+    privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 2 }
     speaker_entry { 1 }
     attendee_entry { 1 }

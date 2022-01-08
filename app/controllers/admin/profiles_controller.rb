@@ -3,8 +3,8 @@ class Admin::ProfilesController < ApplicationController
 
   def export_profiles
     profiles = Profile.export(@conference.id)
-    filename = "./tmp/profiles.csv"
-    File.open(filename, "w") do |file|
+    filename = './tmp/profiles.csv'
+    File.open(filename, 'w') do |file|
       file.write(profiles)
     end
     # ダウンロード

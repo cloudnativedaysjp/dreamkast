@@ -52,8 +52,8 @@
         </div>
       <% end %>
 
-      <% if talk.document_url.present? %>
-        <div class="col-12 my-3 pt-2" style="border-top: 1px solid #CCC">
+      <% if display_document?(talk) %>
+        <div class="col-12 my-3 pt-2" syle="border-top: 1px solid #CCC">
           <ul>
             <li><a href="<%= talk.document_url %>" target="_blank">発表資料</a></li>
           </ul>

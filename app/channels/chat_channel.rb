@@ -8,6 +8,6 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def post(data)
-    ChatMessage.create!(body: data["body"], conference_id: 1)
+    ChatMessage.create!(body: data['body'], conference_id: 1)
   end
 end

@@ -42,7 +42,7 @@ class Sponsor < ApplicationRecord
 
   def booth_sponsor?
     sponsor_types.each do |type|
-      if type.name == "Booth"
+      if type.name == 'Booth'
         return true
       end
     end

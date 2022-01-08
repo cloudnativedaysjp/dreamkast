@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_01_082455) do
+ActiveRecord::Schema.define(version: 2022_01_08_084355) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -229,6 +229,8 @@ ActiveRecord::Schema.define(version: 2022_01_01_082455) do
     t.boolean "publish", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "only_accepted", default: false
+    t.boolean "to_all", default: false
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 

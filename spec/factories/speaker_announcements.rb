@@ -4,8 +4,10 @@
 #
 #  id            :bigint           not null, primary key
 #  body          :text(65535)      not null
+#  only_accepted :boolean          default(FALSE)
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
+#  to_all        :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null

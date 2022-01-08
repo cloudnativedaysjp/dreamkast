@@ -4,9 +4,10 @@
 #
 #  id            :bigint           not null, primary key
 #  body          :text(65535)      not null
+#  only_accepted :boolean          default(FALSE)
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
-#  speaker_names :string(255)      not null
+#  to_all        :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null
@@ -32,11 +33,16 @@ class SpeakerAnnouncement < ApplicationRecord
   }
 
   scope :find_by_speaker, lambda { |speaker_id|
-    joins(:speaker_announcement_middles).where(speaker_announcement_middles: { speaker_id: speaker_id }, publish: true)
+    joins(:speaker_announcement_middles).where(speaker_announcement_middles: { speaker_id: speaker_id }, publish: true).accepted_only(speaker_id)
+  }
+
+  scope :accepted_only, lambda { |speaker_id|
+    return if Speaker.find(speaker_id).proposal_accepted?
+    where(only_accepted: false)
   }
 
   def speaker_names
-    return '全員' if speakers.blank?
+    return '全員' if to_all
     speakers.map(&:name).join(',')
   end
 end

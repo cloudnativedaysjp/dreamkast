@@ -6,7 +6,6 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
   let!(:default_param) {
     {
       conference_id: conf.id,
-      speaker_names: speaker.name,
       publish_time: Time.now,
       body: 'test',
       publish: false
@@ -23,14 +22,6 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       context 'with nil conference_id' do
         let(:param) {
           default_param[:conference_id] = nil
-          default_param
-        }
-        it { expect(subject.id).to(be_falsey) }
-      end
-
-      context 'with nil speaker_names' do
-        let(:param) {
-          default_param[:speaker_names] = nil
           default_param
         }
         it { expect(subject.id).to(be_falsey) }
@@ -77,9 +68,16 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
 
-    describe '#format_speaker_namess' do
-      pending 'wait to impl'
-      subject { described_class.create(param).format_speaker_namess }
+    describe '#speaker_names' do
+      context 'when has no speakers' do
+        let!(:announce) { create(:speaker_announcement, :published) }
+        it { expect(announce.speaker_names).to(eq('全員')) }
+      end
+
+      context 'when has speakers alice' do
+        let!(:announce) { create(:speaker_announcement, :published, speakers: [create(:speaker_alice)]) }
+        it { expect(announce.speaker_names).to(eq('Alice')) }
+      end
     end
   end
 end

@@ -224,7 +224,6 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
 
   create_table "speaker_announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.string "speaker_names", null: false
     t.datetime "publish_time", null: false
     t.text "body", null: false
     t.boolean "publish", default: false

@@ -14,12 +14,12 @@
     </tr>
     </thead>
     <tbody>
-    <% @speaker_announcements.each do |announcement| %>
+    <% @speaker_announcements.eager_load(:speakers).each do |announcement| %>
       <tr>
         <td>
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
         <td>
-          <%= announcement.format_speaker_names %>
+          <%= announcement.speaker_names %>
         </td>
         <td>
           <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>

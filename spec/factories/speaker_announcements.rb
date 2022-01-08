@@ -1,7 +1,26 @@
+# == Schema Information
+#
+# Table name: speaker_announcements
+#
+#  id            :bigint           not null, primary key
+#  body          :text(65535)      not null
+#  publish       :boolean          default(FALSE)
+#  publish_time  :datetime         not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  conference_id :bigint           not null
+#
+# Indexes
+#
+#  index_speaker_announcements_on_conference_id  (conference_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (conference_id => conferences.id)
+#
 FactoryBot.define do
   factory :speaker_announcement do
     conference_id { 1 }
-    speaker_names { 'alice' }
     publish_time { Time.now }
     body { 'test announcement for alice' }
     publish { false }
@@ -9,7 +28,6 @@ FactoryBot.define do
       publish { true }
     end
     trait :speaker_mike do
-      speaker_names { 'mike' }
       body { 'test announcement for mike' }
       publish { true }
     end

@@ -1,0 +1,43 @@
+<%= form_with(url: speaker_announcement_url, model: @speaker_announcement, local: true) do |form| %>
+  <section class="speaker-information py-3">
+
+    <div class="field">
+      <%= form.label :publish_time, '公開日' %>*<br/>
+      <%= form.datetime_select :publish_time, class: 'form-control' %>
+    </div>
+
+    <% if @speakers.blank? || @speakers.nil? %>
+      <div class="field">
+        <%= form.label :speaker_id, '登壇者' %>*<br/>
+        <% Speaker.where(conference_id: @conference.id).pluck(:id).each do |speaker_id| %>
+          <%= form.hidden_field :speaker_ids, multiple: true, value: speaker_id, class: 'form-control' %>
+        <% end %>
+        <%= form.text_field :speaker_names, value: "全員", readonly: true %>
+      </div>
+    <% else %>
+        <div class="field">
+          <%= form.label :speaker_id, '登壇者' %>*<br/>
+
+          <!-- @speakers.length == 1 -->
+          <% @speakers.each do |speaker| %>
+            <%= form.hidden_field :speaker_ids, multiple: true, value: speaker.id %>
+          <% end %>
+          <%= form.text_field :speaker_names, value: @speakers.length == 1 ? @speakers[0].name : "全員", readonly: true %><br/>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :body, 'アナウンス内容' %>*
+      <%= form.text_area :body, class: "form-control", required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :publish, '公開・非公開' %>*<br/>
+      <%= form.select :publish, {'非公開': 0, '公開': 1}, class: "form-control", required: true %>
+    </div>
+
+    <div class="actions justify-content-center py-3">
+      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    </div>
+  </section>
+<% end %>

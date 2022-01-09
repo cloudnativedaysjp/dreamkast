@@ -45,6 +45,7 @@ class Conference < ApplicationRecord
   has_many :talk_difficulties
   has_many :speakers
   has_many :announcements
+  has_many :speaker_announcements
   has_many :proposal_item_configs
   has_many :proposal_items
   has_many :profiles

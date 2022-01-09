@@ -26,6 +26,8 @@ class Speaker < ApplicationRecord
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
+  has_many :speaker_announcement_middles
+  has_many :speaker_announcements, through: :speaker_announcement_middles
 
   validates :name, presence: true
   validates :profile, presence: true

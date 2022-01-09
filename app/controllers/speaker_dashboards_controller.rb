@@ -3,6 +3,7 @@ class SpeakerDashboardsController < ApplicationController
   before_action :logged_in_using_omniauth?, :set_speaker
 
   def show
+    @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
   end
 
   def logged_in_using_omniauth?

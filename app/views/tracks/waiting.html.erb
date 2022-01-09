@@ -20,6 +20,13 @@
         配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。
       </div>
 
+      <% unless @speaker.nil? %>
+        <div class="information mt-4" id="speaker_notice">
+          <h4><%= "#{@speaker.name}様へのお知らせ" %></h4>
+          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
+        </div>
+      <% end %>
+
       <div class="information mt-3">
         <h4>運営からのお知らせ</h4>
         <ul>

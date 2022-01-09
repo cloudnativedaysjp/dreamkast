@@ -68,6 +68,27 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
 
+    describe '#accepted_only' do
+      subject { described_class.accepted_only(speaker.id) }
+      before { create(:speaker_announcement, :only_accepted, speakers: [speaker]) }
+
+      context 'speaker has accepted proposal' do
+        let!(:speaker) { create(:speaker_alice, :with_talk1_accepted) }
+        it 'find one announcement' do
+          expect(SpeakerAnnouncement.all.size).to(eq(1))
+          expect(subject.size).to(eq(1))
+        end
+      end
+
+      context 'speaker has no accepted proposal' do
+        let!(:speaker) { create(:speaker_alice, :with_talk1_rejected) }
+        it 'cannot find announcements' do
+          expect(SpeakerAnnouncement.all.size).to(eq(1))
+          expect(subject.size).to(eq(0))
+        end
+      end
+    end
+
     describe '#speaker_names' do
       context 'when to all speakers' do
         let!(:announce) { create(:speaker_announcement, :published_all) }

@@ -33,6 +33,10 @@ FactoryBot.define do
       to_all { true }
       publish { true }
     end
+    trait :only_accepted do
+      only_accepted { true }
+      publish { true }
+    end
     trait :speaker_mike do
       body { 'test announcement for mike' }
       publish { true }

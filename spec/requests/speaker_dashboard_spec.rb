@@ -27,6 +27,13 @@ describe SpeakerDashboardsController, type: :request do
       end
     end
 
+    shared_examples_for :response_does_not_include_proposal_title do |title|
+      it 'include information about proposal' do
+        get '/cndt2020/speaker_dashboard'
+        expect(response.body).to_not(include(title))
+      end
+    end
+
     shared_examples_for :response_includes_edit_button do
       it 'include edit button ' do
         get '/cndt2020/speaker_dashboard'
@@ -103,6 +110,17 @@ describe SpeakerDashboardsController, type: :request do
 
           it_should_behave_like :request_is_successful
           it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_edit_button
+        end
+
+        context 'speaker has registered proposal and sponsor session' do
+          before do
+            create(:speaker_alice, :with_talk1_registered, :with_sponsor_session)
+          end
+
+          it_should_behave_like :request_is_successful
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_does_not_include_proposal_title, 'sponsor_session'
           it_should_behave_like :response_includes_edit_button
         end
 

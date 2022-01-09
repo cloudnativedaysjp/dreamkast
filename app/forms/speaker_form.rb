@@ -38,13 +38,6 @@ class SpeakerForm
           else
             params.delete(:_destroy)
             talk = @speaker.talks.find(params[:id])
-            if @sponsor.present? && params[:sponsor_session] == 'true'
-              params[:sponsor_id] = @sponsor.id
-              params.delete(:sponsor_session)
-            else
-              params[:sponsor_id] = nil
-              params.delete(:sponsor_session)
-            end
 
             proposal_item_params = {}
             proposal_item_config_labels.each do |label|
@@ -63,13 +56,6 @@ class SpeakerForm
             params.delete(:_destroy)
             params[:show_on_timetable] = true
             params[:video_published] = true
-            if @sponsor.present? && params[:sponsor_session] == 'true'
-              params[:sponsor_id] = @sponsor.id
-              params.delete(:sponsor_session)
-            else
-              params[:sponsor_id] = nil
-              params.delete(:sponsor_session)
-            end
             proposal_item_params = {}
             proposal_item_config_labels.each do |label|
               proposal_item_params[label.pluralize] = params.delete(label.pluralize)

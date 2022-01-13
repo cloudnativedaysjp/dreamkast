@@ -170,19 +170,6 @@ class LiveStreamMediaLive < LiveStream
     "s3://#{bucket_name}/medialive/#{conference.abbr}"
   end
 
-  def bucket_name
-    case env_name
-    when 'production'
-      'dreamkast-ivs-stream-archive-prd'
-    when 'staging'
-      'dreamkast-ivs-stream-archive-stg'
-    when 'review_app'
-      'dreamkast-ivs-stream-archive-dev'
-    else
-      'dreamkast-ivs-stream-archive-dev'
-    end
-  end
-
   def cloudfront_domain_name
     case env_name
     when 'review_app'

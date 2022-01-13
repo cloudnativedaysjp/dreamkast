@@ -18,4 +18,17 @@ module EnvHelper
   def review_app?
     env_name == 'review_app'
   end
+
+  def bucket_name
+    case env_name
+    when 'production'
+      'dreamkast-ivs-stream-archive-prd'
+    when 'staging'
+      'dreamkast-ivs-stream-archive-stg'
+    when 'review_app'
+      'dreamkast-ivs-stream-archive-dev'
+    else
+      'dreamkast-ivs-stream-archive-dev'
+    end
+  end
 end

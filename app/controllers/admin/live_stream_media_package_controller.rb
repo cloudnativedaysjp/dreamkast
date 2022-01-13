@@ -3,9 +3,7 @@ class Admin::LiveStreamMediaPackageController < ApplicationController
 
   def bulk_create
     @conference.tracks.each do |track|
-      unless track.media_package_channel.present?
-        CreateMediaPackageJob.perform_later(@conference, track)
-      end
+      CreateMediaPackageJob.perform_later(@conference, track) unless track.media_package_channel.present?
     end
 
     respond_to do |format|
@@ -15,8 +13,7 @@ class Admin::LiveStreamMediaPackageController < ApplicationController
 
   def bulk_delete
     params[:media_package].each_key do |id, _|
-      media_live = MediaPackageChannel.find(id)
-      DeleteMediaPackageJob.perform_later(media_live)
+      DeleteMediaPackageJob.perform_later(MediaPackageChannel.find(id))
     end
 
     respond_to do |format|

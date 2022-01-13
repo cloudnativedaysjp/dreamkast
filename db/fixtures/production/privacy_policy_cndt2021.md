@@ -35,6 +35,8 @@
 - 株式会社スタンバイ
 - [トレンドマイクロ株式会社](https://www.trendmicro.com/ja_jp/about/legal/privacy-policy/handling.html)
 - 日本シノプシス合同会社
+- クラウドフレア・ジャパン株式会社
+- Kong Inc.
 
 （順不同、後日追記になる場合がございます）
 

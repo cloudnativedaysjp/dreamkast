@@ -23,6 +23,13 @@ class Admin::TalksController < ApplicationController
     redirect_to(admin_talks_url, notice: '配信設定を更新しました')
   end
 
+  def recording_preview
+    @talk = Talk.find(params[:id])
+    respond_to do |format|
+      format.js { render('admin/talks/recording_preview.js') }
+    end
+  end
+
   def start_on_air
     @date = params[:talk][:date] || @conference.conference_days.first.date.strftime('%Y-%m-%d')
     @conference_day = @conference.conference_days.select { |day| day.date.strftime('%Y-%m-%d') == @date }.first

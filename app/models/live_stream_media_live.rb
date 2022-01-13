@@ -54,10 +54,14 @@ class LiveStreamMediaLive < LiveStream
 
   def get_input_from_aws
     self.input = media_live_client.describe_input(input_id: input_id)
+  rescue => e
+    logger.error(e.message.to_s)
   end
 
   def get_channel_from_aws
     self.channel = media_live_client.describe_channel(channel_id: channel_id)
+  rescue => e
+    logger.error(e.message.to_s)
   end
 
   def input

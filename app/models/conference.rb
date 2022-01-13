@@ -52,6 +52,7 @@ class Conference < ApplicationRecord
   has_many :stats_of_registrants
   has_many :admin_profiles
   has_many :live_stream_media_live
+  has_many :media_package_harvest_jobs
 
   scope :upcoming, -> {
     merge(where(status: 0).or(where(status: 1)))

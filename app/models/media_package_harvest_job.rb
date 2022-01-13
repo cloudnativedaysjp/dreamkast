@@ -47,16 +47,16 @@ class MediaPackageHarvestJob < ApplicationRecord
 
   private
 
-  def create_params(start_time, end_time, origin_endpoint, s3_destination)
+  def create_params(start_time, end_time, origin_endpoint, _s3_destination)
     {
       id: "#{resource_name}_#{id}",
       start_time: start_time,
       end_time: end_time,
       origin_endpoint_id: origin_endpoint,
       s3_destination: {
-        bucket_name: "dreamkast-ivs-stream-archive-dev",
-        manifest_key: "mediapackage/test001/test.m3u8",
-        role_arn: "arn:aws:iam::607167088920:role/MediaPackageLivetoVOD-Policy"
+        bucket_name: 'dreamkast-ivs-stream-archive-dev',
+        manifest_key: 'mediapackage/test001/test.m3u8',
+        role_arn: 'arn:aws:iam::607167088920:role/MediaPackageLivetoVOD-Policy'
       }
     }
   end

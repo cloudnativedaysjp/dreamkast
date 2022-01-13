@@ -25,8 +25,6 @@ module EnvHelper
       'dreamkast-ivs-stream-archive-prd'
     when 'staging'
       'dreamkast-ivs-stream-archive-stg'
-    when 'review_app'
-      'dreamkast-ivs-stream-archive-dev'
     else
       'dreamkast-ivs-stream-archive-dev'
     end

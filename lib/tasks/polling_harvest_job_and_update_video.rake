@@ -22,8 +22,6 @@ namespace :util do
       'd3pun3ptcv21q4.cloudfront.net'
     when 'dreamkast-ivs-stream-archive-stg'
       'd3i2o0iduabu0p.cloudfront.net'
-    when 'dreamkast-ivs-stream-archive-dev'
-      'd1jzp6sbtx9by.cloudfront.net'
     else
       'd1jzp6sbtx9by.cloudfront.net'
     end

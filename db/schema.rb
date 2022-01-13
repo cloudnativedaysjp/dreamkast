@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 2022_01_01_082455) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.bigint "talk_id"
+    t.string "status"
     t.index ["conference_id"], name: "index_media_package_harvest_jobs_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_harvest_jobs_on_media_package_channel_id"
     t.index ["talk_id"], name: "fk_rails_98wwalked"

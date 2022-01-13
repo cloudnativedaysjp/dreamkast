@@ -5,6 +5,7 @@
 #  id                       :bigint           not null, primary key
 #  end_time                 :datetime
 #  start_time               :datetime
+#  status                   :string(255)
 #  conference_id            :bigint           not null
 #  job_id                   :string(255)
 #  media_package_channel_id :bigint           not null
@@ -30,6 +31,7 @@ class MediaPackageHarvestJob < ApplicationRecord
 
   belongs_to :conference
   belongs_to :media_package_channel
+  belongs_to :talk
 
   def job
     @job ||= media_package_client.describe_harvest_job(id: job_id)
@@ -38,7 +40,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   def create_media_package_resources(start_time, end_time, origin_endpoint, s3_destination)
     resp = media_package_client.create_harvest_job(create_params(start_time, end_time, origin_endpoint, s3_destination))
     resp = media_package_client.describe_harvest_job(id: resp.id)
-    update!(job_id: resp.id)
+    update!(job_id: resp.id, status: resp.status)
   rescue => e
     logger.error(e.message)
   end

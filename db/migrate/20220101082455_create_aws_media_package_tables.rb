@@ -17,6 +17,7 @@ class CreateAwsMediaPackageTables < ActiveRecord::Migration[6.0]
       t.belongs_to :media_package_channel, null: false, foreign_key: true
       t.belongs_to :talk, null: false, foreign_key: true
       t.string :job_id
+      t.string :status
       t.datetime :start_time
       t.datetime :end_time
     end

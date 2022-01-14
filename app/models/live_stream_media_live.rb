@@ -209,7 +209,7 @@ class LiveStreamMediaLive < LiveStream
       type: 'RTMP_PUSH',
       destinations: [
         {
-          stream_name: 'aaa/bvbb',
+          stream_name: "#{random_string}/#{random_string}",
         }
       ],
       input_security_groups: ['8926492'],
@@ -404,5 +404,9 @@ class LiveStreamMediaLive < LiveStream
       scaling_behavior: 'STRETCH_TO_OUTPUT',
       sharpness: sharpness
     }
+  end
+
+  def random_string
+    ('a'..'z').to_a.sample(10).join
   end
 end

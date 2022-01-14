@@ -228,7 +228,7 @@ class LiveStreamMediaLive < LiveStream
       tags: tags,
       destinations: [
         {
-          id: 'dest_ivs',
+          id: 'dest-ivs',
           settings: [
             {
               url: "rtmps://#{track.live_stream_ivs.ingest_endpoint}:443/app/",
@@ -345,13 +345,13 @@ class LiveStreamMediaLive < LiveStream
           {
             audio_description_names: ['audio_al2b0j'],
             caption_description_names: [],
-            output_name: 'dest_ivs',
+            output_name: 'dest-ivs',
             output_settings: {
               rtmp_output_settings: {
                 certificate_mode: 'VERIFY_AUTHENTICITY',
                 connection_retry_interval: 2,
                 destination: {
-                  destination_ref_id: 'dest_ivs'
+                  destination_ref_id: 'dest-ivs'
                 },
                 num_retries: 10
               }

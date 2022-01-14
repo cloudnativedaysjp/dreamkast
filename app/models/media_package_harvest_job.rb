@@ -37,8 +37,8 @@ class MediaPackageHarvestJob < ApplicationRecord
     @job ||= media_package_client.describe_harvest_job(id: job_id)
   end
 
-  def create_media_package_resources(start_time, end_time, origin_endpoint, s3_destination)
-    resp = media_package_client.create_harvest_job(create_params(start_time, end_time, origin_endpoint, s3_destination))
+  def create_media_package_resources
+    resp = media_package_client.create_harvest_job(create_params)
     resp = media_package_client.describe_harvest_job(id: resp.id)
     update!(job_id: resp.id, status: resp.status)
   rescue => e
@@ -47,18 +47,26 @@ class MediaPackageHarvestJob < ApplicationRecord
 
   private
 
-  def create_params(start_time, end_time, origin_endpoint, _s3_destination)
+  def create_params
     {
       id: "#{resource_name}_#{id}",
-      start_time: start_time,
-      end_time: end_time,
+      start_time: start_time.strftime('%Y-%m-%dT%H:%M:%S%:z'),
+      end_time: end_time.strftime('%Y-%m-%dT%H:%M:%S%:z'),
       origin_endpoint_id: origin_endpoint,
       s3_destination: {
-        bucket_name: 'dreamkast-ivs-stream-archive-dev',
-        manifest_key: 'mediapackage/test001/test.m3u8',
+        bucket_name: bucket_name,
+        manifest_key: manifest_key,
         role_arn: 'arn:aws:iam::607167088920:role/MediaPackageLivetoVOD-Policy'
       }
     }
+  end
+
+  def origin_endpoint
+    "#{env_name}_#{@job.conference.abbr}_track#{@job.talk.track.name}"
+  end
+
+  def manifest_key
+    "mediapackage/#{conference.abbr}/talks/#{talk_id}/playlist.m3u8"
   end
 
   def resource_name

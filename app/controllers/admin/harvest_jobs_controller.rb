@@ -24,9 +24,7 @@ class Admin::HarvestJobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
-        s = @job.start_time.strftime('%Y-%m-%dT%H:%M:%S%:z')
-        e = @job.end_time.strftime('%Y-%m-%dT%H:%M:%S%:z')
-        @job.create_media_package_resources(s, e, "#{env_name}_#{@job.conference.abbr}_track#{@job.talk.track.name}", "#{backet_name}/mediapackage/#{@job.conference.abbr}/talk_#{@job.talk_id}")
+        @job.create_media_package_resources
         format.html { redirect_to(admin_tracks_path, notice: 'HarvestJob was successfully updated.') }
         format.json { render(:show, status: :ok, location: @job) }
       else

@@ -26,7 +26,7 @@ class LiveStreamIvs < LiveStream
 
   before_create do
     tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s
+    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     resp = ivs_client.create_channel(
       name: channel_name,
       latency_mode: 'LOW',

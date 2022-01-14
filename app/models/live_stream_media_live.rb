@@ -199,7 +199,7 @@ class LiveStreamMediaLive < LiveStream
 
   def create_input_params
     tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s
+    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     {
       name: resource_name,
       type: 'RTMP_PULL',
@@ -214,7 +214,8 @@ class LiveStreamMediaLive < LiveStream
 
   def create_channel_params(input_id, input_name)
     tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s
+    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
+
     {
       name: resource_name,
       role_arn: 'arn:aws:iam::607167088920:role/MediaLiveAccessRole',

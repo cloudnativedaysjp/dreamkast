@@ -30,7 +30,6 @@
         <th scope="col">Track</th>
         <th scope="col">Name</th>
         <th scope="col">ARN</th>
-        <th scope="col">Ingest Endpoint</th>
         <th scope="col">Playback URL</th>
       </tr>
       </thead>
@@ -45,7 +44,6 @@
           <td><%= ivs.track.name %></td>
           <td><%= ivs.name %></td>
           <td><%= ivs.channel_arn %></td>
-          <td><%= ivs.ingest_url %></td>
           <td><%= ivs.playback_url %></td>
         </tr>
       <% end %>
@@ -70,6 +68,7 @@
         <th scope="col">Track</th>
         <th scope="col">Input Name</th>
         <th scope="col">Input ID</th>
+        <th scope="col">Destination URL</th>
         <th scope="col">Channel Name</th>
         <th scope="col">Channel ID</th>
         <th scope="col">Channel State</th>
@@ -86,6 +85,7 @@
           <td><%= media_live.track.name %></td>
           <td><%= media_live.input_name %></td>
           <td><%= media_live.input_id %></td>
+          <td><%= media_live.destination_url %></td>
           <td><%= media_live.channel_name %></td>
           <td><%= media_live.channel_id %></td>
           <td><%= media_live.channel_state %></td>

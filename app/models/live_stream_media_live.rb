@@ -82,6 +82,10 @@ class LiveStreamMediaLive < LiveStream
     input&.name
   end
 
+  def destination_url
+    input ? input.destinations[0].url : ''
+  end
+
   def playback_url
     cloudfront_url = "https://#{cloudfront_domain_name}"
     object_key = destination.gsub("s3://#{bucket_name}/", '')

@@ -6,7 +6,6 @@
 #  body          :text(65535)      not null
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
-#  speaker_names :string(255)      not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null

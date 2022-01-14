@@ -66,7 +66,7 @@
         <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
           <% label = first_item.label.pluralize.to_sym %>
           <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
-          <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked %>
+          <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked, required: true %>
           <%= label label, item.params, {class: 'form-check-label'} %><br>
         <% end %>
       <% else %>

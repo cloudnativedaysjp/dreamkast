@@ -111,26 +111,18 @@ class LiveStreamMediaLive < LiveStream
     create_parameter("/medialive/#{resource_name}", track.media_package_channel.ingest_endpoint_password)
 
     input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
+    params = { input_security_group_id: input_security_group_resp.security_group.id }
+    update!(params: params)
 
     input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
-    params = {}
-    params[:input_id] = input_resp.input.id
-    params[:input_arn] = input_resp.input.arn
+    params = params.merge(input_id: input_resp.input.id, input_arn: input_resp.input.arn)
     update!(params: params)
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
+    params = params.merge(channel_id: channel_resp.id, channel_arn: channel_resp.arn)
+    update!(params: params)
 
     wait_channel_until(:channel_created, channel_resp.channel['id'])
-
-    channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
-    params = {
-      input_security_group_id: input_security_group_resp.security_group.id,
-      input_id: input_resp.input.id,
-      input_arn: input_resp.input.arn,
-      channel_id: channel_resp.id,
-      channel_arn: channel_resp.arn,
-    }
-    update!(params: params)
   rescue => e
     logger.error(e.message)
     delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id, input_security_group_id: input_security_group_resp.security_group.id)

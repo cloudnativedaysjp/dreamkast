@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_104841) do
+ActiveRecord::Schema.define(version: 2022_01_01_082455) do
 
-  create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "page"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.integer "profile_id"
   end
 
-  create_table "admin_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "admin_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
     t.string "email"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_admin_profiles_on_conference_id"
   end
 
-  create_table "agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "agreements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "form_item_id"
     t.integer "value"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time"
     t.text "body"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
-  create_table "booths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "booths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
     t.boolean "published"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
-  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chat_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
     t.bigint "speaker_id"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
   end
 
-  create_table "conference_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "conference_days", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
     t.time "end_time"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_conference_days_on_conference_id"
   end
 
-  create_table "conferences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "conferences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -117,21 +117,21 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["status"], name: "index_conferences_on_status"
   end
 
-  create_table "form_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "form_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "conference_id"
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "industries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "industries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "conference_id"
   end
 
-  create_table "links", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "links", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "title"
     t.string "url"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_links_on_conference_id"
   end
 
-  create_table "live_streams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "live_streams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
     t.string "type"
@@ -150,14 +150,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["track_id"], name: "index_live_streams_on_track_id"
   end
 
-  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "content"
     t.string "text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "sub"
     t.string "email"
     t.string "last_name"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.string "company_address_prefecture_id"
   end
 
-  create_table "proposal_item_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposal_item_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "type"
     t.integer "item_number"
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
   end
 
-  create_table "proposal_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposal_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "talk_id", null: false
     t.string "label"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["talk_id"], name: "index_proposal_items_on_talk_id"
   end
 
-  create_table "proposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id", null: false
     t.integer "conference_id", null: false
     t.integer "status", default: 0, null: false
@@ -206,14 +206,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "registered_talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "speaker_announcement_middles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "speaker_announcement_middles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["speaker_id"], name: "index_speaker_announcement_middles_on_speaker_id"
   end
 
-  create_table "speaker_announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "speaker_announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", null: false
     t.text "body", null: false
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 
-  create_table "speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "profile"
     t.string "company"
@@ -249,7 +249,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.string "name_mother_tongue"
   end
 
-  create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "sponsor_id", null: false
     t.string "type"
     t.string "title"
@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
-  create_table "sponsor_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "email"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["sponsor_id"], name: "index_sponsor_profiles_on_sponsor_id"
   end
 
-  create_table "sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
     t.integer "order"
@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_sponsor_types_on_conference_id"
   end
 
-  create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "abbr"
     t.text "description"
@@ -296,14 +296,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
   end
 
-  create_table "sponsors_sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsors_sponsor_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "sponsor_id"
     t.integer "sponsor_type_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "stats_of_registrants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "stats_of_registrants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
     t.datetime "created_at", precision: 6, null: false
@@ -311,21 +311,21 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_stats_of_registrants_on_conference_id"
   end
 
-  create_table "talk_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talk_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "conference_id"
   end
 
-  create_table "talk_difficulties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talk_difficulties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "conference_id"
   end
 
-  create_table "talk_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talk_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.integer "time_minutes"
     t.datetime "created_at", precision: 6, null: false
@@ -333,7 +333,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["conference_id"], name: "index_talk_times_on_conference_id"
   end
 
-  create_table "talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.text "abstract"
     t.string "movie_url"
@@ -357,14 +357,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end
 
-  create_table "talks_speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talks_speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.integer "speaker_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "tracks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "tracks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "number"
     t.string "name"
     t.string "video_id"
@@ -374,14 +374,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.string "video_platform"
   end
 
-  create_table "video_registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "video_registrations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.string "url"
     t.integer "status", default: 0, null: false
     t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 
-  create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.string "site"
     t.string "url"
@@ -393,7 +393,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_104841) do
     t.text "video_file_data"
   end
 
-  create_table "viewer_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "viewer_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "conference_id"
     t.integer "track_id"
     t.string "stream_type"

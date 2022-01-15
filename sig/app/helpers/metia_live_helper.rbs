@@ -5,5 +5,5 @@ module MediaLiveHelper
 
   def get_media_live_channels_from_aws: (Array[String]) -> Array[Aws::Types::Channel]
 
-  def wait_until: (String, String) -> void
+  def wait_channel_until: (String, String) -> void
 end

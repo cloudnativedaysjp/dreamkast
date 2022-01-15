@@ -46,8 +46,9 @@ class LiveStreamMediaLive < LiveStream
   CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'
   ERROR = 'ERROR'
 
-  attr_accessor :channel
+  attr_accessor :input_security_group
   attr_accessor :input
+  attr_accessor :channel
 
   def initialize(attributes = nil)
     @params = {}
@@ -70,6 +71,10 @@ class LiveStreamMediaLive < LiveStream
     params&.dig('channel_id')
   end
 
+  def input_security_group_id
+    params&.dig('input_security_group_id')
+  end
+
   def channel_state
     channel&.state
   end
@@ -80,6 +85,10 @@ class LiveStreamMediaLive < LiveStream
 
   def input_name
     input&.name
+  end
+
+  def destination_url
+    input ? input.destinations[0].url : ''
   end
 
   def playback_url
@@ -98,14 +107,17 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_media_live_resources
-    input_resp = media_live_client.create_input(create_input_params)
+    input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
+
+    input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
 
-    wait_until(:channel_created, channel_resp.channel['id'])
+    wait_channel_until(:channel_created, channel_resp.channel['id'])
 
     channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
     params = {
+      input_security_group_id: input_security_group_resp.security_group.id,
       input_id: input_resp.input.id,
       input_arn: input_resp.input.arn,
       channel_id: channel_resp.id,
@@ -114,13 +126,16 @@ class LiveStreamMediaLive < LiveStream
     update!(params: params)
   rescue => e
     logger.error(e.message)
-    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
+    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id, input_security_group_id: input_security_group_resp.security_group.id)
   end
 
-  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id)
+  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id, input_security_group_id: self.input_security_group_id)
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
-    wait_until(:channel_deleted, channel_id)
+    wait_channel_until(:channel_deleted, channel_id)
+
     media_live_client.delete_input(input_id: input_id) if input_id
+    wait_input_until(:input_deleted, input_id) if input_id
+    media_live_client.delete_input_security_group(input_security_group_id: input_security_group_id) if input_security_group_id
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -197,17 +212,27 @@ class LiveStreamMediaLive < LiveStream
     end
   end
 
-  def create_input_params
+  def create_input_security_groups_params
+    tags = { 'Environment' => env_name }
+    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
+    {
+      tags: tags,
+      whitelist_rules: [{ cidr: '0.0.0.0/0' }]
+    }
+  end
+
+  def create_input_params(input_security_group_id)
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     {
       name: resource_name,
-      type: 'RTMP_PULL',
-      sources: [
+      type: 'RTMP_PUSH',
+      destinations: [
         {
-          url: track.live_stream_ivs.playback_url
+          stream_name: "#{random_string}/#{random_string}",
         }
       ],
+      input_security_groups: [input_security_group_id],
       tags: tags
     }
   end
@@ -223,11 +248,11 @@ class LiveStreamMediaLive < LiveStream
       tags: tags,
       destinations: [
         {
-          id: 'destination1',
-          media_package_settings: [],
+          id: 'dest-ivs',
           settings: [
             {
-              url: "s3://#{bucket_name}/medialive/#{conference.abbr}"
+              url: "rtmps://#{track.live_stream_ivs.ingest_endpoint}:443/app/",
+              stream_name: track.live_stream_ivs.stream_key['value']
             }
           ]
         }
@@ -241,7 +266,7 @@ class LiveStreamMediaLive < LiveStream
             caption_selectors: [],
             audio_selectors: [
               {
-                name: 'aaa'
+                name: 'Default'
               }
             ],
             deblock_filter: 'DISABLED',
@@ -262,206 +287,98 @@ class LiveStreamMediaLive < LiveStream
 
       encoder_settings: {
         audio_descriptions: [
+          # For IVS
           {
-            audio_selector_name: 'aaa',
+            name: 'audio_al2b0j',
+            audio_selector_name: 'Default',
             audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 192000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_1'
-          },
-          {
-            audio_selector_name: 'aaa',
-            audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 192000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_2'
-          },
-          {
-            audio_selector_name: 'aaa',
-            audio_type_control: 'FOLLOW_INPUT',
-            codec_settings: {
-              aac_settings: {
-                bitrate: 128000,
-                coding_mode: 'CODING_MODE_2_0',
-                input_type: 'NORMAL',
-                profile: 'LC',
-                rate_control_mode: 'CBR',
-                raw_format: 'NONE',
-                sample_rate: 48000,
-                spec: 'MPEG4'
-              }
-            },
-            language_code_control: 'FOLLOW_INPUT',
-            name: 'audio_3'
+            language_code_control: 'FOLLOW_INPUT'
           }
         ],
         caption_descriptions: [],
         output_groups: [
-          {
-            name: 'HD',
-            output_group_settings: {
-              hls_group_settings: {
-                ad_markers: [],
-                caption_language_mappings: [],
-                caption_language_setting: 'OMIT',
-                client_cache: 'ENABLED',
-                codec_specification: 'RFC_4281',
-                destination: { destination_ref_id: 'destination1' },
-                directory_structure: 'SINGLE_DIRECTORY',
-                discontinuity_tags: 'INSERT',
-                hls_cdn_settings: { hls_s3_settings: {} },
-                hls_id_3_segment_tagging: 'DISABLED',
-                i_frame_only_playlists: 'DISABLED',
-                incomplete_segment_behavior: 'AUTO',
-                index_n_segments: 600,
-                input_loss_action: 'EMIT_OUTPUT',
-                iv_in_manifest: 'INCLUDE',
-                iv_source: 'FOLLOWS_SEGMENT_NUMBER',
-                keep_segments: 700,
-                manifest_compression: 'NONE',
-                manifest_duration_format: 'INTEGER',
-                mode: 'VOD',
-                output_selection: 'MANIFESTS_AND_SEGMENTS',
-                program_date_time: 'EXCLUDE',
-                program_date_time_period: 600,
-                redundant_manifest: 'DISABLED',
-                segment_length: 6,
-                segmentation_mode: 'USE_SEGMENT_DURATION',
-                segments_per_subdirectory: 10000,
-                stream_inf_resolution: 'INCLUDE',
-                timed_metadata_id_3_frame: 'PRIV',
-                timed_metadata_id_3_period: 10,
-                ts_file_mode: 'SEGMENTED_FILES'
-              }
-            },
-            outputs: [
-              {
-                audio_description_names: ['audio_1'],
-                caption_description_names: [],
-                output_name: '_1080p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_1080p30'
-                  }
-                },
-                video_description_name: 'video_1080p30'
-              },
-              {
-                audio_description_names: ['audio_2'],
-                caption_description_names: [],
-                output_name: '_720p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_720p30'
-                  }
-                },
-                video_description_name: 'video_720p30'
-              },
-              {
-                audio_description_names: ['audio_3'],
-                caption_description_names: [],
-                output_name: '_480p30',
-                output_settings: {
-                  hls_output_settings: {
-                    h265_packaging_type: 'HVC1',
-                    hls_settings: {
-                      standard_hls_settings: {
-                        audio_rendition_sets: 'program_audio',
-                        m3u_8_settings: {
-                          audio_frames_per_pes: 4,
-                          audio_pids: '492-498',
-                          ecm_pid: '8182',
-                          nielsen_id_3_behavior: 'NO_PASSTHROUGH',
-                          pcr_control: 'PCR_EVERY_PES_PACKET',
-                          pmt_pid: '480',
-                          program_num: 1,
-                          scte_35_behavior: 'NO_PASSTHROUGH',
-                          scte_35_pid: '500',
-                          timed_metadata_behavior: 'NO_PASSTHROUGH',
-                          timed_metadata_pid: '502',
-                          video_pid: '481'
-                        }
-                      }
-                    },
-                    name_modifier: '_480p30'
-                  }
-                },
-                video_description_name: 'video_480p30'
-              }
-            ]
-          }
+          output_to_ivs
         ],
         timecode_config: {
           source: 'EMBEDDED'
         },
         video_descriptions: [
-          video_description('video_1080p30', 1080, 1920, 5000000, 50),
-          video_description('video_720p30', 720, 1280, 3000000, 100),
-          video_description('video_480p30', 480, 854, 1500000, 100)
+          # For IVS
+          {
+            name: 'video_ue3og',
+            respond_to_afd: 'NONE',
+            scaling_behavior: 'DEFAULT',
+            sharpness: 50
+          }
         ]
       }
+    }
+  end
+
+  def audio_description(name, bitrate, sample_rate)
+    {
+      name: name,
+        audio_selector_name: 'Default',
+        audio_type_control: 'FOLLOW_INPUT',
+        codec_settings:
+          {
+            aac_settings:
+              {
+                bitrate: bitrate,
+                coding_mode: 'CODING_MODE_2_0',
+                input_type: 'NORMAL',
+                profile: 'LC',
+                rate_control_mode: 'CBR',
+                raw_format: 'NONE',
+                sample_rate: sample_rate,
+                spec: 'MPEG4'
+              }
+          },
+        language_code_control: 'FOLLOW_INPUT'
+    }
+  end
+
+  def output_groups
+    [
+      output_to_ivs
+    ]
+  end
+
+  def output_to_ivs
+    {
+      name: 'To IVS',
+      output_group_settings:
+        {
+          rtmp_group_settings:
+            {
+              ad_markers: [],
+              authentication_scheme: 'COMMON',
+              cache_full_behavior: 'DISCONNECT_IMMEDIATELY',
+              cache_length: 30,
+              caption_data: 'ALL',
+              input_loss_action: 'EMIT_OUTPUT',
+              restart_delay: 15
+            }
+        },
+      outputs:
+        [
+          {
+            audio_description_names: ['audio_al2b0j'],
+            caption_description_names: [],
+            output_name: 'dest-ivs',
+            output_settings: {
+              rtmp_output_settings: {
+                certificate_mode: 'VERIFY_AUTHENTICITY',
+                connection_retry_interval: 2,
+                destination: {
+                  destination_ref_id: 'dest-ivs'
+                },
+                num_retries: 10
+              }
+            },
+            video_description_name: 'video_ue3og'
+          }
+        ]
     }
   end
 
@@ -478,7 +395,6 @@ class LiveStreamMediaLive < LiveStream
           color_metadata: 'INSERT',
           entropy_encoding: 'CABAC',
           flicker_aq: 'ENABLED',
-          force_field_pictures: 'DISABLED',
           framerate_control: 'SPECIFIED',
           framerate_denominator: 1,
           framerate_numerator: 30,
@@ -490,22 +406,27 @@ class LiveStreamMediaLive < LiveStream
           level: 'H264_LEVEL_AUTO',
           look_ahead_rate_control: 'HIGH',
           num_ref_frames: 3,
-          par_control: 'INITIALIZE_FROM_SOURCE',
-          profile: 'HIGH',
+          par_control: 'SPECIFIED',
+          par_denominator: 3,
+          par_numerator: 4,
+          profile: 'MAIN',
           rate_control_mode: 'CBR',
           scan_type: 'PROGRESSIVE',
           scene_change_detect: 'ENABLED',
           slices: 1,
           spatial_aq: 'ENABLED',
-          subgop_length: 'FIXED',
           syntax: 'DEFAULT',
           temporal_aq: 'ENABLED',
           timecode_insertion: 'DISABLED'
         }
       },
       respond_to_afd: 'NONE',
-      scaling_behavior: 'DEFAULT',
+      scaling_behavior: 'STRETCH_TO_OUTPUT',
       sharpness: sharpness
     }
+  end
+
+  def random_string
+    ('a'..'z').to_a.sample(10).join
   end
 end

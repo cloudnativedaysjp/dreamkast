@@ -220,8 +220,6 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_input_security_groups_params
-    tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     {
       tags: tags,
       whitelist_rules: [{ cidr: '0.0.0.0/0' }]

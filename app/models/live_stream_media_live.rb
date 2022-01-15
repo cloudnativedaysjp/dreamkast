@@ -130,8 +130,7 @@ class LiveStreamMediaLive < LiveStream
 
   def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id, input_security_group_id: self.input_security_group_id)
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
-    wait_channel_until(:channel_deleted, channel_id)
-
+    wait_channel_until(:channel_deleted, channel_id) if channel_id
     media_live_client.delete_input(input_id: input_id) if input_id
     wait_input_until(:input_deleted, input_id) if input_id
     media_live_client.delete_input_security_group(input_security_group_id: input_security_group_id) if input_security_group_id

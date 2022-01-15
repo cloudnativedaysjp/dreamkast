@@ -222,11 +222,7 @@ class LiveStreamMediaLive < LiveStream
     {
       name: resource_name,
       type: 'RTMP_PUSH',
-      destinations: [
-        {
-          stream_name: "#{random_string}/#{random_string}",
-        }
-      ],
+      destinations: [{ stream_name: "#{random_string}/#{random_string}" }],
       input_security_groups: [input_security_group_id],
       tags: tags
     }
@@ -268,11 +264,7 @@ class LiveStreamMediaLive < LiveStream
           input_id: input_id,
           input_settings: {
             caption_selectors: [],
-            audio_selectors: [
-              {
-                name: 'Default'
-              }
-            ],
+            audio_selectors: [{ name: 'Default' }],
             deblock_filter: 'DISABLED',
             denoise_filter: 'DISABLED',
             filter_strength: 1,

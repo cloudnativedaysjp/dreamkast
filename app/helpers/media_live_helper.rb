@@ -34,8 +34,15 @@ module MediaLiveHelper
     channels.select { |channel| channel_ids.include?(channel.id) }
   end
 
-  def wait_until(waiter_name, channel_id)
+  def wait_channel_until(waiter_name, channel_id)
     media_live_client.wait_until(waiter_name, channel_id: channel_id) do |w|
+      w.max_attempts = 30
+      w.delay = 5
+    end
+  end
+
+  def wait_input_until(waiter_name, input_id)
+    media_live_client.wait_until(waiter_name, input_id: input_id) do |w|
       w.max_attempts = 30
       w.delay = 5
     end

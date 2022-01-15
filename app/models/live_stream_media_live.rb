@@ -46,8 +46,9 @@ class LiveStreamMediaLive < LiveStream
   CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'
   ERROR = 'ERROR'
 
-  attr_accessor :channel
+  attr_accessor :input_security_group
   attr_accessor :input
+  attr_accessor :channel
 
   def initialize(attributes = nil)
     @params = {}
@@ -68,6 +69,10 @@ class LiveStreamMediaLive < LiveStream
 
   def channel_id
     params&.dig('channel_id')
+  end
+
+  def input_security_group_id
+    params&.dig('input_security_group_id')
   end
 
   def channel_state
@@ -102,14 +107,17 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def create_media_live_resources
-    input_resp = media_live_client.create_input(create_input_params)
+    input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
+
+    input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
 
-    wait_until(:channel_created, channel_resp.channel['id'])
+    wait_channel_until(:channel_created, channel_resp.channel['id'])
 
     channel_resp = media_live_client.describe_channel(channel_id: channel_resp.channel['id'])
     params = {
+      input_security_group_id: input_security_group_resp.security_group.id,
       input_id: input_resp.input.id,
       input_arn: input_resp.input.arn,
       channel_id: channel_resp.id,
@@ -118,13 +126,16 @@ class LiveStreamMediaLive < LiveStream
     update!(params: params)
   rescue => e
     logger.error(e.message)
-    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id)
+    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id, input_security_group_id: input_security_group_resp.security_group.id)
   end
 
-  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id)
+  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id, input_security_group_id: self.input_security_group_id)
     media_live_client.delete_channel(channel_id: channel_id) if channel_id
-    wait_until(:channel_deleted, channel_id)
+    wait_channel_until(:channel_deleted, channel_id)
+
     media_live_client.delete_input(input_id: input_id) if input_id
+    wait_input_until(:input_deleted, input_id) if input_id
+    media_live_client.delete_input_security_group(input_security_group_id: input_security_group_id) if input_security_group_id
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -201,7 +212,16 @@ class LiveStreamMediaLive < LiveStream
     end
   end
 
-  def create_input_params
+  def create_input_security_groups_params
+    tags = { 'Environment' => env_name }
+    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
+    {
+      tags: tags,
+      whitelist_rules: [{ cidr: '0.0.0.0/0' }]
+    }
+  end
+
+  def create_input_params(input_security_group_id)
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     {
@@ -212,7 +232,7 @@ class LiveStreamMediaLive < LiveStream
           stream_name: "#{random_string}/#{random_string}",
         }
       ],
-      input_security_groups: ['8926492'],
+      input_security_groups: [input_security_group_id],
       tags: tags
     }
   end

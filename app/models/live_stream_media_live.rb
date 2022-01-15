@@ -191,8 +191,6 @@ class LiveStreamMediaLive < LiveStream
       'dreamkast-ivs-stream-archive-prd'
     when 'staging'
       'dreamkast-ivs-stream-archive-stg'
-    when 'review_app'
-      'dreamkast-ivs-stream-archive-dev'
     else
       'dreamkast-ivs-stream-archive-dev'
     end
@@ -200,8 +198,6 @@ class LiveStreamMediaLive < LiveStream
 
   def cloudfront_domain_name
     case env_name
-    when 'review_app'
-      'd1jzp6sbtx9by.cloudfront.net'
     when 'staging'
       'd3i2o0iduabu0p.cloudfront.net'
     when 'production'

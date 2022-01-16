@@ -81,6 +81,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   def tags
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
+    tags
   end
 
   def resource_name

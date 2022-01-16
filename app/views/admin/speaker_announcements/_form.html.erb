@@ -13,7 +13,7 @@
           <%= form.hidden_field :speaker_ids, multiple: true, value: speaker_id, class: 'form-control' %>
         <% end %>
         <%= form.text_field :speaker_names, value: "全員", readonly: true %>
-        <%= form.hidden_field :to_all, value: true %>
+        <%= form.hidden_field :receiver, value: :all %>
       </div>
     <% else %>
         <div class="field">
@@ -23,14 +23,19 @@
           <% @speakers.each do |speaker| %>
             <%= form.hidden_field :speaker_ids, multiple: true, value: speaker.id %>
           <% end %>
-          <%= form.text_field :speaker_names, value: @speakers.length == 1 ? @speakers[0].name : "全員", readonly: true %><br/>
+          <%= form.text_field :speaker_names, value: @speakers.length == 1 ? @speakers[0].name : "全員", readonly: true %>
         </div>
     <% end %>
-
-    <div class="field">
-      <%= form.label :only_accepted, 'CFP採択者にのみ通知' %><br/>
-      <%= form.check_box :only_accepted, value: @speaker_announcement.only_accepted %>
-    </div>
+    <br/>
+    <% if is_to_all_announcements?(@speakers) %>
+      <div class="field">
+        <%= form.radio_button :receiver, :only_accepted %>
+        <%= form.label :receiver, 'CFP採択者にのみ通知', value: @speaker_announcement.receiver %>
+        <br/>
+        <%= form.radio_button :receiver, :all_speaker %>
+        <%= form.label :receiver, 'CFP採択に関わらず通知', value: @speaker_announcement.receiver %>
+      </div>
+    <% end %>
 
     <div class="field">
       <%= form.label :body, 'アナウンス内容' %>*

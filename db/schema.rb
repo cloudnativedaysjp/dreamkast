@@ -229,8 +229,7 @@ ActiveRecord::Schema.define(version: 2022_01_08_084355) do
     t.boolean "publish", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "only_accepted", default: false
-    t.boolean "to_all", default: false
+    t.integer "receiver", default: 0, null: false
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 

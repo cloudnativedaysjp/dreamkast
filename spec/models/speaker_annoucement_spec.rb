@@ -68,23 +68,14 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
 
-    describe '#accepted_only' do
-      subject { described_class.accepted_only(speaker.id) }
+    describe '#accepted_announcements' do
+      subject { described_class.accepted_announcements }
       before { create(:speaker_announcement, :only_accepted, speakers: [speaker]) }
 
       context 'speaker has accepted proposal' do
-        let!(:speaker) { create(:speaker_alice, :with_talk1_accepted) }
         it 'find one announcement' do
           expect(SpeakerAnnouncement.all.size).to(eq(1))
           expect(subject.size).to(eq(1))
-        end
-      end
-
-      context 'speaker has no accepted proposal' do
-        let!(:speaker) { create(:speaker_alice, :with_talk1_rejected) }
-        it 'cannot find announcements' do
-          expect(SpeakerAnnouncement.all.size).to(eq(1))
-          expect(subject.size).to(eq(0))
         end
       end
     end
@@ -93,6 +84,11 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       context 'when to all speakers' do
         let!(:announce) { create(:speaker_announcement, :published_all) }
         it { expect(announce.speaker_names).to(eq('全員')) }
+      end
+
+      context 'when to cfp accepted speakers' do
+        let!(:announce) { create(:speaker_announcement, :only_accepted) }
+        it { expect(announce.speaker_names).to(eq('CFP採択者')) }
       end
 
       context 'when to speaker alice' do

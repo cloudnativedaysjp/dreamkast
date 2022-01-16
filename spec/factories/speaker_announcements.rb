@@ -4,10 +4,9 @@
 #
 #  id            :bigint           not null, primary key
 #  body          :text(65535)      not null
-#  only_accepted :boolean          default(FALSE)
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
-#  to_all        :boolean          default(FALSE)
+#  receiver      :integer          default("private"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null
@@ -30,11 +29,11 @@ FactoryBot.define do
       publish { true }
     end
     trait :published_all do
-      to_all { true }
+      receiver { :all_speaker }
       publish { true }
     end
     trait :only_accepted do
-      only_accepted { true }
+      receiver { :only_accepted }
       publish { true }
     end
     trait :speaker_mike do

@@ -68,6 +68,6 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def speaker_announcement_params
-    params.require(:speaker_announcement).permit(:conference_id, :to_all, :publish_time, :only_accepted, :body, :publish, speaker_ids: [])
+    params.require(:speaker_announcement).permit(:conference_id, :receiver, :publish_time, :only_accepted, :body, :publish, speaker_ids: [])
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_01_082455) do
+ActiveRecord::Schema.define(version: 2022_01_18_092940) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -353,6 +353,7 @@ ActiveRecord::Schema.define(version: 2022_01_01_082455) do
     t.json "expected_participants"
     t.json "execution_phases"
     t.integer "sponsor_id"
+    t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
   end

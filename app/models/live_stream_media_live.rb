@@ -134,6 +134,7 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.delete_input(input_id: input_id) if input_id
     wait_input_until(:input_deleted, input_id) if input_id
     media_live_client.delete_input_security_group(input_security_group_id: input_security_group_id) if input_security_group_id
+    delete_parameter("/medialive/#{resource_name}")
   rescue => e
     logger.error(e.message.to_s)
   end

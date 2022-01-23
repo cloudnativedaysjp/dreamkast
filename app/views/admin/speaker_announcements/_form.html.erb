@@ -13,7 +13,7 @@
           <%= form.hidden_field :speaker_ids, multiple: true, value: speaker_id, class: 'form-control' %>
         <% end %>
         <%= form.text_field :speaker_names, value: "全員", readonly: true %>
-        <%= form.hidden_field :receiver, value: :all %>
+        <%= form.hidden_field :receiver, value: :all_speaker %>
       </div>
     <% else %>
         <div class="field">
@@ -29,6 +29,7 @@
     <br/>
     <% if is_to_all_announcements?(@speakers) %>
       <div class="field">
+        <% @speaker_announcement.receiver = :all_speaker if @speaker_announcement.person? %>
         <%= form.radio_button :receiver, :only_accepted %>
         <%= form.label :receiver, 'CFP採択者にのみ通知', value: @speaker_announcement.receiver %>
         <br/>

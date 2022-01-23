@@ -68,15 +68,13 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
 
-    describe '#accepted_announcements' do
-      subject { described_class.accepted_announcements }
+    describe '#exclude_announcements_for_only_accepted' do
+      subject { described_class.exclude_announcements_for_only_accepted}
       before { create(:speaker_announcement, :only_accepted, speakers: [speaker]) }
 
-      context 'speaker has accepted proposal' do
-        it 'find one announcement' do
-          expect(SpeakerAnnouncement.all.size).to(eq(1))
-          expect(subject.size).to(eq(1))
-        end
+      it 'not find only_accepted announcement' do
+        expect(SpeakerAnnouncement.all.size).to(eq(1))
+        expect(subject.size).to(eq(0))
       end
     end
 

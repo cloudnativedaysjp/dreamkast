@@ -69,7 +69,7 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
     end
 
     describe '#exclude_announcements_for_only_accepted' do
-      subject { described_class.exclude_announcements_for_only_accepted}
+      subject { described_class.exclude_announcements_for_only_accepted }
       before { create(:speaker_announcement, :only_accepted, speakers: [speaker]) }
 
       it 'not find only_accepted announcement' do

@@ -40,7 +40,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: 'alice@example.com' } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return({ info: { email: 'alice@example.com' } }))
           end
 
           it 'redirect to /cndt2020/registration' do
@@ -54,7 +54,7 @@ describe TalksController, type: :request do
         context 'user already registered' do
           before do
             create(:alice, :on_cndt2020)
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+            allow_any_instance_of(ActionDispatch::Request::Session::Options).to(receive(:[]).and_return(session[:userinfo]))
           end
 
           it 'returns a success response with form' do
@@ -146,7 +146,7 @@ describe TalksController, type: :request do
             create(:cndo2021)
             create(:alice, :on_cndt2020)
             create(:alice, :on_cndo2021)
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
@@ -237,7 +237,7 @@ describe TalksController, type: :request do
             create(:cndo2021)
             create(:alice, :on_cndt2020)
             create(:alice, :on_cndo2021)
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
@@ -328,7 +328,7 @@ describe TalksController, type: :request do
             create(:cndo2021)
             create(:alice, :on_cndt2020)
             create(:alice, :on_cndo2021)
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
@@ -393,7 +393,7 @@ describe TalksController, type: :request do
 
       context "user doesn't registered" do
         before {
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(session[:userinfo]))
         }
         it 'redirect to /cndt2020/registration' do
           get '/cndt2020/talks'
@@ -416,7 +416,7 @@ describe TalksController, type: :request do
       before  { create(:cndt2020, :opened) }
       context "user doesn't registered" do
         before {
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(session[:userinfo]))
         }
         it 'redirect to /cndt2020/registration' do
           get '/cndt2020/talks'

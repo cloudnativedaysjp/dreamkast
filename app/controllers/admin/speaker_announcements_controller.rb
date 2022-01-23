@@ -56,7 +56,11 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   private
 
-  helper_method :speaker_announcement_url
+  helper_method :speaker_announcement_url, :is_to_all_announcements?
+
+  def is_to_all_announcements?(speakers)
+    speakers.blank? || speakers.nil? || speakers.length > 1
+  end
 
   def speaker_announcement_url
     case action_name

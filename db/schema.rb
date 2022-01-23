@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_113029) do
   create_table "media_package_channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.string "channel_id", null: false
+    t.string "channel_id", default: ""
     t.index ["channel_id"], name: "index_media_package_channels_on_channel_id", unique: true
     t.index ["conference_id"], name: "index_media_package_channels_on_conference_id"
     t.index ["track_id"], name: "index_media_package_channels_on_track_id"

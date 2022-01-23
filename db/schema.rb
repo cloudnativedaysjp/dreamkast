@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_113029) do
+ActiveRecord::Schema.define(version: 2022_01_23_073409) do
 
   create_table "access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -157,6 +157,19 @@ ActiveRecord::Schema.define(version: 2022_01_19_113029) do
     t.index ["channel_id"], name: "index_media_package_channels_on_channel_id", unique: true
     t.index ["conference_id"], name: "index_media_package_channels_on_conference_id"
     t.index ["track_id"], name: "index_media_package_channels_on_track_id"
+  end
+
+  create_table "media_package_harvest_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "media_package_channel_id", null: false
+    t.bigint "talk_id", null: false
+    t.string "job_id"
+    t.string "status"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["conference_id"], name: "index_media_package_harvest_jobs_on_conference_id"
+    t.index ["media_package_channel_id"], name: "index_media_package_harvest_jobs_on_media_package_channel_id"
+    t.index ["talk_id"], name: "index_media_package_harvest_jobs_on_talk_id"
   end
 
   create_table "media_package_origin_endpoints", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -436,6 +449,9 @@ ActiveRecord::Schema.define(version: 2022_01_19_113029) do
   add_foreign_key "live_streams", "tracks"
   add_foreign_key "media_package_channels", "conferences"
   add_foreign_key "media_package_channels", "tracks"
+  add_foreign_key "media_package_harvest_jobs", "conferences"
+  add_foreign_key "media_package_harvest_jobs", "media_package_channels"
+  add_foreign_key "media_package_harvest_jobs", "talks"
   add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
   add_foreign_key "proposal_item_configs", "conferences"

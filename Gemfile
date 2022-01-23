@@ -108,6 +108,8 @@ gem "octokit", "~> 4.0"
 
 gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
+gem "aws-sdk-mediapackage"
+gem "aws-sdk-ssm"
 
 gem 'active_hash'
 gem 'opentelemetry-sdk'

@@ -14,6 +14,9 @@ class Admin::LiveStreamIvsController < ApplicationController
       @media_lives.find { |media_live| media_live.input_id == input.id }.input = input
     end
 
+    @media_package_channels = @conference.tracks.map(&:media_package_channel).compact
+    @media_package_channels.each(&:channel)
+
     respond_to do |format|
       format.html { render(:index) }
       format.json do

@@ -34,7 +34,7 @@ class SpeakerAnnouncement < ApplicationRecord
   }
 
   scope :find_by_speaker, lambda { |speaker_id|
-    if Speaker.find(speaker_id).proposal_accepted?
+    if Speaker.find(speaker_id).has_accepted_proposal?
       joins(:speaker_announcement_middles).where(speaker_announcement_middles: { speaker_id: speaker_id }, publish: true).accepted_announcements
     else
       joins(:speaker_announcement_middles).where(speaker_announcement_middles: { speaker_id: speaker_id }, publish: true)

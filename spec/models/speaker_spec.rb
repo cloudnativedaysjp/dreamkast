@@ -23,8 +23,8 @@ require 'rails_helper'
 RSpec.describe(Speaker, type: :model) do
   before { create(:cndt2020) }
 
-  describe '#proposal_accepted?' do
-    subject { speaker.proposal_accepted? }
+  describe '#has_accepted_proposal?' do
+    subject { speaker.has_accepted_proposal? }
 
     context 'when speaker has accepted talk' do
       let!(:speaker) { create(:speaker_alice, :with_talk1_accepted) }

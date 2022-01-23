@@ -76,7 +76,7 @@ class Speaker < ApplicationRecord
     link_to(ActionController::Base.helpers.image_tag('GitHub-Mark-64px.png', width: 20), "https://github.com/#{github_id}") if github_id.present?
   end
 
-  def proposal_accepted?
+  def has_accepted_proposal?
     talks.find { |e| e.proposal.status == 'accepted' }.present?
   end
 end

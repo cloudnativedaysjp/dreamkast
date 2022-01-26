@@ -115,4 +115,6 @@ gem 'active_hash'
 gem 'opentelemetry-sdk'
 gem 'opentelemetry-exporter-jaeger'
 gem 'opentelemetry-instrumentation-all'
+gem 'opentelemetry-instrumentation-aws_sdk'
+
 

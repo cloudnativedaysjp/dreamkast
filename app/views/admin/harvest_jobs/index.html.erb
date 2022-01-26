@@ -1,0 +1,26 @@
+<%= render 'admin/layout' do %>
+  <h1>HarvestJobs</h1>
+
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Harvest Job ID</th>
+      <th scope="col">Harvest Job Status</th>
+      <th scope="col">StartTime</th>
+      <th scope="col">EndTime</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @harvest_jobs.each do |harvest_job| %>
+      <tr>
+        <td><%= harvest_job.id %></td>
+        <td><%= harvest_job.job_id %></td>
+        <td><%= harvest_job.job.status %></td>
+        <td><%= harvest_job.start_time %></td>
+        <td><%= harvest_job.end_time %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

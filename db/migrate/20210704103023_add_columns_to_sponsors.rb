@@ -4,8 +4,8 @@ class AddColumnsToSponsors < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :sub
       t.string :email
-      t.belongs_to :conference, null: false, foreign_key: true
-      t.belongs_to :sponsor, null: false
+      t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
+      t.belongs_to :sponsor, null: false, type: :bigint
 
       t.timestamps
     end

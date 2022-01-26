@@ -4,7 +4,7 @@ class CreateProposalItemConfigs < ActiveRecord::Migration[6.0]
     add_column :talks, :execution_phases, :json
 
     create_table :proposal_item_configs do |t|
-      t.belongs_to :conference, null: false, foreign_key: true
+      t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
       t.string :type
       t.integer :item_number
       t.string :label

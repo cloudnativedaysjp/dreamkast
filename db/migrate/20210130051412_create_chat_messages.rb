@@ -1,11 +1,11 @@
 class CreateChatMessages < ActiveRecord::Migration[6.0]
   def self.up
     create_table :chat_messages do |t|
-      t.belongs_to :conference, null: false, foreign_key: true
-      t.belongs_to :talk, null: true, foreign_key: true
-      t.belongs_to :booth, null: true, foreign_key: true
-      t.belongs_to :profile, null: true, foreign_key: true
-      t.belongs_to :speaker, null: true, foreign_key: true
+      t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
+      t.belongs_to :talk, null: true, foreign_key: true, type: :bigint
+      t.belongs_to :booth, null: true, foreign_key: true, type: :bigint
+      t.belongs_to :profile, null: true, foreign_key: true, type: :bigint
+      t.belongs_to :speaker, null: true, foreign_key: true, type: :bigint
 
       t.string :body
       t.integer :parent_id, :null => true, :index => true

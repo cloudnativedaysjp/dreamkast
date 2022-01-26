@@ -4,9 +4,8 @@ namespace :util do
     include EnvHelper
     include MediaPackageHelper
 
-    client = media_package_client
     MediaPackageHarvestJob.where(status: 'IN_PROGRESS').each do |harvest_job|
-      resp = client.describe_harvest_job(id: harvest_job.job_id)
+      resp = harvest_job.job
       harvest_job.update!(status: resp.status)
 
       url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"

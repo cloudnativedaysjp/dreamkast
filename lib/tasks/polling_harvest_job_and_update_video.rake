@@ -6,11 +6,11 @@ namespace :util do
 
     client = media_package_client
     MediaPackageHarvestJob.where(status: 'IN_PROGRESS').each do |harvest_job|
-      r = client.describe_harvest_job(id: harvest_job.job_id)
-      harvest_job.update!(status: r.status)
+      resp = client.describe_harvest_job(id: harvest_job.job_id)
+      harvest_job.update!(status: resp.status)
 
-      url = "https://#{cloudfront_domain_name(r.s3_destination.bucket_name)}/#{r.s3_destination.manifest_key}"
-      if r.status == 'SUCCEEDED' && harvest_job.talk.video_id == ''
+      url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
+      if resp.status == 'SUCCEEDED' && harvest_job.talk.video_id == ''
         harvest_job.talk.video.update!(video_id: url)
       end
     end

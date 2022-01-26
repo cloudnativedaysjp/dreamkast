@@ -2,21 +2,17 @@
 #
 # Table name: media_package_origin_endpoints
 #
-#  id                       :bigint           not null, primary key
-#  conference_id            :bigint           not null
+#  id                       :integer          not null, primary key
+#  conference_id            :integer          not null
+#  media_package_channel_id :integer          not null
 #  endpoint_id              :string(255)
-#  media_package_channel_id :bigint           not null
 #
 # Indexes
 #
 #  index_media_package_origin_endpoints_on_conference_id             (conference_id)
 #  index_media_package_origin_endpoints_on_media_package_channel_id  (media_package_channel_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (conference_id => conferences.id)
-#  fk_rails_...  (media_package_channel_id => media_package_channels.id)
-#
+
 class MediaPackageOriginEndpoint < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper

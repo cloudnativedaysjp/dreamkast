@@ -25,9 +25,9 @@ pidfile ENV.fetch('PIDFILE') { 'tmp/pids/server.pid' }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
-workers ENV.fetch('WEB_CONCURRENCY') { 1 }
+# workers ENV.fetch('WEB_CONCURRENCY') { 1 }
 preload_app!
 
 # Use the `preload_app!` method when specifying a `workers` number.

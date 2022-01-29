@@ -7,11 +7,11 @@ class Api::V1::TalksController < ApplicationController
     if params[:conferenceDayIds]
       @talks = @talks.where(params[:conferenceDayIds].split(',').map { |id| "conference_day_id = #{id}" }.join(' OR '))
     end
-    render('api/v1/talks/index')
+    render(:index, formats: :json, type: :jbuilder)
   end
 
   def show
     @talk = Talk.find(params[:id])
-    render('api/v1/talks/index')
+    render(:show, formats: :json, type: :jbuilder)
   end
 end

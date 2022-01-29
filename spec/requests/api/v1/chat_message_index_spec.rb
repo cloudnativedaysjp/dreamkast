@@ -20,13 +20,14 @@ describe Api::V1::ChatMessagesController, type: :request do
 
   describe 'GET /api/v1/chat_messages' do
     before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return( info: { email: alice.email }))
-      create(:talk1)
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
+      create(:talk1, conference: cndt2020)
       create(:message_from_alice, profile: alice)
     end
 
     let!(:cndt2020) { create(:cndt2020) }
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let!(:roles) { '' }
 
     it 'succeed request' do
       get '/api/v1/chat_messages?eventAbbr=cndt2020&roomId=1&roomType=talk'

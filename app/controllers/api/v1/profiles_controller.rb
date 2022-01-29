@@ -3,6 +3,6 @@ class Api::V1::ProfilesController < ApplicationController
   before_action :set_profile
 
   def my_profile
-    render('api/v1/profiles/my_profile.json.jbuilder')
+    render(:my_profile, formats: :json, type: :jbuilder)
   end
 end

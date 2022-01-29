@@ -706,6 +706,63 @@ Sponsor.seed(
     conference_id: 4,
     url: 'https://www.cloudflare.com/ja-jp/'
   },
+  {
+    id: 103,
+    name: '株式会社スリーシェイク',
+    abbr: '3shake',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 104,
+    name: 'JFrog Japan株式会社',
+    abbr: 'jfrog',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 105,
+    name: 'New Relic株式会社',
+    abbr: 'newrelic',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 106,
+    name: 'F5ネットワークスジャパン合同会社',
+    abbr: 'f5',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 107,
+    name: 'アクイアジャパン合同会社',
+    abbr: 'acquia',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 108,
+    name: 'Splunk Services Japan合同会社',
+    abbr: 'splunk',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 109,
+    name: 'グーグル・クラウド・ジャパン合同会社',
+    abbr: 'google',
+    conference_id: 5,
+    url: ''
+  },
+  {
+    id: 110,
+    name: 'Datadog',
+    abbr: 'datadog',
+    conference_id: 5,
+    url: ''
+  },
+
 )
 
 SponsorType.seed(
@@ -862,6 +919,25 @@ SponsorType.seed(
     name: "Media",
     order: 7,
   },
+  {
+    id: 30,
+    conference_id: 5,
+    name: "Platinum",
+    order: 1,
+  },
+  {
+    id: 31,
+    conference_id: 5,
+    name: "Gold",
+    order: 2,
+  },
+  {
+    id: 32,
+    conference_id: 5,
+    name: "Silver",
+    order: 3,
+  },
+
 )
 
 [
@@ -991,6 +1067,14 @@ SponsorType.seed(
   [126, 'Hands-On', 'elastic', 4],
   [127, 'Platinum', 'cloudflare', 4],
   [128, 'CM', 'gmo', 4],
+  [129, 'Platinum', '3shake', 5],
+  [130, 'Platinum', 'jfrog', 5],
+  [131, 'Platinum', 'newrelic', 5],
+  [132, 'Gold', 'f5', 5],
+  [133, 'Silver', 'acquia', 5],
+  [134, 'Platinum', 'splunk', 5],
+  [135, 'Platinum', 'google', 5],
+  [136, 'Platinum', 'datadog', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1107,6 +1191,14 @@ end
   [100, 'gitlab', 'sponsors/cndt2021/gitlab.png', 4],
   [101, 'elastic', 'sponsors/cndt2021/elastic.png', 4],
   [102, 'cloudflare', 'sponsors/cndt2021/cloudflare.png', 4],
+  [103, '3shake', 'sponsors/o11y2022/3-shake.png', 5],
+  [104, 'jfrog', 'sponsors/o11y2022/jfrog.png', 5],
+  [105, 'newrelic', 'sponsors/o11y2022/newrelic.png', 5],
+  [106, 'f5', 'sponsors/o11y2022/nginx.png', 5],
+  [107, 'acquia', 'sponsors/o11y2022/acquia.png', 5],
+  [108, 'splunk', 'sponsors/o11y2022/splunk.png', 5],
+  [109, 'google', 'sponsors/o11y2022/google.png', 5],
+  [110, 'datadog', 'sponsors/o11y2022/datadog.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

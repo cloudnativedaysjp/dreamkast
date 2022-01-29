@@ -19,7 +19,7 @@ describe ProfilesController, type: :request do
       subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(user_session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
       end
 
       it "doesn't have timetable and speakers links" do
@@ -35,7 +35,7 @@ describe ProfilesController, type: :request do
 
       before do
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(user_session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
       end
 
       it 'redirect to timetables' do
@@ -61,7 +61,7 @@ describe ProfilesController, type: :request do
       end
 
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(user_session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
         create(:form_item1)
         create(:form_item2)
         create(:form_item3)

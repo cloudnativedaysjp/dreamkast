@@ -36,7 +36,7 @@ describe EventController, type: :request do
     context 'when logged in and speaker_entry is enabled' do
       context 'not registered' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
         end
 
         it 'returns a success response with event top page' do
@@ -49,7 +49,7 @@ describe EventController, type: :request do
 
       context 'registered' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           create(:speaker_alice)
         end
 
@@ -70,7 +70,7 @@ describe EventController, type: :request do
 
     context 'not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       it 'returns a success response with event top page' do
@@ -83,7 +83,7 @@ describe EventController, type: :request do
 
     context 'registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
         create(:speaker_alice)
       end
 

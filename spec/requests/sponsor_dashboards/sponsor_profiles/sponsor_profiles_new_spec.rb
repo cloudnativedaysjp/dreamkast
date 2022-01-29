@@ -20,7 +20,7 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
 
         describe 'sponsor logged in' do
           before do
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
           end
 
           it 'returns a success response with new sponsor_profiles page' do
@@ -46,7 +46,7 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
 
         describe 'sponsor logged in' do
           before do
-            allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
           end
 
           it 'returns a success response with new sponsor_profiles page' do

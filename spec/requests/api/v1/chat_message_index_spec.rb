@@ -20,7 +20,7 @@ describe Api::V1::ChatMessagesController, type: :request do
 
   describe 'GET /api/v1/chat_messages' do
     before do
-      allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: alice.email } }))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return( info: { email: alice.email }))
       create(:talk1)
       create(:message_from_alice, profile: alice)
     end

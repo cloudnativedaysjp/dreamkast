@@ -23,7 +23,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return( info: { email: 'alice@example.com' }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
       end
 
       it 'redirect to /cndt2020/registration' do
@@ -70,7 +70,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return( info: { email: 'alice@example.com'  }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
       end
 
       it 'redirect to /cndt2020/registration' do

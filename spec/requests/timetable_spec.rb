@@ -43,7 +43,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return( {info: { email: 'alice@example.com' }}))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
       end
 
       it 'redirect to /cndt2020/registration' do
@@ -108,7 +108,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }}))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
       end
 
       it 'redirect to /cndo2021/registration' do

@@ -1,0 +1,31 @@
+name: add 'reviewapps/ignore' label to PR that no update during one week
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 09:00 JST
+
+jobs:
+  labeling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            const now = new Date();
+            const borderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3);
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+            });
+            prs.data.filter(d => {
+              const updatedAt = new Date(Date.parse(d.updated_at));
+              return updatedAt < borderDate;
+            }).map(pr => {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: ["reviewapps/ignore"],
+              })
+            });

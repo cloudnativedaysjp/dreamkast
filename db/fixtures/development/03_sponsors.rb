@@ -762,6 +762,13 @@ Sponsor.seed(
     conference_id: 5,
     url: ''
   },
+  {
+    id: 111,
+    name: '株式会社マクニカ ネットワークス カンパニー',
+    abbr: 'macnica',
+    conference_id: 5,
+    url: ''
+  },
 
 )
 
@@ -1075,6 +1082,7 @@ SponsorType.seed(
   [134, 'Platinum', 'splunk', 5],
   [135, 'Platinum', 'google', 5],
   [136, 'Platinum', 'datadog', 5],
+  [137, 'Gold', 'macnica', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1199,6 +1207,7 @@ end
   [108, 'splunk', 'sponsors/o11y2022/splunk.png', 5],
   [109, 'google', 'sponsors/o11y2022/google.png', 5],
   [110, 'datadog', 'sponsors/o11y2022/datadog.png', 5],
+  [111, 'macnica', 'o11y2022/trademark.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

@@ -58,8 +58,8 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   helper_method :speaker_announcement_url, :is_to_all_announcements?
 
-  def is_to_all_announcements?(speakers)
-    speakers.blank? || speakers.nil? || speakers.length > 1
+  def is_to_all_announcements?
+    @speakers.blank? || @speakers.nil? || @speakers.length > 1
   end
 
   def speaker_announcement_url

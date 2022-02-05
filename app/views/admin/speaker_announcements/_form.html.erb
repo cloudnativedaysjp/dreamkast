@@ -27,7 +27,7 @@
         </div>
     <% end %>
     <br/>
-    <% if is_to_all_announcements?(@speakers) %>
+    <% if is_to_all_announcements? %>
       <div class="field">
         <% @speaker_announcement.receiver = :all_speaker if @speaker_announcement.person? %>
         <%= form.radio_button :receiver, :only_accepted %>

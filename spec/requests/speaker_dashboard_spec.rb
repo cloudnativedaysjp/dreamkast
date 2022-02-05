@@ -228,10 +228,9 @@ describe SpeakerDashboardsController, type: :request do
         end
 
         context 'when alice has accepted proposal' do
-          before do
-            create(:speaker_announcement, :only_accepted, speakers: [alice])
-            allow_any_instance_of(Speaker).to(receive(:has_accepted_proposal?).and_return(true))
-          end
+          before { create(:speaker_announcement, :only_accepted, speakers: [alice]) }
+          let(:alice) { create(:speaker_alice, :with_talk1_accepted) }
+
           it 'show to_all announcements' do
             subject
             expect(response).to(be_successful)
@@ -247,10 +246,8 @@ describe SpeakerDashboardsController, type: :request do
         end
 
         context 'when alice not has accepted proposal' do
-          before do
-            create(:speaker_announcement, :only_accepted, speakers: [alice])
-            allow_any_instance_of(Speaker).to(receive(:has_accepted_proposal?).and_return(false))
-          end
+          before { create(:speaker_announcement, :only_accepted, speakers: [alice]) }
+          let(:alice) { create(:speaker_alice, :with_talk1_rejected) }
 
           it 'show to_all announcements' do
             subject

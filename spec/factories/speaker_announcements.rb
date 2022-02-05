@@ -29,10 +29,12 @@ FactoryBot.define do
       publish { true }
     end
     trait :published_all do
+      body { 'test announcement for all speaker' }
       receiver { :all_speaker }
       publish { true }
     end
     trait :only_accepted do
+      body { 'test announcement for only accepted' }
       receiver { :only_accepted }
       publish { true }
     end

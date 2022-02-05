@@ -23,7 +23,7 @@
 
       <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post, local: true) do |form| %>
         <section class="speaker-information py-3">
-          <%= form.hidden_field :media_package_channel_id, value: 11 %>
+          <%= form.hidden_field :media_package_channel_id, value: @media_package_channel.id %>
           <%= form.hidden_field :talk_id, value: @talk.id %>
 
           <div class="field">

@@ -21,7 +21,7 @@
         <source src="<%= @preview_url %>" type="application/x-mpegURL" />
       </video>
 
-      <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post) do |form| %>
+      <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post, local: true) do |form| %>
         <section class="speaker-information py-3">
           <%= form.hidden_field :media_package_channel_id, value: 11 %>
           <%= form.hidden_field :talk_id, value: @talk.id %>

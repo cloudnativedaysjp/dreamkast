@@ -32,7 +32,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   belongs_to :talk
 
   def job
-    @job ||= media_package_client.describe_harvest_job(id: job_id)
+    @job ||= media_package_client.describe_harvest_job(id: job_id) if job_id
   end
 
   def create_media_package_resources

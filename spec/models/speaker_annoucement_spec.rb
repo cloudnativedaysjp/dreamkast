@@ -68,13 +68,28 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
 
+    describe '#exclude_announcements_for_only_accepted' do
+      subject { described_class.exclude_announcements_for_only_accepted }
+      before { create(:speaker_announcement, :only_accepted, speakers: [speaker]) }
+
+      it 'not find only_accepted announcement' do
+        expect(SpeakerAnnouncement.all.size).to(eq(1))
+        expect(subject.size).to(eq(0))
+      end
+    end
+
     describe '#speaker_names' do
-      context 'when has no speakers' do
-        let!(:announce) { create(:speaker_announcement, :published) }
+      context 'when to all speakers' do
+        let!(:announce) { create(:speaker_announcement, :published_all) }
         it { expect(announce.speaker_names).to(eq('全員')) }
       end
 
-      context 'when has speakers alice' do
+      context 'when to cfp accepted speakers' do
+        let!(:announce) { create(:speaker_announcement, :only_accepted) }
+        it { expect(announce.speaker_names).to(eq('CFP採択者')) }
+      end
+
+      context 'when to speaker alice' do
         let!(:announce) { create(:speaker_announcement, :published, speakers: [create(:speaker_alice)]) }
         it { expect(announce.speaker_names).to(eq('Alice')) }
       end

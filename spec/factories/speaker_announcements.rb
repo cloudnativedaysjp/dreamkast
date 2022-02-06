@@ -6,6 +6,7 @@
 #  body          :text(65535)      not null
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
+#  receiver      :integer          default("private"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null
@@ -25,6 +26,16 @@ FactoryBot.define do
     body { 'test announcement for alice' }
     publish { false }
     trait :published do
+      publish { true }
+    end
+    trait :published_all do
+      body { 'test announcement for all speaker' }
+      receiver { :all_speaker }
+      publish { true }
+    end
+    trait :only_accepted do
+      body { 'test announcement for only accepted' }
+      receiver { :only_accepted }
       publish { true }
     end
     trait :speaker_mike do

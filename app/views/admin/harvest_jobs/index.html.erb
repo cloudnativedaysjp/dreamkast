@@ -16,7 +16,7 @@
       <tr>
         <td><%= harvest_job.id %></td>
         <td><%= harvest_job.job_id %></td>
-        <td><%= harvest_job.job.status %></td>
+        <td><%= harvest_job.job&.status %></td>
         <td><%= harvest_job.start_time %></td>
         <td><%= harvest_job.end_time %></td>
       </tr>

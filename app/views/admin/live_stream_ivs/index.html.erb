@@ -1,133 +1,20 @@
 <%= render 'admin/layout' do %>
-  <div class="row mb-3">
-    <div class="col-10 mb-3 d-flex align-items-center">
+  <div class="row mb-2">
+    <div class="col-10 d-flex align-items-center">
       <h2>Live Stream IVS</h2>
     </div>
   </div>
 
-  <h3>Track毎のIVS一覧</h3>
-
-  <div class="row mb-3">
-    <div class="col-10 mb-3 d-flex align-items-center">
-      <%= form_with(url: admin_bulk_create_ivs_path, model: @ivs, local: true) do |form| %>
-        <%= form.submit '各トラック毎のIVSを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
-      <% end %>
-    </div>
-
-    <div class="col-10 mb-3 d-flex align-items-center">
-      <div class="col-12 form-group">
-        <%= link_to 'Download IVS Resources as json', admin_live_stream_ivs_path(format: :json), class: "btn btn-primary" %>
-      </div>
+  <div class="row mb-2">
+    <div class="col-10 d-flex align-items-center">
+      <ul>
+        <li>作成時は IVS, MediaPackage, MediaLiveの順番で作成してください</li>
+        <li>削除時は MediaLive, MediaPackage, IVSの順番で削除してください</li>
+      </ul>
     </div>
   </div>
 
-  <%= form_with(url: admin_bulk_delete_ivs_path, model: @ivs, local: true) do |form| %>
-    <table class="table table-striped talks_table" >
-      <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Track</th>
-        <th scope="col">Name</th>
-        <th scope="col">ARN</th>
-        <th scope="col">Playback URL</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @ivss.each do |ivs| %>
-        <tr>
-          <td>
-            <input type="checkbox" name="ivs[<%= ivs.id %>]">
-          </td>
-
-          <td><%= ivs.id %></td>
-          <td><%= ivs.track.name %></td>
-          <td><%= ivs.name %></td>
-          <td><%= ivs.channel_arn %></td>
-          <td><%= ivs.playback_url %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-    <%= form.submit '選択したIVSを削除する', class: "btn btn-danger", data: { confirm: '本当に削除しますか？' }  %>
-  <% end %>
-
-  <h3>Track毎のMediaPackage一覧</h3>
-  <div class="col-10 mb-3 d-flex align-items-center">
-    <%= form_with(url: admin_bulk_create_media_package_path, local: true) do |form| %>
-      <%= form.submit '各トラック毎のMediaPackage Packageを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
-    <% end %>
-  </div>
-
-  <%= form_with(url: admin_bulk_delete_media_package_path, local: true) do |form| %>
-    <table class="table table-striped talks_table" >
-      <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Track</th>
-        <th scope="col">Channel ID</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @media_package_channels.each do |channel| %>
-        <tr>
-          <td>
-            <input type="checkbox" name="media_package[<%= channel.id %>]">
-          </td>
-
-          <td><%= channel.id %></td>
-          <td><%= channel.track.name %></td>
-          <td><%= channel.channel_id %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-    <%= form.submit '選択したMediaPackageを削除する', class: "btn btn-danger", data: { confirm: '本当に削除しますか？' }  %>
-  <% end %>
-
-  <h3>Track毎のMediaLive一覧</h3>
-  <div class="col-10 mb-3 d-flex align-items-center">
-    <%= form_with(url: admin_bulk_create_media_live_path, local: true) do |form| %>
-      <%= form.submit '各トラック毎のMediaLive Input and Channelを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
-    <% end %>
-  </div>
-
-  <%= form_with(url: admin_bulk_delete_media_live_path, local: true) do |form| %>
-    <table class="table table-striped talks_table" >
-      <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Track</th>
-        <th scope="col">Input Name</th>
-        <th scope="col">Input ID</th>
-        <th scope="col">Destination URL</th>
-        <th scope="col">Channel Name</th>
-        <th scope="col">Channel ID</th>
-        <th scope="col">Channel State</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @media_lives.each do |media_live| %>
-        <tr>
-          <td>
-            <input type="checkbox" name="media_live[<%= media_live.id %>]">
-          </td>
-
-          <td><%= media_live.id %></td>
-          <td><%= media_live.track.name %></td>
-          <td><%= media_live.input_name %></td>
-          <td><%= media_live.input_id %></td>
-          <td><%= media_live.destination_url %></td>
-          <td><%= media_live.channel_name %></td>
-          <td><%= media_live.channel_id %></td>
-          <td><%= media_live.channel_state %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-    <%= form.submit '選択したMediaLiveを削除する', class: "btn btn-danger", data: { confirm: '本当に削除しますか？' }  %>
-  <% end %>
-
+  <%= render 'admin/live_stream_ivs/ivs' %>
+  <%= render 'admin/live_stream_ivs/media_package' %>
+  <%= render 'admin/live_stream_ivs/media_live' %>
 <% end %>

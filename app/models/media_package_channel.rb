@@ -3,7 +3,7 @@
 # Table name: media_package_channels
 #
 #  id            :bigint           not null, primary key
-#  channel_id    :string(255)      default("")
+#  channel_id    :string(255)
 #  conference_id :bigint           not null
 #  track_id      :bigint           not null
 #

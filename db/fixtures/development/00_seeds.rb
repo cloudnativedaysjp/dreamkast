@@ -239,6 +239,9 @@ Track.seed(
   { id: 23, number: 4, name: "D", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
   { id: 24, number: 5, name: "E", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
   { id: 25, number: 6, name: "F", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 26, number: 1, name: "A", conference_id: 5},
+  { id: 27, number: 2, name: "B", conference_id: 5},
+  { id: 28, number: 3, name: "C", conference_id: 5},
 )
 
 
@@ -419,7 +422,31 @@ Proposal.seed(csv.map{|line|
   }
 })
 
-# TODO: Need to add o11y2022 Dummy
+# Import O11y Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/proposals.csv'), headers: true)
+Proposal.seed(csv.map{|line|
+  {
+    id: line["id"],
+    talk_id: line["talk_id"],
+    conference_id: line["conference_id"],
+    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+  }
+})
 
 # Mock profile
 Profile.seed(

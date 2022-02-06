@@ -12,7 +12,7 @@ section.timetable {
     .grid {
         display: grid;
         grid-template-rows: repeat(var(--rows), 3px);
-        grid-template-columns: repeat(6, minmax(180px, 240px));
+        grid-template-columns: repeat(3, minmax(240px, 360px));
         grid-auto-columns: 100px;
         overflow-x: auto;
         overflow-scrolling: touch;

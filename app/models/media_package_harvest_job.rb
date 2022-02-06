@@ -60,7 +60,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def origin_endpoint
-    "#{env_name}_#{@job.conference.abbr}_track#{@job.talk.track.name}"
+    "#{env_name}_#{conference.abbr}_track#{talk.track.name}"
   end
 
   def manifest_key
@@ -73,6 +73,17 @@ class MediaPackageHarvestJob < ApplicationRecord
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else
       "#{env_name}_#{conference.abbr}_track#{track.name}"
+    end
+  end
+
+  def bucket_name
+    case env_name
+    when 'production'
+      'dreamkast-ivs-stream-archive-prd'
+    when 'staging'
+      'dreamkast-ivs-stream-archive-stg'
+    else
+      'dreamkast-ivs-stream-archive-dev'
     end
   end
 end

@@ -135,6 +135,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
     after(:create) do |conference|
       create(:one_day1, conference: conference)
+      create(:internal, conference: conference)
     end
   end
 
@@ -148,7 +149,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
     after(:create) do |conference|
       create(:two_day1, conference: conference)
-      create(:two_day1, conference: conference)
+      create(:two_day2, conference: conference)
+      create(:internal, conference: conference)
     end
   end
 

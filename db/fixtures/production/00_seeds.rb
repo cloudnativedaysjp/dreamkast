@@ -117,7 +117,7 @@ ConferenceDay.seed(
   {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
 
-  {id: 14, date: "2022-03-11", start_time: "13:00", end_time: "19:00", conference_id: 5, internal: false},
+  {id: 14, date: "2022-03-11", start_time: "12:00", end_time: "19:00", conference_id: 5, internal: false},
   {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event  
 )
 
@@ -209,6 +209,9 @@ Track.seed(
   { id: 23, number: 4, name: "D", conference_id: 4},
   { id: 24, number: 5, name: "E", conference_id: 4},
   { id: 25, number: 6, name: "F", conference_id: 4},
+  { id: 26, number: 1, name: "A", conference_id: 5},
+  { id: 27, number: 2, name: "B", conference_id: 5},
+  { id: 28, number: 3, name: "C", conference_id: 5},
 )
 
 
@@ -386,7 +389,31 @@ if ENV['REVIEW_APP'] == 'true'
     }
   })
 
-  # TODO: Need to add o11y2022 Dummy for review app
+  # Import O11y Dummy
+  csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks.csv'), headers: true)
+  Talk.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/speakers.csv'), headers: true)
+  Speaker.seed(csv.map(&:to_hash))
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks_speakers.csv'), headers: true)
+  csv.each do |row|
+    TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+      h = row.to_hash
+      t.talk_id = h["talk_id"]
+      t.speaker_id = h["speaker_id"]
+    end
+  end
+
+  csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/proposals.csv'), headers: true)
+  Proposal.seed(csv.map{|line|
+    {
+      id: line["id"],
+      talk_id: line["talk_id"],
+      conference_id: line["conference_id"],
+      status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+    }
+  })
     
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

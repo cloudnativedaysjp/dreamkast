@@ -117,7 +117,7 @@ ConferenceDay.seed(
   {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
 
-  {id: 14, date: "2022-03-11", start_time: "13:00", end_time: "19:00", conference_id: 5, internal: false},
+  {id: 14, date: "2022-03-11", start_time: "12:00", end_time: "19:00", conference_id: 5, internal: false},
   {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event  
 )
 

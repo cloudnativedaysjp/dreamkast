@@ -25,9 +25,22 @@ namespace :util do
       body << "Track :#{harvest_job.talk.track.name}"
       body << "スピーカー: #{harvest_job.talk.speaker_names.join("\n")}"
       body << "セッション: #{harvest_job.talk.title}"
-      body << "アーカイブURL: https://event.cloudnativedays.jp/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
+      body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
 
       slack.post(body.join("\n")) unless body.empty?
+    end
+  end
+
+  def fqdn
+    return "dreamkast-dk-#{review_app_number}.dev.cloudnativedays.jp" if review_app?
+
+    case env_name
+    when 'production'
+      'event.cloudnativedays.jp'
+    when 'staging'
+      'staging.dev.cloudnativedays.jp'
+    else
+      'localhost:8080'
     end
   end
 

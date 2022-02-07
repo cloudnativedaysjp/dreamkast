@@ -118,7 +118,7 @@ class ApplicationController < ActionController::Base
 
   def set_speaker
     if @current_user
-      @speaker = Speaker.find_by(email: @current_user[:info][:email])
+      @speaker = Speaker.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
     end
   end
 

@@ -36,7 +36,7 @@ class Speaker < ApplicationRecord
   validates :conference_id, presence: true
 
   def proposals
-    talks.map(&:proposals)
+    talks.map(&:proposal)
   end
 
   def sponsor_talks

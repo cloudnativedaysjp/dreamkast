@@ -35,7 +35,6 @@ module Prometheus
       def calculate_viewer_count
         accepted_talks = Talk.accepted.pluck(:id)
 
-
         vcs = ViewerCount.select(
           [
             :conference_id, :track_id, :talk_id, ViewerCount.arel_table[:count].maximum.as('count')

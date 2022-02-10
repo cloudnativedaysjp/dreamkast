@@ -37,7 +37,7 @@ module Prometheus
 
         max_ids = ViewerCount.where(talk_id: accepted_talks).group(:talk_id).maximum(:id)
 
-        max_id_array=[]
+        max_id_array = []
         max_ids.each do |max_id|
           max_id_array.append(max_id.last)
         end

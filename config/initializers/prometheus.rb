@@ -35,11 +35,18 @@ module Prometheus
       def calculate_viewer_count
         accepted_talks = Talk.accepted.pluck(:id)
 
+        max_ids = ViewerCount.where(talk_id: accepted_talks).group(:talk_id).maximum(:id)
+
+        max_id_array=[]
+        max_ids.each do |max_id|
+          max_id_array.append(max_id.last)
+        end
+
         vcs = ViewerCount.select(
           [
-            :conference_id, :track_id, :talk_id, ViewerCount.arel_table[:count].maximum.as('count')
+            :conference_id, :track_id, :talk_id, :count
           ]
-        ).where(talk_id: accepted_talks).group(:conference_id, :track_id, :talk_id)
+        ).where(id: max_id_array)
 
         vcs.each do |vc|
           Prometheus::Controller::VIEWER_COUNT.set(

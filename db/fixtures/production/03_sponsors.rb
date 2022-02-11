@@ -965,7 +965,12 @@ SponsorType.seed(
     name: "Silver",
     order: 3,
   },
-
+  {
+    id: 33,
+    conference_id: 5,
+    name: "Hands-On",
+    order: 4,
+  },
 )
 
 [

@@ -29,7 +29,7 @@ FactoryBot.define do
   sequence :countup do |i|
     i
   end
-  
+
   factory :viewer_count, class: ViewerCount do
     conference_id { 1 }
     track_id { 1 }
@@ -46,4 +46,3 @@ FactoryBot.define do
     end
   end
 end
-

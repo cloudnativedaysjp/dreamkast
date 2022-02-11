@@ -27,5 +27,16 @@ describe Prometheus::Middleware::DreamkastExporter, type: :request do
       expect(response.body).to(include('dreamkast_viewer_count{talk_id="1",track_id="1",conference_id="1"} 3.0'))
       expect(response.body).to(include('dreamkast_chat_count{conference_id="1",talk_id="2"} 12.0'))
     end
+
+    context 'have multiple profiles in each conference' do
+      let!(:cndo2021) { create(:cndo2021, :registered) }
+      let!(:alice) { create(:alice, :on_cndo2021, conference: cndo2021) }
+      let!(:bob) { create(:bob, :on_cndt2020, conference: cndt2020) }
+      it 'returns a number of regisrants each conferences' do
+        get '/metrics'
+        expect(response.body).to(include('dreamkast_registrants_count{conference_id="1"} 1.0'))
+        expect(response.body).to(include('dreamkast_registrants_count{conference_id="2"} 1.0'))
+      end
+    end
   end
 end

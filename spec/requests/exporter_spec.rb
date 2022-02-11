@@ -12,7 +12,7 @@ describe Prometheus::Middleware::DreamkastExporter, type: :request do
       create(:video, :on_air, :talk1)
       create(:video, :on_air, :talk3)
     end
-    before(:each) do
+    after(:each) do
       FactoryBot.rewind_sequences
     end
 

@@ -29,7 +29,7 @@ RSpec.describe(ViewerCount, type: :model) do
         create_list(:viewer_count, 3, :talk1)
         create_list(:viewer_count, 3, :talk3)
       end
-      before(:each) do
+      after(:each) do
         FactoryBot.rewind_sequences
       end
 
@@ -65,6 +65,9 @@ RSpec.describe(ViewerCount, type: :model) do
         create(:video, :on_air, :talk3)
         create_list(:viewer_count, 3, :talk1)
         create_list(:viewer_count, 3, :talk3)
+      end
+      after(:each) do
+        FactoryBot.rewind_sequences
       end
 
       context 'if talk is off air' do

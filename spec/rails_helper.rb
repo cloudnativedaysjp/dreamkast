@@ -72,4 +72,5 @@ RSpec.configure do |config|
     schema_path: Rails.root.join('schemas', 'swagger.yml').to_s,
   }
   include Committee::Rails::Test::Methods
+  config.include ActiveJob::TestHelper
 end

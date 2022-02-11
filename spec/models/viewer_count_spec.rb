@@ -29,6 +29,9 @@ RSpec.describe(ViewerCount, type: :model) do
         create_list(:viewer_count, 3, :talk1)
         create_list(:viewer_count, 3, :talk3)
       end
+      before(:each) do
+        FactoryBot.rewind_sequences
+      end
 
       context 'if talk is on air' do
         before do
@@ -49,7 +52,7 @@ RSpec.describe(ViewerCount, type: :model) do
         end
         it "doesn't include off air talk" do
           expect(ViewerCount.latest_number_of_viewers.find_by(talk_id: 1)).to(be(nil))
-          expect(ViewerCount.latest_number_of_viewers.find_by(talk_id: 3).count).to(eq(12))
+          expect(ViewerCount.latest_number_of_viewers.find_by(talk_id: 3).count).to(eq(6))
         end
       end
     end

@@ -12,6 +12,9 @@ describe Prometheus::Middleware::DreamkastExporter, type: :request do
       create(:video, :on_air, :talk1)
       create(:video, :on_air, :talk3)
     end
+    before(:each) do
+      FactoryBot.rewind_sequences
+    end
 
     let!(:cndt2020) { create(:cndt2020, :opened) }
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }

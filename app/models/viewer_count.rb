@@ -18,7 +18,7 @@
 #  index_viewer_counts_on_track_id       (track_id)
 #
 class ViewerCount < ApplicationRecord
-  def latest_viewer_counts
+  def self.latest_number_of_viewers
     on_air_ids = Talk.where(conference_id: Conference.opened.ids).on_air.pluck(:id)
     latest_viwer_count_ids = where(talk_id: on_air_ids).group(:talk_id).maximum(:id).values
 

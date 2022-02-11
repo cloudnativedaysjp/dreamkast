@@ -20,5 +20,34 @@
 require 'rails_helper'
 
 RSpec.describe(ViewerCount, type: :model) do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'get_latest_number_of_viewer' do
+    context 'with opened conference' do
+      before do
+        create(:cndt2020, :opened)
+      end
+
+      context 'if talk is on air' do
+        before do
+          create(:talk1, :on_air)
+        end
+        it { expect(最新のviewercountが返る) }
+        it { expect(過去のviewercountは返らない) }
+      end
+
+      context 'if talk is off air' do
+        before do
+          create(:talk1, :off_air) 
+        end
+        it { expect(viewercountが返らない) }
+      end
+    end
+
+    context 'with registered conference' do
+      before do
+        create(:cndt2020, :registered)
+        create(:talk1, :on_air) 
+      end
+      it { expect(viewercountが返らない) }
+    end
+  end
 end

@@ -21,5 +21,13 @@ FactoryBot.define do
     on_air { false }
     slido_id { '1234' }
     video_id { '1234' }
+
+    trait :on_air do
+      on_air { true }
+    end
+
+    trait :off_air do
+      on_air { false }
+    end
   end
 end

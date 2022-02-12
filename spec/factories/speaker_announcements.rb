@@ -6,7 +6,7 @@
 #  body          :text(65535)      not null
 #  publish       :boolean          default(FALSE)
 #  publish_time  :datetime         not null
-#  receiver      :integer          default("private"), not null
+#  receiver      :integer          default("person"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null

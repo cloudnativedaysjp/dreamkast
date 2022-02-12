@@ -1237,10 +1237,10 @@ end
   [108, 'splunk', 'sponsors/o11y2022/splunk.png', 5],
   [109, 'google', 'sponsors/o11y2022/google.png', 5],
   [110, 'datadog', 'sponsors/o11y2022/datadog.png', 5],
-  [111, 'macnica', 'o11y2022/macnica.png', 5],
-  [112, 'oracle', 'o11y2022/oracle.png', 5],
-  [113, 'elastic', 'o11y2022/elastic.png', 5],
-  [114, 'scsk', 'o11y2022/scsk.png', 5],
+  [111, 'macnica', 'sponsors/o11y2022/macnica.png', 5],
+  [112, 'oracle', 'sponsors/o11y2022/oracle.png', 5],
+  [113, 'elastic', 'sponsors/o11y2022/elastic.png', 5],
+  [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

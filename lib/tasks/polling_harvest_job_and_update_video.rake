@@ -18,16 +18,16 @@ namespace :util do
       url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
       if resp.status == 'SUCCEEDED' && harvest_job.talk.video_id == ''
         harvest_job.talk.video.update!(video_id: url)
+
+        body = []
+        body << 'アーカイブの作成が完了しました:'
+        body << "Track :#{harvest_job.talk.track.name}"
+        body << "スピーカー: #{harvest_job.talk.speaker_names.join("\n")}"
+        body << "セッション: #{harvest_job.talk.title}"
+        body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
+
+        slack.post(body.join("\n")) unless body.empty?
       end
-
-      body = []
-      body << 'アーカイブの作成が完了しました:'
-      body << "Track :#{harvest_job.talk.track.name}"
-      body << "スピーカー: #{harvest_job.talk.speaker_names.join("\n")}"
-      body << "セッション: #{harvest_job.talk.title}"
-      body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
-
-      slack.post(body.join("\n")) unless body.empty?
     end
   end
 

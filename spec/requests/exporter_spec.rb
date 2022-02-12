@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Prometheus::Middleware::DreamkastExporter, type: :request do
+describe DreamkastExporter, type: :request do
   context 'GET /metrics' do
     before do
       create(:talk1, conference: cndt2020)

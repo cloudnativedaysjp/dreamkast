@@ -1,1 +1,1 @@
-Rails.application.config.middleware.use(Prometheus::Middleware::DreamkastExporter)
+Rails.application.config.middleware.use(DreamkastExporter)

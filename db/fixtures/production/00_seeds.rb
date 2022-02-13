@@ -26,7 +26,7 @@ EOS
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
-    committee_name: "CloudNative Days Spring 2021 ONLINE",
+    committee_name: "CloudNative Days Spring 2021 ONLINE Committee",
     about: <<'EOS'
     『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。
     CNCFによる定義によると、『近代的でダイナミックな環境で、スケーラブルなアプリケーションを構築・実行するための能力を組織にもたらす』のがクラウドネイティブ技術です。

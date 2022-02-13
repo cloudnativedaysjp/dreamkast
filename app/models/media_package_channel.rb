@@ -9,7 +9,7 @@
 #
 # Indexes
 #
-#  index_media_package_channels_on_channel_id     (channel_id) UNIQUE
+#  index_media_package_channels_on_channel_id     (channel_id)
 #  index_media_package_channels_on_conference_id  (conference_id)
 #  index_media_package_channels_on_track_id       (track_id)
 #

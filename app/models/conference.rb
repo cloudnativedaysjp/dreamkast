@@ -9,6 +9,7 @@
 #  brief                      :string(255)
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
+#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  copyright                  :string(255)
 #  name                       :string(255)
 #  privacy_policy             :text(65535)

@@ -16,7 +16,7 @@ namespace :util do
       harvest_job.update!(status: resp.status)
 
       puts("Harvest Job: id: #{resp.id}, status: #{resp.status}")
-      if resp.status == 'SUCCEEDED' && harvest_job.talk.video.id == ''
+      if resp.status == 'SUCCEEDED' && harvest_job.talk.video.video_id == ''
         url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
         puts("Update video id: #{url}")
         harvest_job.talk.video.update!(video_id: url)

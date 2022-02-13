@@ -15,8 +15,10 @@ namespace :util do
       resp = harvest_job.job
       harvest_job.update!(status: resp.status)
 
-      url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
-      if resp.status == 'SUCCEEDED' && harvest_job.talk.video_id == ''
+      puts("Harvest Job: id: #{resp.id}, status: #{resp.status}")
+      if resp.status == 'SUCCEEDED' && harvest_job.talk.video.id == ''
+        url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
+        puts("Update video id: #{url}")
         harvest_job.talk.video.update!(video_id: url)
 
         body = []
@@ -28,6 +30,8 @@ namespace :util do
 
         slack.post(body.join("\n")) unless body.empty?
       end
+    rescue => e
+      puts(e)
     end
   end
 

@@ -16,6 +16,7 @@ describe EventController, type: :request do
         expect(response).to(have_http_status('200'))
         expect(response.body).to(include('CloudNative Days Tokyo 2020'))
         expect(response.body).to(include('スピーカーとしてエントリー'))
+        expect(response.body).to(include('CloudNative Days Tokyo 2020 Committee'))
       end
 
       it 'returns a success response with privacy policy' do

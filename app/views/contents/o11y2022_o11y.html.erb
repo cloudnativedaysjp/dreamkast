@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row p-md-4" id="o11y">
+    <div class="col-12 my-4">
+      <h2 class="text-center">Observability ConferenceをObserveしよう！</h2>
+      <p>せっかくObservabilityのカンファレンスをやるのであれば、カンファレンス自体の可観測性を高めていくと良いのでは？ そんな思いから、Observability ConferenceのさまざまなメトリクスをGrafanaで可視化し、それを公開してしまおう！　という企画です。</p>
+      
+      <p>Grafanaとは、データベースに格納されている大量の数値データを分析およびインタラクティブな視覚化を可能にする、マルチプラットフォームで動作するOSSのWebアプリケーションです。</p>
+      <p>さあ、どんなメトリクスが見られるのでしょうか。是非アクセスしてみてください!</p>
+      <h2 class="text-center mt-4">ログイン方法</h2>
+      <p>以下のボタンから、Grafanaにログインすることができます。</p>
+      <p>ログインする際には認証が必要です。認証方法は本カンファレンスでも利用しているAuth0と連携しています。Grafanaにアクセス後、Sign in with Auth0をクリックし、本カンファレンスの登録に使用した認証方法(ユーザ名+パスワード, GitHub, Google)を選択してください。</p>
+      <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+        <%= link_to 'Grafanaにアクセス', "https://grafana.cloudnativedays.jp/login", {class: "btn btn-secondary btn-xl inline", target: :_blank } %>
+      </div>
+
+      <div class="col-12 align-self-baseline align-top  my-4 justify-content-center text-center">
+        <%= image_tag "o11y2022/grafana_login.png", :width => '30%', class: 'm-4' %>
+        <%= image_tag "o11y2022/auth0_login.png", :width => '30%', class: 'm-4' %>
+      </div>
+
+      <h2 class="text-center mt-4">操作方法</h2>
+      <p>Dashboard のホーム画面左側のメニュー画面から、"Search dashboards"を選択します。選択するとリストが表示されます。閲覧できるのは、"General", "public" の2つです。</p>
+      <div class="col-12 align-self-baseline align-top  my-4 justify-content-center text-center">
+        <%= image_tag "o11y2022/grafana_search.png", :width => '70%', class: 'm-4' %>
+      </div>
+      
+      <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+        <%= link_to 'Grafanaにアクセス', "https://grafana.cloudnativedays.jp/login", {class: "btn btn-secondary btn-xl inline", target: :_blank } %>
+      </div>
+    </div>
+  </div>
+</div>

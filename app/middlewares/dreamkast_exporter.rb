@@ -1,20 +1,26 @@
 class DreamkastExporter < Prometheus::Middleware::Exporter
   def initialize(app, options = {})
     super
-    viwer_count = Prometheus::Client::Gauge.new(
-      :dreamkast_viewer_count,
-      docstring: 'Count dreamkast viewer number',
-      labels: [:talk_id, :track_id, :conference_id]
-    )
-
-    chat_count = Prometheus::Client::Gauge.new(
-      :dreamkast_chat_count,
-      docstring: 'Count dreamkast chat number',
-      labels: [:conference_id, :talk_id]
-    )
-
-    @registry.register(viwer_count)
-    @registry.register(chat_count)
+    metrics = [
+      Prometheus::Client::Gauge.new(
+        :dreamkast_viewer_count,
+        docstring: 'Count dreamkast viewer number',
+        labels: [:talk_id, :track_id, :conference_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_chat_count,
+        docstring: 'Count dreamkast chat number',
+        labels: [:conference_id, :talk_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_registrants_count,
+        docstring: 'Count dreamkast registrants number',
+        labels: [:conference_id]
+      )
+    ]
+    metrics.each do |metric|
+      @registry.register(metric)
+    end
   end
 
   def respond_with(format)
@@ -40,6 +46,15 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       metrics.set(
         chat_count.count,
         labels: { conference_id: chat_count.conference_id, talk_id: chat_count.room_id }
+      )
+    end
+  end
+
+  def dreamkast_registrants_count(metrics)
+    Conference.all.each do |conf|
+      metrics.set(
+        conf.profiles.count,
+        labels: { conference_id: conf.id }
       )
     end
   end

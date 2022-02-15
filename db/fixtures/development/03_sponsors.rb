@@ -789,7 +789,14 @@ Sponsor.seed(
     abbr: 'scsk',
     conference_id: 5,
     url: 'https://www.scsk.jp/sp/sysdig/'
-  }
+  },
+  {
+    id: 115,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 5,
+    url: 'https://plaid.co.jp/'
+  },
 
 )
 
@@ -971,6 +978,12 @@ SponsorType.seed(
     name: "Hands-On",
     order: 4,
   },
+  {
+    id: 34,
+    conference_id: 5,
+    name: "Tool",
+    order: 5,
+  },
 
 )
 
@@ -1113,6 +1126,7 @@ SponsorType.seed(
   [138, 'Hands-On', 'oracle', 5],
   [139, 'Hands-On', 'elastic', 5],
   [140, 'Hands-On', 'scsk', 5],
+  [141, 'Tool', 'plaid', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1241,6 +1255,7 @@ end
   [112, 'oracle', 'sponsors/o11y2022/oracle.png', 5],
   [113, 'elastic', 'sponsors/o11y2022/elastic.png', 5],
   [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
+  [115, 'plaid', 'sponsors/o11y2022/plaid.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

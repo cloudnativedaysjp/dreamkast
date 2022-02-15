@@ -102,6 +102,8 @@ namespace :util do
         proposal = Proposal.new(conference_id: conference.id, talk_id: talk.id, status: 1)
         proposal.save!
       end
+      video = Video.new(talk_id: talk.id, on_air: false)
+      video.save!
     end
 
     track_b_talks.each do |param|
@@ -111,6 +113,8 @@ namespace :util do
         proposal = Proposal.new(conference_id: conference.id, talk_id: talk.id, status: 1)
         proposal.save!
       end
+      video = Video.new(talk_id: talk.id, on_air: false)
+      video.save!
     end
   end
 end

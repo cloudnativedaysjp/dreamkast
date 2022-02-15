@@ -49,4 +49,13 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       )
     end
   end
+
+  def dreamkast_registrants_count(metrics)
+    Conference.all.each do |conf|
+      metrics.set(
+        conf.profiles.count,
+        labels: { conference_id: conf.id }
+      )
+    end
+  end
 end

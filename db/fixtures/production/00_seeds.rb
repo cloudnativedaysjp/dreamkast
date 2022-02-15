@@ -123,7 +123,7 @@ ConferenceDay.seed(
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
 
   {id: 14, date: "2022-03-11", start_time: "12:00", end_time: "19:00", conference_id: 5, internal: false},
-  {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event  
+  {id: 15, date: "2022-02-16", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
 )
 
 Industry.seed(

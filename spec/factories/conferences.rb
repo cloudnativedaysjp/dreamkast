@@ -9,6 +9,7 @@
 #  brief                      :string(255)
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
+#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  copyright                  :string(255)
 #  name                       :string(255)
 #  privacy_policy             :text(65535)
@@ -38,6 +39,7 @@ FactoryBot.define do
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
+    committee_name { 'CloudNative Days Tokyo 2020 Committee' }
     about do
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -105,6 +107,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
+    committee_name { 'CloudNative Days Spring 2021 ONLINE Committee' }
     about do
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -166,6 +169,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
+    committee_name { 'CloudNative Days Tokyo 2020 Committee' }
     about do
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

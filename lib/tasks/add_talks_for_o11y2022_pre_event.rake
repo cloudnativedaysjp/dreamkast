@@ -16,43 +16,43 @@ namespace :util do
         title: 'Opening',
         start_time: '19:00:00',
         end_time: '19:05:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: 'What it means to be "observable" in Ubie',
         start_time: '19:05:00',
         end_time: '19:45:00',
-        abstract: '',
+        abstract: ''
       },
       {
         title: '休憩',
         start_time: '19:45:00',
         end_time: '19:50:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: 'Grafana Lokiで構築する1日20TBの大規模ログモニタリング基盤',
         start_time: '19:50:00',
         end_time: '20:30:00',
-        abstract: '',
+        abstract: ''
       },
       {
         title: '休憩',
         start_time: '20:30:00',
         end_time: '20:35:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: 'Co-ChairによるObservability Conference 2022みどころ',
         start_time: '20:35:00',
         end_time: '20:55:00',
-        abstract: '',
+        abstract: ''
       },
       {
         title: 'Closing',
         start_time: '20:55:00',
         end_time: '21:00:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       }
     ]
 
@@ -61,37 +61,37 @@ namespace :util do
         title: 'Opening',
         start_time: '19:00:00',
         end_time: '19:05:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: '分散トレーシングの歴史、計装、そしてその活用プラクティス',
         start_time: '19:05:00',
         end_time: '19:45:00',
-        abstract: '',
+        abstract: ''
       },
       {
         title: '休憩',
         start_time: '19:45:00',
         end_time: '19:50:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: 'Observe the Conference',
         start_time: '19:50:00',
         end_time: '20:30:00',
-        abstract: '',
+        abstract: ''
       },
       {
         title: '休憩',
         start_time: '20:30:00',
         end_time: '20:35:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       },
       {
         title: 'Closing',
         start_time: '20:55:00',
         end_time: '21:00:00',
-        abstract: 'intermission',
+        abstract: 'intermission'
       }
     ]
 

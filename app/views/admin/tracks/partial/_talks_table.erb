@@ -24,10 +24,12 @@
       <% end %>
     </td>
     <td>
-      <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
+      <% if talk.abstract != 'intermission' %>
+        <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
+      <% end %>
     </td>
     <td>
-      <% if talk.video && talk.speakers.size > 0 %>
+      <% if talk.video && talk.abstract != 'intermission' %>
         <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
           <div class="btn btn-primary">録画済み</div>
         <% else %>

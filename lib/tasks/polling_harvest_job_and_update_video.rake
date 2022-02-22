@@ -16,10 +16,9 @@ namespace :util do
       harvest_job.update!(status: resp.status)
 
       puts("Harvest Job: id: #{resp.id}, status: #{resp.status}")
-      if resp.status == 'SUCCEEDED' && harvest_job.talk.video.video_id == ''
-        url = "https://#{cloudfront_domain_name(resp.s3_destination.bucket_name)}/#{resp.s3_destination.manifest_key}"
-        puts("Update video id: #{url}")
-        harvest_job.talk.video.update!(video_id: url)
+      if resp.status == 'SUCCEEDED'
+        puts("Update video id: #{harvest_job.video_url}")
+        harvest_job.talk.video.update!(video_id: harvest_job.video_url)
 
         body = []
         body << 'アーカイブの作成が完了しました:'
@@ -45,17 +44,6 @@ namespace :util do
       'staging.dev.cloudnativedays.jp'
     else
       'localhost:8080'
-    end
-  end
-
-  def cloudfront_domain_name(bucket_name)
-    case bucket_name
-    when 'dreamkast-ivs-stream-archive-prd'
-      'd3pun3ptcv21q4.cloudfront.net'
-    when 'dreamkast-ivs-stream-archive-stg'
-      'd3i2o0iduabu0p.cloudfront.net'
-    else
-      'd1jzp6sbtx9by.cloudfront.net'
     end
   end
 end

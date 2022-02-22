@@ -9,6 +9,7 @@
       <th scope="col">Harvest Job Status</th>
       <th scope="col">StartTime</th>
       <th scope="col">EndTime</th>
+      <th scope="col">Video URL</th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
         <td><%= harvest_job.job&.status %></td>
         <td><%= harvest_job.start_time %></td>
         <td><%= harvest_job.end_time %></td>
+        <td><%= harvest_job.video_url %></td>
       </tr>
     <% end %>
     </tbody>

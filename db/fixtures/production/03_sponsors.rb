@@ -797,6 +797,13 @@ Sponsor.seed(
     conference_id: 5,
     url: 'https://plaid.co.jp/'
   },
+  {
+    id: 116,
+    name: 'freee株式会社',
+    abbr: 'freee',
+    conference_id: 5,
+    url: 'https://corp.freee.co.jp/'
+  },
 
 )
 
@@ -1127,6 +1134,7 @@ SponsorType.seed(
   [139, 'Hands-On', 'elastic', 5],
   [140, 'Hands-On', 'scsk', 5],
   [141, 'Tool', 'plaid', 5],
+  [142, 'Hands-On', 'freee', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1255,6 +1263,7 @@ end
   [113, 'elastic', 'sponsors/o11y2022/elastic.png', 5],
   [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
   [115, 'plaid', 'sponsors/o11y2022/plaid.png', 5],
+  [116, 'freee', 'sponsors/o11y2022/freee.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

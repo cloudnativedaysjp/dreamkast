@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'
+    get 'o11y' => 'contents#o11y'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

@@ -70,7 +70,7 @@ FactoryBot.define do
   end
 
   factory :talk3, class: Talk do
-    id { 5 }
+    id { 3 }
     title { 'talk3' }
     start_time { '13:00' }
     end_time { '13:40' }
@@ -86,7 +86,7 @@ FactoryBot.define do
 
 
   factory :talk_rejekt, class: Talk do
-    id { 3 }
+    id { 5 }
     title { 'Rejected Talk' }
     start_time { '19:00' }
     end_time { '21:00' }

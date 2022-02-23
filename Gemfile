@@ -106,6 +106,8 @@ gem 'slack-incoming-webhooks'
 
 gem "octokit", "~> 4.0"
 
+gem "image_processing", "~> 1.8"
+
 gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 gem "aws-sdk-mediapackage"

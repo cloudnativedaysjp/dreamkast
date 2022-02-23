@@ -9,7 +9,7 @@
           <p class="card-text"><%= simple_format speaker.profile %></p>
           <b>プロフィール画像</b>
           <% if @speaker && @speaker.avatar_url.present? %>
-            <p class="card-text"><%= image_tag @speaker.avatar_url, :size => '80x80' %></p>
+            <p class="card-text"><%= image_tag @speaker.avatar_url(:small), :size => '80x80' %></p>
           <% end %>
         </div>
         <div class="col">

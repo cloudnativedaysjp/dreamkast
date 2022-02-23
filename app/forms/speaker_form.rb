@@ -2,6 +2,7 @@ class SpeakerForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations
+  include AvatarUploader::Attachment(:avatar)
 
   attr_accessor :name
   attr_accessor :name_mother_tongue
@@ -94,6 +95,7 @@ class SpeakerForm
     ActiveRecord::Base.transaction do
       speaker.update!(name: name, name_mother_tongue: name_mother_tongue, profile: profile, company: company, job_title: job_title, twitter_id: twitter_id, github_id: github_id, avatar: avatar, conference_id: conference_id,
                       sub: sub, email: email, additional_documents: additional_documents)
+      speaker.avatar_derivatives!
       @destroy_talks.each do |talk|
         proposal = talk.proposal
         talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)

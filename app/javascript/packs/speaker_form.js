@@ -1,3 +1,5 @@
+import cropUpload from './cropbox.js'
+
 $(document).on('click', '.add_talk_fields', function(event) {
     event.preventDefault();
     var regexp, time;
@@ -24,3 +26,9 @@ $(document).on('click', '.remove_talk_field', function(event) {
     }
     return false;
 });
+
+window.onload = function () {
+  document.querySelectorAll('.avatar, input[type="file"]').forEach(function (fileInput) {
+    cropUpload(fileInput)
+  })
+}

@@ -1,3 +1,5 @@
+import Cropper from "cropperjs"
+
 export default function cropUpload(fileInput) {
   let formGroup = fileInput.parentNode
   let hiddenInput = document.querySelector('.upload-data')

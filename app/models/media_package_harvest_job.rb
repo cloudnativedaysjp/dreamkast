@@ -67,7 +67,6 @@ class MediaPackageHarvestJob < ApplicationRecord
     "mediapackage/#{conference.abbr}/talks/#{talk_id}/#{id}/playlist.m3u8"
   end
 
-
   def resource_name
     track = media_package_channel.track
     if review_app?

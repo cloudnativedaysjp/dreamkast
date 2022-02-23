@@ -60,7 +60,7 @@
   </div>
 
   <div class="image-preview">
-    <img src="<%= @speaker.avatar_url(:large) %>" height="300" class="rounded" \>
+    <img src="<%= @speaker.avatar_url(:large) || @speaker.avatar_url %>" height="300" class="rounded" \>
   </div>
 
   </section>

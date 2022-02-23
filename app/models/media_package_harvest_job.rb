@@ -43,6 +43,10 @@ class MediaPackageHarvestJob < ApplicationRecord
     logger.error(e.message)
   end
 
+  def video_url
+    "https://#{cloudfront_domain_name(job.bucket_name)}/#{job.manifest_key}"
+  end
+
   private
 
   def create_params
@@ -63,9 +67,6 @@ class MediaPackageHarvestJob < ApplicationRecord
     "mediapackage/#{conference.abbr}/talks/#{talk_id}/#{id}/playlist.m3u8"
   end
 
-  def video_url
-    "https://#{cloudfront_domain_name(job.bucket_name)}/#{job.manifest_key}"
-  end
 
   def resource_name
     track = media_package_channel.track

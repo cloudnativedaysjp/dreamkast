@@ -1,12 +1,11 @@
-require "image_processing/mini_magick"
+require 'image_processing/mini_magick'
 
 class AvatarUploader < Shrine
-
   THUMBNAILS = {
     large:  [300, 300],
     medium: [120, 120],
-    small:  [80, 80],
-  }
+    small:  [80, 80]
+  }.freeze
 
   def generate_location(io, metadata: {}, **options)
     "avatar/#{super}"
@@ -22,7 +21,7 @@ class AvatarUploader < Shrine
 
   class UploadedFile
     def crop_points
-      metadata.fetch("crop").fetch_values("x", "y", "width", "height")
+      metadata.fetch('crop').fetch_values('x', 'y', 'width', 'height')
     end
   end
 end

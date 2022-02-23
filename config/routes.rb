@@ -135,6 +135,6 @@ Rails.application.routes.draw do
     resources :links, only: [:index]
   end
 
-  mount AvatarUploader.upload_endpoint(:cache) => "/upload/avatar"
+  mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'
   get '*path', controller: 'application', action: 'render_404'
 end

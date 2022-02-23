@@ -44,7 +44,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def video_url
-    "https://#{cloudfront_domain_name(job.bucket_name)}/#{job.manifest_key}"
+    "https://#{cloudfront_domain_name(job.s3_destination.bucket_name)}/#{job.s3_destination.manifest_key}"
   end
 
   private

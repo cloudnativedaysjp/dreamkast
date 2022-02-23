@@ -28,7 +28,6 @@ export default function cropUpload(fileInput) {
   uppy.on('upload-success', function (file, response) {
     imagePreview.src = response.uploadURL
 
-    console.log(response.body)
     hiddenInput.value = JSON.stringify(response.body['data'])
 
     let copper = new Cropper(imagePreview, {

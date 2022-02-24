@@ -1,5 +1,3 @@
-import cropUpload from './cropbox.js'
-
 $(document).on('click', '.add_talk_fields', function(event) {
     event.preventDefault();
     var regexp, time;

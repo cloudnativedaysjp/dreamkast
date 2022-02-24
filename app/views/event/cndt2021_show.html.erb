@@ -61,7 +61,7 @@
               <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
                   <li>
-                    <%= image_tag speaker.avatar_or_dummy_url, :size => '100x100', class: "rounded-circle" %><br/>
+                    <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
                     <%= speaker&.name %>
                   </li>
                 <% end %>

@@ -47,8 +47,8 @@ export default function cropUpload(fileInput) {
   })
 }
 
-window.onload = function () {
+$(function () {
   document.querySelectorAll('#avatar_upload').forEach(function (fileInput) {
     cropUpload(fileInput)
   })
-}
+});

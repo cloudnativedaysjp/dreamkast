@@ -57,11 +57,11 @@
       type: :hidden,
       error_handler: false,
       class: "upload-data",
-      value: @speaker.cached_avatar_data %>
+      value: @speaker.cached_avatar_data unless @speaker.nil? %>
   </div>
 
   <div class="image-preview">
-    <img src="<%= @speaker.avatar_url(:large) || @speaker.avatar_url %>" height="300" class="rounded" \>
+    <img src="<%= (@speaker.avatar_url(:large) || @speaker.avatar_url) unless @speaker.nil? %>" height="300" class="rounded" \>
   </div>
 
   </section>

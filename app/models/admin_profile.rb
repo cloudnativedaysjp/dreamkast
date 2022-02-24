@@ -32,7 +32,7 @@ class AdminProfile < ApplicationRecord
     !avatar_url.nil?
   end
 
-  def avatar_or_dummy_url(size=:small)
+  def avatar_or_dummy_url(size = :small)
     if has_avatar?
       avatar_url(size) || avatar_url
     else

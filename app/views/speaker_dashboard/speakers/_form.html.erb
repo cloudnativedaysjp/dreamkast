@@ -44,12 +44,13 @@
       <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp'  %>
     </div>
 
-  <div class="form-group">
+  <div class="field pb-3">
       <%= form.label :avatar, '講演者写真 - Photographs' %>
     <!-- will be replaced by Uppy -->
     <%= form.text_field :avatar,
       type: :file,
-      class: "avatar form-control" %>
+      id: "avatar_upload",
+      class: "form-control" %>
 
     <!-- for storing uploaded file data -->
     <%= form.text_field :avatar,

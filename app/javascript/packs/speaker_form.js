@@ -26,9 +26,3 @@ $(document).on('click', '.remove_talk_field', function(event) {
     }
     return false;
 });
-
-window.onload = function () {
-  document.querySelectorAll('.avatar, input[type="file"]').forEach(function (fileInput) {
-    cropUpload(fileInput)
-  })
-}

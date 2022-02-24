@@ -43,7 +43,7 @@ ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabl
 WORKDIR /app
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get -y install libmariadb3 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install libmariadb3 imagemagick && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY . .
 COPY --from=asset-compile /app/public /app/public
 EXPOSE 3000

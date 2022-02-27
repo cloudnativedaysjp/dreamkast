@@ -24,19 +24,6 @@ namespace :aws_sqs do
     raise result.error unless result.successful?
   end
 
-  task delete_sqs: :environment do
-    include(EnvHelper)
-
-    exit unless review_app?
-
-    cli = Aws::SQS::Client.new(region: 'ap-northeast-1')
-    result = cli.get_queue_url({ queue_name: "review_app_#{review_app_number}" + '.fifo' })
-    response = cli.delete_queue({ queue_url: result.queue_url })
-    raise(response.error) unless response.successful?
-  rescue Aws::SQS::Errors::NonExistentQueue
-    Rails.logger.debug('Queue not exist')
-  end
-
   task fifo_job: :environment do
     require 'aws/rails/sqs_active_job/poller'
     include JobHelper

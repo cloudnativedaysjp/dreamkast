@@ -805,6 +805,13 @@ Sponsor.seed(
     url: 'https://corp.freee.co.jp/'
   },
   {
+    id: 117,
+    name: 'クリエーションライン株式会社',
+    abbr: 'creationline',
+    conference_id: 5,
+    url: "https://www.creationline.com/"
+  },
+  {
     id: 118,
     name: 'さくらインターネット株式会社',
     abbr: 'sakura',
@@ -997,6 +1004,12 @@ SponsorType.seed(
     name: "Tool",
     order: 5,
   },
+  {
+    id: 35,
+    conference_id: 5,
+    name: "CM",
+    order: 6,
+  },
 
 )
 
@@ -1141,6 +1154,7 @@ SponsorType.seed(
   [140, 'Hands-On', 'scsk', 5],
   [141, 'Tool', 'plaid', 5],
   [142, 'Hands-On', 'freee', 5],
+  [143, 'CM', 'creationline', 5],
   [144, 'Tool', 'sakura', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
@@ -1272,6 +1286,7 @@ end
   [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
   [115, 'plaid', 'sponsors/o11y2022/plaid.png', 5],
   [116, 'freee', 'sponsors/o11y2022/freee.png', 5],
+  [117, 'creationline', 'sponsors/o11y2022/creationline.png', 5],
   [118, 'sakura', 'sponsors/o11y2022/sakura.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(

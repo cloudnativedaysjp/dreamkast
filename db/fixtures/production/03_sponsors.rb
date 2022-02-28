@@ -804,7 +804,13 @@ Sponsor.seed(
     conference_id: 5,
     url: 'https://corp.freee.co.jp/'
   },
-
+  {
+    id: 118,
+    name: 'さくらインターネット株式会社',
+    abbr: 'sakura',
+    conference_id: 5,
+    url: 'https://www.sakura.ad.jp'
+  },
 )
 
 SponsorType.seed(
@@ -1135,6 +1141,7 @@ SponsorType.seed(
   [140, 'Hands-On', 'scsk', 5],
   [141, 'Tool', 'plaid', 5],
   [142, 'Hands-On', 'freee', 5],
+  [144, 'Tool', 'sakura', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1264,6 +1271,7 @@ end
   [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
   [115, 'plaid', 'sponsors/o11y2022/plaid.png', 5],
   [116, 'freee', 'sponsors/o11y2022/freee.png', 5],
+  [118, 'sakura', 'sponsors/o11y2022/sakura.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

@@ -47,7 +47,7 @@ function cropUpload(fileInput) {
   })
 }
 
-$(function () {
+window.addEventListener('load', function () {
   document.querySelectorAll('#avatar_upload').forEach(function (fileInput) {
     cropUpload(fileInput)
   })

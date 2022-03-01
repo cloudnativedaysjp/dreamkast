@@ -57,7 +57,7 @@
       type: :hidden,
       error_handler: false,
       class: "upload-data",
-      value: @speaker.cached_avatar_data unless @speaker.nil? %>
+      value: @speaker.nil? ? "" : @speaker.cached_avatar_data %>
   </div>
 
   <div class="image-preview">

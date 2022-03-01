@@ -1,4 +1,4 @@
-require 'image_processing/mini_magick'
+require 'image_processing/vips'
 
 class AvatarUploader < Shrine
   THUMBNAILS = {
@@ -12,7 +12,7 @@ class AvatarUploader < Shrine
   end
 
   Attacher.derivatives do |original|
-    magick = ImageProcessing::MiniMagick.source(original)
+    magick = ImageProcessing::Vips.source(original)
     magick = magick.crop(*file.crop_points)
     THUMBNAILS.transform_values do |(width, height)|
       magick.resize_to_limit!(width, height)

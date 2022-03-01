@@ -60,9 +60,9 @@ class Speaker < ApplicationRecord
     !avatar_url.nil?
   end
 
-  def avatar_or_dummy_url
+  def avatar_or_dummy_url(size = :medium)
     if has_avatar?
-      avatar_url
+      avatar_url(size) || avatar_url
     else
       'dummy.png'
     end

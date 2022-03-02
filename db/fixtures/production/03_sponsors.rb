@@ -809,7 +809,7 @@ Sponsor.seed(
     name: 'クリエーションライン株式会社',
     abbr: 'creationline',
     conference_id: 5,
-    url: "https://www.creationline.com/"
+    url: "https://www.creationline.com/training"
   },
   {
     id: 118,

@@ -1,14 +1,5 @@
 # syntax = docker/dockerfile:experimental
 
-FROM ruby:3.0.2-slim as build-vips
-
-RUN apt-get update && apt install -y wget build-essential pkg-config libglib2.0-dev libexpat1-dev
-RUN wget https://github.com/libvips/libvips/releases/download/v8.12.2/vips-8.12.2.tar.gz \
-    && tar zxf vips-8.12.2.tar.gz \
-    && cd vips-8.12.2 \
-    && ./configure \
-    && make -j4
-
 FROM node:16.13.1-slim as node
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -38,8 +29,7 @@ COPY Gemfile* ./
 COPY package.json yarn.lock ./
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
-COPY --from=build-vips /vips-8.12.2 /vips-8.12.2
-RUN cd /vips-8.12.2 && make install
+RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=production DB_ADAPTER=nulldb bin/rails assets:precompile
 
@@ -54,9 +44,7 @@ ENV RAILS_ENV=production, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabl
 WORKDIR /app
 COPY --from=node /app/node_modules /app/node_modules
 COPY --from=fetch-lib /usr/local/bundle /usr/local/bundle
-COPY --from=build-vips /vips-8.12.2 /vips-8.12.2
-RUN apt-get update && apt-get -y install libglib2.0-dev libexpat1-dev libmariadb3 build-essential \
-    && cd /vips-8.12.2 && make install && apt-get purge -y build-essential libglib2.0-dev libexpat1-dev \
+RUN apt-get update && apt-get -y install libmariadb3 libvips42 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY . .
 COPY --from=asset-compile /app/public /app/public

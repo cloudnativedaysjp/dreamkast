@@ -183,7 +183,7 @@ GEM
     hashie (4.1.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    image_processing (1.12.1)
+    image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     jbuilder (2.10.0)
@@ -618,7 +618,7 @@ DEPENDENCIES
   committee-rails
   debase (= 0.2.5.beta2)
   factory_bot_rails
-  image_processing (~> 1.8)
+  image_processing (~> 1.12.2)
   jbuilder (~> 2.7)
   listen (~> 3.2)
   mysql2 (~> 0.5.3)

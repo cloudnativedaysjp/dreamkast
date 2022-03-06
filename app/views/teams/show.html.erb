@@ -6,7 +6,7 @@
     <% @admin_profiles.each do |admin_profile| %>
       <div class="col mb-4">
         <div class="card">
-          <%= image_tag admin_profile.avatar_or_dummy_url, class: 'card-img-top' %>
+          <%= image_tag admin_profile.avatar_or_dummy_url(:large), class: 'card-img-top' %>
           <div class="card-body">
             <h5 class="card-title"><%= admin_profile.name %></h5>
             <p class="card-text"><%= admin_profile.twitter_link %> <%= admin_profile.github_link %></p>

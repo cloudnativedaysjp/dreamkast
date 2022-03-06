@@ -70,7 +70,7 @@
                 <% end %>
 
                 <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
-                  <% 
+                  <%
                     row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:00")) / 60).to_i + 10
                     row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
                   %>
@@ -101,7 +101,7 @@
         </div>
       </section>
     <% end %>
-    
+
     <section class="page-section" id="entry">
       <div class="container">
         <div class="row h-100 align-items-center justify-content-center text-center">
@@ -129,7 +129,7 @@
               <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
                   <li>
-                    <%= image_tag speaker.avatar_or_dummy_url, :size => '100x100', class: "rounded-circle" %><br/>
+                    <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
                     <%= speaker&.name %>
                   </li>
                 <% end %>

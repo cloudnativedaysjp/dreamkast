@@ -97,7 +97,9 @@ gem "pundit"
 
 gem 'redcarpet'
 
+# processing images
 gem "uppy-s3_multipart", "~> 0.3"
+gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'

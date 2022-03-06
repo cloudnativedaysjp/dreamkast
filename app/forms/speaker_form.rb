@@ -2,6 +2,7 @@ class SpeakerForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations
+  include AvatarUploader::Attachment(:avatar)
 
   attr_accessor :name
   attr_accessor :name_mother_tongue

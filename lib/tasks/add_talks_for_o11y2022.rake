@@ -13,41 +13,41 @@ namespace :util do
     track_c = conference.tracks.find_by(name: 'C')
 
     track_a_talks = [
-      { start_time: '10:00:00', end_time: '12:00:00', title: '開始までお待ちください' },
-      { start_time: '12:00:00', end_time: '12:05:00', title: 'Opening' },
+      { start_time: '10:00:00', end_time: '11:50:00', title: '開始までお待ちください' },
+      { start_time: '11:50:00', end_time: '12:05:00', title: 'Opening' },
       { start_time: '12:45:00', end_time: '13:05:00', title: '休憩' },
       { start_time: '13:45:00', end_time: '14:05:00', title: '休憩' },
       { start_time: '14:45:00', end_time: '15:05:00', title: '休憩' },
       { start_time: '15:45:00', end_time: '16:05:00', title: '休憩' },
       { start_time: '16:45:00', end_time: '17:05:00', title: '休憩' },
       { start_time: '17:45:00', end_time: '18:05:00', title: '休憩' },
-      { start_time: '18:45:00', end_time: '19:00:00', title: 'Closing' },
+      { start_time: '18:50:00', end_time: '19:00:00', title: 'Closing' },
       { start_time: '19:00:00', end_time: '20:00:00', title: 'Observability Conference 2022は終了しました' }
     ]
 
     track_b_talks = [
-      { start_time: '10:00:00', end_time: '12:00:00', title: '開始までお待ちください' },
-      { start_time: '12:00:00', end_time: '12:05:00', title: 'TrackAでOpeningセッション中' },
+      { start_time: '10:00:00', end_time: '11:50:00', title: '開始までお待ちください' },
+      { start_time: '11:50:00', end_time: '12:05:00', title: 'TrackAでOpeningセッション中' },
       { start_time: '12:45:00', end_time: '13:05:00', title: '休憩' },
       { start_time: '13:45:00', end_time: '14:05:00', title: '休憩' },
       { start_time: '14:45:00', end_time: '15:05:00', title: '休憩' },
       { start_time: '15:45:00', end_time: '16:05:00', title: '休憩' },
       { start_time: '16:45:00', end_time: '17:05:00', title: '休憩' },
       { start_time: '17:45:00', end_time: '18:05:00', title: '休憩' },
-      { start_time: '18:45:00', end_time: '19:00:00', title: 'TrackAでClosingセッション中' },
+      { start_time: '18:50:00', end_time: '19:00:00', title: 'TrackAでClosingセッション中' },
       { start_time: '19:00:00', end_time: '20:00:00', title: 'Observability Conference 2022は終了しました' }
     ]
 
     track_c_talks = [
-      { start_time: '10:00:00', end_time: '12:00:00', title: '開始までお待ちください' },
-      { start_time: '12:00:00', end_time: '12:05:00', title: 'TrackAでOpeningセッション中' },
+      { start_time: '10:00:00', end_time: '11:50:00', title: '開始までお待ちください' },
+      { start_time: '11:50:00', end_time: '12:05:00', title: 'TrackAでOpeningセッション中' },
       { start_time: '12:45:00', end_time: '13:05:00', title: '休憩' },
       { start_time: '13:45:00', end_time: '14:05:00', title: '休憩' },
       { start_time: '14:45:00', end_time: '15:05:00', title: '休憩' },
       { start_time: '15:45:00', end_time: '16:05:00', title: '休憩' },
       { start_time: '16:45:00', end_time: '17:05:00', title: '休憩' },
       { start_time: '17:45:00', end_time: '18:05:00', title: '休憩' },
-      { start_time: '18:45:00', end_time: '19:00:00', title: 'TrackAでClosingセッション中' },
+      { start_time: '18:50:00', end_time: '19:00:00', title: 'TrackAでClosingセッション中' },
       { start_time: '19:00:00', end_time: '20:00:00', title: 'Observability Conference 2022は終了しました' }
     ]
 

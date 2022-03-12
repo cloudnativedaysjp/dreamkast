@@ -37,7 +37,7 @@ class Speaker < ApplicationRecord
   validates :conference_id, presence: true
 
   def proposals
-    talks.map(&:proposals)
+    talks.map(&:proposal)
   end
 
   def sponsor_talks
@@ -61,9 +61,9 @@ class Speaker < ApplicationRecord
     !avatar_url.nil?
   end
 
-  def avatar_or_dummy_url
+  def avatar_or_dummy_url(size = :medium)
     if has_avatar?
-      avatar_url
+      avatar_url(size) || avatar_url
     else
       'dummy.png'
     end
@@ -75,5 +75,9 @@ class Speaker < ApplicationRecord
 
   def github_link
     link_to(ActionController::Base.helpers.image_tag('GitHub-Mark-64px.png', width: 20), "https://github.com/#{github_id}") if github_id.present?
+  end
+
+  def has_accepted_proposal?
+    talks.find { |e| e.proposal.status == 'accepted' }.present?
   end
 end

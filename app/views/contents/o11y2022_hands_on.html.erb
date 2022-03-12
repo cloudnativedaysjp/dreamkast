@@ -1,0 +1,150 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12 py-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <%= image_tag 'o11y2022/hands-on.png', style: 'width: 100%'%>
+          <h4 class="card-title" id="kontest" style="color: #2E2F30">
+            Observebility Conference 2022 Hands-on
+          </h4>
+          <h6 class="card-subtitle text-muted mb-3">
+            開催日時：2022/3/10 (木) 9:00-18:00
+          </h6>
+
+          <p class="card-text">
+            Observebility Conference 2022でも、前々回のCI/CD Conference 2021でも好評だった『Continuous 〜技術を<b>知り、試し、取り入れる</b>〜』Co-located ハンズオンを開催することになりました。
+          </p>
+
+          <p class="card-text">
+            Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のObservability Confernece 2022で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
+          </p>
+
+          <h5><strong>申込方法・参加方法</strong></h5>
+
+          <p class="card-text">
+            申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+          </p>
+          <p class="card-text">
+            イベントはオンラインで実施され、各ハンズオンが提供するZoom・Google Meets・Microsoft teamsなどを利用します。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+          </p>
+
+          <h5><strong>スケジュール</strong></h5>
+          <p class="card-text">
+          <ul>
+            <li>
+              開催日: 2022/3/10 (木)（Observability Conference 2022 前日）
+            </li>
+            <li>
+              午前 (9:00–13:00):</b>
+              <ul>
+                <li><a href="#hc1">TBD</a></li>
+              </ul>
+            </li>
+            <li>
+              午後 (14:00–):</b>
+              <ul>
+                <li><a href="#hs0">『Elastic オブザーバビリティ ハンズオンワークショップ』by Elasticsearch 株式会社</a></li>
+                <li><a href="#hs1">『Sysdig Secure DevOps Platform ハンズオントレーニング ～コンテナ・Kubernetesの監視、アラート、トラブルシューティング！！～』by SCSK株式会社</a></li>
+                <li><a href="#hs2">『Kubernetes & オブザーバビリティ入門 ～Oracle Container Engine for Kubernetes(OKE)でサンプルマイクロサービスアプリケーションをデプロイしてオブザバビリティツールを利用してみよう～』by 日本オラクル株式会社</a></li>
+                <ul><li style="color: #ff0000; font-weight: bold;">（満員御礼）定員に達したため、本ハンズオンへの申込を締切りました！</li></ul>
+                <li><a href="#hs3">『AWSコストのオブザーバビリティ ハンズオンワークショップ』by freee株式会社</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <br>
+
+          <div class="handson-session">
+            <h5 id="hs0"><strong>『Elastic オブザーバビリティ ハンズオンワークショップ』by Elasticsearch 株式会社</strong></h5>
+
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://www.elastic.co/jp/virtual-events/observability-hands-on-workshop">https://www.elastic.co/jp/virtual-events/observability-hands-on-workshop</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには Observebility Conference 2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <li>
+                開催日時：2022/3/10 14:00-18:00
+              </li>
+            </ul>
+
+            <p class="card-text">
+            Elasticオブザーバビリティを使って、オブザーバビリティの3本柱、ログ、メトリック、トレースをパワフルなデータストアに一元化し、リアルタイムな検索や、インタラクティブな分析を簡単に始めることができます。さらに、機械学習を組み合わせることで、異常を効果的に検知することも可能となります。<br>
+            <br>
+            このワークショップでは、Elastic Agentを使ったログ、メトリックの収集から、APMを使ったトレースの分析など、Elasticオブザーバビリティの基本的な使い方をハンズオンにて、実際に体験していただきます。最近の各種Cloudからのオブザーバビリティデータの投入についてもご紹介いたします。<br>
+            <br>
+            </p>
+          </div>
+
+          <div class="handson-session">
+            <h5 id="hs1"><strong>『Sysdig Secure DevOps Platform ハンズオントレーニング ～コンテナ・Kubernetesの監視、アラート、トラブルシューティング！！～』by SCSK株式会社</strong></h5>
+
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://www.scsk.jp/event/2022/20220310.html">https://www.scsk.jp/event/2022/20220310.html</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには Observebility Conference 2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <li>
+                開催日時：2022/3/10 14:00-16:00
+              </li>
+            </ul>
+
+            <p class="card-text">「Sysdig Secure DevOps Platform」は、OSのシステムコールを可視化する特許技術をベースに、「Docker」など各コンテナ内部のアプリケーションや ミドルウェア、「Kubernetes」のリソース状況および健全性、コンテナ間通信を完全にモニタリングし、視覚化します。<br>
+            また、コンテナに潜む脆弱性の発見や、不正アクセスなど異常検知時のコンテナ制御のほか、「Kubernetes」上でのコマンド履歴をすべて記録可能なことから、サイバーセキュリティにおけるフルフォレンジックを実現します。<br>
+            </p>
+          </div>
+
+          <div class="handson-session">
+            <h5 id="hs2"><strong>『Kubernetes & オブザーバビリティ入門 ～Oracle Container Engine for Kubernetes(OKE)でサンプルマイクロサービスアプリケーションをデプロイしてオブザバビリティツールを利用してみよう～』by 日本オラクル株式会社</strong></h5>
+
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://connpass.com/event/238995/">https://connpass.com/event/238995/</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには Observebility Conference 2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <ul><li style="color: #ff0000; font-weight: bold;">（満員御礼）定員に達したため、本ハンズオンへの申込を締切りました！</li></ul>
+              <li>
+                開催日時：2022/3/10 14:00-18:00
+              </li>
+            </ul>
+
+            <p class="card-text">Oracle Container Engine for Kubernetes(OKE)でサンプルマイクロサービスアプリケーションをデプロイして
+Oracle Cloud Infrastructure(OCI)のオブザバビリティサービス（Application Performance Monitoring、Logging、Monitoring、Notifications）を利用しながら、オブザバビリティを体験する入門ハンズオンです。<br>
+            </p>
+          </div>
+
+          <div class="handson-session">
+            <h5 id="hs3"><strong>AWSコストのオブザーバビリティ ハンズオンワークショップ by freee 株式会社</strong></h5>
+
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://connpass.com/event/240049/">https://connpass.com/event/240049/</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには Observebility Conference 2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <li>
+                開催日時：2022/3/10 14:00-16:00
+              </li>
+            </ul>
+
+            <p class="card-text">awsのコストは使った分だけ請求されますが、多くのサービスを利用している場合は難解になりがちです。しらずしらずに放ったらかししているリソースがコストの浪費になっているケースがあります。また利用料金が正しく見積もりと合っているかどうかも分かりづらい時があります。<br>
+            ハンズオンを通じてコストの利用状況をリアルタイムに分析して、無駄なコストを節約しコスト削減の手助けとなることを期待しております。<br>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% @message_box = "豊富な併設イベントも開催中！" %>

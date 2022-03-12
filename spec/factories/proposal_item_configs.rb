@@ -67,6 +67,30 @@ FactoryBot.define do
     params { 'Dev/QA（開発環境）' }
   end
 
+  factory :proposal_item_configs_assumed_visitor, class: ProposalItemConfig do
+    type { 'ProposalItemConfigCheckBox' }
+    label { 'assumed_visitor' }
+    item_number { 1 }
+    item_name { '想定受講者（★★）' }
+    params { 'architect - システム設計' }
+  end
+
+  factory :proposal_item_configs_presentation_method, class: ProposalItemConfig do
+    type { 'ProposalItemConfigRadioButton' }
+    label { 'presentation_method' }
+    item_number { 1 }
+    item_name { '登壇方法の希望' }
+    params { '現地登壇' }
+  end
+
+  factory :proposal_item_configs_session_time, class: ProposalItemConfig do
+    type { 'ProposalItemConfigRadioButton' }
+    label { 'session_time' }
+    item_number { 1 }
+    item_name { '必要とする講演時間 - Session time you need（★）' }
+    params { '40min (full session)' }
+  end
+
   factory :proposal_item_configs_whether_it_can_be_published, class: ProposalItemConfig do
     conference_id { 1 }
     type { 'ProposalItemConfigRadioButton' }

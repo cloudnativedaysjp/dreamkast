@@ -19,6 +19,8 @@ gem 'jbuilder', '~> 2.11'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+# Use Prometheus client
+gem 'prometheus-client', '~> 3.0.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -91,7 +93,9 @@ gem "pundit"
 
 gem 'redcarpet'
 
+# processing images
 gem "uppy-s3_multipart", "~> 0.3"
+gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set', github: "collectiveidea/awesome_nested_set"
 gem 'aws-sdk-rails'

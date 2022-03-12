@@ -31,7 +31,7 @@
       <% @speakers.each do |speaker| %>
         <tr>
           <% if speaker.has_avatar? %>
-            <td class="avatar"><%= image_tag speaker.avatar_url, :size => '80x80'  %></td>
+            <td class="avatar"><%= image_tag speaker.avatar_url(:medium) || speaker.avatar_url, :size => '80x80'  %></td>
           <% else %>
             <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
           <% end %>
@@ -41,7 +41,7 @@
           <td><%= speaker.job_title %></td>
           <td><%= speaker.twitter_id %></td>
           <td><%= speaker.github_id %></td>
-          <td><%= link_to 'Edit', "speakers/#{speaker.id}/edit" %></td>
+          <td><%= link_to 'Edit', "speakers/#{speaker.id}/edit", data: {"turbolinks" => false} %></td>
           <td><%= link_to 'Notice', "speaker_announcements/new?speaker_id=#{speaker.id}" %></td>
         </tr>
       <% end %>

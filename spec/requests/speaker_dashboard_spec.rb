@@ -226,6 +226,42 @@ describe SpeakerDashboardsController, type: :request do
           expect(response.body).not_to(include('<p>test announcement for mike</p>'))
           expect(SpeakerAnnouncement.where(publish: true).size).to(eq(2))
         end
+
+        context 'when alice has accepted proposal' do
+          before { create(:speaker_announcement, :only_accepted, speakers: [alice]) }
+          let(:alice) { create(:speaker_alice, :with_talk1_accepted) }
+
+          it 'show to_all announcements' do
+            subject
+            expect(response).to(be_successful)
+            expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+            expect(response.body).to(include('<p>test announcement for alice</p>'))
+          end
+
+          it 'show only_accepted announcements' do
+            subject
+            expect(response).to(be_successful)
+            expect(response.body).to(include('<p>test announcement for only accepted</p>'))
+          end
+        end
+
+        context 'when alice not has accepted proposal' do
+          before { create(:speaker_announcement, :only_accepted, speakers: [alice]) }
+          let(:alice) { create(:speaker_alice, :with_talk1_rejected) }
+
+          it 'show to_all announcements' do
+            subject
+            expect(response).to(be_successful)
+            expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+            expect(response.body).to(include('<p>test announcement for alice</p>'))
+          end
+
+          it 'not show only_accepted announcements' do
+            subject
+            expect(response).to(be_successful)
+            expect(response.body).not_to(include('<p>test announcement for only accepted</p>'))
+          end
+        end
       end
     end
   end

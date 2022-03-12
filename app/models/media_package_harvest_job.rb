@@ -27,7 +27,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   belongs_to :talk
 
   def job
-    @job ||= media_package_client.describe_harvest_job(id: job_id)
+    @job ||= media_package_client.describe_harvest_job(id: job_id) if job_id
   end
 
   def create_media_package_resources
@@ -38,6 +38,10 @@ class MediaPackageHarvestJob < ApplicationRecord
     logger.error(e.message)
   end
 
+  def video_url
+    "https://#{cloudfront_domain_name(job.s3_destination.bucket_name)}/#{job.s3_destination.manifest_key}"
+  end
+
   private
 
   def create_params
@@ -45,7 +49,7 @@ class MediaPackageHarvestJob < ApplicationRecord
       id: "#{resource_name}_#{id}",
       start_time: start_time.strftime('%Y-%m-%dT%H:%M:%S%:z'),
       end_time: end_time.strftime('%Y-%m-%dT%H:%M:%S%:z'),
-      origin_endpoint_id: origin_endpoint,
+      origin_endpoint_id: resource_name,
       s3_destination: {
         bucket_name: bucket_name,
         manifest_key: manifest_key,
@@ -54,12 +58,8 @@ class MediaPackageHarvestJob < ApplicationRecord
     }
   end
 
-  def origin_endpoint
-    "#{env_name}_#{@job.conference.abbr}_track#{@job.talk.track.name}"
-  end
-
   def manifest_key
-    "mediapackage/#{conference.abbr}/talks/#{talk_id}/playlist.m3u8"
+    "mediapackage/#{conference.abbr}/talks/#{talk_id}/#{id}/playlist.m3u8"
   end
 
   def resource_name
@@ -68,6 +68,28 @@ class MediaPackageHarvestJob < ApplicationRecord
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else
       "#{env_name}_#{conference.abbr}_track#{track.name}"
+    end
+  end
+
+  def bucket_name
+    case env_name
+    when 'production'
+      'dreamkast-ivs-stream-archive-prd'
+    when 'staging'
+      'dreamkast-ivs-stream-archive-stg'
+    else
+      'dreamkast-ivs-stream-archive-dev'
+    end
+  end
+
+  def cloudfront_domain_name(bucket_name)
+    case bucket_name
+    when 'dreamkast-ivs-stream-archive-prd'
+      'd3pun3ptcv21q4.cloudfront.net'
+    when 'dreamkast-ivs-stream-archive-stg'
+      'd3i2o0iduabu0p.cloudfront.net'
+    else
+      'd1jzp6sbtx9by.cloudfront.net'
     end
   end
 end

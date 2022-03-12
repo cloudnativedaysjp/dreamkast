@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_23_073409) do
+ActiveRecord::Schema.define(version: 2022_02_13_134136) do
 
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2022_01_23_073409) do
     t.boolean "cfp_result_visible", default: false
     t.boolean "show_sponsors", default: false
     t.string "brief"
+    t.string "committee_name", default: "CloudNative Days Committee", null: false
     t.index ["status"], name: "index_conferences_on_status"
   end
 
@@ -153,8 +154,8 @@ ActiveRecord::Schema.define(version: 2022_01_23_073409) do
   create_table "media_package_channels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.string "channel_id"
-    t.index ["channel_id"], name: "index_media_package_channels_on_channel_id", unique: true
+    t.string "channel_id", default: ""
+    t.index ["channel_id"], name: "index_media_package_channels_on_channel_id"
     t.index ["conference_id"], name: "index_media_package_channels_on_conference_id"
     t.index ["track_id"], name: "index_media_package_channels_on_track_id"
   end
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(version: 2022_01_23_073409) do
     t.boolean "publish", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "receiver", default: 0, null: false
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 

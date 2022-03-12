@@ -40,3 +40,7 @@ Style/MethodDefParentheses:
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+
+# nextの使用は強制されたくない
+Style/Next:
+  Enabled: false

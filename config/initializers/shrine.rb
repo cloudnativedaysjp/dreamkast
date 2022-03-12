@@ -40,3 +40,8 @@ Shrine.plugin(:activerecord)
 Shrine.plugin(:cached_attachment_data)
 Shrine.plugin(:restore_cached_data)
 Shrine.plugin(:uppy_s3_multipart)
+Shrine.plugin(:derivatives)
+Shrine.plugin(:upload_endpoint, url: true)
+Shrine.plugin(:backgrounding)
+Shrine::Attacher.promote_block { PromoteJob.perform_now(record, name, file_data) }
+Shrine::Attacher.destroy_block { DestroyJob.perform_later(data) }

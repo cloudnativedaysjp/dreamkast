@@ -220,6 +220,9 @@ GEM
     hashie (5.0.0)
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     io-wait (0.2.1)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
@@ -239,9 +242,10 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.7.1)
-    minitest (5.15.0)
+    mini_portile2 (2.8.0)
+    minitest (5.14.4)
     msgpack (1.4.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -263,8 +267,8 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.1)
-      mini_portile2 (~> 2.7.0)
+    nokogiri (1.13.3)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -460,13 +464,14 @@ GEM
     parallel (1.21.0)
     parser (3.1.0.0)
       ast (~> 2.4.1)
+    prometheus-client (3.0.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (4.3.10)
+    puma (4.3.11)
       nio4r (~> 2.0)
     pundit (2.1.1)
       activesupport (>= 3.0.0)
@@ -573,6 +578,8 @@ GEM
     ruby-debug-ide (0.7.3)
       rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -680,6 +687,7 @@ DEPENDENCIES
   committee-rails
   debase (= 0.2.5.beta2)
   factory_bot_rails
+  image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
   listen (~> 3.2)
   mysql2 (~> 0.5.3)
@@ -690,6 +698,7 @@ DEPENDENCIES
   opentelemetry-instrumentation-all
   opentelemetry-instrumentation-aws_sdk
   opentelemetry-sdk
+  prometheus-client (~> 3.0.0)
   pry-rails
   puma (~> 4.3)
   pundit

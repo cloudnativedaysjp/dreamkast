@@ -95,6 +95,7 @@
     </div>
     <% end %>
 
+    <% if ["cndt2020", "cndo2021", "cicd2021", "cndt2021"].include?(@event) %>
     <h4 class="mt-3">日本マイクロソフト株式会社/Microsoft Corporation</h4>
     <p>
     日本マイクロソフト株式会社から情報提供を希望される場合、申し込み者情報に記載いただいた内容を日本マイクロソフト株式会社へ提供させていただきます。利用目的は当該企業の製品・サービスに関する情報またはマーケティング活動に関する情報をお知らせすることです。個人情報の取り扱いにつきましては、日本マイクロソフト株式会社のプライバシーポリシーに準拠します。
@@ -105,10 +106,11 @@
     </div>
     <p>(<a href="https://privacy.microsoft.com/ja-jp/privacystatement/" target="_blank">プライバシーステートメント</a>)</p>
     <p></p>
+    <% end %>
   </div>
   <% end %>
 
   <div class="form-row form-group justify-content-md-center py-20">
-    <%= form.submit "登録", class: "btn btn-primary form-control" %>
+    <%= form.submit "個人情報保護方針に同意して参加登録", class: "btn btn-primary form-control" %>
   </div>
 <% end %>

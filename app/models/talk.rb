@@ -234,7 +234,8 @@ class Talk < ApplicationRecord
     session_time = proposal_items.find_by(label: 'session_time')
     return ProposalItemConfig.find(session_time.params.to_i).params.split('min')[0].to_i if session_time
 
-    talk_time.present? ? talk_time.time_minutes : 0
+    # プロポーザルでセッションの時間を選択するカンファレンスと選択しないカンファレンスがあり、選択しない場合はデフォルト値として40分とする
+    talk_time.present? ? talk_time.time_minutes : 40
   end
 
   def start_to_end

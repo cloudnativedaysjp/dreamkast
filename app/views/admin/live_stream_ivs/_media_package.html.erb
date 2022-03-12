@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-10">
+    <h3>Track毎のMediaPackage一覧</h3>
+  </div>
+</div>
+
+<div class="row mb-1">
+  <div class="col-10 d-flex">
+    <%= form_with(url: admin_bulk_create_media_package_path, local: true) do |form| %>
+      <%= form.submit '各トラック毎のMediaPackage Packageを作成(未作成の場合のみ作ります)', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col">
+    <%= form_with(url: admin_bulk_delete_media_package_path, local: true) do |form| %>
+      <table class="table table-striped talks_table" >
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">ID</th>
+          <th scope="col">Track</th>
+          <th scope="col">Channel ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @media_package_channels.each do |channel| %>
+          <tr>
+            <td>
+              <input type="checkbox" name="media_package[<%= channel.id %>]">
+            </td>
+
+            <td><%= channel.id %></td>
+            <td><%= channel.track.name %></td>
+            <td><%= channel.channel_id %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= form.submit '選択したMediaPackageを削除する', class: "btn btn-danger", data: { confirm: '本当に削除しますか？' }  %>
+    <% end %>
+  </div>
+</div>

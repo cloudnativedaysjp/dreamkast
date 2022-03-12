@@ -13,6 +13,7 @@ Conference.seed(
     copyright: '© CloudNative Days Tokyo 2020 (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Tokyo 2020 Committee",
     about: <<'EOS'
 CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
 最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
@@ -32,6 +33,7 @@ EOS
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndo2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Spring 2021 ONLINE Committee",
     about: <<'EOS'
     『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。
     CNCFによる定義によると、『近代的でダイナミックな環境で、スケーラブルなアプリケーションを構築・実行するための能力を組織にもたらす』のがクラウドネイティブ技術です。
@@ -63,6 +65,7 @@ EOS
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cicd2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CI/CD Conference 2021 Committee",
     about: <<'EOS'
 CI/CD Conferenceは、CI/CDに特化したテックカンファレンスです。『技術を知り、試して、取り入れる』のコンセプトのもと、参加者が優れたCI/CDの知見を取り入れ、改善を行っていけるイベントを目指しています。そして、ゆくゆくは参加者が登壇者となり、他の人に知見を共有していける、Continuousなイベントでありたいと思っています。
 EOS
@@ -77,6 +80,7 @@ EOS
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Tokyo 2021 Committee",
     about: <<'EOS'
     "CloudNative Days" は最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。
     今日、多くの技術者、コミュニティ、企業がクラウドネイティブを目指す旅路を歩んでいます。
@@ -96,6 +100,7 @@ EOS
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "Observability Conference 2022 Committee",
     about: <<'EOS'
     Observability Conference（O11yCon）は、オブザーバビリティ（可観測性）に特化したテックカンファレンスです。
 
@@ -146,8 +151,8 @@ ConferenceDay.seed(
   {id: 12, date: "2021-11-05", start_time: "12:00", end_time: "19:20", conference_id: 4, internal: false},
   {id: 13, date: "2021-10-18", start_time: "19:00", end_time: "21:00", conference_id: 4, internal: true}, #Pre event
 
-  {id: 14, date: "2022-03-11", start_time: "13:00", end_time: "19:00", conference_id: 5, internal: false},
-  {id: 15, date: "2022-02-18", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
+  {id: 14, date: "2022-03-11", start_time: "12:00", end_time: "19:00", conference_id: 5, internal: false},
+  {id: 15, date: "2022-02-16", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -239,6 +244,9 @@ Track.seed(
   { id: 23, number: 4, name: "D", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
   { id: 24, number: 5, name: "E", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
   { id: 25, number: 6, name: "F", conference_id: 4, video_platform: "vimeo", video_id: "gggggg"},
+  { id: 26, number: 1, name: "A", conference_id: 5},
+  { id: 27, number: 2, name: "B", conference_id: 5},
+  { id: 28, number: 3, name: "C", conference_id: 5},
 )
 
 
@@ -419,7 +427,31 @@ Proposal.seed(csv.map{|line|
   }
 })
 
-# TODO: Need to add o11y2022 Dummy
+# Import O11y Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/proposals.csv'), headers: true)
+Proposal.seed(csv.map{|line|
+  {
+    id: line["id"],
+    talk_id: line["talk_id"],
+    conference_id: line["conference_id"],
+    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+  }
+})
 
 # Mock profile
 Profile.seed(

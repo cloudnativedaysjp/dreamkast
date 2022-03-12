@@ -75,6 +75,13 @@ FactoryBot.define do
     internal { false }
   end
 
+  factory :internal, class: ConferenceDay do
+    date { '2021-02-10' }
+    start_time { '19:00' }
+    end_time { '21:00' }
+    internal { true }
+  end
+
   factory :two_day2, class: ConferenceDay do
     date { '2021-03-12' }
     start_time { '13:00' }

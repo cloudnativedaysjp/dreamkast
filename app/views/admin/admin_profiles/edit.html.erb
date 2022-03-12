@@ -18,13 +18,24 @@
 
         <div class="field pb-3">
           <%= form.label :avatar, 'Profile Image' %>
-          <% if @admin_profile && @admin_profile.avatar_url.present? %>
-            <br>
-            <%= image_tag @admin_profile.avatar_url, :size => '80x80' %>
-          <% end %>
-          <%= form.hidden_field :avatar, value: @admin_profile && @admin_profile.avatar_url.present? ? @admin_profile.avatar_data : '' %>
-          <%= form.file_field :avatar, class: "form-control"  %>
+
+          <!-- will be replaced by Uppy -->
+          <%= form.text_field :avatar,
+            type: :file,
+            id: "avatar_upload",
+            class: "form-control" %>
+
+          <!-- for storing uploaded file data -->
+          <%= form.text_field :avatar,
+            type: :hidden,
+            error_handler: false,
+            class: "upload-data",
+            value: @admin_profile.cached_avatar_data %>
         </div>
+
+      <div class="image-preview">
+        <img src="<%= @admin_profile.avatar_url(:large) || @admin_profile.avatar_url %>" height="300" class="rounded" \>
+      </div>
 
         <div class="form-row form-group">
           <%= form.label :name, "Name" %>*

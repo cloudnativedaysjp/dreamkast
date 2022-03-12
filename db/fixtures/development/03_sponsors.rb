@@ -706,6 +706,118 @@ Sponsor.seed(
     conference_id: 4,
     url: 'https://www.cloudflare.com/ja-jp/'
   },
+  {
+    id: 103,
+    name: '株式会社スリーシェイク',
+    abbr: '3shake',
+    conference_id: 5,
+    url: 'https://3-shake.com/'
+  },
+  {
+    id: 104,
+    name: 'JFrog Japan株式会社',
+    abbr: 'jfrog',
+    conference_id: 5,
+    url: 'https://jfrog.com/ja/'
+  },
+  {
+    id: 105,
+    name: 'New Relic株式会社',
+    abbr: 'newrelic',
+    conference_id: 5,
+    url: 'https://newrelic.com/jp'
+  },
+  {
+    id: 106,
+    name: 'F5ネットワークスジャパン合同会社',
+    abbr: 'f5',
+    conference_id: 5,
+    url: 'https://www.nginx.co.jp/'
+  },
+  {
+    id: 107,
+    name: 'アクイアジャパン合同会社',
+    abbr: 'acquia',
+    conference_id: 5,
+    url: 'https://www.acquia.com/jp'
+  },
+  {
+    id: 108,
+    name: 'Splunk Services Japan合同会社',
+    abbr: 'splunk',
+    conference_id: 5,
+    url: 'https://www.splunk.com/ja_jp'
+  },
+  {
+    id: 109,
+    name: 'グーグル・クラウド・ジャパン合同会社',
+    abbr: 'google',
+    conference_id: 5,
+    url: 'https://cloud.google.com/free'
+  },
+  {
+    id: 110,
+    name: 'Datadog',
+    abbr: 'datadog',
+    conference_id: 5,
+    url: 'https://www.datadoghq.com/ja'
+  },
+  {
+    id: 111,
+    name: '株式会社マクニカ ネットワークス カンパニー',
+    abbr: 'macnica',
+    conference_id: 5,
+    url: 'https://www.macnica.co.jp/business/security/manufacturers/splunk/pro_itoa.html'
+  },
+  {
+    id: 112,
+    name: '日本オラクル株式会社',
+    abbr: 'oracle',
+    conference_id: 5,
+    url: 'https://www.oracle.com/jp/contact-us/about/'
+  },
+  {
+    id: 113,
+    name: 'Elasticsearch 株式会社',
+    abbr: 'elastic',
+    conference_id: 5,
+    url: 'https://www.elastic.co/jp/'
+  },
+  {
+    id: 114,
+    name: 'SCSK株式会社',
+    abbr: 'scsk',
+    conference_id: 5,
+    url: 'https://www.scsk.jp/sp/sysdig/'
+  },
+  {
+    id: 115,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 5,
+    url: 'https://plaid.co.jp/'
+  },
+  {
+    id: 116,
+    name: 'freee株式会社',
+    abbr: 'freee',
+    conference_id: 5,
+    url: 'https://corp.freee.co.jp/'
+  },
+  {
+    id: 117,
+    name: 'クリエーションライン株式会社',
+    abbr: 'creationline',
+    conference_id: 5,
+    url: "https://www.creationline.com/training"
+  },
+  {
+    id: 118,
+    name: 'さくらインターネット株式会社',
+    abbr: 'sakura',
+    conference_id: 5,
+    url: 'https://www.sakura.ad.jp'
+  },
 )
 
 SponsorType.seed(
@@ -862,6 +974,43 @@ SponsorType.seed(
     name: "Media",
     order: 7,
   },
+  {
+    id: 30,
+    conference_id: 5,
+    name: "Platinum",
+    order: 1,
+  },
+  {
+    id: 31,
+    conference_id: 5,
+    name: "Gold",
+    order: 2,
+  },
+  {
+    id: 32,
+    conference_id: 5,
+    name: "Silver",
+    order: 3,
+  },
+  {
+    id: 33,
+    conference_id: 5,
+    name: "Hands-On",
+    order: 4,
+  },
+  {
+    id: 34,
+    conference_id: 5,
+    name: "Tool",
+    order: 5,
+  },
+  {
+    id: 35,
+    conference_id: 5,
+    name: "CM",
+    order: 6,
+  },
+
 )
 
 [
@@ -991,6 +1140,22 @@ SponsorType.seed(
   [126, 'Hands-On', 'elastic', 4],
   [127, 'Platinum', 'cloudflare', 4],
   [128, 'CM', 'gmo', 4],
+  [129, 'Platinum', '3shake', 5],
+  [130, 'Platinum', 'jfrog', 5],
+  [131, 'Platinum', 'newrelic', 5],
+  [132, 'Gold', 'f5', 5],
+  [133, 'Silver', 'acquia', 5],
+  [134, 'Platinum', 'splunk', 5],
+  [135, 'Platinum', 'google', 5],
+  [136, 'Platinum', 'datadog', 5],
+  [137, 'Gold', 'macnica', 5],
+  [138, 'Hands-On', 'oracle', 5],
+  [139, 'Hands-On', 'elastic', 5],
+  [140, 'Hands-On', 'scsk', 5],
+  [141, 'Tool', 'plaid', 5],
+  [142, 'Hands-On', 'freee', 5],
+  [143, 'CM', 'creationline', 5],
+  [144, 'Tool', 'sakura', 5],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1107,6 +1272,22 @@ end
   [100, 'gitlab', 'sponsors/cndt2021/gitlab.png', 4],
   [101, 'elastic', 'sponsors/cndt2021/elastic.png', 4],
   [102, 'cloudflare', 'sponsors/cndt2021/cloudflare.png', 4],
+  [103, '3shake', 'sponsors/o11y2022/3-shake.png', 5],
+  [104, 'jfrog', 'sponsors/o11y2022/jfrog.png', 5],
+  [105, 'newrelic', 'sponsors/o11y2022/newrelic.png', 5],
+  [106, 'f5', 'sponsors/o11y2022/nginx.png', 5],
+  [107, 'acquia', 'sponsors/o11y2022/acquia.png', 5],
+  [108, 'splunk', 'sponsors/o11y2022/splunk.png', 5],
+  [109, 'google', 'sponsors/o11y2022/google.png', 5],
+  [110, 'datadog', 'sponsors/o11y2022/datadog.png', 5],
+  [111, 'macnica', 'sponsors/o11y2022/macnica.png', 5],
+  [112, 'oracle', 'sponsors/o11y2022/oracle.png', 5],
+  [113, 'elastic', 'sponsors/o11y2022/elastic.png', 5],
+  [114, 'scsk', 'sponsors/o11y2022/scsk.png', 5],
+  [115, 'plaid', 'sponsors/o11y2022/plaid.png', 5],
+  [116, 'freee', 'sponsors/o11y2022/freee.png', 5],
+  [117, 'creationline', 'sponsors/o11y2022/creationline.png', 5],
+  [118, 'sakura', 'sponsors/o11y2022/sakura.png', 5],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

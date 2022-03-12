@@ -9,7 +9,7 @@
 #
 # Indexes
 #
-#  index_media_package_channels_on_channel_id     (channel_id) UNIQUE
+#  index_media_package_channels_on_channel_id     (channel_id)
 #  index_media_package_channels_on_conference_id  (conference_id)
 #  index_media_package_channels_on_track_id       (track_id)
 #
@@ -21,6 +21,7 @@ class MediaPackageChannel < ApplicationRecord
   belongs_to :conference
   belongs_to :track
   has_many :media_package_origin_endpoints
+  has_many :media_package_harvest_jobs
 
   before_destroy do
     delete_media_package_resources

@@ -44,15 +44,26 @@
       <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp'  %>
     </div>
 
-    <div class="field pb-3">
+  <div class="field pb-3">
       <%= form.label :avatar, '講演者写真 - Photographs' %>
-      <% if @speaker && @speaker.avatar_url.present? %>
-        <br>
-        <%= image_tag @speaker.avatar_url, :size => '80x80' %>
-      <% end %>
-      <%= form.hidden_field :avatar, value: @speaker && @speaker.avatar_url.present? ? @speaker.avatar_data : '' %>
-      <%= form.file_field :avatar, class: "form-control"  %>
-    </div>
+    <!-- will be replaced by Uppy -->
+    <%= form.text_field :avatar,
+      type: :file,
+      id: "avatar_upload",
+      class: "form-control" %>
+
+    <!-- for storing uploaded file data -->
+    <%= form.text_field :avatar,
+      type: :hidden,
+      error_handler: false,
+      class: "upload-data",
+      value: @speaker.nil? ? "" : @speaker.cached_avatar_data %>
+  </div>
+
+  <div class="image-preview">
+    <img src="<%= (@speaker.avatar_url(:large) || @speaker.avatar_url) unless @speaker.nil? %>" height="300" class="rounded" \>
+  </div>
+
   </section>
 
   <section class="speaker-information py-3">
@@ -80,7 +91,7 @@
       <%= markdown @conference.privacy_policy_for_speaker %>
     </div>
   </section>
-      
+
   <div class="actions justify-content-center py-3">
     <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
   </div>

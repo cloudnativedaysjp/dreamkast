@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'logout' => 'logout#logout'
 
+
   namespace 'api' do
     namespace 'v1' do
       get ':event/my_profile' => 'profiles#my_profile'
@@ -105,6 +106,7 @@ Rails.application.routes.draw do
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'
+    get 'o11y' => 'contents#o11y'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'
@@ -133,5 +135,6 @@ Rails.application.routes.draw do
     resources :links, only: [:index]
   end
 
+  mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'
   get '*path', controller: 'application', action: 'render_404'
 end

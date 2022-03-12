@@ -37,4 +37,10 @@ class ChatMessage < ApplicationRecord
   belongs_to :profile
 
   enum message_type: { chat: 0, qa: 1 }
+
+  def self.counts
+    ChatMessage.all.select(
+      [:conference_id, :room_id, ChatMessage.arel_table[:room_id].count.as('count')]
+    ).where(conference_id: Conference.opened.ids).group(:conference_id, :room_id)
+  end
 end

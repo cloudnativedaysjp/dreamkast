@@ -12,6 +12,7 @@
 #  about                      :text(65535)
 #  privacy_policy             :text(65535)
 #  coc                        :text(65535)
+#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  copyright                  :string(255)
 #  privacy_policy_for_speaker :text(65535)
 #  speaker_entry              :integer

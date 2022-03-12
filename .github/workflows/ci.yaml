@@ -15,6 +15,15 @@ jobs:
     if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
     - uses: actions/checkout@v2
+    - name: dependencies
+      run: |
+       sudo apt-get install -y wget build-essential pkg-config libglib2.0-dev libexpat1-dev
+       wget https://github.com/libvips/libvips/releases/download/v8.12.2/vips-8.12.2.tar.gz
+       tar zxf vips-8.12.2.tar.gz
+       cd vips-8.12.2
+       ./configure
+       make -j2
+       sudo make install
     - name: Run database
       shell: bash
       run: |

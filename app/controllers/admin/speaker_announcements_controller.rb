@@ -56,7 +56,11 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   private
 
-  helper_method :speaker_announcement_url
+  helper_method :speaker_announcement_url, :is_to_all_announcements?
+
+  def is_to_all_announcements?
+    @speakers.blank? || @speakers.nil? || @speakers.length > 1
+  end
 
   def speaker_announcement_url
     case action_name
@@ -68,6 +72,6 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def speaker_announcement_params
-    params.require(:speaker_announcement).permit(:conference_id, :publish_time, :body, :publish, speaker_ids: [])
+    params.require(:speaker_announcement).permit(:conference_id, :receiver, :publish_time, :only_accepted, :body, :publish, speaker_ids: [])
   end
 end

@@ -52,15 +52,13 @@
           </td>
 
           <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
-            <% if @conference.closed? || (@conference.opened? && @current_user) %>
-              <% if talk.video_published && talk.video.present? %>
-                <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
-              <% end %>
+            <% if video_archived?(talk) %>
+              <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
             <% end %>
           </td>
 
           <td id="td-id-<%= (index * 7) + 10 %>" class="td-class-<%= index + 1 %> text-center">
-            <% if talk.document_url.present? %>
+            <% if document_archived?(talk) %>
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>
           </td>

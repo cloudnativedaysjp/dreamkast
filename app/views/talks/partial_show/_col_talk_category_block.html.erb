@@ -13,8 +13,8 @@
     </span>
     <% end %>
     &nbsp;
-    <% if @conference.closed? %>
-      <% if talk.video_published %>
+    <% if @conference.closed? || @conference.archived? %>
+      <% if video_archived?(talk) %>
         <span class="difficulty archivable">アーカイブ視聴可</span>
       <% else %>
         <span class="difficulty non_archivable">アーカイブ視聴不可</span>

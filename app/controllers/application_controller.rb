@@ -124,9 +124,9 @@ class ApplicationController < ActionController::Base
 
   def event_view
     if FileTest.exist?("#{Rails.root}/app/views/#{controller_name}/#{event_name}_#{action_name}.html.erb")
-      "#{controller_name}/#{event_name}_#{action_name}.html.erb"
+      "#{event_name}_#{action_name}"
     else
-      "#{controller_name}/#{action_name}.html.erb"
+      action_name.to_s
     end
   end
 end

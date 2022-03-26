@@ -47,7 +47,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe 'sponsor logged in' do
-          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
+          before { allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo])) }
 
           it_should_behave_like :redirect_to_login_page
         end
@@ -63,7 +63,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe 'sponsor logged in' do
-          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
+          before { allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo])) }
 
           it_should_behave_like :redirect_to_login_page
         end
@@ -77,7 +77,16 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
 
         describe 'sponsor logged in' do
-          before { allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo)) }
+          before do
+            ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+              if arg[1] == :userinfo
+                admin_userinfo[:userinfo]
+              else
+                arg[0].send(:original, arg[1])
+              end
+            end)
+          end
 
           it_should_behave_like :returns_successfully
 

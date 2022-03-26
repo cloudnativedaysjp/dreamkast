@@ -21,7 +21,7 @@ describe Api::V1::ChatMessagesController, type: :request do
   describe 'PUT /api/v1/chat_message/:id' do
     describe 'update own chat message' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: alice.email } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: alice.email }))
         create(:talk1)
         create(:message_from_alice, profile: alice)
       end
@@ -43,7 +43,7 @@ describe Api::V1::ChatMessagesController, type: :request do
 
   describe 'update others chat message' do
     before do
-      allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: alice.email } }))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: alice.email }))
       create(:talk1, conference: cndt2020)
     end
     let!(:cndt2020) { create(:cndt2020) }

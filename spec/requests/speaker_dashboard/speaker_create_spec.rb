@@ -5,7 +5,14 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
   context 'user already logged in' do
     context "user doesn't registered" do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            admin_userinfo[:userinfo]
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       describe 'register speaker and proposal without session time selection' do

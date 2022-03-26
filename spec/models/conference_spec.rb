@@ -2,30 +2,31 @@
 #
 # Table name: conferences
 #
-#  id                         :bigint           not null, primary key
+#  id                         :integer          not null, primary key
+#  name                       :string(255)
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
 #  abbr                       :string(255)
+#  status                     :integer          default("0"), not null
+#  theme                      :text(65535)
 #  about                      :text(65535)
-#  attendee_entry             :integer
-#  brief                      :string(255)
-#  cfp_result_visible         :boolean          default(FALSE)
+#  privacy_policy             :text(65535)
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  copyright                  :string(255)
-#  name                       :string(255)
-#  privacy_policy             :text(65535)
 #  privacy_policy_for_speaker :text(65535)
-#  show_sponsors              :boolean          default(FALSE)
-#  show_timetable             :integer
 #  speaker_entry              :integer
-#  status                     :integer          default("registered"), not null
-#  theme                      :text(65535)
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
+#  attendee_entry             :integer
+#  show_timetable             :integer
+#  cfp_result_visible         :boolean          default("0")
+#  show_sponsors              :boolean          default("0")
+#  brief                      :string(255)
 #
 # Indexes
 #
 #  index_conferences_on_status  (status)
 #
+
 require 'rails_helper'
 
 RSpec.describe(Conference, type: :model) do

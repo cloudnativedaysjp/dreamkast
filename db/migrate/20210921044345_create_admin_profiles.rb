@@ -1,7 +1,7 @@
 class CreateAdminProfiles < ActiveRecord::Migration[6.0]
   def change
     create_table :admin_profiles do |t|
-      t.belongs_to :conference, null: false, foreign_key: true
+      t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
 
       t.string :sub
       t.string :email

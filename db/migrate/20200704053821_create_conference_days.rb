@@ -4,7 +4,7 @@ class CreateConferenceDays < ActiveRecord::Migration[6.0]
       t.date :date
       t.time :start_time
       t.time :end_time
-      t.belongs_to :conference
+      t.belongs_to :conference, type: :bigint
 
       t.timestamps
     end

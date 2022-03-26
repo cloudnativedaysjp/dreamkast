@@ -2,15 +2,16 @@
 #
 # Table name: tracks
 #
-#  id             :bigint           not null, primary key
-#  name           :string(255)
+#  id             :integer          not null, primary key
 #  number         :integer
-#  video_platform :string(255)
+#  name           :string(255)
+#  video_id       :string(255)
+#  conference_id  :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  conference_id  :integer
-#  video_id       :string(255)
+#  video_platform :string(255)
 #
+
 class Track < ApplicationRecord
   has_many :talks
   has_one :live_stream_ivs

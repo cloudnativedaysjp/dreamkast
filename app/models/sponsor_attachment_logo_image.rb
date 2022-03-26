@@ -2,26 +2,23 @@
 #
 # Table name: sponsor_attachments
 #
-#  id         :bigint           not null, primary key
-#  file_data  :string(255)
+#  id         :integer          not null, primary key
+#  sponsor_id :integer          not null
+#  type       :string(255)
+#  title      :string(255)
+#  url        :string(255)
+#  text       :text(65535)
 #  link       :string(255)
 #  public     :boolean
-#  text       :text(65535)
-#  title      :string(255)
-#  type       :string(255)
-#  url        :string(255)
+#  file_data  :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  sponsor_id :bigint           not null
 #
 # Indexes
 #
 #  index_sponsor_attachments_on_sponsor_id  (sponsor_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (sponsor_id => sponsors.id)
-#
+
 class SponsorAttachmentLogoImage < SponsorAttachment
   belongs_to :sponsor
 end

@@ -5,13 +5,13 @@ class CreateSponsors< ActiveRecord::Migration[6.0]
       t.string :abbr
       t.text :description
       t.string :url
-      t.belongs_to :conference, null: false, foreign_key: true
+      t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
 
       t.timestamps
     end
 
     create_table :sponsor_attachments do |t|
-      t.belongs_to :sponsor, null: false, foreign_key: true
+      t.belongs_to :sponsor, null: false, foreign_key: true, type: :bigint
       t.string :type
       t.string :title
       t.string :url

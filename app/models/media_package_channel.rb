@@ -2,10 +2,10 @@
 #
 # Table name: media_package_channels
 #
-#  id            :bigint           not null, primary key
-#  channel_id    :string(255)      default("")
-#  conference_id :bigint           not null
-#  track_id      :bigint           not null
+#  id            :integer          not null, primary key
+#  conference_id :integer          not null
+#  track_id      :integer          not null
+#  channel_id    :string(255)
 #
 # Indexes
 #
@@ -13,11 +13,7 @@
 #  index_media_package_channels_on_conference_id  (conference_id)
 #  index_media_package_channels_on_track_id       (track_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (conference_id => conferences.id)
-#  fk_rails_...  (track_id => tracks.id)
-#
+
 class MediaPackageChannel < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper

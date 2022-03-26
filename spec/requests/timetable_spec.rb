@@ -43,7 +43,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: 'alice@example.com' } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
       end
 
       it 'redirect to /cndt2020/registration' do
@@ -57,7 +57,7 @@ describe TimetableController, type: :request do
     describe 'logged in' do
       before do
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(alice_session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
       context "get exists event's timetables" do
@@ -108,7 +108,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: 'alice@example.com' } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
       end
 
       it 'redirect to /cndo2021/registration' do
@@ -122,7 +122,7 @@ describe TimetableController, type: :request do
     describe 'logged in' do
       before do
         create(:bob, :on_cndo2021)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(bob_session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end
 
       context "get exists event's timetables" do

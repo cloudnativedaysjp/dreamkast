@@ -29,10 +29,19 @@ module Cndtattend
                        request_specs: false)
     end
 
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
     config.active_model.i18n_customize_full_message = true
     config.autoload_paths << "#{Rails.root}/app/middlewares"
+    config.autoload_once_paths << "#{Rails.root}/app/middlewares"
+    config.autoload_once_paths << "#{Rails.root}/app/helpers"
     config.action_cable.mount_path = '/cable'
   end
 end

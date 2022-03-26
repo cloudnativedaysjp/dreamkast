@@ -2,13 +2,14 @@
 #
 # Table name: proposals
 #
-#  id            :bigint           not null, primary key
-#  status        :integer          default("registered"), not null
+#  id            :integer          not null, primary key
+#  talk_id       :integer          not null
+#  conference_id :integer          not null
+#  status        :integer          default("0"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  conference_id :integer          not null
-#  talk_id       :integer          not null
 #
+
 class Proposal < ApplicationRecord
   enum status: { registered: 0, accepted: 1, rejected: 2 }
 

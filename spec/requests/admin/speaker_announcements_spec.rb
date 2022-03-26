@@ -19,7 +19,7 @@ describe Admin::SpeakerAnnouncementsController, type: :request do
 
     context 'user logged in' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       context 'user is registered' do

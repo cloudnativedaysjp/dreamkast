@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
+gem 'rails', '~> 7.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
@@ -14,7 +14,7 @@ gem 'webpacker', '~> 4.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.11'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -49,15 +49,11 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'spring-commands-rspec'
   gem 'ruby-debug-ide'
   gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
-  gem 'rbs', '1.7.0.beta.2'
+  gem 'rbs', '~> 2.0.0'
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
   gem 'annotate', require: false
@@ -101,7 +97,7 @@ gem 'redcarpet'
 gem "uppy-s3_multipart", "~> 0.3"
 gem "image_processing", "~> 1.12.2"
 
-gem 'awesome_nested_set'
+gem 'awesome_nested_set', github: "collectiveidea/awesome_nested_set"
 gem 'aws-sdk-rails'
 
 gem 'activerecord-nulldb-adapter'
@@ -119,4 +115,6 @@ gem 'active_hash'
 gem 'opentelemetry-sdk'
 gem 'opentelemetry-exporter-jaeger'
 gem 'opentelemetry-instrumentation-all'
+gem 'opentelemetry-instrumentation-aws_sdk'
+
 

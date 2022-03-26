@@ -2,19 +2,20 @@
 #
 # Table name: conference_days
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
 #  date          :date
-#  end_time      :time
-#  internal      :boolean          default(FALSE), not null
 #  start_time    :time
+#  end_time      :time
+#  conference_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  conference_id :bigint
+#  internal      :boolean          default("0"), not null
 #
 # Indexes
 #
 #  index_conference_days_on_conference_id  (conference_id)
 #
+
 FactoryBot.define do
   factory :day1, class: ConferenceDay do
     id { 1 }

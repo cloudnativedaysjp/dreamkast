@@ -2,14 +2,14 @@
 #
 # Table name: viewer_counts
 #
-#  id            :bigint           not null, primary key
-#  count         :integer
+#  id            :integer          not null, primary key
+#  conference_id :integer
+#  track_id      :integer
 #  stream_type   :string(255)
+#  talk_id       :integer
+#  count         :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  conference_id :integer
-#  talk_id       :integer
-#  track_id      :integer
 #
 # Indexes
 #
@@ -17,6 +17,7 @@
 #  index_viewer_counts_on_talk_id        (talk_id)
 #  index_viewer_counts_on_track_id       (track_id)
 #
+
 require 'rails_helper'
 
 RSpec.describe(ViewerCount, type: :model) do

@@ -19,7 +19,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
 
       describe 'sponsor logged in' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         end
 
         it 'returns a forbidden response with 403 status code' do
@@ -44,7 +44,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
 
       describe "sponsor logged in and sponsor profile isn't created" do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         end
 
         it 'redirects to creating sponsor_profile page' do
@@ -57,7 +57,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
 
       describe "sponsor logged in and sponsor profile isn't created" do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         end
         let!(:sponsor_alice) { create(:sponsor_alice) }
 

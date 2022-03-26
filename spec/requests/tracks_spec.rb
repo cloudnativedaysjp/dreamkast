@@ -10,7 +10,7 @@ RSpec.describe(TracksController, type: :request) do
       before do
         create(:cndt2020)
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       context 'user is admin' do
@@ -124,7 +124,7 @@ RSpec.describe(TracksController, type: :request) do
       before do
         create(:cndt2020, :opened)
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       context 'when user access to dashboard' do

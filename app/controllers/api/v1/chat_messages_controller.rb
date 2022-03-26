@@ -13,7 +13,7 @@ class Api::V1::ChatMessagesController < ApplicationController
     query[:created_at] = params[:createdFrom] if params[:createdFrom]
     query[:reply_to] = params[:replyTo] if params[:replyTo]
     @chat_messages = ChatMessage.where(query)
-    render('api/v1/chat_messages/index.json.jbuilder')
+    render(:index, formats: :json, type: :jbuilder)
   end
 
   def create

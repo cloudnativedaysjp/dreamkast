@@ -4,7 +4,7 @@ class AddAvatarDataToSpeaker < ActiveRecord::Migration[6.0]
     drop_table :active_storage_attachments do |t|
       t.string     :name,     null: false
       t.references :record,   null: false, polymorphic: true, index: false
-      t.references :blob,     null: false
+      t.references :blob,     null: false, type: :bigint
 
       t.datetime :created_at, null: false
 

@@ -9,7 +9,7 @@ describe ContentsController, type: :request do
       before do
         create(:cndt2020)
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       it 'returns a success response with kontest (sub event) list' do
@@ -23,7 +23,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: 'alice@example.com' } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
       end
 
       it 'redirect to /cndt2020/registration' do
@@ -56,7 +56,7 @@ describe ContentsController, type: :request do
       before do
         create(:cndt2020)
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
       it 'returns a success response with discussion' do
@@ -70,7 +70,7 @@ describe ContentsController, type: :request do
     describe 'logged in and not registerd' do
       before do
         create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(userinfo: { info: { email: 'alice@example.com' } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
       end
 
       it 'redirect to /cndt2020/registration' do

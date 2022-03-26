@@ -56,7 +56,7 @@ describe SpeakerDashboardsController, type: :request do
 
       describe 'speaker logged in' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         end
 
         describe "speaker doesn't registered" do
@@ -86,7 +86,7 @@ describe SpeakerDashboardsController, type: :request do
 
     context 'CNDT2020 is registered and speaker entry is enabled' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
       end
 
       context 'CFP result is visible' do
@@ -197,7 +197,7 @@ describe SpeakerDashboardsController, type: :request do
       before do
         create(:cndt2020)
         create(:alice, :on_cndt2020)
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
       end
       let!(:alice) { create(:speaker_alice) }
 

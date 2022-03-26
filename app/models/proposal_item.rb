@@ -2,21 +2,18 @@
 #
 # Table name: proposal_items
 #
-#  id            :bigint           not null, primary key
+#  id            :integer          not null, primary key
+#  conference_id :integer          not null
+#  talk_id       :integer          not null
 #  label         :string(255)
 #  params        :json
-#  conference_id :bigint           not null
-#  talk_id       :bigint           not null
 #
 # Indexes
 #
 #  index_proposal_items_on_conference_id  (conference_id)
 #  index_proposal_items_on_talk_id        (talk_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (conference_id => conferences.id)
-#
+
 class ProposalItem < ApplicationRecord
   belongs_to :conference
   belongs_to :talk

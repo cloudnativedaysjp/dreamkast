@@ -37,7 +37,7 @@ describe SpeakerDashboard::SpeakersController, type: :request do
     context 'user already logged in' do
       context "user doesn't registered" do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
           create(:speaker_bob)
         end
 
@@ -52,7 +52,7 @@ describe SpeakerDashboard::SpeakersController, type: :request do
 
       describe 'user already registered' do
         before do
-          allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+          allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
           create(:speaker_alice)
           create(:speaker_bob)
         end
@@ -82,7 +82,7 @@ describe SpeakerDashboard::SpeakersController, type: :request do
 
     context 'user already logged in' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(admin_userinfo))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         create(:speaker_bob)
       end
       it 'return success response' do

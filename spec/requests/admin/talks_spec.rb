@@ -20,7 +20,14 @@ describe Admin::SpeakersController, type: :request do
 
     context 'user logged in' do
       before do
-        allow_any_instance_of(ActionDispatch::Request).to(receive(:session).and_return(session))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            session[:userinfo]
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       context 'user is not registered' do

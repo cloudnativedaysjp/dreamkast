@@ -10,7 +10,7 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
 FROM ruby:3.1.1 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
-RUN apt-get update && apt-get install shared-mime-info libmariadb3
+RUN apt-get update && apt-get install shared-mime-info libmariadb3 -y
 RUN bundle install
 
 FROM ruby:3.1.1 as asset-compile

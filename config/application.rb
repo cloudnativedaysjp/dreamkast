@@ -43,5 +43,6 @@ module Cndtattend
     config.autoload_once_paths << "#{Rails.root}/app/middlewares"
     config.autoload_once_paths << "#{Rails.root}/app/helpers"
     config.action_cable.mount_path = '/cable'
+    config.active_record.legacy_connection_handling = false
   end
 end

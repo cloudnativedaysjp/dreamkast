@@ -7,13 +7,13 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
     yarn install --modules-folder .cache/node_modules && \
     cp -ar .cache/node_modules node_modules
 
-FROM ruby:3.0.2 as fetch-lib
+FROM ruby:3.1.1 as fetch-lib
 WORKDIR /app
 COPY Gemfile* ./
-RUN apt-get update && apt-get install shared-mime-info libmariadb3
+RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
 RUN bundle install
 
-FROM ruby:3.0.2 as asset-compile
+FROM ruby:3.1.1 as asset-compile
 ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --from=node /usr/local/bin/node /usr/local/bin/
@@ -33,7 +33,7 @@ RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=production DB_ADAPTER=nulldb bin/rails assets:precompile
 
-FROM ruby:3.0.2-slim
+FROM ruby:3.1.1-slim
 
 ENV YARN_VERSION 1.22.15
 COPY --from=node /opt/yarn-v$YARN_VERSION /opt/yarn

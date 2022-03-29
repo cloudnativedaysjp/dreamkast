@@ -17,7 +17,7 @@
 AllCops:
   NewCops: disable
   SuggestExtensions: false
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 3.1
 
 # Enforcing a blank line often worsens vertical layout.
 Layout/EmptyLineAfterGuardClause:

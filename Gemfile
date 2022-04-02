@@ -49,8 +49,6 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
-  gem 'ruby-debug-ide'
-  gem 'debase', '0.2.5.beta2'
   gem 'pry-rails'
   gem 'bullet'
   gem 'rbs', '~> 2.0.0'

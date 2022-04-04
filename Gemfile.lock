@@ -177,9 +177,6 @@ GEM
     concurrent-ruby (1.1.9)
     content_disposition (1.0.0)
     crass (1.0.6)
-    debase (0.2.5.beta2)
-      debase-ruby_core_source (>= 0.10.12)
-    debase-ruby_core_source (0.10.14)
     diff-lcs (1.5.0)
     digest (3.1.0)
     docile (1.4.0)
@@ -470,6 +467,7 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
+    psych (3.3.2)
     public_suffix (4.0.6)
     puma (4.3.12)
       nio4r (~> 2.0)
@@ -575,8 +573,6 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
     rubocop-rspec (2.8.0)
       rubocop (~> 1.19)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
@@ -685,7 +681,6 @@ DEPENDENCIES
   capybara (>= 2.15)
   committee
   committee-rails
-  debase (= 0.2.5.beta2)
   factory_bot_rails
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
@@ -700,6 +695,7 @@ DEPENDENCIES
   opentelemetry-sdk
   prometheus-client (~> 3.0.0)
   pry-rails
+  psych (< 4)
   puma (~> 4.3)
   pundit
   rack-timeout
@@ -714,7 +710,6 @@ DEPENDENCIES
   rubocop (~> 1.22.0)
   rubocop-rails
   rubocop-rspec (>= 2.0.0)
-  ruby-debug-ide
   sass-rails (>= 6)
   seed-fu
   selenium-webdriver
@@ -732,7 +727,7 @@ DEPENDENCIES
   webpacker (~> 4.0)
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.1.1p18
 
 BUNDLED WITH
    2.2.22

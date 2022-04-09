@@ -2,9 +2,15 @@ name: CI
 
 on:
   push:
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
     branches:
     - main
   pull_request:
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
     branches:
       - main
     types: [opened, synchronize]

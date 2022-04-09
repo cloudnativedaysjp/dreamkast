@@ -2,6 +2,9 @@ name: GitOps for production
 
 on:
   push:
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
     tags:
       - v*
 

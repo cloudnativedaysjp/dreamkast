@@ -34,7 +34,7 @@ jobs:
           ]
           all_changed_files = os.getenv("ALL_CHANGED_FILES").split()
           for filename in all_changed_files:
-            if not True in list(map(lambda pattern: pathlib.PurePath(filename).match(pattern), paths_ignore)):
+            if not any(list(map(lambda pattern: pathlib.PurePath(filename).match(pattern), paths_ignore))):
               sys.exit()
           print("true")
           _EOF_

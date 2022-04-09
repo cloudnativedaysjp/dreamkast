@@ -4,14 +4,14 @@ on:
   push:
     paths-ignore:
       - '.github/**'
-      - '!.github/ci.yml'
+      - '!.github/workflows/ci.yml'
       - '**.md'
     branches:
     - main
   pull_request:
     paths-ignore:
       - '.github/**'
-      - '!.github/ci.yml'
+      - '!.github/workflows/ci.yml'
       - '**.md'
     branches:
       - main

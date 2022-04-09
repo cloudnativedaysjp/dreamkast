@@ -4,7 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/**'
-      - '!.github/build.yml'
+      - '!.github/workflows/build.yml'
       - '**.md'
 
 jobs:

@@ -4,7 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/**'
-      - '!.github/gitops-stg.yml'
+      - '!.github/workflows/gitops-stg.yml'
       - '**.md'
     branches:
     - main

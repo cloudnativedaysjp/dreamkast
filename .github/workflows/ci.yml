@@ -25,8 +25,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: dependencies
       run: |
-       sudo apt-get install -y libvips42 libmysqlclient-dev
-       sudo ln -s /usr/lib/x86_64-linux-gnu/libffi.so.7.1.0 /usr/lib/x86_64-linux-gnu/libffi.so.6
+        echo 'deb http://security.ubuntu.com/ubuntu xenial-security main' | sudo tee /etc/apt/sources.list.d/xenial-security.list
+        sudo apt update
+        sudo apt-get install -y libvips42 libmysqlclient20
+        sudo ln -s /usr/lib/x86_64-linux-gnu/libffi.so.7.1.0 /usr/lib/x86_64-linux-gnu/libffi.so.6
     - name: Run database
       shell: bash
       run: |

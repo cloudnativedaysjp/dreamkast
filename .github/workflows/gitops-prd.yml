@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/**'
+      - '!.github/gitops-prd.yml'
       - '**.md'
     tags:
       - v*

@@ -1,4 +1,4 @@
-name: add 'reviewapps/ignore' label to PR that no update during one week
+name: add 'reviewapps/ignore' label to PR when all updated files match to paths_ignore
 
 on: pull_request
 

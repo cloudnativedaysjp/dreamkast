@@ -3,6 +3,8 @@ name: build container image
 on:
   push:
     paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/build.yml'
       - '**.md'
 
 jobs:

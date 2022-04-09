@@ -2,6 +2,10 @@ name: GitOps for production
 
 on:
   push:
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/gitops-prd.yml'
+      - '**.md'
     tags:
       - v*
 

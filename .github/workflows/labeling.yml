@@ -41,7 +41,7 @@ jobs:
           )
           echo "::set-output name=FLAG::${FLAG}"
 
-      - name: Labeling 'reviewapp-operator/ignore' to PR
+      - name: Labeling 'reviewapps/ignore' to PR
         if: ${{ steps.check-paths-ignore.outputs.FLAG == 'true' }}
         uses: actions/github-script@v5
         with:

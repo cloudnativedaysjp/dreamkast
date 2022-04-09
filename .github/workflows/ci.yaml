@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-18.04
     if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: dependencies
       run: |
        sudo apt-get install -y wget build-essential pkg-config libglib2.0-dev libexpat1-dev
@@ -37,19 +37,10 @@ jobs:
       run: |
         docker-compose up -d db redis
     - name: Set up Node.js 16.13.1
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 16.13.1
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-    - uses: actions/cache@v2
-      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
+        cache: 'yarn'
     - name: yarn install
       run: |
         yarn
@@ -57,7 +48,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1.1
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}

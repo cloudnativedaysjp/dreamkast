@@ -49,3 +49,5 @@ public/uploads/*
 vendor
 
 .gem_rbs_collection
+
+package-lock.json

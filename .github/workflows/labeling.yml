@@ -17,7 +17,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v18.7
+        uses: tj-actions/changed-files@v19
         with:
           use_fork_point: true
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Labeling 'reviewapps/ignore' to PR
         if: ${{ steps.check-paths-ignore.outputs.FLAG == 'true' }}
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.addLabels({

@@ -246,7 +246,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    mysql2 (0.5.3)
+    mysql2 (0.5.4)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -683,7 +683,7 @@ DEPENDENCIES
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
   listen (~> 3.2)
-  mysql2 (~> 0.5.3)
+  mysql2 (~> 0.5.4)
   octokit (~> 4.0)
   omniauth-auth0 (~> 2.4)
   omniauth-rails_csrf_protection (~> 0.1)

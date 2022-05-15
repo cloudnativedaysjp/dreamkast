@@ -102,6 +102,19 @@ EOS
     さまざまなロールの垣根を超えて、ともにオブザーバビリティの道を明らかにしていきましょう。
 EOS
   },
+  {
+    id: 6,
+    name: "CloudNative Security Conference 2022",
+    abbr: "cnsec2022",
+    theme: "WIP",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')), #TODO: cnsec2022版プライバシーポリシー
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Security Conference 2022",
+    about: <<'EOS'
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -124,6 +137,10 @@ ConferenceDay.seed(
 
   {id: 14, date: "2022-03-11", start_time: "12:00", end_time: "19:00", conference_id: 5, internal: false},
   {id: 15, date: "2022-02-16", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
+
+  # CNSEC2022
+  {id: 16, date: "2022-08-05", start_time: "12:00", end_time: "19:00", conference_id: 6, internal: false},
+  {id: 17, date: "2022-07-15", start_time: "19:00", end_time: "21:00", conference_id: 6, internal: true}, #Pre event
 )
 
 Industry.seed(

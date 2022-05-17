@@ -150,7 +150,7 @@ ConferenceDay.seed(
   {id: 15, date: "2022-02-16", start_time: "19:00", end_time: "21:00", conference_id: 5, internal: true}, #Pre event
 
   # CNSEC2022
-  {id: 16, date: "2022-08-05", start_time: "12:00", end_time: "19:00", conference_id: 6, internal: false},
+  {id: 16, date: "2022-08-05", start_time: "13:00", end_time: "19:00", conference_id: 6, internal: false},
   {id: 17, date: "2022-07-15", start_time: "19:00", end_time: "21:00", conference_id: 6, internal: true}, #Pre event
 )
 

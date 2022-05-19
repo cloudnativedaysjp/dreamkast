@@ -95,6 +95,7 @@ EOS
     id: 5,
     name: "Observability Conference 2022 by CloudNative Days",
     abbr: "o11y2022",
+    status: 2, # closed
     theme: "Observe the Observability 〜知らないことを知り、見えていないものを見る〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
@@ -357,6 +358,9 @@ TalkDifficulty.seed(
   { id: 41, conference_id: 5, name: "初級者"},
   { id: 42, conference_id: 5, name: "中級者"},
   { id: 43, conference_id: 5, name: "上級者"},
+  { id: 51, conference_id: 6, name: "初級者"},
+  { id: 52, conference_id: 6, name: "中級者"},
+  { id: 53, conference_id: 6, name: "上級者"},
 )
 
 TalkTime.seed(

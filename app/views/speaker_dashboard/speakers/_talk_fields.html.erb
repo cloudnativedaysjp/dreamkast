@@ -23,7 +23,7 @@
     <%= f.text_area :abstract, {class: "form-control"}  %>
   </div>
 
-  <% unless ['cicd2021', 'o11y2022'].include?(@conference.abbr) %>
+  <% unless ['cicd2021', 'o11y2022', 'cnsec2022'].include?(@conference.abbr) %>
     <div class="field pb-3">
       <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
       <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>

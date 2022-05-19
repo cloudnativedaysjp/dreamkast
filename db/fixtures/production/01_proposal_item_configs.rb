@@ -500,7 +500,7 @@ ProposalItemConfig.seed(
     label: 'presentation_method',
     item_number: 6,
     item_name: '登壇方法の希望',
-    params: '現地登壇'
+    params: 'オンライン登壇'
   },
   {
     id: 54,
@@ -509,19 +509,10 @@ ProposalItemConfig.seed(
     label: 'presentation_method',
     item_number: 6,
     item_name: '登壇方法の希望',
-    params: 'オンライン登壇'
-  },
-  {
-    id: 55,
-    conference_id: 6,
-    type: 'ProposalItemConfigRadioButton',
-    label: 'presentation_method',
-    item_number: 6,
-    item_name: '登壇方法の希望',
     params: '事前収録'
   },
   {
-    id: 56,
+    id: 55,
     conference_id: 6,
     type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
@@ -531,7 +522,7 @@ ProposalItemConfig.seed(
     description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
   },
   {
-    id: 57,
+    id: 56,
     conference_id: 6,
     type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
@@ -540,7 +531,7 @@ ProposalItemConfig.seed(
     params: 'Only Slide - スライドのみ公開可'
   },
   {
-    id: 58,
+    id: 57,
     conference_id: 6,
     type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',
@@ -549,7 +540,7 @@ ProposalItemConfig.seed(
     params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   },
   {
-    id: 59,
+    id: 58,
     conference_id: 6,
     type: 'ProposalItemConfigRadioButton',
     label: 'whether_it_can_be_published',

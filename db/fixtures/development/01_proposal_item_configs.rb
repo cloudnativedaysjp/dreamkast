@@ -535,6 +535,16 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
+    key: 3,
+    params: 'Only Movie - 動画のみ公開可'
+  },
+  {
+    id: 58,
+    conference_id: 6,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'whether_it_can_be_published',
+    item_number: 3,
+    item_name: 'スライドと動画の公開可否（★★）',
     key: 4,
     params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   }

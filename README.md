@@ -137,3 +137,4 @@ $ bundle exec rails db:seed
 ```
 aws --endpoint-url http://localhost:9324 sqs create-queue --queue-name chat
 ```
+test

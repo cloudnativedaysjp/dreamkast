@@ -38,6 +38,7 @@ function cropUpload(fileInput) {
       guides: false,
       autoCropArea: 1.0,
       background: false,
+      checkCrossOrigin: false,
       crop: function (event) {
         let data = JSON.parse(hiddenInput.value)
         data['metadata']['crop'] = event.detail

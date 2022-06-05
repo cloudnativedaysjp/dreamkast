@@ -19,6 +19,8 @@
 #  updated_at                    :datetime         not null
 #  conference_id                 :integer
 #  company_address_prefecture_id :string(255)
+#  first_name_kana               :string(255)
+#  last_name_kana                :string(255)
 #
 
 require 'rails_helper'

@@ -22,7 +22,17 @@
     </div>
   </div>
 
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :last_name_kana, "姓(カナ)" %>*
+      <%= form.text_field :last_name_kana, required: true, class: "form-control", placeholder: "クラウド" %>
+    </div>
 
+    <div class="col-12 col-md-6">
+      <%= form.label :first_name_kana, "名(カナ)" %>*
+      <%= form.text_field :first_name_kana, required: true, class: "form-control", placeholder: "タロウ" %>
+    </div>
+  </div>
 
   <div class="form-row form-group">
     <%= form.label :industry_id, "業種" %>*

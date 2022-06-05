@@ -5,7 +5,7 @@
 #  id            :integer          not null, primary key
 #  conference_id :integer          not null
 #  track_id      :integer          not null
-#  channel_id    :string(255)
+#  channel_id    :string(255)      default("")
 #
 # Indexes
 #

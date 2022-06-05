@@ -7,9 +7,9 @@
 #  publish_time  :datetime         not null
 #  body          :text(65535)      not null
 #  publish       :boolean          default("0")
-#  receiver      :integer          default("person"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  receiver      :integer          default("0"), not null
 #
 # Indexes
 #

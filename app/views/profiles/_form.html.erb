@@ -45,8 +45,22 @@
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_name, "勤務先名/学校名" %>*
-    <%= form.text_field :company_name, required: true, class: "form-control", placeholder: "クラウドネイティブデイズ株式会社" %>
+    <%= form.label :address_level1, "勤務先名/学校名（前株・後株などはセレクトボックスから選択ください）" %>*
+  </div>
+
+  <div class="form-row form-group">
+
+    <div class="col-12 col-md-4">
+      <%= form.collection_select :company_name_prefix_id, CompanyNamePrefix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control", autocomplete: "address-level1"} %>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <%= form.text_field :company_name, required: true, class: "form-control", placeholder: "クラウドネイティブデイズ" %>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <%= form.collection_select :company_name_suffix_id, CompanyNameSuffix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control", autocomplete: "address-level1"} %>
+    </div>
   </div>
 
   <div class="form-row form-group">
@@ -55,33 +69,33 @@
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :postal_code, "勤務先住所（郵便番号）" %>*
-    <%= form.text_field :postal_code, required: true, class: "form-control", minlength: "7", maxlength: "8", pattern: "\\d*", autocomplete: "postal-code" %>
+    <%= form.label :company_postal_code, "勤務先住所: 郵便番号（ハイフンをつけずに入力ください）" %>*
+    <%= form.text_field :company_postal_code, required: true, class: "form-control", minlength: "7", maxlength: "7", pattern: "\\d*", placeholder: "1000001", autocomplete: "postal-code" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :address_level1, "勤務先住所（都道府県 国外の場合は `国外` を選択してください）" %>*
-    <%= form.collection_select :address_level1, CompanyAddressPrefecture.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
+    <%= form.label :company_address_level1, "勤務先住所: 都道府県（国外の場合は `国外` を選択してください）" %>*
+    <%= form.collection_select :company_address_level1, CompanyAddressPrefecture.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :address_level2, "勤務先住所（市区町村）" %>*
-    <%= form.text_field :address_level2, required: true, class: "form-control", placeholder: "港区", autocomplete: "address-level2" %>
+    <%= form.label :company_address_level2, "勤務先住所: 市区町村" %>*
+    <%= form.text_field :company_address_level2, required: true, class: "form-control", placeholder: "港区", autocomplete: "address-level2" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :address_line1, "勤務先住所（町名・番地）" %>*
-    <%= form.text_field :address_line1, required: true, class: "form-control", placeholder: "赤坂1−2−3", autocomplete: "address-line1" %>
+    <%= form.label :company_address_line1, "勤務先住所: 町名・番地" %>*
+    <%= form.text_field :company_address_line1, required: true, class: "form-control", placeholder: "赤坂1−2−3", autocomplete: "address-line1" %>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :address_line2, "勤務先住所（建物名など）" %>*
-    <%= form.text_field :address_line2, required: true, class: "form-control", autocomplete: "address-line2"%>
+    <%= form.label :company_address_line2, "勤務先住所: 建物名など" %>*
+    <%= form.text_field :company_address_line2, required: true, class: "form-control", autocomplete: "address-line2"%>
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_tel, "勤務先電話番号" %>*
-    <%= form.text_field :company_tel, required: true, class: "form-control", placeholder: "03-0000-0000" %>
+    <%= form.label :company_tel, "勤務先電話番号（ハイフンをつけずに入力ください）" %>*
+    <%= form.text_field :company_tel, required: true, class: "form-control", placeholder: "0300000000", pattern: "\\d{11}" %>
   </div>
 
   <div class="form-row form-group">

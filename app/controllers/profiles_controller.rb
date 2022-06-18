@@ -20,8 +20,8 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    postal_code = profile_params[:company_postal_code].gsub(/-/, "")
-    tel = profile_params[:company_tel].gsub(/-/, "")
+    postal_code = profile_params[:company_postal_code].gsub(/-/, '')
+    tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
     @profile.sub = @current_user[:extra][:raw_info][:sub]
@@ -44,8 +44,8 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    postal_code = profile_params[:company_postal_code].gsub(/-/, "")
-    tel = profile_params[:company_tel].gsub(/-/, "")
+    postal_code = profile_params[:company_postal_code].gsub(/-/, '')
+    tel = profile_params[:company_tel].gsub(/-/, '')
 
     respond_to do |format|
       if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))

@@ -45,7 +45,7 @@ RSpec.describe(Profile, type: :model) do
       occupation: 'Solutions Architect',
       company_name: 'CNDT',
       company_email: 'cndt@example.com',
-      company_postal_code: "1000001",
+      company_postal_code: '1000001',
       company_address_level1: '1',
       company_address_level2: 'address level 2',
       company_address_line1: 'address line 1',
@@ -80,28 +80,28 @@ RSpec.describe(Profile, type: :model) do
     expect(@profile).to(be_invalid)
   end
 
-  %w[1010001].each do |code|
+  ['1010001'].each do |code|
     it "is valid if company_postal_code is a #{code}" do
       @profile[:company_postal_code] = code
       expect(@profile).to(be_valid)
     end
   end
 
-  %w[101-0001].each do |code|
+  ['101-0001'].each do |code|
     it "is invalid if company_postal_code is a #{code}" do
       @profile[:company_postal_code] = code
       expect(@profile).to(be_invalid)
     end
   end
 
-  %w[09012345678 +819012345678].each do |tel|
+  ['09012345678', '+819012345678'].each do |tel|
     it "is valid if company_tel is a #{tel}" do
       @profile[:company_tel] = tel
       expect(@profile).to(be_valid)
     end
   end
 
-  %w[090-1234-5678 +81-90-1234-5678 xxxxx 09012345678X ☀ amsy0810].each do |tel|
+  ['090-1234-5678', '+81-90-1234-5678', 'xxxxx', '09012345678X', '☀', 'amsy0810'].each do |tel|
     it "is invalid if company_tel is #{tel}" do
       @profile[:company_tel] = tel
       expect(@profile).to(be_invalid)

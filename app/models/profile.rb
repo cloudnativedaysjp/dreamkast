@@ -40,8 +40,16 @@ end
 
 class TelValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    unless value =~ /\A[-+0-9]*\z/i
+    unless value =~ /\A[+0-9]*\z/i
       record.errors.add(attribute, (options[:message] || 'は正しい電話番号ではありません'))
+    end
+  end
+end
+
+class PostalCodeValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value =~ /\A\d*\z/i
+      record.errors.add(attribute, (options[:message] || 'は入力可能な郵便番号ではありません。ハイフンで区切らずに入力してください。'))
     end
   end
 end
@@ -68,7 +76,11 @@ class Profile < ApplicationRecord
   validates :occupation, presence: true, length: { maximum: 50 }
   validates :company_name, presence: true, length: { maximum: 128 }
   validates :company_email, presence: true, email: true
-  # validates :company_address, presence: true, length: { maximum: 128 }
+  validates :company_postal_code, presence: true, length: { maximum: 7 }
+  validates :company_address_level1, presence: true, length: { maximum: 256 }
+  validates :company_address_level2, presence: true, length: { maximum: 1024 }
+  validates :company_address_line1, presence: true, length: { maximum: 1024 }
+  validates :company_address_line2, presence: true, length: { maximum: 1024 }
   validates :company_tel, presence: true, length: { maximum: 128 }, tel: true
   validates :department, presence: true, length: { maximum: 128 }
   validates :position, presence: true, length: { maximum: 128 }

@@ -40,8 +40,12 @@ FactoryBot.define do
     occupation { 'aaa' }
     company_name { 'aa' }
     company_email { 'alice_company@example.com' }
-    company_address { 'aa' }
-    company_tel { '123-4567-8901' }
+    company_postal_code { '1010001' }
+    company_address_level1 { '1' }
+    company_address_level2 { 'address level 2' }
+    company_address_line1 { 'address line 1' }
+    company_address_line2 { 'address line 2' }
+    company_tel { '12345678901' }
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }
@@ -65,8 +69,12 @@ FactoryBot.define do
     occupation { 'aaa' }
     company_name { 'aa' }
     company_email { 'bob_company@example.com' }
-    company_address { 'aa' }
-    company_tel { '123-4567-8901' }
+    company_postal_code { '1010001' }
+    company_address_level1 { '1' }
+    company_address_level2 { 'address level 2' }
+    company_address_line1 { 'address line 1' }
+    company_address_line2 { 'address line 2' }
+    company_tel { '12345678901' }
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }

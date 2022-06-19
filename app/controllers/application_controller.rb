@@ -1,4 +1,5 @@
 class Forbidden < ActionController::ActionControllerError; end
+class NotFound < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
   include EnvHelper
@@ -8,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   unless Rails.env.development?
     rescue_from Exception, with: :render_500
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from ActiveRecord::RecordNotFound, NotFound, with: :render_404
     rescue_from Forbidden, with: :render_403
   end
 

@@ -74,8 +74,8 @@
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_address_level1, "勤務先住所: 都道府県（国外の場合は `国外` を選択してください）" %>*
-    <%= form.collection_select :company_address_level1, CompanyAddressPrefecture.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
+    <%= form.label :company_address_level1_id, "勤務先住所: 都道府県（国外の場合は `国外` を選択してください）" %>*
+    <%= form.collection_select :company_address_level1_id, CompanyAddressLevel1.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
   </div>
 
   <div class="form-row form-group">

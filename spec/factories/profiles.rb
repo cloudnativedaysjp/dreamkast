@@ -24,7 +24,7 @@
 #  company_name_prefix_id        :string(255)
 #  company_name_suffix_id        :string(255)
 #  company_postal_code           :string(255)
-#  company_address_level1        :string(255)
+#  company_address_level1_id     :integer
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
@@ -41,7 +41,7 @@ FactoryBot.define do
     company_name { 'aa' }
     company_email { 'alice_company@example.com' }
     company_postal_code { '1010001' }
-    company_address_level1 { '1' }
+    company_address_level1_id { 1 }
     company_address_level2 { 'address level 2' }
     company_address_line1 { 'address line 1' }
     company_address_line2 { 'address line 2' }
@@ -70,7 +70,7 @@ FactoryBot.define do
     company_name { 'aa' }
     company_email { 'bob_company@example.com' }
     company_postal_code { '1010001' }
-    company_address_level1 { '1' }
+    company_address_level1_id { 1 }
     company_address_level2 { 'address level 2' }
     company_address_line1 { 'address line 1' }
     company_address_line2 { 'address line 2' }

@@ -76,7 +76,7 @@ class Profile < ApplicationRecord
   validates :occupation, presence: true, length: { maximum: 50 }
   validates :company_name, presence: true, length: { maximum: 128 }
   validates :company_email, presence: true, email: true
-  validates :company_postal_code, presence: true, length: { maximum: 8 }
+  validates :company_postal_code, presence: true, length: { maximum: 8 }, postal_code: true
   validates :company_address_level1, presence: true, length: { maximum: 256 }
   validates :company_address_level2, presence: true, length: { maximum: 1024 }
   validates :company_address_line1, presence: true, length: { maximum: 1024 }

@@ -70,7 +70,7 @@
 
   <div class="form-row form-group">
     <%= form.label :company_postal_code, "勤務先住所: 郵便番号" %>*
-    <%= form.text_field :company_postal_code, required: true, class: "form-control", minlength: "7", maxlength: "8", pattern: "(\\d{7}|\\d{3}-\\d{4})", placeholder: "1000001 or 100-0001", autocomplete: "postal-code" %>
+    <%= form.text_field :company_postal_code, required: true, class: "form-control", minlength: "7", maxlength: "8", pattern: "(\\d{7}|\\d{3}-\\d{4})", placeholder: "1000001", autocomplete: "postal-code" %>
   </div>
 
   <div class="form-row form-group">
@@ -95,7 +95,7 @@
 
   <div class="form-row form-group">
     <%= form.label :company_tel, "勤務先電話番号" %>*
-    <%= form.text_field :company_tel, required: true, class: "form-control", placeholder: "0300000000 or 030-000-0000", pattern: "[\\d+-]*" %>
+    <%= form.text_field :company_tel, required: true, class: "form-control", placeholder: "0300000000", pattern: "[\\d+-]*" %>
   </div>
 
   <div class="form-row form-group">

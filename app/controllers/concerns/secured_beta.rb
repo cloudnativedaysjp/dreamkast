@@ -3,8 +3,8 @@ module SecuredBeta
 
   included do
     before_action :set_current_user, :is_beta_user?
-    # helper_method :beta_user?
   end
+
   def beta_user?
     @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
   end

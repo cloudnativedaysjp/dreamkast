@@ -3,7 +3,7 @@ module Secured
 
   included do
     before_action :logged_in_using_omniauth?, :new_user?, if: :use_secured_before_action?
-    helper_method :admin?, :speaker?
+    helper_method :admin?, :speaker?, :beta_user?
   end
 
   def logged_in_using_omniauth?
@@ -32,6 +32,10 @@ module Secured
 
   def speaker?
     @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
+  end
+
+  def beta_user?
+    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
   end
 
   def conference

@@ -1,4 +1,5 @@
 class Forbidden < ActionController::ActionControllerError; end
+
 class NotFound < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base

@@ -21,7 +21,7 @@ class SpeakerAnnouncement < ApplicationRecord
   JA_RECEIVER = { person: '個人', all_speaker: '全員', only_accepted: 'CFP採択者', only_rejected: 'CFP非採択者' }.freeze
 
   after_create -> { inform('create') }
-  after_update -> { inform('update') }
+  before_update -> { inform('update') }
 
   belongs_to :conference
   has_many :speaker_announcement_middles, dependent: :destroy
@@ -48,7 +48,7 @@ class SpeakerAnnouncement < ApplicationRecord
 
   def inform(context)
     if should_inform?(context)
-      speakers.each { |speaker| SpeakerMailer.inform_speaker_announcement(conference, speaker, self).deliver_later }
+      speakers.each { |speaker| SpeakerMailer.inform_speaker_announcement(conference, speaker).deliver_later }
     end
   end
 
@@ -60,9 +60,9 @@ class SpeakerAnnouncement < ApplicationRecord
   def should_inform?(context)
     case context
     when 'create'
-      publish && person?
+      publish
     when 'update'
-      publish && person? && publish_changed?
+      publish && publish_changed?
     end
   end
 end

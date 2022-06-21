@@ -100,60 +100,39 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
     subject { announcement.should_inform?(context) }
     let!(:announcement) { SpeakerAnnouncement.create(param) }
     context 'when create' do
-      subject { announcement.should_inform?(context) }
-      let!(:announcement) { SpeakerAnnouncement.create(param) }
       let!(:context) { 'create' }
       context 'when publish is true' do
-        context 'when receiver is person' do
-          let!(:param) {
-            default_param[:publish] = true
-            default_param[:receiver] = :person
-            default_param
-          }
-          it { is_expected.to(be_truthy) }
-        end
-        context 'when receiver is not person' do
-          let!(:param) {
-            default_param[:publish] = true
-            default_param[:receiver] = :only_accepted
-            default_param
-          }
-          it { is_expected.to(be_falsey) }
-        end
+        let!(:param) {
+          default_param[:publish] = true
+          default_param
+        }
+        it { is_expected.to(be_truthy) }
       end
       context 'when publish is false' do
-        context 'when receiver is person' do
-          let!(:param) {
-            default_param[:publish] = false
-            default_param[:receiver] = :person
-            default_param
-          }
-          it { is_expected.to(be_falsey) }
-        end
-        context 'when receiver is not person' do
-          let!(:param) {
-            default_param[:publish] = false
-            default_param[:receiver] = :only_accepted
-            default_param
-          }
-          it { is_expected.to(be_falsey) }
-        end
+        let!(:param) {
+          default_param[:publish] = false
+          default_param
+        }
+        it { is_expected.to(be_falsey) }
       end
     end
     context 'when update' do
-      let!(:context) { 'create' }
+      let!(:context) { 'update' }
       let!(:param) {
         default_param[:publish] = false
-        default_param[:receiver] = :person
         default_param
       }
       context 'publish to true' do
-        before { announcement.update(publish: true) }
-        it { is_expected.to(be_truthy) }
+        it {
+          announcement.publish = true
+          is_expected.to(be_truthy)
+        }
       end
       context 'publish does not be changed' do
-        before { announcement.update(body: 'test body') }
-        it { is_expected.to(be_falsey) }
+        it {
+          announcement.body = 'test body'
+          is_expected.to(be_falsey)
+        }
       end
     end
   end

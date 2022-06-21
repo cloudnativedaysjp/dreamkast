@@ -24,7 +24,7 @@
 #  company_name_prefix_id        :string(255)
 #  company_name_suffix_id        :string(255)
 #  company_postal_code           :string(255)
-#  company_address_level1_id     :integer
+#  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
@@ -46,7 +46,7 @@ RSpec.describe(Profile, type: :model) do
       company_name: 'CNDT',
       company_email: 'cndt@example.com',
       company_postal_code: '1000001',
-      company_address_level1_id: 1,
+      company_address_level1: 'address level 1',
       company_address_level2: 'address level 2',
       company_address_line1: 'address line 1',
       company_address_line2: 'address line 2',
@@ -62,7 +62,7 @@ RSpec.describe(Profile, type: :model) do
   end
 
   [:sub, :email, :first_name, :last_name, :industry_id, :occupation, :company_name, :company_email,
-   :company_postal_code, :company_address_level1_id, :company_address_level2, :company_address_line1, :company_address_line2,
+   :company_postal_code, :company_address_level1, :company_address_level2, :company_address_line1, :company_address_line2,
    :company_tel, :department, :position].each do |param|
     it "is invalid without #{param}" do
       @profile[param] = nil

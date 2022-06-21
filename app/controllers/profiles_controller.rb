@@ -114,7 +114,7 @@ class ProfilesController < ApplicationController
       :company_name_suffix_id,
       :company_email,
       :company_postal_code,
-      :company_address_level1_id,
+      :company_address_level1,
       :company_address_level2,
       :company_address_line1,
       :company_address_line2,

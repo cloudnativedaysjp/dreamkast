@@ -24,7 +24,7 @@
 #  company_name_prefix_id        :string(255)
 #  company_name_suffix_id        :string(255)
 #  company_postal_code           :string(255)
-#  company_address_level1_id     :integer
+#  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
@@ -56,7 +56,6 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to_active_hash :company_address_level1, shortcuts: [:name]
   belongs_to_active_hash :company_name_prefix, shortcuts: [:name]
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name]
 
@@ -77,7 +76,7 @@ class Profile < ApplicationRecord
   validates :company_name, presence: true, length: { maximum: 128 }
   validates :company_email, presence: true, email: true
   validates :company_postal_code, presence: true, length: { maximum: 8 }, postal_code: true
-  validates :company_address_level1_id, presence: true, length: { maximum: 256 }
+  validates :company_address_level1, presence: true, length: { maximum: 256 }
   validates :company_address_level2, presence: true, length: { maximum: 1024 }
   validates :company_address_line1, presence: true, length: { maximum: 1024 }
   validates :company_address_line2, presence: true, length: { maximum: 1024 }
@@ -107,7 +106,7 @@ class Profile < ApplicationRecord
           profile.occupation,
           profile.company_name_prefix.name + profile.company_name + profile.company_name_suffix.name,
           profile.company_postal_code,
-          profile.company_address_level1.name,
+          profile.company_address_level1,
           profile.company_address_level2 + profile.company_address_line1,
           profile.company_address_line2,
           profile.company_tel,

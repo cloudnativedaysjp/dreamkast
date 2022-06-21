@@ -209,7 +209,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
     t.string "company_name_prefix_id"
     t.string "company_name_suffix_id"
     t.string "company_postal_code"
-    t.integer "company_address_level1_id"
+    t.string "company_address_level1"
     t.string "company_address_level2"
     t.string "company_address_line1"
     t.string "company_address_line2"

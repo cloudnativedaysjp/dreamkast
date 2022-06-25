@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_13_134136) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "page"
     t.string "ip"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "profile_id"
   end
 
@@ -30,8 +29,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "twitter_id"
     t.string "github_id"
     t.text "avatar_data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "show_on_team_page"
     t.index ["conference_id"], name: "index_admin_profiles_on_conference_id"
   end
@@ -40,8 +39,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.integer "profile_id"
     t.integer "form_item_id"
     t.integer "value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -56,8 +55,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
     t.boolean "published"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_booths_on_conference_id"
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
@@ -72,8 +71,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.integer "rgt", null: false
     t.integer "depth", default: 0, null: false
     t.integer "children_count", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "room_type"
     t.bigint "room_id"
     t.integer "message_type"
@@ -90,16 +89,16 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.time "start_time"
     t.time "end_time"
     t.bigint "conference_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "internal", default: false, null: false
     t.index ["conference_id"], name: "index_conference_days_on_conference_id"
   end
 
   create_table "conferences", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "abbr"
     t.integer "status", default: 0, null: false
     t.text "theme"
@@ -121,14 +120,14 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
   create_table "form_items", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "conference_id"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "industries", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "conference_id"
   end
 
@@ -137,8 +136,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "title"
     t.string "url"
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_links_on_conference_id"
   end
 
@@ -184,8 +183,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "content"
     t.string "text"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -201,10 +200,19 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "company_tel"
     t.string "department"
     t.string "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "conference_id"
     t.string "company_address_prefecture_id"
+    t.string "first_name_kana"
+    t.string "last_name_kana"
+    t.string "company_name_prefix_id"
+    t.string "company_name_suffix_id"
+    t.string "company_postal_code"
+    t.string "company_address_level1"
+    t.string "company_address_level2"
+    t.string "company_address_line1"
+    t.string "company_address_line2"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -233,22 +241,22 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.integer "talk_id", null: false
     t.integer "conference_id", null: false
     t.integer "status", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["speaker_announcement_id"], name: "index_speaker_announcement_middles_on_speaker_announcement_id"
     t.index ["speaker_id"], name: "index_speaker_announcement_middles_on_speaker_id"
   end
@@ -258,8 +266,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.datetime "publish_time", null: false
     t.text "body", null: false
     t.boolean "publish", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "receiver", default: 0, null: false
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
@@ -271,8 +279,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "job_title"
     t.string "twitter_id"
     t.string "github_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "avatar_data"
     t.integer "conference_id"
     t.text "email"
@@ -290,8 +298,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "link"
     t.boolean "public"
     t.string "file_data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
@@ -301,8 +309,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "email"
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_sponsor_profiles_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_profiles_on_sponsor_id"
   end
@@ -311,8 +319,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.bigint "conference_id", null: false
     t.string "name"
     t.integer "order"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_sponsor_types_on_conference_id"
   end
 
@@ -322,8 +330,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.text "description"
     t.string "url"
     t.bigint "conference_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "speaker_emails"
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
   end
@@ -331,37 +339,37 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
   create_table "sponsors_sponsor_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "sponsor_id"
     t.integer "sponsor_type_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_stats_of_registrants_on_conference_id"
   end
 
   create_table "talk_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "conference_id"
   end
 
   create_table "talk_difficulties", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "conference_id"
   end
 
   create_table "talk_times", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.integer "time_minutes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_talk_times_on_conference_id"
   end
 
@@ -373,8 +381,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.time "end_time"
     t.bigint "talk_difficulty_id"
     t.bigint "talk_category_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "conference_id"
     t.integer "conference_day_id"
     t.integer "track_id"
@@ -393,8 +401,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
   create_table "talks_speakers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.integer "speaker_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -402,8 +410,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "name"
     t.string "video_id"
     t.integer "conference_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "video_platform"
   end
 
@@ -419,8 +427,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "site"
     t.string "url"
     t.boolean "on_air"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "video_id"
     t.string "slido_id"
     t.text "video_file_data"
@@ -432,8 +440,8 @@ ActiveRecord::Schema.define(version: 2022_02_13_134136) do
     t.string "stream_type"
     t.integer "talk_id"
     t.integer "count"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_viewer_counts_on_conference_id"
     t.index ["talk_id"], name: "index_viewer_counts_on_talk_id"
     t.index ["track_id"], name: "index_viewer_counts_on_track_id"

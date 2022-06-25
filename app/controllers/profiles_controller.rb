@@ -20,7 +20,10 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile = Profile.new(profile_params.merge(conference_id: @conference.id))
+    postal_code = profile_params[:company_postal_code].gsub(/-/, '')
+    tel = profile_params[:company_tel].gsub(/-/, '')
+
+    @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
     @profile.sub = @current_user[:extra][:raw_info][:sub]
     @profile.email = @current_user[:info][:email]
 
@@ -41,8 +44,11 @@ class ProfilesController < ApplicationController
   end
 
   def update
+    postal_code = profile_params[:company_postal_code].gsub(/-/, '')
+    tel = profile_params[:company_tel].gsub(/-/, '')
+
     respond_to do |format|
-      if @profile.update(profile_params)
+      if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
         format.html { redirect_to(edit_profile_path(id: @profile.id)) }
         format.json { render(:show, status: :ok, location: @profile) }
       else
@@ -99,11 +105,19 @@ class ProfilesController < ApplicationController
       :email,
       :last_name,
       :first_name,
+      :last_name_kana,
+      :first_name_kana,
       :industry_id,
       :occupation,
+      :company_name_prefix_id,
       :company_name,
+      :company_name_suffix_id,
       :company_email,
-      :company_address,
+      :company_postal_code,
+      :company_address_level1,
+      :company_address_level2,
+      :company_address_line1,
+      :company_address_line2,
       :company_address_prefecture_id,
       :company_tel,
       :department,

@@ -19,6 +19,15 @@
 #  updated_at                    :datetime         not null
 #  conference_id                 :integer
 #  company_address_prefecture_id :string(255)
+#  first_name_kana               :string(255)
+#  last_name_kana                :string(255)
+#  company_name_prefix_id        :string(255)
+#  company_name_suffix_id        :string(255)
+#  company_postal_code           :string(255)
+#  company_address_level1        :string(255)
+#  company_address_level2        :string(255)
+#  company_address_line1         :string(255)
+#  company_address_line2         :string(255)
 #
 
 FactoryBot.define do
@@ -31,8 +40,12 @@ FactoryBot.define do
     occupation { 'aaa' }
     company_name { 'aa' }
     company_email { 'alice_company@example.com' }
-    company_address { 'aa' }
-    company_tel { '123-4567-8901' }
+    company_postal_code { '1010001' }
+    company_address_level1 { 'address level 1' }
+    company_address_level2 { 'address level 2' }
+    company_address_line1 { 'address line 1' }
+    company_address_line2 { 'address line 2' }
+    company_tel { '12345678901' }
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }
@@ -56,8 +69,12 @@ FactoryBot.define do
     occupation { 'aaa' }
     company_name { 'aa' }
     company_email { 'bob_company@example.com' }
-    company_address { 'aa' }
-    company_tel { '123-4567-8901' }
+    company_postal_code { '1010001' }
+    company_address_level1 { 'address level 1' }
+    company_address_level2 { 'address level 2' }
+    company_address_line1 { 'address line 1' }
+    company_address_line2 { 'address line 2' }
+    company_tel { '12345678901' }
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }

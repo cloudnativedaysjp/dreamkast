@@ -17,4 +17,11 @@ class SpeakerMailer < ApplicationMailer
 
     mail(to: speaker.email, subject: "【#{@conference.name}】プロポーザルを受け付けました")
   end
+
+  def inform_speaker_announcement(conference, speaker)
+    @conference = conference
+    @speaker = speaker
+
+    mail(to: @speaker.email, subject: "#{@conference.abbr}運営からのお知らせ")
+  end
 end

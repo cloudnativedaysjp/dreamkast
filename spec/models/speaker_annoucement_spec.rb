@@ -95,4 +95,45 @@ RSpec.describe(SpeakerAnnouncement, type: :model) do
       end
     end
   end
+
+  describe '#should_inform?' do
+    subject { announcement.should_inform?(context) }
+    let!(:announcement) { SpeakerAnnouncement.create(param) }
+    context 'when create' do
+      let!(:context) { 'create' }
+      context 'when publish is true' do
+        let!(:param) {
+          default_param[:publish] = true
+          default_param
+        }
+        it { is_expected.to(be_truthy) }
+      end
+      context 'when publish is false' do
+        let!(:param) {
+          default_param[:publish] = false
+          default_param
+        }
+        it { is_expected.to(be_falsey) }
+      end
+    end
+    context 'when update' do
+      let!(:context) { 'update' }
+      let!(:param) {
+        default_param[:publish] = false
+        default_param
+      }
+      context 'publish to true' do
+        it {
+          announcement.publish = true
+          is_expected.to(be_truthy)
+        }
+      end
+      context 'publish does not be changed' do
+        it {
+          announcement.body = 'test body'
+          is_expected.to(be_falsey)
+        }
+      end
+    end
+  end
 end

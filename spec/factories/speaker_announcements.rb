@@ -22,6 +22,7 @@ FactoryBot.define do
     publish_time { Time.now }
     body { 'test announcement for alice' }
     publish { false }
+    receiver { :person }
     trait :published do
       publish { true }
     end

@@ -818,6 +818,63 @@ Sponsor.seed(
     conference_id: 5,
     url: 'https://www.sakura.ad.jp'
   },
+
+  {
+    id: 119,
+    name: "日本マイクロソフト株式会社/Microsoft Corporation",
+    abbr: "microsoft",
+    conference_id: 6,
+    url: "https://news.microsoft.com/ja-jp/"
+  },
+  {
+    id: 120,
+    name: "HashiCorp Japan株式会社",
+    abbr: "hashicorp",
+    conference_id: 6,
+    url: "https://www.hashicorp.co.jp"
+  },
+  {
+    id: 121,
+    name: "F5ネットワークスジャパン合同会社",
+    abbr: 'nginx',
+    conference_id: 6,
+    url: 'https://www.nginx.co.jp/'
+  },
+  {
+    id: 122,
+    name: "Snyk株式会社",
+    abbr: 'snyk',
+    conference_id: 6,
+    url: 'https://snyk.io/jp',
+  },
+  {
+    id: 123,
+    name: "mabl株式会社",
+    abbr: 'mabl',
+    conference_id: 6,
+    url: 'https://www.mabl.com/Japan',
+  },
+  {
+    id: 124,
+    name: "グーグル・クラウド・ジャパン合同会社",
+    abbr: 'google',
+    conference_id: 6,
+    url: '',
+  },
+  {
+    id: 125,
+    name: "Sysdig Japan",
+    abbr: "sysdig",
+    conference_id: 6,
+    url: '',
+  },
+  {
+    id: 126,
+    name: 'Elastic',
+    abbr: 'elastic',
+    conference_id: 6,
+    url: ''
+  },
 )
 
 SponsorType.seed(
@@ -1011,6 +1068,18 @@ SponsorType.seed(
     order: 6,
   },
 
+  {
+    id: 36,
+    conference_id: 6,
+    name: "Session",
+    order: 1,
+  },
+  {
+    id: 37,
+    conference_id: 6,
+    name: "CM",
+    order: 2,
+  },
 )
 
 [
@@ -1156,6 +1225,15 @@ SponsorType.seed(
   [142, 'Hands-On', 'freee', 5],
   [143, 'CM', 'creationline', 5],
   [144, 'Tool', 'sakura', 5],
+
+  [145, 'Session', 'microsoft', 6],
+  [146, 'Session', 'hashicorp', 6],
+  [147, 'Session', 'nginx', 6],
+  [148, 'Session', 'snyk', 6],
+  [149, 'Session', 'mabl', 6],
+  [150, 'Session', 'google', 6],
+  [151, 'CM', 'sysdig', 6],
+  [152, 'CM', 'elastic', 6],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1288,6 +1366,15 @@ end
   [116, 'freee', 'sponsors/o11y2022/freee.png', 5],
   [117, 'creationline', 'sponsors/o11y2022/creationline.png', 5],
   [118, 'sakura', 'sponsors/o11y2022/sakura.png', 5],
+
+  [119, 'microsoft', 'sponsors/cnsec2022/microsoft.png', 6],
+  [120, 'hashicorp', 'sponsors/cnsec2022/hashicorp.png', 6],
+  [121, 'nginx', 'sponsors/cnsec2022/nginx.png', 6],
+  [122, 'snyk', 'sponsors/cnsec2022/snyk.png', 6],
+  [123, 'mabl', 'sponsors/cnsec2022/mabl.png', 6],
+  [124, 'google', 'sponsors/cnsec2022/dummy.png', 6],
+  [125, 'sysdig', 'sponsors/cnsec2022/dummy.png', 6],
+  [126, 'elastic', 'sponsors/cnsec2022/dummy.png', 6],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

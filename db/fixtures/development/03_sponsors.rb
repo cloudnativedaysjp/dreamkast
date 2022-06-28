@@ -859,21 +859,21 @@ Sponsor.seed(
     name: "グーグル・クラウド・ジャパン合同会社",
     abbr: 'google',
     conference_id: 6,
-    url: '',
+    url: 'https://cloud.google.com/',
   },
   {
     id: 125,
     name: "Sysdig Japan",
     abbr: "sysdig",
     conference_id: 6,
-    url: '',
+    url: 'https://sysdig.jp',
   },
   {
     id: 126,
     name: 'Elastic',
     abbr: 'elastic',
     conference_id: 6,
-    url: ''
+    url: 'https://www.elastic.co/'
   },
 )
 

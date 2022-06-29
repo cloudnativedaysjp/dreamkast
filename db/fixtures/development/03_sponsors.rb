@@ -859,21 +859,21 @@ Sponsor.seed(
     name: "グーグル・クラウド・ジャパン合同会社",
     abbr: 'google',
     conference_id: 6,
-    url: '',
+    url: 'https://cloud.google.com/',
   },
   {
     id: 125,
     name: "Sysdig Japan",
     abbr: "sysdig",
     conference_id: 6,
-    url: '',
+    url: 'https://sysdig.jp',
   },
   {
     id: 126,
     name: 'Elastic',
     abbr: 'elastic',
     conference_id: 6,
-    url: ''
+    url: 'https://www.elastic.co/'
   },
 )
 
@@ -1372,9 +1372,9 @@ end
   [121, 'nginx', 'sponsors/cnsec2022/nginx.png', 6],
   [122, 'snyk', 'sponsors/cnsec2022/snyk.png', 6],
   [123, 'mabl', 'sponsors/cnsec2022/mabl.png', 6],
-  [124, 'google', 'sponsors/cnsec2022/dummy.png', 6],
+  [124, 'google', 'sponsors/cnsec2022/google.png', 6],
   [125, 'sysdig', 'sponsors/cnsec2022/dummy.png', 6],
-  [126, 'elastic', 'sponsors/cnsec2022/dummy.png', 6],
+  [126, 'elastic', 'sponsors/cnsec2022/elastic.png', 6],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

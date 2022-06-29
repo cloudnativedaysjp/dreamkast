@@ -11,6 +11,5 @@
 #
 
 FactoryBot.define do
-  factory :agreement, class: Agreement do
-  end
+  factory :agreement, class: Agreement
 end

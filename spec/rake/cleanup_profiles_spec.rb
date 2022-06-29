@@ -5,9 +5,9 @@ describe 'cleanup_profiles' do
   before(:all) do
     @rake = Rake::Application.new
     Rake.application = @rake
-    Rake.application.rake_require('cleanup_profiles' , ["#{Rails.root}/lib/tasks"])
+    Rake.application.rake_require('cleanup_profiles', ["#{Rails.root}/lib/tasks"])
     Rake::Task.define_task(:environment)
-    ENV["EVENT_ABBR"] = "cndt2020"
+    ENV['EVENT_ABBR'] = 'cndt2020'
   end
 
   before(:each) do
@@ -16,15 +16,15 @@ describe 'cleanup_profiles' do
 
   let(:task) { 'util:cleanup_profiles' }
 
-  describe "archived conference" do
+  describe 'archived conference' do
     let!(:cndt2020) { create(:cndt2020, :archived) }
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
     let!(:access_log) { create(:access_log, profile: alice) }
     let!(:talk) { create(:talk1) }
     let!(:registered_talk) { create(:registered_talk, profile: alice, talk: talk) }
-    let!(:form_item) { create(:form_item1)}
+    let!(:form_item) { create(:form_item1) }
     let!(:agreement) { create(:agreement, profile: alice, form_item_id: form_item.id) }
-    let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id)}
+    let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id) }
     let(:task) { 'util:cleanup_profiles' }
 
     it 'delete profiles related of conference' do
@@ -54,27 +54,27 @@ describe 'cleanup_profiles' do
     end
   end
 
-  describe "registered conference" do
+  describe 'registered conference' do
     let!(:cndt2020) { create(:cndt2020, :registered) }
 
     it 'doesn\'t work' do
-      expect{@rake[task].invoke}.to(raise_error("cndt2020 is not archived yet"))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
     end
   end
 
-  describe "opened conference" do
+  describe 'opened conference' do
     let!(:cndt2020) { create(:cndt2020, :opened) }
 
     it 'doesn\'t work' do
-      expect{@rake[task].invoke}.to(raise_error("cndt2020 is not archived yet"))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
     end
   end
 
-  describe "closed conference" do
+  describe 'closed conference' do
     let!(:cndt2020) { create(:cndt2020, :closed) }
 
     it 'doesn\'t work' do
-      expect{@rake[task].invoke}.to(raise_error("cndt2020 is not archived yet"))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
     end
   end
 end

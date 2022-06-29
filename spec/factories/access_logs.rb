@@ -13,6 +13,5 @@
 #
 
 FactoryBot.define do
-  factory :access_log, class: AccessLog do
-  end
+  factory :access_log, class: AccessLog
 end

@@ -13,6 +13,9 @@ namespace :util do
           AccessLog.where(profile_id: profile.id).each do |access_log|
             access_log.destroy!
           end
+          RegisteredTalk.where(profile_id: profile.id).each do |registered_talk|
+            registered_talk.destroy!
+          end
           profile.destroy!
         end
       rescue => e

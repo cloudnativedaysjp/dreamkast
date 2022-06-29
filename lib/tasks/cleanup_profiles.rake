@@ -10,6 +10,9 @@ namespace :util do
       begin
         conference = Conference.find_by(abbr: abbr)
         conference.profiles.each do |profile|
+          AccessLog.where(profile_id: profile.id).each do |access_log|
+            access_log.destroy!
+          end
           profile.destroy!
         end
       rescue => e

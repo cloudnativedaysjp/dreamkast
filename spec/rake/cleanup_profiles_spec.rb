@@ -16,10 +16,16 @@ describe 'cleanup_profiles' do
 
   let!(:cndt2020) { create(:cndt2020, :opened) }
   let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+  let!(:access_log) { create(:access_log, profile: alice) }
   let(:task) { 'util:cleanup_profiles' }
 
   it 'delete profiles related of conference' do
     @rake[task].invoke
     expect(Profile.where(conference_id: cndt2020.id).size).to(eq(0))
+  end
+
+  it 'delete access logs related of profile' do
+    @rake[task].invoke
+    expect(AccessLog.where(profile_id: alice.id).size).to(eq(0))
   end
 end

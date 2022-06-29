@@ -19,6 +19,7 @@ describe 'cleanup_profiles' do
   let!(:access_log) { create(:access_log, profile: alice) }
   let!(:talk) { create(:talk1) }
   let!(:registered_talk) { create(:registered_talk, profile: alice, talk: talk) }
+  let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id)}
   let(:task) { 'util:cleanup_profiles' }
 
   it 'delete profiles related of conference' do
@@ -34,5 +35,11 @@ describe 'cleanup_profiles' do
   it 'delete registered talks related of profile' do
     @rake[task].invoke
     expect(RegisteredTalk.where(profile_id: alice.id).size).to(eq(0))
+  end
+
+  it 'doesn\'t delete chat messages related of profile' do
+    @rake[task].invoke
+    expect(ChatMessage.where(conference_id: cndt2020.id).size).to(eq(1))
+    expect(ChatMessage.find_by(conference_id: cndt2020.id).profile).to(eq(nil))
   end
 end

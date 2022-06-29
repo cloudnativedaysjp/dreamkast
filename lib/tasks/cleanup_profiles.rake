@@ -16,6 +16,9 @@ namespace :util do
           RegisteredTalk.where(profile_id: profile.id).each do |registered_talk|
             registered_talk.destroy!
           end
+          ChatMessage.where(profile_id: profile.id).each do |chat_message|
+            chat_message.update!(profile_id: nil)
+          end
           profile.destroy!
         end
       rescue => e

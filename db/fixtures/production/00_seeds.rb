@@ -245,6 +245,9 @@ Track.seed(
   { id: 26, number: 1, name: "A", conference_id: 5},
   { id: 27, number: 2, name: "B", conference_id: 5},
   { id: 28, number: 3, name: "C", conference_id: 5},
+  { id: 29, number: 1, name: "A", conference_id: 6},
+  { id: 30, number: 2, name: "B", conference_id: 6},
+  { id: 31, number: 3, name: "C", conference_id: 6},
 )
 
 

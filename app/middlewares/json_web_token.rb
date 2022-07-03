@@ -15,7 +15,7 @@ class JsonWebToken
   end
 
   def self.jwks_hash
-    jwks_raw = Net::HTTP.get URI("https://jacopen.auth0.com/.well-known/jwks.json") # ここに自身のドメインを指定する
+    jwks_raw = Net::HTTP.get(URI('https://jacopen.auth0.com/.well-known/jwks.json')) # ここに自身のドメインを指定する
     jwks_keys = Array(JSON.parse(jwks_raw)['keys'])
     Hash[
       jwks_keys

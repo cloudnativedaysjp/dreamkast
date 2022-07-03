@@ -1,6 +1,6 @@
-<div class="card-group  my-4">
+<div class="card-group">
   <% @talks.each do |talk| %>
-    <div class="card m-1">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">
           <%= talk.title %>
@@ -24,13 +24,18 @@
 
         <% if conference.speaker_entry_disabled? %>
 
-          <% if talk.video_registration&.url.present? %>
-            <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
+          <% if talk.video_registration %>
+            <p class="card-text">ビデオファイル提出状況: <%= talk.video_registration.status %></p>
+            <% JSON.parse(talk.video_registration.statistics).each do |k,v| %>
+              <p><%= k %>:<%= v %></p>
+            <% end %>
           <% else %>
-            <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
+            <p class="card-text">ビデオファイル提出状況: 未確認 (アップロードからステータス反映まで30分程度かかることがあります)</p>
           <% end %>
 
-          <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
+          <% if talk.video_registration&.url.present? %>
+            <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
+          <% end %>
         <% end %>
       </div>
     </div>

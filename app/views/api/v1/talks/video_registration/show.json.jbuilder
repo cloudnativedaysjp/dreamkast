@@ -1,0 +1,5 @@
+json.status(@video_registration.status)
+json.statistics(JSON.parse(@video_registration.statistics))
+json.url(@video_registration.url)
+json.createdAt(@video_registration.created_at.strftime('%Y-%m-%d %H:%M:%S'))
+json.updatedAt(@video_registration.updated_at.strftime('%Y-%m-%d %H:%M:%S'))

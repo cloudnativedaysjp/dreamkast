@@ -7,24 +7,27 @@
         <%= link_to 'エントリー', speakers_entry_path %>
       </div>
     <% else %>
-      <h2 class="py-3 pl-2">スピーカープロフィール</h2>
-      <div class="col-12 mb-4">
-        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
-      </div>
 
       <h2 class="py-3 pl-2"><%= "#{@speaker.name}様へのお知らせ" %></h2>
       <div class="col-12 mb-4">
-
         <div class="information mt-4" id="speaker_notice">
           <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
         </div>
       </div>
-
-      <h2 class="py-3 pl-2">エントリー済みセッション一覧</h2>
-      <div class="col-12 mb-4">
-        <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
-        <%= button_to 'edit', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
+      
+      <div class="col-6">
+        <h2 class="py-3 pl-2">Profile</h2>
+        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
       </div>
+
+      
+      <div class="col-6">
+        <h2 class="py-3 pl-2">Sessions</h2>
+        <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+      </div>
+      <i class="bi bi-pencil-square"></i>
+
+      <%= button_to 'ProfileとSessionを編集', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
     <% end %>
   </div>
 </div>

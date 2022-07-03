@@ -14,6 +14,10 @@
 
 .speaker-dashboard-form {
     background: rgba(255, 255, 255, 0.95);
+    .card-title a,
+    .card-text a {
+        text-decoration: underline;
+    }
     h2 {
         font-weight: bold;
     }
@@ -48,6 +52,10 @@
     }
     .centered-image {
         margin: 0 auto;
+    }
+    .video-format p {
+        font-size: small;
+        margin: 0.5em;
     }
     .card-text {
         margin-bottom: 2rem;

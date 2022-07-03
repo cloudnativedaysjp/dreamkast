@@ -1,5 +1,5 @@
 class Api::V1::Talks::VideoRegistrationController < ApplicationController
-  # include SecuredPublicApi
+  include SecuredPublicApi
 
   before_action :set_talk
   skip_before_action :verify_authenticity_token

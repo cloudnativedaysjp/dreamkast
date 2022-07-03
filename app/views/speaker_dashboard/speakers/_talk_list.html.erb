@@ -1,43 +1,48 @@
 <div class="card-group">
   <% @talks.each do |talk| %>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= talk.title %>
-          <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
-        </h5>
-        <% if talk.proposal.present? %>
-          受付状況: <%= proposal_status(talk.proposal) %>
-        <% end %>
-        <% if talk.talk_category.present? %>
-          <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></h6>
-        <% end %>
-        <p class="card-text"><%= simple_format talk.abstract %></p>
-
-        <% if talk.document_url.present? %>
-          <p class="card-text">セッション資料公開URL: <%= link_to talk.document_url, talk.document_url %></p>
-        <% else %>
-          <% if conference.speaker_entry_disabled? %>
-            <p class="card-text">セッション資料公開URLはまだ追加されていません</p>
-          <% end %>
-        <% end %>
-
-        <% if conference.speaker_entry_disabled? %>
-
-          <% if talk.video_registration %>
-            <p class="card-text">ビデオファイル提出状況: <%= talk.video_registration.status %></p>
-            <% JSON.parse(talk.video_registration.statistics).each do |k,v| %>
-              <p><%= k %>:<%= v %></p>
-            <% end %>
-          <% else %>
-            <p class="card-text">ビデオファイル提出状況: 未確認 (アップロードからステータス反映まで30分程度かかることがあります)</p>
-          <% end %>
-
-          <% if talk.video_registration&.url.present? %>
-            <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
-          <% end %>
-        <% end %>
-      </div>
+  <div class="card">
+    <div class="card-header">
+      <b>Sessions</b>
+      <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions') %>
     </div>
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= talk.title %>
+        <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
+      </h5>
+      <% if talk.proposal.present? %>
+      受付状況: <%= proposal_status(talk.proposal) %>
+      <% end %>
+      <% if talk.talk_category.present? %>
+      <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> /
+        <%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></h6>
+      <% end %>
+      <p class="card-text"><%= simple_format talk.abstract %></p>
+
+      <% if talk.document_url.present? %>
+      <p class="card-text">セッション資料公開URL: <%= link_to talk.document_url, talk.document_url %></p>
+      <% else %>
+      <% if conference.speaker_entry_disabled? %>
+      <p class="card-text">セッション資料公開URLはまだ追加されていません</p>
+      <% end %>
+      <% end %>
+
+      <% if conference.speaker_entry_disabled? %>
+
+      <% if talk.video_registration %>
+      <p class="card-text">ビデオファイル提出状況: <%= talk.video_registration.status %></p>
+      <% JSON.parse(talk.video_registration.statistics).each do |k,v| %>
+      <p><%= k %>:<%= v %></p>
+      <% end %>
+      <% else %>
+      <p class="card-text">ビデオファイル提出状況: 未確認 (アップロードからステータス反映まで30分程度かかることがあります)</p>
+      <% end %>
+
+      <% if talk.video_registration&.url.present? %>
+      <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
   <% end %>
 </div>

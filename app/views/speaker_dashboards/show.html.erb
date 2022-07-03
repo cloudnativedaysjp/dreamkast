@@ -3,30 +3,27 @@
   <div class="row speaker-dashboard-form">
 
     <% unless @speaker.present? %>
-      <div class="col-12 my-4">
-        <%= link_to 'エントリー', speakers_entry_path %>
-      </div>
+    <div class="col-12 my-4">
+      <%= link_to 'エントリー', speakers_entry_path %>
+    </div>
     <% else %>
 
-      <h2 class="py-3 pl-2"><%= "#{@speaker.name}様へのお知らせ" %></h2>
-      <div class="col-12 mb-4">
-        <div class="information mt-4" id="speaker_notice">
-          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
-        </div>
+    <h2 class="py-3 pl-2"><%= "#{@speaker.name}様へのお知らせ" %></h2>
+    <div class="col-12 mb-4">
+      <div class="information mt-4" id="speaker_notice">
+        <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
       </div>
-      
-      <div class="col-6">
-        <h2 class="py-3 pl-2">Profile</h2>
-        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
-      </div>
+    </div>
 
-      
-      <div class="col-6">
-        <h2 class="py-3 pl-2">Sessions</h2>
-        <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
-      </div>
-      <img src="/assets/images/pencil-square.svg" alt="Bootstrap" />
-      <%= button_to 'ProfileとSessionを編集', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
+    <div class="col-6">
+      <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+    </div>
+
+
+    <div class="col-6">
+      <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+    </div>
+
     <% end %>
   </div>
 </div>

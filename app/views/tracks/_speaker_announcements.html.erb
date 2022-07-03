@@ -1,8 +1,15 @@
+<div class="card-group">
+  <div class="card">
+    <div class="card-header">
+      <%= "#{@speaker.name}様へのお知らせ" %>
+    </div>
+  </div>
+</div>
 <ul>
   <% speaker_announcements.order(publish_time: 'DESC').uniq.each do |announcement| %>
-    <li>
-      <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
-      <%= simple_format announcement.body %>
-    </li>
+  <li>
+    <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+    <%= simple_format announcement.body %>
+  </li>
   <% end %>
 </ul>

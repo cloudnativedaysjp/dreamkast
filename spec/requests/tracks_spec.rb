@@ -32,7 +32,7 @@ RSpec.describe(TracksController, type: :request) do
           it 'show speaker' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).to(include('<h4>Alice様へのお知らせ</h4>'))
+            expect(response.body).to(include('Alice様へのお知らせ'))
           end
 
           context 'wnen announcement is not published' do
@@ -42,8 +42,8 @@ RSpec.describe(TracksController, type: :request) do
             it 'not exists speaker_announcements' do
               subject
               expect(response).to(be_successful)
-              expect(response.body).to(include('<h4>Alice様へのお知らせ</h4>'))
-              expect(response.body).not_to(include('<p>test_announcement</p>'))
+              expect(response.body).to(include('Alice様へのお知らせ'))
+              expect(response.body).not_to(include('test_announcement'))
             end
           end
 
@@ -56,9 +56,9 @@ RSpec.describe(TracksController, type: :request) do
             it "show only alice's announcements" do
               subject
               expect(response).to(be_successful)
-              expect(response.body).to(include('<h4>Alice様へのお知らせ</h4>'))
-              expect(response.body).to(include('<p>test announcement for alice</p>'))
-              expect(response.body).not_to(include('<p>test announcement for mike</p>'))
+              expect(response.body).to(include('Alice様へのお知らせ'))
+              expect(response.body).to(include('test announcement for alice'))
+              expect(response.body).not_to(include('test announcement for mike'))
               expect(SpeakerAnnouncement.where(publish: true).size).to(eq(2))
             end
           end
@@ -68,7 +68,7 @@ RSpec.describe(TracksController, type: :request) do
           it 'not show speaker_announcements' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('<h4>Alice様へのお知らせ</h4>'))
+            expect(response.body).not_to(include('Alice様へのお知らせ'))
           end
         end
       end

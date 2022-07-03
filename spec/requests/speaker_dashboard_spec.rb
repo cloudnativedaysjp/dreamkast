@@ -110,7 +110,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', 'エントリー済み'
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -120,7 +120,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', 'エントリー済み'
           it_should_behave_like :response_does_not_include_proposal_title, 'sponsor_session'
           it_should_behave_like :response_includes_edit_button
         end
@@ -131,7 +131,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: 採択'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '採択'
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -141,7 +141,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: 不採択'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '不採択'
           it_should_behave_like :response_includes_edit_button
         end
       end
@@ -167,7 +167,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', 'エントリー済み'
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -177,7 +177,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', 'エントリー済み'
           it_should_behave_like :response_includes_edit_button
         end
 
@@ -187,7 +187,7 @@ describe SpeakerDashboardsController, type: :request do
           end
 
           it_should_behave_like :request_is_successful
-          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', '受付状況: エントリー済み'
+          it_should_behave_like :response_includes_proposal_title_and_entry_status, 'talk1', 'エントリー済み'
           it_should_behave_like :response_includes_edit_button
         end
       end
@@ -207,7 +207,7 @@ describe SpeakerDashboardsController, type: :request do
         it 'not exists speaker_announcements' do
           subject
           expect(response).to(be_successful)
-          expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+          expect(response.body).to(include('Alice様へのお知らせ'))
           expect(response.body).not_to(include('<p>test announcementf for alice</p>'))
         end
       end
@@ -221,7 +221,7 @@ describe SpeakerDashboardsController, type: :request do
         it "show only alice's announcements" do
           subject
           expect(response).to(be_successful)
-          expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+          expect(response.body).to(include('Alice様へのお知らせ'))
           expect(response.body).to(include('<p>test announcement for alice</p>'))
           expect(response.body).not_to(include('<p>test announcement for mike</p>'))
           expect(SpeakerAnnouncement.where(publish: true).size).to(eq(2))
@@ -234,7 +234,7 @@ describe SpeakerDashboardsController, type: :request do
           it 'show to_all announcements' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+            expect(response.body).to(include('Alice様へのお知らせ'))
             expect(response.body).to(include('<p>test announcement for alice</p>'))
           end
 
@@ -252,7 +252,7 @@ describe SpeakerDashboardsController, type: :request do
           it 'show to_all announcements' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).to(include('<h2 class="py-3 pl-2">Alice様へのお知らせ</h'))
+            expect(response.body).to(include('Alice様へのお知らせ'))
             expect(response.body).to(include('<p>test announcement for alice</p>'))
           end
 

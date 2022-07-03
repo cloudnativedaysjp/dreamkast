@@ -100,7 +100,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
 
             it_should_behave_like :returns_successfully
             it_should_behave_like :response_does_not_include_proposal_title, 'talk1'
-            it_should_behave_like :response_includes_proposal_title_and_entry_status, 'sponsor_session', '受付状況: エントリー済み'
+            it_should_behave_like :response_includes_proposal_title_and_entry_status, 'sponsor_session', 'エントリー済み'
           end
         end
       end

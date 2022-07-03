@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time"
+    t.datetime "publish_time", precision: nil
     t.text "body"
     t.boolean "publish"
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
     t.boolean "show_sponsors", default: false
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
+    t.string "material_link"
     t.index ["status"], name: "index_conferences_on_status"
   end
 
@@ -165,8 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
     t.bigint "talk_id", null: false
     t.string "job_id"
     t.string "status"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.index ["conference_id"], name: "index_media_package_harvest_jobs_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_harvest_jobs_on_media_package_channel_id"
     t.index ["talk_id"], name: "index_media_package_harvest_jobs_on_talk_id"
@@ -213,6 +214,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
     t.string "company_address_level2"
     t.string "company_address_line1"
     t.string "company_address_line2"
+    t.integer "number_of_employee_id", default: 12
+    t.integer "annual_sales_id", default: 11
+    t.string "company_fax"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -263,7 +267,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
 
   create_table "speaker_announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time", null: false
+    t.datetime "publish_time", precision: nil, null: false
     t.text "body", null: false
     t.boolean "publish", default: false
     t.datetime "created_at", null: false
@@ -419,6 +423,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_083350) do
     t.bigint "talk_id", null: false
     t.string "url"
     t.integer "status", default: 0, null: false
+    t.json "statistics", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 

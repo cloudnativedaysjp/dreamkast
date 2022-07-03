@@ -12,7 +12,6 @@
 #  about                      :text(65535)
 #  privacy_policy             :text(65535)
 #  coc                        :text(65535)
-#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  copyright                  :string(255)
 #  privacy_policy_for_speaker :text(65535)
 #  speaker_entry              :integer
@@ -21,6 +20,8 @@
 #  cfp_result_visible         :boolean          default("0")
 #  show_sponsors              :boolean          default("0")
 #  brief                      :string(255)
+#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
+#  material_link              :string(255)
 #
 # Indexes
 #

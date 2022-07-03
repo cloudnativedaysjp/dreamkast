@@ -50,17 +50,32 @@
 
   <div class="form-row form-group">
 
-    <div class="col-12 col-md-3">
-      <%= form.collection_select :company_name_prefix_id, CompanyNamePrefix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
+    <div class="col-12 col-md-4">
+      <%= form.collection_select :company_name_prefix_id, ::FormModels::CompanyNamePrefix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
     </div>
 
     <div class="col-12 col-md-6">
       <%= form.text_field :company_name, required: true, class: "form-control", placeholder: "クラウドネイティブデイズ" %>
     </div>
 
-    <div class="col-12 col-md-3">
-      <%= form.collection_select :company_name_suffix_id, CompanyNameSuffix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
+    <div class="col-12 col-md-4">
+      <%= form.collection_select :company_name_suffix_id, ::FormModels::CompanyNameSuffix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
     </div>
+  </div>
+
+  <div class="form-row form-group">
+    <%= form.label :annual_sales_id, "年商規模" %><span class="required">*</span>
+    <%= form.collection_select :annual_sales_id, ::FormModels::AnnualSales.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "annual-sales-id"} %>
+  </div>
+
+  <div class="form-row form-group">
+    <%= form.label :number_of_employee_id, "従業員数" %><span class="required">*</span>
+    <%= form.collection_select :number_of_employee_id, ::FormModels::NumberOfEmployee.all, :id, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "number-of-employee-id"} %>
+  </div>
+
+  <div class="form-row form-group">
+    <%= form.label :company_address_level1, "勤務先住所: 都道府県（国外の場合は `国外` を選択してください）" %><span class="required">*</span>
+    <%= form.collection_select :company_address_level1, CompanyAddressLevel1.all, :name, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
   </div>
 
   <div class="form-row form-group">
@@ -96,6 +111,11 @@
   <div class="form-row form-group">
     <%= form.label :company_tel, "勤務先電話番号" %><span class="required">*</span>
     <%= form.text_field :company_tel, required: true, class: "form-control", placeholder: "0300000000", pattern: "[\\d+-]*" %>
+  </div>
+
+  <div class="form-row form-group">
+    <%= form.label :company_fax, "勤務先FAX番号" %>
+    <%= form.text_field :company_fax, required: false, class: "form-control", placeholder: "0300000000", pattern: "[\\d+-]*" %>
   </div>
 
   <div class="form-row form-group">

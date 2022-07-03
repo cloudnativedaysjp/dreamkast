@@ -28,6 +28,9 @@
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
+#  number_of_employee_id         :integer          default("12")
+#  annual_sales_id               :integer          default("11")
+#  company_fax                   :string(255)
 #
 
 FactoryBot.define do
@@ -49,6 +52,8 @@ FactoryBot.define do
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }
+    number_of_employee_id { 2 }
+    annual_sales_id { 3 }
 
     trait :on_cndt2020 do
       conference_id { 1 }
@@ -78,6 +83,8 @@ FactoryBot.define do
     department { 'aa' }
     position { 'aaa' }
     conference_id { 1 }
+    number_of_employee_id { 4 }
+    annual_sales_id { 5 }
 
     trait :on_cndt2020 do
       conference_id { 1 }

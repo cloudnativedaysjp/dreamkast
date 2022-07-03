@@ -28,6 +28,9 @@
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
+#  number_of_employee_id         :integer          default("12")
+#  annual_sales_id               :integer          default("11")
+#  company_fax                   :string(255)
 #
 
 require 'rails_helper'

@@ -59,8 +59,8 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to_active_hash :company_name_prefix, shortcuts: [:name], :class_name => '::FormModels::CompanyNamePrefix'
-  belongs_to_active_hash :company_name_suffix, shortcuts: [:name], :class_name => '::FormModels::CompanyNameSuffix'
+  belongs_to_active_hash :company_name_prefix, shortcuts: [:name], class_name: '::FormModels::CompanyNamePrefix'
+  belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
   belongs_to :conference
   has_many :registered_talks

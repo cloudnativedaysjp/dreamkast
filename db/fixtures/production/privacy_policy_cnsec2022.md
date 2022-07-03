@@ -21,7 +21,7 @@
 
 #### 各スポンサーの名称、プライバシーポリシー、個人情報の取扱いについての情報提供（更新日：2022年7月5日）
 
-- 日本マイクロソフト株式会社
+- [日本マイクロソフト株式会社](https://privacy.microsoft.com/ja-jp/privacystatement)
 - [HashiCorp Japan株式会社](https://www.hashicorp.com/privacy)
 - F5ネットワークスジャパン合同会社
 - [Snyk株式会社](https://snyk.io/policies/privacy/)

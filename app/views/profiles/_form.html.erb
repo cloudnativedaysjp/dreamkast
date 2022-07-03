@@ -50,7 +50,7 @@
 
   <div class="form-row form-group">
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <%= form.collection_select :company_name_prefix_id, ::FormModels::CompanyNamePrefix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
     </div>
 
@@ -58,7 +58,7 @@
       <%= form.text_field :company_name, required: true, class: "form-control", placeholder: "クラウドネイティブデイズ" %>
     </div>
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <%= form.collection_select :company_name_suffix_id, ::FormModels::CompanyNameSuffix.all, :id, :name, {prompt: "法人格を選択"}, {class: "form-control"} %>
     </div>
   </div>

@@ -25,8 +25,7 @@
         <h2 class="py-3 pl-2">Sessions</h2>
         <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
       </div>
-      <i class="bi bi-pencil-square"></i>
-
+      <img src="/assets/images/pencil-square.svg" alt="Bootstrap" />
       <%= button_to 'ProfileとSessionを編集', edit_speaker_dashboard_speaker_path(id: @speaker.id), method: "get", class: "btn btn-primary btn-lg" %>
     <% end %>
   </div>

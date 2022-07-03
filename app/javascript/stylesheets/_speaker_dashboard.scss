@@ -53,12 +53,19 @@
     .centered-image {
         margin: 0 auto;
     }
+    .card-text {
+        margin-bottom: 1.5rem;
+    }
     .video-format p {
         font-size: small;
-        margin: 0.5em;
+        margin: 0.5rem;
     }
-    .card-text {
-        margin-bottom: 2rem;
+    .session-title {
+        border-bottom: 1px dotted #CCC;
+        margin-bottom: 1.5rem;
+        img {
+            vertical-align: top;
+        }
     }
 }
 

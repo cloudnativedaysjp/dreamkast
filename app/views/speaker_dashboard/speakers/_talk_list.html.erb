@@ -1,18 +1,15 @@
 <div class="card-group">
-  <% @talks.each do |talk| %>
   <div class="card">
     <div class="card-header">
       <b>Sessions</b>
       <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions') %>
     </div>
+    <% @talks.each do |talk| %>
     <div class="card-body">
-      <h5 class="card-title">
-        タイトル
-      </h5>
-      <div class="card-text">
+      <h4 class="card-title session-title">
         <%= talk.title %>
-        <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
-      </div>
+        <%= link_to (image_tag "icons/box-arrow-up-right.svg"), talk_path(id: talk.id) %>
+      </h4>
       <% if talk.talk_category.present? %>
       <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> /
         <%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></h6>
@@ -54,11 +51,12 @@
         <% if talk.video_registration %>
           <%= talk.video_registration.status %>
         <% else %>
-        未確認 (アップロードからステータス反映まで30分程度かかることがあります)
+        未確認<br/>
+        ※アップロードからステータス反映まで30分程度かかることがあります
         <% end %>
       </div>
 
-      <% if talk.video_registration.statistics %>
+      <% if talk.video_registration&.statistics.present? %>
       <h5 class="card-title">
         ビデオファイル フォーマットチェック
       </h5>
@@ -72,8 +70,7 @@
       <% if talk.video_registration&.url.present? %>
       <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
       <% end %>
-
     </div>
+    <% end %>
   </div>
-  <% end %>
 </div>

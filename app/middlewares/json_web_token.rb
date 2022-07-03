@@ -4,9 +4,9 @@ require 'uri'
 class JsonWebToken
   def self.verify(token)
     JWT.decode(token, nil,
-               true, # Verify the signature of this token
+               true,
                algorithms: 'RS256',
-               iss: "https://#{AUTH0_DOMAIN}/", # ここに自身のドメインを指定する
+               iss: "https://#{AUTH0_DOMAIN}/",
                verify_iss: true,
                aud: Rails.application.secrets.auth0_api_audience,
                verify_aud: true) do |header|
@@ -15,7 +15,7 @@ class JsonWebToken
   end
 
   def self.jwks_hash
-    jwks_raw = Net::HTTP.get(URI("https://#{AUTH0_DOMAIN}/.well-known/jwks.json")) # ここに自身のドメインを指定する
+    jwks_raw = Net::HTTP.get(URI("https://#{AUTH0_DOMAIN}/.well-known/jwks.json"))
     jwks_keys = Array(JSON.parse(jwks_raw)['keys'])
     Hash[
       jwks_keys

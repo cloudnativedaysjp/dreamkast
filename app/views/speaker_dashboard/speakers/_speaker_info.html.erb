@@ -9,16 +9,21 @@
   <h5 class="text-center"><%= speaker.name %></h5>
   <div class="card-body">
     <h5 class="card-title">プロフィール</h5>
-    <p class="card-text"><%= simple_format speaker.profile %></p>
+    <div class="card-text"><%= simple_format speaker.profile %></div>
+
     <h5 class="card-title">会社名 / 所属団体名</h5>
-    <p class="card-text"><%= speaker.company %></p>
+    <div class="card-text"><%= speaker.company %></div>
+
     <h5 class="card-title">肩書き</h5>
-    <p class="card-text"><%= speaker.job_title %></p>
+    <div class="card-text"><%= speaker.job_title %></div>
+
     <h5 class="card-title">過去の登壇実績が分かるスライド等</h5>
-    <p class="card-text"><%= simple_format speaker.additional_documents %></p>
+    <div class="card-text"><%= simple_format speaker.additional_documents %></div>
+
     <h5 class="card-title">Twitter ID</h5>
-    <p class="card-text"><%= speaker.twitter_id %></p>
+    <div class="card-text"><%= speaker.twitter_id %></div>
+
     <h5 class="card-title">GitHub ID</h5>
-    <p class="card-text"><%= speaker.github_id %></p>
+    <div class="card-text"><%= speaker.github_id %></div>
   </div>
 </div>

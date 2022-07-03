@@ -8,11 +8,8 @@
     </div>
     <% else %>
 
-    <h2 class="py-3 pl-2"><%= "#{@speaker.name}様へのお知らせ" %></h2>
-    <div class="col-12 mb-4">
-      <div class="information mt-4" id="speaker_notice">
-        <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
-      </div>
+    <div class="col-12 my-4"  id="speaker_notice">
+      <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
     </div>
 
     <div class="col-6">

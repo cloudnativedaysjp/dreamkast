@@ -1,79 +1,86 @@
 <div class="container tracks">
 
   <% if @speaker.present? %>
-    <div class="row h-100 align-items-center justify-content-center text-center mt-3">
-      <div class="col-12 align-self-center">
-        <%= button_to 'スピーカーの方へ : スピーカープロフィール、セッション情報の確認・更新はこちら', speaker_dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-      </div>
+  <div class="row h-100 align-items-center justify-content-center text-center mt-3">
+    <div class="col-12 align-self-center">
+      <%= button_to 'スピーカーの方へ : スピーカープロフィール、セッション情報の確認・更新はこちら', speaker_dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
     </div>
+  </div>
   <% end %>
 
   <div class="row">
-    <div id="main-pane" class="col-12 col-md-8">
+    <section id="main-pane card-group" class="col-12 col-md-8">
       <div class="mt-3">
-        <h4>スケジュール</h4>
-        <ul>
-          <% @conference.conference_days.externals.each do |day| %>
-            <li><%= day.date %>: <%= day.start_time.strftime("%H:%M") + "-" + day.end_time.strftime("%H:%M") %></li>
-          <% end %>
-        </ul>
-        配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。
+        <div class="card">
+          <div class="card-header">
+            <b>配信スケジュール</b>
+          </div>
+          <div class="card-body">
+            <% @conference.conference_days.externals.each do |day| %>
+            <div class="card-text"><%= day.date %>:
+              <%= day.start_time.strftime("%H:%M") + "-" + day.end_time.strftime("%H:%M") %></div>
+            <div class="card-text">配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。</div>
+            <% end %>
+          </div>
+        </div>
       </div>
 
       <% unless @speaker.nil? %>
-        <div class="information mt-4" id="speaker_notice">
-          <h4><%= "#{@speaker.name}様へのお知らせ" %></h4>
-          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
-        </div>
+      <div class="mt-3">
+        <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
+      </div>
       <% end %>
 
-      <div class="information mt-3">
-        <h4>運営からのお知らせ</h4>
-        <ul>
-          <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
-            <li>
-              <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
-              <%= simple_format announcement.body %>
-            </li>
+      <div class="mt-3">
+        <div class="card">
+          <div class="card-header">
+            <b>運営からのお知らせ</b>
+          </div>
+          <div class="card-body">
+            <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
+            <h5 class="card-title"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+          <div class="card-text"><%= simple_format announcement.body %></div>
           <% end %>
-        </ul>
+        </div>
       </div>
 
       <div id="registered-talk" class="talk accordion mt-3">
         <h4 class="">
-            聴講予定セッション
+          聴講予定セッション
         </h4>
         <div id="registered-talk-list">
           <% @profile.talks.each do |talk| %>
-            <div class="category_difficulty">
-              <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-              <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-                <span class="difficulty difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
-              <% end %>
-              <% if talk.talk_category_id.present? %>
-              <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
-              <% end %>
-            </div>
-            <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
+          <div class="category_difficulty">
+            <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %>
+            <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+            <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+            <span class="difficulty difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
+            <% end %>
+            <% if talk.talk_category_id.present? %>
+            <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
+            <% end %>
+          </div>
+          <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
           <% end %>
           <div class="col-12 text-center my-4">
-              <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+            <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
           </div>
         </div>
       </div>
-    </div>
-    <div id="sub-pane" class="col-12 col-md-4">
+    </section>
+    <section id="sub-pane" class="col-12 col-md-4">
       <div class="social mt-3">
-        <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a class="twitter-timeline" data-height="600"
+          href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Tweets by cloudnativedays</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
-    </div>
+    </section>
   </div>
-
   <div class="row">
     <% if @conference.show_sponsors %>
-      <section class="page-section" id="sponsors">
-        <%= render 'event/partial/sponsors', conference: @conference %>
-      </section>
+    <section class="page-section" id="sponsors">
+      <%= render 'event/partial/sponsors', conference: @conference %>
+    </section>
     <% end %>
   </div>
 

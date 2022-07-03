@@ -1,0 +1,59 @@
+#speaker-landing {
+    line-height: 200%;
+    a {
+        color: $primary;
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 992px) {
+    #speaker-landing {
+        line-height: 130%;
+    }
+}
+
+.speaker-dashboard-form {
+    background: rgba(255, 255, 255, 0.95);
+    h2 {
+        font-weight: bold;
+    }
+    h3 {
+        font-weight: bold;
+    }
+    h4 {
+        font-weight: bold;
+        font-size: large;
+    }
+    h5 {
+        font-weight: bold;
+        font-size: medium;
+    }
+    p {
+        font-size: medium;
+        margin: 1em 0;
+    }
+    ol {
+        font-size: larger;
+        margin: 1em 0;
+    }
+    ul {
+        font-size: larger;
+        margin: 1em 0;
+    }
+    .privacy p {
+        font-size: small;
+    }
+    &:before h1 {
+        font-size: small;
+    }
+    .centered-image {
+        margin: 0 auto;
+    }
+    .card-text {
+        margin-bottom: 2rem;
+    }
+}
+
+.entry {
+    font-size: xx-large;
+}

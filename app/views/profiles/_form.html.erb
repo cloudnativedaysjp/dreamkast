@@ -65,11 +65,6 @@
   </div>
 
   <div class="form-row form-group">
-    <%= form.label :company_address_level1, "勤務先住所: 都道府県（国外の場合は `国外` を選択してください）" %><span class="required">*</span>
-    <%= form.collection_select :company_address_level1, CompanyAddressLevel1.all, :name, :name, {prompt: ""}, {required: true, class: "form-control", autocomplete: "address-level1"} %>
-  </div>
-
-  <div class="form-row form-group">
     <%= form.label :company_email, "勤務先メールアドレス" %><span class="required">*</span>
     <%= form.email_field :company_email, required: true, class: "form-control", placeholder: "mail@example.com" %>
   </div>

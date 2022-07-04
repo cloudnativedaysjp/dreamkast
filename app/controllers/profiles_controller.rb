@@ -123,7 +123,10 @@ class ProfilesController < ApplicationController
       :department,
       :position,
       :roles,
-      :conference_id
+      :conference_id,
+      :number_of_employee_id,
+      :annual_sales_id,
+      :company_fax
     )
   end
 

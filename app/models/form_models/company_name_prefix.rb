@@ -1,4 +1,4 @@
-class CompanyNameSuffix < ActiveHash::Base
+class FormModels::CompanyNamePrefix < ActiveHash::Base
   self.data = [
     { id: 1, name: '株式会社' },
     { id: 2, name: '有限会社' },

@@ -64,9 +64,9 @@ RSpec.describe(Profile, type: :model) do
     expect(@profile).to(be_valid)
   end
 
-  [:sub, :email, :first_name, :last_name, :industry_id, :occupation, :company_name, :company_email,
+  [:sub, :email, :first_name, :last_name, :company_name, :company_email,
    :company_postal_code, :company_address_level1, :company_address_level2, :company_address_line1, :company_address_line2,
-   :company_tel, :department, :position].each do |param|
+   :company_tel].each do |param|
     it "is invalid without #{param}" do
       @profile[param] = nil
       expect(@profile).to(be_invalid)

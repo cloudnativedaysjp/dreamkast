@@ -2,13 +2,10 @@
 #
 # Table name: video_registrations
 #
-#  id         :integer          not null, primary key
-#  talk_id    :integer          not null
-#  url        :string(255)
-#  status     :integer          default("0"), not null
-#  statistics :json             not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id      :integer          not null, primary key
+#  talk_id :integer          not null
+#  url     :string(255)
+#  status  :integer          default("0"), not null
 #
 # Indexes
 #

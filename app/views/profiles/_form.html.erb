@@ -104,6 +104,16 @@
     <%= form.text_field :company_fax, required: false, class: "form-control", placeholder: "0300000000", pattern: "[\\d+-]*" %>
   </div>
 
+  <div class="form-row form-group">
+    <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年" %>*
+    <%= form.text_field :department, required: true, class: "form-control", placeholder: "クラウド開発部門" %>
+  </div>
+
+  <div class="form-row form-group">
+    <%= form.label :position, "勤務先役職" %>*
+    <%= form.text_field :position, required: true, class: "form-control", placeholder: "一般 / 管理職 / CTO など" %>
+  </div>
+
   <% if action_name == "new" %>
   <div class="privacy_policy">
     <%= markdown @conference.privacy_policy %>

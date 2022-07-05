@@ -23,9 +23,9 @@
 
 - [日本マイクロソフト株式会社](https://privacy.microsoft.com/ja-jp/privacystatement)
 - [HashiCorp Japan株式会社](https://www.hashicorp.com/privacy)
-- F5ネットワークスジャパン合同会社
+- [F5ネットワークスジャパン合同会社](https://www.f5.com/ja_jp/company/policies/privacy-notice)
 - [Snyk株式会社](https://snyk.io/policies/privacy/)
-- mabl株式会社
+- [mabl株式会社](https://www.mabl.com/privacy)
 - [グーグル・クラウド・ジャパン合同会社](https://policies.google.com/privacy)
 
 #### 当社の個人情報のお取扱いに関するお問い合わせ

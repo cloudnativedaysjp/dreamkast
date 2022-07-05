@@ -85,8 +85,8 @@ class Profile < ApplicationRecord
   validates :company_address_line2, presence: false, length: { maximum: 1024 }
   validates :company_tel, presence: true, length: { maximum: 128 }, tel: true
   validates :company_fax, presence: false, length: { maximum: 128 }
-  validates :department, presence: false, length: { maximum: 128 }
-  validates :position, presence: false, length: { maximum: 128 }
+  validates :department, presence: true, length: { maximum: 128 }
+  validates :position, presence: true, length: { maximum: 128 }
   validates :number_of_employee_id, presence: true, length: { maximum: 128 }
   validates :annual_sales_id, presence: true, length: { maximum: 128 }
 

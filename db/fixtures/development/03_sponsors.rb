@@ -1373,7 +1373,7 @@ end
   [122, 'snyk', 'sponsors/cnsec2022/snyk.png', 6],
   [123, 'mabl', 'sponsors/cnsec2022/mabl.png', 6],
   [124, 'google', 'sponsors/cnsec2022/google.png', 6],
-  [125, 'sysdig', 'sponsors/cnsec2022/dummy.png', 6],
+  [125, 'sysdig', 'sponsors/cnsec2022/sysdig.png', 6],
   [126, 'elastic', 'sponsors/cnsec2022/elastic.png', 6],
 ].each do |logo|
   SponsorAttachment.seed(

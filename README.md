@@ -46,7 +46,7 @@ the version is controlled by `.node-version` and `.ruby-version` file.
 You need to install shared-mime-info
 
 - macOS: `brew install shared-mime-info`
-- Ubuntu, Debian: `apt-get install shared-mime-info` and `apt-get install libmariadbd-dev`
+- Ubuntu, Debian: `apt-get install shared-mime-info`
 
 ```
 $ yarn install --check-files

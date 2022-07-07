@@ -3,9 +3,14 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
     super
     metrics = [
       Prometheus::Client::Gauge.new(
-        :dreamkast_viewer_count,
-        docstring: 'Count dreamkast viewer number',
-        labels: [:talk_id, :track_id, :conference_id]
+        :dreamkast_track_viewer_count,
+        docstring: 'Count dreamkast viewer number by track',
+        labels: [:track_id, :conference_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_talk_viewer_count,
+        docstring: 'Count dreamkast viewer number by talk',
+        labels: [:talk_id, :conference_id]
       ),
       Prometheus::Client::Gauge.new(
         :dreamkast_chat_count,
@@ -32,11 +37,22 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
 
   private
 
-  def dreamkast_viewer_count(metrics)
+  def dreamkast_track_viewer_count(metrics)
+
     ViewerCount.latest_number_of_viewers.each do |vc|
       metrics.set(
         vc.count,
-        labels: { talk_id: vc.talk_id, track_id: vc.track_id, conference_id: vc.conference_id }
+        labels: { track_id: vc.track_id, conference_id: vc.conference_id }
+      )
+    end
+  end
+
+  def dreamkast_talk_viewer_count(metrics)
+
+    ViewerCount.latest_number_of_viewers.each do |vc|
+      metrics.set(
+        vc.count,
+        labels: { talk_id: vc.talk_id, conference_id: vc.conference_id }
       )
     end
   end

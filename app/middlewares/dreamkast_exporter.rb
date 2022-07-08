@@ -38,7 +38,6 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   private
 
   def dreamkast_track_viewer_count(metrics)
-
     ViewerCount.latest_number_of_viewers.each do |vc|
       metrics.set(
         vc.count,
@@ -48,7 +47,6 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_talk_viewer_count(metrics)
-
     ViewerCount.latest_number_of_viewers.each do |vc|
       metrics.set(
         vc.count,

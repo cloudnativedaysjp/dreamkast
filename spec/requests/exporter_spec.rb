@@ -24,7 +24,8 @@ describe DreamkastExporter, type: :request do
       get '/metrics'
       expect(response).to(be_successful)
       expect(response).to(have_http_status('200'))
-      expect(response.body).to(include('dreamkast_viewer_count{talk_id="1",track_id="1",conference_id="1"} 3.0'))
+      expect(response.body).to(include('dreamkast_track_viewer_count{track_id="1",conference_id="1"} 3.0'))
+      expect(response.body).to(include('dreamkast_talk_viewer_count{talk_id="1",conference_id="1"} 3.0'))
       expect(response.body).to(include('dreamkast_chat_count{conference_id="1",talk_id="2"} 12.0'))
     end
 

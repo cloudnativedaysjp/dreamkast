@@ -1,5 +1,3 @@
-# app/controllers/concerns/secured.rb
-
 # frozen_string_literal: true
 
 module SecuredPublicApi

@@ -37,7 +37,7 @@ FactoryBot.define do
       STATS
                 ).to_json
     }
-    trait :not_submitted do
+    trait :unsubmitted do
       status { 0 }
     end
     trait :submitted do

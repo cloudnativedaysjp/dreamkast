@@ -727,7 +727,7 @@ components:
           type: string
         status:
           type: string
-          enum: [not_submitted, submitted, confirmed, invalid]
+          enum: [unsubmitted, submitted, confirmed, invalid_format]
         statistics:
           type: object
         createdAt:

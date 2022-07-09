@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Api::V1::Talks::VideoRegistrationController, type: :request do
   describe 'GET /api/v1/talks/:id/video_registration' do
-    describe 'get video_registration' do
+    context 'get video_registration' do
       let!(:cndt2020) { create(:cndt2020) }
       before do
         create(:talk1)
@@ -17,7 +17,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       end
     end
 
-    describe 'get video_registration without JWT token' do
+    context 'get video_registration without JWT token' do
       let!(:cndt2020) { create(:cndt2020) }
       before do
         create(:talk1)
@@ -37,14 +37,14 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       create(:talk1)
     end
 
-    describe 'create without JWT token' do
+    context 'create without JWT token' do
       it 'return 401 when put url' do
         put '/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers: headers
         expect(response).to(have_http_status(:unauthorized))
       end
     end
 
-    describe 'create newly' do
+    context 'create newly' do
       before do
         allow(JsonWebToken).to(receive(:verify).and_return(true))
       end
@@ -64,7 +64,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       end
     end
 
-    describe 'update' do
+    context 'update' do
       before do
         create(:video_registration)
         allow(JsonWebToken).to(receive(:verify).and_return(true))

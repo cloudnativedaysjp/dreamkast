@@ -4,14 +4,6 @@ class Api::V1::Talks::VideoRegistrationController < ApplicationController
   before_action :set_talk
   skip_before_action :verify_authenticity_token
 
-  def set_talk
-    begin
-      @talk = Talk.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render(json: { message: 'Not Found' }, status: 404)
-    end
-  end
-
   def show
     if @talk.video_registration.present?
       @video_registration = @talk.video_registration
@@ -41,5 +33,15 @@ class Api::V1::Talks::VideoRegistrationController < ApplicationController
     end
     video_registration.save
     render(json: { message: 'OK' }, status: 200)
+  end
+
+  private
+
+  def set_talk
+    begin
+      @talk = Talk.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render(json: { message: 'Not Found' }, status: 404)
+    end
   end
 end

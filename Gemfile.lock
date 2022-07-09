@@ -183,6 +183,7 @@ GEM
     down (5.2.4)
       addressable (~> 2.8)
     erubi (1.10.0)
+    execjs (2.8.1)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -465,6 +466,9 @@ GEM
     parallel (1.21.0)
     parser (3.1.0.0)
       ast (~> 2.4.1)
+    pluginator (1.5.0)
+    pre-commit (0.39.0)
+      pluginator (~> 1.5)
     prometheus-client (3.0.0)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -687,6 +691,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   committee
   committee-rails
+  execjs
   factory_bot_rails
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
@@ -699,6 +704,7 @@ DEPENDENCIES
   opentelemetry-instrumentation-all
   opentelemetry-instrumentation-aws_sdk
   opentelemetry-sdk
+  pre-commit
   prometheus-client (~> 3.0.0)
   pry-rails
   psych (< 4)

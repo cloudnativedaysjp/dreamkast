@@ -66,18 +66,28 @@
         color: white;
     }
     .subtitle {
-        font-size: 2rem;
+        font-size: 1rem;
+        @media (min-width: 576px) {
+            font-size: 1rem;
+        }
+        @media (min-width: 768px) {
+            font-size: 1.5rem;
+        }
+        @media (min-width: 992px) {
+            font-size: 2rem;
+        }
     }
     .container {
         line-height: 90%;
-        font-size: 7rem;
+        font-size: 4rem;
+        margin-top: 20px;
         @media (min-width: 576px) {
             margin-top: 50px;
-            font-size: 7rem;
+            font-size: 5rem;
         }
         @media (min-width: 768px) {
             margin-top: 50px;
-            font-size: 10rem;
+            font-size: 8rem;
         }
         @media (min-width: 992px) {
             margin-top: 50px;

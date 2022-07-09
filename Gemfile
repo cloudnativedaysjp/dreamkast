@@ -55,6 +55,8 @@ group :development do
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
   gem 'annotate', require: false
+  gem 'pre-commit', require: false
+  gem 'execjs', require: false
 end
 
 group :test do

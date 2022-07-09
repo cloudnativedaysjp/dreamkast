@@ -144,7 +144,7 @@ aws --endpoint-url http://localhost:9324 sqs create-queue --queue-name chat
 
 https://manage.auth0.com/dashboard/us/dreamkast/applications/Piz0aBnXn0vxesyZScc76PgdCB7lCAbk/settings
 
-### Retrieve JWT Token
+### Generate JWT Token
 
 ```
 AUTH0_DOMAIN=dreamkast.us.auth0.com
@@ -154,7 +154,7 @@ AUDIENCE=https://event.cloudnativedays.jp/
 TOKEN=$(curl --url https://${AUTH0_DOMAIN}/oauth/token \
   --header 'content-type: application/json' \
   --data "{\"client_id\":\"${CLIENT_ID}\",\"client_secret\":\"${CLIENT_SECRET}\",\"audience\":\"${AUDIENCE}\",\"grant_type\":\"client_credentials\"}" | jq -r .access_token)
-DREAMKAST_DOMAIN='dreamkast-dk-1279.dev.cloudnativedays.jp'
+DREAMKAST_DOMAIN='event.cloudnativedays.jp'
 ```
 
 ※ Don't retrieve JWT token frequently due to Auth0 limitation. We recommend store generated token into environment variable. Generated token is available 1 day.

@@ -60,24 +60,29 @@
     color: transparent;
     text-align: center;
     font-weight: 700;
-    line-height: 90%;
-    font-size: 7rem;
     &:hover {
         background-clip: unset;
         -webkit-background-clip: unset;
         color: white;
     }
-    @media (min-width: 576px) {
-        margin-top: 50px;
+    .subtitle {
+        font-size: 2rem;
+    }
+    .container {
+        line-height: 90%;
         font-size: 7rem;
-    }
-    @media (min-width: 768px) {
-        margin-top: 50px;
-        font-size: 10rem;
-    }
-    @media (min-width: 992px) {
-        margin-top: 50px;
-        font-size: 15rem;
+        @media (min-width: 576px) {
+            margin-top: 50px;
+            font-size: 7rem;
+        }
+        @media (min-width: 768px) {
+            margin-top: 50px;
+            font-size: 10rem;
+        }
+        @media (min-width: 992px) {
+            margin-top: 50px;
+            font-size: 15rem;
+        }
     }
 }
 

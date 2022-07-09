@@ -38,7 +38,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
     end
 
     describe 'create without JWT token' do
-      it 'return OK when put url' do
+      it 'return 401 when put url' do
         put '/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers: headers
         expect(response).to(have_http_status(:unauthorized))
       end

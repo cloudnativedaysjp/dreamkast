@@ -104,16 +104,16 @@ EOS
   },
   {
     id: 6,
-    name: "CloudNative Security Conference 2022",
+    name: "CloudNative Security Conference 2022 by CloudNative Days",
     abbr: "cnsec2022",
     theme: "Go \"Green\"〜ともに目指す持続可能なセキュリティ〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')), #TODO: cnsec2022版プライバシーポリシー
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
-    committee_name: "CloudNative Security Conference 2022",
+    committee_name: "CloudNative Security Conference 2022 Committee",
     about: <<'EOS'
-CloudNative Security Conference 2022 (CNSec2022) は、クラウドネイティブセキュリティに特化したテックカンファレンスです。
+CloudNative Security Conference 2022 by CloudNative Days (CNSec2022) は、クラウドネイティブセキュリティに特化したテックカンファレンスです。
 
 クラウドネイティブなセキュリティとは、いったいどのようなものでしょうか。私達は、"Green"というキーワードに想いを込めてみました。
 

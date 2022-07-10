@@ -29,7 +29,7 @@ export AUTH0_CLIENT_SECRET=jBeB2Jd4sdfsdfdgetwarzOXYsdEyasdfq3wer3r9wglkj129UoF_
 export AUTH0_DOMAIN=yourdomain.auth0.com
 ```
 
-## Setup environment
+## How to setup environment
 
 This repository works with
 
@@ -102,8 +102,6 @@ Run Webpack dev server in case you want to edit JavaScript.
 ```
 $ ./bin/webpack-dev-server
 ```
-
-
 
 ## Ruby Type
 
@@ -190,4 +188,11 @@ curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/t
             "size_description": "Appropriate media size."
           }
 }'
+```
+
+## Run rubocop automatically
+
+```
+git config pre-commit.ruby "bundle exec ruby"
+git config pre-commit.checks "[rubocop]"
 ```

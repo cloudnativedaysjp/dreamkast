@@ -43,4 +43,14 @@ RSpec.describe(Speaker, type: :model) do
       it { expect(subject).to(be_falsey) }
     end
   end
+
+  describe '#avatar_full_url' do
+    subject { speaker.avatar_full_url }
+    before { allow(speaker).to(receive(:avatar_url).and_return('/test_image.jpg')) }
+    let!(:speaker) { create(:speaker_alice) }
+
+    context 'when speaker has avatar_data' do
+      it { is_expected.to(eq("https://#{ENV.fetch('S3_BUCKET', '')}.s3.#{ENV.fetch('S3_REGION', '')}.amazonaws.com/test_image.jpg")) }
+    end
+  end
 end

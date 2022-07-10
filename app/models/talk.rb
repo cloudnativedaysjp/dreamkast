@@ -98,7 +98,7 @@ class Talk < ApplicationRecord
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
-    columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]
+    columns = %w[id title abstract speaker avatar_url date track_id session_time difficulty category created_at twitter_id company start_to_end]
     labels = conference.proposal_item_configs.map(&:label).uniq
     labels.delete('session_time')
     columns.concat(labels)
@@ -112,6 +112,9 @@ class Talk < ApplicationRecord
                talk.title,
                talk.abstract,
                talk.speaker_names.join('/ '),
+               talk.avatar_urls.join('/ '),
+               talk.conference_day.date,
+               talk.track.name,
                talk.time,
                talk.talk_difficulty&.name,
                talk.talk_category&.name,
@@ -192,6 +195,10 @@ class Talk < ApplicationRecord
 
   def speaker_names
     speakers.map(&:name)
+  end
+
+  def avatar_urls
+    speakers.map(&:avatar_full_url)
   end
 
   def speaker_company_names

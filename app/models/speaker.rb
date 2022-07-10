@@ -69,6 +69,12 @@ class Speaker < ApplicationRecord
     end
   end
 
+  def avatar_full_url
+    if has_avatar?
+      "https://#{ENV.fetch('S3_BUCKET', '')}.s3.#{ENV.fetch('S3_REGION', '')}.amazonaws.com#{avatar_url}"
+    end
+  end
+
   def twitter_link
     link_to(ActionController::Base.helpers.image_tag('Twitter_Social_Icon_Circle_Color.png', width: 20), "https://twitter.com/#{twitter_id}") if twitter_id.present?
   end

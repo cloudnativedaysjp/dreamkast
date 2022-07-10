@@ -29,7 +29,7 @@ export AUTH0_CLIENT_SECRET=jBeB2Jd4sdfsdfdgetwarzOXYsdEyasdfq3wer3r9wglkj129UoF_
 export AUTH0_DOMAIN=yourdomain.auth0.com
 ```
 
-## Setup environment
+## How to setup environment
 
 This repository works with
 
@@ -103,8 +103,6 @@ Run Webpack dev server in case you want to edit JavaScript.
 $ ./bin/webpack-dev-server
 ```
 
-
-
 ## Ruby Type
 
 ### Generate RBS files for Rails
@@ -136,6 +134,60 @@ $ bundle exec rails db:seed
 
 ```
 aws --endpoint-url http://localhost:9324 sqs create-queue --queue-name chat
+```
+
+## How to use REST API for VideoRegistration
+
+### Retrieve CLIENT ID and CLIENT SECRET from Auth0
+
+https://manage.auth0.com/dashboard/us/dreamkast/applications/Piz0aBnXn0vxesyZScc76PgdCB7lCAbk/settings
+
+### Generate JWT Token
+
+```
+AUTH0_DOMAIN=dreamkast.us.auth0.com
+CLIENT_ID=<CLIENT ID>
+CLIENT_SECRET=<CLIENT SECRET>
+AUDIENCE=https://event.cloudnativedays.jp/
+TOKEN=$(curl --url https://${AUTH0_DOMAIN}/oauth/token \
+  --header 'content-type: application/json' \
+  --data "{\"client_id\":\"${CLIENT_ID}\",\"client_secret\":\"${CLIENT_SECRET}\",\"audience\":\"${AUDIENCE}\",\"grant_type\":\"client_credentials\"}" | jq -r .access_token)
+DREAMKAST_DOMAIN='event.cloudnativedays.jp'
+```
+
+※ Don't retrieve JWT token frequently due to Auth0 limitation. We recommend store generated token into environment variable. Generated token is available 1 day.
+
+### Get VideoRegistration
+
+```
+curl -X GET -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration
+```
+
+### Set URL
+
+```
+curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration -d '{
+  "url": "https://foobar"
+}'
+```
+
+### Set video status
+
+```
+curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration -d '{
+  "status": "confirmed",
+  "statistics": {
+            "file_name": "XX",
+            "resolution_status": "OK",
+            "resolution_type": "FHD",
+            "aspect_status": "OK",
+            "aspect_ratio": "16:9",
+            "duration_status": "OK",
+            "duration_description": "Appropriate media duration.",
+            "size_status": "OK",
+            "size_description": "Appropriate media size."
+          }
+}'
 ```
 
 ## Run rubocop automatically

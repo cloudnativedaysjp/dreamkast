@@ -179,6 +179,56 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
+  /api/v1/talks/{talkId}/video_registration:
+    get:
+      tags:
+        - VideoRegistration
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoRegistration'
+        '400':
+          description: Invalid params supplied
+        '401':
+          description: Unauthorized
+        '404':
+          description: Talk not found
+    put:
+      tags:
+        - VideoRegistration
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      summary: Put VideoRegistration
+      requestBody:
+        description: Update video_registration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoRegistration'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid params supplied
+        '401':
+          description: Unauthorized
+        '404':
+          description: Talk not found
   /api/v1/chat_messages:
     get:
       tags:
@@ -669,3 +719,36 @@ components:
         - miroUrl
         - pdfUrls
         - keyImageUrls
+    VideoRegistration:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        status:
+          type: string
+          enum: [unsubmitted, submitted, confirmed, invalid_format]
+        statistics:
+          type: object
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - status
+      example:
+        status: "confirmed"
+        url: "https://uploader.cloudnativedays.jp/hoge"
+        statistics: {
+            "file_name": "XX",
+            "resolution_status": "OK",
+            "resolution_type": "FHD",
+            "aspect_status": "OK",
+            "aspect_ratio": "16:9",
+            "duration_status": "OK",
+            "duration_description": "Appropriate media duration.",
+            "size_status": "OK",
+            "size_description": "Appropriate media size."
+        }
+        createdAt: "2022-04-30T10:06:33.938Z"
+        updatedAt: "2022-05-30T22:02:11.123Z"

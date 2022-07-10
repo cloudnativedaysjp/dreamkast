@@ -1,38 +1,76 @@
-<div class="card-group  my-4">
-  <% @talks.each do |talk| %>
-    <div class="card m-1">
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= talk.title %>
-          <%= link_to '(Public Session Page)', talk_path(id: talk.id) %>
-        </h5>
-        <% if talk.proposal.present? %>
-          受付状況: <%= proposal_status(talk.proposal) %>
-        <% end %>
-        <% if talk.talk_category.present? %>
-          <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> / <%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></h6>
-        <% end %>
-        <p class="card-text"><%= simple_format talk.abstract %></p>
+<div class="card-group">
+  <div class="card">
+    <div class="card-header">
+      <b>Sessions</b>
+      <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions') %>
+    </div>
+    <% @talks.each do |talk| %>
+    <div class="card-body">
+      <h4 class="card-title session-title">
+        <%= talk.title %>
+        <%= link_to (image_tag "icons/box-arrow-up-right.svg"), talk_path(id: talk.id) %>
+      </h4>
+      <% if talk.talk_category.present? %>
+      <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> /
+        <%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></h6>
+      <% end %>
 
+      <% if talk.proposal.present? %>
+      <h5 class="card-title">
+        受付状況
+      </h5>
+      <div class="card-text">
+        <%= proposal_status(talk.proposal) %>
+      </div>
+      <% end %>
+
+      <h5 class="card-title">
+      概要
+      </h5>
+      <div class="card-text">
+        <%= simple_format talk.abstract %>
+      </div>
+
+      <h5 class="card-title">
+        セッション資料公開URL
+      </h5>
+      <div class="card-text">
         <% if talk.document_url.present? %>
-          <p class="card-text">セッション資料公開URL: <%= link_to talk.document_url, talk.document_url %></p>
+          <%= link_to talk.document_url, talk.document_url %>
+        </div>
         <% else %>
-          <% if conference.speaker_entry_disabled? %>
-            <p class="card-text">セッション資料公開URLはまだ追加されていません</p>
-          <% end %>
-        <% end %>
-
-        <% if conference.speaker_entry_disabled? %>
-
-          <% if talk.video_registration&.url.present? %>
-            <p class="card-text"><%= video_registration_status(talk.video_registration) %> (<%= link_to 'Download', talk.video_registration.url %>)</p>
-          <% else %>
-            <p class="card-text">ビデオファイル提出状況: ダウンロード用URLはまだ登録されていません</p>
-          <% end %>
-
-          <a href="<%= video_registration_url(talk) %>" class="btn btn-primary">ビデオファイル登録</a>
+          セッション資料公開URLはまだ追加されていません
+        </div>
+      <% end %>
+      
+      <h5 class="card-title">
+        ビデオファイル提出状況
+      </h5>
+      
+      <div class="card-text">
+        <% if talk.video_registration %>
+          <%= talk.video_registration.status %>
+        <% else %>
+        未確認<br/>
+        ※アップロードからステータス反映まで30分程度かかることがあります
         <% end %>
       </div>
+
+      <% if talk.video_registration&.statistics.present? %>
+      <h5 class="card-title">
+        ビデオファイル フォーマットチェック
+      </h5>
+      <div class="card-text video-format">
+        <% JSON.parse(talk.video_registration.statistics).each do |k,v| %>
+        <p><%= k %>:<%= v %></p>
+        <% end %>
+      </div>
+      <% end %>
+
+      <% if talk.video_registration&.url.present? %>
+      <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
+      <% end %>
     </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

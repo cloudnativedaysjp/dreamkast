@@ -103,69 +103,6 @@
     }
 }
 
-// Speaker Dashboard
-.speaker-dashboard-form {
-    background: rgba(255, 255, 255, 0.95);
-}
-
-#speaker-landing {
-    line-height: 200%;
-    a {
-        color: $primary;
-        text-decoration: underline;
-    }
-}
-
-@media (max-width: 992px) {
-    #speaker-landing {
-        line-height: 130%;
-    }
-}
-
-.speaker-dashboard-form h2 {
-    font-weight: bold;
-}
-
-.speaker-dashboard-form h3 {
-    font-weight: bold;
-}
-
-.speaker-dashboard-form h4 {
-    font-weight: bold;
-    font-size: large;
-}
-
-.speaker-dashboard-form p {
-    font-size: large;
-    margin: 1em 0;
-}
-
-.speaker-dashboard-form ol {
-    font-size: larger;
-    margin: 1em 0;
-}
-
-.speaker-dashboard-form ul {
-    font-size: larger;
-    margin: 1em 0;
-}
-
-.speaker-dashboard-form .privacy p {
-    font-size: small;
-}
-
-.speaker-dashboard-form:before h1 {
-    font-size: small;
-}
-
-.entry {
-    font-size: xx-large;
-}
-
-.speaker-dashboard-form .centered-image {
-    margin: 0 auto;
-}
-
 .information {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -186,9 +123,6 @@
     color: #ff0000;
 }
 
-// .speaker-dashboard-form .field {
-//     margin-bottom: 10px;
-// }
 .white_background {
     background: rgba(255, 255, 255, 0.95);
 }

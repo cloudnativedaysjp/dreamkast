@@ -21,6 +21,7 @@
 #  show_sponsors              :boolean          default("0")
 #  brief                      :string(255)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
+#  material_link              :string(255)
 #
 # Indexes
 #

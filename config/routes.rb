@@ -18,9 +18,14 @@ Rails.application.routes.draw do
       resources :talks, only: [:index, :show]
       resources :tracks, only: [:index, :show]
       resources :sponsors, only: [:index]
+      resources :speakers, only: [:index, :show]
       resources :chat_messages, only: [:index, :create, :update]
       resources :booths, only: [:show]
       get 'tracks/:id/viewer_count' => 'tracks#viewer_count'
+      namespace 'talks' do
+        get ':id/video_registration' => 'video_registration#show'
+        put ':id/video_registration' => 'video_registration#update'
+      end
     end
   end
 

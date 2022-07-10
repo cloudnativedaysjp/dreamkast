@@ -1,6 +1,6 @@
 <%= form_with(url: speaker_url, model: @speaker_form, local: true) do |form| %>
   <section class="speaker-information py-3">
-    <h3 class="py-3">スピーカー情報</h3>
+    <a id="speaker"><h3 class="py-3">スピーカー情報</h3></a>
 
     <div class="field pb-3">
       <%= form.label :name, '講演者氏名（英語表記） - Your Name' %>*
@@ -67,7 +67,7 @@
   </section>
 
   <section class="speaker-information py-3">
-    <h3 class="py-3">セッション情報</h3>
+    <a id="sessions"><h3 class="py-3">セッション情報</h3></a>
 
     <div class="talk-fields">
       <%= form.fields_for :talks do |talk| %>

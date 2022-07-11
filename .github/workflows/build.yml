@@ -31,6 +31,7 @@ jobs:
           images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
           tags: |
             type=sha,prefix=,format=long
+            type=ref,event=branch
 
       - name: Build
         id: docker_build

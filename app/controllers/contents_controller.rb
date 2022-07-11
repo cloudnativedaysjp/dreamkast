@@ -31,12 +31,8 @@ class ContentsController < ApplicationController
   end
 
   def o11y
-    if params[:event] == 'o11y2022'
-      @conference = Conference.find_by(abbr: params[:event])
-      render("#{@conference.abbr}_o11y".to_sym)
-    else
-      redirect_to("/#{params[:event]}")
-    end
+    @conference = Conference.find_by(abbr: params[:event])
+    render(:o11y)
   end
 
   private

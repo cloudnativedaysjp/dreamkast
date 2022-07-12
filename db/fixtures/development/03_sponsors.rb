@@ -875,6 +875,20 @@ Sponsor.seed(
     conference_id: 6,
     url: 'https://www.elastic.co/'
   },
+  {
+    id: 127,
+    name: 'Plaid',
+    abbr: 'Plaid',
+    conference_id: 6,
+    url: 'https://plaid.co.jp/'
+  },
+  {
+    id: 128,
+    name: 'さくらインターネット株式会社',
+    abbr: 'sakura',
+    conference_id: 6,
+    url: 'https://www.sakura.ad.jp'
+  },
 )
 
 SponsorType.seed(
@@ -1080,6 +1094,12 @@ SponsorType.seed(
     name: "CM",
     order: 2,
   },
+  {
+    id: 38,
+    conference_id: 6,
+    name: "Tool",
+    order: 3,
+  },
 )
 
 [
@@ -1234,6 +1254,8 @@ SponsorType.seed(
   [150, 'Session', 'google', 6],
   [151, 'CM', 'sysdig', 6],
   [152, 'CM', 'elastic', 6],
+  [153, 'Tool', 'plaid', 6],
+  [154, 'Tool', 'sakura', 6],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1375,6 +1397,8 @@ end
   [124, 'google', 'sponsors/cnsec2022/google.png', 6],
   [125, 'sysdig', 'sponsors/cnsec2022/sysdig.png', 6],
   [126, 'elastic', 'sponsors/cnsec2022/elastic.png', 6],
+  [127, 'plaid', 'sponsors/cnsec2022/plaid.png', 6],
+  [128, 'sakura', 'sponsors/cnsec2022/sakura.png', 6],
 ].each do |logo|
   SponsorAttachment.seed(
     { id: logo[0],

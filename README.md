@@ -173,6 +173,13 @@ curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/t
 
 ### Set video status
 
+You can set these values in status.
+
+- unsubmitted
+- submitted
+- confirmed
+- invalid_format
+
 ```
 curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration -d '{
   "status": "confirmed",

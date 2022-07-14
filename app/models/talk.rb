@@ -106,7 +106,7 @@ class Talk < ApplicationRecord
 
     # this column was added later,
     # so it is added at the end for processing by the broadcast team.
-    columns_added_later = %w[avatar_url date track_id(A,B...)]
+    columns_added_later = %w[avatar_url date track_id]
     columns.concat(columns_added_later)
 
     csv = CSV.generate do |csv|

@@ -49,7 +49,9 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?
+  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?,
+                :talk_category, :talk_difficulty, :display_speaker_dashboard_link?,
+                :video_registration_url, :video_registration_status, :proposal_status
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')

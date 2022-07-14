@@ -20,7 +20,7 @@
         受付状況
       </h5>
       <div class="card-text">
-        <%= proposal_status(talk.proposal) %>
+        <%= talk.proposal.status_message %>
       </div>
       <% end %>
 
@@ -49,7 +49,7 @@
       
       <div class="card-text">
         <% if talk.video_registration %>
-          <%= talk.video_registration.status %>
+          <%= talk.video_registration.status_message %>
         <% else %>
         未確認<br/>
         ※アップロードからステータス反映まで30分程度かかることがあります
@@ -61,9 +61,14 @@
         ビデオファイル フォーマットチェック
       </h5>
       <div class="card-text video-format">
+        <table class="table table-striped">
         <% JSON.parse(talk.video_registration.statistics).each do |k,v| %>
-        <p><%= k %>:<%= v %></p>
+          <tr>
+            <th><%= k %></th>
+            <td><%= v %></td>
+          </tr>
         <% end %>
+        </table>
       </div>
       <% end %>
 

@@ -99,9 +99,15 @@ class Talk < ApplicationRecord
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
     columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]
+
     labels = conference.proposal_item_configs.map(&:label).uniq
     labels.delete('session_time')
     columns.concat(labels)
+
+    # this column was added later,
+    # so it is added at the end for processing by the broadcast team.
+    columns_added_later = %w[avatar_url date track_id]
+    columns.concat(columns_added_later)
 
     csv = CSV.generate do |csv|
       # カラム名を1行目として入れる
@@ -123,6 +129,9 @@ class Talk < ApplicationRecord
           v = talk.proposal_item_value(label)
           row << (v.instance_of?(Array) ? v.join(', ') : v)
         end
+        row << talk.avatar_urls.join('/ ')
+        row << talk.conference_day.date
+        row << talk.track.name
         csv << row
       end
     end
@@ -192,6 +201,10 @@ class Talk < ApplicationRecord
 
   def speaker_names
     speakers.map(&:name)
+  end
+
+  def avatar_urls
+    speakers.map(&:avatar_full_url)
   end
 
   def speaker_company_names

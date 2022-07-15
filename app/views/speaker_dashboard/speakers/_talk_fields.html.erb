@@ -20,7 +20,7 @@
   <div class="field pb-3">
     <%= f.label :abstract, '講演内容 - Abstract（★★★）' %>
     <p class="field-description" style="font-size: 0.7em">（200文字程度）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (About 400 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
-    <%= f.text_area :abstract, {class: "form-control"}  %>
+    <%= f.text_area :abstract, {class: "form-control abstract"}  %>
   </div>
 
   <% unless ['cicd2021', 'o11y2022', 'cnsec2022'].include?(@conference.abbr) %>

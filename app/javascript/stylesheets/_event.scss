@@ -1,0 +1,51 @@
+#speakers,
+#committee {
+    background-color: $white;
+    @media (max-width: 576px) {
+        display: none;
+    }
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 50px;
+    }
+    li {
+        list-style: none;
+    }
+    .speaker-list {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .name {
+        display: none;
+        position: absolute;
+        padding: 5px;
+        font-size: 12px;
+        line-height: 1.6em;
+        color: #fff;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        width: 100px;
+        height: 100px;
+    }
+    // .name:before {
+    //     content: "";
+    //     position: absolute;
+    //     top: 100%;
+    //     left: 50%;
+    //     border: 15px solid transparent;
+    //     border-top: 15px solid $primary;
+    //     margin-left: -15px;
+    // }
+    .speaker-list:hover .name {
+        display: inline-block;
+        top: 0px;
+        left: 0px;
+        img {
+            width: 20px;
+            margin: 10px;
+        }
+    }
+}

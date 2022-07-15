@@ -25,7 +25,7 @@ class Proposal < ApplicationRecord
   end
 
   def status_message
-    return 'エントリー済み' unless talk.conference.cfp_result_visible
+    return STATUS_MESSAGE['registered'] unless talk.conference.cfp_result_visible
     STATUS_MESSAGE[status]
   end
 end

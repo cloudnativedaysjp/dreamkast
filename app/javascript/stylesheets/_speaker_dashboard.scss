@@ -14,6 +14,10 @@
 
 .speaker-dashboard-form {
     background: rgba(255, 255, 255, 0.95);
+    #speaker_notice .card-body {
+        overflow-y: scroll;
+        height: 20rem;
+    }
     .card-title a,
     .card-text a {
         text-decoration: underline;
@@ -71,4 +75,13 @@
 
 .entry {
     font-size: xx-large;
+}
+
+.speaker-information {
+    #speaker_profile {
+        height: 8rem;
+    }
+    .abstract {
+        height: 10rem;
+    }
 }

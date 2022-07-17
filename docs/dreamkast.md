@@ -1,6 +1,10 @@
 Dreamkast
 =========
 
+<div align="center">
+<img src="images/dreamkast.png" width="300">
+</div>
+
 Repository: https://github.com/cloudnativedaysjp/dreamkast/
 
 ### これは何？

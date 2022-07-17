@@ -1,6 +1,10 @@
 Dreamkast UI
 ============
 
+<div align="center">
+<img src="images/dreamkast-ui.png" width="300">
+</div>
+
 Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
 
 ### これは何？

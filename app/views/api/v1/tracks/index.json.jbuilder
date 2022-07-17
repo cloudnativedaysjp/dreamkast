@@ -3,4 +3,5 @@ json.array!(@tracks) do |track|
   json.name(track.name)
   json.videoPlatform(track.video_platform)
   json.videoId(track.live_stream_ivs.present? ? track.live_stream_ivs&.playback_url : track.video_id)
+  json.channelArn(track.live_stream_ivs&.channel_arn)
 end

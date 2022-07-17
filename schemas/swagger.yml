@@ -446,13 +446,19 @@ components:
           type: string
         videoPlatform:
           type: string
+          nullable: true
         videoId:
           type: string
+          nullable: true
+        channelArn:
+          type: string
+          nullable: true
       example:
         id: 2
         name: "Track 2"
         videoPlatform: "vimeo"
         videoId: "453935827"
+        channelArn: "arn:aws:ivs:us-east-1:607167088920:channel/KdizL0w0PD7i"
       required:
         - id
         - name

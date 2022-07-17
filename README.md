@@ -1,5 +1,9 @@
 # dreamkast
 
+<div align="center">
+<img src="images/dreamkast.png" width="300">
+</div>
+
 Online Conference System written in Ruby on Rails
 
 ## About Dreamkast platform

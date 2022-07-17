@@ -7,128 +7,101 @@ Dreamkast platform
 - [Dreamkast UI](#dreamkast-UI)
 - [Dreamkast Infra](#dreamkast-infra)
 - [Dreamkast Relasebot](#dreamkast-relasebot)
-- [Dreamkast ReviewApp Operator](#dreamkast-reveiwapp-operator)
+- [Dreamkast Review App Operator](#dreamkast-reveiw-app-operator)
 - [Dreamkast API Docs](#dreamkast-api-docs)
 
-## Repositories / Components
+## Dreamkast
 
-### Dreamkast
+See [Dreamkast](docs/dreamkast.md)
 
-Repository: https://github.com/cloudnativedaysjp/dreamkast/
-
-#### これは何？
-
-Ruby on Railsで書かれたDreamkast platformの中核となるコンポーネント。
-
-- イベントのブランドサイト
-- ユーザーのサインアップ
-- タイムテーブル
-- CFP受付
-- Proposal採択
-- 登壇者およびスポンサー向け情報の提供
-- Talk管理
-- IVSのコントロール
-- UIのオンエア状態のコントロール
-- 各種API
-
-#### どこで動いているか
-
-- EKS(Kubernetes)
-
-Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
-
-#### 依存しているサービス
-
-- EKS(Kubernetes) - 実行環境として
-- Auth0 - 認証認可
-- Amazon RDS(MySQL) - DBとして。開発環境ではMySQLのコンテナを利用
-- Amazon S3 - アップロードされた画像の保存先として
-- Amazon ElastiCache(Redis) - セッションの保存。開発環境ではRedisのコンテナを利用
-- Amazon SES - メール送信
-- Amazon SQS - チャットやメール送信のキューとして
-- Amazon IVS, MediaLive, MediaPackage - 動画配信
-- Sentry - エラートラッキング
-
-### Dreamkast UI
+## Dreamkast UI
 
 Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
 
-#### これは何？
+### これは何？
 
+イベント当日に視聴者が動画配信を視聴するためのアプリケーション。Amazon IVSやVimeoの動画を埋め込み、視聴者に提供する。タブによるUIで簡単にトラックを切り替えられる設計が特徴
 
-#### どこで動いているか
+ Next.jsを使っており、TypeScriptで記述されている。
 
-- EKS(Kubernetes)
+- IVS/Vimeoの埋め込み(イベントによって使い分ける)
+- タブによるセッション切り替え機能
+- チャット機能
+- スポンサーブース(現状は無効化)
 
-Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
+DreamkastとDreamkast UIの前段にはKubernetes上で稼働しているContourがおり、L7ロードバランスされている。/uiにアクセスしたときはDreamkast UIに繋がるようになっている
 
-#### 依存しているサービス
-
-
-### Dreamkast UI
-
-Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
-
-#### これは何？
-
-
-#### どこで動いているか
+### どこで動いているか
 
 - EKS(Kubernetes)
 
 Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
 
-#### 依存しているサービス
+### 依存しているサービス
 
+- Dreamkast - REST APIでイベントに関する情報を取得。またイベントの切り替えやチャットをWebSocketを使って通信している
+- Karte - 利用者トラッキング
 
+## Dreamkast Infra
 
+Repository: https://github.com/cloudnativedaysjp/dreamkast-infra
 
-### Dreamkast UI
+### これは何？
 
-Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
+Dreamkastの各コンポーネントをIaCするリポジトリ。
 
-#### これは何？
+- Kubernetesマニフェスト
+- CloudFormation - AWSリソースの管理
+- Terraform - AWS以外のリソースの管理
+- Grafana Dashboard
 
+## Dreamkast Releasebot
 
-#### どこで動いているか
+Repository: https://github.com/cloudnativedaysjp/dreamkast-releasebot
 
-- EKS(Kubernetes)
+### これは何？
 
-Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
+ChatOpsを実現するコンポーネント。Slackで@dreamkast-releasebotを呼び出すことで、各プロダクトをProduction環境にデプロイできる。
 
-#### 依存しているサービス
+言語/Framework: Go / slack-go (RTM)
 
-
-
-### Dreamkast UI
-
-Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
-
-#### これは何？
-
-
-#### どこで動いているか
-
-- EKS(Kubernetes)
-
-Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
-
-#### 依存しているサービス
-
-
-
-### Dreamkast UI
-
-Repository: https://github.com/cloudnativedaysjp/dreamkast-ui/
-
-#### これは何？
-
-
-#### どこで動いているか
+### どこで動いているか
 
 - EKS(Kubernetes)
 
-Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast
+Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast-releasebot
 
-#### 依存しているサービス
+## Dreamkast Review App Operator
+
+Repository: https://github.com/cloudnativedaysjp/dreamkast-releasebot
+
+### これは何？
+
+GitHubのPull Requestをチェックし、新しいPRが出来たらDreamkastのコンポーネント一式を立ち上げる、KubernetesのOperator。
+
+言語/Framework: Go / Kubebuilder
+
+### どこで動いているか
+
+- EKS(Kubernetes)
+
+Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/infra/reviewapp-operator
+
+## Dreamkast API Docs
+
+Repository: https://github.com/cloudnativedaysjp/dreamkast-api-docs
+
+### これは何？
+
+DreamkastのAPIを定義しているドキュメント。Swaggerを利用している
+
+### どこで動いているか
+
+- DocsがKubernetes上で動いている
+
+Manifest: https://github.com/cloudnativedaysjp/dreamkast-infra/tree/main/manifests/app/dreamkast-api-mock/base
+
+
+
+
 

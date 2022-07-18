@@ -68,6 +68,10 @@ FactoryBot.define do
     track_id { 1 }
     show_on_timetable { true }
     video_published { false }
+
+    trait :conference_day_id_1 do
+      conference_day_id { 1 }
+    end
   end
 
   factory :talk3, class: Talk do

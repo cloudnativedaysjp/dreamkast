@@ -35,6 +35,10 @@ FactoryBot.define do
       talk_id { 1 }
     end
 
+    trait :talk2 do
+      talk_id { 2 }
+    end
+
     trait :talk3 do
       talk_id { 3 }
     end

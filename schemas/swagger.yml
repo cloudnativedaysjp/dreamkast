@@ -179,6 +179,26 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
+    put:
+      tags:
+        - Talk
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      summary: Put Talk
+      requestBody:
+        description: Update on_air status
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                on_air:
+                  type: boolean
   /api/v1/talks/{talkId}/video_registration:
     get:
       tags:

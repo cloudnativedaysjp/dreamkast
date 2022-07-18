@@ -48,7 +48,7 @@ function cropUpload(fileInput) {
   })
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('turbolinks:load', function () {
   document.querySelectorAll('#avatar_upload').forEach(function (fileInput) {
     cropUpload(fileInput)
   })

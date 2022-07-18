@@ -24,63 +24,22 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
-    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime('%Y-%m-%d')
-    @conference_day = @conference.conference_days.select { |day| day.date.strftime('%Y-%m-%d') == @date }.first
-    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
-    @track = @conference.tracks.find_by(name: @track_name)
-    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
-    @talks = @conference
-             .talks
-             .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
-             .order('conference_day_id ASC, start_time ASC, track_id ASC')
     talk = Talk.find(params[:talk][:id])
-    ActiveRecord::Base.transaction do
-      other_talk_in_track = @conference.tracks.find_by(name: talk.track.name).talks
-                                       .select { |t| t.conference_day.id == talk.conference_day.id && t.id != talk.id }
-      other_talk_in_track.each do |talk|
-        talk.video.update!(on_air: false)
-      end
-
-      talk.video.update!(on_air: true)
-    end
-
-    ActionCable.server.broadcast(
-      'track_channel', Video.on_air(conference)
-    )
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2
-    )
+    talk.start_streaming
 
     flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
     respond_to do |format|
-      format.js { render('admin/tracks/index.js') }
+      format.js { render(json: { message: 'OK' }, status: 200) }
     end
   end
 
   def stop_on_air
-    @date = params[:talk][:date] || @conference.conference_days.first.date.strftime('%Y-%m-%d')
-    @conference_day = @conference.conference_days.select { |day| day.date.strftime('%Y-%m-%d') == @date }.first
-    @track_name = params[:talk][:track_name] || @conference.tracks.first.name
-    @track = @conference.tracks.find_by(name: @track_name)
-    @track.live_stream_media_live.get_channel_from_aws if @track.live_stream_media_live
-    @talks = @conference
-             .talks
-             .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
-             .order('conference_day_id ASC, start_time ASC, track_id ASC')
-
     talk = Talk.find(params[:talk][:id])
-    talk.video.update!(on_air: false)
-
-    ActionCable.server.broadcast(
-      'track_channel', Video.on_air(conference)
-    )
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2
-    )
+    talk.stop_streaming
 
     flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
     respond_to do |format|
-      format.js { render('admin/tracks/index.js') }
+      format.js { render(json: { message: 'OK' }, status: 200) }
     end
   end
 

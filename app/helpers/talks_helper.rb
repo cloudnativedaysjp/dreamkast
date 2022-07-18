@@ -20,7 +20,7 @@ module TalksHelper
       'track_channel', Video.on_air(conference)
     )
     ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
     )
   end
 end

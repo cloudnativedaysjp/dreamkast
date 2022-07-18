@@ -77,7 +77,7 @@ paths:
           description: Invalid [eventAbbr] supplied
         '404':
           description: Event not found
-  
+
   /api/v1/tracks/{trackId}:
     get:
       tags:
@@ -452,6 +452,9 @@ components:
           nullable: true
         channelArn:
           type: string
+          nullable: true
+        onAirTalk:
+          type: object
           nullable: true
       example:
         id: 2

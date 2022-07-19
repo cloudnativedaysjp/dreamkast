@@ -13,15 +13,6 @@ module ApplicationHelper
     redirect_to(root_path, alert: 'ログインしてください')
   end
 
-  def message_box
-    cls = ''
-    unless @message_box
-      @message_box = "#{Conference.find(1).name}へようこそ"
-      cls = 'd-none'
-    end
-    "<div id=\"message_box\" class=\"#{cls}\"><p>#{@message_box}</p></div>"
-  end
-
   def site_name
     if event_name && Conference.find_by(abbr: event_name).present?
       Conference.find_by(abbr: event_name).name

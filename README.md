@@ -1,6 +1,14 @@
 # dreamkast
 
-Online Conference Platform
+<div align="center">
+<img src="docs/images/dreamkast.png" width="300">
+</div>
+
+Online Conference System written in Ruby on Rails
+
+## About Dreamkast platform
+
+See [Docs](docs/README.md)
 
 ## Prerequisites
 

@@ -31,21 +31,6 @@
             background-color: $primary;
         }
     }
-    #speakers {
-        background-color: $white;
-        @media (max-width: 576px) {
-            display: none;
-        }
-        ul {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 50px;
-        }
-        li {
-            list-style: none;
-        }
-    }
 }
 
 #cnsec2022 #masthead {

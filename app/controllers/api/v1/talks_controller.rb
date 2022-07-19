@@ -22,7 +22,7 @@ class Api::V1::TalksController < ApplicationController
 
   def update
     talk = Talk.find(params[:id])
-    body ||= JSON.parse(request.body.read, { symbolize_names: true })
+    body = JSON.parse(request.body.read, { symbolize_names: true })
     if body[:on_air].nil?
       render_400
     else

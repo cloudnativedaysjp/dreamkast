@@ -24,7 +24,7 @@
       <% end %>
     </td>
     <td>
-      <% if talk.abstract != 'intermission' %>
+      <% if talk.abstract != 'intermission' && talk.live? %>
         <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
       <% end %>
     </td>

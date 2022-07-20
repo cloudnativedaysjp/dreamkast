@@ -514,6 +514,17 @@ Proposal.seed(csv.map{|line|
   }
 })
 
+csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/proposal_items.csv'), headers: true)
+ProposalItem.seed(csv.map{|line|
+  {
+    id: line["id"],
+    conference_id: line["conference_id"],
+    talk_id: line["talk_id"],
+    label: line["label"],
+    params: line["params"]
+  }
+})
+
 # Mock profile
 Profile.seed(
   {

@@ -81,6 +81,14 @@ FactoryBot.define do
     item_number { 1 }
     item_name { '登壇方法の希望' }
     params { '現地登壇' }
+
+    trait :live do
+      params { 'オンライン登壇' }
+    end
+
+    trait :video do
+      params { '事前収録' }
+    end
   end
 
   factory :proposal_item_configs_session_time, class: ProposalItemConfig do

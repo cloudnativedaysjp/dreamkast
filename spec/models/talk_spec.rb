@@ -62,4 +62,27 @@ describe Talk, type: :model do
       end
     end
   end
+
+  context 'live?' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+    let!(:proposal_item_config_1) { create(:proposal_item_configs_presentation_method, :live, conference: cndt2020) }
+    let!(:proposal_item_config_2) { create(:proposal_item_configs_presentation_method, :video, conference: cndt2020) }
+
+    context 'live session' do
+      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk: talk, params: proposal_item_config_1.id ) }
+
+      it 'should be true' do
+        expect(talk.live?).to(be_truthy)
+      end
+    end
+
+    context 'non-live session' do
+      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk: talk, params: proposal_item_config_2.id ) }
+
+      it 'should be true' do
+        expect(talk.live?).to(be_falsey)
+      end
+    end
+  end
 end

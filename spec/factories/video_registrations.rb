@@ -7,8 +7,8 @@
 #  url        :string(255)
 #  status     :integer          default("0"), not null
 #  statistics :json             not null
-#  created_at :datetime
-#  updated_at :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #

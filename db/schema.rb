@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time", precision: nil
+    t.datetime "publish_time"
     t.text "body"
     t.boolean "publish"
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
@@ -114,7 +114,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
     t.boolean "show_sponsors", default: false
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
-    t.string "material_link"
     t.index ["status"], name: "index_conferences_on_status"
   end
 
@@ -166,8 +165,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
     t.bigint "talk_id", null: false
     t.string "job_id"
     t.string "status"
-    t.datetime "start_time", precision: nil
-    t.datetime "end_time", precision: nil
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["conference_id"], name: "index_media_package_harvest_jobs_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_harvest_jobs_on_media_package_channel_id"
     t.index ["talk_id"], name: "index_media_package_harvest_jobs_on_talk_id"
@@ -267,7 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
 
   create_table "speaker_announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time", precision: nil, null: false
+    t.datetime "publish_time", null: false
     t.text "body", null: false
     t.boolean "publish", default: false
     t.datetime "created_at", null: false

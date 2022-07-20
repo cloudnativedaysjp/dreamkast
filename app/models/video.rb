@@ -44,10 +44,10 @@ class Video < ApplicationRecord
     list
   end
 
-  def self.on_air_v2
-    tracks = Track.where(conference_id: 2)
+  def self.on_air_v2(conference_id)
+    tracks = Track.where(conference_id: conference_id)
     res = {}
-    on_air_talks = Talk.on_air.where(conference_id: 2)
+    on_air_talks = Talk.on_air.where(conference_id: conference_id)
     tracks.each do |track|
       talk = on_air_talks.find_by(track_id: track.id)
       if talk

@@ -318,6 +318,29 @@ class Talk < ApplicationRecord
     r
   end
 
+  def start_streaming
+    ActiveRecord::Base.transaction do
+      other_talks_in_track = conference.tracks.find_by(name: track.name).talks
+                                       .select { |t| t.conference_day.id == conference_day.id && t.id != id }
+      other_talks_in_track.each do |other_talk|
+        other_talk.video.update!(on_air: false)
+      end
+
+      video.update!(on_air: true)
+    end
+
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+    )
+  end
+
+  def stop_streaming
+    video.update!(on_air: false)
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+    )
+  end
+
   private
 
   def validate_proposal_item_configs

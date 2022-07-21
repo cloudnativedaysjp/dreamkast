@@ -341,6 +341,14 @@ class Talk < ApplicationRecord
     )
   end
 
+  def live?
+    method = proposal_items.find_by(label: 'presentation_method')
+    return false unless method
+
+    config = ProposalItemConfig.find(method.params)
+    config.params == 'オンライン登壇'
+  end
+
   private
 
   def validate_proposal_item_configs

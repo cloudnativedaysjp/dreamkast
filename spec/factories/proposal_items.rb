@@ -26,4 +26,8 @@ FactoryBot.define do
   factory :radio_button_item_3, class: ProposalItem do
     label { 'radio_button_item_3' }
   end
+
+  factory :presentation_method, class: ProposalItem do
+    label { 'presentation_method' }
+  end
 end

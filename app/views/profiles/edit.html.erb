@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row justify-content-lg-center">
         <div class="col-12 col-lg-12 registration-form py-3 px-md-5">
-            <p id="notice" class="alert alert-success" role="alert"><%= notice %></p>
+            <% flash.each do |key, value| %>
+                <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
+            <% end %>
             <h2>登録情報変更</h2>
             <%= render 'form', profile: @profile %>
         </div>

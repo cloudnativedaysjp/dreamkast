@@ -28,4 +28,14 @@ class VideoRegistration < ApplicationRecord
   def status_message
     STATUS_MESSAGE[status]
   end
+
+  # TODO: ステータスが変化したときにメールを送る
+  # def send_mail
+  #   begin
+  #     speaker = Speaker.find(talk.speaker_id)
+  #     SpeakerMailer.video_uploaded(speaker, talk, @video_registration).deliver_later
+  #   rescue => e
+  #     logger.error("Failed to send mail: #{e.message}")
+  #   end
+  # end
 end

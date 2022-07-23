@@ -31,7 +31,7 @@
               <%= talk.video_registration&.status_message %>
             </td>
             <td>
-              <% if talk.video_registration.present? %>
+              <% if talk.video_registration.present? && talk.video_registration.statistics.present?  %>
                 <% JSON.parse(talk.video_registration&.statistics).each  do |k, v| %>
                   <%= k %>: <%= v %><br>
                 <% end %>

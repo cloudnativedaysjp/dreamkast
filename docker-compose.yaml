@@ -22,7 +22,7 @@ services:
       REDIS_URL: redis://redis:6379
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       SQS_FIFO_QUEUE_URL: http://sqs:9324/queue/default
-      REVIEW_APP: true
+      REVIEW_APP: "true"
     tty: true
     stdin_open: true
     tmpfs:

@@ -91,9 +91,9 @@ class LiveStreamIvs < LiveStream
   def ivs_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::IVS::Client.new(region: 'us-east-1', credentials: creds)
+      Aws::IVS::Client.new(region: 'ap-northeast-1', credentials: creds)
     else
-      Aws::IVS::Client.new(region: 'us-east-1')
+      Aws::IVS::Client.new(region: 'ap-northeast-1')
     end
   end
 

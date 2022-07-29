@@ -43,9 +43,6 @@ class Admin::TracksController < ApplicationController
         start_offset: value[:startOffset],
         end_offset: value[:endOffset]
       )
-      talk.start_offset = value[:startOffset]
-      talk.end_offset = value[:endOffset]
-      talk.save
     end
     ActionCable.server.broadcast(
       "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)

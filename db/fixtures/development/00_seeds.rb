@@ -139,6 +139,20 @@ CloudNative Security Conference 2022 (CNSec2022) は、クラウドネイティ�
 EOS
   },
   {
+    id: 7,
+    name: "CloudNative Days Tokyo 2022",
+    abbr: "cndt2022",
+    theme: "TBD",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Tokyo 2022 Committee",
+    about: <<'EOS'
+TBD
+EOS
+  },
+  {
     id: 10,
     name: "Test Event Winter 2020",
     status: 3, # archived

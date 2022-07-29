@@ -17,10 +17,9 @@
 <table class="table table-striped talks_table" >
   <thead>
   <tr>
-    <th scope="col">Talk ID</th>
-    <th scope="col">Time</th>
-    <th scope="col">Speakers</th>
-    <th scope="col">Title</th>
+    <th scope="col">ID</th>
+    <th scope="col" style="width: 200px;">Time</th>
+    <th scope="col">Speakers<br/>Title</th>
     <th scope="col">On Air</th>
     <th scope="col">Recording</th>
     <th scope="col">Recording Status</th>
@@ -31,6 +30,14 @@
   <%= render 'admin/tracks/partial/talks_table', conference_day: conference_day, talks: @talks, track: @track %>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col-12 m-2">
+    <%= form_with url: admin_update_offset_path, id: 'time' do |f| %>
+      <%= f.submit("Offsetを更新", {class: "btn btn-primary" }) %>
+    <% end %>
+  </div>
+</div>
 
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
@@ -49,5 +56,3 @@
 <div id='debug_media_live_information'>
   <%= render 'admin/tracks/partial/debug_media_live_information' %>
 </div>
-
-<%= javascript_pack_tag 'admin/tracks/media_live.js' %>

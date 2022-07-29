@@ -1,13 +1,18 @@
-$(function(){
-  clearInterval(window.media_live_timer);
-  console.log("media_live_timer activated");
+import consumer from "./consumer"
 
-  window.media_live_timer = setInterval(function() {
-    console.log('update')
-    $.ajax({
-      url: location.href,
-      type: 'GET',
-      dataType: 'script'
-    })
-  }, 10000);
+consumer.subscriptions.create({ channel: "OnAirChannel", eventAbbr: "cnsec2022" }, {
+    connected() {
+        console.log("onair connected");
+    },
+
+    disconnected() {},
+
+    received(data) {
+        console.log("Received");
+        window.location.reload();
+    },
+
+    update: function(message) {
+        return this.perform('update');
+    }
 });

@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       put 'proposals' => 'proposals#update_proposals'
       resources :tracks, only: [:index]
       put 'tracks' => 'tracks#update_tracks'
+      post 'update_offset' => 'tracks#update_offset'
       resources :attachments, only: [:show]
       get 'team' => 'teams#show'
       put 'team' => 'teams#update'

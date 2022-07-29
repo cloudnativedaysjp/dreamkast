@@ -39,7 +39,10 @@ class Admin::TracksController < ApplicationController
 
   def update_offset
     params[:time][0].each do |id, value|
-      talk = Talk.find(id)
+      Talk.find(id).update!(
+          start_offset: value[:startOffset],
+          end_offset: value[:endOffset]
+      )
       talk.start_offset = value[:startOffset]
       talk.end_offset = value[:endOffset]
       talk.save

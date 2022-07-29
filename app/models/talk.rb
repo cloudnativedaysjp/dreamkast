@@ -354,19 +354,27 @@ class Talk < ApplicationRecord
   end
 
   def start_time
-    self[:start_time].change(
-      year: conference_day.date.year,
-      month: conference_day.date.month,
-      day:  conference_day.date.day
-    )
+    if conference_day
+      self[:start_time].change(
+        year: conference_day.date.year,
+        month: conference_day.date.month,
+        day:  conference_day.date.day
+      )
+    else
+      self[:start_time]
+    end
   end
 
   def end_time
-    self[:end_time].change(
-      year: conference_day.date.year,
-      month: conference_day.date.month,
-      day:  conference_day.date.day
-    )
+    if conference_day
+      self[:end_time].change(
+        year: conference_day.date.year,
+        month: conference_day.date.month,
+        day:  conference_day.date.day
+      )
+    else
+      self[:end_time]
+    end
   end
 
   def actual_start_time

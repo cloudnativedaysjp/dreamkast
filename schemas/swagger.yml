@@ -511,6 +511,8 @@ components:
       properties:
         id:
           type: number
+        conferenceId:
+          type: number
         trackId:
           type: number
         videoPlatform:

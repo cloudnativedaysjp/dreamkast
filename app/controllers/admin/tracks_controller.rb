@@ -12,7 +12,7 @@ class Admin::TracksController < ApplicationController
     @talks = @conference
              .talks
              .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
-             .order('conference_day_id ASC, start_time ASC, track_id ASC')
+             .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
 
     respond_to do |format|
       format.html
@@ -35,5 +35,18 @@ class Admin::TracksController < ApplicationController
         format.js
       end
     end
+  end
+
+  def update_offset
+    params[:time][0].each do |id, value|
+      Talk.find(id).update!(
+        start_offset: value[:startOffset],
+        end_offset: value[:endOffset]
+      )
+    end
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+    )
+    redirect_to(admin_tracks_path, flash: { success: 'Offset updated' })
   end
 end

@@ -31,4 +31,12 @@
     <% end %>
   </div>
 <% end %>
+
+<div id="transit_nav" class="p-4">
+  <%= form_with url: admin_update_offset_path, id: 'time' do |f| %>
+    <%= f.submit("Offsetを更新", {id: "submit-offset", class: "btn transit_button" }) %>
+  <% end %>
+</div>
+
 <%= javascript_pack_tag 'admin/tracks/media_live.js' %>
+<%= javascript_pack_tag 'admin/tracks/tracks_control.js' %>

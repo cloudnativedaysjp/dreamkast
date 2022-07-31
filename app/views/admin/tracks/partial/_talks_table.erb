@@ -1,9 +1,23 @@
 <% talks.each do |talk| %>
   <tr>
     <td><%= talk.id %></td>
-    <td><%= talk.start_to_end %></td>
-    <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-    <td><h5><%= talk.title %></h5></td>
+    <td>
+      Planned<br/>
+      <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+      <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+      <br/>
+      Offset<br/>
+      <%= text_field_tag("time[][#{talk.id.to_s}][startOffset]", talk.start_offset.to_s, {size: 1, form: 'time', class: 'start-offset'}) %>-
+      <%= text_field_tag("time[][#{talk.id.to_s}][endOffset]", talk.end_offset.to_s, {size: 1, form: 'time'}) %>
+      <br/>
+      Actual<br/>
+      <%= text_field_tag(talk.id.to_s + "_actual_start", talk.actual_start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+      <%= text_field_tag(talk.id.to_s + "_actual_end", talk.actual_end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+    </td>
+    <td>
+      <h5><%= talk.title %></h5>
+      <ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
+    </td>
     <td >
       <% if talk.video %>
         <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>

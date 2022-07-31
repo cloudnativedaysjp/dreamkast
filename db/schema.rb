@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time"
+    t.datetime "publish_time", precision: nil
     t.text "body"
     t.boolean "publish"
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
@@ -165,8 +165,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
     t.bigint "talk_id", null: false
     t.string "job_id"
     t.string "status"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.index ["conference_id"], name: "index_media_package_harvest_jobs_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_harvest_jobs_on_media_package_channel_id"
     t.index ["talk_id"], name: "index_media_package_harvest_jobs_on_talk_id"
@@ -266,7 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
 
   create_table "speaker_announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.datetime "publish_time", null: false
+    t.datetime "publish_time", precision: nil, null: false
     t.text "body", null: false
     t.boolean "publish", default: false
     t.datetime "created_at", null: false
@@ -396,6 +396,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_131903) do
     t.json "expected_participants"
     t.json "execution_phases"
     t.integer "sponsor_id"
+    t.integer "start_offset", default: 0, null: false
+    t.integer "end_offset", default: 0, null: false
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"

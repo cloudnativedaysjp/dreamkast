@@ -353,30 +353,6 @@ class Talk < ApplicationRecord
     config.params == 'オンライン登壇'
   end
 
-  def start_time
-    if conference_day
-      self[:start_time].change(
-        year: conference_day.date.year,
-        month: conference_day.date.month,
-        day:  conference_day.date.day
-      )
-    else
-      self[:start_time]
-    end
-  end
-
-  def end_time
-    if conference_day
-      self[:end_time].change(
-        year: conference_day.date.year,
-        month: conference_day.date.month,
-        day:  conference_day.date.day
-      )
-    else
-      self[:end_time]
-    end
-  end
-
   def actual_start_time
     start_time + start_offset.minutes
   end

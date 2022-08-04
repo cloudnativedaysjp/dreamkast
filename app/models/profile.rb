@@ -113,7 +113,7 @@ class Profile < ApplicationRecord
           profile.company_full_name,
           profile.company_postal_code,
           profile.company_address_level1,
-          profile.company_address_level2 + profile.company_address_line1,
+          profile.company_address_level2.to_s + profile.company_address_line1.to_s,
           profile.company_address_line2,
           profile.company_tel,
           profile.company_email

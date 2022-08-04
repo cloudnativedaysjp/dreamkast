@@ -108,9 +108,9 @@ class Profile < ApplicationRecord
           profile.first_name,
           profile.last_name_kana,
           profile.first_name_kana,
-          Industry.find(profile.industry_id).name,
+          profile.industry_name,
           profile.occupation,
-          profile.company_name_prefix.name + profile.company_name + profile.company_name_suffix.name,
+          profile.company_full_name,
           profile.company_postal_code,
           profile.company_address_level1,
           profile.company_address_level2 + profile.company_address_line1,
@@ -120,5 +120,17 @@ class Profile < ApplicationRecord
         ]
       end
     end
+  end
+
+  def industry_name
+    if industry_id.present?
+      Industry.find(profile.industry_id).name
+    else
+      ''
+    end
+  end
+
+  def company_full_name
+    "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
 end

@@ -124,7 +124,7 @@ class Profile < ApplicationRecord
 
   def industry_name
     if industry_id.present?
-      Industry.find(profile.industry_id).name
+      Industry.find(industry_id).name
     else
       ''
     end

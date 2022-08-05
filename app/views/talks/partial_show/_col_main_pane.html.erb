@@ -36,7 +36,7 @@
       </div>
 
       <% if display_video?(talk) %>
-        <% if conference.abbr == 'cndt2021' || conference.abbr == 'o11y2022' %>
+        <% if conference.abbr == 'cndt2021' || conference.abbr == 'o11y2022' || conference.abbr == 'cnsec2022'  %>
           <%= render 'talks/partial_show/talk_video_block_videojs', talk: talk %>
         <% else %>
           <%= render 'talks/partial_show/talk_video_block', talk: talk %>

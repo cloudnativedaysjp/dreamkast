@@ -1,4 +1,4 @@
-name: build
+name: Trivy code scan
 on:
   pull_request:
     paths-ignore:

@@ -1,11 +1,11 @@
-name: add 'reviewapps/ignore' label to PR when all updated files match to paths_ignore
+name: grant 'reviewapps' label if there are any changes in PR's source code.
 
 on: pull_request
 
 jobs:
   labeling:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Test changed-files
+    name: grant 'reviewapps' label
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,20 +37,45 @@ jobs:
           all_changed_files = os.getenv("ALL_CHANGED_FILES").split()
           for filename in all_changed_files:
             if not any(list(map(lambda pattern: pathlib.PurePath(filename).match(pattern), paths_ignore))):
+              print("false")
               sys.exit()
           print("true")
           _EOF_
           )
           echo "::set-output name=FLAG::${FLAG}"
 
-      - name: Labeling 'reviewapps/ignore' to PR
-        if: ${{ steps.check-paths-ignore.outputs.FLAG == 'true' }}
+      - name: Labeling 'reviewapps' to PR
         uses: actions/github-script@v6
+        id: set-result
+        if: ${{ steps.check-paths-ignore.outputs.FLAG == 'false' }}
         with:
+          result-encoding: string
           script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
+            const message = `
+            Review app
+            * https://dreamkast-dk-%d.dev.cloudnativedays.jp
+            `;
+            const targetLabel = 'reviewapps';
+            issue = await github.rest.issues.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: ['reviewapps/ignore']
+              issue_number: context.issue.number,
             });
+            flag = false;
+            issue.data.labels.filter(label => {
+              if (label.name == targetLabel) { flag = true; };
+            });
+            if (!flag) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: [targetLabel]
+              });
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: message.replace("%d", context.issue.number),
+              });
+            }

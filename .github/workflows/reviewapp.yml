@@ -79,16 +79,3 @@ jobs:
                 body: message,
               });
             }
-
-      - name: Comment to PR
-        uses: peter-evans/create-or-update-comment@v2
-        if: ${{ steps.set-result.outputs.result == 'labeling' }}
-        with:
-          issue-number: 1
-          body: |
-            This is a multi-line test comment
-            - With GitHub **Markdown** :sparkles:
-            - Created by [create-or-update-comment][1]
-
-            [1]: https://github.com/peter-evans/create-or-update-comment
-          reactions: '+1'

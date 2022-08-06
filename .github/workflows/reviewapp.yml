@@ -1,0 +1,94 @@
+name: grant 'reviewapps' label if there are any changes in PR's source code.
+
+on: pull_request
+
+jobs:
+  labeling:
+    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    name: grant 'reviewapps' label
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+          architecture: 'x64'
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v19
+        with:
+          use_fork_point: true
+
+      - name: List all changed files
+        id: check-paths-ignore
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          FLAG=$(cat << '_EOF_' | python
+          import os
+          import sys
+          import pathlib
+          paths_ignore = [
+            '.github/**/*.yml',
+            '**.md',
+          ]
+          all_changed_files = os.getenv("ALL_CHANGED_FILES").split()
+          for filename in all_changed_files:
+            if not any(list(map(lambda pattern: pathlib.PurePath(filename).match(pattern), paths_ignore))):
+              print("false")
+              sys.exit()
+          print("true")
+          _EOF_
+          )
+          echo "::set-output name=FLAG::${FLAG}"
+
+      - name: Labeling 'reviewapps' to PR
+        uses: actions/github-script@v6
+        id: set-result
+        if: ${{ steps.check-paths-ignore.outputs.FLAG == 'false' }}
+        with:
+          result-encoding: string
+          script: |
+            const message = `
+            Review app
+            * https://dreamkast-dk-1254.dev.cloudnativedays.jp
+            `;
+            const targetLabel = 'reviewapps';
+            issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            flag = false;
+            issue.data.labels.filter(label => {
+              if (label.name == targetLabel) { flag = true; };
+            });
+            if (!flag) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: [targetLabel]
+              });
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: message,
+              });
+            }
+
+      - name: Comment to PR
+        uses: peter-evans/create-or-update-comment@v2
+        if: ${{ steps.set-result.outputs.result == 'labeling' }}
+        with:
+          issue-number: 1
+          body: |
+            This is a multi-line test comment
+            - With GitHub **Markdown** :sparkles:
+            - Created by [create-or-update-comment][1]
+
+            [1]: https://github.com/peter-evans/create-or-update-comment
+          reactions: '+1'

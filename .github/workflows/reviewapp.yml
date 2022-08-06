@@ -53,7 +53,7 @@ jobs:
           script: |
             const message = `
             Review app
-            * https://dreamkast-dk-1254.dev.cloudnativedays.jp
+            * https://dreamkast-dk-%d.dev.cloudnativedays.jp
             `;
             const targetLabel = 'reviewapps';
             issue = await github.rest.issues.get({
@@ -76,6 +76,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: message,
+                body: message.replace("%d", context.issue.number),
               });
             }

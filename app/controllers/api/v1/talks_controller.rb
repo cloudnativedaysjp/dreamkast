@@ -8,7 +8,7 @@ class Api::V1::TalksController < ApplicationController
     conference = Conference.find_by(abbr: params[:eventAbbr])
     query = { conference_id: conference.id }
     query[:track_id] = params[:trackId] if params[:trackId]
-    @talks = Talk.where(query)
+    @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers]).where(query)
     if params[:conferenceDayIds]
       @talks = @talks.where(params[:conferenceDayIds].split(',').map { |id| "conference_day_id = #{id}" }.join(' OR '))
     end

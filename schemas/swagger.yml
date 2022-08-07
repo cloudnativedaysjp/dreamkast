@@ -511,6 +511,8 @@ components:
       properties:
         id:
           type: number
+        conferenceId:
+          type: number
         trackId:
           type: number
         videoPlatform:
@@ -533,6 +535,7 @@ components:
                 type: string
         dayId:
           type: number
+          nullable: true
         showOnTimetable:
           type: boolean
         startTime:
@@ -551,9 +554,11 @@ components:
           type: string
         conferenceDayId:
           type: number
+          nullable: true
         conferenceDayDate:
           type: string
           format: date
+          nullable: true
         startOffset:
           type: number
         endOffset:

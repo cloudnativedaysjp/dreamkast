@@ -1,5 +1,6 @@
 json.array!(@talks) do |talk|
   json.id(talk.id)
+  json.conferenceId(talk.conference.id)
   json.trackId(talk.track_id)
   json.videoPlatform(talk.video_platform)
   json.videoId(talk.video_id)
@@ -15,8 +16,8 @@ json.array!(@talks) do |talk|
   json.talkCategory(talk.category)
   json.onAir(talk.on_air?)
   json.documentUrl(talk.document_url || '')
-  json.conferenceDayId(talk.conference_day.id)
-  json.conferenceDayDate(talk.conference_day.date)
+  json.conferenceDayId(talk.conference_day&.id)
+  json.conferenceDayDate(talk.conference_day&.date)
   json.startOffset(talk.start_offset)
   json.endOffset(talk.end_offset)
   json.actualStartTime(talk.actual_start_time)

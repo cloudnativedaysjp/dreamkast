@@ -22,6 +22,8 @@
 #  expected_participants :json
 #  execution_phases      :json
 #  sponsor_id            :integer
+#  start_offset          :integer          default("0"), not null
+#  end_offset            :integer          default("0"), not null
 #
 # Indexes
 #

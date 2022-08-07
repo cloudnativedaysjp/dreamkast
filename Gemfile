@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.1'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.2'
+gem 'rails', '~> 7.0.3'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
@@ -29,8 +29,8 @@ gem 'prometheus-client', '~> 3.0.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # OmniAuth Auth0 strategy and CSRF protection
-gem 'omniauth-auth0', '~> 2.4'
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-auth0', '~> 3.0'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -113,9 +113,3 @@ gem "aws-sdk-mediapackage"
 gem "aws-sdk-ssm"
 
 gem 'active_hash'
-gem 'opentelemetry-sdk'
-gem 'opentelemetry-exporter-jaeger'
-gem 'opentelemetry-instrumentation-all'
-gem 'opentelemetry-instrumentation-aws_sdk'
-
-

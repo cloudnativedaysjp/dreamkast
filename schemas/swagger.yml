@@ -559,6 +559,14 @@ components:
           type: string
           format: date
           nullable: true
+        startOffset:
+          type: number
+        endOffset:
+          type: number
+        actualStartTime:
+          type: string
+        actualEndTime:
+          type: string
       example:
         - id: 1
           trackId: 2

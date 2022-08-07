@@ -18,4 +18,8 @@ json.array!(@talks) do |talk|
   json.documentUrl(talk.document_url || '')
   json.conferenceDayId(talk.conference_day&.id)
   json.conferenceDayDate(talk.conference_day&.date)
+  json.startOffset(talk.start_offset)
+  json.endOffset(talk.end_offset)
+  json.actualStartTime(talk.actual_start_time)
+  json.actualEndTime(talk.actual_end_time)
 end

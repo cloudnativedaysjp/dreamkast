@@ -22,6 +22,8 @@
 #  expected_participants :json
 #  execution_phases      :json
 #  sponsor_id            :integer
+#  start_offset          :integer          default("0"), not null
+#  end_offset            :integer          default("0"), not null
 #
 # Indexes
 #
@@ -159,7 +161,9 @@ class Talk < ApplicationRecord
       'show_on_timetable',
       'video_published',
       'document_url',
-      'additional_documents'
+      'additional_documents',
+      'start_offset',
+      'end_offset'
     ]
   end
 
@@ -347,6 +351,14 @@ class Talk < ApplicationRecord
 
     config = ProposalItemConfig.find(method.params)
     config.params == 'オンライン登壇'
+  end
+
+  def actual_start_time
+    start_time + start_offset.minutes
+  end
+
+  def actual_end_time
+    end_time + end_offset.minutes
   end
 
   private

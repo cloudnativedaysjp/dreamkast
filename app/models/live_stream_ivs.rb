@@ -100,15 +100,11 @@ class LiveStreamIvs < LiveStream
   def recording_configuration_arn
     case env_name
     when 'production'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
+      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/DoiBRZMiClzN'
     when 'staging'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
-    when 'review_app'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
-    when 'others'
-      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/BfS5HX3B0J4r'
     else
-      ''
+      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/DkqVCWZLeG8B'
     end
   end
 end

@@ -1,0 +1,33 @@
+name: remove 'reviewapps' label from PR that no update during 3 days
+
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 09:00 JST
+
+jobs:
+  labeling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const targetLabel = 'reviewapps';
+            const now = new Date();
+            const borderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3);
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+            });
+            prs.data.filter(d => {
+              const updatedAt = new Date(Date.parse(d.updated_at));
+              return updatedAt < borderDate && d.labels.includes(targetLabel);
+            }).map(pr => {
+              github.rest.issues.removeLabel({
+                name: targetLabel,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+              })
+            });

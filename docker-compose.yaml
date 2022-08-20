@@ -21,8 +21,9 @@ services:
       MYSQL_DATABASE: dreamkast
       REDIS_URL: redis://redis:6379
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      SQS_FIFO_QUEUE_URL: http://sqs:9324/queue/default
+      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
       REVIEW_APP: "true"
+      DREAMKAST_NAMESPACE: "localhost"
     tty: true
     stdin_open: true
     tmpfs:
@@ -31,6 +32,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - localstack
   fifo-worker:
     build: .
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
@@ -41,7 +43,10 @@ services:
     tmpfs:
       - /app/tmp
     depends_on:
-      - db
+      db:
+          condition: service_started
+      localstack:
+          condition: service_healthy
   db:
     image: mysql/mysql-server:8.0
     environment:
@@ -74,11 +79,23 @@ services:
     image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ui:main
     ports:
     - 3001:3001
-  sqs:
-    image: roribio16/alpine-sqs
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=ap-northeast-1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
+      - ./localstack:/tmp/localstack
     ports:
-    - 9324:9324
-    - 9325:9325
+      - 4566:4566
+    healthcheck:
+      test: awslocal sqs list-queues --output=text | grep default
+      interval: 10s
+      timeout: 60s
+      retries: 10
+      start_period: 1s
 volumes:
   mysql-data:
   redis-data:

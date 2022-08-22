@@ -113,3 +113,5 @@ gem "aws-sdk-mediapackage"
 gem "aws-sdk-ssm"
 
 gem 'active_hash'
+
+gem 'newrelic_rpm'

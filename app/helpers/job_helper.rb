@@ -2,7 +2,7 @@ module JobHelper
   include EnvHelper
 
   def sqs_queue_url
-    if review_app?
+    if ENV['SQS_FIFO_QUEUE_URL'] == ''
       cli = Aws::SQS::Client.new(region: 'ap-northeast-1')
       result = cli.get_queue_url({ queue_name: "review_app_#{review_app_number}" + '.fifo' })
       raise(result.error) unless result.successful?

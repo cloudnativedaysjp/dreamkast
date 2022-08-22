@@ -56,9 +56,5 @@ test:
   <<: *default_settings
   monitor_mode: false
 
-staging:
-  <<: *default_settings
-  app_name: Dreamkast (Staging)
-
 production:
   <<: *default_settings

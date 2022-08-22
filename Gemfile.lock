@@ -261,6 +261,7 @@ GEM
       digest
       net-protocol
       timeout
+    newrelic_rpm (8.10.0)
     nio4r (2.5.8)
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
@@ -527,6 +528,7 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   listen (~> 3.2)
   mysql2 (~> 0.5.4)
+  newrelic_rpm
   octokit (~> 4.0)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)

@@ -2,24 +2,24 @@
     "name": "cndtattend",
     "private": true,
     "dependencies": {
-        "@rails/actioncable": "^7.0.0",
-        "@rails/activestorage": "^7.0.0",
-        "@rails/ujs": "^7.0.0",
+        "@rails/actioncable": "7.0.1",
+        "@rails/activestorage": "7.0.1",
+        "@rails/ujs": "7.0.1",
         "@rails/webpacker": "5.4.3",
-        "@uppy/aws-s3-multipart": "^1.8.12",
-        "@uppy/core": "^1.16.0",
-        "@uppy/dashboard": "^1.16.0",
-        "@uppy/xhr-upload": "^1.6.10",
+        "@uppy/aws-s3-multipart": "1.8.13",
+        "@uppy/core": "1.16.0",
+        "@uppy/dashboard": "1.16.0",
+        "@uppy/xhr-upload": "1.6.10",
         "bootstrap": "4.6.0",
-        "bootstrap-table": "^1.20.2",
-        "cropperjs": "^1.5.12",
-        "jquery": "^3.5.1",
-        "popper.js": "^1.16.1",
-        "turbolinks": "^5.2.0",
+        "bootstrap-table": "1.20.2",
+        "cropperjs": "1.5.12",
+        "jquery": "3.5.1",
+        "popper.js": "1.16.1",
+        "turbolinks": "5.2.0",
         "video.js": "7.10.2"
     },
     "version": "0.1.0",
     "devDependencies": {
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "3.11.3"
     }
 }

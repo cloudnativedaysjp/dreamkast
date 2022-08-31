@@ -51,7 +51,7 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'pry-rails'
   gem 'bullet'
-  gem 'rbs', '~> 2.0.0'
+  gem 'rbs', '~> 2.6.0'
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
   gem 'annotate', require: false

@@ -3,7 +3,7 @@
     "private": true,
     "dependencies": {
         "@rails/actioncable": "^7.0.0",
-        "@rails/activestorage": "^7.0.0",
+        "@rails/activestorage": "7.0.2",
         "@rails/ujs": "7.0.2",
         "@rails/webpacker": "5.4.3",
         "@uppy/aws-s3-multipart": "^1.8.12",

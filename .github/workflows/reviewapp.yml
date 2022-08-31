@@ -3,7 +3,7 @@ name: grant 'reviewapps' label if there are any changes in PR's source code.
 on: 
   pull_request:
     branches-ignore:
-        - 'renovate/**'
+        - 'renovate/*'
 
 jobs:
   labeling:

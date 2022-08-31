@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-FROM node:16.13.1-slim as node
+FROM node:16.17.0-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
 RUN bundle install
 
 FROM ruby:3.1.2 as asset-compile
-ENV YARN_VERSION 1.22.15
+ENV YARN_VERSION 1.22.19
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
@@ -35,7 +35,7 @@ RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS
 
 FROM ruby:3.1.2-slim
 
-ENV YARN_VERSION 1.22.15
+ENV YARN_VERSION 1.22.19
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \

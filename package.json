@@ -10,7 +10,7 @@
         "@uppy/core": "1.20.1",
         "@uppy/dashboard": "1.21.1",
         "@uppy/xhr-upload": "1.7.5",
-        "bootstrap": "4.6.2",
+        "bootstrap": "5.2.0",
         "bootstrap-table": "1.21.0",
         "cropperjs": "^1.5.12",
         "jquery": "3.6.1",

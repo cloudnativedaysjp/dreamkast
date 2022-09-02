@@ -94,7 +94,7 @@ gem "pundit"
 gem 'redcarpet'
 
 # processing images
-gem "uppy-s3_multipart", "~> 0.3"
+gem "uppy-s3_multipart", "~> 1.0"
 gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set', github: "collectiveidea/awesome_nested_set"

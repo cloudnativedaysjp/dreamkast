@@ -352,7 +352,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbs (2.0.0)
+    rbs (2.6.0)
     rbs_rails (0.9.0)
       parser
       rbs (>= 1)
@@ -541,7 +541,7 @@ DEPENDENCIES
   rack-timeout
   rails (~> 7.0.3)
   rails_autolink
-  rbs (~> 2.0.0)
+  rbs (~> 2.6.0)
   rbs_rails
   redcarpet
   redis-rails

@@ -79,8 +79,7 @@ export MYSQL_PASSWORD=password
 export MYSQL_DATABASE=dreamkast
 export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
-export SQS_MAIL_QUEUE_URL=http://localhost:9324/queue/default
-export SQS_CHAT_QUEUE_URL=http://localhost:9324/queue/chat
+export SQS_FIFO_QUEUE_URL=http://localhost:9324/queue/default
 ```
 
 Next, configure awscli and logged in registry using it.
@@ -94,7 +93,7 @@ Then, setup databases, ui and load balancer by running Docker Compose
 
 ```
 $ docker-compose pull ui
-$ docker-compose up -d db redis nginx ui
+$ docker compose up -d fifo-worker db redis nginx localstack ui
 ```
 
 Run the application

@@ -12,14 +12,14 @@
         "@uppy/xhr-upload": "1.7.5",
         "bootstrap": "4.6.2",
         "bootstrap-table": "1.21.0",
-        "cropperjs": "^1.5.12",
+        "cropperjs": "1.5.12",
         "jquery": "3.6.1",
-        "popper.js": "^1.16.1",
-        "turbolinks": "^5.2.0",
+        "popper.js": "1.16.1",
+        "turbolinks": "5.2.0",
         "video.js": "7.10.2"
     },
     "version": "0.1.0",
     "devDependencies": {
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "3.11.3"
     }
 }

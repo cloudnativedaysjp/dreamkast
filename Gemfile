@@ -94,7 +94,7 @@ gem "pundit"
 gem 'redcarpet'
 
 # processing images
-gem "uppy-s3_multipart", "~> 0.3"
+gem "uppy-s3_multipart", "~> 1.0"
 gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set', github: "collectiveidea/awesome_nested_set"
@@ -105,7 +105,7 @@ gem 'activerecord-nulldb-adapter'
 gem 'slack-incoming-webhooks'
 
 gem "octokit", "~> 4.0"
-gem 'psych', '< 4'
+gem 'psych', '< 5'
 
 gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"

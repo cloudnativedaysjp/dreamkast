@@ -104,7 +104,7 @@ gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
 
-gem "octokit", "~> 4.0"
+gem "octokit", "~> 5.0"
 gem 'psych', '< 5'
 
 gem "aws-sdk-ivs"

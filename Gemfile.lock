@@ -296,7 +296,7 @@ GEM
     pluginator (1.5.0)
     pre-commit (0.39.0)
       pluginator (~> 1.5)
-    prometheus-client (3.0.0)
+    prometheus-client (4.0.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -535,7 +535,7 @@ DEPENDENCIES
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)
   pre-commit
-  prometheus-client (~> 3.0.0)
+  prometheus-client (~> 4.0.0)
   pry-rails
   psych (< 5)
   puma (~> 5.0)

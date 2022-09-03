@@ -64,7 +64,7 @@ services:
     ports:
     - "3306:3306"
   redis:
-    image: "redis:6"
+    image: "redis:7"
     volumes:
       - redis-data:/data
     ports:

@@ -103,7 +103,7 @@ jobs:
           branch: production/dk-main
 
       - name: Create and Merge Pull Request
-        uses: "actions/github-script@v2"
+        uses: "actions/github-script@v6"
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |

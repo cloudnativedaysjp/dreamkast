@@ -138,20 +138,20 @@ CloudNative Security Conference 2022 (CNSec2022) は、クラウドネイティ�
 そのような持続可能なセキュリティを実現するために、このイベントで様々な知見や技術を持ち寄って、安全で豊かな"Green"をともに目指してみませんか？
 EOS
   },
-#   {
-#     id: 7,
-#     name: "CloudNative Days Tokyo 2022",
-#     abbr: "cndt2022",
-#     theme: "TBD",
-#     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-#     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
-#     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
-#     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
-#     committee_name: "CloudNative Days Tokyo 2022 Committee",
-#     about: <<'EOS'
-# TBD
-# EOS
-#   },
+  {
+    id: 7,
+    name: "CloudNative Days Tokyo 2022",
+    abbr: "cndt2022",
+    theme: "TBD",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Tokyo 2022 Committee",
+    about: <<'EOS'
+TBD
+EOS
+  },
   {
     id: 10,
     name: "Test Event Winter 2020",
@@ -196,6 +196,11 @@ ConferenceDay.seed(
   # CNSEC2022
   {id: 16, date: "2022-08-05", start_time: "13:00", end_time: "19:00", conference_id: 6, internal: false},
   {id: 17, date: "2022-07-15", start_time: "19:00", end_time: "21:00", conference_id: 6, internal: true}, #Pre event
+
+  # CNDT2022
+  {id: 18, date: "2022-11-21", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
+  {id: 19, date: "2022-11-22", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
+  {id: 20, date: "2022-10-31", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -293,6 +298,12 @@ Track.seed(
   { id: 29, number: 1, name: "A", conference_id: 6},
   { id: 30, number: 2, name: "B", conference_id: 6},
   { id: 31, number: 3, name: "C", conference_id: 6},
+  { id: 32, number: 1, name: "A", conference_id: 7},
+  { id: 33, number: 2, name: "B", conference_id: 7},
+  { id: 34, number: 3, name: "C", conference_id: 7},
+  { id: 35, number: 4, name: "D", conference_id: 7},
+  { id: 36, number: 5, name: "E", conference_id: 7},
+  { id: 37, number: 6, name: "F", conference_id: 7},
 )
 
 

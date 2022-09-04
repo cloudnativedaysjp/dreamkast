@@ -48,7 +48,7 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize + '_fields', f: builder)
     end
-    link_to(name, '#', class: 'add_pdf_fields ' + args[:class], data: { id: id, fields: fields.gsub("\n", '') }, style: args[:style])
+    link_to(name, '#', class: 'add_pdf_fields ' + args[:class], data: { id:, fields: fields.gsub("\n", '') }, style: args[:style])
   end
 
   def link_to_add_key_image_fields(name, f, association, **args)
@@ -57,7 +57,7 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize + '_fields', f: builder)
     end
-    link_to(name, '#', class: 'add_key_image_fields ' + args[:class], data: { id: id, fields: fields.gsub("\n", '') }, style: args[:style])
+    link_to(name, '#', class: 'add_key_image_fields ' + args[:class], data: { id:, fields: fields.gsub("\n", '') }, style: args[:style])
   end
 
   def link_to_add_link_fields(name, f, association, **args)
@@ -66,7 +66,7 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize + '_fields', f: builder)
     end
-    link_to(name, '#', class: 'add_link_fields ' + args[:class], data: { id: id, fields: fields.gsub("\n", '') }, style: args[:style])
+    link_to(name, '#', class: 'add_link_fields ' + args[:class], data: { id:, fields: fields.gsub("\n", '') }, style: args[:style])
   end
 
   def link_to_add_conference_day_fields(name, f, association, **args)
@@ -75,7 +75,7 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
       render(association.to_s.singularize + '_fields', f: builder)
     end
-    link_to(name, '#', class: 'add_conference_day_fields ' + args[:class], data: { id: id, fields: fields.gsub("\n", '') }, style: args[:style])
+    link_to(name, '#', class: 'add_conference_day_fields ' + args[:class], data: { id:, fields: fields.gsub("\n", '') }, style: args[:style])
   end
 
   def markdown(text)

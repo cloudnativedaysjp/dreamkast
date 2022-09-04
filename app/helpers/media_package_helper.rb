@@ -14,7 +14,7 @@ module MediaPackageHelper
     channels = []
     next_token = ''
     loop do
-      resp = media_package_client.list_channels(next_token: next_token)
+      resp = media_package_client.list_channels(next_token:)
       channels.concat(resp.channels)
       break unless resp.next_token
       next_token = resp.next_token

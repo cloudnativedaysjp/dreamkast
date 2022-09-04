@@ -28,8 +28,8 @@ class LiveStreamIvs < LiveStream
       latency_mode: 'LOW',
       type: 'STANDARD',
       authorized: false,
-      recording_configuration_arn: recording_configuration_arn,
-      tags: tags
+      recording_configuration_arn:,
+      tags:
     )
 
     self.params = {
@@ -67,7 +67,7 @@ class LiveStreamIvs < LiveStream
   end
 
   def get_stream
-    ivs_client.get_stream(channel_arn: channel_arn)
+    ivs_client.get_stream(channel_arn:)
   end
 
   def viewer_count

@@ -22,8 +22,8 @@ namespace :util do
             conference_id: conference.id,
             track_id: ivs.track_id,
             stream_type: ivs.type,
-            talk_id: talk_id,
-            count: count
+            talk_id:,
+            count:
           )
           vc.save!
         rescue Aws::IVS::Errors::ChannelNotBroadcasting

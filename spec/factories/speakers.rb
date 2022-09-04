@@ -34,8 +34,8 @@ FactoryBot.define do
       after(:build) do |speaker|
         talk = FactoryBot.create(:talk1)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk: talk, speaker: speaker })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 0)
+        FactoryBot.create(:talks_speakers, { talk:, speaker: })
+        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 0)
       end
     end
 
@@ -43,8 +43,8 @@ FactoryBot.define do
       after(:build) do |speaker|
         talk = FactoryBot.create(:talk1)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk: talk, speaker: speaker })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 1)
+        FactoryBot.create(:talks_speakers, { talk:, speaker: })
+        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 1)
       end
     end
 
@@ -52,18 +52,18 @@ FactoryBot.define do
       after(:build) do |speaker|
         talk = FactoryBot.create(:talk1)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk: talk, speaker: speaker })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk: talk, status: 2)
+        FactoryBot.create(:talks_speakers, { talk:, speaker: })
+        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 2)
       end
     end
 
     trait :with_sponsor_session do
       after(:build) do |speaker|
         sponsor = create(:sponsor)
-        talk = create(:sponsor_session, sponsor: sponsor)
+        talk = create(:sponsor_session, sponsor:)
         speaker.talks << talk
-        create(:talks_speakers, { talk: talk, speaker: speaker })
-        create(:proposal, :with_cndt2021, talk: talk, status: 0)
+        create(:talks_speakers, { talk:, speaker: })
+        create(:proposal, :with_cndt2021, talk:, status: 0)
       end
     end
   end
@@ -96,7 +96,7 @@ FactoryBot.define do
       after(:build) do |speaker|
         speaker_announcement = FactoryBot.create(:speaker_announcement, :published)
         speaker.speaker_announcements << speaker_announcement
-        FactoryBot.create(:speaker_announcement_middle, { speaker: speaker, speaker_announcement: speaker_announcement })
+        FactoryBot.create(:speaker_announcement_middle, { speaker:, speaker_announcement: })
       end
     end
   end

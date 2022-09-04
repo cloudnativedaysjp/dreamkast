@@ -9,7 +9,7 @@ namespace :aws_sqs do
     queue_name = "review_app_#{review_app_number}" + '.fifo'
     result = cli.create_queue(
       {
-        queue_name: queue_name,
+        queue_name:,
         attributes: {
           DelaySeconds: '0',
           FifoQueue: true.to_s,

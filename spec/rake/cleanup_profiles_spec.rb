@@ -21,7 +21,7 @@ describe 'cleanup_profiles' do
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
     let!(:access_log) { create(:access_log, profile: alice) }
     let!(:talk) { create(:talk1) }
-    let!(:registered_talk) { create(:registered_talk, profile: alice, talk: talk) }
+    let!(:registered_talk) { create(:registered_talk, profile: alice, talk:) }
     let!(:form_item) { create(:form_item1) }
     let!(:agreement) { create(:agreement, profile: alice, form_item_id: form_item.id) }
     let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id) }

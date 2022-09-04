@@ -7,7 +7,7 @@ namespace :util do
     abbr = ENV.fetch('EVENT_ABBR')
 
     ActiveRecord::Base.transaction do
-      conference = Conference.find_by(abbr: abbr)
+      conference = Conference.find_by(abbr:)
       unless conference.archived?
         raise "#{conference.abbr} is not archived yet"
       end

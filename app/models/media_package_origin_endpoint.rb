@@ -50,7 +50,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
     {
       id: resource_name,
       channel_id: media_package_channel.channel_id,
-      tags: tags,
+      tags:,
       hls_package: {
         ad_markers: 'NONE',
         ad_triggers: ['SPLICE_INSERT', 'PROVIDER_ADVERTISEMENT', 'DISTRIBUTOR_ADVERTISEMENT', 'PROVIDER_PLACEMENT_OPPORTUNITY', 'DISTRIBUTOR_PLACEMENT_OPPORTUNITY'],

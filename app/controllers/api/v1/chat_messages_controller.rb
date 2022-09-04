@@ -25,7 +25,7 @@ class Api::V1::ChatMessagesController < ApplicationController
     reply_to = @params[:replyTo]
     message_type = @params[:messageType]
 
-    attr = { profile_id: @profile.id, body: body, conference_id: conference.id, room_id: room_id, room_type: room_type, message_type: message_type }
+    attr = { profile_id: @profile.id, body:, conference_id: conference.id, room_id:, room_type:, message_type: }
 
     speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
     attr[:speaker_id] = speaker.id if speaker.present?
@@ -43,7 +43,7 @@ class Api::V1::ChatMessagesController < ApplicationController
     body = params[:body]
     authorize(chat_msg)
 
-    chat_msg.update!({ body: body })
+    chat_msg.update!({ body: })
   end
 
   def not_authorized

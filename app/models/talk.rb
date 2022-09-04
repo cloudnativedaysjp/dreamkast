@@ -199,7 +199,7 @@ class Talk < ApplicationRecord
     after = Time.zone.parse(SLOT_MAP[slot_number_param.to_i - 1].dup.insert(2, ':')).utc.strftime('%T')
     before = (Time.zone.parse(SLOT_MAP[slot_number_param.to_i].dup.insert(2, ':')) - 60).utc.strftime('%T')
 
-    where(conference_day_id: day_id, track_id: track_id)
+    where(conference_day_id: day_id, track_id:)
       .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")
   end
 
@@ -282,16 +282,16 @@ class Talk < ApplicationRecord
   end
 
   def create_or_update_proposal_item(label, params)
-    item = proposal_items.find_by(label: label)
+    item = proposal_items.find_by(label:)
     if item.present?
-      item.update(params: params)
+      item.update(params:)
     else
-      proposal_items.build(conference_id: conference_id, label: label, params: params)
+      proposal_items.build(conference_id:, label:, params:)
     end
   end
 
   def proposal_item_value(label)
-    params = proposal_items.find_by(label: label)&.params
+    params = proposal_items.find_by(label:)&.params
     return nil unless params
 
     case params
@@ -305,7 +305,7 @@ class Talk < ApplicationRecord
   def selected_proposal_items
     r = {}
     conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number|
-      proposal_item_config = conference.proposal_item_configs.find_by(item_number: item_number)
+      proposal_item_config = conference.proposal_item_configs.find_by(item_number:)
       params = proposal_items.find_by(label: proposal_item_config.label)&.params
       return r unless params
       case params
@@ -314,7 +314,7 @@ class Talk < ApplicationRecord
       when Array
         f = ProposalItemConfig.where(id: params.shift)
         a = params.inject(f) do |self_obj, id|
-          self_obj.or(ProposalItemConfig.where(id: id))
+          self_obj.or(ProposalItemConfig.where(id:))
         end
         r[proposal_item_config.item_name] = a.map(&:params).join(', ')
       end

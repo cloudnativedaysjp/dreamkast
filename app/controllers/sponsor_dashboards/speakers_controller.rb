@@ -118,14 +118,14 @@ class SponsorDashboards::SpeakersController < ApplicationController
                                     :avatar,
                                     :conference_id,
                                     :additional_documents,
-                                    talks_attributes: talks_attributes)
+                                    talks_attributes:)
   end
 
   def talks_attributes
     attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
-      conf = @conference.proposal_item_configs.find_by(label: label)
+      conf = @conference.proposal_item_configs.find_by(label:)
       if conf.class.to_s == 'ProposalItemConfigCheckBox'
         h[conf.label.pluralize.to_sym] = []
       elsif conf.class.to_s == 'ProposalItemConfigRadioButton'

@@ -12,7 +12,7 @@ module MediaLiveHelper
     inputs = []
     next_token = ''
     while true
-      resp = media_live_client.list_inputs(next_token: next_token)
+      resp = media_live_client.list_inputs(next_token:)
       inputs.concat(resp.inputs)
       break unless resp.next_token
       next_token = resp.next_token
@@ -25,7 +25,7 @@ module MediaLiveHelper
     channels = []
     next_token = ''
     while true
-      resp = media_live_client.list_channels(next_token: next_token)
+      resp = media_live_client.list_channels(next_token:)
       channels.concat(resp.channels)
       break unless resp.next_token
       next_token = resp.next_token
@@ -35,14 +35,14 @@ module MediaLiveHelper
   end
 
   def wait_channel_until(waiter_name, channel_id)
-    media_live_client.wait_until(waiter_name, channel_id: channel_id) do |w|
+    media_live_client.wait_until(waiter_name, channel_id:) do |w|
       w.max_attempts = 30
       w.delay = 5
     end
   end
 
   def wait_input_until(waiter_name, input_id)
-    media_live_client.wait_until(waiter_name, input_id: input_id) do |w|
+    media_live_client.wait_until(waiter_name, input_id:) do |w|
       w.max_attempts = 30
       w.delay = 5
     end
@@ -54,7 +54,7 @@ module MediaLiveHelper
     channels = []
     next_token = ''
     loop do
-      resp = client.list_channels(next_token: next_token)
+      resp = client.list_channels(next_token:)
       channels.concat(resp.channels)
       break unless resp.next_token
       next_token = resp.next_token
@@ -78,7 +78,7 @@ module MediaLiveHelper
     inputs = []
     next_token = ''
     while true
-      resp = client.list_inputs(next_token: next_token)
+      resp = client.list_inputs(next_token:)
       inputs.concat(resp.inputs)
       break unless resp.next_token
       next_token = resp.next_token

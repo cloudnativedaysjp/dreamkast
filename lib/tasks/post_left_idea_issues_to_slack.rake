@@ -28,6 +28,6 @@ namespace :util do
       }
     end
 
-    slack.post(payload, attachments: attachments)
+    slack.post(payload, attachments:)
   end
 end

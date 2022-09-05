@@ -91,7 +91,7 @@ class Profile < ApplicationRecord
   validates :annual_sales_id, presence: true, length: { maximum: 128 }
 
   def sub_and_email_must_be_unique_in_a_conference
-    if Profile.where(sub: sub, email: email, conference_id: conference_id).exists?
+    if Profile.where(sub:, email:, conference_id:).exists?
       errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
     end
   end

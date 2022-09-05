@@ -72,7 +72,7 @@ describe Talk, type: :model do
     let!(:proposal_item_config_2) { create(:proposal_item_configs_presentation_method, :video, conference: cndt2020) }
 
     context 'live session' do
-      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk: talk, params: proposal_item_config_1.id) }
+      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk:, params: proposal_item_config_1.id) }
 
       it 'should be true' do
         expect(talk.live?).to(be_truthy)
@@ -80,7 +80,7 @@ describe Talk, type: :model do
     end
 
     context 'non-live session' do
-      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk: talk, params: proposal_item_config_2.id) }
+      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk:, params: proposal_item_config_2.id) }
 
       it 'should be true' do
         expect(talk.live?).to(be_falsey)

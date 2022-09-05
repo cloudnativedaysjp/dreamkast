@@ -8,7 +8,7 @@ class CreateMediaLiveJob < ApplicationJob
     logger.info('Perform CreateMediaLiveJob')
     conference, track = args
 
-    media_live = LiveStreamMediaLive.new(conference: conference, track: track)
+    media_live = LiveStreamMediaLive.new(conference:, track:)
 
     logger.error("Failed to create LiveStreamMediaLive: #{media_live.errors}") unless media_live.save
 

@@ -51,8 +51,8 @@ class MediaPackageHarvestJob < ApplicationRecord
       end_time: end_time.strftime('%Y-%m-%dT%H:%M:%S%:z'),
       origin_endpoint_id: resource_name,
       s3_destination: {
-        bucket_name: bucket_name,
-        manifest_key: manifest_key,
+        bucket_name:,
+        manifest_key:,
         role_arn: 'arn:aws:iam::607167088920:role/MediaPackageLivetoVOD-Policy'
       }
     }

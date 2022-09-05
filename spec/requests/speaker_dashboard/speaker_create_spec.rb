@@ -17,10 +17,10 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
 
       describe 'register speaker and proposal without session time selection' do
         let(:conference) { create(:cndt2020, :registered, :speaker_entry_enabled) }
-        let(:execution_phase) { create(:proposal_item_configs_execution_phase, conference: conference) }
-        let(:assumed_visitor) { create(:proposal_item_configs_assumed_visitor, conference: conference) }
-        let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference: conference) }
-        let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference: conference) }
+        let(:execution_phase) { create(:proposal_item_configs_execution_phase, conference:) }
+        let(:assumed_visitor) { create(:proposal_item_configs_assumed_visitor, conference:) }
+        let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
+        let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
 
         it 'talk\'s session time should be 40 minutes (default value)' do
           params = {

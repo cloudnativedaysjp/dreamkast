@@ -16,16 +16,16 @@ module SsmHelper
 
     ssm_client.put_parameter(
       {
-        name: name,
-        value: value,
-        tier: tier,
-        type: type,
-        tags: tags
+        name:,
+        value:,
+        tier:,
+        type:,
+        tags:
       }
     )
   end
 
   def delete_parameter(name)
-    ssm_client.delete_parameter(name: name)
+    ssm_client.delete_parameter(name:)
   end
 end

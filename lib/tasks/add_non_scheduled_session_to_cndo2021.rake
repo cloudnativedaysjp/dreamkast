@@ -5,11 +5,11 @@ namespace :db do
     talk = Talk.where('title = ?', title)
     track = Track.find_by(name: title[-1], conference_id: conference.id)
     attr = {
-      title: title,
+      title:,
       abstract: title[-1],
       conference_id: conference.id,
-      conference_day_id: conference.conference_days.find_by(date: date).id,
-      date: date,
+      conference_day_id: conference.conference_days.find_by(date:).id,
+      date:,
       show_on_timetable: false,
       track_id: track.id,
       start_time: Time.parse('01:00'), # UTC

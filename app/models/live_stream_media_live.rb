@@ -53,11 +53,11 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def get_input_from_aws
-    self.input = media_live_client.describe_input(input_id: input_id)
+    self.input = media_live_client.describe_input(input_id:)
   end
 
   def get_channel_from_aws
-    self.channel = media_live_client.describe_channel(channel_id: channel_id)
+    self.channel = media_live_client.describe_channel(channel_id:)
   end
 
   def channel_name
@@ -108,15 +108,15 @@ class LiveStreamMediaLive < LiveStream
 
     input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
     params = { input_security_group_id: input_security_group_resp.security_group.id }
-    update!(params: params)
+    update!(params:)
 
     input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
     params = params.merge(input_id: input_resp.input.id, input_arn: input_resp.input.arn)
-    update!(params: params)
+    update!(params:)
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
     params = params.merge(channel_id: channel_resp.channel.id, channel_arn: channel_resp.channel.arn)
-    update!(params: params)
+    update!(params:)
 
     wait_channel_until(:channel_created, channel_resp.channel.id)
   rescue => e
@@ -125,28 +125,28 @@ class LiveStreamMediaLive < LiveStream
   end
 
   def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id, input_security_group_id: self.input_security_group_id)
-    media_live_client.delete_channel(channel_id: channel_id) if channel_id
+    media_live_client.delete_channel(channel_id:) if channel_id
     wait_channel_until(:channel_deleted, channel_id) if channel_id
-    media_live_client.delete_input(input_id: input_id) if input_id
+    media_live_client.delete_input(input_id:) if input_id
     wait_input_until(:input_deleted, input_id) if input_id
-    media_live_client.delete_input_security_group(input_security_group_id: input_security_group_id) if input_security_group_id
+    media_live_client.delete_input_security_group(input_security_group_id:) if input_security_group_id
     delete_parameter("/medialive/#{resource_name}")
   rescue => e
     logger.error(e.message.to_s)
   end
 
   def start_channel
-    media_live_client.start_channel(channel_id: channel_id)
+    media_live_client.start_channel(channel_id:)
   end
 
   def stop_channel
-    media_live_client.stop_channel(channel_id: channel_id)
+    media_live_client.stop_channel(channel_id:)
   end
 
   def set_recording_target_talk(talk_id)
     media_live_client.update_channel(
       {
-        channel_id: channel_id,
+        channel_id:,
         destinations: [
           {
             id: 'destination1',
@@ -161,7 +161,7 @@ class LiveStreamMediaLive < LiveStream
       }
     )
     params[:talk_id] = talk_id
-    update!(params: params)
+    update!(params:)
   rescue => e
     logger.error(e.message)
     logger.error(e.backtrace.join("\n"))
@@ -205,7 +205,7 @@ class LiveStreamMediaLive < LiveStream
 
   def create_input_security_groups_params
     {
-      tags: tags,
+      tags:,
       whitelist_rules: [{ cidr: '0.0.0.0/0' }]
     }
   end
@@ -222,7 +222,7 @@ class LiveStreamMediaLive < LiveStream
       type: 'RTMP_PUSH',
       destinations: [{ stream_name: "#{random_string}/#{random_string}" }],
       input_security_groups: [input_security_group_id],
-      tags: tags
+      tags:
     }
   end
 
@@ -231,7 +231,7 @@ class LiveStreamMediaLive < LiveStream
       name: resource_name,
       role_arn: 'arn:aws:iam::607167088920:role/MediaLiveAccessRole',
       channel_class: 'SINGLE_PIPELINE',
-      tags: tags,
+      tags:,
 
       destinations: [
         {
@@ -259,7 +259,7 @@ class LiveStreamMediaLive < LiveStream
       input_attachments: [
         {
           input_attachment_name: input_name,
-          input_id: input_id,
+          input_id:,
           input_settings: {
             caption_selectors: [],
             audio_selectors: [{ name: 'Default' }],
@@ -320,20 +320,20 @@ class LiveStreamMediaLive < LiveStream
 
   def audio_description(name, bitrate, sample_rate)
     {
-      name: name,
+      name:,
       audio_selector_name: 'Default',
       audio_type_control: 'FOLLOW_INPUT',
       codec_settings:
         {
           aac_settings:
             {
-              bitrate: bitrate,
+              bitrate:,
               coding_mode: 'CODING_MODE_2_0',
               input_type: 'NORMAL',
               profile: 'LC',
               rate_control_mode: 'CBR',
               raw_format: 'NONE',
-              sample_rate: sample_rate,
+              sample_rate:,
               spec: 'MPEG4'
             }
         },
@@ -464,23 +464,23 @@ class LiveStreamMediaLive < LiveStream
               }
             }
           },
-          name_modifier: name_modifier
+          name_modifier:
         }
       },
-      video_description_name: video_description_name
+      video_description_name:
     }
   end
 
   def video_description(name, height, width, bitrate, sharpness)
     {
-      name: name,
-      height: height,
-      width: width,
+      name:,
+      height:,
+      width:,
       codec_settings: {
         h264_settings: {
           adaptive_quantization: 'HIGH',
           afd_signaling: 'NONE',
-          bitrate: bitrate,
+          bitrate:,
           color_metadata: 'INSERT',
           entropy_encoding: 'CABAC',
           flicker_aq: 'ENABLED',
@@ -509,7 +509,7 @@ class LiveStreamMediaLive < LiveStream
       },
       respond_to_afd: 'NONE',
       scaling_behavior: 'STRETCH_TO_OUTPUT',
-      sharpness: sharpness
+      sharpness:
     }
   end
 

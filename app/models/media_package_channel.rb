@@ -71,7 +71,7 @@ class MediaPackageChannel < ApplicationRecord
     {
       id: resource_name,
       description: '',
-      tags: tags
+      tags:
     }
   end
 

@@ -95,7 +95,7 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(status: status, cfp_result_visible: cfp_result_visible, speaker_entry: speaker_entry, attendee_entry: attendee_entry, show_timetable: show_timetable, show_sponsors: show_sponsors, brief: brief)
+      conference.update!(status:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, brief:)
     end
   rescue => e
     puts(e)
@@ -123,8 +123,8 @@ class ConferenceForm
       attendee_entry: conference.attendee_entry,
       show_timetable: conference.show_timetable,
       show_sponsors: conference.show_sponsors,
-      links: links,
-      conference_days: conference_days,
+      links:,
+      conference_days:,
       brief: conference.brief
     }
   end

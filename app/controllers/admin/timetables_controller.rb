@@ -21,7 +21,7 @@ class Admin::TimetablesController < ApplicationController
       if talk_param[:start_time] != ''
         end_time = (Time.parse(talk_param[:start_time]) + (talk.time.to_i * 60)).to_s(:db)
       end
-      talk.update(talk_param.merge(end_time: end_time))
+      talk.update(talk_param.merge(end_time:))
       @talks << talk
     end
     redirect_to(admin_timetables_path, notice: 'タイムテーブルを更新しました')

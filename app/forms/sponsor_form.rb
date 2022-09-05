@@ -93,7 +93,7 @@ class SponsorForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      sponsor.update!(description: description, speaker_emails: speaker_emails)
+      sponsor.update!(description:, speaker_emails:)
 
       if sponsor.booth.present?
         sponsor.booth.update!(published: booth_published)
@@ -154,8 +154,8 @@ class SponsorForm
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
       attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',
       attachment_miro: sponsor.sponsor_attachment_miro.present? ? sponsor.sponsor_attachment_miro.url : '',
-      sponsor_attachment_key_images: sponsor_attachment_key_images,
-      sponsor_attachment_pdfs: sponsor_attachment_pdfs
+      sponsor_attachment_key_images:,
+      sponsor_attachment_pdfs:
     }
   end
 end

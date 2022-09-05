@@ -92,11 +92,11 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
 
           context 'sponsor has sponsor session and has registered proposal ' do
             before do
-              create(:talks_speakers, { talk: talk, speaker: speaker })
-              create(:proposal, :with_cndt2021, talk: talk, status: 0)
+              create(:talks_speakers, { talk:, speaker: })
+              create(:proposal, :with_cndt2021, talk:, status: 0)
             end
             let(:speaker) { create(:speaker_alice, :with_talk1_registered) }
-            let(:talk) { create(:sponsor_session, sponsor: sponsor) }
+            let(:talk) { create(:sponsor_session, sponsor:) }
 
             it_should_behave_like :returns_successfully
             it_should_behave_like :response_does_not_include_proposal_title, 'talk1'

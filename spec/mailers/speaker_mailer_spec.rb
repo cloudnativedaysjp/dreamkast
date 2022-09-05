@@ -15,8 +15,8 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       it { expect(mail.body.encoded).to(include("資料URL: #{talk.document_url}")) }
     end
     let!(:conference) { create(:one_day) }
-    let!(:speaker) { create(:speaker_alice, conference: conference) }
-    let!(:talk) { create(:talk1, conference: conference) }
+    let!(:speaker) { create(:speaker_alice, conference:) }
+    let!(:talk) { create(:talk1, conference:) }
 
     subject(:mail) { described_class.cfp_registered(conference, speaker, talk).deliver_now }
 
@@ -25,11 +25,11 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
     end
 
     describe 'has check box' do
-      let!(:proposal_config_checkbox_1_a) { create(:check_box_item_config_1, conference: conference, params: '1-A') }
-      let!(:proposal_config_checkbox_1_b) { create(:check_box_item_config_1, conference: conference, params: '1-B') }
+      let!(:proposal_config_checkbox_1_a) { create(:check_box_item_config_1, conference:, params: '1-A') }
+      let!(:proposal_config_checkbox_1_b) { create(:check_box_item_config_1, conference:, params: '1-B') }
 
       describe 'select one item (1-A)' do
-        let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_a.id.to_s]) }
+        let!(:selected_checkbox_1) { create(:check_box_item_1, conference:, talk:, params: [proposal_config_checkbox_1_a.id.to_s]) }
 
         it_should_behave_like :has_basic_information
 
@@ -37,7 +37,7 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       end
 
       describe 'select one item (1-B)' do
-        let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_b.id.to_s]) }
+        let!(:selected_checkbox_1) { create(:check_box_item_1, conference:, talk:, params: [proposal_config_checkbox_1_b.id.to_s]) }
 
         it_should_behave_like :has_basic_information
 
@@ -45,7 +45,7 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       end
 
       describe 'select two item' do
-        let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_a.id.to_s, proposal_config_checkbox_1_b.id.to_s]) }
+        let!(:selected_checkbox_1) { create(:check_box_item_1, conference:, talk:, params: [proposal_config_checkbox_1_a.id.to_s, proposal_config_checkbox_1_b.id.to_s]) }
 
         it_should_behave_like :has_basic_information
 
@@ -54,9 +54,9 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
     end
 
     describe 'has one radio button' do
-      let!(:proposal_config_radio_button_3_a) { create(:radio_button_item_config_3, conference: conference,  params: '3-A') }
-      let!(:proposal_config_radio_button_3_b) { create(:radio_button_item_config_3, conference: conference,  params: '3-B') }
-      let!(:selected_radio_button_3) { create(:radio_button_item_3, conference: conference, talk: talk, params: proposal_config_radio_button_3_a.id.to_s) }
+      let!(:proposal_config_radio_button_3_a) { create(:radio_button_item_config_3, conference:,  params: '3-A') }
+      let!(:proposal_config_radio_button_3_b) { create(:radio_button_item_config_3, conference:,  params: '3-B') }
+      let!(:selected_radio_button_3) { create(:radio_button_item_3, conference:, talk:, params: proposal_config_radio_button_3_a.id.to_s) }
 
       it_should_behave_like :has_basic_information
 
@@ -64,13 +64,13 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
     end
 
     describe 'has check box and radio button' do
-      let!(:proposal_config_checkbox_1_a) { create(:check_box_item_config_1, conference: conference, params: '1-A') }
-      let!(:proposal_config_checkbox_1_b) { create(:check_box_item_config_1, conference: conference, params: '1-B') }
-      let!(:proposal_config_radio_button_3_a) { create(:radio_button_item_config_3, conference: conference,  params: '3-A') }
-      let!(:proposal_config_radio_button_3_b) { create(:radio_button_item_config_3, conference: conference,  params: '3-B') }
+      let!(:proposal_config_checkbox_1_a) { create(:check_box_item_config_1, conference:, params: '1-A') }
+      let!(:proposal_config_checkbox_1_b) { create(:check_box_item_config_1, conference:, params: '1-B') }
+      let!(:proposal_config_radio_button_3_a) { create(:radio_button_item_config_3, conference:,  params: '3-A') }
+      let!(:proposal_config_radio_button_3_b) { create(:radio_button_item_config_3, conference:,  params: '3-B') }
 
-      let!(:selected_checkbox_1) { create(:check_box_item_1, conference: conference, talk: talk, params: [proposal_config_checkbox_1_a.id.to_s]) }
-      let!(:selected_radio_button_3) { create(:radio_button_item_3, conference: conference, talk: talk, params: proposal_config_radio_button_3_a.id.to_s) }
+      let!(:selected_checkbox_1) { create(:check_box_item_1, conference:, talk:, params: [proposal_config_checkbox_1_a.id.to_s]) }
+      let!(:selected_radio_button_3) { create(:radio_button_item_3, conference:, talk:, params: proposal_config_radio_button_3_a.id.to_s) }
 
       it_should_behave_like :has_basic_information
 
@@ -89,7 +89,7 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
     end
     subject(:mail) { described_class.inform_speaker_announcement(conference, speaker).deliver_now }
     let!(:conference) { create(:one_day) }
-    let!(:speaker) { create(:speaker_alice, conference: conference) }
+    let!(:speaker) { create(:speaker_alice, conference:) }
 
     it_should_behave_like :has_basic_information
   end

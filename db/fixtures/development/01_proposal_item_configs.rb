@@ -646,6 +646,7 @@ def presentation_method(conference_id:, item_number:, items:)
         item_number: item_number,
         item_name: '登壇方法の希望',
         params: item[:params],
+        description: item[:description],
       }
     end
   )
@@ -714,9 +715,21 @@ presentation_method(
   conference_id: 7,
   item_number: 4,
   items: [
-    {id: 73, params: '現地登壇'},
-    {id: 74, params: 'オンライン登壇'},
-    {id: 75, params: '事前収録'},
+    {
+      id: 73,
+      params: '現地登壇',
+      description: "プロポーザル採択後は登壇方法を変更することができません"
+    },
+    {
+      id: 74,
+      params: 'オンライン登壇',
+      description: ''
+    },
+    {
+      id: 75,
+      params: '事前収録',
+      description: ''
+    },
   ]
 )
 
@@ -729,8 +742,8 @@ session_time(
       key: SessionTime::FOURTY_MINUTES,
       params: '40min (full session)',
       description: [
-        "ワークショップやLTなどを希望される場合はその他に希望時間を記入してください - If you are requesting a workshop or LT etc, please fill in the desired time in addition",
-        "20分のセッションは登壇方法が事前収録の時のみ選択できます"].join("</br>")
+        "20分のセッションは登壇方法が事前収録の時のみ選択できます"
+      ].join("</br>")
     },
     {
       id: 77,

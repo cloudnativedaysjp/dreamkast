@@ -612,6 +612,8 @@ def session_time(conference_id:, item_number:, items:)
         item_name: '必要とする講演時間 - Session time you need（★）',
         params: item[:params],
         description: item[:description],
+        key: item[:key],
+        value: item[:params],
       }
     end
   )
@@ -708,30 +710,42 @@ whether_it_can_be_published(
   ]
 )
 
-session_time(
+presentation_method(
   conference_id: 7,
   item_number: 4,
   items: [
-    {id: 73, params: '40min (full session)', description: 'ワークショップやLTなどを希望される場合はその他に希望時間を記入してください - If you are requesting a workshop or LT etc, please fill in the desired time in addition'},
-    {id: 74, params: '20min (half session)', description: ''}
+    {id: 73, params: '現地登壇'},
+    {id: 74, params: 'オンライン登壇'},
+    {id: 75, params: '事前収録'},
+  ]
+)
+
+session_time(
+  conference_id: 7,
+  item_number: 5,
+  items: [
+    {
+      id: 76,
+      key: SessionTime::FOURTY_MINUTES,
+      params: '40min (full session)',
+      description: [
+        "ワークショップやLTなどを希望される場合はその他に希望時間を記入してください - If you are requesting a workshop or LT etc, please fill in the desired time in addition",
+        "20分のセッションは登壇方法が事前収録の時のみ選択できます"].join("</br>")
+    },
+    {
+      id: 77,
+      key: SessionTime::TWENTY_MINUTES,
+      params: '20min (half session)',
+      description: ''
+    }
   ]
 )
 
 language(
   conference_id: 7,
-  item_number: 5,
-  items: [
-    {id: 75, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
-    {id: 76, params: 'EN'},
-  ]
-)
-
-presentation_method(
-  conference_id: 7,
   item_number: 6,
   items: [
-    {id: 77, params: '現地登壇'},
-    {id: 78, params: 'オンライン登壇'},
-    {id: 79, params: '事前収録'},
+    {id: 78, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
+    {id: 79, params: 'EN'},
   ]
 )

@@ -364,6 +364,25 @@ TalkCategory.seed(
   { id: 52, conference_id: 4, name: "組織論"},
   { id: 53, conference_id: 4, name: "その他"},
   { id: 54, conference_id: 4, name: "Keynote"},
+
+  { id: 55, conference_id: 7, name: "CI / CD"},
+  { id: 56, conference_id: 7, name: "Customizing / Extending"},
+  { id: 57, conference_id: 7, name: "IoT / Edge"},
+  { id: 58, conference_id: 7, name: "Microservices / Services Mesh"},
+  { id: 59, conference_id: 7, name: "ML / HPC"},
+  { id: 60, conference_id: 7, name: "Networking"},
+  { id: 61, conference_id: 7, name: "Operation / Monitoring / Logging"},
+  { id: 62, conference_id: 7, name: "Application / Development"},
+  { id: 63, conference_id: 7, name: "Runtime"},
+  { id: 64, conference_id: 7, name: "Security"},
+  { id: 65, conference_id: 7, name: "Serverless / FaaS"},
+  { id: 66, conference_id: 7, name: "Storage / Database"},
+  { id: 67, conference_id: 7, name: "Architecture Design"},
+  { id: 68, conference_id: 7, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 69, conference_id: 7, name: "NFV / Edge"},
+  { id: 70, conference_id: 7, name: "組織論"},
+  { id: 71, conference_id: 7, name: "その他"},
+  { id: 72, conference_id: 7, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -389,6 +408,9 @@ TalkDifficulty.seed(
   { id: 51, conference_id: 6, name: "初級者"},
   { id: 52, conference_id: 6, name: "中級者"},
   { id: 53, conference_id: 6, name: "上級者"},
+  { id: 54, conference_id: 7, name: "初級者"},
+  { id: 55, conference_id: 7, name: "中級者"},
+  { id: 53, conference_id: 7, name: "上級者"},
 )
 
 TalkTime.seed(

@@ -1,0 +1,18 @@
+// Import custom variables and override default Bootstrap variables
+@import "./cndt2022/_variables.scss";
+// Import Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-table/src/bootstrap-table';
+// Import custom styles
+@import "./_global.scss";
+@import "./_navbar.scss";
+@import "./cndt2022/_timetable.scss";
+@import "./_tracks.scss";
+@import "./_admin.scss";
+@import "./_booth.scss";
+@import "./_links.scss";
+@import "./_talks.scss";
+@import "./_team.scss";
+@import "./cndt2022/_cndt2022.scss";
+// Import custom utilities
+@import "./cndt2022/_utilities.scss";

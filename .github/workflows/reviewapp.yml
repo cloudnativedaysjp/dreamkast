@@ -1,14 +1,12 @@
 name: grant 'reviewapps' label if there are any changes in PR's source code.
 
-on: 
-  pull_request:
-    branches-ignore:
-      - 'renovate/*'
+on: pull_request
 
 jobs:
   labeling:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: grant 'reviewapps' label
+    if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
     steps:
       - uses: actions/checkout@v3
         with:

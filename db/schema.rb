@@ -246,7 +246,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["talk_id"], name: "index_proposals_on_talk_id"
   end
 
   create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -409,7 +408,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.integer "speaker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["talk_id"], name: "index_talks_speakers_on_talk_id"
   end
 
   create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -455,7 +453,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.index ["conference_id"], name: "index_viewer_counts_on_conference_id"
     t.index ["talk_id"], name: "index_viewer_counts_on_talk_id"
     t.index ["track_id"], name: "index_viewer_counts_on_track_id"
-    t.index ["created_at"], name: "index_viewer_counts_on_created_at"
   end
 
   add_foreign_key "admin_profiles", "conferences"

@@ -100,7 +100,7 @@ jobs:
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |
-            const pr = await github.pulls.create({
+            const pr = await github.rest.pulls.create({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               title: "Automated PR (staging/dk-main)",
@@ -108,7 +108,7 @@ jobs:
               head: "staging/dk-main",
               base: "main"
             });
-            await github.pulls.merge({
+            await github.rest.pulls.merge({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               pull_number: pr.data.number,

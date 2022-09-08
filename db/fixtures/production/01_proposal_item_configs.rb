@@ -259,7 +259,7 @@ ProposalItemConfig.seed(
     item_name: '講演言語 - Language（★）',
     params: 'EN'
   },
-  
+
   # o11y2022
   {
     id: 28,
@@ -348,7 +348,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: '現地登壇'
   },
   {
@@ -357,7 +357,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: 'オンライン登壇'
   },
   {
@@ -366,7 +366,7 @@ ProposalItemConfig.seed(
     type: 'ProposalItemConfigRadioButton',
     label: 'presentation_method',
     item_number: 6,
-    item_name: '登壇方法',
+    item_name: '登壇方法の希望',
     params: '事前収録'
   },
   {
@@ -377,7 +377,6 @@ ProposalItemConfig.seed(
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
     params: 'All okay - スライド・動画両方ともに公開可',
-    key: 1,
     description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.'
   },
   {
@@ -387,7 +386,6 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    key: 2,
     params: 'Only Slide - スライドのみ公開可'
   },
   {
@@ -397,7 +395,6 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    key: 4,
     params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   },
   {
@@ -407,7 +404,6 @@ ProposalItemConfig.seed(
     label: 'whether_it_can_be_published',
     item_number: 3,
     item_name: 'スライドと動画の公開可否（★★）',
-    key: 5,
     params: 'その他'
   },
 
@@ -552,4 +548,217 @@ ProposalItemConfig.seed(
     key: 4,
     params: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
   }
+)
+
+# =========== CNDT2022 =============
+def assumed_visitor(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigCheckBox',
+        label: 'assumed_visitor',
+        item_number: item_number,
+        item_name: '想定受講者（★★）',
+        params: item[:params]
+      }
+    end
+  )
+end
+def execution_phase(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigCheckBox',
+        label: 'execution_phase',
+        item_number: item_number,
+        item_name: '実行フェーズ（★★）',
+        params: item[:params]
+      }
+    end
+  )
+end
+def whether_it_can_be_published(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigRadioButton',
+        label: 'whether_it_can_be_published',
+        item_number: item_number,
+        item_name: 'スライドと動画の公開可否（★★）',
+        params: item[:params],
+        description: item[:description],
+        key: item[:key],
+        value: item[:value]
+      }
+    end
+  )
+end
+
+def session_time(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigRadioButton',
+        label: 'session_time',
+        item_number: item_number,
+        item_name: '必要とする講演時間 - Session time you need（★）',
+        params: item[:params],
+        description: item[:description],
+        key: item[:key],
+        value: item[:params],
+      }
+    end
+  )
+end
+def language(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigRadioButton',
+        label: 'language',
+        item_number: item_number,
+        item_name: '講演言語 - Language（★）',
+        params: item[:params],
+        description: item[:description],
+      }
+    end
+  )
+end
+
+def presentation_method(conference_id:, item_number:, items:)
+  ProposalItemConfig.seed(
+    items.map do |item|
+      {
+        id: item[:id],
+        conference_id: conference_id,
+        type: 'ProposalItemConfigRadioButton',
+        label: 'presentation_method',
+        item_number: item_number,
+        item_name: '登壇方法の希望',
+        params: item[:params],
+        description: item[:description],
+      }
+    end
+  )
+end
+
+assumed_visitor(
+  conference_id: 7,
+  item_number: 1,
+  items: [
+    {id: 59, params: 'architect - システム設計'},
+    {id: 60, params: 'developer - システム開発'},
+    {id: 61, params: 'app-developer - アプリケーション開発'},
+    {id: 62, params: 'operator/sys-admin - 運用管理/システム管理'},
+    {id: 63, params: 'CxO/biz - ビジネス層'},
+    {id: 64, params: 'その他'}
+  ]
+)
+
+execution_phase(
+  conference_id: 7,
+  item_number: 2,
+  items: [
+    {id: 65, params: 'Dev/QA（開発環境）'},
+    {id: 66, params: 'PoC（検証）'},
+    {id: 67, params: 'Production（本番環境）'},
+    {id: 68, params: 'Other'},
+  ]
+)
+
+whether_it_can_be_published(
+  conference_id: 7,
+  item_number: 3,
+  items: [
+    {
+      id: 69,
+      params: 'All okay - スライド・動画両方ともに公開可',
+      description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.',
+      key: VideoAndSlidePublished::ALL_OK,
+      value: 'All okay - スライド・動画両方ともに公開可'
+    },
+    {
+      id: 70,
+      params: 'Only Slide - スライドのみ公開可',
+      description: '',
+      key: VideoAndSlidePublished::ONLY_SLIDE,
+      value: 'Only Slide - スライドのみ公開可'
+    },
+    {
+      id: 71,
+      params: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
+      description: '',
+      key: VideoAndSlidePublished::ALL_NG,
+      value: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+    },
+    {
+      id: 72,
+      params: 'その他',
+      description: '',
+      key: VideoAndSlidePublished::OTHERS,
+      value: 'その他'
+    }
+  ]
+)
+
+presentation_method(
+  conference_id: 7,
+  item_number: 4,
+  items: [
+    {
+      id: 73,
+      params: '現地登壇',
+      description: "プロポーザル採択後は登壇方法を変更することができません"
+    },
+    {
+      id: 74,
+      params: 'オンライン登壇',
+      description: ''
+    },
+    {
+      id: 75,
+      params: '事前収録',
+      description: ''
+    },
+  ]
+)
+
+session_time(
+  conference_id: 7,
+  item_number: 5,
+  items: [
+    {
+      id: 76,
+      key: SessionTime::FOURTY_MINUTES,
+      params: '40min (full session)',
+      description: [
+        "20分のセッションは登壇方法が事前収録の時のみ選択できます"
+      ].join("</br>")
+    },
+    {
+      id: 77,
+      key: SessionTime::TWENTY_MINUTES,
+      params: '20min (half session)',
+      description: ''
+    }
+  ]
+)
+
+language(
+  conference_id: 7,
+  item_number: 6,
+  items: [
+    {id: 78, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
+    {id: 79, params: 'EN'},
+  ]
 )

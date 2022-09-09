@@ -410,7 +410,7 @@ TalkDifficulty.seed(
   { id: 53, conference_id: 6, name: "上級者"},
   { id: 54, conference_id: 7, name: "初級者"},
   { id: 55, conference_id: 7, name: "中級者"},
-  { id: 53, conference_id: 7, name: "上級者"},
+  { id: 56, conference_id: 7, name: "上級者"},
 )
 
 TalkTime.seed(

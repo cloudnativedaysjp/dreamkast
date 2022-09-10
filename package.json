@@ -2,7 +2,7 @@
     "name": "cndtattend",
     "private": true,
     "dependencies": {
-        "@rails/actioncable": "7.0.2",
+        "@rails/actioncable": "7.0.4",
         "@rails/activestorage": "7.0.2",
         "@rails/ujs": "7.0.4",
         "@rails/webpacker": "5.4.3",

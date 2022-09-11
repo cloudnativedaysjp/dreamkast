@@ -13,7 +13,7 @@
         z-index: 2;
     }
     .btn-entry {
-        background-color: $umemurasaki;
+        background-color: $wine;
         color: white;
         font-size: medium;
         font-weight: lighter;
@@ -28,7 +28,7 @@
             font-size: x-large;
         }
         &:hover {
-            background-color: $usubeni;
+            background-color: $orange2022;
         }
     }
     #speakers {
@@ -49,8 +49,8 @@
     }
 }
 
-#cndt2021 #masthead {
-    background: linear-gradient(to bottom, rgba(66, 58, 87, 0.7), rgba(66, 58, 87, 0.9)), url(../images/cndt2021/masthead.jpg);
+#cndt2022 #masthead {
+    background: linear-gradient(to bottom, rgba(87, 58, 64, 0.7), rgba(87, 58, 64, 0.9)), url(../images/cndt2021/masthead.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -115,7 +115,7 @@
 #speaker-landing {
     line-height: 200%;
     a {
-        color: $azurite;
+        color: $purple2022;
         text-decoration: underline;
     }
 }
@@ -150,8 +150,7 @@
 }
 
 .speaker-dashboard-form ul {
-    font-size: larger
-;
+    font-size: larger;
     margin: 1em 0;
 }
 
@@ -176,7 +175,7 @@
     overflow-y: scroll;
     height: 300px;
     a {
-        color: $azurite ;
+        color: $purple2022;
         border-bottom: 2px solid;
     }
 }
@@ -186,13 +185,13 @@
 }
 
 .handson-session {
-    margin : 50px 0 50px 0;
-    padding : 50px 0 0 0;
+    margin: 50px 0 50px 0;
+    padding: 50px 0 0 0;
     border-top: 1px solid #222222;
 }
 
 .alert-url {
-  color: #ff0000;
+    color: #ff0000;
 }
 
 // .speaker-dashboard-form .field {

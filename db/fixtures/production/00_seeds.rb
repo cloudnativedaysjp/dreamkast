@@ -130,14 +130,19 @@ EOS
     id: 7,
     name: "CloudNative Days Tokyo 2022",
     abbr: "cndt2022",
-    theme: "TBD",
+    theme: "+Native 〜ともに広がるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Tokyo 2022 Committee",
     about: <<'EOS'
-TBD
+    "CloudNative Days" は最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。
+
+    世の中の在り方が広がっても、私たちは共に物理的・時間的な距離を乗り越えていきます。
+    クラウドネイティブの世界が広がっても、私たちは共に新しい未知の道を開拓し続けていきます。
+    
+    これまでもこれからも、広がり続けるクラウドネイティブにおいて、様々な人・会社・技術・考え方で目指す多様性を受け入れ、共に時間を共有し、新しい地図を広げていきましょう。
 EOS
   }
 )

@@ -30,41 +30,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
-          tags: |
-            type=sha,prefix=,format=long
-
-      - name: Build
-        id: docker_build
-        uses: docker/build-push-action@v3
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Checkout dreamkast-infra
         uses: actions/checkout@v3
@@ -73,21 +41,14 @@ jobs:
           path: dreamkast-infra
           token: ${{ steps.generate_token.outputs.token }}
 
-      - name: Update Kubernetes resources
-        uses: cloudnativedaysjp/action-dreamkast-gitops@main
-        with:
-          base_dir: dreamkast-infra
-          app_template_dir: manifests/app/dreamkast/overlays/template
-          app_target_dir: manifests/app/dreamkast/overlays/production/main
-          argo_template_file: manifests/app/argocd-apps/template/dreamkast.yaml
-          argo_target_file: manifests/app/argocd-apps/production/dreamkast-main.yaml
-          image: dreamkast-ecs=${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}
-          namespace: dreamkast
-          replacements: BRANCH=main,ENVIRONMENT=production
+      - name: Update Kubernetes manifest
+        working-directory: dreamkast-infra/manifests/app/dreamkast/overlays/production/main
+        run: |
+          kustomize edit set image dreamkast-ecs=${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}
 
       - name: Commit files
+        working-directory: dreamkast-infra/
         run: |
-          cd dreamkast-infra/
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git status

@@ -108,12 +108,6 @@ class TalksController < ApplicationController
     super && (!speaker? || !set_conference.speaker_entry_enabled?)
   end
 
-  def set_profile
-    if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
-  end
-
   def talk_start_to_end(talk)
     if talk.start_time.present? && talk.end_time.present?
       talk.start_time.strftime('%H:%M') + '-' + talk.end_time.strftime('%H:%M')

@@ -61,12 +61,6 @@ class Admin::TimetablesController < ApplicationController
     end
   end
 
-  def set_profile
-    if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
-  end
-
   private
 
   helper_method :timetable_partial_name

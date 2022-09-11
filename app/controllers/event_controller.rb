@@ -39,6 +39,15 @@ class EventController < ApplicationController
     false
   end
 
+  # CFP募集期間はスピーカー登録の有無でリダイレクトする
+  def should_redirect?
+    if set_conference.speaker_entry_enabled?
+      @speaker.present?
+    else
+      false
+    end
+  end
+
   helper_method :speaker_entry_button_name, :speaker_entry_button_path
 
   def speaker_entry_button_name

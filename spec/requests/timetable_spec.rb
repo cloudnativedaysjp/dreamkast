@@ -108,20 +108,33 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+        create(:guest, :on_cndo2021)
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
-      it 'redirect to /cndo2021/registration' do
-        get '/cndo2021/timetables'
-        expect(response).to_not(be_successful)
-        expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndo2021/registration'))
+      context 'when conference status is closed or archived' do
+        it 'access to /cndo2021/timetables' do
+          get '/cndo2021/timetables'
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
+        end
+      end
+
+      context 'when conference status is opened or registered' do
+        before { Conference.find_by(abbr: 'cndo2021').update!(status: 1) }
+        it 'redirect to /cndo2021/registration' do
+          get '/cndo2021/timetables'
+          expect(response).to_not(be_successful)
+          expect(response).to(have_http_status('302'))
+          expect(response).to(redirect_to('/cndo2021/registration'))
+        end
       end
     end
 
     describe 'logged in' do
       before do
         create(:bob, :on_cndo2021)
+        create(:guest, :on_cndo2021)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end
 

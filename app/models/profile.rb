@@ -133,4 +133,8 @@ class Profile < ApplicationRecord
   def company_full_name
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
+
+  def self.set_guest
+    find_by(email: 'guest@guest.com')
+  end
 end

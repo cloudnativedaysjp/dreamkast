@@ -102,6 +102,12 @@ class TalksController < ApplicationController
     params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
   end
 
+  # CFP募集期間中はスピーカー登録だけでも表示する
+  # CFP期間後はProfileの登録が必要
+  def should_redirect?
+    super && (!speaker? || !set_conference.speaker_entry_enabled?)
+  end
+
   def set_profile
     if @current_user
       @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)

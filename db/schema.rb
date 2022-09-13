@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -59,6 +59,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_booths_on_conference_id"
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
+  end
+
+  create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "cancel_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_cancel_orders_on_order_id"
   end
 
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -185,6 +193,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_orders_on_order_id"
+    t.index ["profile_id"], name: "index_orders_on_profile_id"
+  end
+
+  create_table "orders_tickets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "ticket_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_orders_tickets_on_order_id"
+    t.index ["ticket_id"], name: "index_orders_tickets_on_ticket_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -410,6 +436,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tickets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.string "title", null: false
+    t.text "description", null: false
+    t.integer "price", null: false
+    t.integer "stock", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_tickets_on_conference_id"
+  end
+
   create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number"
     t.string "name"
@@ -459,6 +496,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
   add_foreign_key "announcements", "conferences"
   add_foreign_key "booths", "conferences"
   add_foreign_key "booths", "sponsors"
+  add_foreign_key "cancel_orders", "orders"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
@@ -472,6 +510,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
   add_foreign_key "media_package_harvest_jobs", "talks"
   add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
+  add_foreign_key "orders", "orders"
+  add_foreign_key "orders", "profiles"
+  add_foreign_key "orders_tickets", "orders"
+  add_foreign_key "orders_tickets", "tickets"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"
@@ -482,5 +524,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_28_153413) do
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "talk_times", "conferences"
+  add_foreign_key "tickets", "conferences"
   add_foreign_key "video_registrations", "talks"
 end

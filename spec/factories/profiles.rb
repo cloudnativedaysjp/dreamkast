@@ -98,7 +98,7 @@ FactoryBot.define do
   factory :guest, class: Profile do
     id { 4 }
     sub { 'guest' }
-    email { 'guest@guest.com' }
+    email { 'guest@cloudnativedays.com' }
     last_name { 'guest' }
     first_name { 'Guest' }
     industry_id { '1' }

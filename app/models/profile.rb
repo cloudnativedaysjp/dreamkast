@@ -135,6 +135,6 @@ class Profile < ApplicationRecord
   end
 
   def self.set_guest
-    find_by(email: 'guest@guest.com')
+    find_by(email: 'guest@cloudnativedays.com')
   end
 end

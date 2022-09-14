@@ -112,7 +112,8 @@ describe TimetableController, type: :request do
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
-      context 'when conference status is closed or archived' do
+      context 'when conference status is archived' do
+        before { Conference.find_by(abbr: 'cndo2021').update!(status: 3) }
         it 'access to /cndo2021/timetables' do
           get '/cndo2021/timetables'
           expect(response).to(be_successful)
@@ -120,8 +121,7 @@ describe TimetableController, type: :request do
         end
       end
 
-      context 'when conference status is opened or registered' do
-        before { Conference.find_by(abbr: 'cndo2021').update!(status: 1) }
+      context 'when conference status is not archived' do
         it 'redirect to /cndo2021/registration' do
           get '/cndo2021/timetables'
           expect(response).to_not(be_successful)

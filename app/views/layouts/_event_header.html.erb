@@ -57,7 +57,7 @@
           <% end %>
         <% end %>
         <li class="nav-item dropdown">
-          <% if @conference.present? && !(@conference.closed? || @conference.archived?) %>
+          <% if @conference.present? && !@conference.archived? %>
             <% if @current_user %>
               <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="thumbnail img-circle" src="<%= @current_user[:info][:image] %>" />
@@ -80,6 +80,21 @@
               </div>
             <% else %>
                 <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
+            <% end %>
+          <% else %>
+            <% if @current_user %>
+              <li class="nav-item dropdown">
+                <%= link_to "Menu", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <% if admin? %>
+                    <a class="dropdown-item" href="<%= admin_path %>">管理画面</a>
+                  <% end %>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+              </li>
+            <% else %>
+              <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm", style: "background-color: gray; border-color: grey;" } %></li>
             <% end %>
           <% end %>
         </li>

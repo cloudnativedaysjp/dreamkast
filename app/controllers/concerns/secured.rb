@@ -16,7 +16,7 @@ module Secured
   end
 
   def should_redirect?
-    new_user? && (conference.opened? || conference.registered?)
+    new_user? && !set_conference.archived?
   end
 
   def redirect_to_registration

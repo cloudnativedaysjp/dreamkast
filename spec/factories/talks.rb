@@ -47,6 +47,7 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { true }
     document_url { 'http://' }
+    created_at { Time.new(2022, 9, 1, 10) }
 
     trait :video_published do
       video_published { true }
@@ -179,5 +180,18 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { true }
     document_url { 'http://' }
+  end
+
+  factory :has_no_conference_days, class: Talk do
+    id { 100 }
+    title { 'not accepted talk' }
+    abstract { 'あいうえおかきくけこさしすせそ' }
+    conference_id { 1 }
+    talk_difficulty_id { 1 }
+    talk_category_id { 1 }
+    show_on_timetable { false }
+    video_published { false }
+    document_url { 'http://' }
+    created_at { Time.new(2022, 9, 1, 10) }
   end
 end

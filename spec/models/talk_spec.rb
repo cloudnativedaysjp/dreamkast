@@ -94,7 +94,7 @@ describe Talk, type: :model do
     let!(:proposal_item_config_1) { create(:proposal_item_configs_presentation_method, :live, conference: cndt2020) }
     let!(:proposal_item_config_2) { create(:proposal_item_configs_presentation_method, :video, conference: cndt2020) }
     let(:expected) {
-      "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n1,talk1,あいうえおかきくけこさしすせそ,\"\",40,,,2022-09-01 10:00:00 +0900,\"\",\"\",12:00-12:40,,\"\",2020-09-08,A\n"
+      "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n1,talk1,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",12:00-12:40,,\"\",2020-09-08,A\n"
     }
 
     context 'has full attributes' do
@@ -108,7 +108,7 @@ describe Talk, type: :model do
     context 'on registration term' do
       let!(:talk) { create(:has_no_conference_days) }
       let(:expected) {
-        "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n100,not accepted talk,あいうえおかきくけこさしすせそ,\"\",40,,,2022-09-01 10:00:00 +0900,\"\",\"\",\"\",,\"\",,\n"
+        "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n100,not accepted talk,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",\"\",,\"\",,\n"
       }
       it 'export csv without attributes will be decided later' do
         File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|

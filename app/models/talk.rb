@@ -132,8 +132,8 @@ class Talk < ApplicationRecord
           row << (v.instance_of?(Array) ? v.join(', ') : v)
         end
         row << talk.avatar_urls.join('/ ')
-        row << talk.conference_day.date
-        row << talk.track.name
+        row << (talk.conference_day.nil? ? nil : talk.conference_day.date)
+        row << (talk.track.nil? ? nil : talk.track.name)
         csv << row
       end
     end

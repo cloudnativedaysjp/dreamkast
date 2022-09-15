@@ -2,7 +2,6 @@ class CreateOrderTables < ActiveRecord::Migration[7.0]
   def change
     create_table :orders do |t|
       t.belongs_to :profile, null: false, foreign_key: true, type: :bigint
-      t.belongs_to :order, null: false, foreign_key: true, type: :bigint
 
       t.timestamps
     end

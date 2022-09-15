@@ -18,7 +18,7 @@
 #  fk_rails_...  (order_id => orders.id)
 #  fk_rails_...  (ticket_id => tickets.id)
 #
-class OrdersTickets < ApplicationRecord
+class OrdersTicket < ApplicationRecord
   belongs_to :order
   belongs_to :ticket
 end

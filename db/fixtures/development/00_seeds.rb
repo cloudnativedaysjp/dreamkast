@@ -672,3 +672,8 @@ EOS
 EOS
 }
 )
+
+Ticket.seed(
+  {id: 1, title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 7 },
+  {id: 2, title: "オンライン参加", description: "aaaa", price: 0, stock: 1500, conference_id: 7 },
+)

@@ -197,10 +197,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
 
   create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
-    t.bigint "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_orders_on_order_id"
     t.index ["profile_id"], name: "index_orders_on_profile_id"
   end
 
@@ -510,7 +508,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
   add_foreign_key "media_package_harvest_jobs", "talks"
   add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
-  add_foreign_key "orders", "orders"
   add_foreign_key "orders", "profiles"
   add_foreign_key "orders_tickets", "orders"
   add_foreign_key "orders_tickets", "tickets"

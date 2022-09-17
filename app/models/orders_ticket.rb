@@ -2,11 +2,11 @@
 #
 # Table name: orders_tickets
 #
-#  id         :bigint           not null, primary key
+#  id         :string(255)      not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  order_id   :bigint           not null
-#  ticket_id  :bigint           not null
+#  order_id   :string(255)      not null
+#  ticket_id  :string(255)      not null
 #
 # Indexes
 #
@@ -19,6 +19,8 @@
 #  fk_rails_...  (ticket_id => tickets.id)
 #
 class OrdersTicket < ApplicationRecord
+  before_create :set_uuid
+
   belongs_to :order
   belongs_to :ticket
 end

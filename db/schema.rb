@@ -61,9 +61,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
-  create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-  create_table "cancel_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "order_id", null: false
+  create_table "cancel_orders", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_cancel_orders_on_order_id"
@@ -195,16 +194,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "orders", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_orders_on_profile_id"
   end
 
-  create_table "orders_tickets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "order_id", null: false
-    t.bigint "ticket_id", null: false
+  create_table "orders_tickets", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "order_id", null: false
+    t.string "ticket_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_orders_tickets_on_order_id"
@@ -434,7 +433,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tickets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "tickets", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "title", null: false
     t.text "description", null: false

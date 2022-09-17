@@ -2,7 +2,7 @@
 #
 # Table name: tickets
 #
-#  id            :bigint           not null, primary key
+#  id            :string(255)      not null, primary key
 #  description   :text(65535)      not null
 #  price         :integer          not null
 #  stock         :integer          not null
@@ -20,6 +20,8 @@
 #  fk_rails_...  (conference_id => conferences.id)
 #
 class Ticket < ApplicationRecord
+  before_create :set_uuid
+
   belongs_to :profile
 
   has_many :orders_tickets

@@ -102,4 +102,8 @@ module ApplicationHelper
       'application'
     end
   end
+
+  def vote_api(id)
+    "https://api.cloudnativedays.jp/api/v1/#{@conference.abbr}/talks/#{id}/vote"
+  end
 end

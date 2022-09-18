@@ -18,7 +18,7 @@
           Proposal 
           <% case talk.proposal.status %>
           <% when "registered" %>
-          (採択待ち)
+          (採択待ち) 
           <% when "accepted" %>
           (採択)
           <% when "rejected" %>
@@ -33,6 +33,14 @@
         <% else %>
           <%= render 'talks/partial_show/col_talk_category_block', talk: talk %>
         <% end %>
+      </div>
+
+      <div class="row py-3">
+        <div class="col-auto col-md-auto">
+          <% if talk.proposal.present? && talk.proposal.status == 'registered' %>
+            <%= button_to '👍投票する!', vote_api(talk.id.to_s), {method: 'post', remote: true, class: 'btn btn-primary inline', id: 'vote', talk_id: talk.id} %>
+          <% end %>
+        </div>
       </div>
 
       <% if display_video?(talk) %>

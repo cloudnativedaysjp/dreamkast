@@ -66,7 +66,7 @@ FactoryBot.define do
     trait :with_order do
       after(:build) do |profile|
         ticket = profile.conference.tickets.find_by(title: 'ticket a')
-        create(:order, profile: profile, tickets: [ticket])
+        create(:order, profile:, tickets: [ticket])
       end
     end
   end
@@ -104,7 +104,7 @@ FactoryBot.define do
     trait :with_order do
       after(:build) do |profile|
         ticket = profile.conference.tickets.find_by(title: 'ticket a')
-        create(:order, profile: profile, tickets: [ticket])
+        create(:order, profile:, tickets: [ticket])
       end
     end
   end

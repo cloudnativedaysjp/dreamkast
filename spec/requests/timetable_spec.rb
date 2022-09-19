@@ -56,7 +56,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:alice, :with_order, conference: conference)
+        create(:alice, :with_order, conference:)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
@@ -121,7 +121,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        bob = create(:bob, :with_order, conference: cndo2021)
+        create(:bob, :with_order, conference: cndo2021)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end
 

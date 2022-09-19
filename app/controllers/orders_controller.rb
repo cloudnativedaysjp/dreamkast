@@ -2,7 +2,6 @@ class OrdersController < ApplicationController
   include Secured
 
   before_action :set_conference, :set_profile
-  skip_before_action :logged_in_using_omniauth?, only: [:new]
   skip_before_action :need_order?, only: [:create, :new]
 
   def new

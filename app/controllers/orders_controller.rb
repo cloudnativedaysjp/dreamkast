@@ -14,7 +14,8 @@ class OrdersController < ApplicationController
 
     @order = Order.new
     @tickets = @conference.tickets
-end
+  end
+
   def create
     @order = Order.new(profile_id: @profile.id)
     @order.orders_tickets.build(ticket_id: order_params[:ticket_ids])
@@ -34,5 +35,4 @@ end
       :ticket_ids
     )
   end
-
 end

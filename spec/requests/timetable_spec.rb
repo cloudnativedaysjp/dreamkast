@@ -58,8 +58,8 @@ describe TimetableController, type: :request do
       before do
         alice = create(:alice, :on_cndt2020)
         ticket = create(:ticket, :a, conference_id: conference.id)
-        order = create(:order,profile: alice)
-        create(:orders_ticket, { ticket: ticket, order: order})
+        order = create(:order, profile: alice)
+        create(:orders_ticket, { ticket:, order: })
 
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
@@ -127,8 +127,8 @@ describe TimetableController, type: :request do
       before do
         bob = create(:bob, :on_cndo2021)
         ticket = create(:ticket, :a, conference_id: cndo2021.id)
-        order = create(:order,profile: bob)
-        create(:orders_ticket, { ticket: ticket, order: order})
+        order = create(:order, profile: bob)
+        create(:orders_ticket, { ticket:, order: })
 
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end

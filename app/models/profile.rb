@@ -138,6 +138,7 @@ class Profile < ApplicationRecord
   def active_order
     orders.find { |order| order.cancel_order.nil? }
   end
+
   def has_active_order?
     orders.any? { |order| order.cancel_order.present? }
   end

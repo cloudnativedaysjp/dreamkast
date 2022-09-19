@@ -2,17 +2,21 @@
 #
 # Table name: links
 #
-#  id            :integer          not null, primary key
-#  conference_id :integer          not null
+#  id            :bigint           not null, primary key
+#  description   :text(65535)
 #  title         :string(255)
 #  url           :string(255)
-#  description   :text(65535)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  conference_id :bigint           not null
 #
 # Indexes
 #
 #  index_links_on_conference_id  (conference_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (conference_id => conferences.id)
 #
 
 FactoryBot.define do

@@ -2,14 +2,14 @@
 #
 # Table name: conference_days
 #
-#  id            :integer          not null, primary key
+#  id            :bigint           not null, primary key
 #  date          :date
-#  start_time    :time
 #  end_time      :time
-#  conference_id :integer
+#  internal      :boolean          default(FALSE), not null
+#  start_time    :time
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  internal      :boolean          default("0"), not null
+#  conference_id :bigint
 #
 # Indexes
 #

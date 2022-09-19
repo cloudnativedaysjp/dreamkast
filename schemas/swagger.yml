@@ -31,6 +31,23 @@ paths:
                 $ref: '#/components/schemas/Profile'
         '403':
           description: You don't logged in
+  /api/v1/events:
+    get:
+      tags:
+        - Event
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid [eventAbbr] supplied
+        '404':
+          description: Event not found
   /api/v1/events/{eventAbbr}:
     get:
       tags:

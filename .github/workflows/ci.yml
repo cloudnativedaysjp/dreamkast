@@ -54,11 +54,11 @@ jobs:
       env:
         COVERAGE: true
       run: |
-        bundle exec rake webpacker:compile
         bundle exec rails db:create RAILS_ENV=test
         bundle exec rails db:environment:set RAILS_ENV=test
         bundle exec rails db:migrate RAILS_ENV=test
         bundle exec rake ci:check_git_diff
+        bundle exec rake webpacker:compile
     - name: Run tests
       shell: bash
       env:

@@ -9,10 +9,7 @@ RSpec.describe(TracksController, type: :request) do
     describe 'logged in and registered' do
       before do
         cndt2020 = create(:cndt2020)
-        alice = create(:alice, :on_cndt2020)
-        ticket = create(:ticket, :a, conference_id: cndt2020.id)
-        order = create(:order, profile: alice)
-        create(:orders_ticket, { ticket:, order: })
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -126,10 +123,7 @@ RSpec.describe(TracksController, type: :request) do
     describe 'logged in and registered' do
       before do
         cndt2020 = create(:cndt2020, :opened)
-        alice = create(:alice, :on_cndt2020)
-        ticket = create(:ticket, :a, conference_id: cndt2020.id)
-        order = create(:order, profile: alice)
-        create(:orders_ticket, { ticket:, order: })
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 

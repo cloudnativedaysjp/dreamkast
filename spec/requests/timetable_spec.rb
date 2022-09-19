@@ -56,11 +56,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        alice = create(:alice, :on_cndt2020)
-        ticket = create(:ticket, :a, conference_id: conference.id)
-        order = create(:order, profile: alice)
-        create(:orders_ticket, { ticket:, order: })
-
+        create(:alice, :with_order, conference: conference)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
@@ -125,11 +121,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        bob = create(:bob, :on_cndo2021)
-        ticket = create(:ticket, :a, conference_id: cndo2021.id)
-        order = create(:order, profile: bob)
-        create(:orders_ticket, { ticket:, order: })
-
+        bob = create(:bob, :with_order, conference: cndo2021)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end
 

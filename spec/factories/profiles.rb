@@ -62,6 +62,13 @@ FactoryBot.define do
     trait :on_cndo2021 do
       conference_id { 2 }
     end
+
+    trait :with_order do
+      after(:build) do |profile|
+        ticket = profile.conference.tickets.find_by(title: 'ticket a')
+        create(:order, profile: profile, tickets: [ticket])
+      end
+    end
   end
 
   factory :bob, class: Profile do
@@ -92,6 +99,13 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    trait :with_order do
+      after(:build) do |profile|
+        ticket = profile.conference.tickets.find_by(title: 'ticket a')
+        create(:order, profile: profile, tickets: [ticket])
+      end
     end
   end
 end

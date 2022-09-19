@@ -54,10 +54,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            alice = create(:alice, conference: cndt2020)
-            ticket = create(:ticket, :a, conference_id: cndt2020.id)
-            order = create(:order, profile: alice)
-            create(:orders_ticket, { ticket:, order: })
+            create(:alice, :with_order, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -149,15 +146,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            alice_cndt2020 = create(:alice, conference: cndt2020)
-            alice_cndo2021 = create(:alice, :on_cndo2021)
-            ticket = create(:ticket, :a, conference_id: cndt2020.id)
-            order = create(:order, profile: alice_cndt2020)
-            create(:orders_ticket, { ticket:, order: })
-
-            ticket = create(:ticket, :a, conference_id: cndo2021.id)
-            order = create(:order, profile: alice_cndo2021)
-            create(:orders_ticket, { ticket:, order: })
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
 
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
@@ -249,15 +239,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            alice_cndt2020 = create(:alice, conference: cndt2020)
-            alice_cndo2021 = create(:alice, :on_cndo2021)
-            ticket = create(:ticket, :a, conference_id: cndt2020.id)
-            order = create(:order, profile: alice_cndt2020)
-            create(:orders_ticket, { ticket:, order: })
-
-            ticket = create(:ticket, :a, conference_id: cndo2021.id)
-            order = create(:order, profile: alice_cndo2021)
-            create(:orders_ticket, { ticket:, order: })
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
@@ -348,15 +331,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            alice_cndt2020 = create(:alice, conference: cndt2020)
-            alice_cndo2021 = create(:alice, :on_cndo2021)
-            ticket = create(:ticket, :a, conference_id: cndt2020.id)
-            order = create(:order, profile: alice_cndt2020)
-            create(:orders_ticket, { ticket:, order: })
-
-            ticket = create(:ticket, :a, conference_id: cndo2021.id)
-            order = create(:order, profile: alice_cndo2021)
-            create(:orders_ticket, { ticket:, order: })
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end

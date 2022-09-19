@@ -2,16 +2,16 @@
 #
 # Table name: videos
 #
-#  id              :integer          not null, primary key
-#  talk_id         :integer
+#  id              :bigint           not null, primary key
+#  on_air          :boolean
 #  site            :string(255)
 #  url             :string(255)
-#  on_air          :boolean
+#  video_file_data :text(65535)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  video_id        :string(255)
 #  slido_id        :string(255)
-#  video_file_data :text(65535)
+#  talk_id         :integer
+#  video_id        :string(255)
 #
 
 FactoryBot.define do

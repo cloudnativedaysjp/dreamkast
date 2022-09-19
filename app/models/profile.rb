@@ -2,35 +2,35 @@
 #
 # Table name: profiles
 #
-#  id                            :integer          not null, primary key
-#  sub                           :string(255)
-#  email                         :string(255)
-#  last_name                     :string(255)
-#  first_name                    :string(255)
-#  industry_id                   :integer
-#  occupation                    :string(255)
-#  company_name                  :string(255)
-#  company_email                 :string(255)
+#  id                            :bigint           not null, primary key
 #  company_address               :string(255)
-#  company_tel                   :string(255)
-#  department                    :string(255)
-#  position                      :string(255)
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
-#  conference_id                 :integer
-#  company_address_prefecture_id :string(255)
-#  first_name_kana               :string(255)
-#  last_name_kana                :string(255)
-#  company_name_prefix_id        :string(255)
-#  company_name_suffix_id        :string(255)
-#  company_postal_code           :string(255)
 #  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
 #  company_address_line1         :string(255)
 #  company_address_line2         :string(255)
-#  number_of_employee_id         :integer          default("12")
-#  annual_sales_id               :integer          default("11")
+#  company_email                 :string(255)
 #  company_fax                   :string(255)
+#  company_name                  :string(255)
+#  company_postal_code           :string(255)
+#  company_tel                   :string(255)
+#  department                    :string(255)
+#  email                         :string(255)
+#  first_name                    :string(255)
+#  first_name_kana               :string(255)
+#  last_name                     :string(255)
+#  last_name_kana                :string(255)
+#  occupation                    :string(255)
+#  position                      :string(255)
+#  sub                           :string(255)
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  annual_sales_id               :integer          default(11)
+#  company_address_prefecture_id :string(255)
+#  company_name_prefix_id        :string(255)
+#  company_name_suffix_id        :string(255)
+#  conference_id                 :integer
+#  industry_id                   :integer
+#  number_of_employee_id         :integer          default(12)
 #
 
 class EmailValidator < ActiveModel::EachValidator

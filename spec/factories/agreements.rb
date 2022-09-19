@@ -2,12 +2,12 @@
 #
 # Table name: agreements
 #
-#  id           :integer          not null, primary key
-#  profile_id   :integer
-#  form_item_id :integer
+#  id           :bigint           not null, primary key
 #  value        :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  form_item_id :integer
+#  profile_id   :integer
 #
 
 FactoryBot.define do

@@ -2,11 +2,11 @@
 #
 # Table name: sponsors_sponsor_types
 #
-#  id              :integer          not null, primary key
-#  sponsor_id      :integer
-#  sponsor_type_id :integer
+#  id              :bigint           not null, primary key
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  sponsor_id      :integer
+#  sponsor_type_id :integer
 #
 
 FactoryBot.define do

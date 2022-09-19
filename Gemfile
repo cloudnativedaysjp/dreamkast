@@ -43,6 +43,7 @@ group :development, :test do
   gem 'rubocop', '~> 1.36.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', '>= 2.0.0'
+  gem 'annotate', require: false
 end
 
 group :development do
@@ -54,7 +55,6 @@ group :development do
   gem 'rbs', '~> 2.7.0.pre'
   gem 'steep', github: 'soutaro/steep', require: false
   gem 'rbs_rails', require: false
-  gem 'annotate', require: false
   gem 'pre-commit', require: false
   gem 'execjs', require: false
 end

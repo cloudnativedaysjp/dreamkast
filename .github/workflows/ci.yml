@@ -49,7 +49,7 @@ jobs:
     - name: Run rubocop
       run: |
         bundle exec rubocop
-    - name: Run tests
+    - name: Prepare tests
       shell: bash
       env:
         COVERAGE: true
@@ -57,6 +57,13 @@ jobs:
         bundle exec rake webpacker:compile
         bundle exec rails db:create RAILS_ENV=test
         bundle exec rails db:environment:set RAILS_ENV=test
+        bundle exec rails db:migrate RAILS_ENV=test
+        bundle exec rake ci:check_git_diff
+    - name: Run tests
+      shell: bash
+      env:
+        COVERAGE: true
+      run: |
         bundle exec rspec
     - name: Simplecov Report
       uses: aki77/simplecov-report-action@v1

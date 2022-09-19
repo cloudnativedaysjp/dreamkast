@@ -19,13 +19,21 @@
 #
 #  fk_rails_...  (conference_id => conferences.id)
 #
-class Ticket < ApplicationRecord
-  before_create :set_uuid
 
-  has_many :orders_tickets
-  has_many :orders, through: :orders_tickets
+FactoryBot.define do
+  factory :ticket, class: Ticket do
+    trait :a do
+      title { 'ticket a' }
+      description { 'a' }
+      price { 0 }
+      stock { 1000 }
+    end
 
-  def remaining_stock
-    stock - orders.includes([:cancel_order]).select { |order| order.cancel_order.nil? }.size
+    trait :b do
+      title { 'ticket b' }
+      description { 'b' }
+      price { 0 }
+      stock { 500 }
+    end
   end
 end

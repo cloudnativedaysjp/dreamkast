@@ -15,5 +15,5 @@ module ActiveHashReflection
 end
 
 Rails.application.reloader.to_prepare do
-  ActiveRecord::Reflection::AssociationReflection.include ActiveHashReflection
+  ActiveRecord::Reflection::AssociationReflection.include(ActiveHashReflection)
 end

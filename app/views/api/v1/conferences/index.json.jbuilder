@@ -9,5 +9,5 @@ json.array!(@conferences) do |conference|
   json.privacy_policy_for_speaker(conference.privacy_policy_for_speaker)
   json.copyright(conference.copyright)
   json.coc(conference.coc)
-  json.conferenceDays(conference.conference_days.map { |day| { id: day.id, date: day.date } }.sort { |a, b| a[:date] <=> b[:date] })
+  json.conferenceDays(conference.conference_days.map { |day| { id: day.id, date: day.date, internal: day.internal } }.sort { |a, b| a[:date] <=> b[:date] })
 end

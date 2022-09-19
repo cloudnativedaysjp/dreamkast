@@ -451,6 +451,8 @@ components:
                 type: number
               date:
                 type: string
+              internal:
+                type: boolean
       example:
         id: 2
         name: "CloudNative Days Spring 2020 ONLINE"

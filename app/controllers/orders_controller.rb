@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
 
   def order_ticket
-    if @profile.orders.present?
+    unless @profile.orders.includes([:cancel_order]).all? { |order| order.cancel_order.present? }
       redirect_to("/#{event_name}/dashboard")
     end
 

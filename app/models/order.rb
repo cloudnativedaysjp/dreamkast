@@ -20,6 +20,7 @@ class Order < ApplicationRecord
 
   belongs_to :profile
 
+  has_one :cancel_order
   has_many :orders_tickets
   has_many :tickets, through: :orders_tickets
 end

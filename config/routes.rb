@@ -141,6 +141,7 @@ Rails.application.routes.draw do
 
     get 'order_ticket', to: 'orders#order_ticket'
     resources :orders
+    resources :cancel_orders
   end
 
   mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'

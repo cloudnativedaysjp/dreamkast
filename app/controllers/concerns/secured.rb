@@ -28,11 +28,10 @@ module Secured
 
   def need_order?
     new_user?
-    p profile = Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
-    p profile.orders
-    if profile.orders.empty?
+    profile = Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+    if profile.orders.empty? || profile.orders.all? { |order| order.cancel_order.present? }
       redirect_to("/#{params[:event]}/order_ticket")
-      end
+    end
   end
 
   def admin?

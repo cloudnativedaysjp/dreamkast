@@ -134,4 +134,11 @@ class Profile < ApplicationRecord
   def company_full_name
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
+
+  def active_order
+    orders.find { |order| order.cancel_order.nil? }
+  end
+  def has_active_order?
+    orders.any? { |order| order.cancel_order.present? }
+  end
 end

@@ -57,7 +57,7 @@ services:
       TZ: 'Asia/Tokyo'
     cap_add:
       - SYS_NICE
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci --default-authentication-plugin=mysql_native_password
     volumes:
     - mysql-data:/var/lib/mysql
     - ./db/docker-entrypoint-initdb.d/1_allow-host-ip.sql:/docker-entrypoint-initdb.d/1_allow-host-ip.sql

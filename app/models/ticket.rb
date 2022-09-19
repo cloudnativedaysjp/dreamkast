@@ -22,6 +22,8 @@
 class Ticket < ApplicationRecord
   before_create :set_uuid
 
+  belongs_to :conference
+
   has_many :orders_tickets
   has_many :orders, through: :orders_tickets
 

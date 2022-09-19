@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base
     @profile = if @current_user && (set_conference.opened? || set_conference.registered?)
                  Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
                else
-                 Profile.set_guest
+                 GuestProfile.new
                end
   end
 

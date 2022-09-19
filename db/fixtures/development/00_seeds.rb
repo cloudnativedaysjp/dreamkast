@@ -634,27 +634,3 @@ EOS
 EOS
 }
 )
-
-Profile.seed(
-  {
-    sub: 'guest',
-    email: 'guest@cloudnativedays.com',
-    last_name: 'guest',
-    first_name: 'Guest',
-    industry_id: '1',
-    occupation: 'aaa',
-    company_name: 'aa',
-    company_email: 'guest_company@example.com',
-    company_postal_code: '1010001',
-    company_address_level1: 'address level 1',
-    company_address_level2: 'address level 2',
-    company_address_line1: 'address line 1',
-    company_address_line2: 'address line 2',
-    company_tel: '12345678901',
-    department: 'aa',
-    position: 'aaa',
-    conference_id: 1,
-    number_of_employee_id: 4,
-    annual_sales_id: 5
-  }
-)

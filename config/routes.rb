@@ -139,7 +139,7 @@ Rails.application.routes.draw do
     put 'profiles/:id/role', to: 'profiles#set_role'
     resources :links, only: [:index]
 
-    resources :orders
+    resources :orders, only: [:new, :create]
     resources :cancel_orders
   end
 

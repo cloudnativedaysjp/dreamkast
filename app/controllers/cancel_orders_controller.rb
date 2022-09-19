@@ -2,10 +2,8 @@ class CancelOrdersController < ApplicationController
   include Secured
 
   before_action :set_conference, :set_profile
-  before_action :set_current_profile, only: [:edit, :update, :destroy]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
-  skip_before_action :need_order?, only: [:create, :order_ticket]
-  before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
+  skip_before_action :need_order?, only: [:create]
 
   def new
     @order = Order.find(params[:order_id])
@@ -17,7 +15,7 @@ class CancelOrdersController < ApplicationController
 
     respond_to do |format|
       if @cancel_order.save
-        format.html { redirect_to(order_ticket_path, notice: 'キャンセルされました。') }
+        format.html { redirect_to(new_order_path, notice: 'キャンセルされました。') }
         format.json { head(:no_content) }
       else
         format.html { render(:edit) }

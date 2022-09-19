@@ -139,7 +139,6 @@ Rails.application.routes.draw do
     put 'profiles/:id/role', to: 'profiles#set_role'
     resources :links, only: [:index]
 
-    get 'order_ticket', to: 'orders#order_ticket'
     resources :orders
     resources :cancel_orders
   end

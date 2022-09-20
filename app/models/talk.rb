@@ -353,6 +353,12 @@ class Talk < ApplicationRecord
     config.params == 'オンライン登壇'
   end
 
+  def presentation_method
+    method = proposal_items.find_by(label: 'presentation_method')
+    return nil if method.blank?
+    ProposalItemConfig.find(method.params).params
+  end
+
   def actual_start_time
     start_time + start_offset.minutes
   end

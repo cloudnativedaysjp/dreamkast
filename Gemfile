@@ -52,8 +52,8 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'pry-rails'
   gem 'bullet'
-  gem 'rbs', '~> 2.7.0.pre'
-  gem 'steep', github: 'soutaro/steep', require: false
+  gem 'rbs'
+  gem 'steep', require: false
   gem 'rbs_rails', require: false
   gem 'pre-commit', require: false
   gem 'execjs', require: false

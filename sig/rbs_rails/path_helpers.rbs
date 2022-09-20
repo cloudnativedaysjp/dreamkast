@@ -1,8 +1,8 @@
 interface _RbsRailsPathHelpers
+  def rails_mailers_path: (*untyped) -> String
   def rails_info_properties_path: (*untyped) -> String
   def rails_info_routes_path: (*untyped) -> String
   def rails_info_path: (*untyped) -> String
-  def rails_mailers_path: (*untyped) -> String
   def root_path: (*untyped) -> String
   def auth_auth0_callback_path: (*untyped) -> String
   def auth_failure_path: (*untyped) -> String
@@ -14,6 +14,8 @@ interface _RbsRailsPathHelpers
   def api_v1_tracks_path: (*untyped) -> String
   def api_v1_track_path: (*untyped) -> String
   def api_v1_sponsors_path: (*untyped) -> String
+  def api_v1_speakers_path: (*untyped) -> String
+  def api_v1_speaker_path: (*untyped) -> String
   def api_v1_chat_messages_path: (*untyped) -> String
   def api_v1_chat_message_path: (*untyped) -> String
   def api_v1_booth_path: (*untyped) -> String
@@ -39,7 +41,6 @@ interface _RbsRailsPathHelpers
   def admin_speakers_path: (*untyped) -> String
   def edit_admin_speaker_path: (*untyped) -> String
   def admin_speaker_path: (*untyped) -> String
-  def admin_bulk_insert_speakers_path: (*untyped) -> String
   def admin_export_speakers_path: (*untyped) -> String
   def admin_export_profiles_path: (*untyped) -> String
   def admin_talks_path: (*untyped) -> String
@@ -51,6 +52,10 @@ interface _RbsRailsPathHelpers
   def new_admin_announcement_path: (*untyped) -> String
   def edit_admin_announcement_path: (*untyped) -> String
   def admin_announcement_path: (*untyped) -> String
+  def admin_speaker_announcements_path: (*untyped) -> String
+  def new_admin_speaker_announcement_path: (*untyped) -> String
+  def edit_admin_speaker_announcement_path: (*untyped) -> String
+  def admin_speaker_announcement_path: (*untyped) -> String
   def admin_publish_timetable_path: (*untyped) -> String
   def admin_close_timetable_path: (*untyped) -> String
   def admin_preview_timetable_path: (*untyped) -> String
@@ -58,19 +63,24 @@ interface _RbsRailsPathHelpers
   def admin_stop_on_air_path: (*untyped) -> String
   def admin_start_recording_path: (*untyped) -> String
   def admin_stop_recording_path: (*untyped) -> String
-  def admin_bulk_insert_talks_path: (*untyped) -> String
-  def admin_bulk_insert_talks_speaker_path: (*untyped) -> String
   def admin_tracks_path: (*untyped) -> String
+  def admin_update_offset_path: (*untyped) -> String
   def admin_attachment_path: (*untyped) -> String
-  def admin_video_registrations_path: (*untyped) -> String
   def admin_team_path: (*untyped) -> String
   def admin_live_stream_ivs_path: (*untyped) -> String
   def admin_bulk_create_ivs_path: (*untyped) -> String
   def admin_bulk_delete_ivs_path: (*untyped) -> String
   def admin_bulk_create_media_live_path: (*untyped) -> String
   def admin_bulk_delete_media_live_path: (*untyped) -> String
+  def admin_bulk_create_media_package_path: (*untyped) -> String
+  def admin_bulk_delete_media_package_path: (*untyped) -> String
+  def admin_harvest_jobs_path: (*untyped) -> String
+  def new_admin_harvest_job_path: (*untyped) -> String
+  def edit_admin_harvest_job_path: (*untyped) -> String
+  def admin_harvest_job_path: (*untyped) -> String
   def team_path: (*untyped) -> String
   def speakers_entry_path: (*untyped) -> String
+  def speakers_guidance_path: (*untyped) -> String
   def speakers_path: (*untyped) -> String
   def speaker_path: (*untyped) -> String
   def speaker_dashboard_path: (*untyped) -> String
@@ -101,6 +111,7 @@ interface _RbsRailsPathHelpers
   def discussion_path: (*untyped) -> String
   def hands_on_path: (*untyped) -> String
   def job_board_path: (*untyped) -> String
+  def o11y_path: (*untyped) -> String
   def tracks_path: (*untyped) -> String
   def track_path: (*untyped) -> String
   def registration_path: (*untyped) -> String
@@ -127,18 +138,25 @@ interface _RbsRailsPathHelpers
   def new_rails_conductor_inbound_email_path: (*untyped) -> String
   def edit_rails_conductor_inbound_email_path: (*untyped) -> String
   def rails_conductor_inbound_email_path: (*untyped) -> String
+  def new_rails_conductor_inbound_email_source_path: (*untyped) -> String
+  def rails_conductor_inbound_email_sources_path: (*untyped) -> String
   def rails_conductor_inbound_email_reroute_path: (*untyped) -> String
+  def rails_conductor_inbound_email_incinerate_path: (*untyped) -> String
   def rails_service_blob_path: (*untyped) -> String
+  def rails_service_blob_proxy_path: (*untyped) -> String
   def rails_blob_representation_path: (*untyped) -> String
+  def rails_blob_representation_proxy_path: (*untyped) -> String
   def rails_disk_service_path: (*untyped) -> String
   def update_rails_disk_service_path: (*untyped) -> String
   def rails_direct_uploads_path: (*untyped) -> String
   def rails_representation_path: (*untyped) -> String
   def rails_blob_path: (*untyped) -> String
+  def rails_storage_proxy_path: (*untyped) -> String
+  def rails_storage_redirect_path: (*untyped) -> String
+  def rails_mailers_url: (*untyped) -> String
   def rails_info_properties_url: (*untyped) -> String
   def rails_info_routes_url: (*untyped) -> String
   def rails_info_url: (*untyped) -> String
-  def rails_mailers_url: (*untyped) -> String
   def root_url: (*untyped) -> String
   def auth_auth0_callback_url: (*untyped) -> String
   def auth_failure_url: (*untyped) -> String
@@ -150,6 +168,8 @@ interface _RbsRailsPathHelpers
   def api_v1_tracks_url: (*untyped) -> String
   def api_v1_track_url: (*untyped) -> String
   def api_v1_sponsors_url: (*untyped) -> String
+  def api_v1_speakers_url: (*untyped) -> String
+  def api_v1_speaker_url: (*untyped) -> String
   def api_v1_chat_messages_url: (*untyped) -> String
   def api_v1_chat_message_url: (*untyped) -> String
   def api_v1_booth_url: (*untyped) -> String
@@ -175,7 +195,6 @@ interface _RbsRailsPathHelpers
   def admin_speakers_url: (*untyped) -> String
   def edit_admin_speaker_url: (*untyped) -> String
   def admin_speaker_url: (*untyped) -> String
-  def admin_bulk_insert_speakers_url: (*untyped) -> String
   def admin_export_speakers_url: (*untyped) -> String
   def admin_export_profiles_url: (*untyped) -> String
   def admin_talks_url: (*untyped) -> String
@@ -187,6 +206,10 @@ interface _RbsRailsPathHelpers
   def new_admin_announcement_url: (*untyped) -> String
   def edit_admin_announcement_url: (*untyped) -> String
   def admin_announcement_url: (*untyped) -> String
+  def admin_speaker_announcements_url: (*untyped) -> String
+  def new_admin_speaker_announcement_url: (*untyped) -> String
+  def edit_admin_speaker_announcement_url: (*untyped) -> String
+  def admin_speaker_announcement_url: (*untyped) -> String
   def admin_publish_timetable_url: (*untyped) -> String
   def admin_close_timetable_url: (*untyped) -> String
   def admin_preview_timetable_url: (*untyped) -> String
@@ -194,19 +217,24 @@ interface _RbsRailsPathHelpers
   def admin_stop_on_air_url: (*untyped) -> String
   def admin_start_recording_url: (*untyped) -> String
   def admin_stop_recording_url: (*untyped) -> String
-  def admin_bulk_insert_talks_url: (*untyped) -> String
-  def admin_bulk_insert_talks_speaker_url: (*untyped) -> String
   def admin_tracks_url: (*untyped) -> String
+  def admin_update_offset_url: (*untyped) -> String
   def admin_attachment_url: (*untyped) -> String
-  def admin_video_registrations_url: (*untyped) -> String
   def admin_team_url: (*untyped) -> String
   def admin_live_stream_ivs_url: (*untyped) -> String
   def admin_bulk_create_ivs_url: (*untyped) -> String
   def admin_bulk_delete_ivs_url: (*untyped) -> String
   def admin_bulk_create_media_live_url: (*untyped) -> String
   def admin_bulk_delete_media_live_url: (*untyped) -> String
+  def admin_bulk_create_media_package_url: (*untyped) -> String
+  def admin_bulk_delete_media_package_url: (*untyped) -> String
+  def admin_harvest_jobs_url: (*untyped) -> String
+  def new_admin_harvest_job_url: (*untyped) -> String
+  def edit_admin_harvest_job_url: (*untyped) -> String
+  def admin_harvest_job_url: (*untyped) -> String
   def team_url: (*untyped) -> String
   def speakers_entry_url: (*untyped) -> String
+  def speakers_guidance_url: (*untyped) -> String
   def speakers_url: (*untyped) -> String
   def speaker_url: (*untyped) -> String
   def speaker_dashboard_url: (*untyped) -> String
@@ -237,6 +265,7 @@ interface _RbsRailsPathHelpers
   def discussion_url: (*untyped) -> String
   def hands_on_url: (*untyped) -> String
   def job_board_url: (*untyped) -> String
+  def o11y_url: (*untyped) -> String
   def tracks_url: (*untyped) -> String
   def track_url: (*untyped) -> String
   def registration_url: (*untyped) -> String
@@ -263,12 +292,19 @@ interface _RbsRailsPathHelpers
   def new_rails_conductor_inbound_email_url: (*untyped) -> String
   def edit_rails_conductor_inbound_email_url: (*untyped) -> String
   def rails_conductor_inbound_email_url: (*untyped) -> String
+  def new_rails_conductor_inbound_email_source_url: (*untyped) -> String
+  def rails_conductor_inbound_email_sources_url: (*untyped) -> String
   def rails_conductor_inbound_email_reroute_url: (*untyped) -> String
+  def rails_conductor_inbound_email_incinerate_url: (*untyped) -> String
   def rails_service_blob_url: (*untyped) -> String
+  def rails_service_blob_proxy_url: (*untyped) -> String
   def rails_blob_representation_url: (*untyped) -> String
+  def rails_blob_representation_proxy_url: (*untyped) -> String
   def rails_disk_service_url: (*untyped) -> String
   def update_rails_disk_service_url: (*untyped) -> String
   def rails_direct_uploads_url: (*untyped) -> String
   def rails_representation_url: (*untyped) -> String
   def rails_blob_url: (*untyped) -> String
+  def rails_storage_proxy_url: (*untyped) -> String
+  def rails_storage_redirect_url: (*untyped) -> String
 end

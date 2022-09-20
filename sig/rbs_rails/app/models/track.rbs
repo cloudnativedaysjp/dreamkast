@@ -1,142 +1,296 @@
-class Track < ApplicationRecord
+class Track < ::ApplicationRecord
   extend _ActiveRecord_Relation_ClassMethods[Track, ActiveRecord_Relation, Integer]
 
-  attr_accessor id(): Integer
-  def id_changed?: () -> bool
-  def id_change: () -> [ Integer?, Integer? ]
-  def id_will_change!: () -> void
-  def id_was: () -> Integer?
-  def id_previously_changed?: () -> bool
-  def id_previous_change: () -> Array[Integer?]?
-  def id_previously_was: () -> Integer?
-  def id_before_last_save: () -> Integer?
-  def id_change_to_be_saved: () -> Array[Integer?]?
-  def id_in_database: () -> Integer?
-  def saved_change_to_id: () -> Array[Integer?]?
-  def saved_change_to_id?: () -> bool
-  def will_save_change_to_id?: () -> bool
-  def restore_id!: () -> void
-  def clear_id_change: () -> void
+  module GeneratedAttributeMethods
+    def id: () -> Integer
 
-  attr_accessor number(): Integer?
-  def number_changed?: () -> bool
-  def number_change: () -> [ Integer?, Integer? ]
-  def number_will_change!: () -> void
-  def number_was: () -> Integer?
-  def number_previously_changed?: () -> bool
-  def number_previous_change: () -> Array[Integer?]?
-  def number_previously_was: () -> Integer?
-  def number_before_last_save: () -> Integer?
-  def number_change_to_be_saved: () -> Array[Integer?]?
-  def number_in_database: () -> Integer?
-  def saved_change_to_number: () -> Array[Integer?]?
-  def saved_change_to_number?: () -> bool
-  def will_save_change_to_number?: () -> bool
-  def restore_number!: () -> void
-  def clear_number_change: () -> void
+    def id=: (Integer) -> Integer
 
-  attr_accessor name(): String?
-  def name_changed?: () -> bool
-  def name_change: () -> [ String?, String? ]
-  def name_will_change!: () -> void
-  def name_was: () -> String?
-  def name_previously_changed?: () -> bool
-  def name_previous_change: () -> Array[String?]?
-  def name_previously_was: () -> String?
-  def name_before_last_save: () -> String?
-  def name_change_to_be_saved: () -> Array[String?]?
-  def name_in_database: () -> String?
-  def saved_change_to_name: () -> Array[String?]?
-  def saved_change_to_name?: () -> bool
-  def will_save_change_to_name?: () -> bool
-  def restore_name!: () -> void
-  def clear_name_change: () -> void
+    def id?: () -> bool
 
-  attr_accessor video_id(): String?
-  def video_id_changed?: () -> bool
-  def video_id_change: () -> [ String?, String? ]
-  def video_id_will_change!: () -> void
-  def video_id_was: () -> String?
-  def video_id_previously_changed?: () -> bool
-  def video_id_previous_change: () -> Array[String?]?
-  def video_id_previously_was: () -> String?
-  def video_id_before_last_save: () -> String?
-  def video_id_change_to_be_saved: () -> Array[String?]?
-  def video_id_in_database: () -> String?
-  def saved_change_to_video_id: () -> Array[String?]?
-  def saved_change_to_video_id?: () -> bool
-  def will_save_change_to_video_id?: () -> bool
-  def restore_video_id!: () -> void
-  def clear_video_id_change: () -> void
+    def id_changed?: () -> bool
 
-  attr_accessor conference_id(): Integer?
-  def conference_id_changed?: () -> bool
-  def conference_id_change: () -> [ Integer?, Integer? ]
-  def conference_id_will_change!: () -> void
-  def conference_id_was: () -> Integer?
-  def conference_id_previously_changed?: () -> bool
-  def conference_id_previous_change: () -> Array[Integer?]?
-  def conference_id_previously_was: () -> Integer?
-  def conference_id_before_last_save: () -> Integer?
-  def conference_id_change_to_be_saved: () -> Array[Integer?]?
-  def conference_id_in_database: () -> Integer?
-  def saved_change_to_conference_id: () -> Array[Integer?]?
-  def saved_change_to_conference_id?: () -> bool
-  def will_save_change_to_conference_id?: () -> bool
-  def restore_conference_id!: () -> void
-  def clear_conference_id_change: () -> void
+    def id_change: () -> [ Integer?, Integer? ]
 
-  attr_accessor created_at(): ActiveSupport::TimeWithZone
-  def created_at_changed?: () -> bool
-  def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
-  def created_at_will_change!: () -> void
-  def created_at_was: () -> ActiveSupport::TimeWithZone?
-  def created_at_previously_changed?: () -> bool
-  def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
-  def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
-  def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
-  def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
-  def created_at_in_database: () -> ActiveSupport::TimeWithZone?
-  def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
-  def saved_change_to_created_at?: () -> bool
-  def will_save_change_to_created_at?: () -> bool
-  def restore_created_at!: () -> void
-  def clear_created_at_change: () -> void
+    def id_will_change!: () -> void
 
-  attr_accessor updated_at(): ActiveSupport::TimeWithZone
-  def updated_at_changed?: () -> bool
-  def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
-  def updated_at_will_change!: () -> void
-  def updated_at_was: () -> ActiveSupport::TimeWithZone?
-  def updated_at_previously_changed?: () -> bool
-  def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
-  def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
-  def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
-  def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
-  def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
-  def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
-  def saved_change_to_updated_at?: () -> bool
-  def will_save_change_to_updated_at?: () -> bool
-  def restore_updated_at!: () -> void
-  def clear_updated_at_change: () -> void
+    def id_was: () -> Integer?
 
-  attr_accessor video_platform(): String?
-  def video_platform_changed?: () -> bool
-  def video_platform_change: () -> [ String?, String? ]
-  def video_platform_will_change!: () -> void
-  def video_platform_was: () -> String?
-  def video_platform_previously_changed?: () -> bool
-  def video_platform_previous_change: () -> Array[String?]?
-  def video_platform_previously_was: () -> String?
-  def video_platform_before_last_save: () -> String?
-  def video_platform_change_to_be_saved: () -> Array[String?]?
-  def video_platform_in_database: () -> String?
-  def saved_change_to_video_platform: () -> Array[String?]?
-  def saved_change_to_video_platform?: () -> bool
-  def will_save_change_to_video_platform?: () -> bool
-  def restore_video_platform!: () -> void
-  def clear_video_platform_change: () -> void
+    def id_previously_changed?: () -> bool
 
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def number: () -> Integer?
+
+    def number=: (Integer?) -> Integer?
+
+    def number?: () -> bool
+
+    def number_changed?: () -> bool
+
+    def number_change: () -> [ Integer?, Integer? ]
+
+    def number_will_change!: () -> void
+
+    def number_was: () -> Integer?
+
+    def number_previously_changed?: () -> bool
+
+    def number_previous_change: () -> Array[Integer?]?
+
+    def number_previously_was: () -> Integer?
+
+    def number_before_last_save: () -> Integer?
+
+    def number_change_to_be_saved: () -> Array[Integer?]?
+
+    def number_in_database: () -> Integer?
+
+    def saved_change_to_number: () -> Array[Integer?]?
+
+    def saved_change_to_number?: () -> bool
+
+    def will_save_change_to_number?: () -> bool
+
+    def restore_number!: () -> void
+
+    def clear_number_change: () -> void
+
+    def name: () -> String?
+
+    def name=: (String?) -> String?
+
+    def name?: () -> bool
+
+    def name_changed?: () -> bool
+
+    def name_change: () -> [ String?, String? ]
+
+    def name_will_change!: () -> void
+
+    def name_was: () -> String?
+
+    def name_previously_changed?: () -> bool
+
+    def name_previous_change: () -> Array[String?]?
+
+    def name_previously_was: () -> String?
+
+    def name_before_last_save: () -> String?
+
+    def name_change_to_be_saved: () -> Array[String?]?
+
+    def name_in_database: () -> String?
+
+    def saved_change_to_name: () -> Array[String?]?
+
+    def saved_change_to_name?: () -> bool
+
+    def will_save_change_to_name?: () -> bool
+
+    def restore_name!: () -> void
+
+    def clear_name_change: () -> void
+
+    def video_id: () -> String?
+
+    def video_id=: (String?) -> String?
+
+    def video_id?: () -> bool
+
+    def video_id_changed?: () -> bool
+
+    def video_id_change: () -> [ String?, String? ]
+
+    def video_id_will_change!: () -> void
+
+    def video_id_was: () -> String?
+
+    def video_id_previously_changed?: () -> bool
+
+    def video_id_previous_change: () -> Array[String?]?
+
+    def video_id_previously_was: () -> String?
+
+    def video_id_before_last_save: () -> String?
+
+    def video_id_change_to_be_saved: () -> Array[String?]?
+
+    def video_id_in_database: () -> String?
+
+    def saved_change_to_video_id: () -> Array[String?]?
+
+    def saved_change_to_video_id?: () -> bool
+
+    def will_save_change_to_video_id?: () -> bool
+
+    def restore_video_id!: () -> void
+
+    def clear_video_id_change: () -> void
+
+    def conference_id: () -> Integer?
+
+    def conference_id=: (Integer?) -> Integer?
+
+    def conference_id?: () -> bool
+
+    def conference_id_changed?: () -> bool
+
+    def conference_id_change: () -> [ Integer?, Integer? ]
+
+    def conference_id_will_change!: () -> void
+
+    def conference_id_was: () -> Integer?
+
+    def conference_id_previously_changed?: () -> bool
+
+    def conference_id_previous_change: () -> Array[Integer?]?
+
+    def conference_id_previously_was: () -> Integer?
+
+    def conference_id_before_last_save: () -> Integer?
+
+    def conference_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def conference_id_in_database: () -> Integer?
+
+    def saved_change_to_conference_id: () -> Array[Integer?]?
+
+    def saved_change_to_conference_id?: () -> bool
+
+    def will_save_change_to_conference_id?: () -> bool
+
+    def restore_conference_id!: () -> void
+
+    def clear_conference_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def video_platform: () -> String?
+
+    def video_platform=: (String?) -> String?
+
+    def video_platform?: () -> bool
+
+    def video_platform_changed?: () -> bool
+
+    def video_platform_change: () -> [ String?, String? ]
+
+    def video_platform_will_change!: () -> void
+
+    def video_platform_was: () -> String?
+
+    def video_platform_previously_changed?: () -> bool
+
+    def video_platform_previous_change: () -> Array[String?]?
+
+    def video_platform_previously_was: () -> String?
+
+    def video_platform_before_last_save: () -> String?
+
+    def video_platform_change_to_be_saved: () -> Array[String?]?
+
+    def video_platform_in_database: () -> String?
+
+    def saved_change_to_video_platform: () -> Array[String?]?
+
+    def saved_change_to_video_platform?: () -> bool
+
+    def will_save_change_to_video_platform?: () -> bool
+
+    def restore_video_platform!: () -> void
+
+    def clear_video_platform_change: () -> void
+  end
+  include GeneratedAttributeMethods
   def talks: () -> Talk::ActiveRecord_Associations_CollectionProxy
   def talks=: (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk]) -> (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk])
   def talk_ids: () -> Array[Integer]
@@ -153,17 +307,27 @@ class Track < ApplicationRecord
   def create_live_stream_media_live: (untyped) -> LiveStreamMediaLive
   def create_live_stream_media_live!: (untyped) -> LiveStreamMediaLive
   def reload_live_stream_media_live: () -> LiveStreamMediaLive?
+  def media_package_channel: () -> MediaPackageChannel?
+  def media_package_channel=: (MediaPackageChannel?) -> MediaPackageChannel?
+  def build_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel!: (untyped) -> MediaPackageChannel
+  def reload_media_package_channel: () -> MediaPackageChannel?
+
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
 
   module GeneratedRelationMethods
   end
 
-  class ActiveRecord_Relation < ActiveRecord::Relation
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
     include GeneratedRelationMethods
     include _ActiveRecord_Relation[Track, Integer]
     include Enumerable[Track]
   end
 
-  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
     include GeneratedRelationMethods
     include _ActiveRecord_Relation[Track, Integer]
   end

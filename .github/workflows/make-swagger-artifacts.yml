@@ -19,7 +19,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -58,11 +65,11 @@ jobs:
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
 
       - name: Checkout dreamkast-infra
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: cloudnativedaysjp/dreamkast-infra
           path: dreamkast-infra
-          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
@@ -87,17 +94,17 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
           branch: main
 
       - name: Checkout dreamkast-ui
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: cloudnativedaysjp/dreamkast-ui
           path: dreamkast-ui
-          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Generate Swagger Client
         uses: docker://openapitools/openapi-generator-cli:v5.3.1
@@ -117,7 +124,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-ui
           directory: dreamkast-ui
           branch: openapi-generator/client-axios
@@ -125,7 +132,7 @@ jobs:
       - name: Create Pull Request
         uses: "actions/github-script@v6"
         with:
-          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.rest.pulls.create({
               owner: "cloudnativedaysjp",

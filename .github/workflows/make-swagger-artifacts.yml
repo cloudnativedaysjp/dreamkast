@@ -1,9 +1,12 @@
-name: CI
+name: Make swagger artifacts
 
 on:
   push:
     branches:
     - main
+    paths:
+    - 'schemas/swagger.yml'
+    - 'schemas/Dockerfile'
   # pull_request:
   #   branches:
   #     - main
@@ -44,6 +47,7 @@ jobs:
           IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
+          cd schemas/
           docker build -t $IMAGE_WITH_TAG .
           docker push $IMAGE_WITH_TAG
 

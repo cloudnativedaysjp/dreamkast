@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types: [opened, synchronize]
+  #   tags:
+  #     - v*
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: ecr
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: dreamkast-api-mock
+        run: |
+          echo REF ${{ github.ref }}
+          echo HEAD REF ${{ github.head_ref }}
+          echo SHA ${{ github.sha }}
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
+
+          IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+
+          docker build -t $IMAGE_WITH_TAG .
+          docker push $IMAGE_WITH_TAG
+
+          docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
+          docker push $IMAGE_WITH_SHA
+
+          echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
+          echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
+
+      - name: Checkout dreamkast-infra
+        uses: actions/checkout@v2
+        with:
+          repository: cloudnativedaysjp/dreamkast-infra
+          path: dreamkast-infra
+          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+
+      - name: Update Kubernetes resources
+        run: |
+          cd dreamkast-infra/manifests/app/dreamkast-api-mock/base
+          kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          cat kustomization.yaml
+
+      - name: Commit files
+        run: |
+          cd dreamkast-infra/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git status
+          git add -A
+          git commit -am "Bump docker tag"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: cloudnativedaysjp/dreamkast-infra
+          directory: dreamkast-infra
+          branch: main
+

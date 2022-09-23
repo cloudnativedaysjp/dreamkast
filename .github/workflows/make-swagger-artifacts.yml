@@ -110,7 +110,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: Generate Swagger Client
-        uses: docker://openapitools/openapi-generator-cli:v5.3.1
+        uses: docker://openapitools/openapi-generator-cli:v5.4.0
         with:
           # TODO remove --skip-validate-spec flag
           args: generate -g typescript-axios --reserved-words-mappings abstract=abstract -i ./schemas/swagger.yml -o ./dreamkast-ui/src/client-axios --skip-validate-spec

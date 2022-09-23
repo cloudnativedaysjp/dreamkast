@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
     else
       respond_to do |format|
         format.html { render(:new) }
-        format.json { render(json: @profile.errors, status: :unprocessable_entity) }
+        format.json { render(json: @order.errors, status: :unprocessable_entity) }
       end
     end
   end

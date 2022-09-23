@@ -44,22 +44,25 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: dreamkast-api-mock
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
-          echo REF ${{ github.ref }}
-          echo HEAD REF ${{ github.head_ref }}
-          echo SHA ${{ github.sha }}
-          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
+          echo REF "$GITHUB_REF"
+          echo HEAD REF "$GITHUB_HEAD_REF"
+          echo SHA "$GITHUB_SHA"
+          IMAGE_TAG=$(echo "$GITHUB_REF" | sed -e 's,.*/\(.*\),\1,')
+          [[ "$GITHUB_REF" == "refs/tags/"* ]] && IMAGE_TAG=$(echo "$IMAGE_TAG" | sed -e 's/^v//')
 
-          IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+          IMAGE_WITH_TAG="${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
+          IMAGE_WITH_SHA="${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}"
 
           cd schemas/
-          docker build -t $IMAGE_WITH_TAG .
-          docker push $IMAGE_WITH_TAG
+          docker build -t "$IMAGE_WITH_TAG" .
+          docker push "$IMAGE_WITH_TAG"
 
-          docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
-          docker push $IMAGE_WITH_SHA
+          docker tag "$IMAGE_WITH_TAG" "$IMAGE_WITH_SHA"
+          docker push "$IMAGE_WITH_SHA"
 
           echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"

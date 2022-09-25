@@ -103,7 +103,7 @@ module ApplicationHelper
     end
   end
 
-  def vote_api(id)
-    File.join(ENV['AWS_API_DOMAIN'], @conference.abbr, 'talks', id, 'vote')
+  def vote_api_url(id)
+    File.join(ENV['DREAMKAST_API_ADDR'], @conference.abbr, 'talks', id, 'vote')
   end
 end

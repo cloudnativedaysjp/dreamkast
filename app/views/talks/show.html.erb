@@ -34,5 +34,6 @@
       window.talk_id = "<%= @talk.id %>";
       window.talk_name = "<%= @talk.title %>";
   </script>
+  <%= javascript_pack_tag 'talks.js' %>
 <% end %>
-<%= javascript_pack_tag 'talks.js' %>
+<%= javascript_pack_tag 'vote_cfp.js' %>

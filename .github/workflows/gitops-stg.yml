@@ -42,7 +42,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: Update Kubernetes manifest
-        working-directory: dreamkast-infra/manifests/app/dreamkast/overlays/production/main
+        working-directory: dreamkast-infra/manifests/app/dreamkast/overlays/staging/main
         run: |
           kustomize edit set image dreamkast-ecs=${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}
 

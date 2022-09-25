@@ -6,14 +6,15 @@ describe TalksController, type: :request do
 
   describe 'GET /cndt2020/talks/:id' do
     context 'CNDT2020 is registered' do
-      before do
-        create(:cndt2020, :registered)
-        create(:talk_category1)
-        create(:talk_difficulties1)
-      end
+      let!(:cndt2020) { create(:cndt2020, :registered) }
       let!(:talk1) { create(:talk1) }
       let!(:talk2) { create(:talk2) }
       let!(:video) { create(:video) }
+
+      before do
+        create(:talk_category1, conference: cndt2020)
+        create(:talk_difficulties1, conference: cndt2020)
+      end
 
       context "user doesn't logged in" do
         it 'returns a success response' do
@@ -53,7 +54,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, :on_cndt2020)
+            create(:alice, :with_order, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -105,14 +106,15 @@ describe TalksController, type: :request do
     end
 
     context 'CNDT2020 is opened' do
-      before do
-        create(:cndt2020, :opened)
-        create(:talk_category1)
-        create(:talk_difficulties1)
-      end
+      let!(:cndt2020) { create(:cndt2020, :opened) }
       let!(:talk1) { create(:talk1) }
       let!(:talk2) { create(:talk2) }
       let!(:video) { create(:video) }
+
+      before do
+        create(:talk_category1, conference: cndt2020)
+        create(:talk_difficulties1, conference: cndt2020)
+      end
 
       context "user doesn't logged in" do
         context 'talk is archived' do
@@ -142,10 +144,11 @@ describe TalksController, type: :request do
 
       context 'user logged in' do
         context 'user already registered' do
+          let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:cndo2021)
-            create(:alice, :on_cndt2020)
-            create(:alice, :on_cndo2021)
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
+
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
@@ -196,14 +199,15 @@ describe TalksController, type: :request do
     end
 
     context 'CNDT2020 is closed' do
-      before do
-        create(:cndt2020, :closed)
-        create(:talk_category1)
-        create(:talk_difficulties1)
-      end
+      let!(:cndt2020) { create(:cndt2020, :closed) }
       let!(:talk1) { create(:talk1) }
       let!(:talk2) { create(:talk2) }
       let!(:video) { create(:video) }
+
+      before do
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
 
       context "user doesn't logged in" do
         describe 'talk is archived' do
@@ -233,10 +237,10 @@ describe TalksController, type: :request do
 
       context 'user logged in' do
         context 'user already registered' do
+          let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:cndo2021)
-            create(:alice, :on_cndt2020)
-            create(:alice, :on_cndo2021)
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
@@ -287,14 +291,15 @@ describe TalksController, type: :request do
     end
 
     context 'CNDT2020 is archived' do
-      before do
-        create(:cndt2020, :archived)
-        create(:talk_category1)
-        create(:talk_difficulties1)
-      end
+      let!(:cndt2020) { create(:cndt2020, :archived) }
       let!(:talk1) { create(:talk1) }
       let!(:talk2) { create(:talk2) }
       let!(:video) { create(:video) }
+
+      before do
+        create(:talk_category1)
+        create(:talk_difficulties1)
+      end
 
       context "user doesn't logged in" do
         context 'talk is archived' do
@@ -324,10 +329,10 @@ describe TalksController, type: :request do
 
       context 'user logged in' do
         context 'user already registered' do
+          let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:cndo2021)
-            create(:alice, :on_cndt2020)
-            create(:alice, :on_cndo2021)
+            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, :with_order, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end

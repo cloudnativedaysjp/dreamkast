@@ -44,3 +44,7 @@ Style/StringLiterals:
 # nextの使用は強制されたくない
 Style/Next:
   Enabled: false
+
+# 空のブロックは許容したい
+Lint/EmptyBlock:
+  Enabled: false

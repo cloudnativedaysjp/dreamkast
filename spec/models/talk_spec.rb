@@ -2,28 +2,28 @@
 #
 # Table name: talks
 #
-#  id                    :integer          not null, primary key
-#  title                 :string(255)
+#  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
-#  movie_url             :string(255)
-#  start_time            :time
+#  document_url          :string(255)
+#  end_offset            :integer          default(0), not null
 #  end_time              :time
-#  talk_difficulty_id    :integer
-#  talk_category_id      :integer
+#  execution_phases      :json
+#  expected_participants :json
+#  movie_url             :string(255)
+#  show_on_timetable     :boolean
+#  start_offset          :integer          default(0), not null
+#  start_time            :time
+#  title                 :string(255)
+#  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  conference_id         :integer
 #  conference_day_id     :integer
-#  track_id              :integer
-#  video_published       :boolean          default("0"), not null
-#  document_url          :string(255)
-#  show_on_timetable     :boolean
-#  talk_time_id          :integer
-#  expected_participants :json
-#  execution_phases      :json
+#  conference_id         :integer
 #  sponsor_id            :integer
-#  start_offset          :integer          default("0"), not null
-#  end_offset            :integer          default("0"), not null
+#  talk_category_id      :bigint
+#  talk_difficulty_id    :bigint
+#  talk_time_id          :integer
+#  track_id              :integer
 #
 # Indexes
 #
@@ -84,6 +84,36 @@ describe Talk, type: :model do
 
       it 'should be true' do
         expect(talk.live?).to(be_falsey)
+      end
+    end
+  end
+
+  describe '#export_csv' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+    let!(:proposal_item_config_1) { create(:proposal_item_configs_presentation_method, :live, conference: cndt2020) }
+    let!(:proposal_item_config_2) { create(:proposal_item_configs_presentation_method, :video, conference: cndt2020) }
+    let(:expected) {
+      "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n1,talk1,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",12:00-12:40,,\"\",2020-09-08,A\n"
+    }
+
+    context 'has full attributes' do
+      it 'export csv' do
+        File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|
+          expect(file.read).to(eq(expected))
+        end
+      end
+    end
+
+    context 'on registration term' do
+      let!(:talk) { create(:has_no_conference_days) }
+      let(:expected) {
+        "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n100,not accepted talk,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",\"\",,\"\",,\n"
+      }
+      it 'export csv without attributes will be decided later' do
+        File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|
+          expect(file.read).to(eq(expected))
+        end
       end
     end
   end

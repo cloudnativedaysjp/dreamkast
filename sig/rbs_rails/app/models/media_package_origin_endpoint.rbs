@@ -1,0 +1,180 @@
+class MediaPackageOriginEndpoint < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[MediaPackageOriginEndpoint, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def conference_id: () -> Integer
+
+    def conference_id=: (Integer) -> Integer
+
+    def conference_id?: () -> bool
+
+    def conference_id_changed?: () -> bool
+
+    def conference_id_change: () -> [ Integer?, Integer? ]
+
+    def conference_id_will_change!: () -> void
+
+    def conference_id_was: () -> Integer?
+
+    def conference_id_previously_changed?: () -> bool
+
+    def conference_id_previous_change: () -> Array[Integer?]?
+
+    def conference_id_previously_was: () -> Integer?
+
+    def conference_id_before_last_save: () -> Integer?
+
+    def conference_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def conference_id_in_database: () -> Integer?
+
+    def saved_change_to_conference_id: () -> Array[Integer?]?
+
+    def saved_change_to_conference_id?: () -> bool
+
+    def will_save_change_to_conference_id?: () -> bool
+
+    def restore_conference_id!: () -> void
+
+    def clear_conference_id_change: () -> void
+
+    def media_package_channel_id: () -> Integer
+
+    def media_package_channel_id=: (Integer) -> Integer
+
+    def media_package_channel_id?: () -> bool
+
+    def media_package_channel_id_changed?: () -> bool
+
+    def media_package_channel_id_change: () -> [ Integer?, Integer? ]
+
+    def media_package_channel_id_will_change!: () -> void
+
+    def media_package_channel_id_was: () -> Integer?
+
+    def media_package_channel_id_previously_changed?: () -> bool
+
+    def media_package_channel_id_previous_change: () -> Array[Integer?]?
+
+    def media_package_channel_id_previously_was: () -> Integer?
+
+    def media_package_channel_id_before_last_save: () -> Integer?
+
+    def media_package_channel_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def media_package_channel_id_in_database: () -> Integer?
+
+    def saved_change_to_media_package_channel_id: () -> Array[Integer?]?
+
+    def saved_change_to_media_package_channel_id?: () -> bool
+
+    def will_save_change_to_media_package_channel_id?: () -> bool
+
+    def restore_media_package_channel_id!: () -> void
+
+    def clear_media_package_channel_id_change: () -> void
+
+    def endpoint_id: () -> String?
+
+    def endpoint_id=: (String?) -> String?
+
+    def endpoint_id?: () -> bool
+
+    def endpoint_id_changed?: () -> bool
+
+    def endpoint_id_change: () -> [ String?, String? ]
+
+    def endpoint_id_will_change!: () -> void
+
+    def endpoint_id_was: () -> String?
+
+    def endpoint_id_previously_changed?: () -> bool
+
+    def endpoint_id_previous_change: () -> Array[String?]?
+
+    def endpoint_id_previously_was: () -> String?
+
+    def endpoint_id_before_last_save: () -> String?
+
+    def endpoint_id_change_to_be_saved: () -> Array[String?]?
+
+    def endpoint_id_in_database: () -> String?
+
+    def saved_change_to_endpoint_id: () -> Array[String?]?
+
+    def saved_change_to_endpoint_id?: () -> bool
+
+    def will_save_change_to_endpoint_id?: () -> bool
+
+    def restore_endpoint_id!: () -> void
+
+    def clear_endpoint_id_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+  def media_package_channel: () -> MediaPackageChannel
+  def media_package_channel=: (MediaPackageChannel?) -> MediaPackageChannel?
+  def reload_media_package_channel: () -> MediaPackageChannel?
+  def build_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel!: (untyped) -> MediaPackageChannel
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[MediaPackageOriginEndpoint, Integer]
+    include Enumerable[MediaPackageOriginEndpoint]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[MediaPackageOriginEndpoint, Integer]
+  end
+end

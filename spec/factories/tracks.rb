@@ -2,14 +2,14 @@
 #
 # Table name: tracks
 #
-#  id             :integer          not null, primary key
-#  number         :integer
+#  id             :bigint           not null, primary key
 #  name           :string(255)
-#  video_id       :string(255)
-#  conference_id  :integer
+#  number         :integer
+#  video_platform :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  video_platform :string(255)
+#  conference_id  :integer
+#  video_id       :string(255)
 #
 
 FactoryBot.define do

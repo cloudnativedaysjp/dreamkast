@@ -7,8 +7,8 @@ describe ContentsController, type: :request do
       let(:roles) { [] }
 
       before do
-        create(:cndt2020)
-        create(:alice, :on_cndt2020)
+        cndt2020 = create(:cndt2020)
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -20,7 +20,7 @@ describe ContentsController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
+    describe 'logged in and not registered' do
       before do
         create(:cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
@@ -54,8 +54,8 @@ describe ContentsController, type: :request do
       let(:roles) { [] }
 
       before do
-        create(:cndt2020)
-        create(:alice, :on_cndt2020)
+        cndt2020 = create(:cndt2020)
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -67,7 +67,7 @@ describe ContentsController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
+    describe 'logged in and not registered' do
       before do
         create(:cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))

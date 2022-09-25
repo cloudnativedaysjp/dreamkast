@@ -22,4 +22,5 @@ json.array!(@talks) do |talk|
   json.endOffset(talk.end_offset)
   json.actualStartTime(talk.actual_start_time)
   json.actualEndTime(talk.actual_end_time)
+  json.presentationMethod(talk.presentation_method)
 end

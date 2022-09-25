@@ -126,20 +126,25 @@ CloudNative Security Conference 2022 by CloudNative Days (CNSec2022) は、ク�
 そのような持続可能なセキュリティを実現するために、このイベントで様々な知見や技術を持ち寄って、安全で豊かな"Green"をともに目指してみませんか？
 EOS
   },
-#   {
-#     id: 7,
-#     name: "CloudNative Days Tokyo 2022",
-#     abbr: "cndt2022",
-#     theme: "TBD",
-#     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-#     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
-#     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
-#     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
-#     committee_name: "CloudNative Days Tokyo 2022 Committee",
-#     about: <<'EOS'
-# TBD
-# EOS
-#   },
+  {
+    id: 7,
+    name: "CloudNative Days Tokyo 2022",
+    abbr: "cndt2022",
+    theme: "+Native 〜ともに広がるクラウドネイティブの世界〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Tokyo 2022 Committee",
+    about: <<'EOS'
+    "CloudNative Days" は最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供するテックカンファレンスです。
+
+    世の中の在り方が広がっても、私たちは共に物理的・時間的な距離を乗り越えていきます。
+    クラウドネイティブの世界が広がっても、私たちは共に新しい未知の道を開拓し続けていきます。
+    
+    これまでもこれからも、広がり続けるクラウドネイティブにおいて、様々な人・会社・技術・考え方で目指す多様性を受け入れ、共に時間を共有し、新しい地図を広げていきましょう。
+EOS
+  }
 )
 
 ConferenceDay.seed(
@@ -166,6 +171,11 @@ ConferenceDay.seed(
   # CNSEC2022
   {id: 16, date: "2022-08-05", start_time: "13:00", end_time: "19:00", conference_id: 6, internal: false},
   {id: 17, date: "2022-07-15", start_time: "19:00", end_time: "21:00", conference_id: 6, internal: true}, #Pre event
+
+  # CNDT2022
+  {id: 18, date: "2022-11-21", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
+  {id: 19, date: "2022-11-22", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
+  {id: 20, date: "2022-10-31", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -262,6 +272,12 @@ Track.seed(
   { id: 29, number: 1, name: "A", conference_id: 6},
   { id: 30, number: 2, name: "B", conference_id: 6},
   { id: 31, number: 3, name: "C", conference_id: 6},
+  { id: 32, number: 1, name: "A", conference_id: 7},
+  { id: 33, number: 2, name: "B", conference_id: 7},
+  { id: 34, number: 3, name: "C", conference_id: 7},
+  { id: 35, number: 4, name: "D", conference_id: 7},
+  { id: 36, number: 5, name: "E", conference_id: 7},
+  { id: 37, number: 6, name: "F", conference_id: 7},
 )
 
 
@@ -322,6 +338,25 @@ TalkCategory.seed(
   { id: 52, conference_id: 4, name: "組織論"},
   { id: 53, conference_id: 4, name: "その他"},
   { id: 54, conference_id: 4, name: "Keynote"},
+  
+  { id: 55, conference_id: 7, name: "CI / CD"},
+  { id: 56, conference_id: 7, name: "Customizing / Extending"},
+  { id: 57, conference_id: 7, name: "IoT / Edge"},
+  { id: 58, conference_id: 7, name: "Microservices / Services Mesh"},
+  { id: 59, conference_id: 7, name: "ML / HPC"},
+  { id: 60, conference_id: 7, name: "Networking"},
+  { id: 61, conference_id: 7, name: "Operation / Monitoring / Logging"},
+  { id: 62, conference_id: 7, name: "Application / Development"},
+  { id: 63, conference_id: 7, name: "Runtime"},
+  { id: 64, conference_id: 7, name: "Security"},
+  { id: 65, conference_id: 7, name: "Serverless / FaaS"},
+  { id: 66, conference_id: 7, name: "Storage / Database"},
+  { id: 67, conference_id: 7, name: "Architecture Design"},
+  { id: 68, conference_id: 7, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 69, conference_id: 7, name: "NFV / Edge"},
+  { id: 70, conference_id: 7, name: "組織論"},
+  { id: 71, conference_id: 7, name: "その他"},
+  { id: 72, conference_id: 7, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -344,6 +379,9 @@ TalkDifficulty.seed(
   { id: 51, conference_id: 6, name: "初級者"},
   { id: 52, conference_id: 6, name: "中級者"},
   { id: 53, conference_id: 6, name: "上級者"},
+  { id: 54, conference_id: 7, name: "初級者"},
+  { id: 55, conference_id: 7, name: "中級者"},
+  { id: 56, conference_id: 7, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -513,3 +551,8 @@ EOS
     }
   )
 end
+
+Ticket.seed(
+  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 7 },
+  {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 1500, conference_id: 7 },
+)

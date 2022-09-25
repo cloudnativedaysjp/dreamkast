@@ -1,90 +1,188 @@
-class LiveStreamMediaLive < LiveStream
+class LiveStreamMediaLive < ::LiveStream
   extend _ActiveRecord_Relation_ClassMethods[LiveStreamMediaLive, ActiveRecord_Relation, Integer]
 
-  attr_accessor id(): Integer
-  def id_changed?: () -> bool
-  def id_change: () -> [ Integer?, Integer? ]
-  def id_will_change!: () -> void
-  def id_was: () -> Integer?
-  def id_previously_changed?: () -> bool
-  def id_previous_change: () -> Array[Integer?]?
-  def id_previously_was: () -> Integer?
-  def id_before_last_save: () -> Integer?
-  def id_change_to_be_saved: () -> Array[Integer?]?
-  def id_in_database: () -> Integer?
-  def saved_change_to_id: () -> Array[Integer?]?
-  def saved_change_to_id?: () -> bool
-  def will_save_change_to_id?: () -> bool
-  def restore_id!: () -> void
-  def clear_id_change: () -> void
+  module GeneratedAttributeMethods
+    def id: () -> Integer
 
-  attr_accessor conference_id(): Integer
-  def conference_id_changed?: () -> bool
-  def conference_id_change: () -> [ Integer?, Integer? ]
-  def conference_id_will_change!: () -> void
-  def conference_id_was: () -> Integer?
-  def conference_id_previously_changed?: () -> bool
-  def conference_id_previous_change: () -> Array[Integer?]?
-  def conference_id_previously_was: () -> Integer?
-  def conference_id_before_last_save: () -> Integer?
-  def conference_id_change_to_be_saved: () -> Array[Integer?]?
-  def conference_id_in_database: () -> Integer?
-  def saved_change_to_conference_id: () -> Array[Integer?]?
-  def saved_change_to_conference_id?: () -> bool
-  def will_save_change_to_conference_id?: () -> bool
-  def restore_conference_id!: () -> void
-  def clear_conference_id_change: () -> void
+    def id=: (Integer) -> Integer
 
-  attr_accessor track_id(): Integer
-  def track_id_changed?: () -> bool
-  def track_id_change: () -> [ Integer?, Integer? ]
-  def track_id_will_change!: () -> void
-  def track_id_was: () -> Integer?
-  def track_id_previously_changed?: () -> bool
-  def track_id_previous_change: () -> Array[Integer?]?
-  def track_id_previously_was: () -> Integer?
-  def track_id_before_last_save: () -> Integer?
-  def track_id_change_to_be_saved: () -> Array[Integer?]?
-  def track_id_in_database: () -> Integer?
-  def saved_change_to_track_id: () -> Array[Integer?]?
-  def saved_change_to_track_id?: () -> bool
-  def will_save_change_to_track_id?: () -> bool
-  def restore_track_id!: () -> void
-  def clear_track_id_change: () -> void
+    def id?: () -> bool
 
-  attr_accessor type(): String?
-  def type_changed?: () -> bool
-  def type_change: () -> [ String?, String? ]
-  def type_will_change!: () -> void
-  def type_was: () -> String?
-  def type_previously_changed?: () -> bool
-  def type_previous_change: () -> Array[String?]?
-  def type_previously_was: () -> String?
-  def type_before_last_save: () -> String?
-  def type_change_to_be_saved: () -> Array[String?]?
-  def type_in_database: () -> String?
-  def saved_change_to_type: () -> Array[String?]?
-  def saved_change_to_type?: () -> bool
-  def will_save_change_to_type?: () -> bool
-  def restore_type!: () -> void
-  def clear_type_change: () -> void
+    def id_changed?: () -> bool
 
-  attr_accessor params(): untyped?
-  def params_changed?: () -> bool
-  def params_change: () -> [ untyped?, untyped? ]
-  def params_will_change!: () -> void
-  def params_was: () -> untyped?
-  def params_previously_changed?: () -> bool
-  def params_previous_change: () -> Array[untyped?]?
-  def params_previously_was: () -> untyped?
-  def params_before_last_save: () -> untyped?
-  def params_change_to_be_saved: () -> Array[untyped?]?
-  def params_in_database: () -> untyped?
-  def saved_change_to_params: () -> Array[untyped?]?
-  def saved_change_to_params?: () -> bool
-  def will_save_change_to_params?: () -> bool
-  def restore_params!: () -> void
-  def clear_params_change: () -> void
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def conference_id: () -> Integer
+
+    def conference_id=: (Integer) -> Integer
+
+    def conference_id?: () -> bool
+
+    def conference_id_changed?: () -> bool
+
+    def conference_id_change: () -> [ Integer?, Integer? ]
+
+    def conference_id_will_change!: () -> void
+
+    def conference_id_was: () -> Integer?
+
+    def conference_id_previously_changed?: () -> bool
+
+    def conference_id_previous_change: () -> Array[Integer?]?
+
+    def conference_id_previously_was: () -> Integer?
+
+    def conference_id_before_last_save: () -> Integer?
+
+    def conference_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def conference_id_in_database: () -> Integer?
+
+    def saved_change_to_conference_id: () -> Array[Integer?]?
+
+    def saved_change_to_conference_id?: () -> bool
+
+    def will_save_change_to_conference_id?: () -> bool
+
+    def restore_conference_id!: () -> void
+
+    def clear_conference_id_change: () -> void
+
+    def track_id: () -> Integer
+
+    def track_id=: (Integer) -> Integer
+
+    def track_id?: () -> bool
+
+    def track_id_changed?: () -> bool
+
+    def track_id_change: () -> [ Integer?, Integer? ]
+
+    def track_id_will_change!: () -> void
+
+    def track_id_was: () -> Integer?
+
+    def track_id_previously_changed?: () -> bool
+
+    def track_id_previous_change: () -> Array[Integer?]?
+
+    def track_id_previously_was: () -> Integer?
+
+    def track_id_before_last_save: () -> Integer?
+
+    def track_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def track_id_in_database: () -> Integer?
+
+    def saved_change_to_track_id: () -> Array[Integer?]?
+
+    def saved_change_to_track_id?: () -> bool
+
+    def will_save_change_to_track_id?: () -> bool
+
+    def restore_track_id!: () -> void
+
+    def clear_track_id_change: () -> void
+
+    def type: () -> String?
+
+    def type=: (String?) -> String?
+
+    def type?: () -> bool
+
+    def type_changed?: () -> bool
+
+    def type_change: () -> [ String?, String? ]
+
+    def type_will_change!: () -> void
+
+    def type_was: () -> String?
+
+    def type_previously_changed?: () -> bool
+
+    def type_previous_change: () -> Array[String?]?
+
+    def type_previously_was: () -> String?
+
+    def type_before_last_save: () -> String?
+
+    def type_change_to_be_saved: () -> Array[String?]?
+
+    def type_in_database: () -> String?
+
+    def saved_change_to_type: () -> Array[String?]?
+
+    def saved_change_to_type?: () -> bool
+
+    def will_save_change_to_type?: () -> bool
+
+    def restore_type!: () -> void
+
+    def clear_type_change: () -> void
+
+    def params: () -> untyped?
+
+    def params=: (untyped?) -> untyped?
+
+    def params?: () -> bool
+
+    def params_changed?: () -> bool
+
+    def params_change: () -> [ untyped?, untyped? ]
+
+    def params_will_change!: () -> void
+
+    def params_was: () -> untyped?
+
+    def params_previously_changed?: () -> bool
+
+    def params_previous_change: () -> Array[untyped?]?
+
+    def params_previously_was: () -> untyped?
+
+    def params_before_last_save: () -> untyped?
+
+    def params_change_to_be_saved: () -> Array[untyped?]?
+
+    def params_in_database: () -> untyped?
+
+    def saved_change_to_params: () -> Array[untyped?]?
+
+    def saved_change_to_params?: () -> bool
+
+    def will_save_change_to_params?: () -> bool
+
+    def restore_params!: () -> void
+
+    def clear_params_change: () -> void
+  end
+  include GeneratedAttributeMethods
 
   def conference: () -> Conference
   def conference=: (Conference?) -> Conference?
@@ -98,17 +196,20 @@ class LiveStreamMediaLive < LiveStream
   def build_track: (untyped) -> Track
   def create_track: (untyped) -> Track
   def create_track!: (untyped) -> Track
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
 
   module GeneratedRelationMethods
   end
 
-  class ActiveRecord_Relation < ActiveRecord::Relation
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
     include GeneratedRelationMethods
     include _ActiveRecord_Relation[LiveStreamMediaLive, Integer]
     include Enumerable[LiveStreamMediaLive]
   end
 
-  class ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
     include GeneratedRelationMethods
     include _ActiveRecord_Relation[LiveStreamMediaLive, Integer]
   end

@@ -1,5 +1,9 @@
 <div class="container">
-  <%= render 'form', speaker: @speaker %>
+  <div class="row speaker-dashboard-form justify-content-center">
+    <div class="col-12 col-lg-8">
+      <%= render 'form', speaker: @speaker %>
 
-  <%= link_to 'Back', speaker_dashboard_path %>
+      <%= link_to 'Back', speaker_dashboard_path %>
+    </div>
+  </div>
 </div>

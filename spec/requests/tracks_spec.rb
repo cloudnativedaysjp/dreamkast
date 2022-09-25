@@ -8,8 +8,8 @@ RSpec.describe(TracksController, type: :request) do
   describe 'GET /:event/dashboard' do
     describe 'logged in and registered' do
       before do
-        create(:cndt2020)
-        create(:alice, :on_cndt2020)
+        cndt2020 = create(:cndt2020)
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -122,8 +122,8 @@ RSpec.describe(TracksController, type: :request) do
   describe 'GET /:event/tracks' do
     describe 'logged in and registered' do
       before do
-        create(:cndt2020, :opened)
-        create(:alice, :on_cndt2020)
+        cndt2020 = create(:cndt2020, :opened)
+        create(:alice, :with_order, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 

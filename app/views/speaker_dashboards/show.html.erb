@@ -2,6 +2,10 @@
   <h1 class="text-center py-3 entry">スピーカーダッシュボード</h1>
   <div class="row speaker-dashboard-form">
 
+    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+      <%= button_to 'CFP要項を確認する', speakers_guidance_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+    </div>
+
     <% unless @speaker.present? %>
     <div class="col-12 my-4">
       <%= link_to 'エントリー', speakers_entry_path %>

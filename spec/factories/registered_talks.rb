@@ -2,11 +2,11 @@
 #
 # Table name: registered_talks
 #
-#  id         :integer          not null, primary key
-#  profile_id :integer
-#  talk_id    :integer
+#  id         :bigint           not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  profile_id :integer
+#  talk_id    :integer
 #
 
 FactoryBot.define do

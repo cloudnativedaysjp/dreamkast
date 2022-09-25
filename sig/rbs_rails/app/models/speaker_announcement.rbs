@@ -1,0 +1,355 @@
+class SpeakerAnnouncement < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[SpeakerAnnouncement, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def conference_id: () -> Integer
+
+    def conference_id=: (Integer) -> Integer
+
+    def conference_id?: () -> bool
+
+    def conference_id_changed?: () -> bool
+
+    def conference_id_change: () -> [ Integer?, Integer? ]
+
+    def conference_id_will_change!: () -> void
+
+    def conference_id_was: () -> Integer?
+
+    def conference_id_previously_changed?: () -> bool
+
+    def conference_id_previous_change: () -> Array[Integer?]?
+
+    def conference_id_previously_was: () -> Integer?
+
+    def conference_id_before_last_save: () -> Integer?
+
+    def conference_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def conference_id_in_database: () -> Integer?
+
+    def saved_change_to_conference_id: () -> Array[Integer?]?
+
+    def saved_change_to_conference_id?: () -> bool
+
+    def will_save_change_to_conference_id?: () -> bool
+
+    def restore_conference_id!: () -> void
+
+    def clear_conference_id_change: () -> void
+
+    def publish_time: () -> ActiveSupport::TimeWithZone
+
+    def publish_time=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def publish_time?: () -> bool
+
+    def publish_time_changed?: () -> bool
+
+    def publish_time_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def publish_time_will_change!: () -> void
+
+    def publish_time_was: () -> ActiveSupport::TimeWithZone?
+
+    def publish_time_previously_changed?: () -> bool
+
+    def publish_time_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def publish_time_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def publish_time_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def publish_time_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def publish_time_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_publish_time: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_publish_time?: () -> bool
+
+    def will_save_change_to_publish_time?: () -> bool
+
+    def restore_publish_time!: () -> void
+
+    def clear_publish_time_change: () -> void
+
+    def body: () -> String
+
+    def body=: (String) -> String
+
+    def body?: () -> bool
+
+    def body_changed?: () -> bool
+
+    def body_change: () -> [ String?, String? ]
+
+    def body_will_change!: () -> void
+
+    def body_was: () -> String?
+
+    def body_previously_changed?: () -> bool
+
+    def body_previous_change: () -> Array[String?]?
+
+    def body_previously_was: () -> String?
+
+    def body_before_last_save: () -> String?
+
+    def body_change_to_be_saved: () -> Array[String?]?
+
+    def body_in_database: () -> String?
+
+    def saved_change_to_body: () -> Array[String?]?
+
+    def saved_change_to_body?: () -> bool
+
+    def will_save_change_to_body?: () -> bool
+
+    def restore_body!: () -> void
+
+    def clear_body_change: () -> void
+
+    def publish: () -> bool?
+
+    def publish=: (bool?) -> bool?
+
+    def publish?: () -> bool
+
+    def publish_changed?: () -> bool
+
+    def publish_change: () -> [ bool?, bool? ]
+
+    def publish_will_change!: () -> void
+
+    def publish_was: () -> bool?
+
+    def publish_previously_changed?: () -> bool
+
+    def publish_previous_change: () -> Array[bool?]?
+
+    def publish_previously_was: () -> bool?
+
+    def publish_before_last_save: () -> bool?
+
+    def publish_change_to_be_saved: () -> Array[bool?]?
+
+    def publish_in_database: () -> bool?
+
+    def saved_change_to_publish: () -> Array[bool?]?
+
+    def saved_change_to_publish?: () -> bool
+
+    def will_save_change_to_publish?: () -> bool
+
+    def restore_publish!: () -> void
+
+    def clear_publish_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def receiver: () -> String
+
+    def receiver=: (String) -> String
+
+    def receiver?: () -> bool
+
+    def receiver_changed?: () -> bool
+
+    def receiver_change: () -> [ String?, String? ]
+
+    def receiver_will_change!: () -> void
+
+    def receiver_was: () -> String?
+
+    def receiver_previously_changed?: () -> bool
+
+    def receiver_previous_change: () -> Array[String?]?
+
+    def receiver_previously_was: () -> String?
+
+    def receiver_before_last_save: () -> String?
+
+    def receiver_change_to_be_saved: () -> Array[String?]?
+
+    def receiver_in_database: () -> String?
+
+    def saved_change_to_receiver: () -> Array[String?]?
+
+    def saved_change_to_receiver?: () -> bool
+
+    def will_save_change_to_receiver?: () -> bool
+
+    def restore_receiver!: () -> void
+
+    def clear_receiver_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def speaker_announcement_middles: () -> SpeakerAnnouncementMiddle::ActiveRecord_Associations_CollectionProxy
+  def speaker_announcement_middles=: (SpeakerAnnouncementMiddle::ActiveRecord_Associations_CollectionProxy | Array[SpeakerAnnouncementMiddle]) -> (SpeakerAnnouncementMiddle::ActiveRecord_Associations_CollectionProxy | Array[SpeakerAnnouncementMiddle])
+  def speaker_announcement_middle_ids: () -> Array[Integer]
+  def speaker_announcement_middle_ids=: (Array[Integer]) -> Array[Integer]
+  def speakers: () -> Speaker::ActiveRecord_Associations_CollectionProxy
+  def speakers=: (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker]) -> (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker])
+  def speaker_ids: () -> Array[Integer]
+  def speaker_ids=: (Array[Integer]) -> Array[Integer]
+
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  def person!: () -> bool
+  def person?: () -> bool
+  def all_speaker!: () -> bool
+  def all_speaker?: () -> bool
+  def only_accepted!: () -> bool
+  def only_accepted?: () -> bool
+  def only_rejected!: () -> bool
+  def only_rejected?: () -> bool
+  def self.person: () -> ActiveRecord_Relation
+  def self.all_speaker: () -> ActiveRecord_Relation
+  def self.only_accepted: () -> ActiveRecord_Relation
+  def self.only_rejected: () -> ActiveRecord_Relation
+  def self.published: () -> ActiveRecord_Relation
+  def self.find_by_speaker: (untyped speaker_id) -> ActiveRecord_Relation
+  def self.exclude_announcements_for_only_accepted: () -> ActiveRecord_Relation
+
+  module GeneratedRelationMethods
+    def person: () -> ActiveRecord_Relation
+
+    def all_speaker: () -> ActiveRecord_Relation
+
+    def only_accepted: () -> ActiveRecord_Relation
+
+    def only_rejected: () -> ActiveRecord_Relation
+
+    def published: () -> ActiveRecord_Relation
+
+    def find_by_speaker: (untyped speaker_id) -> ActiveRecord_Relation
+
+    def exclude_announcements_for_only_accepted: () -> ActiveRecord_Relation
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[SpeakerAnnouncement, Integer]
+    include Enumerable[SpeakerAnnouncement]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[SpeakerAnnouncement, Integer]
+  end
+end

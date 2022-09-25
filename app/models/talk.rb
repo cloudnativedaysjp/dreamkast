@@ -2,28 +2,28 @@
 #
 # Table name: talks
 #
-#  id                    :integer          not null, primary key
-#  title                 :string(255)
+#  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
-#  movie_url             :string(255)
-#  start_time            :time
+#  document_url          :string(255)
+#  end_offset            :integer          default(0), not null
 #  end_time              :time
-#  talk_difficulty_id    :integer
-#  talk_category_id      :integer
+#  execution_phases      :json
+#  expected_participants :json
+#  movie_url             :string(255)
+#  show_on_timetable     :boolean
+#  start_offset          :integer          default(0), not null
+#  start_time            :time
+#  title                 :string(255)
+#  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  conference_id         :integer
 #  conference_day_id     :integer
-#  track_id              :integer
-#  video_published       :boolean          default("0"), not null
-#  document_url          :string(255)
-#  show_on_timetable     :boolean
-#  talk_time_id          :integer
-#  expected_participants :json
-#  execution_phases      :json
+#  conference_id         :integer
 #  sponsor_id            :integer
-#  start_offset          :integer          default("0"), not null
-#  end_offset            :integer          default("0"), not null
+#  talk_category_id      :bigint
+#  talk_difficulty_id    :bigint
+#  talk_time_id          :integer
+#  track_id              :integer
 #
 # Indexes
 #
@@ -132,8 +132,8 @@ class Talk < ApplicationRecord
           row << (v.instance_of?(Array) ? v.join(', ') : v)
         end
         row << talk.avatar_urls.join('/ ')
-        row << talk.conference_day.date
-        row << talk.track.name
+        row << (talk.conference_day.nil? ? nil : talk.conference_day.date)
+        row << (talk.track.nil? ? nil : talk.track.name)
         csv << row
       end
     end
@@ -351,6 +351,12 @@ class Talk < ApplicationRecord
 
     config = ProposalItemConfig.find(method.params)
     config.params == 'オンライン登壇'
+  end
+
+  def presentation_method
+    method = proposal_items.find_by(label: 'presentation_method')
+    return nil if method.blank?
+    ProposalItemConfig.find(method.params).params
   end
 
   def actual_start_time

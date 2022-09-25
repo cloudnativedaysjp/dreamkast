@@ -2,25 +2,25 @@
 #
 # Table name: conferences
 #
-#  id                         :integer          not null, primary key
+#  id                         :bigint           not null, primary key
+#  abbr                       :string(255)
+#  about                      :text(65535)
+#  attendee_entry             :integer
+#  brief                      :string(255)
+#  cfp_result_visible         :boolean          default(FALSE)
+#  coc                        :text(65535)
+#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
+#  copyright                  :string(255)
 #  name                       :string(255)
+#  privacy_policy             :text(65535)
+#  privacy_policy_for_speaker :text(65535)
+#  show_sponsors              :boolean          default(FALSE)
+#  show_timetable             :integer
+#  speaker_entry              :integer
+#  status                     :integer          default("registered"), not null
+#  theme                      :text(65535)
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  abbr                       :string(255)
-#  status                     :integer          default("0"), not null
-#  theme                      :text(65535)
-#  about                      :text(65535)
-#  privacy_policy             :text(65535)
-#  coc                        :text(65535)
-#  copyright                  :string(255)
-#  privacy_policy_for_speaker :text(65535)
-#  speaker_entry              :integer
-#  attendee_entry             :integer
-#  show_timetable             :integer
-#  cfp_result_visible         :boolean          default("0")
-#  show_sponsors              :boolean          default("0")
-#  brief                      :string(255)
-#  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #
 # Indexes
 #
@@ -93,6 +93,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 4, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_4')
       create(:track, id: 5, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_5')
       create(:track, id: 6, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_6')
+      create(:ticket, :a, conference:)
+      create(:ticket, :b, conference:)
     end
   end
 
@@ -109,6 +111,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     attendee_entry { 1 }
     show_timetable { 1 }
     committee_name { 'CloudNative Days Spring 2021 ONLINE Committee' }
+    coc { 'this is coc' }
+
     about do
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -126,6 +130,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 14, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 15, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 16, number: 7, name: 'G', conference_id: conference.id, video_id: 'video_7')
+      create(:ticket, :a, conference:)
+      create(:ticket, :b, conference:)
     end
   end
 

@@ -2,21 +2,21 @@
 #
 # Table name: speakers
 #
-#  id                   :integer          not null, primary key
-#  name                 :string(255)
-#  profile              :text(65535)
+#  id                   :bigint           not null, primary key
+#  additional_documents :text(65535)
+#  avatar_data          :text(65535)
 #  company              :string(255)
+#  email                :text(65535)
 #  job_title            :string(255)
-#  twitter_id           :string(255)
-#  github_id            :string(255)
+#  name                 :string(255)
+#  name_mother_tongue   :string(255)
+#  profile              :text(65535)
+#  sub                  :text(65535)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  avatar_data          :text(65535)
 #  conference_id        :integer
-#  email                :text(65535)
-#  sub                  :text(65535)
-#  additional_documents :text(65535)
-#  name_mother_tongue   :string(255)
+#  github_id            :string(255)
+#  twitter_id           :string(255)
 #
 
 require 'rails_helper'

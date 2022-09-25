@@ -68,6 +68,10 @@
 
   <section class="speaker-information py-3">
     <a id="sessions"><h3 class="py-3">セッション情報</h3></a>
+    <p class="alert alert-info">
+      <%= link_to 'CFP要項を確認する', speakers_guidance_path %>
+    </p>
+
 
     <div class="talk-fields">
       <%= form.fields_for :talks do |talk| %>

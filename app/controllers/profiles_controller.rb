@@ -34,7 +34,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
       Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
       ProfileMailer.registered(@profile, @conference).deliver_later
-      redirect_to("/#{event_name}/timetables")
+      redirect_to(new_order_path)
     else
       respond_to do |format|
         format.html { render(:new) }

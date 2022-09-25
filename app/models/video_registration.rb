@@ -2,17 +2,21 @@
 #
 # Table name: video_registrations
 #
-#  id         :integer          not null, primary key
-#  talk_id    :integer          not null
-#  url        :string(255)
-#  status     :integer          default("0"), not null
+#  id         :bigint           not null, primary key
 #  statistics :json             not null
+#  status     :integer          default("unsubmitted"), not null
+#  url        :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  talk_id    :bigint           not null
 #
 # Indexes
 #
 #  index_video_registrations_on_talk_id  (talk_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (talk_id => talks.id)
 #
 
 class VideoRegistration < ApplicationRecord

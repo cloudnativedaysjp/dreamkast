@@ -11,10 +11,4 @@ class BoothsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @booth = @conference.booths.find(params[:id])
   end
-
-  private
-
-  def set_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-  end
 end

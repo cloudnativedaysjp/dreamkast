@@ -77,12 +77,6 @@ class SpeakersController < ApplicationController
     @speaker = Speaker.find(params[:id])
   end
 
-  def set_profile
-    if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
-  end
-
   # Only allow a list of trusted parameters through.
   def speaker_params
     params.require(:speaker).permit(:name, :profile, :company, :job_title, :twitter_id, :github_id, :avatar)

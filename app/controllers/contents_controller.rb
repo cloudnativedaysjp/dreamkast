@@ -34,12 +34,4 @@ class ContentsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     render(:o11y)
   end
-
-  private
-
-  def set_profile
-    if @current_user
-      @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
-  end
 end

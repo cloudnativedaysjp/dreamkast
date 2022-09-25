@@ -32,16 +32,16 @@ EOS
     CNCFによる定義によると、『近代的でダイナミックな環境で、スケーラブルなアプリケーションを構築・実行するための能力を組織にもたらす』のがクラウドネイティブ技術です。
     また、オープンソースでベンダー中立なエコシステムを育成・維持し、このパラダイムの採用を促進したいとも述べられています。
     私たちはこの考えに賛同します。クラウドネイティブ技術を日本にも浸透させるべく、過去数年にわたりイベントを行ってきました。
-    
+
     しかし世の中が大きく変わりつつある昨今。我々はこう考えました。
     『今ならオンラインの特性を生かして、CloudNative Daysをダイナミックな環境でスケーラブルな形に更に進化させられるのではないか？』
-    
+
     オンラインでは、誰でも情報を得ることができ、誰もが発信することもできます。オープンな思想のもとに作られたインターネットには境界がありません。
     そうしたインターネットの成り立ちを思い出し、初心者から達人まで、住んでいる場所を問わず、クラウドネイティブに取り組む人が、
-    
+
     ・今まで参加者だった人が壁を感じずに発信できる
     ・参加者が、これまで以上に多様な視点から学びを得られる
-    
+
     そんな機会を創り出し、登壇者・参加者・イベント主催者といった垣根を超えて、クラウドネイティブ・コミュニティを広げていきたいと考えています。
     CloudNative Days Spring 2021 Onlineでは、クラウドネイティブ技術を通じて培った知見やマインドセットを最大限に活用し、これまでに無かった斬新なイベントを目指しています。
 EOS
@@ -76,7 +76,7 @@ EOS
 
     それぞれの旅路において、拾い集めた様々な経験、知識、疑問、悩みを共有する"交差点"にして欲しい、そんな思いが"CloudNative Days" には込められています。
     まだ旅への一歩を踏み出せていない人も、再び旅に出る人も、この"交差点"に集まることで過去を振り返りながら新たなクラウドネイティブの旅をともに歩み進めることができると私達は信じています。
-    
+
     旅をする準備をしませんか？ "交差点"で会えるのを楽しみにしています。
 EOS
   },
@@ -94,11 +94,11 @@ EOS
     Observability Conference（O11yCon）は、オブザーバビリティ（可観測性）に特化したテックカンファレンスです。
 
     どのようなツールがあるのか・実業務での活用事例、そしてそもそも オブザーバビリティとは何なのか。
-    
+
     それぞれの情報を共有し、オブザーバビリティに対する理解を深め合いましょう。そうして得られた知見を、今度は皆さん自身のシステム/アプリケーションに活かすことで、より実体や現状が高い解像度ではっきりと見えてくるはずです。
-    
+
     まさに、知らなかったことを知ることで、見えていないものが見えるようになります。
-    
+
     さまざまなロールの垣根を超えて、ともにオブザーバビリティの道を明らかにしていきましょう。
 EOS
   },
@@ -157,7 +157,7 @@ ConferenceDay.seed(
   {id: 6, date: "2021-03-11", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 7, date: "2021-03-12", start_time: "12:00", end_time: "20:00", conference_id: 2, internal: false},
   {id: 8, date: "2021-02-26", start_time: "19:00", end_time: "21:00", conference_id: 2, internal: true}, #Pre event
-    
+
   {id: 9, date: "2021-09-03", start_time: "13:00", end_time: "19:00", conference_id: 3, internal: false},
   {id: 10, date: "2021-08-05", start_time: "19:00", end_time: "21:00", conference_id: 3, internal: true}, #Pre event
 
@@ -319,7 +319,7 @@ TalkCategory.seed(
   { id: 34, conference_id: 2, name: "組織論"},
   { id: 35, conference_id: 2, name: "その他"},
   { id: 36, conference_id: 2, name: "Keynote"},
-  
+
   { id: 37, conference_id: 4, name: "CI / CD"},
   { id: 38, conference_id: 4, name: "Customizing / Extending"},
   { id: 39, conference_id: 4, name: "IoT / Edge"},
@@ -531,7 +531,7 @@ if ENV['REVIEW_APP'] == 'true'
       status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
     }
   })
-    
+
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},
     { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true, slido_id: "3jtfhpkv"},

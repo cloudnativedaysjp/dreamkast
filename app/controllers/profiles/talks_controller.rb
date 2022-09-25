@@ -58,10 +58,6 @@ class Profiles::TalksController < ApplicationController
 
   private
 
-  def set_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-  end
-
   def talk_params
     params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
   end

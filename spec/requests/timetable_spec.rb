@@ -108,14 +108,25 @@ describe TimetableController, type: :request do
 
     describe 'logged in and not registered' do
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
-      it 'redirect to /cndo2021/registration' do
-        get '/cndo2021/timetables'
-        expect(response).to_not(be_successful)
-        expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndo2021/registration'))
+      context 'when conference status is archived' do
+        before { Conference.find_by(abbr: 'cndo2021').update!(status: 3) }
+        it 'access to /cndo2021/timetables' do
+          get '/cndo2021/timetables'
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
+        end
+      end
+
+      context 'when conference status is not archived' do
+        it 'redirect to /cndo2021/registration' do
+          get '/cndo2021/timetables'
+          expect(response).to_not(be_successful)
+          expect(response).to(have_http_status('302'))
+          expect(response).to(redirect_to('/cndo2021/registration'))
+        end
       end
     end
 

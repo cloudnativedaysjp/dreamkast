@@ -43,18 +43,20 @@ setVotedId = function(id) {
 toggleVoted = function() {
     let btn = document.getElementById('vote');
     btn.disabled = true;
-    btn.value = "投票済み";
+    btn.innerHTML = "投票済み";
 }
 
 document.getElementById('vote').addEventListener('click', function() {
-    //ここでAPIを叩く
+    const vote_url = document.getElementById('vote').getAttribute('vote_url')
+    fetch(vote_url,{ method: 'POST' })
     setVotedId(parseInt(document.getElementById('vote').getAttribute('talk_id')));
     toggleVoted();
     return false;
 });
 
-window.onload = function() {
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('hogehoge')
     if (getVotedIds().includes(parseInt(document.getElementById('vote').getAttribute('talk_id')))) {
         toggleVoted();
     }
-}
+})

@@ -104,6 +104,6 @@ module ApplicationHelper
   end
 
   def vote_api(id)
-    "https://api.cloudnativedays.jp/api/v1/#{@conference.abbr}/talks/#{id}/vote"
+    File.join(ENV['AWS_API_DOMAIN'], @conference.abbr, 'talks', id, 'vote')
   end
 end

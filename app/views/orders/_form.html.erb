@@ -1,0 +1,15 @@
+<%= form_with(url: orders_path, model: @order, local: true, class: "needs-validation") do |form| %>
+  <div class="form-row form-group">
+
+    <div class="col-12 col-md-6">
+      <% tickets.each do |ticket| %>
+        <%= radio_button_tag "order[ticket_ids]", ticket.id %>
+        <%= label :ticket_ids, ticket.title %> (残数: <%= ticket.remaining_stock %>)<br />
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-row form-group justify-content-md-center py-20">
+    <%= form.submit "個人情報保護方針に同意して参加登録", class: "btn btn-primary form-control" %>
+  </div>
+<% end %>

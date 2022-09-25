@@ -56,7 +56,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:alice, :on_cndt2020)
+        create(:alice, :with_order, conference:)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
@@ -84,8 +84,8 @@ describe TimetableController, type: :request do
   end
 
   describe 'GET cndo#index' do
+    let!(:cndo2021) { create(:cndo2021) }
     before do
-      create(:cndo2021)
       create(:cndo_talk_category1)
       create(:cndo_talk_difficulties1)
     end
@@ -121,7 +121,7 @@ describe TimetableController, type: :request do
 
     describe 'logged in' do
       before do
-        create(:bob, :on_cndo2021)
+        create(:bob, :with_order, conference: cndo2021)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(bob_session[:userinfo]))
       end
 

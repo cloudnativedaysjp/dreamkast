@@ -15,7 +15,7 @@ describe ProfilesController, type: :request do
       end
     end
 
-    describe 'logged in and not registerd' do
+    describe 'logged in and not registered' do
       subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
@@ -30,7 +30,7 @@ describe ProfilesController, type: :request do
       end
     end
 
-    describe 'logged in and already registerd' do
+    describe 'logged in and already registered' do
       subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
@@ -42,7 +42,7 @@ describe ProfilesController, type: :request do
         get '/cndt2020/registration'
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response.body).to(redirect_to('/cndt2020/dashboard'))
+        expect(response.body).to(redirect_to('/cndt2020/orders/new'))
       end
     end
 
@@ -72,7 +72,7 @@ describe ProfilesController, type: :request do
         expect do
           post('/cndt2020/profiles', params: { profile: profiles_params.merge(agreement_params) })
         end.to(change(Agreement, :count).by(+4))
-        expect(response.body).to(redirect_to('/cndt2020/timetables'))
+        expect(response.body).to(redirect_to('/cndt2020/orders/new'))
       end
     end
   end

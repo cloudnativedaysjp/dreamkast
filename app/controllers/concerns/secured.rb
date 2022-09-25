@@ -2,7 +2,7 @@ module Secured
   extend ActiveSupport::Concern
 
   included do
-    before_action :logged_in_using_omniauth?, :new_user?, if: :use_secured_before_action?
+    before_action :logged_in_using_omniauth?, :new_user?, :need_order?, if: :use_secured_before_action?
     helper_method :admin?, :speaker?, :beta_user?
   end
 
@@ -19,9 +19,19 @@ module Secured
   end
 
   def new_user?
-    if session[:userinfo].present? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+    if logged_in? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
       unless ['profiles'].include?(controller_name)
         redirect_to("/#{params[:event]}/registration")
+      end
+    end
+  end
+
+  def need_order?
+    new_user?
+    if logged_in? && Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+      profile = Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+      if profile.orders.empty? || profile.orders.all? { |order| order.cancel_order.present? }
+        redirect_to(new_order_path)
       end
     end
   end

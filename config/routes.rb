@@ -138,6 +138,9 @@ Rails.application.routes.draw do
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'
     resources :links, only: [:index]
+
+    resources :orders, only: [:new, :create]
+    resources :cancel_orders
   end
 
   mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'

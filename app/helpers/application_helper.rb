@@ -102,4 +102,8 @@ module ApplicationHelper
       'application'
     end
   end
+
+  def vote_api_url(id)
+    File.join(ENV['DREAMKAST_API_ADDR'], @conference.abbr, 'talks', id, 'vote')
+  end
 end

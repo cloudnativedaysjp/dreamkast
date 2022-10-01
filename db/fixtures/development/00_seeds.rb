@@ -303,6 +303,7 @@ Track.seed(
   { id: 29, number: 1, name: "A", conference_id: 6},
   { id: 30, number: 2, name: "B", conference_id: 6},
   { id: 31, number: 3, name: "C", conference_id: 6},
+
   { id: 32, number: 1, name: "A", conference_id: 7},
   { id: 33, number: 2, name: "B", conference_id: 7},
   { id: 34, number: 3, name: "C", conference_id: 7},
@@ -567,6 +568,43 @@ Proposal.seed(csv.map{|line|
 })
 
 csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/proposal_items.csv'), headers: true)
+ProposalItem.seed(csv.map{|line|
+  {
+    id: line["id"],
+    conference_id: line["conference_id"],
+    talk_id: line["talk_id"],
+    label: line["label"],
+    params: line["params"]
+  }
+})
+
+# Import CNDT2022 Dummy
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2022/talks.csv'), headers: true)
+Talk.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2022/speakers.csv'), headers: true)
+Speaker.seed(csv.map(&:to_hash))
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2022/talks_speakers.csv'), headers: true)
+csv.each do |row|
+  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
+    h = row.to_hash
+    t.talk_id = h["talk_id"]
+    t.speaker_id = h["speaker_id"]
+  end
+end
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2022/proposals.csv'), headers: true)
+Proposal.seed(csv.map{|line|
+  {
+    id: line["id"],
+    talk_id: line["talk_id"],
+    conference_id: line["conference_id"],
+    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
+  }
+})
+
+csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2022/proposal_items.csv'), headers: true)
 ProposalItem.seed(csv.map{|line|
   {
     id: line["id"],

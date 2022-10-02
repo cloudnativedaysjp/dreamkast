@@ -80,5 +80,5 @@ jobs:
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               pull_number: pr.data.number,
-              merge_method: "merge",
+              merge_method: "squash",
             });

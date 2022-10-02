@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col-6">
       <pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
+      <pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
       <pre><%= JSON.pretty_generate(@current_user[:extra][:raw_info]) %></pre>
       <div><%= JSON.pretty_generate(@current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"]) %></div>
       <%= form_with url: 'admin/destroy_user', method: 'delete' do |form| %>

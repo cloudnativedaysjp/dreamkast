@@ -22,6 +22,7 @@
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
+#  unique_code                   :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)
@@ -69,6 +70,10 @@ class Profile < ApplicationRecord
   has_many :form_items, through: :agreements
   has_many :chat_messages
   has_many :orders
+
+  before_create do
+    unique_code = SecureRandom.uuid
+  end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
   validates :sub, presence: true, length: { maximum: 250 }
@@ -121,6 +126,10 @@ class Profile < ApplicationRecord
         ]
       end
     end
+  end
+
+  def gen_unique_code
+    update!(unique_code: SecureRandom.uuid)
   end
 
   def industry_name

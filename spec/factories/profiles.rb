@@ -22,6 +22,7 @@
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
+#  unique_code                   :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)

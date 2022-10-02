@@ -2,10 +2,6 @@ name: GitOps for staging
 
 on:
   push:
-    paths-ignore:
-      - '.github/**'
-      - '!.github/workflows/gitops-stg.yml'
-      - '**.md'
     branches:
     - main
 

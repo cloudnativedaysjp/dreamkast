@@ -12,7 +12,8 @@
     },
     {
       "matchManagers": ["dockerfile", "docker-compose"],
-      "groupName": "all dependencies on Docker",
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "all minor, or patch dependencies on Docker",
     },
     {
       "matchManagers": ["github-actions"],

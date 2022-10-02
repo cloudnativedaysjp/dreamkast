@@ -74,3 +74,32 @@ RSpec.configure do |config|
   include Committee::Rails::Test::Methods
   config.include(ActiveJob::TestHelper)
 end
+
+def claim
+  [JSON.parse('{
+    "https://cloudnativedays.jp/roles": [
+      "CNDT2022-Admin",
+      "CNSEC2022-Admin"
+    ],
+    "https://boundary": [
+      "CNDT2022-Admin",
+      "CNSEC2022-Admin"
+    ],
+    "given_name": "Kazuto",
+    "family_name": "Kusama",
+    "nickname": "jacopen",
+    "name": "Kazuto Kusama (jacopen)",
+    "picture": "https://lh3.googleusercontent.com/a-/AFdZucpvEjNRZYjV2ke2VoVckmoW_OOJCP9s68RUj04kPHs=s96-c",
+    "locale": "en",
+    "updated_at": "2022-09-08T13:28:58.857Z",
+    "email": "jacopen@example.com",
+    "email_verified": true,
+    "iss": "https://jacopen.auth0.com/",
+    "sub": "google-oauth2|101793385802092207080",
+    "aud": "foobar",
+    "iat": 1662643742,
+    "exp": 1663003742,
+    "sid": "tbYMsPeGs1ZfqV4IUDpJBKN6lMbQkr6-",
+    "nonce": "924094dcbe1e08bb2536eaa6cb60c5fa"
+  }')]
+end

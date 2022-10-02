@@ -10,7 +10,8 @@ module SecuredPublicApi
   private
 
   def authenticate_request!
-    auth_token
+    claim = verify_token
+    current_user(claim[0])
   rescue JWT::VerificationError, JWT::DecodeError
     render(json: { errors: ['Not Authenticated'] }, status: :unauthorized)
   end
@@ -21,7 +22,22 @@ module SecuredPublicApi
     end
   end
 
-  def auth_token
+  def verify_token
     JsonWebToken.verify(http_token)
+  end
+
+  def current_user(claim)
+    @current_user = {}
+    @current_user[:extra] = {}
+    @current_user[:extra][:raw_info] = {}
+    @current_user[:info] = {}
+    @current_user[:extra][:raw_info] = claim
+    if @current_user[:extra][:raw_info]['name'].present?
+      @current_user[:info][:name] = @current_user[:extra][:raw_info]['name']
+      @current_user[:info][:nickname] = @current_user[:extra][:raw_info]['nickname']
+      @current_user[:info][:email] = @current_user[:extra][:raw_info]['email']
+      @current_user[:info][:image] = @current_user[:extra][:raw_info]['picture']
+    end
+    @current_user
   end
 end

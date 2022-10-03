@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   skip_before_action :need_order?, only: [:create, :new]
 
   def new
-    unless @profile.orders.includes([:cancel_order]).all? { |order| order.cancel_order.present? }
+    unless @profile.instance_of?(Profile) && @profile.orders.includes([:cancel_order]).all? { |order| order.cancel_order.present? }
       redirect_to("/#{event_name}/dashboard")
     end
 

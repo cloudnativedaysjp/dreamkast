@@ -32,8 +32,7 @@ module Secured
   end
 
   def need_order?
-    new_user?
-    if logged_in? && Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+    if logged_in? && set_profile.instance_of?(Profile) && Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
       profile = Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
       if profile.orders.empty? || profile.orders.all? { |order| order.cancel_order.present? }
         redirect_to(new_order_path)

@@ -5,7 +5,7 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
+    if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
       - uses: actions/checkout@v3
 

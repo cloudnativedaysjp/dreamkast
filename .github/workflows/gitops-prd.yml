@@ -2,10 +2,6 @@ name: GitOps for production
 
 on:
   push:
-    paths-ignore:
-      - '.github/**'
-      - '!.github/workflows/gitops-prd.yml'
-      - '**.md'
     tags:
       - v*
 
@@ -80,5 +76,5 @@ jobs:
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               pull_number: pr.data.number,
-              merge_method: "merge",
+              merge_method: "squash",
             });

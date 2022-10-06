@@ -7,7 +7,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       before do
         create(:talk1)
         create(:video_registration)
-        allow(JsonWebToken).to(receive(:verify).and_return(true))
+        allow(JsonWebToken).to(receive(:verify).and_return(claim))
       end
 
       it 'confirm json schema' do
@@ -46,7 +46,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
 
     context 'create newly' do
       before do
-        allow(JsonWebToken).to(receive(:verify).and_return(true))
+        allow(JsonWebToken).to(receive(:verify).and_return(claim))
       end
       it 'return OK when put url' do
         put '/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers: headers
@@ -67,7 +67,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
     context 'update' do
       before do
         create(:video_registration)
-        allow(JsonWebToken).to(receive(:verify).and_return(true))
+        allow(JsonWebToken).to(receive(:verify).and_return(claim))
       end
 
       it 'return OK when put url' do

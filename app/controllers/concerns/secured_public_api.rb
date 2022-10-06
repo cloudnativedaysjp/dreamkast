@@ -28,15 +28,15 @@ module SecuredPublicApi
 
   def current_user(claim)
     @current_user = {}
-    @current_user[:extra] = {}
-    @current_user[:extra][:raw_info] = {}
     @current_user[:info] = {}
+    @current_user[:extra] = {}
     @current_user[:extra][:raw_info] = claim
-    if @current_user[:extra][:raw_info]['name'].present?
-      @current_user[:info][:name] = @current_user[:extra][:raw_info]['name']
-      @current_user[:info][:nickname] = @current_user[:extra][:raw_info]['nickname']
-      @current_user[:info][:email] = @current_user[:extra][:raw_info]['email']
-      @current_user[:info][:image] = @current_user[:extra][:raw_info]['picture']
+    if claim['https://cloudnativedays.jp/userinfo']['name'].present?
+      userinfo = claim['https://cloudnativedays.jp/userinfo']
+      @current_user[:info][:name] = userinfo['name']
+      @current_user[:info][:nickname] = userinfo['nickname']
+      @current_user[:info][:email] = userinfo['email']
+      @current_user[:info][:image] = userinfo['picture']
     end
     @current_user
   end

@@ -33,6 +33,12 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
       Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
       Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
+
+      Agreement.create!(profile_id: @profile.id, form_item_id: 6, value: 1) if agreement_params['ibm_require_email_cndt2022']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 7, value: 1) if agreement_params['ibm_require_tel_cndt2022']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 8, value: 1) if agreement_params['redhat_require_email_cndt2022']
+      Agreement.create!(profile_id: @profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
+
       ProfileMailer.registered(@profile, @conference).deliver_later
       redirect_to(new_order_path)
     else
@@ -136,7 +142,13 @@ class ProfilesController < ApplicationController
       :require_tel,
       :require_posting,
       :agree_ms,
-      :agree_ms_cndo2021
+      :agree_ms_cndo2021,
+
+      # for CNDT2022
+      :ibm_require_email_cndt2022,
+      :ibm_require_tel_cndt2022,
+      :redhat_require_email_cndt2022,
+      :redhat_require_tel_cndt2022
     )
   end
 end

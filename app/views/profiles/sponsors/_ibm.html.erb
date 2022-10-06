@@ -1,19 +1,18 @@
 <h4>IBMおよびIBMの⼦会社、関連会社からの情報提供</h4>
 <p>
-  IBMおよび<a href="https://www.ibm.com/ibm/jp/ja/keireki.pdf#subsidiaries" target="_blank">IBMの⼦会社、関連会社</a>から、製品、サービス、オファリングに関する情報をお送りさせていただく場合があります。
+  IBMおよびIBMの<a href="https://www.ibm.com/ibm/jp/ja/keireki.pdf#subsidiaries" target="_blank">子会社、関連会社</a>から、製品、サービス、オファリングに関する情報をお送りさせていただく場合があります。
 </p>
-<p>
-  マーケティングに関する同意は、<a href="https://www.ibm.com/account/reg/jp-ja/signup?formid=urx-42537" target="_blank">opt-out request</a>を送信することにより、いつでも取り消すことができます。また、該当のEメール内の、購読を中⽌するためのリンクをクリックすることで、マーケティングに関するEメールの受信を中⽌することができます。 処理に関する詳しい情報は、<a href="https://www.ibm.com/privacy/jp/ja/" target="_blank">IBMプライバシー・ステートメント</a>をご覧ください。このフォームを送信することで、私はIBMプライバシー・ステートメントを読み、これを理解したものとします。
-</p>
+
 <div class="form-check">
-  <%= form.check_box :require_email, {class: "form-check-input"}, true, false %>
+  <%= form.check_box :ibm_require_email_cndt2022, {class: "form-check-input"}, true, false %>
   <label class="form-check-label" for="require_email">e-メールを希望する</label>
 </div>
 <div class="form-check">
-  <%= form.check_box :require_tel, {class: "form-check-input"}, true, false %>
+  <%= form.check_box :ibm_require_tel_cndt2022, {class: "form-check-input"}, true, false %>
   <label class="form-check-label" for="require_tel">電話を希望する</label>
 </div>
-<div class="form-check">
-  <%= form.check_box :require_posting, {class: "form-check-input"}, true, false %>
-  <label class="form-check-label" for="require_posting">郵便を希望する</label>
-</div>
+
+<p>
+  マーケティングに関する同意は、 <a href="https://www.ibm.com/account/reg/jp-ja/signup?formid=urx-42537" target="_blank">opt-out request</a>を送信することにより、いつでも取り消すことができます。また、該当の E メール内の、購読を中止するためのリンクをクリックすることで、マーケティングに関する E メールの受信を中止することができます。
+  処理に関する詳しい情報は、 <a href="https://www.ibm.com/jp-ja/privacy" target="_blank">IBM プライバシー・ステートメント</a>をご覧ください。このフォームを送信することで、私は IBM プライバシー・ステートメントを読み、これを理解したものとします。
+</p>

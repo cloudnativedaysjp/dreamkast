@@ -122,6 +122,7 @@
       <%= form.check_box :agreement, {required: true, class: "form-check-input"}, true, false %>
       <label class="form-check-label" for="agreement">個人情報の取り扱いについて同意する <span class="required">*</span> <span class="small">ご同意いただけない場合は本セミナーを受講いただくことは出来ません。</span></label>
     </div>
+    <p></p>
 
     <% if %w[cndt2020 cndo2021 cicd2021 cndt2021 cnsec2022].include?(@event) %>
       <%= render 'profiles/sponsors/microsoft', form: form %>

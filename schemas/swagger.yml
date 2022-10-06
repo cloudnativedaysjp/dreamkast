@@ -11,7 +11,7 @@ servers:
   - url: http://api-mock.dev.cloudnativedays.jp/
   - url: http://dreamkast-api-mock.udcp.info/
 paths:
-  /api/v1/${eventAbbr}/my_profile:
+  /api/v1/{eventAbbr}/my_profile:
     get:
       tags:
         - Profile

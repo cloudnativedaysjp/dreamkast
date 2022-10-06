@@ -143,7 +143,6 @@ class ProfilesController < ApplicationController
       :require_posting,
       :agree_ms,
       :agree_ms_cndo2021,
-
       # for CNDT2022
       :ibm_require_email_cndt2022,
       :ibm_require_tel_cndt2022,

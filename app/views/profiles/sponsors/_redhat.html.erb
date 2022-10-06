@@ -1,0 +1,19 @@
+<h4 class="mt-3">レッドハット株式会社</h4>
+<p>
+  レッドハットおよびレッドハットの子会社、関連会社から、製品、サービス、オファリングに関する情報をお送りさせていただく場合があります。
+  ご希望の連絡方法を以下よりご選択下さい。
+  ご選択のない場合、以下のいずれかの方法により、上記情報をお送りさせていただく場合があります。
+</p>
+<div class="form-check">
+  <%= form.check_box :redhat_require_email, {class: "form-check-input"}, true, false %>
+  <label class="form-check-label" for="require_email">e-メールを希望する</label>
+</div>
+<div class="form-check">
+  <%= form.check_box :redhat_require_tel, {class: "form-check-input"}, true, false %>
+  <label class="form-check-label" for="require_tel">電話を希望する</label>
+</div>
+
+<p>
+  マーケティングに関する同意は、レッドハットの<a href="https://www.redhat.com/en/contact?contact=customer-service" target="_blank">フィードバックフォーム</a>を用いてレッドハットに連絡することで、いつでも取り消すことができます。また、該当の E メール内の、購読を中止するためのリンクをクリックすることで、マーケティングに関する E メールの受信を中止することができます。
+  処理に関する詳しい情報は、<a href="https://www.redhat.com/ja/privacy-statement" target="_blank">RED HATプライバシーステートメント</a>をご覧ください。このフォームを送信することで、私は レッドハット プライバシーステートメントを読み、これを理解したものとします。
+</p>

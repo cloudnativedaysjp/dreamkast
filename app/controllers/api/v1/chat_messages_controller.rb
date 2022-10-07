@@ -1,5 +1,6 @@
 class Api::V1::ChatMessagesController < ApplicationController
-  include SecuredApi
+  include SecuredPublicApi
+  before_action :authenticate_request!
   before_action :set_profile
 
   skip_before_action :verify_authenticity_token
@@ -27,7 +28,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
     attr = { profile_id: @profile.id, body:, conference_id: conference.id, room_id:, room_type:, message_type: }
 
-    speaker = Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    speaker = Speaker.find_by(conference: conference.id, email: @current_user[:info][:email])
     attr[:speaker_id] = speaker.id if speaker.present?
 
     if reply_to

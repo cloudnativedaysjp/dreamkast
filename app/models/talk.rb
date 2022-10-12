@@ -100,7 +100,7 @@ class Talk < ApplicationRecord
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
-    columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]
+    columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end]
 
     labels = conference.proposal_item_configs.map(&:label).uniq
     labels.delete('session_time')

@@ -23,6 +23,7 @@ class GuestProfile
   # but return an appropriate value
   def method_missing(method, *args)
     if Profile.new.respond_to?(method)
+      Rails.logger.warn("GuestProfile call goast method: #{method}")
       match = method.to_s.match(/(.*?)([?=!]?)$/)
       case match[2]
       when '='

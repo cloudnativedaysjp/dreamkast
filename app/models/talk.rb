@@ -209,10 +209,9 @@ class Talk < ApplicationRecord
   end
 
   def speakers_additional_documents
-    case
-    when speakers.length == 0
+    if speakers.empty?
       ''
-    when speakers.length == 1
+    elsif speakers.length == 1
       speakers.first.additional_documents
     else
       speakers.map { |speaker|

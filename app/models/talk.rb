@@ -124,6 +124,7 @@ class Talk < ApplicationRecord
                talk.talk_difficulty&.name,
                talk.talk_category&.name,
                talk.created_at,
+               talk.speakers_additional_documents,
                talk.speaker_twitter_ids.join('/ '),
                talk.speaker_company_names.join('/ '),
                talk.start_to_end]
@@ -205,6 +206,22 @@ class Talk < ApplicationRecord
 
   def speaker_names
     speakers.map(&:name)
+  end
+
+  def speakers_additional_documents
+    case
+    when speakers.length == 0
+      ''
+    when speakers.length == 1
+      speakers.first.additional_documents
+    else
+      speakers.map { |speaker|
+        <<-EOS
+        #{speaker.name}
+        #{speaker.additional_documents}
+        EOS
+      }.join("\n\n")
+    end
   end
 
   def avatar_urls

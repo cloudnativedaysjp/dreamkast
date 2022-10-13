@@ -1462,12 +1462,20 @@ SponsorType.seed(
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
   sponsor = Sponsor.find_by(abbr: sponsors_sponsor_type[2], conference_id: sponsors_sponsor_type[3])
+  puts "Error: unable to find #{sponsors_sponsor_type[2]}" unless sponsor
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
   if sponsors_sponsor_type[1] == 'Booth'
     Booth.seed(:conference_id, :sponsor_id) do |s|
       s.conference_id = sponsors_sponsor_type[3]
       s.sponsor_id = sponsor.id
     end
+  end
+end
+
+Conference.all.each do |conf|
+  if conf.sponsors.any? { |sponsor| sponsor.sponsor_types.empty? }
+    no_sponsor_types = conf.sponsors.select { |sponsor| sponsor.sponsor_types.empty? }
+    raise "Error: Some sponsor hae no sponsor_type in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
   end
 end
 
@@ -1623,11 +1631,20 @@ end
   [148, 'plaid', 'sponsors/cndt2022/plaid.png', 7],
   [149, 'sakura', 'sponsors/cndt2022/sakura.png', 7],
 ].each do |logo|
+  sponsor = Sponsor.find_by(abbr: logo[1], conference_id: logo[3])
+  puts "Error: unable to find #{logo[1]}" unless sponsor
   SponsorAttachment.seed(
     { id: logo[0],
-      sponsor_id: Sponsor.find_by(abbr: logo[1], conference_id: logo[3]).id,
+      sponsor_id: sponsor.id,
       type: 'SponsorAttachmentLogoImage',
       url: logo[2]
     }
   )
+end
+
+Conference.all.each do |conf|
+  unless conf.sponsors.all? { |sponsor| sponsor.sponsor_attachment_logo_image.present? }
+    no_sponsor_types = conf.sponsors.select { |sponsor| !sponsor.sponsor_attachment_logo_image }
+    raise "Error: Some sponsor hae no sponsor_logo_image in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
+  end
 end

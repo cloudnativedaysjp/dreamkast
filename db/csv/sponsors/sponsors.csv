@@ -1,0 +1,160 @@
+id,conference_id,name,abbr,url
+1,1,日本アイ・ビー・エム株式会社,ibm,https://www.ibm.com/jp-ja/cloud/cloud-native
+2,1,レッドハット株式会社,redhat,https://www.redhat.com/ja/global/japan#links
+3,1,JFrog Japan株式会社,jfrog,https://jfrog.co.jp/
+4,1,New Relic株式会社,newrelic,https://newrelic.co.jp/
+5,1,CircleCI合同会社,circleci,https://circleci.com/ja/
+6,1,F5ネットワークスジャパン合同会社,nginx,https://www.nginx.co.jp/
+7,1,日本オラクル株式会社,Oracle,https://www.oracle.com/jp/index.html
+8,1,日本マイクロソフト株式会社/Microsoft Corporation,microsoft,https://news.microsoft.com/ja-jp/
+9,1,株式会社サイバーエージェント,cyberagent,https://developers.cyberagent.co.jp/
+10,1,富士通株式会社,fujitsu,https://www.fujitsu.com/jp/
+11,1,サイオステクノロジー株式会社,sios,https://sios.jp/
+12,1,株式会社エヌ・ティ・ティ・データ,nttdata,https://www.nttdata.com/jp/ja/
+13,1,株式会社カサレアル,casareal,https://www.casareal.co.jp/
+14,1,株式会社はてな,hatena,https://mackerel.io
+15,1,Sysdig Japan合同会社,sysdig,https://sysdig.jp
+16,1,Canonical/Ubuntu,canonical,https://jp.ubuntu.com/
+17,1,GMOペパボ株式会社,pepabo,https://pepabo.com/
+18,1,株式会社ディバータ,kuroco,https://kuroco.app/
+19,1,グーグル・クラウド・ジャパン合同会社,google,https://cloud.google.com/anthos
+20,1,株式会社LegalForce,legalforce,https://www.legalforce.co.jp/
+21,1,SUSE ソフトウエア ソリューションズ ジャパン株式会社,suse,https://www.suse.com/ja-jp/solutions/devops/
+22,1,ヴイエムウェア株式会社,vmware,https://www.vmware.com/jp.html
+23,1,ミランティス・ジャパン株式会社,mirantis,https://www.mirantis.co.jp/
+24,1,Elastic,elastic,https://www.elastic.co
+25,1,Plaid,Plaid,https://plaid.co.jp/
+26,1,日本電気株式会社,nec,https://jpn.nec.com/
+27,1,"Rancher Labs, Inc.",rancherlabs,https://www.rancher.co.jp/
+28,1,Linux Foundation,lf,https://www.cncf.io/
+30,2,CircleCI合同会社,circleci,https://circleci.com/ja/
+31,2,New Relic株式会社,newrelic,https://newrelic.com/jp
+32,2,JFrog Japan株式会社,jfrog,https://jfrog.com/ja/
+33,2,Datadog Japan 合同会社,datadog,https://www.datadoghq.com/ja
+34,2,レッドハット株式会社,redhat,https://www.redhat.com/en/global/japan
+35,2,GMOインターネットグループ,gmo,https://www.gmo.jp/
+36,2,SUSE ソフトウエア ソリューションズ ジャパン株式会社,suse,https://www.suse.com/ja-jp/ 
+37,2,アクイアジャパン合同会社,acquia,https://www.acquia.com/jp
+38,2,ヴイエムウェア株式会社,vmware,https://www.vmware.com/jp
+39,2,日本マイクロソフト株式会社,microsoft,https://azure.microsoft.com/ja-jp/developer/
+40,2,F5ネットワークスジャパン合同会社／NGINX,nginx,https://www.nginx.co.jp/
+41,2,SCSK株式会社,scsk,https://www.scsk.jp/sp/sysdig/
+42,2,LINE株式会社,line,https://engineering.linecorp.com/ja/
+43,2,株式会社LegalForce,legalforce,https://www.legalforce.co.jp/
+44,2,ミランティス・ジャパン株式会社,mirantis,https://www.mirantis.co.jp/lens/
+45,2,Plaid,plaid,https://plaid.co.jp/
+46,2,株式会社クラウドネイティブ,cloudnative,https://cloudnative.co.jp/
+47,2,The Linux Foundation,lf,https://www.linuxfoundation.jp/
+48,2,LPI-Japan,lpi,https://lpi.or.jp/
+49,3,CircleCI合同会社,circleci,https://circleci.com/ja/customers/
+50,3,LINE株式会社,line,https://engineering.linecorp.com/ja/
+51,3,日本マイクロソフト株式会社/Microsoft Corporation,microsoft,https://azure.microsoft.com/ja-jp/developer/
+52,3,株式会社ゆめみ,yumemi,https://www.yumemi.co.jp/
+53,3,日本シノプシス合同会社,synopsys,https://www.synopsys.com/ja-jp/software-integrity.html
+54,3,株式会社サイバーエージェント,cyberagent,https://developers.cyberagent.co.jp/blog/
+55,3,LegalForce,legalforce,https://www.legalforce.co.jp/
+56,3,GitLab合同会社,gitlab,https://about.gitlab.com/ja-jp/
+57,3,JBCC株式会社,jbcc,https://www.jbcchd.co.jp/
+58,3,グーグル・クラウド・ジャパン合同会社,google,https://cloudonair.withgoogle.com/events/japan
+59,3,クリエーションライン株式会社,creationline,https://www.creationline.com/
+60,3,Plaid,Plaid,https://plaid.co.jp/
+61,4,CircleCI合同会社,circleci,https://circleci.com/ja/customers/
+62,4,New Relic株式会社,newrelic,https://newrelic.com/jp/events
+63,4,JFrog Japan株式会社,jfrog,https://jfrog.com/ja/devops-tools/
+64,4,Splunk Services Japan合同会社,splunk,https://www.splunk.com/ja_jp
+65,4,株式会社スリーシェイク,3shake,https://3-shake.com/
+66,4,ピュア・ストレージ・ジャパン株式会社,purestorage,https://www.purestorage.com/jp/
+67,4,GMOインターネット株式会社,gmo,https://developers.gmo.jp/
+68,4,日本マイクロソフト株式会社,microsoft,https://azure.microsoft.com/ja-jp/developer/
+69,4,ネットアップ合同会社,netapp,https://www.netapp.com/ja/
+70,4,PingCAP株式会社,pingcap,https://pingcap.co.jp
+71,4,サイオステクノロジー株式会社,sios,https://container.sios.jp/
+72,4,F5ネットワークスジャパン合同会社,f5,https://www.nginx.co.jp/
+73,4,LINE株式会社,line,https://engineering.linecorp.com/ja/
+74,4,株式会社NTTデータ,nttdata,https://www.nttdata.com/jp/ja/
+75,4,ミランティス・ジャパン株式会社,mirantis,https://www.mirantis.co.jp/
+76,4,株式会社カサレアル,casareal,https://www.casareal.co.jp/
+77,4,株式会社ゆめみ,yumemi,https://www.yumemi.co.jp/
+78,4,ヴィーエー・リナックス・システムズ・ジャパン株式会社,valinux,https://www.valinux.co.jp/
+79,4,株式会社ビズリーチ,bizreach,https://www.visional.inc/ja/index.html
+80,4,株式会社サイバーエージェント,cyberagent,https://developers.cyberagent.co.jp/blog/
+81,4,SCSK株式会社,scsk,https://www.scsk.jp/sp/sysdig/
+82,4,株式会社スタンバイ,standby,https://stanby.co.jp/
+83,4,freee 株式会社,freee,https://corp.freee.co.jp/
+84,4,ヴイエムウェア株式会社,vmware,https://tanzu.vmware.com/jp/tanzu
+85,4,レッドハット株式会社,redhat,https://www.redhat.com/ja/global/japan
+86,4,さくらインターネット株式会社,sakura,https://www.sakura.ad.jp
+87,4,トレンドマイクロ株式会社,trendmicro,https://www.trendmicro.com/ja_jp/business.html
+88,4,日本シノプシス合同会社,synopsys,https://www.synopsys.com/ja-jp/software-integrity.html
+89,4,株式会社LegalForce,legalforce,https://www.legalforce.co.jp/
+90,4,Plaid,Plaid,https://plaid.co.jp/
+91,4,Kong Inc,kong,https://jp.konghq.com/
+92,4,Linux Foundation,lf,https://www.linuxfoundation.jp/
+93,4,LPI Japan,lpi,https://lpi.or.jp/
+94,4,ThinkIT,thinkit,https://thinkit.co.jp/
+95,4,ZDnet,zdnet,https://japan.zdnet.com/
+96,4,日本オラクル株式会社,oracle,https://www.oracle.com/jp/contact-us/about/
+97,4,SUSE ソフトウエアソリューションズジャパン株式会社,suse,https://rancher.com
+98,4,アマゾン ウェブ サービス ジャパン株式会社,aws,https://aws.amazon.com/jp/containers/
+99,4,クリエーションライン株式会社,creationline,https://www.creationline.com/
+100,4,GitLab合同会社,gitlab,https://about.gitlab.com/ja-jp/
+101,4,Elastic,elastic,https://www.elastic.co/jp/
+102,4,クラウドフレアジャパン株式会社,cloudflare,https://www.cloudflare.com/ja-jp/
+103,5,株式会社スリーシェイク,3shake,https://3-shake.com/
+104,5,JFrog Japan株式会社,jfrog,https://jfrog.com/ja/
+105,5,New Relic株式会社,newrelic,https://newrelic.com/jp
+106,5,F5ネットワークスジャパン合同会社,f5,https://www.nginx.co.jp/
+107,5,アクイアジャパン合同会社,acquia,https://www.acquia.com/jp
+108,5,Splunk Services Japan合同会社,splunk,https://www.splunk.com/ja_jp
+109,5,グーグル・クラウド・ジャパン合同会社,google,https://cloud.google.com/free
+110,5,Datadog,datadog,https://www.datadoghq.com/ja
+111,5,株式会社マクニカ ネットワークス カンパニー,macnica,https://www.macnica.co.jp/business/security/manufacturers/splunk/pro_itoa.html
+112,5,日本オラクル株式会社,oracle,https://www.oracle.com/jp/contact-us/about/
+113,5,Elasticsearch 株式会社,elastic,https://www.elastic.co/jp/
+114,5,SCSK株式会社,scsk,https://www.scsk.jp/sp/sysdig/
+115,5,Plaid,Plaid,https://plaid.co.jp/
+116,5,freee株式会社,freee,https://corp.freee.co.jp/
+117,5,クリエーションライン株式会社,creationline,https://www.creationline.com/training
+118,5,さくらインターネット株式会社,sakura,https://www.sakura.ad.jp
+119,6,日本マイクロソフト株式会社/Microsoft Corporation,microsoft,https://news.microsoft.com/ja-jp/
+120,6,HashiCorp Japan株式会社,hashicorp,https://www.hashicorp.co.jp
+121,6,F5ネットワークスジャパン合同会社,nginx,https://www.nginx.co.jp/
+122,6,Snyk株式会社,snyk,https://snyk.io/jp
+123,6,mabl株式会社,mabl,https://www.mabl.com/Japan
+124,6,グーグル・クラウド・ジャパン合同会社,google,https://cloud.google.com/
+125,6,Sysdig Japan,sysdig,https://sysdig.jp
+126,6,Elastic,elastic,https://www.elastic.co/
+127,6,Plaid,Plaid,https://plaid.co.jp/
+128,6,さくらインターネット株式会社,sakura,https://www.sakura.ad.jp
+129,7,CircleCI合同会社,circleci,https://circleci.com/ja/
+130,7,LINE株式会社,line,https://engineering.linecorp.com/ja/
+131,7,Snyk株式会社,snyk,https://snyk.io/jp
+132,7,テクマトリックス株式会社,techmatrix,https://it-infra.techmatrix.jp/service/neo
+133,7,GMOインターネットグループ株式会社,gmo,https://www.gmo.jp/
+134,7,PingCAP株式会社,pingcap,https://pingcap.co.jp/?utm_source=physical_event&utm_medium=sponsored_event&utm_campaign=cloudnative_days_2022
+135,7,PagerDuty株式会社,pagerduty,https://www.pagerduty.co.jp/
+136,7,Aiven Japan合同会社,aiven,https://aiven.io/ja
+137,7,グーグル・クラウド・ジャパン合同会社,google,https://cloud.google.com/
+138,7,クリエーションライン株式会社,creationline,https://www.creationline.com/
+139,7,Sysdig Japan合同会社,sysdig,https://sysdig.jp/
+140,7,freee株式会社,freee,https://corp.freee.co.jp/
+141,7,株式会社カサレアル,casareal,https://www.casareal.co.jp/
+142,7,トレンドマイクロ株式会社,trendmicro,https://www.trendmicro.com/ja_jp/business.html
+143,7,Datadog Japan合同会社,datadog,https://www.datadoghq.com/ja/
+144,7,日本アイ・ビー・エム株式会社,ibm,https://ibm.biz/20221121
+145,7,F5ネットワークスジャパン合同会社,f5,https://www.nginx.co.jp/
+146,7,GitLab合同会社,gitlab,https://about.gitlab.com/ja-jp/
+147,7,株式会社NTTデータ,nttdata,https://www.nttdata.com/jp/ja/
+148,7,Plaid,plaid,https://plaid.co.jp/
+149,7,さくらインターネット株式会社,sakura,https://www.sakura.ad.jp
+150,7,New Relic,newrelic,https://newrelic.com/jp/events
+151,7,Dynatrace合同会社,dynatrace,https://www.dynatrace.com/ja/
+152,7,Elastic,elastic,https://www.elastic.co/jp/
+153,7,レッドハット株式会社,redhat,https://www.redhat.com/ja/global/japan
+154,7,アクイアジャパン合同会社,acquia,https://www.acquia.com/jp
+155,7,東京エレクトロンデバイス株式会社,teldevice,https://cn.teldevice.co.jp/
+156,7,日本マイクロソフト株式会社,microsoft,https://news.microsoft.com/ja-jp/
+157,7,ヴィーム・ソフトウェア株式会社,veeam,https://www.veeam.com/jp
+158,7,パロアルトネットワークス株式会社,paloalto,https://www.paloaltonetworks.jp/
+159,7,Splunk Services Japan合同会社,splunk,https://www.splunk.com/ja_jp
+160,7,HashiCorp Japan株式会社,hashicorp,https://www.hashicorp.co.jp/

@@ -1013,7 +1013,7 @@ Sponsor.seed(
     name: 'GitLab合同会社',
     abbr: 'gitlab',
     conference_id: 7,
-    url: ''
+    url: 'https://about.gitlab.com/ja-jp/'
   },
   {
     id: 147,
@@ -1036,6 +1036,76 @@ Sponsor.seed(
     conference_id: 7,
     url: 'https://www.sakura.ad.jp'
   },
+  {
+    id: 150,
+    name: 'New Relic',
+    abbr: 'newrelic',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 151,
+    name: 'Dynatrace合同会社',
+    abbr: 'dynatrace',
+    conference_id: 7,
+    url: 'https://www.dynatrace.com/ja/'
+  },
+  {
+    id: 152,
+    name: 'Elastic',
+    abbr: 'elastic',
+    conference_id: 7,
+    url: 'https://www.elastic.co/jp/'
+  },
+  {
+    id: 153,
+    name: 'レッドハット株式会社',
+    abbr: 'redhat',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 154,
+    name: 'アクイアジャパン合同会社',
+    abbr: 'accuia',
+    conference_id: 7,
+    url: 'https://www.acquia.com/jp'
+  },
+  {
+    id: 155,
+    name: 'HashiCorp Japan株式会社／東京エレクトロンデバイス株式会社',
+    abbr: 'hashicorp',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 156,
+    name: '日本マイクロソフト株式会社',
+    abbr: 'microsoft',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 157,
+    name: 'ヴィーム・ソフトウェア株式会社',
+    abbr: 'veeam',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 158,
+    name: 'パロアルトネットワークス株式会社',
+    abbr: 'paloalto',
+    conference_id: 7,
+    url: ''
+  },
+  {
+    id: 159,
+    name: 'Splunk Services Japan合同会社',
+    abbr: 'splunk',
+    conference_id: 7,
+    url: 'https://www.splunk.com/ja_jp'
+  }
 )
 
 SponsorType.seed(
@@ -1434,6 +1504,7 @@ SponsorType.seed(
   [152, 'CM', 'elastic', 6],
   [153, 'Tool', 'plaid', 6],
   [154, 'Tool', 'sakura', 6],
+
   [155, 'Diamond', 'circleci', 7],
   [156, 'Diamond', 'snyk', 7],
   [157, 'Diamond', 'gmo', 7],
@@ -1445,7 +1516,7 @@ SponsorType.seed(
   [163, 'Diamond', 'trendmicro', 7],
   [164, 'Diamond', 'datadog', 7],
   [165, 'Diamond', 'ibm', 7],
-  [166, 'Diamond', 'f5', 7],
+  [166, 'Gold', 'f5', 7],
   [167, 'Platinum', 'sysdig', 7],
   [168, 'Gold', 'line', 7],
   [169, 'Gold', 'techmatrix', 7],
@@ -1457,16 +1528,35 @@ SponsorType.seed(
   [175, 'CM', 'gmo', 7],
   [176, 'Tool', 'plaid', 7],
   [177, 'Tool', 'sakura', 7],
+  [178, 'Diamond', 'gitlab', 7],
+  [179, 'Diamond', 'newrelic', 7],
+  [180, 'Diamond', 'dynatrace', 7],
+  [181, 'CM', 'elastic', 7],
+  [182, 'Diamond', 'redhat', 7],
+  [183, 'Gold', 'accuia', 7],
+  [184, 'Diamond', 'hashicorp', 7],
+  [185, 'Diamond', 'microsoft', 7],
+  [186, 'Diamond', 'veeam', 7],
+  [187, 'Diamond', 'paloalto', 7],
+  [188, 'Diamond', 'splunk', 7],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
   sponsor = Sponsor.find_by(abbr: sponsors_sponsor_type[2], conference_id: sponsors_sponsor_type[3])
+  puts "Error: unable to find #{sponsors_sponsor_type[2]}" unless sponsor
   SponsorsSponsorType.seed({id: id, sponsor_type_id: sponsor_type.id, sponsor_id: sponsor.id})
   if sponsors_sponsor_type[1] == 'Booth'
     Booth.seed(:conference_id, :sponsor_id) do |s|
       s.conference_id = sponsors_sponsor_type[3]
       s.sponsor_id = sponsor.id
     end
+  end
+end
+
+Conference.all.each do |conf|
+  if conf.sponsors.any? { |sponsor| sponsor.sponsor_types.empty? }
+    no_sponsor_types = conf.sponsors.select { |sponsor| sponsor.sponsor_types.empty? }
+    raise "Error: Some sponsor hae no sponsor_type in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
   end
 end
 
@@ -1618,18 +1708,37 @@ end
   [143, 'datadog', 'sponsors/cndt2022/dummy.png', 7],
   [144, 'ibm', 'sponsors/cndt2022/dummy.png', 7],
   [145, 'f5', 'sponsors/cndt2022/dummy.png', 7],
-  [146, 'gitlab', 'sponsors/cndt2022/dummy.png', 7],
+  [146, 'gitlab', 'sponsors/cndt2022/gitlab.png', 7],
   [147, 'nttdata', 'sponsors/cndt2022/dummy.png', 7],
   [148, 'plaid', 'sponsors/cndt2022/plaid.png', 7],
   [149, 'sakura', 'sponsors/cndt2022/sakura.png', 7],
+  [150, 'newrelic', 'sponsors/cndt2022/newrelic.png', 7],
+  [151, 'dynatrace', 'sponsors/cndt2022/dummy.png', 7],
+  [152, 'elastic', 'sponsors/cndt2022/elastic.png', 7],
+  [153, 'redhat', 'sponsors/cndt2022/dummy.png', 7],
+  [154, 'accuia', 'sponsors/cndt2022/accuia.png', 7],
+  [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
+  [156, 'microsoft', 'sponsors/cndt2022/dummy.png', 7],
+  [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
+  [158, 'paloalto', 'sponsors/cndt2022/dummy.png', 7],
+  [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
 ].each do |logo|
+  sponsor = Sponsor.find_by(abbr: logo[1], conference_id: logo[3])
+  puts "Error: unable to find #{logo[1]}" unless sponsor
   SponsorAttachment.seed(
     { id: logo[0],
-      sponsor_id: Sponsor.find_by(abbr: logo[1], conference_id: logo[3]).id,
+      sponsor_id: sponsor.id,
       type: 'SponsorAttachmentLogoImage',
       url: logo[2]
     }
   )
+end
+
+Conference.all.each do |conf|
+  unless conf.sponsors.all? { |sponsor| sponsor.sponsor_attachment_logo_image.present? }
+    no_sponsor_types = conf.sponsors.select { |sponsor| !sponsor.sponsor_attachment_logo_image }
+    raise "Error: Some sponsor hae no sponsor_logo_image in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
+  end
 end
 
 uploader = SponsorAttachmentFileUploader.new(:store)

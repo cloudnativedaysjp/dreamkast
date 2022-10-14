@@ -1531,7 +1531,7 @@ SponsorType.seed(
   [178, 'Diamond', 'gitlab', 7],
   [179, 'Diamond', 'newrelic', 7],
   [180, 'Diamond', 'dynatrace', 7],
-  [181, 'CM', 'Elastic', 7],
+  [181, 'CM', 'elastic', 7],
   [182, 'Diamond', 'redhat', 7],
   [183, 'Gold', 'accuia', 7],
   [184, 'Diamond', 'hashicorp', 7],

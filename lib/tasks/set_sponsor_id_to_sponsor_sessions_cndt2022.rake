@@ -43,6 +43,10 @@ namespace :db do
           talk = Talk.find(talk_id)
           sponsor = sponsors.find{|sponsor| sponsor.abbr == sponsor_abbr}
 
+          if talk.sponsor.present?
+            raise "Talk #{talk.id} (#{talk.title} is already sponsor session"
+          end
+
           unless ENV['DRY_RUN'] == 'false'
             puts "[Dry Run] Set sponsor #{sponsor.name} to #{talk.title}"
           else

@@ -2,6 +2,7 @@
   <h2>Current user</h2>
   <div class="row">
     <div class="col-6">
+      <pre><%= JSON.pretty_generate(@current_user) %></pre>
       <pre><%= JSON.pretty_generate(@current_user[:info]) %></pre>
       <pre><%= JSON.pretty_generate(@current_user[:extra][:raw_info]) %></pre>
       <div><%= JSON.pretty_generate(@current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"]) %></div>

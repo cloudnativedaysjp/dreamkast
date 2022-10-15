@@ -20,7 +20,7 @@ describe TalksController, type: :request do
 
     context 'update' do
       before do
-        allow(JsonWebToken).to(receive(:verify).and_return(true))
+        allow(JsonWebToken).to(receive(:verify).and_return(claim))
       end
 
       it 'return ok' do

@@ -3,7 +3,7 @@
 
     <div class="col-12 col-md-6">
       <% tickets.each do |ticket| %>
-        <%= radio_button_tag "order[ticket_ids]", ticket.id %>
+        <%= radio_button_tag "order[ticket_ids]", ticket.id, false, required: 'required' %>
         <%= label :ticket_ids, ticket.title %> (残数: <%= ticket.remaining_stock %>)<br />
       <% end %>
     </div>

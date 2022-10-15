@@ -15,6 +15,7 @@ class CancelOrdersController < ApplicationController
 
     respond_to do |format|
       if @cancel_order.save
+        RegisteredTalk.where(profile_id: @profile.id).delete_all
         format.html { redirect_to(new_order_path, notice: 'キャンセルされました。') }
         format.json { head(:no_content) }
       else

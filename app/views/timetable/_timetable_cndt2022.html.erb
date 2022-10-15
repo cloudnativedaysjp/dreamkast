@@ -69,4 +69,4 @@
       form: form,
       information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
 <% end %>
-
+<%= hidden_field_tag('is_offline', @profile.offline?) %>

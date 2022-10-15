@@ -29,5 +29,6 @@ import './admin.js'
 import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'
+import './timetable.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

@@ -1,6 +1,12 @@
-$(function(){
-    $('.talk .radio input:radio').click(function(){
-        $('.content[day_slot=' + $(this).attr('day_slot') + ']').removeClass('checked');
-        $('.content[talk_number=' + $(this).attr('talk_number') + ']').addClass('checked');
-    });
+window.addEventListener('DOMContentLoaded', function() {
+    document.getElementsByClassName("talks_checkbox").forEach(function(element) {
+        element.addEventListener("click", function() {
+            document.getElementsByClassName(`slot_${element.getAttribute('day_slot')}`).forEach(function(currentSelectedTalks) {
+                currentSelectedTalks.checked = false;
+            })
+            document.getElementsByClassName(`${element.getAttribute('talk_number')}`).forEach(function(selectedTalks) {
+                selectedTalks.checked = true;
+            })
+        })
+    })
 })

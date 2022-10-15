@@ -35,5 +35,19 @@ FactoryBot.define do
       price { 0 }
       stock { 500 }
     end
+
+    trait :online do
+      title { 'オンライン参加' }
+      description { 'online' }
+      price { 0 }
+      stock { 500 }
+    end
+
+    trait :offline do
+      title { 'オフライン参加' }
+      description { 'offline' }
+      price { 0 }
+      stock { 2000 }
+    end
   end
 end

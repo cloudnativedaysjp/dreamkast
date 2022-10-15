@@ -1,0 +1,72 @@
+<% @conference.conference_days.externals.each do |conference_day| %>
+  <section class="timetable">
+    <h2 class="date"><%= conference_day.date.to_s %></h2>
+    <div class="grid"
+         style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 - 190 %>">
+      <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
+          <div class="track <%= 'even' if n.zero? || n.even? %>"
+               style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+      <% end %>
+
+      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+        <%
+          # 休み時間を除外
+          lunch_break = 0
+          each_break = 0
+          if talk.start_time.in_time_zone('Asia/Tokyo') > Time.zone.parse("2000-01-01 12:15")
+            lunch_break = 60
+            each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
+          end
+          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i + 10 - lunch_break - each_break
+          row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
+        %>
+        <div class="talk"
+          slot="<%= talk.slot_number %>"
+          style="--track: <%= talk.track.number - 1 %>;
+                  --row-start: <%= row_start %>;
+                  --row-end: <%= row_end  %>;">
+          <% if form %>
+          <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+          <%= form.check_box "talks[#{talk.id}]",
+                              { 
+                                talk_id: talk.id,
+                                day_slot: talk.day_slot,
+                                talk_number: talk.talk_number,
+                                checked: talks_checked?(talk.id),
+                                style: "display: none",
+                                class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}"
+                              },
+                              true,
+                              false %>
+          <% end %>
+          <div class="content
+                      <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
+                      talk_id="<%= talk.id %>"
+                      track_number="<%= talk.track.number %>"
+               style="margin-top:0">
+            <h6>
+                <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
+                <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
+                <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
+                <%= talk.slot_number %>
+            </h6>
+            <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+            <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
+            <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
+          </div>
+
+          <% if form %>
+          </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+<% if form %>
+  <%= render 'timetable_footer',
+      form: form,
+      information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
+<% end %>
+

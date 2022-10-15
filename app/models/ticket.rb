@@ -30,4 +30,18 @@ class Ticket < ApplicationRecord
   def remaining_stock
     stock - orders.includes([:cancel_order]).select { |order| order.cancel_order.nil? }.size
   end
+
+  def stock_status
+    if (remaining_stock.to_f / stock) < 0.2
+      '残席わずか'
+    elsif remaining_stock.zero?
+      '残席なし'
+    else
+      '残席あり'
+    end
+  end
+
+  def sold_out?
+    remaining_stock.zero?
+  end
 end

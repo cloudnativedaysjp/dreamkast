@@ -4,16 +4,19 @@
 #
 #  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
+#  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null
 #  end_time              :time
 #  execution_phases      :json
 #  expected_participants :json
 #  movie_url             :string(255)
+#  number_of_seats       :integer          default(0), not null
 #  show_on_timetable     :boolean
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
 #  title                 :string(255)
+#  verification_code     :string(255)
 #  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

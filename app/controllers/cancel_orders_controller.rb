@@ -11,11 +11,11 @@ class CancelOrdersController < ApplicationController
   end
 
   def create
+    RegisteredTalk.where(profile_id: @profile.id).destroy_all
     @cancel_order = CancelOrder.new(cancel_order_params)
 
     respond_to do |format|
       if @cancel_order.save
-        RegisteredTalk.where(profile_id: @profile.id).delete_all
         format.html { redirect_to(new_order_path, notice: 'キャンセルされました。') }
         format.json { head(:no_content) }
       else

@@ -270,7 +270,11 @@ FormItem.seed(
   { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
   { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
   { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
-  { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"}
+  { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
+  { id: 6, conference_id: 7, name: "IBMからのメールを希望する"},
+  { id: 7, conference_id: 7, name: "IBMからの電話を希望する"},
+  { id: 8, conference_id: 7, name: "Red Hatからのメールを希望する"},
+  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"}
 )
 
 

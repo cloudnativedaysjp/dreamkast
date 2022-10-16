@@ -1067,7 +1067,7 @@ Sponsor.seed(
   {
     id: 154,
     name: 'アクイアジャパン合同会社',
-    abbr: 'accuia',
+    abbr: 'acquia',
     conference_id: 7,
     url: 'https://www.acquia.com/jp'
   },
@@ -1533,7 +1533,7 @@ SponsorType.seed(
   [180, 'Diamond', 'dynatrace', 7],
   [181, 'CM', 'elastic', 7],
   [182, 'Diamond', 'redhat', 7],
-  [183, 'Gold', 'accuia', 7],
+  [183, 'Gold', 'acquia', 7],
   [184, 'Diamond', 'hashicorp', 7],
   [185, 'Diamond', 'microsoft', 7],
   [186, 'Diamond', 'veeam', 7],
@@ -1716,7 +1716,7 @@ end
   [151, 'dynatrace', 'sponsors/cndt2022/dummy.png', 7],
   [152, 'elastic', 'sponsors/cndt2022/elastic.png', 7],
   [153, 'redhat', 'sponsors/cndt2022/dummy.png', 7],
-  [154, 'accuia', 'sponsors/cndt2022/accuia.png', 7],
+  [154, 'acquia', 'sponsors/cndt2022/acquia.png', 7],
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
   [156, 'microsoft', 'sponsors/cndt2022/dummy.png', 7],
   [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],

@@ -70,20 +70,23 @@
         </h4>
         <div id="registered-talk-list">
           <% @profile.talks.each do |talk| %>
-          <div class="category_difficulty">
-            <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %>
-            <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-            <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-            <span class="difficulty difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
-            <% end %>
-            <% if talk.talk_category_id.present? %>
-            <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
-            <% end %>
-          </div>
-          <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
+            <div>
+              <div class="category_difficulty">
+                <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %>
+                <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+                  <span class="difficulty difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
+                <% end %>
+                <% if talk.talk_category_id.present? %>
+                  <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
+                <% end %>
+              </div>
+              <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
+            </div>
           <% end %>
-          <div class="col-12 text-center my-4">
+          <div class="actions py-3">
             <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+            <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.unique_code), class: "btn btn-lg" %>
           </div>
         </div>
       </div>

@@ -367,6 +367,18 @@ class Talk < ApplicationRecord
     end_time + end_offset.minutes
   end
 
+  def export_ics
+    cal = Icalendar::Calendar.new
+    cal.event do |e|
+      e.dtstart     = Icalendar::Values::DateTime.new(start_time)
+      e.dtend       = Icalendar::Values::DateTime.new(end_time)
+      e.summary     = title
+      e.description = abstract
+      e.ip_class    = 'PRIVATE'
+    end
+    cal
+  end
+
   private
 
   def validate_proposal_item_configs

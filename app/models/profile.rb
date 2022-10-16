@@ -72,7 +72,7 @@ class Profile < ApplicationRecord
   has_many :orders
 
   before_create do
-    unique_code = SecureRandom.uuid
+    self.unique_code = SecureRandom.uuid
   end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
@@ -130,6 +130,16 @@ class Profile < ApplicationRecord
 
   def gen_unique_code
     update!(unique_code: SecureRandom.uuid)
+  end
+
+  def export_ics
+    filename = Rails.root.join('tmp', "#{unique_code}.ics").to_s
+    File.open(filename, 'w', encoding: 'sjis') do |file|
+      talks.each do |talk|
+        file.write(talk.export_ics.to_ical)
+      end
+    end
+    filename
   end
 
   def industry_name

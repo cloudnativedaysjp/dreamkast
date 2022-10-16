@@ -45,6 +45,17 @@ class Profiles::TalksController < ApplicationController
     redirect_to(timetables_path, notice: 'セッション登録に失敗しました')
   end
 
+  def calendar
+    respond_to do |format|
+      format.ics do
+        code = params[:code]
+        filename = Profile.find_by(unique_code: code).export_ics
+        stat = File.stat(filename)
+        send_file(filename, filename: "#{code}.ics", length: stat.size)
+      end
+    end
+  end
+
   def update
   end
 

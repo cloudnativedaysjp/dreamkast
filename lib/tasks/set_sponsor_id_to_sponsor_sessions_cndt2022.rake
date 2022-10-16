@@ -1,7 +1,7 @@
 namespace :db do
   desc 'set_sponsor_id_to_sponsor_sessions_cndt2022'
   task set_sponsor_id_to_sponsor_sessions_cndt2022: :environment do
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
+    ActiveRecord::Base.logger = Logger.new($stdout)
     Rails.logger.level = Logger::DEBUG
     sponsors = Conference.includes(sponsors).find_by(abbr: 'cndt2022').sponsors
 
@@ -31,7 +31,7 @@ namespace :db do
       # CI/CDの次はCO-継続した最適化 !?  クラウドネイティブなSREのITリソース管理手法とは
       [1599, 'ibm'],
       # Kubernetes クラスタ管理からの開放 〜 アプリケーション開発を加速
-      [1600, 'redhat'],
+      [1600, 'redhat']
     ]
 
     ActiveRecord::Base.transaction do
@@ -41,16 +41,16 @@ namespace :db do
           sponsor_abbr = sponsor_session[1]
 
           talk = Talk.find(talk_id)
-          sponsor = sponsors.find{|sponsor| sponsor.abbr == sponsor_abbr}
+          sponsor = sponsors.find { |s| s.abbr == sponsor_abbr }
 
           if talk.sponsor.present?
-            raise "Talk #{talk.id} (#{talk.title} is already sponsor session"
+            raise("Talk #{talk.id} (#{talk.title} is already sponsor session")
           end
 
-          unless ENV['DRY_RUN'] == 'false'
-            puts "[Dry Run] Set sponsor #{sponsor.name} to #{talk.title}"
-          else
+          if ENV['DRY_RUN'] == 'false'
             talk.update!(sponsor_id: sponsor.id)
+          else
+            puts("[Dry Run] Set sponsor #{sponsor.name} to #{talk.title}")
           end
         rescue => e
           puts(e)

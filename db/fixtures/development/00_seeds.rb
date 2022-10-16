@@ -153,7 +153,7 @@ EOS
 
     世の中の在り方が広がっても、私たちは共に物理的・時間的な距離を乗り越えていきます。
     クラウドネイティブの世界が広がっても、私たちは共に新しい未知の道を開拓し続けていきます。
-    
+
     これまでもこれからも、広がり続けるクラウドネイティブにおいて、様々な人・会社・技術・考え方で目指す多様性を受け入れ、共に時間を共有し、新しい地図を広げていきましょう。
 EOS
   },
@@ -592,7 +592,8 @@ Profile.seed(
     company_address: "xxx",
     company_email: "yyy@example.com",
     company_tel: "123-456-7890",
-    position: "president"
+    position: "president",
+    calendar_unique_code: SecureRandom.uuid
   }
 )
 

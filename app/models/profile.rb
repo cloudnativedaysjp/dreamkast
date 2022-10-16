@@ -3,6 +3,7 @@
 # Table name: profiles
 #
 #  id                            :bigint           not null, primary key
+#  calendar_unique_code          :string(255)
 #  company_address               :string(255)
 #  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
@@ -22,7 +23,6 @@
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
-#  unique_code                   :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)
@@ -72,7 +72,7 @@ class Profile < ApplicationRecord
   has_many :orders
 
   before_create do
-    self.unique_code = SecureRandom.uuid
+    self.calendar_unique_code = SecureRandom.uuid
   end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
@@ -128,12 +128,12 @@ class Profile < ApplicationRecord
     end
   end
 
-  def gen_unique_code
-    update!(unique_code: SecureRandom.uuid)
+  def gen_calendar_unique_code
+    update!(calendar_unique_code: SecureRandom.uuid)
   end
 
   def export_ics
-    filename = Rails.root.join('tmp', "#{unique_code}.ics").to_s
+    filename = Rails.root.join('tmp', "#{calendar_unique_code}.ics").to_s
     File.open(filename, 'w', encoding: 'sjis') do |file|
       talks.each do |talk|
         file.write(talk.export_ics.to_ical)

@@ -86,7 +86,7 @@
           <% end %>
           <div class="actions py-3">
             <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-            <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.unique_code), class: "btn btn-lg" %>
+            <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.calendar_unique_code), class: "btn btn-lg" %>
           </div>
         </div>
       </div>

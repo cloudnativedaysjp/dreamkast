@@ -3,6 +3,7 @@
 # Table name: profiles
 #
 #  id                            :bigint           not null, primary key
+#  calendar_unique_code          :string(255)
 #  company_address               :string(255)
 #  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
@@ -22,7 +23,6 @@
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
-#  unique_code                   :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)

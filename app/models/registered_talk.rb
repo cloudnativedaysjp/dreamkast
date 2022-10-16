@@ -17,14 +17,14 @@ class RegisteredTalk < ApplicationRecord
   before_destroy :reduce_acquired_seats
 
   def add_acquired_seats
-    if profile.offline?
+    if profile.attend_offline?
       talk.acquired_seats = talk.acquired_seats + 1
       talk.save!
     end
   end
 
   def reduce_acquired_seats
-    if profile.offline?
+    if profile.attend_offline?
       talk.acquired_seats = talk.acquired_seats - 1
       talk.save!
     end

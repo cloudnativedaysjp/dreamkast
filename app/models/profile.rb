@@ -143,7 +143,7 @@ class Profile < ApplicationRecord
     active_order.tickets.first.title
   end
 
-  def offline?
+  def attend_offline?
     if active_order.present?
       active_order.tickets.first.title == 'オフライン参加'
     else
@@ -151,7 +151,7 @@ class Profile < ApplicationRecord
     end
   end
 
-  def online?
+  def attend_online?
     if active_order.present?
       active_order.tickets.first.title == 'オンライン参加'
     else

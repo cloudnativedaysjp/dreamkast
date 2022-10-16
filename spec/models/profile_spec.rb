@@ -98,8 +98,8 @@ RSpec.describe(Profile, type: :model) do
     end
 
     it 'should be online' do
-      expect(profile.online?).to(be_truthy)
-      expect(profile.offline?).to(be_falsey)
+      expect(profile.attend_online?).to(be_truthy)
+      expect(profile.attend_offline?).to(be_falsey)
     end
 
     it 'should return オンライン参加' do
@@ -113,8 +113,8 @@ RSpec.describe(Profile, type: :model) do
     end
 
     it 'should be offline' do
-      expect(profile.online?).to(be_falsey)
-      expect(profile.offline?).to(be_truthy)
+      expect(profile.attend_online?).to(be_falsey)
+      expect(profile.attend_offline?).to(be_truthy)
     end
 
     it 'should return オフライン参加' do

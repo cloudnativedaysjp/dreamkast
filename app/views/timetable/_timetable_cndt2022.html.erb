@@ -27,7 +27,7 @@
                   --row-end: <%= row_end  %>;">
           <% if form %>
           <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
-          <% form_status = talk.sold_out? if @profile.offline? %>
+          <% form_status = talk.sold_out? if @profile.attend_offline? %>
           <%= form.check_box "talks[#{talk.id}]",
                               { 
                                 talk_id: talk.id,
@@ -51,7 +51,7 @@
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
                 <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
                 <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
-                <%= talk.seats_status if @profile.offline? %>
+                <%= talk.seats_status if @profile.attend_offline? %>
             </h6>
             <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
             <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
@@ -71,4 +71,4 @@
       form: form,
       information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
 <% end %>
-<%= hidden_field_tag('is_offline', @profile.offline?) %>
+<%= hidden_field_tag('is_offline', @profile.attend_offline?) %>

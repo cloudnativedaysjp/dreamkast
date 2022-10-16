@@ -27,6 +27,7 @@
                   --row-end: <%= row_end  %>;">
           <% if form %>
           <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+          <% form_status = talk.sold_out? if @profile.offline? %>
           <%= form.check_box "talks[#{talk.id}]",
                               { 
                                 talk_id: talk.id,
@@ -34,13 +35,14 @@
                                 talk_number: talk.talk_number,
                                 checked: talks_checked?(talk.id),
                                 style: "display: none",
-                                class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}"
+                                class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}",
+                                disabled: form_status
                               },
                               true,
                               false %>
           <% end %>
           <div class="content
-                      <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
+                      <%= 'checked' if @current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
                       talk_id="<%= talk.id %>"
                       track_number="<%= talk.track.number %>"
                style="margin-top:0">
@@ -49,7 +51,7 @@
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
                 <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
                 <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
-                <%= talk.slot_number %>
+                <%= talk.seats_status if @profile.offline? %>
             </h6>
             <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
             <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>

@@ -32,10 +32,10 @@ class Ticket < ApplicationRecord
   end
 
   def stock_status
-    if (remaining_stock.to_f / stock) < 0.2
-      '残席わずか'
-    elsif remaining_stock.zero?
+    if sold_out?
       '残席なし'
+    elsif (remaining_stock.to_f / stock) < 0.2
+      '残席わずか'
     else
       '残席あり'
     end

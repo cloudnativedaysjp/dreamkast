@@ -119,6 +119,12 @@ section.timetable {
             align-items: start;
             justify-content: left;
         }
+        &.disabled,
+        &.disabled:hover {
+            background-color: #999 !important;
+            border-radius: 5px;
+            border: solid 1px $dark-blue;
+        }
     }
     .content_caption {
         // -webkit-transition: .3s;

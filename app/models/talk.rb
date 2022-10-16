@@ -387,6 +387,24 @@ class Talk < ApplicationRecord
     end_time + end_offset.minutes
   end
 
+  def remaining_seats
+    number_of_seats - acquired_seats
+  end
+
+  def seats_status
+    if sold_out?
+      '× 残席なし'
+    elsif (acquired_seats.to_f / number_of_seats) > 0.8
+      '△ 残席わずか'
+    else
+      '◎ 残席あり'
+    end
+  end
+
+  def sold_out?
+    (number_of_seats - acquired_seats) <= 0
+  end
+
   private
 
   def validate_proposal_item_configs

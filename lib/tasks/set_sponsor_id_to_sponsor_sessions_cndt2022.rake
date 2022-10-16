@@ -19,7 +19,7 @@ namespace :db do
       # PagerDutyで始めるAIOps − AIと自動化でインシデント対応をモダン化する
       [1544, 'pagerduty'],
       # 100%クラウドベースのデジタル体験基盤(DXP)開発フロー
-      [1594, 'accuia'],
+      [1594, 'acquia'],
       # Google Kubernetes Engine (GKE) で実現する運用レスな世界
       [1543, 'google'],
       # 旅するCSO 鈴木いっぺいの「KubeCon現地リキャップ」

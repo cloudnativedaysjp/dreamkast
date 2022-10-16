@@ -14,7 +14,7 @@
           Track <%= talk.track.name %> 
           <%= talk.conference_day.date.strftime("%Y/%m/%d") %> 
           <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-        <% elsif talk.proposal.present? %>
+        <% elsif talk.proposal.present? && !talk.sponsor_session? %>
           Proposal 
           <% case talk.proposal.status %>
           <% when "registered" %>

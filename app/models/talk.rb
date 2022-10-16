@@ -401,7 +401,7 @@ class Talk < ApplicationRecord
   end
 
   def sold_out?
-    (number_of_seats - acquired_seats) <= 0
+    remaining_seats <= 0
   end
 
   private

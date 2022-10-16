@@ -9,8 +9,8 @@ namespace :util do
     ActiveRecord::Base.transaction do
       conference = Conference.find_by(abbr:)
       conference.profiles
-        .where(unique_code: nil)
-        .update_all(unique_code: SecureRandom.uuid)
+                .where(unique_code: nil)
+                .update_all(unique_code: SecureRandom.uuid)
     end
   end
 end

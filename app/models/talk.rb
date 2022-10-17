@@ -4,12 +4,14 @@
 #
 #  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
+#  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null
 #  end_time              :time
 #  execution_phases      :json
 #  expected_participants :json
 #  movie_url             :string(255)
+#  number_of_seats       :integer          default(0), not null
 #  show_on_timetable     :boolean
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
@@ -382,6 +384,24 @@ class Talk < ApplicationRecord
 
   def actual_end_time
     end_time + end_offset.minutes
+  end
+
+  def remaining_seats
+    number_of_seats - acquired_seats
+  end
+
+  def seats_status
+    if sold_out?
+      '× 残席なし'
+    elsif (acquired_seats.to_f / number_of_seats) > 0.8
+      '△ 残席わずか'
+    else
+      '◎ 残席あり'
+    end
+  end
+
+  def sold_out?
+    remaining_seats <= 0
   end
 
   private

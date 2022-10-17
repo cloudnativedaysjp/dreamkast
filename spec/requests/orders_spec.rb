@@ -86,7 +86,7 @@ describe OrdersController, type: :request do
         post '/cndt2020/orders', params: { order: { ticket_ids: ticket_a.id } }
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020/dashboard'))
+        expect(response).to(redirect_to('/cndt2020/timetables'))
         expect(alice.orders.size).to(eq(1))
       end
     end

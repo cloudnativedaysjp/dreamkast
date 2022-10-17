@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_15_152209) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -421,6 +421,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_093327) do
     t.integer "sponsor_id"
     t.integer "start_offset", default: 0, null: false
     t.integer "end_offset", default: 0, null: false
+    t.integer "number_of_seats", default: 0, null: false
+    t.integer "acquired_seats", default: 0, null: false
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"

@@ -901,21 +901,21 @@ Sponsor.seed(
     name: 'LINE株式会社',
     abbr: 'line',
     conference_id: 7,
-    url: ''
+    url: 'https://engineering.linecorp.com/ja/'
   },
   {
     id: 131,
     name: 'Snyk株式会社',
     abbr: 'snyk',
     conference_id: 7,
-    url: ''
+    url: 'https://snyk.io/jp'
   },
   {
     id: 132,
     name: 'テクマトリックス株式会社',
     abbr: 'techmatrix',
     conference_id: 7,
-    url: ''
+    url: 'https://it-infra.techmatrix.jp/service/neo'
   },
   {
     id: 133,
@@ -950,7 +950,7 @@ Sponsor.seed(
     name: 'グーグル・クラウド・ジャパン合同会社',
     abbr: 'google',
     conference_id: 7,
-    url: ''
+    url: 'https://cloud.google.com/'
   },
   {
     id: 138,
@@ -971,7 +971,7 @@ Sponsor.seed(
     name: 'freee株式会社',
     abbr: 'freee',
     conference_id: 7,
-    url: ''
+    url: 'https://corp.freee.co.jp/'
   },
   {
     id: 141,
@@ -1006,7 +1006,7 @@ Sponsor.seed(
     name: 'F5ネットワークスジャパン合同会社',
     abbr: 'f5',
     conference_id: 7,
-    url: ''
+    url: 'https://www.nginx.co.jp/'
   },
   {
     id: 146,
@@ -1020,7 +1020,7 @@ Sponsor.seed(
     name: '株式会社NTTデータ',
     abbr: 'nttdata',
     conference_id: 7,
-    url: ''
+    url: 'https://www.nttdata.com/jp/ja/'
   },
   {
     id: 148,
@@ -1041,7 +1041,7 @@ Sponsor.seed(
     name: 'New Relic',
     abbr: 'newrelic',
     conference_id: 7,
-    url: ''
+    url: 'https://newrelic.com/jp/events'
   },
   {
     id: 151,
@@ -1062,7 +1062,7 @@ Sponsor.seed(
     name: 'レッドハット株式会社',
     abbr: 'redhat',
     conference_id: 7,
-    url: ''
+    url: 'https://www.redhat.com/ja/global/japan'
   },
   {
     id: 154,
@@ -1073,17 +1073,17 @@ Sponsor.seed(
   },
   {
     id: 155,
-    name: 'HashiCorp Japan株式会社／東京エレクトロンデバイス株式会社',
+    name: 'HashiCorp Japan株式会社',
     abbr: 'hashicorp',
     conference_id: 7,
-    url: ''
+    url: 'https://www.hashicorp.co.jp/'
   },
   {
     id: 156,
     name: '日本マイクロソフト株式会社',
     abbr: 'microsoft',
     conference_id: 7,
-    url: ''
+    url: 'https://news.microsoft.com/ja-jp/'
   },
   {
     id: 157,
@@ -1105,7 +1105,14 @@ Sponsor.seed(
     abbr: 'splunk',
     conference_id: 7,
     url: 'https://www.splunk.com/ja_jp'
-  }
+  },
+  {
+    id: 160,
+    name: '東京エレクトロンデバイス株式会社',
+    abbr: 'teldevice',
+    conference_id: 7,
+    url: 'https://cn.teldevice.co.jp/'
+  },
 )
 
 SponsorType.seed(

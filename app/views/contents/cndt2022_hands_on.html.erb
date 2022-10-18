@@ -44,6 +44,7 @@
             <li>
               午後 (14:00–):</b>
               <ul>
+                <li><a href="#hs0">『Kubernetes Upstream Training』by 稲生章人 / 武藤周 / 大道憲一 / 毛利唯子 / カイシイ / 河村真樹 / 犬飼敏章</a></li>
                 <li><a href="#hs0">『OCI DevOps で体験する CI/CD パイプライン』by 市川豊 / 仁井田拓也</a></li>
                 <li><a href="#hs1">『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』by 相澤 俊幸 / Toshi Aizawa</a></li>
                 <li><a href="#hs2">『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</a></li>
@@ -53,7 +54,7 @@
 
 
           <div class="handson-session">
-            <h5 id="hc2"><strong>『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</strong></h5>
+            <h5 id="hc0"><strong>『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -69,7 +70,7 @@
             <p class="card-text">Landoは、オープンソース製のクロスプラットフォームのローカル開発環境構築ツールです。Landoを使用することで、複雑なDockerファイルの作成をすることなく、特定の開発ユースケース（Drupal、Laravel、Symfonyなど）を満たす環境をDocker上に簡単にセットアップできます。本ハンズオンでは、オープンソースCMS「Drupal」を例に、LandoとDockerを使用してLAMP環境を構築する手順をご紹介します。
             </p>
           </div>
-          
+
           <div class="handson-session">
             <h5 id="hc1"><strong>『KubernetesのIngressとして動作するNGINX Ingress Controller設定入門ハンズオン』 by 田邊 淳一</strong></h5>
             <ul>
@@ -104,7 +105,27 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs0"><strong>『OCI DevOps で体験する CI/CD パイプライン』 by 市川豊 / 仁井田拓也</strong></h5>
+            <h5 id="hs0"><strong>『Kubernetes Upstream Training』by 稲生章人 / 武藤周 / 大道憲一 / 毛利唯子 / カイシイ / 河村真樹 / 犬飼敏章</strong></h5>
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://docs.google.com/forms/d/e/1FAIpQLSeiJPvvwkTqCejHj9C7dQJClJoEqUibEAaG8q3yZfR47ismvA/viewform">https://docs.google.com/forms/d/e/1FAIpQLSeiJPvvwkTqCejHj9C7dQJClJoEqUibEAaG8q3yZfR47ismvA/viewform</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには CNDT2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <li>
+                開催日時：2022/11/18 14:00-18:30
+              </li>
+            </ul>
+            <p class="card-text">
+            KubernetesアップストリームトレーニングはKubernetesの新機能開発・バグ修正・ドキュメント作成などのコミュニティ開発を円滑に行うためのトレーニングプログラムです。参加者はKubernetesコミュニティの概要を把握できることに加えて、Kubernetesコミュニティに対する具体的な貢献方法をハンズオン形式で学ぶことが出来ます。<br>
+            <br>
+            講師は Kubernetes コミュニティにおいてMember以上の開発者で構成されており、日本語での議論・相談が可能です。技術面だけでなく、オープンなコミュニティにおけるコミュニケーションや議論の進め方など、提案を受け入れてもらうための手法についてもお伝えします。            </p>
+          </div>
+
+          <div class="handson-session">
+            <h5 id="hs1"><strong>『OCI DevOps で体験する CI/CD パイプライン』 by 市川豊 / 仁井田拓也</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -123,7 +144,7 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs1"><strong>『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』 by 相澤 俊幸 / Toshi Aizawa</strong></h5>
+            <h5 id="hs2"><strong>『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』 by 相澤 俊幸 / Toshi Aizawa</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -144,7 +165,7 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs2"><strong>『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</strong></h5>
+            <h5 id="hs3"><strong>『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -157,7 +178,6 @@
                 開催日時：2022/11/18 14:00-16:00
               </li>
             </ul>
-
             <p class="card-text">開催概要<br>
             Kubernetesを採用している方むけに、実際にAWS EKS環境とSysdigを使って、擬似攻撃に対するランタイム脅威検知とKubernetesのポスチャー管理を実施するハンズオントレーニンです。これにより「なぜシフトレフトだけではなくランタイムでの脅威検知が重要なのか」を学ぶことができます。<br>
             <br>

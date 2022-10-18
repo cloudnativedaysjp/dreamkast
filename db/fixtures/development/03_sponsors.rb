@@ -1732,9 +1732,9 @@ end
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
   [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],
 ].each do |logo|
-  # if logo[3] == 7 # Validate logo path (CNDT2022 only)
+  if logo[3] == 7 # Validate logo path (CNDT2022 only)
     raise "Error: Unable to find sponsor logo file: #{logo[2]}" unless File.exist?("#{Rails.root}/app/assets/images/#{logo[2]}")
-  # end
+  end
   sponsor = Sponsor.find_by(abbr: logo[1], conference_id: logo[3])
   puts "Error: unable to find #{logo[1]}" unless sponsor
   SponsorAttachment.seed(

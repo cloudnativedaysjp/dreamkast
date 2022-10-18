@@ -1725,7 +1725,6 @@ end
   [153, 'redhat', 'sponsors/cndt2022/redhat.png', 7],
   [154, 'acquia', 'sponsors/cndt2022/acquia.png', 7],
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
-  [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
   [156, 'microsoft', 'sponsors/cndt2022/microsoft.png', 7],
   [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
   [158, 'paloalto', 'sponsors/cndt2022/dummy.png', 7],

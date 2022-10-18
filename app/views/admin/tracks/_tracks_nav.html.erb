@@ -25,6 +25,7 @@
       <th scope="col">Time</th>
       <th scope="col">Speakers</th>
       <th scope="col">Title</th>
+      <th scope="col">Number of Seats</th>
       <th scope="col">Vimeo ID</th>
       <th scope="col">On Air</th>
     </tr>
@@ -35,6 +36,9 @@
         <td><%= talk.start_to_end %></td>
         <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
         <td><h5><%= talk.title %></h5></td>
+        <td>
+          <%= talk.number_of_seats %>
+        </td>
         <td>
           <% video_id = talk.video ? talk.video.video_id : nil %>
           <%= text_field_tag "video[#{talk.id}][video_id]", video_id, placeholder: "vimeo id", size: "9" %>

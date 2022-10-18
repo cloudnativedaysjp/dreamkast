@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  conference_id  :integer
+#  room_id        :bigint           default(0), not null
 #  video_id       :string(255)
 #
 

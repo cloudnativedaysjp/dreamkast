@@ -901,21 +901,21 @@ Sponsor.seed(
     name: 'LINE株式会社',
     abbr: 'line',
     conference_id: 7,
-    url: ''
+    url: 'https://engineering.linecorp.com/ja/'
   },
   {
     id: 131,
     name: 'Snyk株式会社',
     abbr: 'snyk',
     conference_id: 7,
-    url: ''
+    url: 'https://snyk.io/jp'
   },
   {
     id: 132,
     name: 'テクマトリックス株式会社',
     abbr: 'techmatrix',
     conference_id: 7,
-    url: ''
+    url: 'https://it-infra.techmatrix.jp/service/neo'
   },
   {
     id: 133,
@@ -950,7 +950,7 @@ Sponsor.seed(
     name: 'グーグル・クラウド・ジャパン合同会社',
     abbr: 'google',
     conference_id: 7,
-    url: ''
+    url: 'https://cloud.google.com/'
   },
   {
     id: 138,
@@ -971,7 +971,7 @@ Sponsor.seed(
     name: 'freee株式会社',
     abbr: 'freee',
     conference_id: 7,
-    url: ''
+    url: 'https://corp.freee.co.jp/'
   },
   {
     id: 141,
@@ -1006,7 +1006,7 @@ Sponsor.seed(
     name: 'F5ネットワークスジャパン合同会社',
     abbr: 'f5',
     conference_id: 7,
-    url: ''
+    url: 'https://www.nginx.co.jp/'
   },
   {
     id: 146,
@@ -1020,7 +1020,7 @@ Sponsor.seed(
     name: '株式会社NTTデータ',
     abbr: 'nttdata',
     conference_id: 7,
-    url: ''
+    url: 'https://www.nttdata.com/jp/ja/'
   },
   {
     id: 148,
@@ -1041,7 +1041,7 @@ Sponsor.seed(
     name: 'New Relic',
     abbr: 'newrelic',
     conference_id: 7,
-    url: ''
+    url: 'https://newrelic.com/jp/events'
   },
   {
     id: 151,
@@ -1062,7 +1062,7 @@ Sponsor.seed(
     name: 'レッドハット株式会社',
     abbr: 'redhat',
     conference_id: 7,
-    url: ''
+    url: 'https://www.redhat.com/ja/global/japan'
   },
   {
     id: 154,
@@ -1073,17 +1073,17 @@ Sponsor.seed(
   },
   {
     id: 155,
-    name: 'HashiCorp Japan株式会社／東京エレクトロンデバイス株式会社',
-    abbr: 'hashicorp',
+    name: '東京エレクトロンデバイス株式会社',
+    abbr: 'teldevice',
     conference_id: 7,
-    url: ''
+    url: 'https://cn.teldevice.co.jp/'
   },
   {
     id: 156,
     name: '日本マイクロソフト株式会社',
     abbr: 'microsoft',
     conference_id: 7,
-    url: ''
+    url: 'https://news.microsoft.com/ja-jp/'
   },
   {
     id: 157,
@@ -1105,7 +1105,14 @@ Sponsor.seed(
     abbr: 'splunk',
     conference_id: 7,
     url: 'https://www.splunk.com/ja_jp'
-  }
+  },
+  {
+    id: 160,
+    name: 'HashiCorp Japan株式会社',
+    abbr: 'hashicorp',
+    conference_id: 7,
+    url: 'https://www.hashicorp.co.jp/'
+  },
 )
 
 SponsorType.seed(
@@ -1516,29 +1523,29 @@ SponsorType.seed(
   [163, 'Diamond', 'trendmicro', 7],
   [164, 'Diamond', 'datadog', 7],
   [165, 'Diamond', 'ibm', 7],
-  [166, 'Gold', 'f5', 7],
-  [167, 'Platinum', 'sysdig', 7],
-  [168, 'Gold', 'line', 7],
-  [169, 'Gold', 'techmatrix', 7],
-  [170, 'Gold', 'freee', 7],
-  [171, 'Gold', 'casareal', 7],
-  [172, 'Gold', 'f5', 7],
-  [173, 'Gold', 'nttdata', 7],
-  [174, 'CM', 'line', 7],
-  [175, 'CM', 'gmo', 7],
-  [176, 'Tool', 'plaid', 7],
-  [177, 'Tool', 'sakura', 7],
-  [178, 'Diamond', 'gitlab', 7],
-  [179, 'Diamond', 'newrelic', 7],
-  [180, 'Diamond', 'dynatrace', 7],
-  [181, 'CM', 'elastic', 7],
-  [182, 'Diamond', 'redhat', 7],
-  [183, 'Gold', 'acquia', 7],
-  [184, 'Diamond', 'hashicorp', 7],
-  [185, 'Diamond', 'microsoft', 7],
-  [186, 'Diamond', 'veeam', 7],
-  [187, 'Diamond', 'paloalto', 7],
-  [188, 'Diamond', 'splunk', 7],
+  [166, 'Platinum', 'sysdig', 7],
+  [167, 'Gold', 'line', 7],
+  [168, 'Gold', 'techmatrix', 7],
+  [169, 'Gold', 'freee', 7],
+  [170, 'Gold', 'casareal', 7],
+  [171, 'Gold', 'f5', 7],
+  [172, 'Gold', 'nttdata', 7],
+  [173, 'CM', 'line', 7],
+  [174, 'CM', 'gmo', 7],
+  [175, 'Tool', 'plaid', 7],
+  [176, 'Tool', 'sakura', 7],
+  [177, 'Diamond', 'gitlab', 7],
+  [178, 'Diamond', 'newrelic', 7],
+  [179, 'Diamond', 'dynatrace', 7],
+  [180, 'CM', 'elastic', 7],
+  [181, 'Diamond', 'redhat', 7],
+  [182, 'Gold', 'acquia', 7],
+  [183, 'Diamond', 'hashicorp', 7],
+  [184, 'Diamond', 'microsoft', 7],
+  [185, 'Diamond', 'veeam', 7],
+  [186, 'Diamond', 'paloalto', 7],
+  [187, 'Diamond', 'splunk', 7],
+  [188, 'Diamond', 'teldevice', 7],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1691,38 +1698,42 @@ end
   [127, 'plaid', 'sponsors/cnsec2022/plaid.png', 6],
   [128, 'sakura', 'sponsors/cnsec2022/sakura.png', 6],
 
-  [129, 'circleci', 'sponsors/cndt2022/dummy.png', 7],
-  [130, 'line', 'sponsors/cndt2022/dummy.png', 7],
-  [131, 'snyk', 'sponsors/cndt2022/dummy.png', 7],
-  [132, 'techmatrix', 'sponsors/cndt2022/dummy.png', 7],
-  [133, 'gmo', 'sponsors/cndt2022/dummy.png', 7],
-  [134, 'pingcap', 'sponsors/cndt2022/dummy.png', 7],
-  [135, 'pagerduty', 'sponsors/cndt2022/dummy.png', 7],
-  [136, 'aiven', 'sponsors/cndt2022/dummy.png', 7],
-  [137, 'google', 'sponsors/cndt2022/dummy.png', 7],
-  [138, 'creationline', 'sponsors/cndt2022/dummy.png', 7],
-  [139, 'sysdig', 'sponsors/cndt2022/dummy.png', 7],
-  [140, 'freee', 'sponsors/cndt2022/dummy.png', 7],
-  [141, 'casareal', 'sponsors/cndt2022/dummy.png', 7],
-  [142, 'trendmicro', 'sponsors/cndt2022/dummy.png', 7],
-  [143, 'datadog', 'sponsors/cndt2022/dummy.png', 7],
-  [144, 'ibm', 'sponsors/cndt2022/dummy.png', 7],
-  [145, 'f5', 'sponsors/cndt2022/dummy.png', 7],
+  [129, 'circleci', 'sponsors/cndt2022/circleci.png', 7],
+  [130, 'line', 'sponsors/cndt2022/line.png', 7],
+  [131, 'snyk', 'sponsors/cndt2022/snyk.png', 7],
+  [132, 'techmatrix', 'sponsors/cndt2022/techmatrix.png', 7],
+  [133, 'gmo', 'sponsors/cndt2022/gmo.png', 7],
+  [134, 'pingcap', 'sponsors/cndt2022/pingcap.png', 7],
+  [135, 'pagerduty', 'sponsors/cndt2022/pagerduty.png', 7],
+  [136, 'aiven', 'sponsors/cndt2022/aiven.png', 7],
+  [137, 'google', 'sponsors/cndt2022/google.png', 7],
+  [138, 'creationline', 'sponsors/cndt2022/creationline.png', 7],
+  [139, 'sysdig', 'sponsors/cndt2022/sysdig.png', 7],
+  [140, 'freee', 'sponsors/cndt2022/freee.png', 7],
+  [141, 'casareal', 'sponsors/cndt2022/casareal.png', 7],
+  [142, 'trendmicro', 'sponsors/cndt2022/trendmicro.png', 7],
+  [143, 'datadog', 'sponsors/cndt2022/datadog.png', 7],
+  [144, 'ibm', 'sponsors/cndt2022/ibm.jpg', 7],
+  [145, 'f5', 'sponsors/cndt2022/nginx.png', 7],
   [146, 'gitlab', 'sponsors/cndt2022/gitlab.png', 7],
-  [147, 'nttdata', 'sponsors/cndt2022/dummy.png', 7],
+  [147, 'nttdata', 'sponsors/cndt2022/nttdata.png', 7],
   [148, 'plaid', 'sponsors/cndt2022/plaid.png', 7],
   [149, 'sakura', 'sponsors/cndt2022/sakura.png', 7],
   [150, 'newrelic', 'sponsors/cndt2022/newrelic.png', 7],
-  [151, 'dynatrace', 'sponsors/cndt2022/dummy.png', 7],
+  [151, 'dynatrace', 'sponsors/cndt2022/dynatrace.png', 7],
   [152, 'elastic', 'sponsors/cndt2022/elastic.png', 7],
-  [153, 'redhat', 'sponsors/cndt2022/dummy.png', 7],
+  [153, 'redhat', 'sponsors/cndt2022/redhat.png', 7],
   [154, 'acquia', 'sponsors/cndt2022/acquia.png', 7],
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
-  [156, 'microsoft', 'sponsors/cndt2022/dummy.png', 7],
+  [156, 'microsoft', 'sponsors/cndt2022/microsoft.png', 7],
   [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
   [158, 'paloalto', 'sponsors/cndt2022/dummy.png', 7],
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
+  [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],
 ].each do |logo|
+  if logo[3] == 7 # Validate logo path (CNDT2022 only)
+    raise "Error: Unable to find sponsor logo file: #{logo[2]}" unless File.exist?("#{Rails.root}/app/assets/images/#{logo[2]}")
+  end
   sponsor = Sponsor.find_by(abbr: logo[1], conference_id: logo[3])
   puts "Error: unable to find #{logo[1]}" unless sponsor
   SponsorAttachment.seed(

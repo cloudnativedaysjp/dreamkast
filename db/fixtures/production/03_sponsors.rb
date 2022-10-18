@@ -1073,10 +1073,10 @@ Sponsor.seed(
   },
   {
     id: 155,
-    name: 'HashiCorp Japan株式会社',
-    abbr: 'hashicorp',
+    name: '東京エレクトロンデバイス株式会社',
+    abbr: 'teldevice',
     conference_id: 7,
-    url: 'https://www.hashicorp.co.jp/'
+    url: 'https://cn.teldevice.co.jp/'
   },
   {
     id: 156,
@@ -1108,10 +1108,10 @@ Sponsor.seed(
   },
   {
     id: 160,
-    name: '東京エレクトロンデバイス株式会社',
-    abbr: 'teldevice',
+    name: 'HashiCorp Japan株式会社',
+    abbr: 'hashicorp',
     conference_id: 7,
-    url: 'https://cn.teldevice.co.jp/'
+    url: 'https://www.hashicorp.co.jp/'
   },
 )
 

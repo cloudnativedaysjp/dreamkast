@@ -467,7 +467,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_platform"
-    t.bigint "room_id", default: 0, null: false
+    t.bigint "room_id", default: 0
   end
 
   create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

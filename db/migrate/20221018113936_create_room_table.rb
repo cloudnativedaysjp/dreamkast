@@ -10,6 +10,6 @@ class CreateRoomTable < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_column :tracks, :room_id, :bigint, null: false, default: 0
+    add_column :tracks, :room_id, :bigint, null: true, default: 0
   end
 end

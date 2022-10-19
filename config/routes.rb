@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       get 'export_speakers' => 'speakers#export_speakers'
       get 'export_profiles' => 'profiles#export_profiles'
       resources :talks, only: [:index]
+      resources :rooms, only: [:index, :update]
+      put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
       resources :videos, only: [:index]
       resources :timetables, only: [:index]

@@ -276,14 +276,27 @@ Track.seed(
   { id: 29, number: 1, name: "A", conference_id: 6},
   { id: 30, number: 2, name: "B", conference_id: 6},
   { id: 31, number: 3, name: "C", conference_id: 6},
-  { id: 32, number: 1, name: "A", conference_id: 7},
-  { id: 33, number: 2, name: "B", conference_id: 7},
-  { id: 34, number: 3, name: "C", conference_id: 7},
-  { id: 35, number: 4, name: "D", conference_id: 7},
-  { id: 36, number: 5, name: "E", conference_id: 7},
-  { id: 37, number: 6, name: "F", conference_id: 7},
+
+  { id: 32, number: 1, name: "A", conference_id: 7, room_id: 1},
+  { id: 33, number: 2, name: "B", conference_id: 7, room_id: 2},
+  { id: 34, number: 3, name: "C", conference_id: 7, room_id: 3},
+  { id: 35, number: 4, name: "D", conference_id: 7, room_id: 4},
+  { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
+  { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
 )
 
+Room.seed(
+  {id: 1,  conference_id: 7, name: 'Room1'},
+  {id: 2,  conference_id: 7, name: 'レセプションルーム1'},
+  {id: 3,  conference_id: 7, name: 'レセプションルーム2'},
+  {id: 4,  conference_id: 7, name: 'Room6'},
+  {id: 5,  conference_id: 7, name: 'Room2'},
+  {id: 6,  conference_id: 7, name: 'ボードルーム'},
+  {id: 7,  conference_id: 7, name: 'Room3'},
+  {id: 8,  conference_id: 7, name: 'Room4'},
+  {id: 9,  conference_id: 7, name: 'Room5'},
+  {id: 10, conference_id: 7, name: 'Room7'},
+)
 
 TalkCategory.seed(
   { id: 1,  conference_id: 1, name: "CI / CD"},
@@ -429,6 +442,6 @@ EOS
 end
 
 Ticket.seed(
-  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 7 },
+  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 200, conference_id: 7 },
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 1500, conference_id: 7 },
 )

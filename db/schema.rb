@@ -282,7 +282,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
     t.bigint "conference_id", null: false
     t.bigint "track_id"
     t.string "name", null: false
-    t.text "description", null: false
+    t.text "description"
     t.integer "number_of_seats", default: 0, null: false
     t.integer "integer", default: 0, null: false
     t.datetime "created_at", null: false

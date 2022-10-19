@@ -4,7 +4,7 @@ class CreateRoomTable < ActiveRecord::Migration[7.0]
       t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
       t.belongs_to :track, foreign_key: true, type: :bigint
       t.string :name, null: false
-      t.text :description, null: false
+      t.text :description
       t.integer :number_of_seats, :integer, null: false, default: 0
 
       t.timestamps

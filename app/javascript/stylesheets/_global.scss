@@ -202,10 +202,20 @@ footer ul li {
     }
 }
 
-.privacy_policy a {
+.privacy_policy a,
+.privacy_policy a:visited {
     color: #A62B1F;
     &:hover {
         color: #A62B1F;
         text-decoration: underline;
+    }
+}
+
+.contents {
+    a {
+        text-decoration: underline;
+    }
+    a.btn {
+        text-decoration: none;
     }
 }

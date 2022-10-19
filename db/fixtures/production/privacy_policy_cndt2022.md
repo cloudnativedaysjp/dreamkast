@@ -11,39 +11,38 @@
 
 ご登録いただきました個人情報は、以下の本セミナーの協賛企業（以下、スポンサーといいます）へ提供いたします。 ご登録の皆様には、提供先のスポンサーより直接、製品・サービス、展示会・セミナー等に関するご案内、アンケート調査の目的のために、電子メールや郵送、お電話等でご案内をさせていただく場合がございます。
 
-なお、スポンサーへ提供された個人情報は、当該スポンサーの責任において取り扱われるものとします。 また、開催日までにスポンサー、講演提供企業が追加となりました場合は、本セミナーウェブサイトに公開しますとともに、追加となりましたスポンサーにもご登録いただきました個人情報を提供させていただきます。 上記を全てあらかじめご同意の上、お申し込みをお願いいたします。
+なお、スポンサーへ提供された個人情報は、当該スポンサーの責任において取り扱われるものとします。 スポンサー各社のプライバシーポリシーその他個人情報の取扱いについての情報提供は、以下の各スポンサーのウェブサイトをご参照ください。また、開催日までにスポンサー、講演提供企業が追加となりました場合は、本セミナーウェブサイトに公開しますとともに、追加となりましたスポンサーにもご登録いただきました個人情報を提供させていただきます。 上記を全てあらかじめご同意の上、お申し込みをお願いいたします。
 
-#### 各スポンサーの名称、プライバシーポリシー、個人情報の取扱いについての情報提供（更新日：2022年11月19日）
+#### 各スポンサーの名称、プライバシーポリシー、個人情報の取扱いについての情報提供（更新日：2022年10月19日）
 
-- CircleCI合同会社
-- GMOインターネットグループ株式会社
-- Snyk株式会社
-- レッドハット株式会社
-- Datadog Japan合同会社
-- New Relic
-- Splunk Services Japan合同会社
-- GitLab合同会社
-- Dynatrace合同会社
-- HashiCorp Japan株式会社
-- 東京エレクトロンデバイス株式会社
+- [CircleCI合同会社](https://circleci.com/ja/legal/privacy/)
+- [GMOインターネットグループ株式会社](https://www.gmo.jp/csr/governance/privacy-policy/)
+- [Snyk株式会社](https://snyk.io/policies/privacy/)
+- [レッドハット株式会社](https://www.redhat.com/ja/privacy-statement)
+- [Datadog Japan合同会社](https://www.datadoghq.com/ja/legal/privacy/)
+- [New Relic](https://newrelic.com/termsandconditions/privacy)
+- [Splunk Services Japan合同会社](https://www.splunk.com/en_us/legal/privacy/privacy-policy.html)
+- [GitLab合同会社](https://about.gitlab.com/privacy/)
+- [Dynatrace合同会社](https://www.dynatrace.com/company/trust-center/privacy/)
+- [HashiCorp Japan株式会社](https://www.hashicorp.com/privacy)
+- [東京エレクトロンデバイス株式会社](https://www.teldevice.co.jp/privacy.html)
 - 日本マイクロソフト株式会社
 - ヴィーム・ソフトウェア株式会社
 - パロアルトネットワークス株式会社
-- PingCAP株式会社
-- PagerDuty株式会社
-- Aiven Japan合同会社
-- グーグル・クラウド・ジャパン合同会社
-- クリエーションライン株式会社
-- トレンドマイクロ株式会社
-- 日本アイ・ビー・エム株式会社
-- アクイアジャパン合同会社
-- LINE株式会社
+- [PingCAP株式会社](https://pingcap.co.jp/privacy-policy/?utm_source=physical_event&utm_medium=sponsored_event&utm_campaign=cloudnative_days_2022)
+- [PagerDuty株式会社](https://www.pagerduty.com/privacy-policy/)
+- [Aiven Japan合同会社](https://aiven.io/privacy)
+- [グーグル・クラウド・ジャパン合同会社](https://policies.google.com/privacy)
+- [クリエーションライン株式会社](https://www.creationline.com/privacypolicy)
+- [トレンドマイクロ株式会社](https://www.trendmicro.com/ja_jp/about/legal/privacy-policy/handling.html)
+- [日本アイ・ビー・エム株式会社](https://www.ibm.com/jp-ja/privacy)
+- [アクイアジャパン合同会社](https://www.acquia.com/about-us/legal/privacy-policy)
 - テクマトリックス株式会社
-- freee株式会社
-- 株式会社カサレアル
-- F5ネットワークスジャパン合同会社
-- 株式会社NTTデータ
-- Sysdig Japan合同会社
+- [freee株式会社](https://www.freee.co.jp/privacy_policy/)
+- [株式会社カサレアル](https://www.casareal.co.jp/privacy/)
+- [F5ネットワークスジャパン合同会社](https://www.f5.com/ja_jp/company/policies/privacy-notice)
+- [株式会社NTTデータ](https://www.nttdata.com/jp/ja/info/privacy_policy)
+- [Sysdig Japan合同会社](https://sysdig.com/privacy-policy/)
 
-#### 当社の個人情報の個人情報のお取扱いに関するお問い合わせ
+#### 当社の個人情報のお取扱いに関するお問い合わせ
 株式会社インプレス　[お問い合わせフォーム](https://inquiry.impress.co.jp/?id=1)

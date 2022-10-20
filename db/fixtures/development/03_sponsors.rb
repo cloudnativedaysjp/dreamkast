@@ -1097,7 +1097,7 @@ Sponsor.seed(
     name: 'パロアルトネットワークス株式会社',
     abbr: 'paloalto',
     conference_id: 7,
-    url: ''
+    url: 'https://www.paloaltonetworks.jp/'
   },
   {
     id: 159,
@@ -1727,7 +1727,7 @@ end
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
   [156, 'microsoft', 'sponsors/cndt2022/microsoft.png', 7],
   [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
-  [158, 'paloalto', 'sponsors/cndt2022/dummy.png', 7],
+  [158, 'paloalto', 'sponsors/cndt2022/paloalto.png', 7],
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
   [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],
 ].each do |logo|

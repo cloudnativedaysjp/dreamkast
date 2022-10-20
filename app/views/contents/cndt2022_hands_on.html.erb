@@ -44,10 +44,10 @@
               午後 (14:00–):</b>
               <ul>
                 <li><a href="#hs0">『Kubernetes Upstream Training』by 稲生章人 / 武藤周 / 大道憲一 / 毛利唯子 / カイシイ / 河村真樹 / 犬飼敏章</a></li>
-                <li><a href="#hs1">『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</a></li>
-                <li><a href="#hs2">『OCI DevOps で体験する CI/CD パイプライン』by 市川豊 / 仁井田拓也</a></li>
-                <li><a href="#hs3">『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』by 相澤 俊幸 / Toshi Aizawa</a></li>
-                <li><a href="#hs4">『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</a></li>
+                <li><a href="#hs1">『OCI DevOps で体験する CI/CD パイプライン』by 市川豊 / 仁井田拓也</a></li>
+                <li><a href="#hs2">『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』by 相澤 俊幸 / Toshi Aizawa</a></li>
+                <li><a href="#hs3">『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</a></li>
+                <li><a href="#hs4">『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</a></li>
               </ul>
             </li>
           </ul>
@@ -55,7 +55,7 @@
 
 
           <div class="handson-session">
-            <h5 id="hc1"><strong>『KubernetesのIngressとして動作するNGINX Ingress Controller設定入門ハンズオン』 by 田邊 淳一</strong></h5>
+            <h5 id="hc0"><strong>『KubernetesのIngressとして動作するNGINX Ingress Controller設定入門ハンズオン』 by 田邊 淳一</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -108,25 +108,7 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs1"><strong>『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</strong></h5>
-            <ul>
-              <li>
-                <% if @current_user %>
-                  申し込みURL：<a href="https://www.acquia.com/jp/events/webinars/drupal-handson-q42022">https://www.acquia.com/jp/events/webinars/drupal-handson-q42022</a>
-                <% else %>
-                  <strong class="alert-url">申し込みURLを表示するには CNDT2022 サイトにログインしてください。</strong>
-                <% end %>
-              </li>
-              <li>
-                開催日時：2022/11/18 10:00-12:00
-              </li>
-            </ul>
-            <p class="card-text">Landoは、オープンソース製のクロスプラットフォームのローカル開発環境構築ツールです。Landoを使用することで、複雑なDockerファイルの作成をすることなく、特定の開発ユースケース（Drupal、Laravel、Symfonyなど）を満たす環境をDocker上に簡単にセットアップできます。本ハンズオンでは、オープンソースCMS「Drupal」を例に、LandoとDockerを使用してLAMP環境を構築する手順をご紹介します。
-            </p>
-          </div>
-
-          <div class="handson-session">
-            <h5 id="hs2"><strong>『OCI DevOps で体験する CI/CD パイプライン』 by 市川豊 / 仁井田拓也</strong></h5>
+            <h5 id="hs1"><strong>『OCI DevOps で体験する CI/CD パイプライン』 by 市川豊 / 仁井田拓也</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -145,7 +127,7 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs3"><strong>『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』 by 相澤 俊幸 / Toshi Aizawa</strong></h5>
+            <h5 id="hs2"><strong>『Snyk ハンズオン ワークショップ  - 全四製品(Snyk Code & Open Source & Container & IaC)の体験』 by 相澤 俊幸 / Toshi Aizawa</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -166,7 +148,7 @@
           </div>
 
           <div class="handson-session">
-            <h5 id="hs4"><strong>『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</strong></h5>
+            <h5 id="hs3"><strong>『Sysdigを使ってKubernetes環境のランタム脅威検知とセキュリティポスチャー管理を実施』 by 竹内 洋</strong></h5>
             <ul>
               <li>
                 <% if @current_user %>
@@ -200,6 +182,24 @@
              * ラボ：Sysdig Agentのインストール<br>
              * ラボ：ランタイム脅威検知<br>
              * ラボ：Kubernetesのセキュリティポスチャー管理<br>
+            </p>
+          </div>
+
+          <div class="handson-session">
+            <h5 id="hs4"><strong>『Docker+LandoでCMS環境を構築してみよう』 by 丸山 ひかる</strong></h5>
+            <ul>
+              <li>
+                <% if @current_user %>
+                  申し込みURL：<a href="https://www.acquia.com/jp/events/webinars/drupal-handson-q42022">https://www.acquia.com/jp/events/webinars/drupal-handson-q42022</a>
+                <% else %>
+                  <strong class="alert-url">申し込みURLを表示するには CNDT2022 サイトにログインしてください。</strong>
+                <% end %>
+              </li>
+              <li>
+                開催日時：2022/11/18 10:00-12:00
+              </li>
+            </ul>
+            <p class="card-text">Landoは、オープンソース製のクロスプラットフォームのローカル開発環境構築ツールです。Landoを使用することで、複雑なDockerファイルの作成をすることなく、特定の開発ユースケース（Drupal、Laravel、Symfonyなど）を満たす環境をDocker上に簡単にセットアップできます。本ハンズオンでは、オープンソースCMS「Drupal」を例に、LandoとDockerを使用してLAMP環境を構築する手順をご紹介します。
             </p>
           </div>
         </div>

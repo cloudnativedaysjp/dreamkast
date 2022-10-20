@@ -31,7 +31,7 @@ module SecuredPublicApi
     @current_user[:info] = {}
     @current_user[:extra] = {}
     @current_user[:extra][:raw_info] = claim
-    if claim['https://cloudnativedays.jp/userinfo']['name'].present?
+    if claim['https://cloudnativedays.jp/userinfo'].present?
       userinfo = claim['https://cloudnativedays.jp/userinfo']
       @current_user[:info][:name] = userinfo['name']
       @current_user[:info][:nickname] = userinfo['nickname']

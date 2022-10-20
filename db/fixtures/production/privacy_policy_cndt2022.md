@@ -26,9 +26,9 @@
 - [Dynatrace合同会社](https://www.dynatrace.com/company/trust-center/privacy/)
 - [HashiCorp Japan株式会社](https://www.hashicorp.com/privacy)
 - [東京エレクトロンデバイス株式会社](https://www.teldevice.co.jp/privacy.html)
-- 日本マイクロソフト株式会社
+- [日本マイクロソフト株式会社](https://privacy.microsoft.com/ja-jp/privacystatement)
 - ヴィーム・ソフトウェア株式会社
-- パロアルトネットワークス株式会社
+- [パロアルトネットワークス株式会社](https://www.paloaltonetworks.jp/legal-notices/privacy-japan)
 - [PingCAP株式会社](https://pingcap.co.jp/privacy-policy/?utm_source=physical_event&utm_medium=sponsored_event&utm_campaign=cloudnative_days_2022)
 - [PagerDuty株式会社](https://www.pagerduty.com/privacy-policy/)
 - [Aiven Japan合同会社](https://aiven.io/privacy)

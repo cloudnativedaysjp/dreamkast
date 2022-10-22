@@ -35,8 +35,7 @@ class Admin::LiveStreamIvsController < ApplicationController
     @ivs = LiveStreamIvs.new
     @ivs.conference_id = @conference.id
     @ivs.track_id = 20
-    @ivs.params = {
-    }
+    @ivs.params = {}
     respond_to do |format|
       if @ivs.save
         format.html { redirect_to(admin_live_stream_ivs_path, notice: 'IVS successfully created.') }

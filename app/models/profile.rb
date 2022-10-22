@@ -133,11 +133,11 @@ class Profile < ApplicationRecord
   end
 
   def export_ics
+    cal = Icalendar::Calendar.new
     filename = Rails.root.join('tmp', "#{calendar_unique_code}.ics").to_s
-    File.open(filename, 'w', encoding: 'sjis') do |file|
-      talks.each do |talk|
-        file.write(talk.export_ics.to_ical)
-      end
+    talks.each { |t| cal.events << t.calendar }
+    File.open(filename, 'w') do |f|
+      f.write(cal.to_ical.to_s)
     end
     filename
   end

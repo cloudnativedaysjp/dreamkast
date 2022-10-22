@@ -158,7 +158,23 @@ class Profile < ApplicationRecord
     orders.find { |order| order.cancel_order.nil? }
   end
 
-  def has_active_order?
-    orders.any? { |order| order.cancel_order.present? }
+  def way_to_attend
+    active_order.tickets.first.title
+  end
+
+  def attend_offline?
+    if active_order.present?
+      active_order.tickets.first.title == 'オフライン参加'
+    else
+      false
+    end
+  end
+
+  def attend_online?
+    if active_order.present?
+      active_order.tickets.first.title == 'オンライン参加'
+    else
+      false
+    end
   end
 end

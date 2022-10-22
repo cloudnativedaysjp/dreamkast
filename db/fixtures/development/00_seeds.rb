@@ -203,8 +203,8 @@ ConferenceDay.seed(
   {id: 17, date: "2022-07-15", start_time: "19:00", end_time: "21:00", conference_id: 6, internal: true}, #Pre event
 
   # CNDT2022
-  {id: 18, date: "2022-11-21", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
-  {id: 19, date: "2022-11-22", start_time: "13:00", end_time: "19:00", conference_id: 7, internal: false},
+  {id: 18, date: "2022-11-21", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
+  {id: 19, date: "2022-11-22", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
   {id: 20, date: "2022-10-31", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 )
 
@@ -270,7 +270,11 @@ FormItem.seed(
   { id: 2, conference_id: 1, name: "IBMからの電話を希望する"},
   { id: 3, conference_id: 1, name: "IBMからの郵便を希望する"},
   { id: 4, conference_id: 1, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
-  { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"}
+  { id: 5, conference_id: 2, name: "日本マイクロソフト株式会社への個人情報提供に同意する"},
+  { id: 6, conference_id: 7, name: "IBMからのメールを希望する"},
+  { id: 7, conference_id: 7, name: "IBMからの電話を希望する"},
+  { id: 8, conference_id: 7, name: "Red Hatからのメールを希望する"},
+  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"}
 )
 
 
@@ -303,12 +307,27 @@ Track.seed(
   { id: 29, number: 1, name: "A", conference_id: 6},
   { id: 30, number: 2, name: "B", conference_id: 6},
   { id: 31, number: 3, name: "C", conference_id: 6},
-  { id: 32, number: 1, name: "A", conference_id: 7},
-  { id: 33, number: 2, name: "B", conference_id: 7},
-  { id: 34, number: 3, name: "C", conference_id: 7},
-  { id: 35, number: 4, name: "D", conference_id: 7},
-  { id: 36, number: 5, name: "E", conference_id: 7},
-  { id: 37, number: 6, name: "F", conference_id: 7},
+
+  { id: 32, number: 1, name: "A", conference_id: 7, room_id: 1},
+  { id: 33, number: 2, name: "B", conference_id: 7, room_id: 2},
+  { id: 34, number: 3, name: "C", conference_id: 7, room_id: 3},
+  { id: 35, number: 4, name: "D", conference_id: 7, room_id: 4},
+  { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
+  { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
+)
+
+
+Room.seed(
+  {id: 1,  conference_id: 7, name: 'Room1'},
+  {id: 2,  conference_id: 7, name: 'レセプションルーム1'},
+  {id: 3,  conference_id: 7, name: 'レセプションルーム2'},
+  {id: 4,  conference_id: 7, name: 'Room6'},
+  {id: 5,  conference_id: 7, name: 'Room2'},
+  {id: 6,  conference_id: 7, name: 'ボードルーム'},
+  {id: 7,  conference_id: 7, name: 'Room3'},
+  {id: 8,  conference_id: 7, name: 'Room4'},
+  {id: 9,  conference_id: 7, name: 'Room5'},
+  {id: 10, conference_id: 7, name: 'Room7'},
 )
 
 
@@ -429,153 +448,13 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
-
-# Import CNDT2020 Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2020/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-# Import CNDO2021 Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndo2021/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-# Import CICD2021 Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cicd2021/proposals.csv'), headers: true)
-Proposal.seed(csv.map{|line|
-  {
-    id: line["id"],
-    talk_id: line["talk_id"],
-    conference_id: line["conference_id"],
-    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
-  }
-})
-
-# Import CNDT2021 Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cndt2021/proposals.csv'), headers: true)
-Proposal.seed(csv.map{|line|
-  {
-    id: line["id"],
-    talk_id: line["talk_id"],
-    conference_id: line["conference_id"],
-    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
-  }
-})
-
-# Import O11y Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/o11y2022/proposals.csv'), headers: true)
-Proposal.seed(csv.map{|line|
-  {
-    id: line["id"],
-    talk_id: line["talk_id"],
-    conference_id: line["conference_id"],
-    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
-  }
-})
-
-# Import CNSec Dummy
-csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/talks.csv'), headers: true)
-Talk.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/speakers.csv'), headers: true)
-Speaker.seed(csv.map(&:to_hash))
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/talks_speakers.csv'), headers: true)
-csv.each do |row|
-  TalksSpeaker.seed(:talk_id, :speaker_id) do |t|
-    h = row.to_hash
-    t.talk_id = h["talk_id"]
-    t.speaker_id = h["speaker_id"]
-  end
-end
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/proposals.csv'), headers: true)
-Proposal.seed(csv.map{|line|
-  {
-    id: line["id"],
-    talk_id: line["talk_id"],
-    conference_id: line["conference_id"],
-    status: ['registered', 'accepted', 'rejected'][line["status"].to_i]
-  }
-})
-
-csv = CSV.read(File.join(Rails.root, 'db/csv/cnsec2022/proposal_items.csv'), headers: true)
-ProposalItem.seed(csv.map{|line|
-  {
-    id: line["id"],
-    conference_id: line["conference_id"],
-    talk_id: line["talk_id"],
-    label: line["label"],
-    params: line["params"]
-  }
-})
+import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
+import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
+import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
+import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
+import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
+import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(
@@ -675,6 +554,6 @@ EOS
 )
 
 Ticket.seed(
-  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 7 },
+  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 454, conference_id: 7 },
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 1500, conference_id: 7 },
 )

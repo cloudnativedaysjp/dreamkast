@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   skip_before_action :need_order?, only: [:create, :new]
 
   def new
-    unless @profile.orders.includes([:cancel_order]).all? { |order| order.cancel_order.present? }
+    unless @profile.instance_of?(Profile) && @profile.orders.includes([:cancel_order]).all? { |order| order.cancel_order.present? }
       redirect_to("/#{event_name}/dashboard")
     end
 
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
     @order.orders_tickets.build(ticket_id: order_params[:ticket_ids])
 
     if @order.save
-      redirect_to("/#{event_name}/dashboard")
+      redirect_to("/#{event_name}/timetables")
     else
       respond_to do |format|
         format.html { render(:new) }

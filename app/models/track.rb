@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  conference_id  :integer
+#  room_id        :bigint           default(0)
 #  video_id       :string(255)
 #
 
@@ -17,6 +18,7 @@ class Track < ApplicationRecord
   has_one :live_stream_ivs
   has_one :live_stream_media_live
   has_one :media_package_channel
+  belongs_to :room, optional: true
 
   def on_air_talk
     on_air_talks = talks.includes(:video).map(&:video).select { |v| v && v.on_air }

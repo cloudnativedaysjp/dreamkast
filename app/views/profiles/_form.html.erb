@@ -122,20 +122,20 @@
       <%= form.check_box :agreement, {required: true, class: "form-check-input"}, true, false %>
       <label class="form-check-label" for="agreement">個人情報の取り扱いについて同意する <span class="required">*</span> <span class="small">ご同意いただけない場合は本セミナーを受講いただくことは出来ません。</span></label>
     </div>
-
-    <% if ["cndt2020", "cndo2021", "cicd2021", "cndt2021", "cnsec2022"].include?(@event) %>
-    <h4 class="mt-3">日本マイクロソフト株式会社/Microsoft Corporation</h4>
-    <p>
-    日本マイクロソフト株式会社への個人情報の提供にご同意いただける場合は、以下にチェックをお願いいたします。
-ご同意いただいた場合、申し込み者情報に記載いただいた個人情報を、日本マイクロソフト株式会社へ提供するものとし、日本マイクロソフト株式会社の製品・サービス、ウェビナー等に関する情報のご案内（電子メールよるお知らせのほか、記事等のコンテンツも含みます。）の目的ために利用いたします。なお、日本マイクロソフト株式会社は、提供された個人情報を、以下のプライバシーステートメントに準拠し、取り扱うものとします。
-    </p>
-    <div class="form-check form-background">
-      <%= form.check_box :agree_ms, {class: "form-check-input"}, true, false %>
-      <label class="form-check-label" for="agree_ms">日本マイクロソフト株式会社への個人情報提供に同意する(<a href="https://privacy.microsoft.com/ja-jp/privacystatement/" target="_blank">プライバシーステートメント</a>)</label>
-    </div>
-    
     <p></p>
+
+    <% if %w[cndt2020 cndo2021 cicd2021 cndt2021 cnsec2022].include?(@event) %>
+      <%= render 'profiles/sponsors/microsoft', form: form %>
     <% end %>
+
+    <% if %w[cndt2022].include?(@event) %>
+      <%= render 'profiles/sponsors/ibm', form: form %>
+    <% end %>
+
+    <% if %w[cndt2022].include?(@event) %>
+      <%= render 'profiles/sponsors/redhat', form: form %>
+    <% end %>
+
   </div>
   <% end %>
 

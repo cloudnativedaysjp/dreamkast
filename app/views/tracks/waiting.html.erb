@@ -17,17 +17,19 @@
 
   <div class="row">
     <section id="main-pane card-group" class="col-12 col-md-8">
-      <div class="mt-3">
-        <div class="card">
-          <div class="card-header">
-            <b>チケット</b>
-          </div>
-          <div class="card-body">
-            <div class="card-text">あなたは <%= @profile.active_order.tickets.first.title %> です</div>
-            <div class="card-text">チケットの変更は <%= link_to 'こちら', new_cancel_order_path(order_id: @profile.active_order.id) %> から</div>
+      <% if @profile.instance_of?(Profile) %>
+        <div class="mt-3">
+          <div class="card">
+            <div class="card-header">
+              <b>チケット</b>
+            </div>
+            <div class="card-body">
+              <div class="card-text">あなたは <%= @profile.active_order.tickets.first.title %> です</div>
+              <div class="card-text">チケットの変更は <%= link_to 'こちら', new_cancel_order_path(order_id: @profile.active_order.id) %> から</div>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
 
       <div class="mt-3">
         <div class="card">

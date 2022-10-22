@@ -12,7 +12,7 @@ class Profiles::TalksController < ApplicationController
 
   def create
     RegisteredTalk.transaction do
-      RegisteredTalk.where(profile_id: @profile.id).delete_all
+      RegisteredTalk.where(profile_id: @profile.id).destroy_all
 
       if params[:talks].present?
         if params[:event] == 'cndt2020'

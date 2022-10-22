@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_28_142316) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -279,6 +279,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_142316) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "track_id"
+    t.string "name", null: false
+    t.text "description"
+    t.integer "number_of_seats", default: 0, null: false
+    t.integer "integer", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_rooms_on_conference_id"
+    t.index ["track_id"], name: "index_rooms_on_track_id"
+  end
+
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
@@ -422,6 +435,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_142316) do
     t.integer "sponsor_id"
     t.integer "start_offset", default: 0, null: false
     t.integer "end_offset", default: 0, null: false
+    t.integer "number_of_seats", default: 0, null: false
+    t.integer "acquired_seats", default: 0, null: false
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
@@ -453,6 +468,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_142316) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_platform"
+    t.bigint "room_id", default: 0
   end
 
   create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -513,6 +529,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_142316) do
   add_foreign_key "orders_tickets", "tickets"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
+  add_foreign_key "rooms", "conferences"
+  add_foreign_key "rooms", "tracks"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"
   add_foreign_key "speaker_announcement_middles", "speakers"
   add_foreign_key "speaker_announcements", "conferences"

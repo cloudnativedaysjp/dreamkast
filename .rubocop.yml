@@ -48,3 +48,6 @@ Style/Next:
 # 空のブロックは許容したい
 Lint/EmptyBlock:
   Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false

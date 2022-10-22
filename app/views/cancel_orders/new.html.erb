@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-lg-center">
     <div class="col-12 col-lg-8 registration-form">
-      <h2>チケットをキャンセルして別の参加方式に変更します。</h2>
+      <h2>別の参加方式に変更</h2>
       <div class="block"></div>
 
       <%= form_with(url: cancel_orders_path, model: @cancel_order, local: true, class: "needs-validation") do |form| %>
@@ -13,8 +13,10 @@
           </div>
         </div>
 
+        <p>参加方式を変更した場合、登録したセッションは自動的に解除されます。再度タイムテーブルからセッション登録を行ってください。</p>
+
         <div class="form-row form-group justify-content-md-center py-20">
-          <%= form.submit "キャンセルする", class: "btn btn-primary form-control" %>
+          <%= form.submit "参加方式を変更", class: "btn btn-primary form-control" %>
         </div>
       <% end %>
     </div>

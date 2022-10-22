@@ -2,10 +2,6 @@ name: GitOps for staging
 
 on:
   push:
-    paths-ignore:
-      - '.github/**'
-      - '!.github/workflows/gitops-stg.yml'
-      - '**.md'
     branches:
     - main
 
@@ -80,5 +76,5 @@ jobs:
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               pull_number: pr.data.number,
-              merge_method: "merge",
+              merge_method: "squash",
             });

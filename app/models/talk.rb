@@ -4,12 +4,14 @@
 #
 #  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
+#  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null
 #  end_time              :time
 #  execution_phases      :json
 #  expected_participants :json
 #  movie_url             :string(255)
+#  number_of_seats       :integer          default(0), not null
 #  show_on_timetable     :boolean
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
@@ -100,7 +102,7 @@ class Talk < ApplicationRecord
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
-    columns = %w[id title abstract speaker session_time difficulty category created_at twitter_id company start_to_end]
+    columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
 
     labels = conference.proposal_item_configs.map(&:label).uniq
     labels.delete('session_time')
@@ -124,9 +126,11 @@ class Talk < ApplicationRecord
                talk.talk_difficulty&.name,
                talk.talk_category&.name,
                talk.created_at,
+               talk.speakers_additional_documents,
                talk.speaker_twitter_ids.join('/ '),
                talk.speaker_company_names.join('/ '),
-               talk.start_to_end]
+               talk.start_to_end,
+               talk.sponsor.present? ? 'Yes' : 'No']
         labels.each do |label|
           v = talk.proposal_item_value(label)
           row << (v.instance_of?(Array) ? v.join(', ') : v)
@@ -205,6 +209,21 @@ class Talk < ApplicationRecord
 
   def speaker_names
     speakers.map(&:name)
+  end
+
+  def speakers_additional_documents
+    if speakers.empty?
+      ''
+    elsif speakers.length == 1
+      speakers.first.additional_documents
+    else
+      speakers.map { |speaker|
+        <<-EOS
+        #{speaker.name}
+        #{speaker.additional_documents}
+        EOS
+      }.join("\n\n")
+    end
   end
 
   def avatar_urls
@@ -379,6 +398,24 @@ class Talk < ApplicationRecord
     event.description = abstract
     event.ip_class = 'PRIVATE'
     event
+  end
+
+  def remaining_seats
+    number_of_seats - acquired_seats
+  end
+
+  def seats_status
+    if sold_out?
+      '× 残席なし'
+    elsif (acquired_seats.to_f / number_of_seats) > 0.8
+      '△ 残席わずか'
+    else
+      '◎ 残席あり'
+    end
+  end
+
+  def sold_out?
+    remaining_seats <= 0
   end
 
   private

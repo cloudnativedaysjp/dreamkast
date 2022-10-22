@@ -1,0 +1,52 @@
+<%= render 'admin/layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <h2>Rooms</h2>
+    <table class="table table-striped talks_table" >
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">座席数</th>
+        <th scope="col">Track</th>
+        <th scope="col">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= form_with(url: admin_rooms_path, local: true, id: "room_list", method: :put) do |f| %>
+        <% @rooms.each do |room| %>
+          <%= fields_for 'rooms[]', room do |fr| %>
+
+            <tr>
+              <td><%= room.id %></td>
+              <td><%= room.name %></td>
+              <td>
+                <% if room.track.present? %>
+                  <%= fr.text_field :number_of_seats %>
+                <% else %>
+                  <%= fr.hidden_field :number_of_seats, value: 0 %>
+                <% end %>
+              </td>
+              <td>
+                <%= room.track.present? ? room.track.name : '' %>
+              </td>
+              <td>
+                <%= fr.text_field :description %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+<div id="transit_nav" class="p-4">
+  <%= submit_tag "保存", form: "room_list",class: "btn btn-danger transit_button" %>
+  <br/><span class="text-white"> ※トラックに紐付く各セッションの座席数も更新されます</span>
+</div>

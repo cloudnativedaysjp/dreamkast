@@ -1,0 +1,11 @@
+changelog:
+  exclude:
+    authors:
+      - "dreamkast-cloudnativedays"
+  categories:
+    - title: ♻ Update dependencies
+      labels:
+        - "dependencies"
+    - title: 💫 Other Changes
+      labels:
+        - "*"

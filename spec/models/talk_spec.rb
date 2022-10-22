@@ -4,12 +4,14 @@
 #
 #  id                    :bigint           not null, primary key
 #  abstract              :text(65535)
+#  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null
 #  end_time              :time
 #  execution_phases      :json
 #  expected_participants :json
 #  movie_url             :string(255)
+#  number_of_seats       :integer          default(0), not null
 #  show_on_timetable     :boolean
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
@@ -94,7 +96,10 @@ describe Talk, type: :model do
     let!(:proposal_item_config_1) { create(:proposal_item_configs_presentation_method, :live, conference: cndt2020) }
     let!(:proposal_item_config_2) { create(:proposal_item_configs_presentation_method, :video, conference: cndt2020) }
     let(:expected) {
-      "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n1,talk1,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",12:00-12:40,,\"\",2020-09-08,A\n"
+      <<~EOS
+        id,title,abstract,speaker,session_time,difficulty,category,created_at,additional_documents,twitter_id,company,start_to_end,sponsor_session,presentation_method,avatar_url,date,track_id
+        1,talk1,あいうえおかきくけこさしすせそ,"",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},"","","",12:00-12:40,No,,"",2020-09-08,A
+      EOS
     }
 
     context 'has full attributes' do
@@ -108,7 +113,10 @@ describe Talk, type: :model do
     context 'on registration term' do
       let!(:talk) { create(:has_no_conference_days) }
       let(:expected) {
-        "id,title,abstract,speaker,session_time,difficulty,category,created_at,twitter_id,company,start_to_end,presentation_method,avatar_url,date,track_id\n100,not accepted talk,あいうえおかきくけこさしすせそ,\"\",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},\"\",\"\",\"\",,\"\",,\n"
+        <<~EOS
+          id,title,abstract,speaker,session_time,difficulty,category,created_at,additional_documents,twitter_id,company,start_to_end,sponsor_session,presentation_method,avatar_url,date,track_id
+          100,not accepted talk,あいうえおかきくけこさしすせそ,"",40,,,#{talk.created_at.strftime('%Y-%m-%d %H:%M:%S +0900')},"","","","",No,,"",,
+        EOS
       }
       it 'export csv without attributes will be decided later' do
         File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|

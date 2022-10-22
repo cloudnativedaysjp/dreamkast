@@ -369,11 +369,15 @@ class Talk < ApplicationRecord
 
   def calendar
     event = Icalendar::Event.new
-    event.dtstart     = Icalendar::Values::DateTime.new(start_time)
-    event.dtend       = Icalendar::Values::DateTime.new(end_time)
-    event.summary     = title
+    event.dtstart = Icalendar::Values::DateTime.new(
+      "#{conference_day.date.strftime('%Y%m%d')}T#{start_time.strftime('%H%M')}00"
+    )
+    event.dtend = Icalendar::Values::DateTime.new(
+      "#{conference_day.date.strftime('%Y%m%d')}T#{end_time.strftime('%H%M')}00"
+    )
+    event.summary = title
     event.description = abstract
-    event.ip_class    = 'PRIVATE'
+    event.ip_class = 'PRIVATE'
     event
   end
 

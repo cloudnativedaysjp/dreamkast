@@ -126,8 +126,8 @@ Rails.application.routes.draw do
     resources :profiles, only: [:new, :edit, :update, :destroy, :create]
     namespace :profiles do
       post 'talks', to: 'talks#create'
-      get 'calendar', to: 'talks#calendar'
     end
+    get 'profiles/calendar', to: 'profiles#calendar'
     get 'profiles/new', to: 'profiles#new'
     post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'

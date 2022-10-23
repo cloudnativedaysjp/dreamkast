@@ -103,3 +103,31 @@ def claim
     "scope": "openid profile email"
   }')]
 end
+
+def alice_claim
+  [JSON.parse('{
+    "https://cloudnativedays.jp/roles": [
+      "CNDT2022-Admin"
+    ],
+    "https://cloudnativedays.jp/userinfo": {
+      "given_name": "Alice",
+      "family_name": "alice",
+      "nickname": "alice",
+      "name": "alice",
+      "picture": "https://alice.example.com",
+      "locale": "en",
+      "email": "alice@example.com",
+      "email_verified": true
+    },
+    "iss": "https://dreamkast.us.auth0.com/",
+    "sub": "google-oauth2|alice",
+    "aud": [
+      "https://event.cloudnativedays.jp/",
+      "https://dreamkast.us.auth0.com/userinfo"
+    ],
+    "iat": 1662643742,
+    "exp": 1663003742,
+    "azp": "0cWWdpGt4CpWjHJ9QIHtPm5GrJLS25lz",
+    "scope": "openid profile email"
+  }')]
+end

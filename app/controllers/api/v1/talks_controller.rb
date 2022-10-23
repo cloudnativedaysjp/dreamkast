@@ -1,6 +1,5 @@
 class Api::V1::TalksController < ApplicationController
   include SecuredPublicApi
-  before_action :authenticate_request!, only: [:update]
 
   skip_before_action :verify_authenticity_token
 

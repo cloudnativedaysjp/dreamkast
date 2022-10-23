@@ -1,6 +1,5 @@
 class Api::V1::ChatMessagesController < ApplicationController
   include SecuredPublicApi
-  before_action :authenticate_request!
   before_action :set_profile
 
   skip_before_action :verify_authenticity_token

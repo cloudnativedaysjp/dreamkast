@@ -28,7 +28,11 @@ class Ticket < ApplicationRecord
   has_many :orders, through: :orders_tickets
 
   def remaining_stock
-    stock - orders.includes([:cancel_order]).select { |order| order.cancel_order.nil? }.size
+    stock - occupied
+  end
+
+  def occupied
+    orders.includes([:cancel_order]).select { |order| order.cancel_order.nil? }.size
   end
 
   def stock_status

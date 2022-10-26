@@ -344,7 +344,8 @@ class Talk < ApplicationRecord
   def start_streaming
     ActiveRecord::Base.transaction do
       other_talks_in_track = conference.tracks.find_by(name: track.name).talks
-                                       .select { |t| t.conference_day.id == conference_day.id && t.id != id }
+                                       .where(conference_day_id: conference_day.id)
+                                       .where.not(id: id)
       other_talks_in_track.each do |other_talk|
         other_talk.video.update!(on_air: false)
       end

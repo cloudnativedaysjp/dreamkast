@@ -99,6 +99,11 @@ class Talk < ApplicationRecord
     where.not(sponsor_id: nil)
   }
 
+  after_create -> {
+    video = Video.new
+    video.talk_id = id
+    video.save
+  }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"

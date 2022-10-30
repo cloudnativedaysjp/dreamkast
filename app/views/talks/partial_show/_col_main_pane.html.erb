@@ -44,11 +44,11 @@
       </div>
 
       <% if display_video?(talk) %>
-        <% if conference.abbr == 'cndt2021' || conference.abbr == 'o11y2022' || conference.abbr == 'cnsec2022'  %>
-          <%= render 'talks/partial_show/talk_video_block_videojs', talk: talk %>
-        <% else %>
+        <% if %w(cndt2020 cndo2021 cicd2021).include?(@conference.abbr) %>
           <%= render 'talks/partial_show/talk_video_block', talk: talk %>
-          <% end %>
+        <% else %>
+          <%= render 'talks/partial_show/talk_video_block_videojs', talk: talk %>
+        <% end %>
       <% end %>
 
       <p><%= simple_format talk.abstract %></p>

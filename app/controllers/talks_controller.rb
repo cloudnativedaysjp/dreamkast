@@ -17,19 +17,28 @@ class TalksController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: event_name)
-    @talks = if @conference.cfp_result_visible
-               @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
+
+    # talks of cndt2020 and cndo2021 don't have proposals
+    if %w(cndt2020 cndo2021).include?(@conference.abbr)
+      @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                           .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
-                          .where(show_on_timetable: true,
-                                 conference_day_id: @conference.conference_days.externals.map(&:id),
-                                 proposals: { status: :accepted }).order('conference_days.date ASC').order('talks.start_time ASC')
-             else
-               @conference.talks
-                          .joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
-                          .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
-                          .where(show_on_timetable: true,
-                                 conference_day_id: @conference.conference_days.externals.map(&:id)).order('conference_days.date ASC').order('talks.start_time ASC')
-             end
+                          .where(show_on_timetable: true)
+                          .order('conference_days.date ASC').order('talks.start_time ASC')
+    else
+      @talks = if @conference.cfp_result_visible
+                 @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
+                            .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
+                            .where(show_on_timetable: true,
+                                   conference_day_id: @conference.conference_days.externals.map(&:id),
+                                   proposals: { status: :accepted }).order('conference_days.date ASC').order('talks.start_time ASC')
+               else
+                 @conference.talks
+                            .joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
+                            .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
+                            .where(show_on_timetable: true,
+                                   conference_day_id: @conference.conference_days.externals.map(&:id)).order('conference_days.date ASC').order('talks.start_time ASC')
+               end
+    end
   end
 
   helper_method :video_archived?, :document_archived?, :display_video?, :display_document?

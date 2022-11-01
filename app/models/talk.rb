@@ -395,7 +395,13 @@ class Talk < ApplicationRecord
       "#{conference_day.date.strftime('%Y%m%d')}T#{end_time.strftime('%H%M')}00"
     )
     event.summary = title
-    event.description = abstract
+    event.description =
+      "
+Track#{track.name}
+https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
+
+#{abstract}
+"
     event.ip_class = 'PRIVATE'
     event
   end

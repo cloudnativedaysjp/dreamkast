@@ -40,7 +40,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.37.0'
+  gem 'rubocop', '~> 1.38.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', '>= 2.0.0'
   gem 'annotate', require: false

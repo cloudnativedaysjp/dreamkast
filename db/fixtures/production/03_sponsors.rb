@@ -1090,7 +1090,7 @@ Sponsor.seed(
     name: 'ヴィーム・ソフトウェア株式会社',
     abbr: 'veeam',
     conference_id: 7,
-    url: ''
+    url: 'https://www.veeam.com/jp'
   },
   {
     id: 158,

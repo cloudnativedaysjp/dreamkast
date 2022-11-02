@@ -1546,6 +1546,8 @@ SponsorType.seed(
   [186, 'Diamond', 'paloalto', 7],
   [187, 'Diamond', 'splunk', 7],
   [188, 'Diamond', 'teldevice', 7],
+  [189, 'Tool', 'hashicorp', 7],
+  [190, 'Tool', 'teldevice', 7],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])

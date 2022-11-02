@@ -1726,7 +1726,7 @@ end
   [154, 'acquia', 'sponsors/cndt2022/acquia.png', 7],
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
   [156, 'microsoft', 'sponsors/cndt2022/microsoft.png', 7],
-  [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
+  [157, 'veeam', 'sponsors/cndt2022/veeam.png', 7],
   [158, 'paloalto', 'sponsors/cndt2022/paloalto.png', 7],
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
   [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],

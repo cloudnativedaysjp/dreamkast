@@ -11,7 +11,7 @@ module Secured
     if logged_in?
       set_current_user
     else
-      redirect_to("/#{params[:event]}")
+      redirect_to('/auth/login?origin=' + request.fullpath)
     end
   end
 

@@ -1,11 +1,15 @@
 version: "3.8"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - RAILS_ENV=development
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed_fu && ./entrypoint.sh"
     environment: &dkenv
-      RAILS_ENV: production
-      NODE_ENV: production
+      RAILS_ENV: development
+      NODE_ENV: development
       SENTRY_DSN: ${SENTRY_DSN}
       S3_REGION: ap-northeast-1
       S3_BUCKET: ${S3_BUCKET}

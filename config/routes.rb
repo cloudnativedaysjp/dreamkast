@@ -138,6 +138,8 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
+    get 'profiles/checkin', to: 'profiles#checkin'
+
 
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'

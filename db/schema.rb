@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_051339) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -239,6 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
     t.integer "number_of_employee_id", default: 12
     t.integer "annual_sales_id", default: 11
     t.string "company_fax"
+    t.boolean "checked", default: false, null: false
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

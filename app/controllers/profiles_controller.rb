@@ -90,6 +90,11 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def checkin
+    @profile.checked = true
+    @profile.save
+  end
+
   helper_method :profile_url
 
   private

@@ -398,6 +398,7 @@ class Talk < ApplicationRecord
     event.description =
       "
 Track#{track.name}
+会場: #{track.room.name}
 https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
 #{abstract}

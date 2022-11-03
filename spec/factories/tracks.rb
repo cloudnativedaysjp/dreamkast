@@ -16,6 +16,7 @@
 FactoryBot.define do
   factory :track, class: Track do
     video_platform { 'vimeo' }
+    room { create(:room) }
   end
 
   factory :cndt2021_track, class: Track do

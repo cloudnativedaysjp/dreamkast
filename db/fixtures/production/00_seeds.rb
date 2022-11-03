@@ -175,7 +175,7 @@ ConferenceDay.seed(
   # CNDT2022
   {id: 18, date: "2022-11-21", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
   {id: 19, date: "2022-11-22", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
-  {id: 20, date: "2022-10-31", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
+  {id: 20, date: "2022-11-01", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 )
 
 Industry.seed(

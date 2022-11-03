@@ -1127,10 +1127,10 @@
     "@uppy/utils" "^5.0.2"
     namespace-emitter "^2.0.1"
 
-"@uppy/core@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-3.0.2.tgz#036f818d4561fb179d11b4ee477ea5af9299e4de"
-  integrity sha512-Y2lP85FfX10XwVaIVDRQNbujcWKGQo7XtHhVUwtWIcdwcbo6NNTABblcsgbXC6YeoasYII1Ij/N/ssDPK8i50Q==
+"@uppy/core@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-3.0.4.tgz#3bdc08e50ab72749e6f9afa60eec6c836e8b3442"
+  integrity sha512-vFofKmmVVsQE9bnOXozAPy94kLQMUdMH/l8m4ncXmxyyGRc2e9VfvY9wiy2EEsoj11O7YVzHOP70FYdRReUpVw==
   dependencies:
     "@transloadit/prettier-bytes" "0.0.9"
     "@uppy/store-default" "^3.0.2"
@@ -1207,10 +1207,10 @@
   dependencies:
     lodash.throttle "^4.1.1"
 
-"@uppy/xhr-upload@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-3.0.2.tgz#d9b6dd8049f6018033f8adaca3fd5b76ad95695d"
-  integrity sha512-JKrigHAly5IFtW/U1K8wC4FhaYeBnlpbWbwd2OPGMTaiPG7uJ9XsCwcVUXTugwpCIimFd2NJFZl8SyoWDiTJNw==
+"@uppy/xhr-upload@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-3.0.4.tgz#219a92c832bee1f089992958d27ec71dbe9d9d7d"
+  integrity sha512-uJ1oxcwEaSLnrexvi6Lp57hV3z3DsovgVmYIVwg+z/EnrRcL32wNRE7FcIr8Mk9e1jdMiFYlk6cQmiP2dZep8A==
   dependencies:
     "@uppy/companion-client" "^3.0.2"
     "@uppy/utils" "^5.0.2"

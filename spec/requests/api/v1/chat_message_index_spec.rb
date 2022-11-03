@@ -20,7 +20,7 @@ describe Api::V1::ChatMessagesController, type: :request do
 
   describe 'GET /api/v1/chat_messages' do
     before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
+      allow(JsonWebToken).to(receive(:verify).and_return(alice_claim))
       create(:talk1, conference: cndt2020)
       create(:message_from_alice, profile: alice)
     end

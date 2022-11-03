@@ -99,7 +99,6 @@ class Talk < ApplicationRecord
     where.not(sponsor_id: nil)
   }
 
-
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}"
     columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
@@ -344,7 +343,8 @@ class Talk < ApplicationRecord
   def start_streaming
     ActiveRecord::Base.transaction do
       other_talks_in_track = conference.tracks.find_by(name: track.name).talks
-                                       .select { |t| t.conference_day.id == conference_day.id && t.id != id }
+                                       .where(conference_day_id: conference_day.id)
+                                       .where.not(id:)
       other_talks_in_track.each do |other_talk|
         other_talk.video.update!(on_air: false)
       end

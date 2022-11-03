@@ -415,9 +415,15 @@ components:
           type: number
         name:
           type: string
+        email:
+          type: string
+        isAttendOffline:
+          type: boolean
       required:
         - id
         - name
+        - email
+        - isAttendOffline
     Event:
       type: object
       additionalProperties: false

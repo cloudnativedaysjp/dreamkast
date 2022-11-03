@@ -1090,7 +1090,7 @@ Sponsor.seed(
     name: 'ヴィーム・ソフトウェア株式会社',
     abbr: 'veeam',
     conference_id: 7,
-    url: ''
+    url: 'https://www.veeam.com/jp'
   },
   {
     id: 158,
@@ -1546,6 +1546,8 @@ SponsorType.seed(
   [186, 'Diamond', 'paloalto', 7],
   [187, 'Diamond', 'splunk', 7],
   [188, 'Diamond', 'teldevice', 7],
+  [189, 'Tool', 'hashicorp', 7],
+  [190, 'Tool', 'teldevice', 7],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1726,7 +1728,7 @@ end
   [154, 'acquia', 'sponsors/cndt2022/acquia.png', 7],
   [155, 'hashicorp', 'sponsors/cndt2022/hashicorp.png', 7],
   [156, 'microsoft', 'sponsors/cndt2022/microsoft.png', 7],
-  [157, 'veeam', 'sponsors/cndt2022/dummy.png', 7],
+  [157, 'veeam', 'sponsors/cndt2022/veeam.png', 7],
   [158, 'paloalto', 'sponsors/cndt2022/paloalto.png', 7],
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
   [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],

@@ -42,7 +42,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.36.0'
+  gem 'rubocop', '~> 1.38.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', '>= 2.0.0'
   gem 'annotate', require: false
@@ -106,7 +106,7 @@ gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
 
-gem "octokit", "~> 5.0"
+gem "octokit", "~> 6.0"
 gem 'psych', '< 5'
 
 gem "aws-sdk-ivs"

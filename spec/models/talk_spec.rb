@@ -128,7 +128,7 @@ describe Talk, type: :model do
 
   describe '#calendar' do
     let!(:cndt2020) { create(:cndt2020) }
-    let!(:talk) { create(:talk1) }
+    let!(:talk) { create(:talk1, :has_room) }
     it 'has full attributes' do
       expect(talk.calendar.summary).to(eq('talk1'))
       expect(talk.calendar.description.value).to(eq("

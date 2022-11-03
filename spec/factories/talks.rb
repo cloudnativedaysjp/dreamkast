@@ -58,6 +58,10 @@ FactoryBot.define do
     trait :video_not_published do
       video_published { false }
     end
+
+    trait :has_room do
+      track { create(:track, :has_room) }
+    end
   end
 
   factory :talk2, class: Talk do

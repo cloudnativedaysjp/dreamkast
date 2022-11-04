@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_051339) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_04_153701) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -198,6 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_051339) do
     t.bigint "profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "checked", default: false, null: false
     t.index ["profile_id"], name: "index_orders_on_profile_id"
   end
 
@@ -239,7 +240,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_051339) do
     t.integer "number_of_employee_id", default: 12
     t.integer "annual_sales_id", default: 11
     t.string "company_fax"
-    t.boolean "checked", default: false, null: false
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -435,6 +435,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_051339) do
     t.integer "sponsor_id"
     t.integer "start_offset", default: 0, null: false
     t.integer "end_offset", default: 0, null: false
+    t.string "qr_unique_code"
     t.integer "number_of_seats", default: 0, null: false
     t.integer "acquired_seats", default: 0, null: false
     t.index ["conference_id"], name: "index_talks_on_conference_id"

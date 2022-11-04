@@ -12,6 +12,7 @@
 #  expected_participants :json
 #  movie_url             :string(255)
 #  number_of_seats       :integer          default(0), not null
+#  qr_unique_code        :string(255)
 #  show_on_timetable     :boolean
 #  start_offset          :integer          default(0), not null
 #  start_time            :time

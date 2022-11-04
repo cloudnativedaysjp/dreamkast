@@ -1,0 +1,216 @@
+class OrdersTicket < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[OrdersTicket, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def order_id: () -> String
+
+    def order_id=: (String) -> String
+
+    def order_id?: () -> bool
+
+    def order_id_changed?: () -> bool
+
+    def order_id_change: () -> [ String?, String? ]
+
+    def order_id_will_change!: () -> void
+
+    def order_id_was: () -> String?
+
+    def order_id_previously_changed?: () -> bool
+
+    def order_id_previous_change: () -> Array[String?]?
+
+    def order_id_previously_was: () -> String?
+
+    def order_id_before_last_save: () -> String?
+
+    def order_id_change_to_be_saved: () -> Array[String?]?
+
+    def order_id_in_database: () -> String?
+
+    def saved_change_to_order_id: () -> Array[String?]?
+
+    def saved_change_to_order_id?: () -> bool
+
+    def will_save_change_to_order_id?: () -> bool
+
+    def restore_order_id!: () -> void
+
+    def clear_order_id_change: () -> void
+
+    def ticket_id: () -> String
+
+    def ticket_id=: (String) -> String
+
+    def ticket_id?: () -> bool
+
+    def ticket_id_changed?: () -> bool
+
+    def ticket_id_change: () -> [ String?, String? ]
+
+    def ticket_id_will_change!: () -> void
+
+    def ticket_id_was: () -> String?
+
+    def ticket_id_previously_changed?: () -> bool
+
+    def ticket_id_previous_change: () -> Array[String?]?
+
+    def ticket_id_previously_was: () -> String?
+
+    def ticket_id_before_last_save: () -> String?
+
+    def ticket_id_change_to_be_saved: () -> Array[String?]?
+
+    def ticket_id_in_database: () -> String?
+
+    def saved_change_to_ticket_id: () -> Array[String?]?
+
+    def saved_change_to_ticket_id?: () -> bool
+
+    def will_save_change_to_ticket_id?: () -> bool
+
+    def restore_ticket_id!: () -> void
+
+    def clear_ticket_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def order: () -> Order
+  def order=: (Order?) -> Order?
+  def reload_order: () -> Order?
+  def build_order: (untyped) -> Order
+  def create_order: (untyped) -> Order
+  def create_order!: (untyped) -> Order
+  def ticket: () -> Ticket
+  def ticket=: (Ticket?) -> Ticket?
+  def reload_ticket: () -> Ticket?
+  def build_ticket: (untyped) -> Ticket
+  def create_ticket: (untyped) -> Ticket
+  def create_ticket!: (untyped) -> Ticket
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[OrdersTicket, String]
+    include Enumerable[OrdersTicket]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[OrdersTicket, String]
+  end
+end

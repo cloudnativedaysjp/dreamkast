@@ -1,0 +1,187 @@
+class Order < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Order, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def profile_id: () -> Integer
+
+    def profile_id=: (Integer) -> Integer
+
+    def profile_id?: () -> bool
+
+    def profile_id_changed?: () -> bool
+
+    def profile_id_change: () -> [ Integer?, Integer? ]
+
+    def profile_id_will_change!: () -> void
+
+    def profile_id_was: () -> Integer?
+
+    def profile_id_previously_changed?: () -> bool
+
+    def profile_id_previous_change: () -> Array[Integer?]?
+
+    def profile_id_previously_was: () -> Integer?
+
+    def profile_id_before_last_save: () -> Integer?
+
+    def profile_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def profile_id_in_database: () -> Integer?
+
+    def saved_change_to_profile_id: () -> Array[Integer?]?
+
+    def saved_change_to_profile_id?: () -> bool
+
+    def will_save_change_to_profile_id?: () -> bool
+
+    def restore_profile_id!: () -> void
+
+    def clear_profile_id_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+  end
+  include GeneratedAttributeMethods
+  def orders_tickets: () -> OrdersTicket::ActiveRecord_Associations_CollectionProxy
+  def orders_tickets=: (OrdersTicket::ActiveRecord_Associations_CollectionProxy | Array[OrdersTicket]) -> (OrdersTicket::ActiveRecord_Associations_CollectionProxy | Array[OrdersTicket])
+  def orders_ticket_ids: () -> Array[Integer]
+  def orders_ticket_ids=: (Array[Integer]) -> Array[Integer]
+  def tickets: () -> Ticket::ActiveRecord_Associations_CollectionProxy
+  def tickets=: (Ticket::ActiveRecord_Associations_CollectionProxy | Array[Ticket]) -> (Ticket::ActiveRecord_Associations_CollectionProxy | Array[Ticket])
+  def ticket_ids: () -> Array[Integer]
+  def ticket_ids=: (Array[Integer]) -> Array[Integer]
+  def cancel_order: () -> CancelOrder?
+  def cancel_order=: (CancelOrder?) -> CancelOrder?
+  def build_cancel_order: (untyped) -> CancelOrder
+  def create_cancel_order: (untyped) -> CancelOrder
+  def create_cancel_order!: (untyped) -> CancelOrder
+  def reload_cancel_order: () -> CancelOrder?
+  def profile: () -> Profile
+  def profile=: (Profile?) -> Profile?
+  def reload_profile: () -> Profile?
+  def build_profile: (untyped) -> Profile
+  def create_profile: (untyped) -> Profile
+  def create_profile!: (untyped) -> Profile
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Order, String]
+    include Enumerable[Order]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Order, String]
+  end
+end

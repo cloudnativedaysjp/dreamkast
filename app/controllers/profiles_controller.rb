@@ -91,8 +91,12 @@ class ProfilesController < ApplicationController
   end
 
   def checkin
-    @profile.checked = true
-    @profile.save
+    if @profile.active_order
+      @profile.active_order.checked = true
+      @profile.active_order.save
+    else
+      redirect_to(dashboard_path)
+    end
   end
 
   helper_method :profile_url

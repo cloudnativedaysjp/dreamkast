@@ -435,7 +435,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_153701) do
     t.integer "sponsor_id"
     t.integer "start_offset", default: 0, null: false
     t.integer "end_offset", default: 0, null: false
-    t.string "qr_unique_code"
     t.integer "number_of_seats", default: 0, null: false
     t.integer "acquired_seats", default: 0, null: false
     t.index ["conference_id"], name: "index_talks_on_conference_id"

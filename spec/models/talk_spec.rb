@@ -125,4 +125,21 @@ describe Talk, type: :model do
       end
     end
   end
+
+  describe '#calendar' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1, :has_room) }
+    it 'has full attributes' do
+      expect(talk.calendar.summary).to(eq('talk1'))
+      expect(talk.calendar.description.value).to(eq("
+TrackA
+会場: ONLINE
+https://event.cloudnativedays.jp/cndt2020/talks/1
+
+あいうえおかきくけこさしすせそ
+"))
+      expect(talk.calendar.dtstart.value).to(eq(DateTime.new(2020, 9, 8, 12)))
+      expect(talk.calendar.dtend.value).to(eq(DateTime.new(2020, 9, 8, 12, 40)))
+    end
+  end
 end

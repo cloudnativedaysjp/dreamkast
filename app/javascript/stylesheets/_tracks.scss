@@ -90,6 +90,16 @@
     padding-left: 10px;
 }
 
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .btn-lg {
+        background-color: $dark-blue;
+        color: white;
+    }
+}
+
 #social a {
     display: flex;
     height: 4em;

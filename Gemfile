@@ -22,6 +22,8 @@ gem 'jbuilder', '~> 2.11'
 # Use Prometheus client
 gem 'prometheus-client', '~> 4.0.0'
 
+gem 'icalendar'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

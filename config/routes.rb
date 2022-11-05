@@ -130,6 +130,7 @@ Rails.application.routes.draw do
     namespace :profiles do
       post 'talks', to: 'talks#create'
     end
+    get 'profiles/calendar', to: 'profiles#calendar'
     get 'profiles/new', to: 'profiles#new'
     post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'

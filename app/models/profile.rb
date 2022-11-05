@@ -3,6 +3,7 @@
 # Table name: profiles
 #
 #  id                            :bigint           not null, primary key
+#  calendar_unique_code          :string(255)
 #  company_address               :string(255)
 #  company_address_level1        :string(255)
 #  company_address_level2        :string(255)
@@ -70,6 +71,10 @@ class Profile < ApplicationRecord
   has_many :chat_messages
   has_many :orders
 
+  before_create do
+    self.calendar_unique_code = SecureRandom.uuid
+  end
+
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
   validates :sub, presence: true, length: { maximum: 250 }
   validates :email, presence: true, email: true
@@ -121,6 +126,20 @@ class Profile < ApplicationRecord
         ]
       end
     end
+  end
+
+  def gen_calendar_unique_code
+    update!(calendar_unique_code: SecureRandom.uuid)
+  end
+
+  def export_ics
+    cal = Icalendar::Calendar.new
+    filename = Rails.root.join('tmp', "#{calendar_unique_code}.ics").to_s
+    talks.each { |t| cal.events << t.calendar }
+    File.open(filename, 'w') do |f|
+      f.write(cal.to_ical.to_s)
+    end
+    filename
   end
 
   def industry_name

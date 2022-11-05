@@ -386,6 +386,27 @@ class Talk < ApplicationRecord
     end_time + end_offset.minutes
   end
 
+  def calendar
+    event = Icalendar::Event.new
+    event.dtstart = Icalendar::Values::DateTime.new(
+      "#{conference_day.date.strftime('%Y%m%d')}T#{start_time.strftime('%H%M')}00"
+    )
+    event.dtend = Icalendar::Values::DateTime.new(
+      "#{conference_day.date.strftime('%Y%m%d')}T#{end_time.strftime('%H%M')}00"
+    )
+    event.summary = title
+    event.description =
+      "
+Track#{track.name}
+会場: #{track.room.name}
+https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
+
+#{abstract}
+"
+    event.ip_class = 'PRIVATE'
+    event
+  end
+
   def remaining_seats
     number_of_seats - acquired_seats
   end

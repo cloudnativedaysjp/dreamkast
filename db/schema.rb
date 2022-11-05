@@ -239,6 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_113936) do
     t.integer "number_of_employee_id", default: 12
     t.integer "annual_sales_id", default: 11
     t.string "company_fax"
+    t.string "calendar_unique_code"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

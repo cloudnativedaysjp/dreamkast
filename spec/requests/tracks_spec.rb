@@ -101,11 +101,11 @@ RSpec.describe(TracksController, type: :request) do
       end
 
       context "get exists event's dashboard" do
-        it 'redirect to top page a success response' do
+        it 'redirect to login page a success response' do
           subject
           expect(response).to_not(be_successful)
           expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('/cndt2020'))
+          expect(response).to(redirect_to('/auth/login?origin=/cndt2020/dashboard'))
         end
       end
 
@@ -152,11 +152,11 @@ RSpec.describe(TracksController, type: :request) do
       end
 
       context "get exists event's dashboard" do
-        it 'redirect to top page a success response' do
+        it 'redirect to login page a success response' do
           get '/cndt2020/tracks'
           expect(response).to_not(be_successful)
           expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('/cndt2020'))
+          expect(response).to(redirect_to('/auth/login?origin=/cndt2020/tracks'))
         end
       end
     end

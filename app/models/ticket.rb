@@ -26,6 +26,7 @@ class Ticket < ApplicationRecord
 
   has_many :orders_tickets
   has_many :orders, through: :orders_tickets
+  has_many :check_ins
 
   def remaining_stock
     stock - occupied

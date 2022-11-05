@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Auth
   get 'auth/auth0/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
+  get 'auth/login' => 'auth0#login'
   get 'logout' => 'logout#logout'
 
 
@@ -137,6 +138,8 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
+    get 'profiles/checkin/:ticket_id', to: 'profiles#checkin'
+
 
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'

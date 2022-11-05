@@ -17,4 +17,7 @@ class Auth0Controller < ApplicationController
     # show a failure page or redirect to an error page
     redirect_to('/')
   end
+
+  def login
+  end
 end

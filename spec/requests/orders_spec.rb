@@ -9,7 +9,7 @@ describe OrdersController, type: :request do
         get '/cndt2020/orders/new'
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020'))
+        expect(response).to(redirect_to('/auth/login?origin=/cndt2020/orders/new'))
       end
     end
 
@@ -51,11 +51,11 @@ describe OrdersController, type: :request do
     let(:ticket_b) { create(:ticket, :b, conference: cndt2020) }
 
     describe 'not logged in' do
-      it 'redirect to event top page' do
+      it 'redirect to login page' do
         post '/cndt2020/orders', params: { order: { ticket_ids: [ticket_a.id] } }
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020'))
+        expect(response).to(redirect_to('/auth/login?origin=/cndt2020/orders'))
       end
     end
 

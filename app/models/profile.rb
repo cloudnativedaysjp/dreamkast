@@ -70,6 +70,7 @@ class Profile < ApplicationRecord
   has_many :form_items, through: :agreements
   has_many :chat_messages
   has_many :orders
+  has_many :check_ins
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid

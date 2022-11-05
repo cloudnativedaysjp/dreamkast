@@ -22,7 +22,6 @@ Rails.application.routes.draw do
       resources :chat_messages, only: [:index, :create, :update]
       resources :booths, only: [:show]
       resources :debug, only: [:index]
-      get 'tracks/:id/viewer_count' => 'tracks#viewer_count'
       namespace 'talks' do
         get ':id/video_registration' => 'video_registration#show'
         put ':id/video_registration' => 'video_registration#update'

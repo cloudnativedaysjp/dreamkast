@@ -100,6 +100,14 @@ describe ProfilesController, type: :request do
           expect(CheckIn.find_by(profile_id: alice.id)).to(be_present)
         end
       end
+
+      context 'user already checked-in' do
+        it 'should redirect to dashboard' do
+          create(:check_in, profile_id: alice.id, ticket_id: ticket_online.id, order_id: order.id)
+          get "/cndt2020/profiles/checkin/#{ticket_online.id}"
+          expect(response).to(redirect_to('/cndt2020/dashboard'))
+        end
+      end
     end
   end
 end

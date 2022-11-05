@@ -16,9 +16,6 @@
 #  index_check_ins_on_ticket_id   (ticket_id)
 #
 FactoryBot.define do
-  factory :check_in do
-    profile_id { 1 }
-    order_id { 1 }
-    ticket_id { 1 }
+  factory :check_in, class: CheckIn do
   end
 end

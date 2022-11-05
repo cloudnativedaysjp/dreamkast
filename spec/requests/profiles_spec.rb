@@ -1,11 +1,8 @@
 require 'rails_helper'
 
 describe ProfilesController, type: :request do
+  let!(:cndt2020) { create(:cndt2020) }
   describe 'GET /registration' do
-    before do
-      create(:cndt2020)
-    end
-
     describe 'not logged in' do
       it 'redirect to event top page' do
         get '/cndt2020/registration'
@@ -78,7 +75,31 @@ describe ProfilesController, type: :request do
   end
 
   describe 'GET /cndt2020/profiles/checkin/:ticket_id' do
+    subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
+    let(:alice) { create(:alice, conference: cndt2020) }
+    let(:ticket_online) { create(:ticket, :online, conference: cndt2020) }
+    let(:ticket_a) { create(:ticket, :online, conference: cndt2020) }
+    let!(:order) { create(:order, profile: alice) }
+
     before do
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
+    end
+
+    context 'GET /profiles/checkin/:id' do
+      context 'when ticket_id is not exist' do
+        it 'should redirect to dashboard' do
+          get '/cndt2020/profiles/checkin/hoge'
+          expect(response).to(redirect_to('/cndt2020/dashboard'))
+        end
+      end
+
+      context 'when ticket_id is valid' do
+        it 'should have checkin' do
+          get "/cndt2020/profiles/checkin/#{ticket_online.id}"
+          expect(response).to(be_successful)
+          expect(CheckIn.find_by(profile_id: alice.id)).to(be_present)
+        end
+      end
     end
   end
 end

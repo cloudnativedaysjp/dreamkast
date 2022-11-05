@@ -2,7 +2,7 @@ openapi: "3.0.2"
 info:
   title: Dreamkast API
   version: "1.0.0"
-  description: "This is a API definition of the Dreamakst. You can find a documentation of this API at http://api-docs.dev.cloudnativedays.jp/."
+  description: "This is a API definition of the Dreamkast. You can find a documentation of this API at http://api-docs.dev.cloudnativedays.jp/."
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"

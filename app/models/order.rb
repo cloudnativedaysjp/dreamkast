@@ -3,7 +3,6 @@
 # Table name: orders
 #
 #  id         :string(255)      not null, primary key
-#  checked    :boolean          default(FALSE), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  profile_id :bigint           not null
@@ -24,4 +23,5 @@ class Order < ApplicationRecord
   has_one :cancel_order
   has_many :orders_tickets
   has_many :tickets, through: :orders_tickets
+  has_many :check_ins
 end

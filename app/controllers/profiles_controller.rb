@@ -91,9 +91,15 @@ class ProfilesController < ApplicationController
   end
 
   def checkin
-    if @profile.active_order
-      @profile.active_order.checked = true
-      @profile.active_order.save
+    ticket = Ticket.find_by(id: params[:ticket_id])
+    if ticket.present? &&
+       @profile.active_order.present? &&
+       CheckIn.where(profile_id: @profile.id, order_id: @profile.active_order.id, ticket_id: ticket.id).empty?
+      c = CheckIn.new
+      c.profile_id = @profile.id
+      c.order_id = @profile.active_order.id
+      c.ticket_id = ticket.id
+      c.save
     else
       redirect_to(dashboard_path)
     end

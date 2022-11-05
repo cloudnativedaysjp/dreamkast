@@ -76,4 +76,9 @@ describe ProfilesController, type: :request do
       end
     end
   end
+
+  describe 'GET /cndt2020/profiles/checkin/:ticket_id' do
+    before do
+    end
+  end
 end

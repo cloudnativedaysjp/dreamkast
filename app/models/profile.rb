@@ -69,6 +69,7 @@ class Profile < ApplicationRecord
   has_many :form_items, through: :agreements
   has_many :chat_messages
   has_many :orders
+  has_many :check_ins
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
   validates :sub, presence: true, length: { maximum: 250 }

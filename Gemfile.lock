@@ -281,6 +281,8 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-protection (2.2.2)
       rack
     rack-proxy (0.7.2)
@@ -521,6 +523,7 @@ DEPENDENCIES
   psych (< 5)
   puma (~> 6.0)
   pundit
+  rack-cors
   rack-timeout
   rails (~> 7.0.4)
   rails_autolink

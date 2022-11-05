@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.11'
 gem 'prometheus-client', '~> 4.0.0'
 
 gem 'icalendar'
+gem 'rack-cors'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

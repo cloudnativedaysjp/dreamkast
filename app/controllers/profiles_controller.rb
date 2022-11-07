@@ -102,7 +102,17 @@ class ProfilesController < ApplicationController
   end
 
   def point
-    url = "/#{params[:event]}/profiles/point"
+    uri = point_api_uri(@profile.id)
+    req = Net::HTTP::Post.new(uri)
+    post_data = {'pointEvetnId' => params[:point_event_id], 'conference' => params[:event] }.to_json
+    req.body = post_data
+    req_options = {
+      use_ssl: uri.scheme == "https" 
+    }
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+      http.request(req)
+    end
   end
 
 

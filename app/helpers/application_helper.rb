@@ -106,7 +106,7 @@ module ApplicationHelper
   def vote_api_url(id)
     File.join(ENV['DREAMKAST_API_ADDR'], @conference.abbr, 'talks', id, 'vote')
   end
-  
+
   def point_api_uri(profile_id)
     URI.parse("https://#{ENV['DREAMKAST_API_ADDR']}/api/v1/profile/#{profile_id}/point")
   end

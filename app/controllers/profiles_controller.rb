@@ -101,6 +101,11 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def point
+    url = "/#{params[:event]}/profiles/point"
+  end
+
+
   def checkin
     ticket = Ticket.find_by(id: params[:ticket_id])
     if ticket.present? &&

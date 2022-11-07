@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12 py-4 contents white_background checkin">
+        <h2 class="text-center">ポイントの付与が完了しました！</h2>
+        <div class="checked text-center center-block">
+            &nbsp;
+        </div>
+        <p>イベントダッシュボードにリダイレクトします</p>
+    </div>
+  </div>
+</div>
+
+<script>
+setTimeout(() => {
+    location.href = "<%= dashboard_path %>";
+}, 3000);
+</script>

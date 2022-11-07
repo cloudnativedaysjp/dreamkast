@@ -139,6 +139,7 @@ Rails.application.routes.draw do
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
     get 'profiles/checkin/:ticket_id', to: 'profiles#checkin'
+    get 'profiles/point/:point_event_id', to: 'profiles#point'
 
 
     delete 'profiles/:id', to: 'profiles#destroy_id'

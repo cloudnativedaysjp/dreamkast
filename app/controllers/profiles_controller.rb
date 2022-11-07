@@ -107,14 +107,13 @@ class ProfilesController < ApplicationController
     post_data = {'pointEvetnId' => params[:point_event_id], 'conference' => params[:event] }.to_json
     req.body = post_data
     req_options = {
-      use_ssl: uri.scheme == "https" 
+      use_ssl: uri.scheme == 'https'
     }
 
-    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+    Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(req)
     end
   end
-
 
   def checkin
     ticket = Ticket.find_by(id: params[:ticket_id])

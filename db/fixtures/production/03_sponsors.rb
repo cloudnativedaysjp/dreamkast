@@ -1113,6 +1113,13 @@ Sponsor.seed(
     conference_id: 7,
     url: 'https://www.hashicorp.co.jp/'
   },
+  {
+    id: 161,
+    name: 'ミロ・ジャパン合同会社',
+    abbr: 'miro',
+    conference_id: 7,
+    url: 'https://miro.com/'
+  },
 )
 
 SponsorType.seed(

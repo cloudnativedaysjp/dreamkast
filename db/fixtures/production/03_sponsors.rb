@@ -1555,6 +1555,7 @@ SponsorType.seed(
   [188, 'Diamond', 'teldevice', 7],
   [189, 'Tool', 'hashicorp', 7],
   [190, 'Tool', 'teldevice', 7],
+  [191, 'Tool', 'miro', 7],
 ].each do |sponsors_sponsor_type|
   id = sponsors_sponsor_type[0]
   sponsor_type = SponsorType.find_by(name: sponsors_sponsor_type[1], conference_id: sponsors_sponsor_type[3])
@@ -1739,6 +1740,7 @@ end
   [158, 'paloalto', 'sponsors/cndt2022/paloalto.png', 7],
   [159, 'splunk', 'sponsors/cndt2022/splunk.png', 7],
   [160, 'teldevice', 'sponsors/cndt2022/teldevice.png', 7],
+  [161, 'miro', 'sponsors/cndt2022/miro.png', 7],
 ].each do |logo|
   if logo[3] == 7 # Validate logo path (CNDT2022 only)
     raise "Error: Unable to find sponsor logo file: #{logo[2]}" unless File.exist?("#{Rails.root}/app/assets/images/#{logo[2]}")

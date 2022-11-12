@@ -11,7 +11,9 @@
 #
 # Indexes
 #
+#  index_check_ins_on_order_id    (order_id)
 #  index_check_ins_on_profile_id  (profile_id)
+#  index_check_ins_on_ticket_id   (ticket_id)
 #
 require 'rails_helper'
 

@@ -93,11 +93,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_12_064311) do
 
   create_table "check_ins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "order_id"
     t.string "ticket_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_check_ins_on_order_id"
     t.index ["profile_id"], name: "index_check_ins_on_profile_id"
+    t.index ["ticket_id"], name: "index_check_ins_on_ticket_id"
   end
 
   create_table "conference_days", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

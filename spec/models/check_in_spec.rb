@@ -5,9 +5,9 @@
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  order_id   :integer
+#  order_id   :string(255)
 #  profile_id :integer
-#  ticket_id  :integer
+#  ticket_id  :string(255)
 #
 # Indexes
 #

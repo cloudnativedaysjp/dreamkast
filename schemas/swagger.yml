@@ -880,6 +880,8 @@ components:
         presentationMethod:
           type: string
           nullable: true
+        slotNum:
+          type: number
       example:
         - id: 1
           trackId: 2
@@ -904,6 +906,7 @@ components:
           actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
           actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: '現地登壇'
+          slotNum: 1
         - id: 2
           trackId: 2
           videoPlatform: "vimeo"
@@ -927,6 +930,7 @@ components:
           actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
           actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: 'オンライン登壇'
+          slotNum: 1
       required:
         - id
         - trackId

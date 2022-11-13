@@ -86,10 +86,27 @@
               <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
             </div>
           <% end %>
-          <div class="actions py-3">
-            <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-            <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.calendar_unique_code), class: "btn btn-lg" %>
+          <div class="py-3 text-center">
+            <div>
+              <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl" } %>
+            </div>
+            <div>
+              <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.calendar_unique_code), class: "" %>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class="talk accordion my-3">
+        <h4 class="">
+          オフライン会場 アクセス
+        </h4>
+        <div>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12971.28918811224!2d139.7937274!3d35.6321071!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeea9641b7480ced0!2z5pyJ5piO44K744Oz44OI44Op44Or44K_44Ov44O8IOODm-ODvOODqybjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e0!3m2!1sja!2sjp!4v1668349214585!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div>
+        〒135-0063<br/>
+        有明セントラルタワー ホール＆カンファレンス 3F<br/>
+        東京都江東区有明3-7-18
         </div>
       </div>
     </section>

@@ -691,11 +691,44 @@ components:
           type: string
         isAttendOffline:
           type: boolean
+        registeredTalks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegisteredTalk'
       required:
         - id
         - name
         - email
         - isAttendOffline
+    RegisteredTalk:
+      type: object
+      properties:
+        talkId:
+          type: number
+        talkTitle:
+          type: string
+        talkSpeakers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              twitterId:
+                type: string
+        talkStartTime:
+          type: string
+          format: date-time
+        talkEndTime:
+          type: string
+          format: date-time
+        trackName:
+          type: string
+        roomName:
+          type: string
+        conferenceDay:
+          type: string
+          format: date
     Event:
       type: object
       additionalProperties: false

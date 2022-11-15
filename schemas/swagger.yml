@@ -388,18 +388,18 @@ paths:
   /api/v1/profile/{profileId}/points:
     get:
       tags:
-        - Dreamkast-function
+        - Point
       parameters:
-      - name: "conference"
-        in: "query"
-        required: true
-        schema:
-          type: "string"
-      - name: "profileId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+        - name: "conference"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
       responses:
         "400":
           description: "400 response"
@@ -449,16 +449,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProfilePoints"
+    options:
+      parameters:
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: {}
   /api/v1/talks/{talkId}/vote:
     post:
       tags:
-        - Dreamkast-function
+        - Vote
       parameters:
-      - name: "talkId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+        - name: "talkId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
       requestBody:
         content:
           application/json:
@@ -514,16 +535,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Empty"
+    options:
+      parameters:
+        - name: "talkId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: {}
   /api/v1/profile/{profileId}/point:
     post:
       tags:
-        - Dreamkast-function
+        - Point
       parameters:
-      - name: "profileId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
       requestBody:
         content:
           application/json:
@@ -595,16 +637,196 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    options:
+      parameters:
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: {}
+  /api/v1/app-data/{profileId}/conference/{conference}:
+    get:
+      tags:
+        - DkUiData
+      parameters:
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "conference"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DkUiData"
+    post:
+      tags:
+        - DkUiData
+      parameters:
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "conference"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DkUiDataMutation"
+        required: true
+      responses:
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    options:
+      parameters:
+        - name: "profileId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "conference"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Allow-Methods:
+              schema:
+                type: "string"
+            Access-Control-Allow-Headers:
+              schema:
+                type: "string"
+          content: {}
   /api/v1/tracks/{trackId}/viewer_count:
     get:
       tags:
-        - Dreamkast-function
+        - ViewerCount
       parameters:
-      - name: "trackId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+        - name: "trackId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
       responses:
         "400":
           description: "400 response"
@@ -655,14 +877,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/ViewerCount"
     options:
-      tags:
-        - Dreamkast-function
       parameters:
-      - name: "trackId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
+        - name: "trackId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
       responses:
         "200":
           description: "200 response"
@@ -1133,7 +1353,7 @@ components:
     Vote:
       title: "voteResponse"
       required:
-      - "eventAbbr"
+        - "eventAbbr"
       type: "object"
       properties:
         eventAbbr:
@@ -1145,11 +1365,56 @@ components:
       properties:
         message:
           type: "string"
+    DkUiData:
+      title: "dkUiData"
+      required:
+        - "stampChallenges"
+        - "watchedTalksOnline"
+      type: "object"
+      properties:
+        watchedTalksOnline:
+          type: "object"
+          properties:
+            watchingTime:
+              type: "object"
+              additionalProperties: true
+            prevTimestamp:
+              type: "number"
+        stampChallenges:
+          type: "array"
+          items:
+            required:
+              - "slotId"
+              - "waiting"
+            type: "object"
+            properties:
+              condition:
+                type: "string"
+              waiting:
+                type: "boolean"
+              slotId:
+                type: "number"
+              timestamp:
+                type: "number"
+      additionalProperties: true
+    DkUiDataMutation:
+      title: "dkUiDataMutation"
+      required:
+        - "action"
+        - "payload"
+      type: "object"
+      properties:
+        payload:
+          type: "object"
+          additionalProperties: true
+        action:
+          type: "string"
+      additionalProperties: false
     ViewerCount:
       title: "viewerCountResponse"
       required:
-      - "trackId"
-      - "viewerCount"
+        - "trackId"
+        - "viewerCount"
       type: "object"
       properties:
         trackId:
@@ -1160,8 +1425,8 @@ components:
     ProfilePoints:
       title: "profilePointsResponse"
       required:
-      - "points"
-      - "total"
+        - "points"
+        - "total"
       type: "object"
       properties:
         total:
@@ -1171,8 +1436,8 @@ components:
           items:
             title: "profilePointResponse"
             required:
-            - "conference"
-            - "pointEventId"
+              - "conference"
+              - "pointEventId"
             type: "object"
             properties:
               conference:
@@ -1188,8 +1453,8 @@ components:
     ProfilePoint:
       title: "profilePointRequest"
       required:
-      - "conference"
-      - "pointEventId"
+        - "conference"
+        - "pointEventId"
       type: "object"
       properties:
         conference:
@@ -1197,4 +1462,3 @@ components:
         pointEventId:
           type: "string"
       additionalProperties: false
-

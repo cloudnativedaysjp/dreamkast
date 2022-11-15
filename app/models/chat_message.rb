@@ -49,4 +49,8 @@ class ChatMessage < ApplicationRecord
       [:conference_id, :room_id, ChatMessage.arel_table[:room_id].count.as('count')]
     ).where(conference_id: Conference.opened.ids).group(:conference_id, :room_id)
   end
+
+  def child_messages
+    ChatMessage.where(parent_id: id)
+  end
 end

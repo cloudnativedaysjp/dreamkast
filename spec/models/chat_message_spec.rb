@@ -62,4 +62,25 @@ RSpec.describe(ChatMessage, type: :model) do
       end
     end
   end
+
+  describe 'get child messages' do
+    let!(:cndt2020) { create(:cndt2020, :opened) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let!(:bob) { create(:bob, :on_cndt2020, conference: cndt2020) }
+    let!(:parent_message) { create(:messages, :alice, :roomid1, profile: alice) }
+    context 'message has child messages' do
+      before do
+        create(:messages, :bob, :roomid1, :qa, profile: bob, parent_id: parent_message.id)
+      end
+
+      it 'should return child messages' do
+        expect(parent_message.child_messages.count).to(eq(1))
+      end
+    end
+    context 'message has no child messages' do
+      it 'should not return child messages' do
+        expect(parent_message.child_messages.count).to(eq(0))
+      end
+    end
+  end
 end

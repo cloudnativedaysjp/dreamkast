@@ -142,4 +142,24 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       expect(talk.calendar.dtend.value).to(eq(DateTime.new(2020, 9, 8, 12, 40)))
     end
   end
+
+  describe 'Chat message' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1, :has_room) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let!(:bob) { create(:bob, :on_cndt2020, conference: cndt2020) }
+    context 'if talk has child messages' do
+      before do
+        create_list(:messages, 2, :alice, :roomid1, profile: alice)
+        create_list(:messages, 2, :alice, :roomid1, :qa, profile: alice)
+        create_list(:messages, 2, :alice, :roomid2, profile: alice)
+      end
+      it 'should return chat messages' do
+        expect(talk.chat_messages.count).to(eq(4))
+      end
+      it 'should return qa messages only' do
+        expect(talk.qa_messages.count).to(eq(2))
+      end
+    end
+  end
 end

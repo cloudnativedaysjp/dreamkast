@@ -534,7 +534,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Empty"
+                $ref: "#/components/schemas/CommonResponse"
     options:
       parameters:
         - name: "talkId"
@@ -604,7 +604,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Empty"
+                $ref: "#/components/schemas/CommonResponse"
         "400":
           description: "400 response"
           headers:
@@ -790,7 +790,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Empty"
+                $ref: "#/components/schemas/CommonResponse"
     options:
       parameters:
         - name: "profileId"
@@ -1347,9 +1347,6 @@ components:
         updatedAt: "2022-05-30T22:02:11.123Z"
 
     # dreamkast-function
-    Empty:
-      title: "Empty Schema"
-      type: "object"
     Vote:
       title: "voteResponse"
       required:
@@ -1410,6 +1407,15 @@ components:
         action:
           type: "string"
       additionalProperties: false
+    CommonResponse:
+      title: "commonResponse"
+      type: "object"
+      properties:
+        message:
+          type: "string"
+        status:
+          type: "string"
+      additionalProperties: true
     ViewerCount:
       title: "viewerCountResponse"
       required:

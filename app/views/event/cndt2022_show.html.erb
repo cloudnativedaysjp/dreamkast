@@ -19,6 +19,13 @@
                 11/21<br/>
                 11/22
               </p>
+              <p class="text-white remaining">
+                <% if @conference.remaining_date > 0 %>
+                開催まであと<span class="remaining-date"><%= @conference.remaining_date %></span>日!
+                <% elsif @conference.remaining_date > -1 && @conference.opened? %>
+                ただいま開催中！
+                <% end %>
+              </p>
               <p class="text-white font-weight-bold">
               ハイブリッド開催！
               </p>

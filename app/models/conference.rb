@@ -69,4 +69,8 @@ class Conference < ApplicationRecord
   scope :unarchived, -> {
     merge(where(status: 0).or(where(status: 1)).or(where(status: 2)))
   }
+
+  def remaining_date
+    (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
+  end
 end

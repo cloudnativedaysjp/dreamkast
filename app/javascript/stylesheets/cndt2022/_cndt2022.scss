@@ -69,6 +69,14 @@
         font-size: 3em;
         font-weight: lighter;
     }
+    .remaining {
+        font-size: 1rem;
+        font-weight: lighter;
+    }
+    .remaining-date {
+        font-size: 3rem;
+        font-weight: lighter;
+    }
     @media (min-width: 576px) {
         h1 {
             font-size: 1.2em;
@@ -78,6 +86,14 @@
         }
         .date {
             font-size: 3em;
+            font-weight: lighter;
+        }
+        .remaining {
+            font-size: 1rem;
+            font-weight: lighter;
+        }
+        .remaining-date {
+            font-size: 3rem;
             font-weight: lighter;
         }
     }
@@ -94,6 +110,14 @@
             font-size: 4em;
             font-weight: lighter;
         }
+        .remaining {
+            font-size: 1.5rem;
+            font-weight: lighter;
+        }
+        .remaining-date {
+            font-size: 4rem;
+            font-weight: lighter;
+        }
     }
     @media (min-width: 992px) {
         h1 {
@@ -106,6 +130,14 @@
         }
         .date {
             font-size: 5em;
+            font-weight: lighter;
+        }
+        .remaining {
+            font-size: 2rem;
+            font-weight: lighter;
+        }
+        .remaining-date {
+            font-size: 5rem;
             font-weight: lighter;
         }
     }

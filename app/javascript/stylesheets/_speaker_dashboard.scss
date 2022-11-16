@@ -71,6 +71,26 @@
             vertical-align: top;
         }
     }
+    .qa ul {
+        margin: 0;
+        padding: 0;
+        li {
+            font-size: medium;
+            list-style-type: none;
+            margin: 0.5rem;
+            padding-left: 4rem;
+            text-indent: -4rem;
+        }
+        ul {
+            padding: 0 1rem;
+            li:before {
+                content: "↳";
+            }
+        }
+        span.time {
+            color: #999;
+        }
+    }
 }
 
 .entry {

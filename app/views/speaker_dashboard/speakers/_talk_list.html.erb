@@ -75,6 +75,28 @@
       <% if talk.video_registration&.url.present? %>
       <a href="<%= talk.video_registration.url %>" class="btn btn-primary">ビデオファイルアップロード</a>
       <% end %>
+
+      <% if @conference.opened? || @conference.closed? || @conference.archived? %>
+      <h5 class="card-title">
+        このセッションへのQA
+      </h5>
+      
+      <div class="card-text qa">
+        <ul>
+          <% talk.qa_messages.each do |q| %>
+            <li><%= q.created_at.strftime('%H:%M:%S') %> <%= q.body %></li>
+            <% child_messages = q.child_messages %>
+            <% if child_messages.length > 0 %>
+            <ul>
+              <% q.child_messages.each do |child| %>
+                <li><%= child.created_at.strftime('%H:%M:%S') %> <%= child.body %></li>
+              <% end %>
+            </ul>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
     </div>
     <% end %>
   </div>

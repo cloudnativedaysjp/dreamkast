@@ -424,6 +424,14 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     remaining_seats <= 0
   end
 
+  def chat_messages
+    ChatMessage.where(room_id: id, room_type: 'talk')
+  end
+
+  def qa_messages
+    ChatMessage.where(room_id: id, room_type: 'talk', message_type: 'qa')
+  end
+
   private
 
   def validate_proposal_item_configs

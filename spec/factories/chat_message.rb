@@ -46,5 +46,9 @@ FactoryBot.define do
     trait :bob do
       profile_id { 3 }
     end
+
+    trait :qa do
+      message_type { 'qa' }
+    end
   end
 end

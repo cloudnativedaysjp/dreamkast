@@ -131,13 +131,21 @@ footer ul li {
     font-size: 0.9rem;
 }
 
-.sub-pane {}
-
-.sub-pane .social {
-    background-color: #FFF;
-    border-radius: 5px;
-    border: solid 1px #CCC;
-    overflow: hidden;
+.sub-pane {
+    .social {
+        background-color: #FFF;
+        border-radius: 5px;
+        border: solid 1px #CCC;
+        overflow: hidden;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            margin: 0;
+            padding: 0;
+        }
+    }
 }
 
 .fb-share-button {

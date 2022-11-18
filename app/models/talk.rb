@@ -406,6 +406,14 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     event
   end
 
+  def number_of_seats
+    # Workaround for CNDT2022
+    if [1601, 1603, 1561, 1547, 1516, 1539, 1596, 1582, 1546, 1523, 1600, 1626].include?(id)
+      return 454
+    end
+    self[:number_of_seats]
+  end
+
   def remaining_seats
     number_of_seats - acquired_seats
   end

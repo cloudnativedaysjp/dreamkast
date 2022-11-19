@@ -12,7 +12,6 @@ class ProfilesController < ApplicationController
     if set_current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
       redirect_to(dashboard_path)
     end
-
     @event = params[:event]
   end
 
@@ -113,7 +112,7 @@ class ProfilesController < ApplicationController
       c.ticket_id = ticket.id
       c.save
     elsif @profile.nil?
-      redirect_to("/#{params[:event]}/registration", notice: 'このアカウントは参加登録が完了していません。参加登録を行った後に、再度チェックインを行って下さい。')
+      redirect_to("/#{params[:event]}/registration")
     else
       redirect_to(dashboard_path)
     end

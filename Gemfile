@@ -118,3 +118,5 @@ gem "aws-sdk-ssm"
 gem 'active_hash'
 
 gem 'newrelic_rpm'
+
+gem "http", "~> 5.1"

@@ -103,7 +103,8 @@ class ProfilesController < ApplicationController
 
   def checkin
     ticket = Ticket.find_by(id: params[:ticket_id])
-    if ticket.present? &&
+    if @profile.present? &&
+       ticket.present? &&
        @profile.active_order.present? &&
        CheckIn.where(profile_id: @profile.id, order_id: @profile.active_order.id, ticket_id: ticket.id).empty?
       c = CheckIn.new
@@ -111,6 +112,8 @@ class ProfilesController < ApplicationController
       c.order_id = @profile.active_order.id
       c.ticket_id = ticket.id
       c.save
+    elsif @profile.nil?
+      redirect_to("/#{params[:event]}/registration", notice: 'このアカウントは参加登録が完了していません。参加登録を行った後に、再度チェックインを行って下さい。')
     else
       redirect_to(dashboard_path)
     end

@@ -111,6 +111,22 @@ class ProfilesController < ApplicationController
       c.order_id = @profile.active_order.id
       c.ticket_id = ticket.id
       c.save
+
+      # TODO: This is a temporary solution. We should replace hardcoded values after CNDT2022.
+      begin
+        if ['dreamkast', 'dreamkast-staging'].include?(ENV['DREAMKAST_NAMESPACE'])
+          checkin_point_event_id = '65a1981a0ca409f0725fd5d4d1f306e296a97a09'
+          bonus_point_event_id = 'fdef8513c07d94321b42f7ba5752a3cdd1bdc82b'
+        else
+          checkin_point_event_id = '94e7f9049b70fb867a80338af735fb1ea4ee64ba'
+          bonus_point_event_id = '7c54c86f238ef90ce9a9b17c272a707fc2a86df2'
+        end
+        api_client = DreamkastApiClient.new(@conference.abbr)
+        api_client.add_point(checkin_point_event_id, @profile.id) # 会場チェックイン
+        api_client.add_point(bonus_point_event_id, @profile.id) if @profile.created_at < Time.parse('2022-11-21') # 事前登録ボーナス
+      rescue => e
+        p(e)
+      end
     elsif @profile.nil?
       redirect_to("/#{params[:event]}/registration")
     else

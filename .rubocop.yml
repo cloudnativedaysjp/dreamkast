@@ -51,3 +51,6 @@ Lint/EmptyBlock:
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
+
+Style/WordArray:
+  Enabled: false

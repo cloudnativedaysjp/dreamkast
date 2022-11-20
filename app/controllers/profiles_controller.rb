@@ -12,7 +12,6 @@ class ProfilesController < ApplicationController
     if set_current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
       redirect_to(dashboard_path)
     end
-
     @event = params[:event]
   end
 
@@ -103,7 +102,8 @@ class ProfilesController < ApplicationController
 
   def checkin
     ticket = Ticket.find_by(id: params[:ticket_id])
-    if ticket.present? &&
+    if @profile.present? &&
+       ticket.present? &&
        @profile.active_order.present? &&
        CheckIn.where(profile_id: @profile.id, order_id: @profile.active_order.id, ticket_id: ticket.id).empty?
       c = CheckIn.new
@@ -127,6 +127,8 @@ class ProfilesController < ApplicationController
       rescue => e
         p(e)
       end
+    elsif @profile.nil?
+      redirect_to("/#{params[:event]}/registration")
     else
       redirect_to(dashboard_path)
     end

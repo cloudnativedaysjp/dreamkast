@@ -74,6 +74,25 @@ describe ProfilesController, type: :request do
     end
   end
 
+  describe 'GET /cndt2020/profiles/checkin/:ticket_id without profile' do
+    subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
+    let(:ticket_online) { create(:ticket, :online, conference: cndt2020) }
+    let(:ticket_a) { create(:ticket, :online, conference: cndt2020) }
+
+    before do
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
+    end
+
+    context 'GET /profiles/checkin/:id' do
+      context 'when ticket_id is valid' do
+        it 'should redirect to registration' do
+          get "/cndt2020/profiles/checkin/#{ticket_online.id}"
+          expect(response).to(redirect_to('/cndt2020/registration'))
+        end
+      end
+    end
+  end
+
   describe 'GET /cndt2020/profiles/checkin/:ticket_id' do
     subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
     let(:alice) { create(:alice, conference: cndt2020) }

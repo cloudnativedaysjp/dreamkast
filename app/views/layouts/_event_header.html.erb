@@ -55,6 +55,9 @@
               <li class="nav-item"><%= link_to "Committee", team_path, class: "nav-link js-scroll-trigger" %></li>
               <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndt2022' %>
+              <% if logged_in? && @profile.present? %>
+                <li class="nav-item"><%= link_to "Whiteboard", 'https://miro.com/app/board/uXjVPWsauOI=/', class: "nav-link js-scroll-trigger", target: :_blank, rel: "noopener noreferrer" %></li>
+              <% end %>
               <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>
           <% end %>

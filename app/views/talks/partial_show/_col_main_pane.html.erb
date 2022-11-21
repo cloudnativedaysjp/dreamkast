@@ -46,8 +46,9 @@
       <% if display_video?(talk) %>
         <% if %w(cndt2020 cndo2021 cicd2021).include?(@conference.abbr) %>
           <%= render 'talks/partial_show/talk_video_block', talk: talk %>
-        <% else %>
+        <% elsif @conference.abbr != 'cndt2022' %>
           <%= render 'talks/partial_show/talk_video_block_videojs', talk: talk %>
+        <% else %>
         <% end %>
       <% end %>
 

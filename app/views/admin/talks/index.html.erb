@@ -23,6 +23,7 @@
         <th scope="col">Track</th>
         <th scope="col">DateTime</th>
         <th scope="col">Time</th>
+        <th scope="col">公開可否</th>
         <th scope="col">Video File</th>
         <th scope="col">Vimeo ID</th>
         <th scope="col">On Air</th>
@@ -47,6 +48,10 @@
             </td>
             <td>
               <%= talk.time %>
+            </td>
+            <td>
+              <%= talk.proposal_item_value(VideoAndSlidePublished::LABEL)
+              %>
             </td>
             <td>
               <% if talk.video&.url.present? %>

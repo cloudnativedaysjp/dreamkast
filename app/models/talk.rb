@@ -373,7 +373,7 @@ class Talk < ApplicationRecord
 
   def recordable?
     all_ok_id = conference.proposal_item_configs.find_by(key: VideoAndSlidePublished::ALL_OK).id
-    proposal_items.find_by(label: VideoAndSlidePublished::LABEL)&.params != all_ok_id
+    proposal_items.find_by(label: VideoAndSlidePublished::LABEL)&.params.to_i != all_ok_id
   end
 
   def presentation_method

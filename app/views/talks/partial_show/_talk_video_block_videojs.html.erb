@@ -1,11 +1,17 @@
 <div class="mb-2">
-  <video
-    id="my-player"
-    class="video-js video-js vjs-16-9 vjs-big-play-centered"
-    data-setup='{"fluid": true}'
-    controls
-    preload="auto"
-  >
-    <source src="<%= talk.video.video_id %>" type="application/x-mpegURL" />
-  </video>
+  <% if talk.video.video_id == '' %>
+    <div class="alert alert-warning" role="alert">
+      本セッションのアーカイブ動画は現在作成中です。
+    </div>
+  <% else %>
+    <video
+      id="my-player"
+      class="video-js video-js vjs-16-9 vjs-big-play-centered"
+      data-setup='{"fluid": true}'
+      controls
+      preload="auto"
+    >
+      <source src="<%= talk.video.video_id %>" type="application/x-mpegURL" />
+    </video>
+  <% end %>
 </div>

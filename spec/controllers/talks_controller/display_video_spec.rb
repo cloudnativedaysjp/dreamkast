@@ -13,8 +13,22 @@ RSpec.describe(TalksController, type: :controller) do
       end
     end
 
-    shared_examples_for :proposal_item_whether_it_can_be_published_is_all_ok do |bool|
-      context 'proposal_item whether_it_can_be_published is all_ok' do
+    shared_examples_for :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived do |bool|
+      context 'proposal_item whether_it_can_be_published is all_ok and talk is unarchived' do
+        before do
+          allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
+          create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:)
+          create(:proposal_item_whether_it_can_be_published, :all_ok, talk: talk1)
+        end
+        let!(:talk1) { create(:talk1, :video_published, conference:) }
+        let!(:video) { create(:video) }
+
+        it_should_behave_like :display_video_method_returns, bool
+      end
+    end
+
+    shared_examples_for :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived do |bool|
+      context 'proposal_item whether_it_can_be_published is all_ok and talk is archived' do
         before do
           allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:)
@@ -128,7 +142,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -142,7 +157,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, true
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -156,7 +172,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, true
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -170,7 +187,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, true
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -190,7 +208,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -204,7 +223,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -218,7 +238,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false
@@ -232,7 +253,8 @@ RSpec.describe(TalksController, type: :controller) do
         it_should_behave_like :video_is_not_present, false
         it_should_behave_like :video_is_not_archived, false
 
-        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok, true
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_unarchived, false
+        it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ok_and_talk_is_archived, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_slide, false
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_only_video, true
         it_should_behave_like :proposal_item_whether_it_can_be_published_is_all_ng, false

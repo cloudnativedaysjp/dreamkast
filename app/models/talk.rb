@@ -371,6 +371,11 @@ class Talk < ApplicationRecord
     %w[オンライン登壇 現地登壇].include?(config.params)
   end
 
+  def recordable?
+    all_ok_id = conference.proposal_item_configs.find_by(key: VideoAndSlidePublished::ALL_OK).id
+    proposal_items.find_by(label: VideoAndSlidePublished::LABEL)&.params != all_ok_id
+  end
+
   def presentation_method
     method = proposal_items.find_by(label: 'presentation_method')
     return nil if method.blank?

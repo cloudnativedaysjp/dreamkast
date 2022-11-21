@@ -368,7 +368,7 @@ class Talk < ApplicationRecord
     return false unless method
 
     config = ProposalItemConfig.find(method.params)
-    config.params == 'オンライン登壇'
+    %w[オンライン登壇 現地登壇].include?(config.params)
   end
 
   def presentation_method

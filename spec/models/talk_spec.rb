@@ -162,4 +162,25 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
     end
   end
+
+  describe '#archived?' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+
+    context 'talk is not finished' do
+      around { |e| travel_to(Time.zone.local(2020, 9, 8, 12, 49)) { e.run } }
+
+      it 'returns false' do
+        expect(talk.archived?).to(be_falsey)
+      end
+    end
+
+    context 'talk is finished' do
+      around { |e| travel_to(Time.zone.local(2020, 9, 8, 13, 50)) { e.run } }
+
+      it 'returns true' do
+        expect(talk.archived?).to(be_truthy)
+      end
+    end
+  end
 end

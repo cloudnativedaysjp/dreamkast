@@ -4,7 +4,7 @@ FROM node:16.18.1-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
-    yarn install --modules-folder .cache/node_modules && \
+    yarn install --network-timeout 100000 --modules-folder .cache/node_modules && \
     cp -ar .cache/node_modules node_modules
 
 FROM ruby:3.1.2 as fetch-lib

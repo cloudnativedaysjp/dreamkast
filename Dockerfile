@@ -3,9 +3,7 @@
 FROM node:16.18.1-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
-RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
-    yarn install --network-timeout 100000 --modules-folder .cache/node_modules && \
-    cp -ar .cache/node_modules node_modules
+RUN yarn install --network-timeout 100000
 
 FROM ruby:3.1.2 as fetch-lib
 WORKDIR /app
@@ -32,7 +30,7 @@ COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
-RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DB_ADAPTER=nulldb bin/rails assets:precompile
+RUN SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DB_ADAPTER=nulldb bin/rails assets:precompile
 
 FROM ruby:3.1.2-slim
 

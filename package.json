@@ -12,7 +12,7 @@
         "@uppy/xhr-upload": "3.0.4",
         "bootstrap": "4.6.2",
         "bootstrap-table": "1.21.1",
-        "cropperjs": "1.5.12",
+        "cropperjs": "1.5.13",
         "jquery": "3.6.1",
         "popper.js": "1.16.1",
         "turbolinks": "5.2.0",

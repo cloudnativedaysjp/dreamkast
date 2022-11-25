@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4
 
-FROM node:16.18.1-slim as node
+FROM node:18.12.1-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN yarn install --network-timeout 100000

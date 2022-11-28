@@ -6,7 +6,7 @@ on:
 
 jobs:
   tagging:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: contains(github.event.pull_request.title, '[dreamkast-releasebot]')
     steps:
       - name: Generate token

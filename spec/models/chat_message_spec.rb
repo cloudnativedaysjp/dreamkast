@@ -3,7 +3,7 @@
 # Table name: chat_messages
 #
 #  id             :bigint           not null, primary key
-#  body           :string(255)
+#  body           :text(65535)
 #  children_count :integer          default(0), not null
 #  depth          :integer          default(0), not null
 #  lft            :integer          not null

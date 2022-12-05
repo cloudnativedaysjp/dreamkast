@@ -44,6 +44,8 @@ class ChatMessage < ApplicationRecord
 
   enum message_type: { chat: 0, qa: 1 }
 
+  validates :body, presence: true, length: { maximum: 512 }
+
   def self.counts
     ChatMessage.all.select(
       [:conference_id, :room_id, ChatMessage.arel_table[:room_id].count.as('count')]

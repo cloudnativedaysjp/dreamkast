@@ -26,7 +26,7 @@ jobs:
     - name: dependencies
       run: |
         sudo apt update
-        sudo apt-get install -y libvips42 libmysqlclient20
+        sudo apt-get install -y libvips42 libmysqlclient21
         sudo ln -s /usr/lib/x86_64-linux-gnu/libffi.so.7.1.0 /usr/lib/x86_64-linux-gnu/libffi.so.6
     - name: Run database
       shell: bash

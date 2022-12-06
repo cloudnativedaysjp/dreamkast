@@ -74,3 +74,4 @@ class Conference < ApplicationRecord
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
   end
 end
+

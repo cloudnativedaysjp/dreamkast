@@ -19,13 +19,12 @@ on:
 
 jobs:
   run-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
     - uses: actions/checkout@v3
     - name: dependencies
       run: |
-        echo 'deb http://security.ubuntu.com/ubuntu xenial-security main' | sudo tee /etc/apt/sources.list.d/xenial-security.list
         sudo apt update
         sudo apt-get install -y libvips42 libmysqlclient20
         sudo ln -s /usr/lib/x86_64-linux-gnu/libffi.so.7.1.0 /usr/lib/x86_64-linux-gnu/libffi.so.6

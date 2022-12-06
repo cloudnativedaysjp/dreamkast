@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_12_064311) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_135248) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_12_064311) do
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
     t.bigint "speaker_id"
-    t.string "body"
+    t.text "body"
     t.integer "parent_id"
     t.integer "lft", null: false
     t.integer "rgt", null: false

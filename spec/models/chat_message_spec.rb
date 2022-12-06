@@ -3,7 +3,7 @@
 # Table name: chat_messages
 #
 #  id             :bigint           not null, primary key
-#  body           :string(255)
+#  body           :text(65535)
 #  children_count :integer          default(0), not null
 #  depth          :integer          default(0), not null
 #  lft            :integer          not null
@@ -37,6 +37,36 @@
 require 'rails_helper'
 
 RSpec.describe(ChatMessage, type: :model) do
+  describe 'validate body' do
+    let!(:cndt2020) { create(:cndt2020, :opened) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let(:chat_message) { build(:message_from_alice, body: 'a' * message_length) }
+
+    context 'when body length is greater than 512' do
+      let(:message_length) { 513 }
+
+      it 'is invalid' do
+        expect(chat_message).to be_invalid
+      end
+    end
+
+    context 'when body length is equal to 512' do
+      let(:message_length) { 512 }
+
+      it 'is valid' do
+        expect(chat_message).to be_valid
+      end
+    end
+
+    context 'when body length is less than 512' do
+      let(:message_length) { 511 }
+
+      it 'is valid' do
+        expect(chat_message).to be_valid
+      end
+    end
+  end
+
   describe 'get message count' do
     context 'with opened conference' do
       before do

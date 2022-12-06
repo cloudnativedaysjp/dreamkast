@@ -46,7 +46,7 @@ RSpec.describe(ChatMessage, type: :model) do
       let(:message_length) { 513 }
 
       it 'is invalid' do
-        expect(chat_message).to be_invalid
+        expect(chat_message).to(be_invalid)
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe(ChatMessage, type: :model) do
       let(:message_length) { 512 }
 
       it 'is valid' do
-        expect(chat_message).to be_valid
+        expect(chat_message).to(be_valid)
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe(ChatMessage, type: :model) do
       let(:message_length) { 511 }
 
       it 'is valid' do
-        expect(chat_message).to be_valid
+        expect(chat_message).to(be_valid)
       end
     end
   end

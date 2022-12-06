@@ -288,7 +288,7 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    psych (4.0.5)
+    psych (5.0.0)
       stringio
     public_suffix (5.0.0)
     puma (6.0.0)
@@ -540,7 +540,7 @@ DEPENDENCIES
   pre-commit
   prometheus-client (~> 4.0.0)
   pry-rails
-  psych (< 5)
+  psych (< 6)
   puma (~> 6.0)
   pundit
   rack-cors

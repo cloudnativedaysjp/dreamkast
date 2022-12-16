@@ -64,6 +64,8 @@ class Profile < ApplicationRecord
 
   belongs_to_active_hash :company_name_prefix, shortcuts: [:name], class_name: '::FormModels::CompanyNamePrefix'
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
+  belongs_to_active_hash :annual_sales, shortcuts: [:name], class_name: '::FormModels::AnnualSales'
+  belongs_to_active_hash :number_of_employee, shortcuts: [:name], class_name: '::FormModels::NumberOfEmployee'
 
   belongs_to :conference
   has_many :registered_talks
@@ -74,6 +76,8 @@ class Profile < ApplicationRecord
   has_many :orders
   has_many :check_ins
   has_one :public_profile, dependent: :destroy
+  has_one :profile_survey, foreign_key: 'sub', primary_key: 'sub', class_name: 'ProfileSurvey'
+  has_many :audience_counts, foreign_key: 'sub', primary_key: 'sub', class_name: 'AudienceCount'
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid

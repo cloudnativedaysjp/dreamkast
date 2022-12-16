@@ -8,6 +8,11 @@
 #  profile_id :integer
 #  talk_id    :integer
 #
+# Indexes
+#
+#  index_registered_talks_on_profile_id  (profile_id)
+#  index_registered_talks_on_talk_id     (talk_id)
+#
 
 require 'rails_helper'
 

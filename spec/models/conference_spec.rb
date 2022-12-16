@@ -4,19 +4,19 @@
 #
 #  id                         :bigint           not null, primary key
 #  abbr                       :string(255)
-#  about                      :text(65535)
+#  about                      :text(16777215)
 #  attendee_entry             :integer          default("attendee_entry_disabled")
 #  brief                      :string(255)
 #  capacity                   :integer
 #  cfp_result_visible         :boolean          default(FALSE)
-#  coc                        :text(65535)
+#  coc                        :text(16777215)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  conference_status          :string(255)      default("registered")
 #  contact_url                :text(65535)
 #  copyright                  :string(255)
 #  name                       :string(255)
-#  privacy_policy             :text(65535)
-#  privacy_policy_for_speaker :text(65535)
+#  privacy_policy             :text(16777215)
+#  privacy_policy_for_speaker :text(16777215)
 #  rehearsal_mode             :boolean          default(FALSE), not null
 #  show_sponsors              :boolean          default(FALSE)
 #  show_timetable             :integer          default("show_timetable_disabled")

@@ -6,7 +6,7 @@
 #  on_air          :boolean
 #  site            :string(255)
 #  url             :string(255)
-#  video_file_data :text(65535)
+#  video_file_data :text(16777215)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  talk_id         :integer

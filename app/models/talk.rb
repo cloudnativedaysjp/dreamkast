@@ -3,7 +3,7 @@
 # Table name: talks
 #
 #  id                    :bigint           not null, primary key
-#  abstract              :text(65535)
+#  abstract              :text(16777215)
 #  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null
@@ -52,6 +52,7 @@ class Talk < ApplicationRecord
 
   has_one :video_registration, dependent: :destroy
   has_one :video, dependent: :destroy
+  has_many :audience_counts
   belongs_to :talk_time, optional: true
   has_many :talks_speakers
   has_many :registered_talks

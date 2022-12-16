@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.integer "profile_id"
   end
 
-  create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
     t.string "email"
@@ -35,45 +35,56 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["conference_id"], name: "index_admin_profiles_on_conference_id"
   end
 
-  create_table "agreements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "agreements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "form_item_id"
     t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", precision: nil
-    t.text "body"
+    t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
-  create_table "booths", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "audience_counts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "sub"
+    t.integer "min"
+    t.string "track_name"
+    t.integer "talk_id"
+    t.string "talk_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["talk_id"], name: "index_audience_counts_on_talk_id"
+  end
+
+  create_table "booths", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
     t.boolean "published"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["conference_id"], name: "index_booths_on_conference_id"
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
-  create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
     t.bigint "speaker_id"
-    t.text "body"
+    t.text "body", collation: "utf8mb4_0900_ai_ci"
     t.integer "parent_id"
     t.integer "lft", null: false
     t.integer "rgt", null: false
     t.integer "depth", default: 0, null: false
     t.integer "children_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "room_type"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "room_type", collation: "utf8mb4_0900_ai_ci"
     t.bigint "room_id"
     t.integer "message_type"
     t.index ["conference_id"], name: "index_chat_messages_on_conference_id"
@@ -111,28 +122,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["profile_id"], name: "index_check_ins_on_profile_id"
   end
 
-  create_table "conference_days", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "conference_days", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.date "date"
     t.time "start_time"
     t.time "end_time"
     t.bigint "conference_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "internal", default: false, null: false
     t.index ["conference_id"], name: "index_conference_days_on_conference_id"
   end
 
-  create_table "conferences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "abbr"
-    t.text "theme"
-    t.text "about"
-    t.text "privacy_policy"
-    t.text "coc"
-    t.string "copyright"
-    t.text "privacy_policy_for_speaker"
+  create_table "conferences", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "abbr", collation: "utf8mb4_0900_ai_ci"
+    t.text "theme", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.text "about", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.text "privacy_policy", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.text "coc", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.string "copyright", collation: "utf8mb4_0900_ai_ci"
+    t.text "privacy_policy_for_speaker", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.integer "speaker_entry", default: 0
     t.integer "attendee_entry", default: 0
     t.integer "show_timetable", default: 0
@@ -149,24 +160,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["abbr"], name: "index_conferences_on_abbr"
   end
 
-  create_table "form_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "form_items", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "conference_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "links", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "links", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.string "title"
-    t.string "url"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "title", collation: "utf8mb4_0900_ai_ci"
+    t.string "url", collation: "utf8mb4_0900_ai_ci"
+    t.text "description", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["conference_id"], name: "index_links_on_conference_id"
   end
 
-  create_table "live_streams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "live_streams", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
     t.string "type"
@@ -203,14 +214,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["streaming_id"], name: "index_media_live_inputs_on_streaming_id"
   end
 
-  create_table "media_package_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_channels", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "channel_id", default: ""
-    t.string "streaming_id"
+    t.string "streaming_id", collation: "utf8mb4_0900_ai_ci"
     t.index ["channel_id"], name: "index_media_package_channels_on_channel_id"
     t.index ["streaming_id"], name: "index_media_package_channels_on_streaming_id"
   end
 
-  create_table "media_package_harvest_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_harvest_jobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "media_package_channel_id", null: false
     t.bigint "talk_id", null: false
@@ -223,10 +234,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["talk_id"], name: "index_media_package_harvest_jobs_on_talk_id"
   end
 
-  create_table "media_package_origin_endpoints", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_origin_endpoints", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "media_package_channel_id", null: false
     t.string "endpoint_id"
-    t.string "streaming_id"
+    t.string "streaming_id", collation: "utf8mb4_0900_ai_ci"
     t.index ["media_package_channel_id"], name: "index_media_package_origin_endpoints_on_media_package_channel_id"
     t.index ["streaming_id"], name: "index_media_package_origin_endpoints_on_streaming_id"
   end
@@ -272,15 +283,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.string "last_name"
     t.string "first_name"
     t.integer "industry_id"
-    t.string "occupation"
-    t.string "company_name"
-    t.string "company_email"
-    t.string "company_address"
-    t.string "company_tel"
-    t.string "department"
-    t.string "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "occupation", collation: "utf8mb4_0900_ai_ci"
+    t.string "company_name", collation: "utf8mb4_0900_ai_ci"
+    t.string "company_email", collation: "utf8mb4_0900_ai_ci"
+    t.string "company_address", collation: "utf8mb4_0900_ai_ci"
+    t.string "company_tel", collation: "utf8mb4_0900_ai_ci"
+    t.string "department", collation: "utf8mb4_0900_ai_ci"
+    t.string "position", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
     t.string "company_address_prefecture_id"
     t.string "first_name_kana"
@@ -300,7 +311,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.string "participation"
   end
 
-  create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "type"
     t.integer "item_number"
@@ -314,7 +325,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
   end
 
-  create_table "proposal_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposal_items", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "talk_id", null: false
     t.string "label"
@@ -323,7 +334,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["talk_id"], name: "index_proposal_items_on_talk_id"
   end
 
-  create_table "proposals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "proposals", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id", null: false
     t.integer "conference_id", null: false
     t.integer "status", default: 0, null: false
@@ -331,7 +342,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "public_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "public_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.string "nickname", default: ""
     t.string "twitter_id", default: ""
@@ -341,14 +352,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["profile_id"], name: "index_public_profiles_on_profile_id"
   end
 
-  create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["profile_id"], name: "index_registered_talks_on_profile_id"
+    t.index ["talk_id"], name: "index_registered_talks_on_talk_id"
   end
 
-  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name", null: false
     t.text "description"
@@ -358,7 +371,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["conference_id"], name: "index_rooms_on_conference_id"
   end
 
-  create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
     t.datetime "created_at", null: false
@@ -367,7 +380,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["speaker_id"], name: "index_speaker_announcement_middles_on_speaker_id"
   end
 
-  create_table "speaker_announcements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "speaker_announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", precision: nil, null: false
     t.text "body", null: false
@@ -378,39 +391,39 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 
-  create_table "speakers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.text "profile"
-    t.string "company"
-    t.string "job_title"
-    t.string "twitter_id"
-    t.string "github_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "avatar_data"
+  create_table "speakers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.text "profile", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.string "company", collation: "utf8mb4_0900_ai_ci"
+    t.string "job_title", collation: "utf8mb4_0900_ai_ci"
+    t.string "twitter_id", collation: "utf8mb4_0900_ai_ci"
+    t.string "github_id", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.text "avatar_data", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.integer "conference_id"
-    t.text "email"
-    t.text "sub"
+    t.text "email", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.text "sub", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.text "additional_documents"
     t.string "name_mother_tongue"
     t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
   end
 
-  create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "sponsor_id", null: false
-    t.string "type"
-    t.string "title"
-    t.string "url"
-    t.text "text"
-    t.string "link"
+    t.string "type", collation: "utf8mb4_0900_ai_ci"
+    t.string "title", collation: "utf8mb4_0900_ai_ci"
+    t.string "url", collation: "utf8mb4_0900_ai_ci"
+    t.text "text", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.string "link", collation: "utf8mb4_0900_ai_ci"
     t.boolean "public"
-    t.string "file_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "file_data", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
-  create_table "sponsor_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "email"
@@ -422,36 +435,36 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["sponsor_id"], name: "index_sponsor_profiles_on_sponsor_id"
   end
 
-  create_table "sponsor_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.string "name"
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
     t.integer "order"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "visible", default: true
     t.index ["conference_id"], name: "index_sponsor_types_on_conference_id"
   end
 
-  create_table "sponsors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "abbr"
-    t.text "description"
-    t.string "url"
+  create_table "sponsors", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.string "abbr", collation: "utf8mb4_0900_ai_ci"
+    t.text "description", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.string "url", collation: "utf8mb4_0900_ai_ci"
     t.bigint "conference_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "speaker_emails"
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
   end
 
-  create_table "sponsors_sponsor_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsors_sponsor_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "sponsor_id"
     t.integer "sponsor_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
     t.datetime "created_at", null: false
@@ -473,27 +486,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["track_id"], name: "index_streamings_on_track_id"
   end
 
-  create_table "talk_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "talk_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
     t.index ["conference_id"], name: "index_talk_categories_on_conference_id"
   end
 
-  create_table "talk_difficulties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "talk_difficulties", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
     t.index ["conference_id"], name: "index_talk_difficulties_on_conference_id"
   end
 
-  create_table "talk_times", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talk_times", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.integer "time_minutes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["conference_id"], name: "index_talk_times_on_conference_id"
   end
 
@@ -511,13 +524,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.time "end_time"
     t.bigint "talk_difficulty_id"
     t.bigint "talk_category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
     t.integer "conference_day_id"
     t.integer "track_id"
     t.boolean "video_published", default: false, null: false
-    t.string "document_url"
+    t.string "document_url", collation: "utf8mb4_0900_ai_ci"
     t.boolean "show_on_timetable"
     t.integer "talk_time_id"
     t.json "expected_participants"
@@ -530,44 +543,46 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
+    t.index ["track_id"], name: "idx_talks"
     t.index ["track_id"], name: "index_talks_on_track_id"
     t.index ["type"], name: "fk_rails_9c6f538eea"
   end
 
-  create_table "talks_speakers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "talks_speakers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
     t.integer "speaker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["speaker_id"], name: "index_talks_speakers_on_speaker_id"
   end
 
-  create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "number"
-    t.string "name"
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
     t.string "video_id"
     t.integer "conference_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "video_platform"
     t.bigint "room_id", default: 0
+    t.index ["conference_id"], name: "idx_tracks"
     t.index ["conference_id"], name: "index_tracks_on_conference_id"
   end
 
-  create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.string "url"
     t.integer "status", default: 0, null: false
     t.json "statistics", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 
-  create_table "videos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "videos", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "talk_id"
-    t.string "site"
-    t.string "url"
+    t.string "site", collation: "utf8mb4_0900_ai_ci"
+    t.string "url", collation: "utf8mb4_0900_ai_ci"
     t.boolean "on_air"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -575,7 +590,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.text "video_file_data"
   end
 
-  create_table "viewer_counts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "viewer_counts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "conference_id"
     t.integer "track_id"
     t.string "stream_type"

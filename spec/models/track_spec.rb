@@ -18,17 +18,8 @@
 #  index_tracks_on_conference_id  (conference_id)
 #
 
-FactoryBot.define do
-  factory :track, class: Track do
-    video_platform { 'vimeo' }
+require 'rails_helper'
 
-    trait :has_room do
-      name { 'A' }
-      room { create(:room) }
-    end
-  end
-
-  factory :cndt2021_track, class: Track do
-    id { 11 }
-  end
+RSpec.describe(Track, type: :model) do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

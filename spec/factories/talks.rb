@@ -3,7 +3,7 @@
 # Table name: talks
 #
 #  id                    :bigint           not null, primary key
-#  abstract              :text(65535)
+#  abstract              :text(16777215)
 #  acquired_seats        :integer          default(0), not null
 #  document_url          :string(255)
 #  end_offset            :integer          default(0), not null

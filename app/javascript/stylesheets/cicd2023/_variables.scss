@@ -1,0 +1,46 @@
+// Variables
+//- Override and add to color system
+$orange: #f4623a;
+$purple: #BD4392;
+$dark-blue: #206A9B;
+$brown: #5c4d42;
+// CNDT2022 Theme color
+$wine: #A62B1F;
+$gold: #A67F37;
+$orange2022: #F23E2E;
+$purple2022: #401D3D;
+$text: $purple2022;
+//- Override primary color
+$primary: $wine;
+$secondary: $gold;
+//- Override font system
+$font-family-sans-serif: "din-2014",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-family-serif: "din-2014",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-family-base: $font-family-serif;
+$headings-font-family: $font-family-sans-serif;
+//- Add custom variables
+$navbar-height: 4.5rem;

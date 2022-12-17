@@ -11,7 +11,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       end
 
       it 'confirm json schema' do
-        get '/api/v1/talks/1/video_registration', headers: headers
+        get('/api/v1/talks/1/video_registration', headers:)
         expect(response).to(have_http_status(:ok))
         assert_response_schema_confirm
       end
@@ -25,7 +25,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       end
 
       it 'confirm json schema' do
-        get '/api/v1/talks/1/video_registration', headers: headers
+        get('/api/v1/talks/1/video_registration', headers:)
         expect(response).to(have_http_status('401'))
       end
     end
@@ -39,7 +39,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
 
     context 'create without JWT token' do
       it 'return 401 when put url' do
-        put '/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers: headers
+        put('/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers:)
         expect(response).to(have_http_status(:unauthorized))
       end
     end
@@ -49,17 +49,17 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
         allow(JsonWebToken).to(receive(:verify).and_return(claim))
       end
       it 'return OK when put url' do
-        put '/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers: headers
+        put('/api/v1/talks/1/video_registration', params: { url: 'https://' }, as: :json, headers:)
         expect(response).to(have_http_status(:ok))
       end
 
       it 'return OK when put status and statistics' do
-        put '/api/v1/talks/1/video_registration', params: { status: 'submitted', statistics: { foo: 'bar' } }, as: :json, headers: headers
+        put('/api/v1/talks/1/video_registration', params: { status: 'submitted', statistics: { foo: 'bar' } }, as: :json, headers:)
         expect(response).to(have_http_status(:ok))
       end
 
       it 'return 400 when put url, status and statistics' do
-        put '/api/v1/talks/1/video_registration', params: { url: 'https://', status: 'submitted', statistics: { foo: 'bar' } }, as: :json, headers: headers
+        put('/api/v1/talks/1/video_registration', params: { url: 'https://', status: 'submitted', statistics: { foo: 'bar' } }, as: :json, headers:)
         expect(response).to(have_http_status(400))
       end
     end

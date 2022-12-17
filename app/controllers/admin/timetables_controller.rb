@@ -8,9 +8,7 @@ class Admin::TimetablesController < ApplicationController
     @talks = @conference.talks.show_on_timetable.order('conference_day_id ASC, start_time ASC, track_id ASC')
     @tracks = Track.where(conference_id: @conference.id)
     @conference_form = ConferenceForm.new(conference: @conference)
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   def update
@@ -56,9 +54,7 @@ class Admin::TimetablesController < ApplicationController
     @tracks = Track.where(conference_id: @conference.id)
     @talk_categories = TalkCategory.where(conference_id: @conference.id)
     @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   private

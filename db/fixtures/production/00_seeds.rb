@@ -144,7 +144,22 @@ EOS
     
     これまでもこれからも、広がり続けるクラウドネイティブにおいて、様々な人・会社・技術・考え方で目指す多様性を受け入れ、共に時間を共有し、新しい地図を広げていきましょう。
 EOS
-  }
+  },
+  {
+    id: 8,
+    name: "CI/CD Conference 2023 by CloudNative Days",
+    abbr: "cicd2023",
+    status: 1,
+    theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cicd2023.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CI/CD Conference 2023 Committee",
+    about: <<'EOS'
+CI/CD Conferenceは、CI/CDに特化したテックカンファレンスです。『技術を知り、試して、取り入れる』のコンセプトのもと、参加者が優れたCI/CDの知見を取り入れ、改善を行っていけるイベントを目指しています。そして、ゆくゆくは参加者が登壇者となり、他の人に知見を共有していける、Continuousなイベントでありたいと思っています。
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -176,6 +191,10 @@ ConferenceDay.seed(
   {id: 18, date: "2022-11-21", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
   {id: 19, date: "2022-11-22", start_time: "9:50", end_time: "18:00", conference_id: 7, internal: false},
   {id: 20, date: "2022-11-01", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
+
+  # CICD2023
+  {id: 21, date: "2023-03-20", start_time: "12:00", end_time: "19:50", conference_id: 8, internal: false},
+  {id: 22, date: "2023-02-07", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
 )
 
 Industry.seed(
@@ -283,6 +302,10 @@ Track.seed(
   { id: 35, number: 4, name: "D", conference_id: 7, room_id: 4},
   { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
   { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
+  
+  { id: 38, number: 1, name: "A", conference_id: 8, room_id: 1},
+  { id: 39, number: 2, name: "B", conference_id: 8, room_id: 2},
+  { id: 40, number: 3, name: "C", conference_id: 8, room_id: 3},
 )
 
 Room.seed(
@@ -296,6 +319,9 @@ Room.seed(
   {id: 8,  conference_id: 7, name: 'Room4'},
   {id: 9,  conference_id: 7, name: 'Room5'},
   {id: 10, conference_id: 7, name: 'Room7'},
+  {id: 11, conference_id: 8, name: '8F'},
+  {id: 12, conference_id: 8, name: '8D'},
+  {id: 13, conference_id: 8, name: '8E'},
 )
 
 TalkCategory.seed(
@@ -399,6 +425,9 @@ TalkDifficulty.seed(
   { id: 54, conference_id: 7, name: "初級者"},
   { id: 55, conference_id: 7, name: "中級者"},
   { id: 56, conference_id: 7, name: "上級者"},
+  { id: 57, conference_id: 8, name: "初級者"},
+  { id: 58, conference_id: 8, name: "中級者"},
+  { id: 59, conference_id: 8, name: "上級者"},
 )
 
 TalkTime.seed(

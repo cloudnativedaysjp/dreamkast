@@ -6,7 +6,7 @@
         background-color: $white
     }
     #access {
-        background-color: $wine;
+        background-color: $primary;
         color: white;
     }
     #entry {
@@ -17,7 +17,7 @@
         z-index: 2;
     }
     .btn-entry {
-        background-color: $wine;
+        background-color: $primary;
         color: white;
         font-size: medium;
         font-weight: lighter;
@@ -32,7 +32,7 @@
             font-size: x-large;
         }
         &:hover {
-            background-color: $orange2022;
+            background-color: $secondary;
         }
     }
     #speakers {
@@ -60,13 +60,13 @@
     background-attachment: fixed;
     background-size: cover;
     h1 {
-        font-size: 1.5em;
+        font-size: 1.0em;
     }
     h2 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
     .date {
-        font-size: 3em;
+        font-size: 2em;
         font-weight: lighter;
     }
     .remaining {
@@ -79,13 +79,13 @@
     }
     @media (min-width: 576px) {
         h1 {
-            font-size: 1.2em;
+            font-size: 1.0em;
         }
         h2 {
-            font-size: 2em;
+            font-size: 1.5em;
         }
         .date {
-            font-size: 3em;
+            font-size: 2em;
             font-weight: lighter;
         }
         .remaining {
@@ -93,17 +93,17 @@
             font-weight: lighter;
         }
         .remaining-date {
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: lighter;
         }
     }
     @media (min-width: 768px) {
         h1 {
-            font-size: 1.5em;
+            font-size: 1.3em;
             text-align: left;
         }
         h2 {
-            font-size: 3em;
+            font-size: 2em;
             text-align: left;
         }
         .date {
@@ -121,15 +121,15 @@
     }
     @media (min-width: 992px) {
         h1 {
-            font-size: 2.5em;
+            font-size: 2em;
             text-align: left;
         }
         h2 {
-            font-size: 5em;
+            font-size: 3.5em;
             text-align: left;
         }
         .date {
-            font-size: 5em;
+            font-size: 4em;
             font-weight: lighter;
         }
         .remaining {
@@ -137,7 +137,7 @@
             font-weight: lighter;
         }
         .remaining-date {
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: lighter;
         }
     }
@@ -151,7 +151,7 @@
 #speaker-landing {
     line-height: 200%;
     a {
-        color: $purple2022;
+        color: $primary;
         text-decoration: underline;
     }
 }
@@ -211,7 +211,7 @@
     overflow-y: scroll;
     height: 300px;
     a {
-        color: $purple2022;
+        color: $primary;
         border-bottom: 2px solid;
     }
 }

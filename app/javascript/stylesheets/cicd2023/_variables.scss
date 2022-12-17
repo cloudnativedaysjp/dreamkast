@@ -4,15 +4,16 @@ $orange: #f4623a;
 $purple: #BD4392;
 $dark-blue: #206A9B;
 $brown: #5c4d42;
-// CNDT2022 Theme color
-$wine: #A62B1F;
-$gold: #A67F37;
-$orange2022: #F23E2E;
-$purple2022: #401D3D;
-$text: $purple2022;
+// CICD2023 Theme color(Temporary)
+$water-surface: #423A57;
+$sparkle-pink: #CD659F;
+$sparkle-violet: #9A7FB8;
+$concrete-gray: #7A8A92;
+$full-moon: #FDE5C5;
+$text: $water-surface;
 //- Override primary color
-$primary: $wine;
-$secondary: $gold;
+$primary: $water-surface;
+$secondary: $sparkle-violet;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,

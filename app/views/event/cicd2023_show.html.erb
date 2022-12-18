@@ -1,0 +1,151 @@
+<div id="<%= @conference.abbr %>" >
+  <div class="contents">
+
+    <section class="page-section" id="masthead">
+      <div class="container">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+          <div class="col-12 col-sm-8 align-self-end">
+              <h2 class="text-white font-weight-bold">
+                <span class="font-weight-light">Continuous</span><br />
+                ともに回す<br />
+                高速アプリケーション<br />
+                開発ライフサイクル<br />
+              </h2>
+              <h1 class="text-white font-weight-bold"><%= @conference.name %></h1>
+          </div>
+          <div class="col-12 col-sm-4 align-self-end">
+              <p class="text-white date">
+                3/20
+              </p>
+              <p class="text-white remaining">
+                <% if @conference.remaining_date > 0 %>
+                開催まであと<span class="remaining-date"><%= @conference.remaining_date %></span>日!
+                <% elsif @conference.remaining_date > -1 && @conference.opened? %>
+                ただいま開催中！
+                <% end %>
+              </p>
+              <p class="text-white font-weight-bold">
+              ハイブリッド開催！
+              </p>
+              <p class="text-white">
+              日比谷国際ビル コンファレンススクエア<br/>
+              +オンライン<br/>
+              参加費無料
+              </p>
+              <p class="text-white">
+              #CICD2023
+              </p>
+              <% if @conference.closed? || @conference.archived? %>
+                <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
+              <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="entry">
+      <div class="container">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+          <div class="col-12 align-self-center">
+            <% if @conference.closed? || @conference.archived?%>
+              <%= render 'event/partial/buttons', conference: @conference %>
+            <% else %>
+              <%= render 'event/partial/speaker_entry_button', conference: @conference %>
+              <%= render 'event/partial/attendee_entry_button', conference: @conference %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speakers -->
+    <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
+    <section class="page-section" id="speakers">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12 text-center">
+            <h2 class="text-black mt-0">Speakers</h2>
+            <hr class="divider  my-4" />
+            <ul class="">
+              <% @talks.each do |talk| %>
+                <% talk.speakers.each do |speaker| %>
+                  <li>
+                    <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
+                    <%= speaker&.name %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <% end %>
+
+    <!-- About-->
+    <section class="page-section" id="about">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="text-black mt-0">About</h2>
+            <hr class="divider  my-4" />
+            <% @conference.about.split("\n").each do |line| %>
+              <p class="text-black-75 mb-4 text-center"><%= line %></p>
+            <% end %>
+          </div>
+          <div class="col-lg-12 text-center mt-4">
+            <h2 class="text-black mt-0">オンラインでもオフラインでも楽しめる企画</h2>
+            <hr class="divider my-4" />
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <%= image_tag 'cndt2022/exhibition.jpg', style: 'width: 100%'%>
+              </div>
+              <div class="col-12 col-sm-6 align-self-top text-left">
+                <p>参加者が様々な形で交流できるような企画を用意しています！</p>
+                <ul>
+                  <li>オフライン・オンライン両方が参加可能な広げる企画</li>
+                  <li>オフラインの会場感がオンラインに広がる企画</li>
+                  <li>相互交流が広がる企画</li>
+                </ul> 
+                <p>※企画の詳細については後日公開予定です</p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Access -->
+    <section class="page-section" id="access">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="text-black mt-0">Access</h2>
+            <hr class="divider light my-4" />
+          </div>
+          <div class="col-12 col-sm-6">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12965.083045452864!2d139.7544269!3d35.6703345!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x21e5463a7e2f1353!2z44CQ6LK444GX5Lya6K2w5a6k44CR5pel5q-U6LC35Zu96Zqb44OT44Or44Kz44Oz44OV44Kh44Os44Oz44K544K544Kv44Ko44Ki!5e0!3m2!1sja!2sjp!4v1671257027678!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-12 col-sm-6 align-self-top">
+              <p class="text-white">
+                〒100-0011<br/>
+                日比谷国際ビル コンファレンススクエア<br/>
+                東京都千代田区内幸町２丁目２−３ 日比谷国際ビルヂング ８階
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
+    <% end %>
+
+    <section class="page-section bg-secondary" id="information">
+      <%= render 'event/partial/information', conference: @conference %>
+    </section>
+  </div>
+</div>

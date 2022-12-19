@@ -27,6 +27,9 @@ class TalksController < ApplicationController
                @talks.where(show_on_timetable: true,
                             conference_day_id: @conference.conference_days.externals.map(&:id),
                             proposals: { status: :accepted })
+             # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
+             elsif @conference.registered?
+               @talks.where(show_on_timetable: true)
              else
                @talks.where(show_on_timetable: true,
                             conference_day_id: @conference.conference_days.externals.map(&:id))

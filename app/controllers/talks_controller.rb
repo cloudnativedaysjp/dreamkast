@@ -21,15 +21,13 @@ class TalksController < ApplicationController
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
     # talks of cndt2020 and cndo2021 don't have proposals
-    @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr)
+    # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
+    @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr) || @conference.registered?
                @talks.where(show_on_timetable: true)
              elsif @conference.cfp_result_visible
                @talks.where(show_on_timetable: true,
                             conference_day_id: @conference.conference_days.externals.map(&:id),
                             proposals: { status: :accepted })
-             # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
-             elsif @conference.registered?
-               @talks.where(show_on_timetable: true)
              else
                @talks.where(show_on_timetable: true,
                             conference_day_id: @conference.conference_days.externals.map(&:id))

@@ -38,6 +38,7 @@ FactoryBot.define do
     privacy_policy { 'This is Privacy Policy' }
     privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 0 }
+    conference_status { Conference::StATUS_REGISTERED }
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
@@ -52,20 +53,24 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
     trait :registered do
       status { 0 }
+      conference_status { Conference::STATUS_REGISTERED }
     end
 
     trait :opened do
       status { 1 }
+      conference_status { Conference::STATUS_OPENED }
       speaker_entry { 0 } # Generally, speaker_entry should be disabled while conference is opened
     end
 
     trait :closed do
       status { 2 }
+      conference_status { Conference::STATUS_CLOSED }
       speaker_entry { 0 }
     end
 
     trait :archived do
       status { 3 }
+      conference_status { Conference::STATUS_ARCHIVED }
       speaker_entry { 0 }
     end
 
@@ -108,6 +113,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     privacy_policy { 'This is Privacy Policy' }
     privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 2 }
+    conference_status { Conference::SATUS_CLOSED }
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
@@ -140,6 +146,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     name { 'One Day Conference' }
     abbr { 'oneday' }
     status { 2 }
+    conference_status { Conference::STATUS_CLOSED }
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
@@ -154,6 +161,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     name { 'Two Day Conference' }
     abbr { 'twoday' }
     status { 2 }
+    conference_status { Conference::STATUS_CLOSED }
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }
@@ -174,6 +182,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     privacy_policy { 'This is Privacy Policy' }
     privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
     status { 2 }
+    conference_status { Conference::STATUS_CLOSED }
     speaker_entry { 1 }
     attendee_entry { 1 }
     show_timetable { 1 }

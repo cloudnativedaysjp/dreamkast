@@ -3,7 +3,6 @@ services:
   dev:
     build:
       context: .
-      target: dev
       dockerfile: Dockerfile.dev
       args:
         - RAILS_ENV=development

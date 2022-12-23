@@ -3,12 +3,13 @@ services:
   dev:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: dev
+      dockerfile: Dockerfile.dev
       args:
         - RAILS_ENV=development
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "sleep 1"
+    entrypoint: /bin/sh -c "sleep infinity"
     tty: true
     stdin_open: true
     tmpfs:
@@ -23,7 +24,7 @@ services:
         - RAILS_ENV=development
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "./bin/webpack-dev-server"
+    entrypoint: /bin/sh -c "yarn install --check-files && bundle exec rake webpacker:compile && ./bin/webpack-dev-server"
     tty: true
     stdin_open: true
     tmpfs:

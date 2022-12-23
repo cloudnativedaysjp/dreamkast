@@ -8,7 +8,8 @@ services:
         - RAILS_ENV=development
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh && ./bin/webpack-dev-server"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600"
+    command: /bin/sh -c "bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh"
     environment: &dkenv
       RAILS_ENV: development
       NODE_ENV: development

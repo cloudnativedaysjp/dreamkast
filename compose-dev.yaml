@@ -6,7 +6,9 @@ services:
       dockerfile: Dockerfile
       args:
         - RAILS_ENV=development
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed_fu && ./entrypoint.sh"
+    volumes:
+      - .:/app
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh && ./bin/webpack-dev-server"
     environment: &dkenv
       RAILS_ENV: development
       NODE_ENV: development

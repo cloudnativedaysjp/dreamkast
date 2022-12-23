@@ -1,0 +1,106 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - RAILS_ENV=development
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed_fu && ./entrypoint.sh"
+    environment: &dkenv
+      RAILS_ENV: development
+      NODE_ENV: development
+      SENTRY_DSN: ${SENTRY_DSN}
+      S3_REGION: ap-northeast-1
+      S3_BUCKET: ${S3_BUCKET}
+      AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
+      AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      DREAMKAST_API_ADDR: "https://api.dev.cloudnativedays.jp"
+      AWS_REGION: ap-northeast-1
+      MYSQL_HOST: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dreamkast
+      REDIS_URL: redis://redis:6379
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
+      REVIEW_APP: "true"
+      DREAMKAST_NAMESPACE: "localhost"
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /app/tmp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - localstack
+  fifo-worker:
+    build: .
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
+    environment:
+      <<: *dkenv
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /app/tmp
+    depends_on:
+      db:
+          condition: service_started
+      localstack:
+          condition: service_healthy
+  db:
+    image: mysql/mysql-server:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dreamkast
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    cap_add:
+      - SYS_NICE
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci --default-authentication-plugin=mysql_native_password
+    volumes:
+    - mysql-data:/var/lib/mysql
+    - ./db/docker-entrypoint-initdb.d/1_allow-host-ip.sql:/docker-entrypoint-initdb.d/1_allow-host-ip.sql
+    ports:
+    - "3306:3306"
+  redis:
+    image: "redis:6"
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+  nginx:
+    image: nginx
+    volumes:
+    - ./config/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+    - 8080:80
+  ui:
+    image: 607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/dreamkast-ui:main
+    ports:
+    - 3001:3001
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=ap-northeast-1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
+      - ./localstack:/tmp/localstack
+    ports:
+      - 4566:4566
+    healthcheck:
+      test: awslocal sqs list-queues --output=text | grep default
+      interval: 10s
+      timeout: 60s
+      retries: 10
+      start_period: 1s
+volumes:
+  mysql-data:
+  redis-data:

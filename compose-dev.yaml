@@ -1,5 +1,37 @@
 version: "3.8"
 services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - RAILS_ENV=development
+    volumes:
+      - .:/app
+    entrypoint: /bin/sh -c "sleep 1"
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /app/tmp
+    depends_on:
+      - app
+  webpack-dev-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - RAILS_ENV=development
+    volumes:
+      - .:/app
+    entrypoint: /bin/sh -c "./bin/webpack-dev-server"
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /app/tmp
+    ports:
+      - "3035:3035"
+    depends_on:
+      - app
   app:
     build:
       context: .
@@ -8,7 +40,7 @@ services:
         - RAILS_ENV=development
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh && ./bin/webpack-dev-server"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh"
     environment: &dkenv
       RAILS_ENV: development
       NODE_ENV: development

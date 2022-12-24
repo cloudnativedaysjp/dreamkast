@@ -8,7 +8,7 @@ services:
         - RAILS_ENV=development
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --check-files && bundle exec rake webpacker:compile && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh"
+    entrypoint: /bin/sh -c "bundle install && docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --check-files && bundle exec rake webpacker:compile && bundle exec rails db:migrate && bundle exec rails db:seed && (./entrypoint.sh & ./bin/webpack-dev-server)"
     environment: &dkenv
       RAILS_ENV: development
       NODE_ENV: development
@@ -40,40 +40,25 @@ services:
     depends_on:
       - db
       - localstack
-  dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-      args:
-        - RAILS_ENV=development
-    volumes:
-      - .:/app
-    entrypoint: /bin/sh -c "sleep infinity"
-    tty: true
-    stdin_open: true
-    tmpfs:
-      - /app/tmp
-    environment:
-      <<: *dkenv
-  webpack-dev-server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - RAILS_ENV=development
-    volumes:
-      - .:/app
-    entrypoint: /bin/sh -c "yarn install --check-files && bundle exec rake webpacker:compile && ./bin/webpack-dev-server"
-    tty: true
-    stdin_open: true
-    environment:
-      <<: *dkenv
-    tmpfs:
-      - /app/tmp
-    ports:
-      - "3035:3035"
-    depends_on:
-      - app
+  # webpack-dev-server:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - RAILS_ENV=development
+  #   volumes:
+  #     - .:/app
+  #   entrypoint: /bin/sh -c "bundle install && yarn install --check-files && bundle exec rake webpacker:compile && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh & ./bin/webpack-dev-server"
+  #   environment:
+  #     <<: *dkenv
+  #   tty: true
+  #   stdin_open: true
+  #   tmpfs:
+  #     - /app/tmp
+  #   ports:
+  #     - "3035:3035"
+  #   depends_on:
+  #     - app
   fifo-worker:
     build: .
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"

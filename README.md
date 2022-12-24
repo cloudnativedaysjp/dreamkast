@@ -21,11 +21,12 @@ See [Docs](docs/README.md)
 
 1. Retrieve ECR credential
 ```
+# Login AWS with SSO to retrieve ECR credential. If you are not assigned to GAFA account or you don't know how to use AWS SSO, please ask Dreamkast team.
 aws configure sso
 aws ecr get-login-password --region ap-northeast-1 --profile dreamkast-core-XXXXX | docker login --username AWS --password-stdin https://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com
 ```
 
-2. Create .env
+2. Create `.env`. This is an example.
 ```
 tee .env <<EOF
 AUTH0_CLIENT_ID=
@@ -47,6 +48,8 @@ RAILS_MASTER_KEY=
 SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/default
 EOF
 ```
+
+You need to ask Dreamkast team to get full-filled file.
 
 3. docker compose up
 

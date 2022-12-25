@@ -18,12 +18,7 @@ class Admin::TracksController < ApplicationController
       format.html
       format.js { render(:index) }
       format.turbo_stream
-      format.csv do
-        head(:no_content)
-        filename = Talk.export_csv(@conference, @talks, @track_name, @date)
-        stat = File.stat("./#{filename}.csv")
-        send_file("./#{filename}.csv", filename: "#{filename}.csv", length: stat.size)
-      end
+      format.csv { export_talks(@conference, @talks, @track_name, @date) }
     end
   end
 
@@ -50,4 +45,14 @@ class Admin::TracksController < ApplicationController
     )
     redirect_to(admin_tracks_path, flash: { success: 'Offset updated' })
   end
+
+  private
+
+  def export_talks(conference, talks, track_name, date)
+    head(:no_content)
+    filename = Talk.export_csv(conference, talks, track_name, date)
+    stat = File.stat("./#{filename}.csv")
+    send_file("./#{filename}.csv", filename: "#{filename}.csv", length: stat.size)
+  end
+
 end

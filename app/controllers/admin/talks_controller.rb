@@ -25,11 +25,17 @@ class Admin::TalksController < ApplicationController
 
   def start_on_air
     talk = Talk.find(params[:talk][:id])
-    talk.start_streaming
 
-    flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
     respond_to do |format|
-      format.js { render(json: { message: 'OK' }, status: 200) }
+      on_air_talks_of_other_days = talk.track.talks.accepted.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
+      if on_air_talks_of_other_days.size.positive?
+        flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
+        format.js { render(json: { error: "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air." }, status: 200) }
+      else
+        talk.start_streaming
+        flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+        format.js { render(json: { message: 'OK' }, status: 200) }
+      end
     end
   end
 

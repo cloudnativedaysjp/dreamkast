@@ -65,4 +65,47 @@ describe Admin::SpeakersController, type: :request do
       end
     end
   end
+
+
+  describe 'POST :event/admin/talks#start_on_air' do
+    let(:roles) { ['CNDT2020-Admin'] }
+    let!(:talk1) { create(:talk1, track_id: 1, conference_day_id: 1) }
+    let!(:talk2) { create(:talk2, track_id: 1, conference_day_id: 2) }
+    let!(:video1) { create(:video, talk: talk1) }
+    let!(:video2) { create(:video, talk: talk2) }
+
+    before do
+      ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+        if arg[1] == :userinfo
+          session[:userinfo]
+        else
+          arg[0].send(:original, arg[1])
+        end
+      end)
+    end
+
+    describe 'If on air talk does not exists on track 1' do
+      let!(:video1) { create(:video, talk: talk1) }
+      let!(:video2) { create(:video, talk: talk2) }
+
+      it 'success to change to start on air' do
+        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk1.id }, format: 'js' }
+        expect(response).to(be_successful)
+        expect(Video.find(talk1.video.id).on_air).to(be_truthy)
+      end
+    end
+
+    describe 'If on air talk does not exists on track 1'  do
+      let!(:video1) { create(:video, talk: talk1, on_air: true) }
+      let!(:video2) { create(:video, talk: talk2, on_air: false) }
+
+      it 'can not to change to start on air' do
+        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'js' }.to_json, headers: { "Content-Type": 'application/json' }
+        expect(response).to(be_successful)
+        expect(Video.find(talk2.video.id).on_air).to(be_falsey)
+        expect(response.body).to(include("Talk id=#{talk1.id} are already on_air."))
+      end
+    end
+  end
 end

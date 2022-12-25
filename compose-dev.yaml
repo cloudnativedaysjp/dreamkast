@@ -40,28 +40,6 @@ services:
     depends_on:
       - db
       - localstack
-<<<<<<< HEAD
-  # webpack-dev-server:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - RAILS_ENV=development
-  #   volumes:
-  #     - .:/app
-  #   entrypoint: /bin/sh -c "bundle install && yarn install --check-files && bundle exec rake webpacker:compile && bundle exec rails db:migrate && bundle exec rails db:seed && ./entrypoint.sh & ./bin/webpack-dev-server"
-  #   environment:
-  #     <<: *dkenv
-  #   tty: true
-  #   stdin_open: true
-  #   tmpfs:
-  #     - /app/tmp
-  #   ports:
-  #     - "3035:3035"
-  #   depends_on:
-  #     - app
-=======
->>>>>>> 2199f4a1318c544ff462751df75e2e740ac9f2ff
   fifo-worker:
     build: .
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
@@ -113,17 +91,10 @@ services:
     environment:
       - SERVICES=sqs
       - DEFAULT_REGION=ap-northeast-1
-<<<<<<< HEAD
-      - DATA_DIR=/tmp/localstack/data
-    volumes:
-      - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
-      - ./localstack:/tmp/localstack
-=======
       - DATA_DIR=/var/lib/localstack/data
     volumes:
       - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
       - ./localstack:/var/lib/localstack
->>>>>>> 2199f4a1318c544ff462751df75e2e740ac9f2ff
     ports:
       - 4566:4566
     healthcheck:

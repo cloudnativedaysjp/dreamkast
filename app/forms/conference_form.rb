@@ -117,7 +117,7 @@ class ConferenceForm
 
   def default_attributes
     {
-      status: conference.status,
+      status: conference.conference_status,
       cfp_result_visible: conference.cfp_result_visible,
       speaker_entry: conference.speaker_entry,
       attendee_entry: conference.attendee_entry,

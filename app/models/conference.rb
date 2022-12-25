@@ -34,12 +34,11 @@ class Conference < ApplicationRecord
   STATUS_CLOSED = 'closed'.freeze
   STATUS_ARCHIVED = 'archived'.freeze
 
-  enum status: { registered: 0, opened: 1, closed: 2, archived: 3 }
   enum conference_status: {
-    tmp_registered: STATUS_REGISTERED,
-    tmp_opened: STATUS_OPENED,
-    tmp_closed: STATUS_CLOSED,
-    tmp_archived: STATUS_ARCHIVED
+    registered: STATUS_REGISTERED,
+    opened: STATUS_OPENED,
+    closed: STATUS_CLOSED,
+    archived: STATUS_ARCHIVED
   }
   enum speaker_entry: { speaker_entry_disabled: 0, speaker_entry_enabled: 1 }
   enum attendee_entry: { attendee_entry_disabled: 0, attendee_entry_enabled: 1 }

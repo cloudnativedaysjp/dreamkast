@@ -32,3 +32,6 @@ import './cropbox.js'
 import './timetable.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
+
+import "@hotwired/turbo-rails"
+import "controllers"

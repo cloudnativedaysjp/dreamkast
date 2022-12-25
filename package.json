@@ -2,6 +2,7 @@
     "name": "cndtattend",
     "private": true,
     "dependencies": {
+        "@hotwired/turbo-rails": "^7.2.4",
         "@rails/actioncable": "7.0.4",
         "@rails/activestorage": "7.0.4",
         "@rails/ujs": "7.0.4",
@@ -15,6 +16,7 @@
         "cropperjs": "1.5.13",
         "jquery": "3.6.3",
         "popper.js": "1.16.1",
+        "stimulus": "^3.2.1",
         "turbolinks": "5.2.0",
         "video.js": "7.14.3"
     },

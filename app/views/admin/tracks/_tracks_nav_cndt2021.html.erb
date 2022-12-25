@@ -14,22 +14,7 @@
   </div>
 </nav>
 
-<table class="table table-striped talks_table" >
-  <thead>
-  <tr>
-    <th scope="col">ID</th>
-    <th scope="col" style="width: 200px;">Time</th>
-    <th scope="col">Speakers<br/>Title</th>
-    <th scope="col">On Air</th>
-    <th scope="col">Recording</th>
-    <th scope="col">Recording Status</th>
-  </tr>
-  </thead>
-
-  <tbody id="talks_table_tbody">
-  <%= render 'admin/tracks/partial/talks_table', conference_day: conference_day, talks: @talks, track: @track %>
-  </tbody>
-</table>
+<%= render partial: 'admin/tracks/partial/talks_table', locals: {conference_day: conference_day, talks: @talks, track: @track}%>
 
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Vimeo ID は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)

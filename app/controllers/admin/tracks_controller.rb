@@ -17,6 +17,7 @@ class Admin::TracksController < ApplicationController
     respond_to do |format|
       format.html
       format.js { render(:index) }
+      format.turbo_stream
       format.csv do
         head(:no_content)
         filename = Talk.export_csv(@conference, @talks, @track_name, @date)

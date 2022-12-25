@@ -1,0 +1,8 @@
+<%= turbo_stream.prepend "messages", partial: 'admin/tracks/partial/messages' %>
+<%= turbo_stream.update "talks",
+                        partial: 'admin/tracks/partial/talks_table',
+                        locals: {
+                          conference_day: @conference_day,
+                          talks: @talks,
+                          track: @track
+                        } %>

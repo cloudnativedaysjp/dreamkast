@@ -29,12 +29,18 @@ class Admin::TalksController < ApplicationController
     respond_to do |format|
       on_air_talks_of_other_days = talk.track.talks.accepted.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
       if on_air_talks_of_other_days.size.positive?
-        flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-        format.js { render(json: { error: "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air." }, status: 200) }
+        format.turbo_stream { flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air." }
       else
         talk.start_streaming
-        flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-        format.js { render(json: { message: 'OK' }, status: 200) }
+        @conference_day = talk.conference_day
+        @track = talk.track
+        @talks = talk.track
+                     .talks
+                     .where(conference_day_id: talk.conference_day.id, track_id: talk.track.id)
+                     .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
+        format.turbo_stream {
+          flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+        }
       end
     end
   end
@@ -42,10 +48,17 @@ class Admin::TalksController < ApplicationController
   def stop_on_air
     talk = Talk.find(params[:talk][:id])
     talk.stop_streaming
+    @conference_day = talk.conference_day
+    @track = talk.track
+    @talks = talk.track
+                 .talks
+                 .where(conference_day_id: talk.conference_day.id, track_id: talk.track.id)
+                 .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
 
-    flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
     respond_to do |format|
-      format.js { render(json: { message: 'OK' }, status: 200) }
+      format.turbo_stream {
+        flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+      }
     end
   end
 

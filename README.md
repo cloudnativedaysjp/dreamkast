@@ -36,7 +36,7 @@ SENTRY_DSN=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_REGION=ap-northeast-1
-DREAMKAST_API_ADDR="http://localhost:3000"
+DREAMKAST_API_ADDR="http://localhost:8080"
 S3_BUCKET=dreamkast-test-bucket
 S3_REGION=
 MYSQL_HOST=db
@@ -59,7 +59,7 @@ docker compose -f compose-dev.yaml up -d
 
 Wait until the dreamkast app to start (almost 3 minutes)
 
-After that, access to `http://localhost:3000` in your browser.
+After that, access to `http://localhost:8080` in your browser.
 
 ### Using local environment
 

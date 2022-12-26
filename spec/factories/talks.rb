@@ -65,7 +65,7 @@ FactoryBot.define do
 
     trait :accepted do
       after(:build) do |talk|
-        create(:proposal, talk: talk, status: 1, conference_id: talk.conference_id)
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
       end
     end
   end
@@ -90,7 +90,7 @@ FactoryBot.define do
 
     trait :accepted do
       after(:build) do |talk|
-        create(:proposal, talk: talk, status: 1, conference_id: talk.conference_id)
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
       end
     end
   end

@@ -54,5 +54,4 @@ class Admin::TracksController < ApplicationController
     stat = File.stat("./#{filename}.csv")
     send_file("./#{filename}.csv", filename: "#{filename}.csv", length: stat.size)
   end
-
 end

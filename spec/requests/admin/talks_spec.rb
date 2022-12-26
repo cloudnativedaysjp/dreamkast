@@ -69,8 +69,8 @@ describe Admin::SpeakersController, type: :request do
 
   describe 'POST :event/admin/talks#start_on_air' do
     let(:roles) { ['CNDT2020-Admin'] }
-    let!(:talk1) { create(:talk1, track_id: 1, conference_day_id: 1) }
-    let!(:talk2) { create(:talk2, track_id: 1, conference_day_id: 2) }
+    let!(:talk1) { create(:talk1, :accepted, track_id: 1, conference_day_id: 1) }
+    let!(:talk2) { create(:talk2, :accepted, track_id: 1, conference_day_id: 2) }
     let!(:video1) { create(:video, talk: talk1) }
     let!(:video2) { create(:video, talk: talk2) }
 

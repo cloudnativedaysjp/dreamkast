@@ -112,7 +112,7 @@ describe TimetableController, type: :request do
       end
 
       context 'when conference status is archived' do
-        before { Conference.find_by(abbr: 'cndo2021').update!(status: 3) }
+        before { Conference.find_by(abbr: 'cndo2021').update!(conference_status: Conference::STATUS_ARCHIVED) }
         it 'access to /cndo2021/timetables' do
           get '/cndo2021/timetables'
           expect(response).to(be_successful)

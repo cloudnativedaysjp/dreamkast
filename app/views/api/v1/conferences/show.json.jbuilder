@@ -1,7 +1,7 @@
 json.id(@conference.id)
 json.name(@conference.name)
 json.abbr(@conference.abbr)
-json.status(@conference.status)
+json.status(@conference.conference_status)
 json.theme(@conference.theme)
 json.about(@conference.about)
 json.privacy_policy(@conference.privacy_policy)

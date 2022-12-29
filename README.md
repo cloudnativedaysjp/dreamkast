@@ -15,29 +15,53 @@ See [Docs](docs/README.md)
 - Docker Compose
 - Auth0 application keys
 
-## How to create auth0 applications keys
+## How to setup dev environment
 
-See [Auth0 document](https://auth0.com/docs/quickstart/webapp/rails/01-login)
+### Using docker compose(quickest)
 
-After create configuration, create `.env` file in the top-level directory.
-
+1. Retrieve ECR credential
 ```
-AUTH0_CLIENT_ID=FVYbe7dsf1fowelsdlkdsfLwofArfNUznaeku
-AUTH0_CLIENT_SECRET=jBeB2Jd4sdfsdfdgetwarzOXYsdEyasdfq3wer3r9wglkj129UoF_XJuD
-AUTH0_DOMAIN=yourdomain.auth0.com
-```
-
-Docker compose read `.env` file automatically.
-
-If you are running a rails server without Docker compose, you need to set environment variables like this.
-
-```
-export AUTH0_CLIENT_ID=FVYbe7dsf1fowelsdlkdsfLwofArfNUznaeku
-export AUTH0_CLIENT_SECRET=jBeB2Jd4sdfsdfdgetwarzOXYsdEyasdfq3wer3r9wglkj129UoF_XJuD
-export AUTH0_DOMAIN=yourdomain.auth0.com
+# Login AWS with SSO to retrieve ECR credential. If you are not assigned to GAFA account or you don't know how to use AWS SSO, please ask Dreamkast team.
+aws configure sso
+aws ecr get-login-password --region ap-northeast-1 --profile dreamkast-core-XXXXX | docker login --username AWS --password-stdin https://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com
 ```
 
-## How to setup environment
+2. Create `.env`. This is an example.
+```
+tee .env <<EOF
+AUTH0_CLIENT_ID=
+AUTH0_CLIENT_SECRET=
+AUTH0_DOMAIN=
+SENTRY_DSN=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=ap-northeast-1
+DREAMKAST_API_ADDR="http://localhost:8080"
+S3_BUCKET=dreamkast-test-bucket
+S3_REGION=
+MYSQL_HOST=db
+MYSQL_USER=root
+MYSQL_PASSWORD=root
+MYSQL_DATABASE=dreamkast
+REDIS_URL=redis://redis:6379
+RAILS_MASTER_KEY=
+SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/default
+EOF
+```
+
+You need to ask Dreamkast team to get full-filled file.
+
+3. docker compose up
+
+```
+docker compose -f compose-dev.yaml up -d
+```
+
+Wait until the dreamkast app to start (almost 3 minutes)
+
+After that, access to `http://localhost:8080` in your browser.
+
+### Using local environment
 
 This repository works with
 
@@ -102,12 +126,17 @@ Run the application
 $ ./entrypoint.sh
 ```
 
-## For local development
-
 Run Webpack dev server in case you want to edit JavaScript.
 
 ```
 $ ./bin/webpack-dev-server
+```
+
+## DB migration and to add seed data
+
+```
+$ bundle exec rails db:migrate
+$ bundle exec rails db:seed
 ```
 
 ## Ruby Type
@@ -128,19 +157,6 @@ If you want to generate RBS for your application code, you can use `rbs prototyp
 
 ```
 $ rbs prototype rb ./app/models/access_log.rb > sig/app/models/access_log.rbs
-```
-
-## DB migration and to add seed data
-
-```
-$ bundle exec rails db:migrate
-$ bundle exec rails db:seed
-```
-
-## Mock SQS for local chat development
-
-```
-aws --endpoint-url http://localhost:9324 sqs create-queue --queue-name chat
 ```
 
 ## How to use REST API for VideoRegistration
@@ -210,4 +226,3 @@ curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/t
 git config pre-commit.ruby "bundle exec ruby"
 git config pre-commit.checks "[rubocop]"
 ```
-

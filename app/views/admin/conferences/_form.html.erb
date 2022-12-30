@@ -5,8 +5,8 @@
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <% @conference_form.conference.class.conference_statuses.keys.each do |key| %>
-        <%= form.radio_button :status, key %>
-        <%= form.label :status, key %><br>
+        <%= form.radio_button :conference_status, key %>
+        <%= form.label :conference_status, key %><br>
       <% end %>
     </div>
   </div>

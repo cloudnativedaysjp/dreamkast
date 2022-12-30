@@ -1,7 +1,0 @@
-class SponsorAttachmentPdf < SponsorAttachment
-  MAX_POSTS_COUNT: ::Integer
-
-  private
-
-  def posts_count_must_be_within_limit: () -> untyped
-end

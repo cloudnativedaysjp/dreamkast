@@ -1,2 +1,0 @@
-class ProposalItem < ApplicationRecord
-end

@@ -1,3 +1,0 @@
-class SponsorProfile < ApplicationRecord
-  include ActionView::Helpers::UrlHelper
-end

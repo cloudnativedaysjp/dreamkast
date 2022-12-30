@@ -1,2 +1,0 @@
-class SponsorAttachment < ApplicationRecord
-end

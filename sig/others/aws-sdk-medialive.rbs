@@ -1,0 +1,14 @@
+module Aws
+  module MediaLive
+    class Client
+    end
+  end
+
+  module Types
+    class Input
+    end
+
+    class Channel
+    end
+  end
+end

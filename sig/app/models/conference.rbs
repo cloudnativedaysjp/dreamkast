@@ -1,2 +1,8 @@
 class Conference < ApplicationRecord
+  STATUS_REGISTERED: String
+  STATUS_OPENED: String
+  STATUS_CLOSED: String
+  STATUS_ARCHIVED: String
+
+  def remaining_date: -> Integer
 end

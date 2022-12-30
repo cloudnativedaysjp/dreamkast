@@ -1,2 +1,0 @@
-class Industry < ApplicationRecord
-end

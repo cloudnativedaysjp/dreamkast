@@ -1,2 +1,0 @@
-class AccessLog < ApplicationRecord
-end

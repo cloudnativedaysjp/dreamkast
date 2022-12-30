@@ -1,2 +1,0 @@
-class Agreement < ApplicationRecord
-end

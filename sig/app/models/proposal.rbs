@@ -1,3 +1,0 @@
-class Proposal < ApplicationRecord
-  def speakers: () -> untyped
-end

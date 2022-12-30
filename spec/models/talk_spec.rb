@@ -41,8 +41,8 @@ describe Talk, type: :model do
     before do
       create(:cndt2020)
     end
-    let!(:talk1) { create(:talk1) }
-    let!(:talk2) { create(:talk2, :conference_day_id_1) }
+    let!(:talk1) { create(:talk1, :accepted) }
+    let!(:talk2) { create(:talk2, :accepted, :conference_day_id_1) }
     let!(:video1) { create(:video, :off_air) }
     let!(:video2) { create(:video, :on_air, :talk2) }
     context 'start streaming talk1' do

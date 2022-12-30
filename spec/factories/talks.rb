@@ -62,6 +62,12 @@ FactoryBot.define do
     trait :has_room do
       track { create(:track, :has_room) }
     end
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
+    end
   end
 
   factory :talk2, class: Talk do
@@ -80,6 +86,12 @@ FactoryBot.define do
 
     trait :conference_day_id_1 do
       conference_day_id { 1 }
+    end
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
     end
   end
 

@@ -90,7 +90,7 @@ describe Admin::SpeakersController, type: :request do
       let!(:video2) { create(:video, talk: talk2) }
 
       it 'success to change to start on air' do
-        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk1.id }, format: 'js' }
+        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk1.id }, format: 'turbo_stream' }
         expect(response).to(be_successful)
         expect(Video.find(talk1.video.id).on_air).to(be_truthy)
       end
@@ -101,7 +101,7 @@ describe Admin::SpeakersController, type: :request do
       let!(:video2) { create(:video, talk: talk2, on_air: false) }
 
       it 'can not to change to start on air' do
-        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'js' }.to_json, headers: { "Content-Type": 'application/json' }
+        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'turbo_stream' }.to_json, headers: { "Content-Type": 'application/json' }
         expect(response).to(be_successful)
         expect(Video.find(talk2.video.id).on_air).to(be_falsey)
         expect(response.body).to(include("Talk id=#{talk1.id} are already on_air."))

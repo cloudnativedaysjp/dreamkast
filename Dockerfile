@@ -7,13 +7,13 @@ RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
     yarn install --modules-folder .cache/node_modules && \
     cp -ar .cache/node_modules node_modules
 
-FROM ruby:3.1.3 as fetch-lib
+FROM ruby:3.2.0 as fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
 RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
 RUN bundle install
 
-FROM ruby:3.1.3 as asset-compile
+FROM ruby:3.2.0 as asset-compile
 ENV YARN_VERSION 1.22.19
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
@@ -34,7 +34,7 @@ ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DB_ADAPTER=nulldb bin/rails assets:precompile
 
-FROM ruby:3.1.3-slim
+FROM ruby:3.2.0-slim
 
 ENV YARN_VERSION 1.22.19
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn

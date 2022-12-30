@@ -7,7 +7,7 @@
 
   <h2><%= @conference.name %></h2>
   <ul>
-    <li>カンファレンスステータス: <%= @conference.status %></li>
+    <li>カンファレンスステータス: <%= @conference.conference_status %></li>
     <li>CFPの結果公開: <%= @conference.cfp_result_visible ? '公開' : '非公開' %></li>
     <li>スピーカーのエントリー: <%= @conference.speaker_entry %></li>
     <li>参加者の申し込み: <%= @conference.attendee_entry %></li>

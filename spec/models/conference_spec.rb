@@ -18,14 +18,9 @@
 #  show_sponsors              :boolean          default(FALSE)
 #  show_timetable             :integer
 #  speaker_entry              :integer
-#  status                     :integer          default(0), not null
 #  theme                      :text(65535)
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#
-# Indexes
-#
-#  index_conferences_on_status  (status)
 #
 
 require 'rails_helper'

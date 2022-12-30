@@ -18,14 +18,9 @@
 #  show_sponsors              :boolean          default(FALSE)
 #  show_timetable             :integer
 #  speaker_entry              :integer
-#  status                     :integer          default(0), not null
 #  theme                      :text(65535)
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#
-# Indexes
-#
-#  index_conferences_on_status  (status)
 #
 
 class Conference < ApplicationRecord
@@ -70,15 +65,15 @@ class Conference < ApplicationRecord
   has_many :rooms
 
   scope :upcoming, -> {
-    merge(where(status: 0).or(where(status: 1)))
+    merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)))
   }
 
   scope :previous, -> {
-    merge(where(status: 2).or(where(status: 3))).order(id: :desc)
+    merge(where(conference_status: Conference::STATUS_CLOSED).or(where(conference_status: Conference::STATUS_ARCHIVED))).order(id: :desc)
   }
 
   scope :unarchived, -> {
-    merge(where(status: 0).or(where(status: 1)).or(where(status: 2)))
+    merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)).or(where(conference_status: Conference::STATUS_CLOSED)))
   }
 
   def remaining_date

@@ -3,23 +3,25 @@
     <h2>Sponsors</h2>
   </div>
   <div class="row">
-    <% @sponsor_types.each do |sponsor_type| %>
-      <h3><%= sponsor_type.name %></h3>
-      <table class="table table-striped">
-        <thead>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Abbr</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Url</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @sponsors.each do |sponsor| %>
         <tr>
-          <th scope="col">Name</th>
+          <td><%= sponsor.abbr %></td>
+          <td><%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %></td>
+          <td><%= sponsor.sponsor_types.map(&:name).join(', ') %></td>
+          <td><%= sponsor.url %></td>
         </tr>
-        </thead>
-        <tbody>
-        <% sponsor_type.sponsors.each do |sponsor| %>
-          <tr>
-            <td><%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-
-    <% end %>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 <% end %>

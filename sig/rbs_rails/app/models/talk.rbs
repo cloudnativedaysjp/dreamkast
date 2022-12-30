@@ -793,6 +793,78 @@ class Talk < ::ApplicationRecord
     def restore_end_offset!: () -> void
 
     def clear_end_offset_change: () -> void
+
+    def number_of_seats: () -> Integer
+
+    def number_of_seats=: (Integer) -> Integer
+
+    def number_of_seats?: () -> bool
+
+    def number_of_seats_changed?: () -> bool
+
+    def number_of_seats_change: () -> [ Integer?, Integer? ]
+
+    def number_of_seats_will_change!: () -> void
+
+    def number_of_seats_was: () -> Integer?
+
+    def number_of_seats_previously_changed?: () -> bool
+
+    def number_of_seats_previous_change: () -> Array[Integer?]?
+
+    def number_of_seats_previously_was: () -> Integer?
+
+    def number_of_seats_before_last_save: () -> Integer?
+
+    def number_of_seats_change_to_be_saved: () -> Array[Integer?]?
+
+    def number_of_seats_in_database: () -> Integer?
+
+    def saved_change_to_number_of_seats: () -> Array[Integer?]?
+
+    def saved_change_to_number_of_seats?: () -> bool
+
+    def will_save_change_to_number_of_seats?: () -> bool
+
+    def restore_number_of_seats!: () -> void
+
+    def clear_number_of_seats_change: () -> void
+
+    def acquired_seats: () -> Integer
+
+    def acquired_seats=: (Integer) -> Integer
+
+    def acquired_seats?: () -> bool
+
+    def acquired_seats_changed?: () -> bool
+
+    def acquired_seats_change: () -> [ Integer?, Integer? ]
+
+    def acquired_seats_will_change!: () -> void
+
+    def acquired_seats_was: () -> Integer?
+
+    def acquired_seats_previously_changed?: () -> bool
+
+    def acquired_seats_previous_change: () -> Array[Integer?]?
+
+    def acquired_seats_previously_was: () -> Integer?
+
+    def acquired_seats_before_last_save: () -> Integer?
+
+    def acquired_seats_change_to_be_saved: () -> Array[Integer?]?
+
+    def acquired_seats_in_database: () -> Integer?
+
+    def saved_change_to_acquired_seats: () -> Array[Integer?]?
+
+    def saved_change_to_acquired_seats?: () -> bool
+
+    def will_save_change_to_acquired_seats?: () -> bool
+
+    def restore_acquired_seats!: () -> void
+
+    def clear_acquired_seats_change: () -> void
   end
   include GeneratedAttributeMethods
   def talks_speakers: () -> TalksSpeaker::ActiveRecord_Associations_CollectionProxy

@@ -20,6 +20,12 @@ class MediaPackageOriginEndpoint::ActiveRecord_Associations_CollectionProxy < Ac
 end
 class MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
+class OrdersTicket::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class Order::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class CheckIn::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
 class TalksSpeaker::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class RegisteredTalk::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
@@ -39,6 +45,8 @@ end
 class FormModels::CompanyNamePrefix < ActiveHash::Base
 end
 class FormModels::CompanyNameSuffix < ActiveHash::Base
+end
+class Ticket::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ConferenceDay::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
@@ -65,6 +73,8 @@ end
 class AdminProfile::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class LiveStreamMediaLive::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class Room::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ActiveRecord::Associations::CollectionProxy < ActiveRecord::Relation
 end

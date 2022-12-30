@@ -1045,6 +1045,42 @@ class Profile < ::ApplicationRecord
     def restore_company_fax!: () -> void
 
     def clear_company_fax_change: () -> void
+
+    def calendar_unique_code: () -> String?
+
+    def calendar_unique_code=: (String?) -> String?
+
+    def calendar_unique_code?: () -> bool
+
+    def calendar_unique_code_changed?: () -> bool
+
+    def calendar_unique_code_change: () -> [ String?, String? ]
+
+    def calendar_unique_code_will_change!: () -> void
+
+    def calendar_unique_code_was: () -> String?
+
+    def calendar_unique_code_previously_changed?: () -> bool
+
+    def calendar_unique_code_previous_change: () -> Array[String?]?
+
+    def calendar_unique_code_previously_was: () -> String?
+
+    def calendar_unique_code_before_last_save: () -> String?
+
+    def calendar_unique_code_change_to_be_saved: () -> Array[String?]?
+
+    def calendar_unique_code_in_database: () -> String?
+
+    def saved_change_to_calendar_unique_code: () -> Array[String?]?
+
+    def saved_change_to_calendar_unique_code?: () -> bool
+
+    def will_save_change_to_calendar_unique_code?: () -> bool
+
+    def restore_calendar_unique_code!: () -> void
+
+    def clear_calendar_unique_code_change: () -> void
   end
   include GeneratedAttributeMethods
   def registered_talks: () -> RegisteredTalk::ActiveRecord_Associations_CollectionProxy
@@ -1067,6 +1103,14 @@ class Profile < ::ApplicationRecord
   def chat_messages=: (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage]) -> (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage])
   def chat_message_ids: () -> Array[Integer]
   def chat_message_ids=: (Array[Integer]) -> Array[Integer]
+  def orders: () -> Order::ActiveRecord_Associations_CollectionProxy
+  def orders=: (Order::ActiveRecord_Associations_CollectionProxy | Array[Order]) -> (Order::ActiveRecord_Associations_CollectionProxy | Array[Order])
+  def order_ids: () -> Array[Integer]
+  def order_ids=: (Array[Integer]) -> Array[Integer]
+  def check_ins: () -> CheckIn::ActiveRecord_Associations_CollectionProxy
+  def check_ins=: (CheckIn::ActiveRecord_Associations_CollectionProxy | Array[CheckIn]) -> (CheckIn::ActiveRecord_Associations_CollectionProxy | Array[CheckIn])
+  def check_in_ids: () -> Array[Integer]
+  def check_in_ids=: (Array[Integer]) -> Array[Integer]
 
   def company_name_prefix: () -> FormModels::CompanyNamePrefix
   def company_name_prefix=: (FormModels::CompanyNamePrefix?) -> FormModels::CompanyNamePrefix?

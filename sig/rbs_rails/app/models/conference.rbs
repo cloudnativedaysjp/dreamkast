@@ -182,42 +182,6 @@ class Conference < ::ApplicationRecord
 
     def clear_abbr_change: () -> void
 
-    def status: () -> String
-
-    def status=: (String) -> String
-
-    def status?: () -> bool
-
-    def status_changed?: () -> bool
-
-    def status_change: () -> [ String?, String? ]
-
-    def status_will_change!: () -> void
-
-    def status_was: () -> String?
-
-    def status_previously_changed?: () -> bool
-
-    def status_previous_change: () -> Array[String?]?
-
-    def status_previously_was: () -> String?
-
-    def status_before_last_save: () -> String?
-
-    def status_change_to_be_saved: () -> Array[String?]?
-
-    def status_in_database: () -> String?
-
-    def saved_change_to_status: () -> Array[String?]?
-
-    def saved_change_to_status?: () -> bool
-
-    def will_save_change_to_status?: () -> bool
-
-    def restore_status!: () -> void
-
-    def clear_status_change: () -> void
-
     def theme: () -> String?
 
     def theme=: (String?) -> String?
@@ -685,6 +649,42 @@ class Conference < ::ApplicationRecord
     def restore_committee_name!: () -> void
 
     def clear_committee_name_change: () -> void
+
+    def conference_status: () -> String?
+
+    def conference_status=: (String?) -> String?
+
+    def conference_status?: () -> bool
+
+    def conference_status_changed?: () -> bool
+
+    def conference_status_change: () -> [ String?, String? ]
+
+    def conference_status_will_change!: () -> void
+
+    def conference_status_was: () -> String?
+
+    def conference_status_previously_changed?: () -> bool
+
+    def conference_status_previous_change: () -> Array[String?]?
+
+    def conference_status_previously_was: () -> String?
+
+    def conference_status_before_last_save: () -> String?
+
+    def conference_status_change_to_be_saved: () -> Array[String?]?
+
+    def conference_status_in_database: () -> String?
+
+    def saved_change_to_conference_status: () -> Array[String?]?
+
+    def saved_change_to_conference_status?: () -> bool
+
+    def will_save_change_to_conference_status?: () -> bool
+
+    def restore_conference_status!: () -> void
+
+    def clear_conference_status_change: () -> void
   end
   include GeneratedAttributeMethods
   def form_items: () -> FormItem::ActiveRecord_Associations_CollectionProxy
@@ -775,19 +775,19 @@ class Conference < ::ApplicationRecord
   def media_package_harvest_jobs=: (MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy | Array[MediaPackageHarvestJob]) -> (MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy | Array[MediaPackageHarvestJob])
   def media_package_harvest_job_ids: () -> Array[Integer]
   def media_package_harvest_job_ids=: (Array[Integer]) -> Array[Integer]
+  def tickets: () -> Ticket::ActiveRecord_Associations_CollectionProxy
+  def tickets=: (Ticket::ActiveRecord_Associations_CollectionProxy | Array[Ticket]) -> (Ticket::ActiveRecord_Associations_CollectionProxy | Array[Ticket])
+  def ticket_ids: () -> Array[Integer]
+  def ticket_ids=: (Array[Integer]) -> Array[Integer]
+  def rooms: () -> Room::ActiveRecord_Associations_CollectionProxy
+  def rooms=: (Room::ActiveRecord_Associations_CollectionProxy | Array[Room]) -> (Room::ActiveRecord_Associations_CollectionProxy | Array[Room])
+  def room_ids: () -> Array[Integer]
+  def room_ids=: (Array[Integer]) -> Array[Integer]
 
   module GeneratedAssociationMethods
   end
   include GeneratedAssociationMethods
 
-  def registered!: () -> bool
-  def registered?: () -> bool
-  def opened!: () -> bool
-  def opened?: () -> bool
-  def closed!: () -> bool
-  def closed?: () -> bool
-  def archived!: () -> bool
-  def archived?: () -> bool
   def speaker_entry_disabled!: () -> bool
   def speaker_entry_disabled?: () -> bool
   def speaker_entry_enabled!: () -> bool
@@ -800,10 +800,6 @@ class Conference < ::ApplicationRecord
   def show_timetable_disabled?: () -> bool
   def show_timetable_enabled!: () -> bool
   def show_timetable_enabled?: () -> bool
-  def self.registered: () -> ActiveRecord_Relation
-  def self.opened: () -> ActiveRecord_Relation
-  def self.closed: () -> ActiveRecord_Relation
-  def self.archived: () -> ActiveRecord_Relation
   def self.speaker_entry_disabled: () -> ActiveRecord_Relation
   def self.speaker_entry_enabled: () -> ActiveRecord_Relation
   def self.attendee_entry_disabled: () -> ActiveRecord_Relation
@@ -815,14 +811,6 @@ class Conference < ::ApplicationRecord
   def self.unarchived: () -> ActiveRecord_Relation
 
   module GeneratedRelationMethods
-    def registered: () -> ActiveRecord_Relation
-
-    def opened: () -> ActiveRecord_Relation
-
-    def closed: () -> ActiveRecord_Relation
-
-    def archived: () -> ActiveRecord_Relation
-
     def speaker_entry_disabled: () -> ActiveRecord_Relation
 
     def speaker_entry_enabled: () -> ActiveRecord_Relation

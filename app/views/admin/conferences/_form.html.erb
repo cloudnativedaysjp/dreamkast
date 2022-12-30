@@ -4,7 +4,7 @@
 
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
-      <% @conference_form.conference.class.statuses.keys.each do |key| %>
+      <% @conference_form.conference.class.conference_statuses.keys.each do |key| %>
         <%= form.radio_button :status, key %>
         <%= form.label :status, key %><br>
       <% end %>

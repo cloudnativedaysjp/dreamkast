@@ -120,3 +120,5 @@ gem 'active_hash'
 gem 'newrelic_rpm'
 
 gem "http", "~> 5.1"
+
+gem 'slack-ruby-client'

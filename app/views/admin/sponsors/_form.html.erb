@@ -1,8 +1,23 @@
 <%= form_with(url: admin_sponsor_path, model: @sponsor_form, local: true, method: :patch) do |form| %>
+
+  <h4>Name</h4>
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= form.text_area :name, class: "form-control", id: "descriptionInputForm" %>
+    </div>
+  </div>
+
   <h4>Sponsor's Description</h4>
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
       <%= form.text_area :description, class: "form-control", id: "descriptionInputForm", rows: "3" %>
+    </div>
+  </div>
+
+  <h4>URL</h4>
+  <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= form.text_area :url, class: "form-control", id: "descriptionInputForm" %>
     </div>
   </div>
 
@@ -15,80 +30,10 @@
     </div>
   </div>
 
-  <% if @sponsor.booth_sponsor? %>
-    <h4>Booth: Key Images</h4>
-    <div class="key-image-fields">
-      <%= form.fields_for :sponsor_attachment_key_images do |image| %>
-        <%=  render 'admin/sponsors/sponsor_attachment_key_image_fields', :f => image %>
-      <% end %>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.submit %>
     </div>
-
-    <% if form.object.sponsor_attachment_key_images.size >= 2 %>
-      <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary', style: "display: none" %></p>
-    <% else %>
-      <p><%= link_to_add_key_image_fields "Add Image", form, :sponsor_attachment_key_images, class: 'add-key-image btn btn-primary' %></p>
-    <% end %>
-
-    <h4>Booth: Text</h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label :attachment_text, "Text" %>
-        <%= form.text_area :attachment_text, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      </div>
-    </div>
-
-    <h4>Booth: Vimeo</h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <% vimeo = @sponsor.sponsor_attachment_vimeo %>
-        <%= form.label :attachment_vimeo, "Vimeo embed url" %>
-        <%= form.text_field :attachment_vimeo, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-        <% if vimeo.present? %>
-          <div class="movie-wrap">
-            <iframe src="<%= vimeo.url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-
-    <h4>Booth: PDFs</h4>
-    <div class="pdf-fields">
-      <%= form.fields_for :sponsor_attachment_pdfs do |a| %>
-        <%=  render 'admin/sponsors/sponsor_attachment_pdf_fields', :f => a%>
-      <% end %>
-    </div>
-
-    <% if form.object.sponsor_attachment_pdfs.size >= 3 %>
-      <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary', style: "display: none" %></p>
-    <% else %>
-      <p><%= link_to_add_pdf_fields "Add PDF", form, :sponsor_attachment_pdfs, class: 'add-pdf btn btn-primary' %></p>
-    <% end %>
-
-    <h4>Booth: URL for communication (e.g. Zoom)</h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label :attachment_zoom, "URL" %>
-        <%= form.text_field :attachment_zoom, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      </div>
-    </div>
-
-    <h4>Booth: Miro</h4>
-    <div class="form-row form-group">
-      <div class="col-12 col-mb-6">
-        <%= form.label :attachment_miro, "ID" %>
-        <%= form.text_field :attachment_miro, class: "form-control", id: "attachmentTextInputForm", rows: "3" %>
-      </div>
-    </div>
-
-    <h4>Booth: Published?</h4>
-    <%= form.label :booth_published, "Published" %>
-    <%= form.check_box :booth_published %>
-
-  <% end %>
-    <div class="form-row form-group">
-      <div class="col-12 col-md-6">
-        <%= form.submit %>
-      </div>
-    </div>
+  </div>
 <% end %>

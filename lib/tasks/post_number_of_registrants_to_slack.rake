@@ -11,7 +11,6 @@ namespace :util do
     end
 
     client = Slack::Web::Client.new
-    client.auth_test
     resp = client.conversations_list(exclude_archived: true)
     channels = resp.channels
     conferences = Conference.unarchived

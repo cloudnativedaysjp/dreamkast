@@ -34,5 +34,6 @@ import './cropbox.js'
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
     //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)
 
+import 'regenerator-runtime/runtime'
 import "@hotwired/turbo-rails"
 import "controllers"

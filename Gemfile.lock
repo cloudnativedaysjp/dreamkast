@@ -554,7 +554,6 @@ DEPENDENCIES
   rbs
   rbs_rails
   redcarpet
-  redis (~> 4.0)
   redis-rails
   rexml (~> 3.2, >= 3.2.4)
   rspec-rails

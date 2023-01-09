@@ -108,6 +108,12 @@ FactoryBot.define do
     track_id { 3 }
     show_on_timetable { true }
     video_published { false }
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
+    end
   end
 
 

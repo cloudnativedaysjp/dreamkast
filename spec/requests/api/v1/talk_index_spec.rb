@@ -5,9 +5,9 @@ describe TalksController, type: :request do
     describe 'talk belongs to conference_day' do
       before do
         create(:cndt2020)
-        create(:talk1)
+        create(:talk1, :accepted)
         create(:talk2)
-        create(:talk3)
+        create(:talk3, :accepted)
       end
 
       it 'confirm json schema' do
@@ -39,7 +39,7 @@ describe TalksController, type: :request do
     describe 'talk doesn\'t belong to conference_day' do
       before do
         create(:cndt2020)
-        create(:talk1, conference_day_id: nil)
+        create(:talk1, :accepted, conference_day_id: nil)
       end
 
       it 'confirm json schema' do

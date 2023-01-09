@@ -43,7 +43,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.41.0'
+  gem 'rubocop', '~> 1.42.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', '>= 2.0.0'
   gem 'annotate', require: false
@@ -122,3 +122,8 @@ gem 'newrelic_rpm'
 gem "http", "~> 5.1"
 
 gem "turbo-rails"
+
+gem 'slack-ruby-client'
+
+gem 'nokogiri', '1.14.0.rc1'
+

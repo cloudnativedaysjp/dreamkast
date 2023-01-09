@@ -6,7 +6,7 @@ Conference.seed(
     id: 1,
     name: "CloudNative Days Tokyo 2020",
     abbr: "cndt2020",
-    status: 2, # closed
+    conference_status: "closed",
     speaker_entry: 0,
     attendee_entry: 0,
     theme: "+Native 〜ともに創るクラウドネイティブの世界〜",
@@ -25,7 +25,7 @@ EOS
     id: 2,
     name: "CloudNative Days Spring 2021 ONLINE",
     abbr: "cndo2021",
-    status: 3, # archived
+    conference_status: "archived",
     speaker_entry: 1, # enabled
     attendee_entry: 0, # disabled
     theme: "ともに踏み出す CloudNative祭",
@@ -57,7 +57,7 @@ EOS
     id: 3,
     name: "CI/CD Conference 2021 by CloudNative Days",
     abbr: "cicd2021",
-    status: 2, # closed
+    conference_status: "closed",
     speaker_entry: 1,
     attendee_entry: 0,
     theme: "Continuous 〜 技術を知り、試し、取り入れる 〜",
@@ -74,7 +74,7 @@ EOS
     id: 4,
     name: "CloudNative Days Tokyo 2021",
     abbr: "cndt2021",
-    status: 2, # closed
+    conference_status: "closed",
     theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
@@ -95,7 +95,7 @@ EOS
     id: 5,
     name: "Observability Conference 2022 by CloudNative Days",
     abbr: "o11y2022",
-    status: 2, # closed
+    conference_status: "closed",
     theme: "Observe the Observability 〜知らないことを知り、見えていないものを見る〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
@@ -171,18 +171,18 @@ EOS
     CI/CD Conference 2023 by CloudNative Days（CICD2023）は、CI/CDに特化したテックカンファレンスです。
 
     1st SprintであるCI/CD Conference 2021での『技術を知り、試して、取り入れる』から、2nd Sprintである今回はより具体的に『ともに回す高速なアプリケーション開発ライフサイクル』をコンセプトとして掲げました。
-    
+
     クラウドネイティブにアプリケーション開発のライフサイクルを回すことによって、設計、開発、テスト、デプロイ、運用、フィードバックのサイクルを高速化できます。
-    
+
     このカンファレンスでは、それぞれのフェーズでの知見を交流させて新たな気づきを得ることで、次のSprintでの更なる改善・進化の実現を目的とします。
-    
+
     開発と運用の垣根を超えて、継続的に価値を高めるライフサイクルをともに回していける世界を一緒に体験してみましょう！
 EOS
   },
   {
     id: 10,
     name: "Test Event Winter 2020",
-    status: 3, # archived
+    conference_status: "archived",
     abbr: "tew2020",
     theme: "これはTestEventWinter2020のテーマです",
     copyright: '© Test Event Winter 2020 Committee',

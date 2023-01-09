@@ -6,12 +6,16 @@ namespace :util do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     Rails.logger.level = Logger::DEBUG
 
-    url = ENV['SLACK_WEBHOOK_URL']
+    Slack.configure do |config|
+      config.token = ENV['SLACK_TOKEN']
+    end
+
+    client = Slack::Web::Client.new
+    resp = client.conversations_list(exclude_archived: true)
+    channels = resp.channels
     conferences = Conference.unarchived
 
     conferences.each do |conference|
-      slack = Slack::Incoming::Webhooks.new(url)
-      slack.username = "#{conference.abbr.upcase} 参加者速報"
       body = ''
 
       ActiveRecord::Base.transaction do
@@ -33,7 +37,9 @@ namespace :util do
         end
       end
 
-      slack.post(body.join("\n")) unless body.empty?
+      if channels.any? { |c| c.name == conference.abbr }
+        client.chat_postMessage(channel: "##{conference.abbr}", text: body.join('\n'), username: "#{conference.abbr.upcase} 参加者速報")
+      end
     end
   end
 end

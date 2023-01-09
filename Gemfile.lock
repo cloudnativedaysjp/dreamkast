@@ -180,11 +180,17 @@ GEM
     faraday (2.6.0)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
+    faraday-mashify (0.1.1)
+      faraday (~> 2.0)
+      hashie
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (3.0.1)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    gli (2.21.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -228,10 +234,11 @@ GEM
     method_source (1.0.0)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
+    mini_portile2 (2.8.1)
     minitest (5.16.3)
     msgpack (1.5.6)
     multi_xml (0.6.0)
+    multipart-post (2.2.3)
     mysql2 (0.5.4)
     net-imap (0.2.3)
       digest
@@ -249,7 +256,7 @@ GEM
       timeout
     newrelic_rpm (8.10.0)
     nio4r (2.5.8)
-    nokogiri (1.13.10)
+    nokogiri (1.14.0.rc1)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (2.0.8)
@@ -295,7 +302,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.2.0)
       activesupport (>= 3.0.0)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
@@ -442,6 +449,13 @@ GEM
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
     slack-incoming-webhooks (0.3.0)
+    slack-ruby-client (2.0.0)
+      faraday (>= 2.0)
+      faraday-mashify
+      faraday-multipart
+      gli
+      hashie
+      websocket-driver
     snaky_hash (2.0.0)
       hashie
       version_gem (~> 1.1)
@@ -534,6 +548,7 @@ DEPENDENCIES
   listen (~> 3.2)
   mysql2 (~> 0.5.4)
   newrelic_rpm
+  nokogiri (= 1.14.0.rc1)
   octokit (~> 6.0)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)
@@ -564,6 +579,7 @@ DEPENDENCIES
   shrine (~> 3.3)
   simplecov
   slack-incoming-webhooks
+  slack-ruby-client
   steep
   turbolinks (~> 5)
   tzinfo-data
@@ -576,4 +592,4 @@ RUBY VERSION
    ruby 3.2.0p-1
 
 BUNDLED WITH
-   2.3.7
+   2.3.26

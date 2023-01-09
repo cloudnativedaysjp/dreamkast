@@ -1,56 +1,73 @@
-<% talks.each do |talk| %>
-  <tr>
-    <td><%= talk.id %></td>
-    <td>
-      Planned<br/>
-      <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
-      <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
-      <br/>
-      Offset<br/>
-      <%= text_field_tag("time[][#{talk.id.to_s}][startOffset]", talk.start_offset.to_s, {size: 1, form: 'time', class: 'start-offset'}) %>-
-      <%= text_field_tag("time[][#{talk.id.to_s}][endOffset]", talk.end_offset.to_s, {size: 1, form: 'time'}) %>
-      <br/>
-      Actual<br/>
-      <%= text_field_tag(talk.id.to_s + "_actual_start", talk.actual_start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
-      <%= text_field_tag(talk.id.to_s + "_actual_end", talk.actual_end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
-    </td>
-    <td>
-      <h5><%= talk.title %></h5>
-      <ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
-    </td>
-    <td >
-      <% if talk.video %>
-        <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>
-          <%= f.hidden_field "talk[id]", value: talk.id %>
-          <%= f.hidden_field "talk[date]", value: conference_day.date %>
-          <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
-          <div class="on_air_group btn-group-toggle">
-            <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
-                         id: "button_#{talk.id}",
-                         class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
-                         autocomplete: "off",
-                         track_name: talk.track.name,
-                         talk_id: talk.id,
-                         data: { confirm: confirm_message(talk), type: "script" }
-            %>
-          </div>
-        <% end %>
-      <% end %>
-    </td>
-    <td>
-      <% if talk.abstract != 'intermission' && talk.live? && talk.recordable? %>
-        <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
-      <% end %>
-    </td>
-    <td>
-      <% if talk.video && talk.abstract != 'intermission' %>
-        <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
-          <div class="btn btn-primary">録画済み</div>
-        <% else %>
-        未録画
-        <% end %>
-      <% end %>
-    </td>
-  </tr>
+<%= turbo_frame_tag 'talks', src: talks.nil? ? admin_talks_path : nil do %>
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col" style="width: 200px;">Time</th>
+      <th scope="col">Speakers<br/>Title</th>
+      <th scope="col">On Air</th>
+      <th scope="col">Recording</th>
+      <th scope="col">Recording Status</th>
+    </tr>
+    </thead>
+
+    <tbody id="talks_table_tbody">
+    <% talks.each do |talk| %>
+      <tr>
+        <td><%= talk.id %></td>
+        <td>
+          Planned<br/>
+          <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+          <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+          <br/>
+          Offset<br/>
+          <%= text_field_tag("time[][#{talk.id.to_s}][startOffset]", talk.start_offset.to_s, {size: 1, form: 'time', class: 'start-offset'}) %>-
+          <%= text_field_tag("time[][#{talk.id.to_s}][endOffset]", talk.end_offset.to_s, {size: 1, form: 'time'}) %>
+          <br/>
+          Actual<br/>
+          <%= text_field_tag(talk.id.to_s + "_actual_start", talk.actual_start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+          <%= text_field_tag(talk.id.to_s + "_actual_end", talk.actual_end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+        </td>
+        <td>
+          <h5><%= talk.title %></h5>
+          <ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
+        </td>
+        <td >
+          <% if talk.video %>
+            <%= form_with(url: on_air_url(talk), id: "talk_list_#{conference_day.date}_#{track.number}", method: "post", class: "talk_list_form") do |f| %>
+              <%= f.hidden_field "talk[id]", value: talk.id %>
+              <%= f.hidden_field "talk[date]", value: conference_day.date %>
+              <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
+              <div class="on_air_group btn-group-toggle">
+                <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
+                             id: "button_#{talk.id}",
+                             class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
+                             autocomplete: "off",
+                             track_name: talk.track.name,
+                             talk_id: talk.id,
+                             data: { turbo_confirm: confirm_message(talk) }
+                %>
+              </div>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <% if talk.abstract != 'intermission' && talk.live? && talk.recordable? %>
+            <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
+          <% end %>
+        </td>
+        <td>
+          <% if talk.video && talk.abstract != 'intermission' %>
+            <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
+              <div class="btn btn-primary">録画済み</div>
+            <% else %>
+              未録画
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    </tbody>
+  </table>
 <% end %>
-<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>

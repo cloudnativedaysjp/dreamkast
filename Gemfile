@@ -121,6 +121,9 @@ gem 'newrelic_rpm'
 
 gem "http", "~> 5.1"
 
+gem "turbo-rails"
+
 gem 'slack-ruby-client'
 
 gem 'nokogiri', '1.14.0.rc1'
+

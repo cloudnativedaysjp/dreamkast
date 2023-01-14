@@ -35,12 +35,12 @@
     <div class="col-12 col-mb-6">
       <%= form.text_field :speaker_emails, class: "form-control", id: "descriptionInputForm", rows: "3" %>
     </div>
-    </div>
   </div>
 
+  <h4>Sponsor Type</h4>
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
-      <%= form.label :sponsor_types, "受講者レベル - Audience Experience Level（★★）" %>*</br>
+      <%= form.label :sponsor_types, "スポンサータイプ" %>*</br>
       <% @sponsor_types.each do |sponsor_type| %>
         <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>
         <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'form-check-label'} %><br>

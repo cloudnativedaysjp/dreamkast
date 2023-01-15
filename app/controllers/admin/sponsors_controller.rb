@@ -40,8 +40,8 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def update
-     @sponsor = Sponsor.find(params[:id])
-     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
+    @sponsor = Sponsor.find(params[:id])
+    @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
     respond_to do |format|
       if @sponsor_form.save

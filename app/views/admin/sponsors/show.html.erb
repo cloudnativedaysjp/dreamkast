@@ -40,6 +40,17 @@
     </div>
 
     <div class="col-12 col-mb-6">
+      <h4>Sessions</h4>
+      <div class="card-group">
+        <div class="card">
+          <% @sponsor.talks.each do |talk| %>
+            <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-mb-6">
       <%= link_to 'Delete', admin_sponsor_path(id: @sponsor.id), method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-primary" %>
     </div>
   </div>

@@ -21,8 +21,14 @@ toggleVoted = function() {
 }
 
 document.getElementById('vote').addEventListener('click', function() {
-    const voteUrl = document.getElementById('vote').getAttribute('vote_url')
-    fetch(voteUrl,{ method: 'POST' })
+    const voteUrl = document.getElementById('vote').getAttribute('vote_url');
+
+    const eventAbbr = document.getElementById('vote').getAttribute('event_name');
+    const method = 'POST'
+    const body = JSON.stringify({'eventAbbr': eventAbbr});
+    const headers = {'Content-Type': 'application/json'};
+
+    fetch(voteUrl,{ method, headers, body});
     setVotedId(parseInt(document.getElementById('vote').getAttribute('talk_id')));
     toggleVoted();
     return false;

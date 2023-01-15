@@ -31,9 +31,9 @@
     <div class="col-12 col-mb-6">
       <h4>Logo</h4>
       <% if @sponsor.sponsor_attachment_logo_image.present? %>
-        <% if @sponsor.sponsor_attachment_logo_image.url != '' %>
+        <% if @sponsor.sponsor_attachment_logo_image.url.present? %>
           <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
-        <% elsif @sponsor.sponsor_attachment_logo_image.file %>
+        <% elsif @sponsor.sponsor_attachment_logo_image.file.present? %>
           <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "sponsor-logo" %>
         <% end %>
       <% end %>

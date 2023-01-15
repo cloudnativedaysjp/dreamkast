@@ -35,7 +35,6 @@ class SponsorForm
         logo = SponsorAttachmentLogoImage.new(file: attachment_vimeo, sponsor_id: sponsor.id)
         logo.save!
       end
-
     end
   rescue => e
     puts(e)
@@ -61,7 +60,7 @@ class SponsorForm
       description: sponsor.description,
       speaker_emails: sponsor.speaker_emails,
       sponsor_types: sponsor.sponsor_types,
-      attachment_logo_image: sponsor.sponsor_attachment_logo_image,
+      attachment_logo_image: sponsor.sponsor_attachment_logo_image
     }
   end
 end

@@ -74,6 +74,6 @@ class Admin::SponsorsController < ApplicationController
                                     :description,
                                     :speaker_emails,
                                     :attachment_logo_image,
-                                    sponsor_types: [],)
+                                    sponsor_types: [])
   end
 end

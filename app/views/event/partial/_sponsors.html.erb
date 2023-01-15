@@ -12,7 +12,11 @@
             <% if sponsor.sponsor_attachment_logo_image.present? %>
               <div class="<%= sponsor_logo_class(sponsor_type) %>">
                 <a href="<%= sponsor.url %>" target="_blank">
-                  <%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+                  <% if @sponsor.sponsor_attachment_logo_image.url != '' %>
+                    <%= image_tag sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+                  <% elsif @sponsor.sponsor_attachment_logo_image.file %>
+                    <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "sponsor-logo" %>
+                  <% end %>
                 </a>
               </div>
             <% end %>

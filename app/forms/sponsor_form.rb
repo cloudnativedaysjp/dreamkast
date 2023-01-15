@@ -12,6 +12,7 @@ class SponsorForm
   attr_accessor :booth_published
   attr_accessor :sponsor_attachment_key_images
   attr_accessor :attachment_text
+  attr_accessor :attachment_logo_image
   attr_accessor :attachment_vimeo
   attr_accessor :attachment_zoom
   attr_accessor :attachment_miro
@@ -99,6 +100,13 @@ class SponsorForm
     ActiveRecord::Base.transaction do
       sponsor.update!(name:, abbr:, url:, description:, speaker_emails:, sponsor_types: sponsor_types.map{|id| SponsorType.find(id)})
 
+      if sponsor.sponsor_attachment_logo_image.present?
+        sponsor.sponsor_attachment_logo_image.update!(file: attachment_logo_image)
+      else
+        logo = SponsorAttachmentLogoImage.new(file: attachment_vimeo, sponsor_id: sponsor.id)
+        logo.save!
+      end
+
       if sponsor.booth.present?
         sponsor.booth.update!(published: booth_published)
       end
@@ -158,6 +166,7 @@ class SponsorForm
       speaker_emails: sponsor.speaker_emails,
       sponsor_types: sponsor.sponsor_types,
       booth_published: sponsor.booth.present? && sponsor.booth.published.present? ? sponsor.booth.published : nil,
+      attachment_logo_image: sponsor.sponsor_attachment_logo_image,
       attachment_text: sponsor.sponsor_attachment_text.present? ? sponsor.sponsor_attachment_text.text : '',
       attachment_vimeo: sponsor.sponsor_attachment_vimeo.present? ? sponsor.sponsor_attachment_vimeo.url : '',
       attachment_zoom: sponsor.sponsor_attachment_zoom.present? ? sponsor.sponsor_attachment_zoom.url : '',

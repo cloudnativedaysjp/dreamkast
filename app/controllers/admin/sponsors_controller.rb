@@ -79,6 +79,7 @@ class Admin::SponsorsController < ApplicationController
                                     :attachment_vimeo,
                                     :attachment_zoom,
                                     :attachment_miro,
+                                    :attachment_logo_image,
                                     sponsor_types: [],
                                     sponsor_attachment_key_images_attributes: [:id, :title, :file, :_destroy],
                                     sponsor_attachment_pdfs_attributes: [:id, :title, :file, :_destroy])

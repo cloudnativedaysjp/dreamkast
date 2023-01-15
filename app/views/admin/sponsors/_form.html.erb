@@ -49,6 +49,14 @@
   </div>
 
   <div class="form-row form-group">
+    <div class="col-12 col-mb-6">
+      <%= form.label :attachment_logo_image, "スポンサーロゴ" %>
+      <%= form.file_field :attachment_logo_image %>
+      <%= image_tag @sponsor.sponsor_attachment_logo_image.file, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.submit %>
     </div>

@@ -38,7 +38,7 @@
       <div class="row py-3">
         <div class="col-auto col-md-auto">
           <% if talk.proposal.present? && talk.proposal.status == 'registered' %>
-            <button class="btn btn-primary inline" id="vote" vote_url="<%= vote_api_url(talk.id.to_s) %>", talk_id="<%= talk.id %>",type="button">👍投票する</button>
+            <button class="btn btn-primary inline" id="vote" vote_url="<%= vote_api_url(talk.id.to_s) %>" event_name="<%= @conference.abbr %>" talk_id="<%= talk.id %>" type="button">👍投票する</button>
           <% end %>
         </div>
       </div>

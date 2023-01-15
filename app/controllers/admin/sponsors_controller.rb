@@ -20,7 +20,7 @@ class Admin::SponsorsController < ApplicationController
 
   def edit
     @conference = Conference.find_by(abbr: params[:event])
-    p @sponsor_types = @conference.sponsor_types
+    @sponsor_types = @conference.sponsor_types
     @sponsor = Sponsor.find(params[:id])
     @sponsor_form = SponsorForm.new(sponsor: @sponsor)
     @sponsor_form.load
@@ -40,9 +40,8 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def update
-    p params
-    p @sponsor = Sponsor.find(params[:id])
-    p @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
+     @sponsor = Sponsor.find(params[:id])
+     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
     respond_to do |format|
       if @sponsor_form.save

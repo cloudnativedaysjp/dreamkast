@@ -32,7 +32,7 @@ class SponsorForm
       if sponsor.sponsor_attachment_logo_image.present?
         sponsor.sponsor_attachment_logo_image.update!(file: attachment_logo_image)
       else
-        logo = SponsorAttachmentLogoImage.new(file: attachment_vimeo, sponsor_id: sponsor.id)
+        logo = SponsorAttachmentLogoImage.new(file: attachment_logo_image, sponsor_id: sponsor.id)
         logo.save!
       end
     end

@@ -38,5 +38,9 @@
         <% end %>
       <% end %>
     </div>
+
+    <div class="col-12 col-mb-6">
+      <%= link_to 'Delete', admin_sponsor_path(id: @sponsor.id), method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

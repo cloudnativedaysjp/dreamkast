@@ -34,7 +34,7 @@ class Admin::SponsorsController < ApplicationController
       if @sponsor_form.save
         format.html { redirect_to(admin_sponsors_path(event: params[:event]), notice: 'Sponsor was successfully created.') }
       else
-        format.html { render(:new) }
+        format.html { redirect_to(new_admin_sponsor_path(event: params[:event]), notice: 'Failed to create sponsor.') }
       end
     end
   end
@@ -48,6 +48,18 @@ class Admin::SponsorsController < ApplicationController
         format.html { redirect_to(admin_sponsor_url(event: params[:event], id: params[:id]), notice: 'Sponsor was successfully updated.') }
       else
         format.html { render(:edit) }
+      end
+    end
+  end
+
+  def destroy
+    @sponsor = Sponsor.find(params[:id])
+
+    respond_to do |format|
+      if @sponsor.destroy
+        format.html { redirect_to(admin_sponsors_path(event: params[:event]), notice: 'Sponsor was successfully destroyed.') }
+      else
+        format.html { redirect_to(admin_sponsor_url(event: params[:event], id: params[:id]), notice: 'Failed destroying sponsor.') }
       end
     end
   end

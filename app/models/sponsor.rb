@@ -24,16 +24,16 @@
 class Sponsor < ApplicationRecord
   belongs_to :conference
 
-  has_one :sponsor_attachment_text
-  has_one :sponsor_attachment_logo_image
-  has_one :sponsor_attachment_vimeo
-  has_one :sponsor_attachment_zoom
-  has_one :sponsor_attachment_miro
-  has_one :booth
+  has_one :sponsor_attachment_text, dependent: :delete
+  has_one :sponsor_attachment_logo_image, dependent: :delete
+  has_one :sponsor_attachment_vimeo, dependent: :delete
+  has_one :sponsor_attachment_zoom, dependent: :delete
+  has_one :sponsor_attachment_miro, dependent: :delete
+  has_one :booth, dependent: :delete
 
-  has_many :sponsor_attachment_pdfs
-  has_many :sponsor_attachment_key_images
-  has_many :sponsors_sponsor_types
+  has_many :sponsor_attachment_pdfs, dependent: :delete_all
+  has_many :sponsor_attachment_key_images, dependent: :delete_all
+  has_many :sponsors_sponsor_types, dependent: :delete_all
   has_many :sponsor_types, through: :sponsors_sponsor_types
   has_many :talks
 

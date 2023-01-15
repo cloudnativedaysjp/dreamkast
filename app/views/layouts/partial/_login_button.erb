@@ -20,9 +20,7 @@
       <a class="dropdown-item" href="/logout">Logout</a>
     </div>
   <% else %>
-    <%= form_with(url: '/auth/auth0', local: true, data: { turbo: false }) do |form| %>
-      <%= form.submit "Log in", class: "btn btn-primary btn-block btn-sm" %>
-    <% end %>
+      <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
   <% end %>
 <% else %>
   <% if @current_user %>
@@ -37,8 +35,6 @@
       </div>
     </li>
   <% else %>
-    <%= form_with(url: '/auth/auth0', local: true, data: { turbo: false }) do |form| %>
-      <%= form.submit "Log in", class: "btn btn-primary btn-block btn-sm" %>
-    <% end %>
+    <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "btn btn-primary btn-block btn-sm", style: "background-color: gray; border-color: grey;" } %></li>
   <% end %>
 <% end %>

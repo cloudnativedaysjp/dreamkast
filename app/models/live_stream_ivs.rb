@@ -96,20 +96,24 @@ class LiveStreamIvs < LiveStream
   def ivs_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::IVS::Client.new(region: 'ap-northeast-1', credentials: creds)
+      Aws::IVS::Client.new(region: 'us-east-1', credentials: creds)
     else
-      Aws::IVS::Client.new(region: 'ap-northeast-1')
+      Aws::IVS::Client.new(region: 'us-east-1')
     end
   end
 
   def recording_configuration_arn
     case env_name
     when 'production'
-      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/DoiBRZMiClzN'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/rEy1r00HJaMP'
     when 'staging'
-      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/BfS5HX3B0J4r'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/VnSqwzabuOsQ'
+    when 'review_app'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
+    when 'others'
+      'arn:aws:ivs:us-east-1:607167088920:recording-configuration/3gSuTxXYtRkg'
     else
-      'arn:aws:ivs:ap-northeast-1:607167088920:recording-configuration/DkqVCWZLeG8B'
+      ''
     end
   end
 end

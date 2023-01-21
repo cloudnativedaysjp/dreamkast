@@ -4,9 +4,9 @@ module MediaPackageHelper
   def media_package_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::MediaPackage::Client.new(region: 'ap-northeast-1', credentials: creds)
+      Aws::MediaPackage::Client.new(region: 'us-east-1', credentials: creds)
     else
-      Aws::MediaPackage::Client.new(region: 'ap-northeast-1')
+      Aws::MediaPackage::Client.new(region: 'us-east-1')
     end
   end
 

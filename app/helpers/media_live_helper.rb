@@ -2,9 +2,9 @@ module MediaLiveHelper
   def media_live_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::MediaLive::Client.new(region: 'us-east-1', credentials: creds)
+      Aws::MediaLive::Client.new(region: AWS_LIVE_STREAM_REGION, credentials: creds)
     else
-      Aws::MediaLive::Client.new(region: 'us-east-1')
+      Aws::MediaLive::Client.new(region: AWS_LIVE_STREAM_REGION)
     end
   end
 

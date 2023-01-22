@@ -113,11 +113,9 @@ class LiveStreamMediaLive < LiveStream
 
     input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
     params = { input_security_group_id: input_security_group_resp.security_group.id }
-    update!(params:)
 
     input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
     params = params.merge(input_id: input_resp.input.id, input_arn: input_resp.input.arn)
-    update!(params:)
 
     channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
     params = params.merge(channel_id: channel_resp.channel.id, channel_arn: channel_resp.channel.arn)

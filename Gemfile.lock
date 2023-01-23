@@ -186,6 +186,8 @@ GEM
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
     faraday-net_http (3.0.1)
+    faraday-retry (2.0.0)
+      faraday (~> 2.0)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -296,7 +298,7 @@ GEM
     psych (5.0.0)
       stringio
     public_suffix (5.0.0)
-    puma (6.0.0)
+    puma (6.0.1)
       nio4r (~> 2.0)
     pundit (2.2.0)
       activesupport (>= 3.0.0)
@@ -542,6 +544,7 @@ DEPENDENCIES
   committee-rails
   execjs
   factory_bot_rails
+  faraday-retry
   http (~> 5.1)
   icalendar
   image_processing (~> 1.12.2)
@@ -594,4 +597,4 @@ RUBY VERSION
    ruby 3.2.0p-1
 
 BUNDLED WITH
-   2.3.26
+   2.4.1

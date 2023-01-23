@@ -1,5 +1,46 @@
 <%= render 'admin/layout' do %>
-  <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id), class: "btn btn-primary" %>
+  <div class="row mb-3">
+    <div class="col-12 col-mb-6">
+      <h2>Sponsors > <%= @sponsor.name %></h2>
+    </div>
 
-  <%= render 'booths/booth', sponsor: @sponsor %>
+    <div class="col-12 col-mb-6">
+      <%= link_to 'Edit', edit_admin_sponsor_path(id: @sponsor.id), class: "btn btn-primary" %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <h4>Name</h4>
+      <%= @sponsor.name %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <h4>Sponsor's Description</h4>
+      <%= @sponsor.description %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <h4>URL</h4>
+      <%= @sponsor.url %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <h4>Speaker List</h4>
+      <%= @sponsor.speaker_emails %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <h4>Logo</h4>
+      <% if @sponsor.sponsor_attachment_logo_image.present? %>
+        <% if @sponsor.sponsor_attachment_logo_image.url.present? %>
+          <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+        <% elsif @sponsor.sponsor_attachment_logo_image.file.present? %>
+          <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "sponsor-logo" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-mb-6">
+      <%= link_to 'Delete', admin_sponsor_path(id: @sponsor.id), method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>

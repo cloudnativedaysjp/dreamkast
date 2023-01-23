@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     delete 'admin/destroy_user' => 'admin#destroy_user'
     namespace :admin do
       resources :admin_profiles, only: [:edit, :update]
-      resources :sponsors, only: [:index, :show, :edit, :update]
+      resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
       resources :booths, only: [:index, :show]
       resources :conferences, only: [:index, :show, :edit, :update]
       resources :speakers, only: [:index, :edit, :update]

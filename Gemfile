@@ -127,3 +127,4 @@ gem 'slack-ruby-client'
 
 gem 'nokogiri', '1.14.0'
 
+gem 'faraday-retry'

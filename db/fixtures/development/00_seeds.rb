@@ -120,7 +120,7 @@ EOS
     abbr: "cnsec2022",
     theme: "Go \"Green\"〜ともに目指す持続可能なセキュリティ〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')), #TODO: cnsec2022版プライバシーポリシー
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Security Conference 2022 Committee",
@@ -163,8 +163,6 @@ EOS
     abbr: "cicd2023",
     theme: "Continuous 〜ともに回す高速なアプリケーション開発ライフサイクル〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cicd2023.md')),
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CI/CD Conference 2023 Committee",
     about: <<'EOS'

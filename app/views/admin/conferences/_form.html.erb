@@ -87,6 +87,22 @@
     </div>
   </div>
 
+  <h3>Privaty Policy (for attendees)</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.text_area :privacy_policy, {class: "privacy-policy"} %>
+    </div>
+  </div>
+
+  <h3>Privaty Policy (for speakers)</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %>
+    </div>
+  </div>
+
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.submit class: "btn btn-primary" %>

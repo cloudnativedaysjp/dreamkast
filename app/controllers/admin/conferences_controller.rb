@@ -45,7 +45,10 @@ class Admin::ConferencesController < ApplicationController
                                        :show_timetable,
                                        :show_sponsors,
                                        :brief,
+                                       :privacy_policy,
+                                       :privacy_policy_for_speaker,
                                        links_attributes: [:id, :title, :url, :description, :_destroy],
-                                       conference_days_attributes: [:id, :date])
+                                       conference_days_attributes: [:id, :date],
+                                      )
   end
 end

@@ -129,7 +129,7 @@ class ConferenceForm
       conference_days:,
       brief: conference.brief,
       privacy_policy: conference.privacy_policy,
-      privacy_policy_for_speaker: conference.privacy_policy_for_speaker,
+      privacy_policy_for_speaker: conference.privacy_policy_for_speaker
     }
   end
 end

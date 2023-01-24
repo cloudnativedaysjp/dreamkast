@@ -2,8 +2,8 @@ module Secured
   extend ActiveSupport::Concern
 
   included do
-    before_action :redirect_to_registration, if: :should_redirect?
-    before_action :logged_in_using_omniauth?, :need_order?, if: :use_secured_before_action?
+    before_action :to_preparance, :redirect_to_registration, if: :should_redirect?
+    before_action :logged_in_using_omniauth?, :to_preparance, :need_order?, if: :use_secured_before_action?
     helper_method :admin?, :speaker?, :beta_user?
   end
 
@@ -13,6 +13,12 @@ module Secured
     else
       redirect_to('/auth/login?origin=' + request.fullpath)
     end
+  end
+
+  def to_preparance
+    # ログイン状態
+    # かつカンファレンスが一般参加応募不可状態
+    redirect_to(preparation_url) if conference.attendee_entry_disabled? && logged_in?
   end
 
   def should_redirect?

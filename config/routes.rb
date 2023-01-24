@@ -147,6 +147,8 @@ Rails.application.routes.draw do
 
     resources :orders, only: [:new, :create]
     resources :cancel_orders
+
+    get 'preparation' => 'event#preparation'
   end
 
   mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'

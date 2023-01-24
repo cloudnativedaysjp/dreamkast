@@ -53,7 +53,7 @@
       <%= form.label :attachment_logo_image, "スポンサーロゴ" %>
       <%= form.file_field :attachment_logo_image %>
       <% if @sponsor.sponsor_attachment_logo_image %>
-        <%= image_tag @sponsor.sponsor_attachment_logo_image.file, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
+        <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
       <% end %>
     </div>
   </div>

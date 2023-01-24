@@ -33,6 +33,10 @@ class EventController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
   end
 
+  def preparation
+    render('event/preparation')
+  end
+
   private
 
   def use_secured_before_action?

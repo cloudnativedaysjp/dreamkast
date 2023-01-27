@@ -51,4 +51,5 @@ RUN apt-get update && apt-get -y install libmariadb3 libvips42 \
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
 EXPOSE 3000
+ENV RUBY_YJIT_ENABLE=1
 ENTRYPOINT ["./entrypoint.sh"]

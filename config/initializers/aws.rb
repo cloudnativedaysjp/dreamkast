@@ -12,3 +12,5 @@ else
     region: 'ap-northeast-1'
   )
 end
+
+AWS_LIVE_STREAM_REGION = ENV.fetch('AWS_LIVE_STREAM_REGION', 'us-east-1')

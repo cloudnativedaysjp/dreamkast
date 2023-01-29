@@ -14,9 +14,9 @@ namespace :aws do
   def ivs_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::IVS::Client.new(region: 'ap-northeast-1', credentials: creds)
+      Aws::IVS::Client.new(region: AWS_LIVE_STREAM_REGION, credentials: creds)
     else
-      Aws::IVS::Client.new(region: 'ap-northeast-1')
+      Aws::IVS::Client.new(region: AWS_LIVE_STREAM_REGION)
     end
   end
 

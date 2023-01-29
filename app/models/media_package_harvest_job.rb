@@ -80,19 +80,19 @@ class MediaPackageHarvestJob < ApplicationRecord
   def bucket_name
     case env_name
     when 'production'
-      'dreamkast-archive-prd'
+      'dreamkast-ivs-stream-archive-prd'
     when 'staging'
-      'dreamkast-archive-stg'
+      'dreamkast-ivs-stream-archive-stg'
     else
-      'dreamkast-archive-dev'
+      'dreamkast-ivs-stream-archive-dev'
     end
   end
 
   def cloudfront_domain_name(bucket_name)
     case bucket_name
-    when 'dreamkast-archive-prd'
+    when 'dreamkast-ivs-stream-archive-prd'
       'd3pun3ptcv21q4.cloudfront.net'
-    when 'dreamkast-archive-stg'
+    when 'dreamkast-ivs-stream-archive-stg'
       'd3i2o0iduabu0p.cloudfront.net'
     else
       'd1jzp6sbtx9by.cloudfront.net'

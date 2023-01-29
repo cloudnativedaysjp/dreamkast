@@ -181,11 +181,11 @@ class LiveStreamMediaLive < LiveStream
   def bucket_name
     case env_name
     when 'production'
-      'dreamkast-archive-prd'
+      'dreamkast-ivs-stream-archive-prd'
     when 'staging'
-      'dreamkast-archive-stg'
+      'dreamkast-ivs-stream-archive-stg'
     else
-      'dreamkast-archive-dev'
+      'dreamkast-ivs-stream-archive-dev'
     end
   end
 

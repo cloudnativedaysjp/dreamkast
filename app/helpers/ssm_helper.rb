@@ -4,9 +4,9 @@ module SsmHelper
   def ssm_client
     creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
     if creds.set?
-      Aws::SSM::Client.new(region: 'ap-northeast-1', credentials: creds)
+      Aws::SSM::Client.new(region: AWS_LIVE_STREAM_REGION, credentials: creds)
     else
-      Aws::SSM::Client.new(region: 'ap-northeast-1')
+      Aws::SSM::Client.new(region: AWS_LIVE_STREAM_REGION)
     end
   end
 

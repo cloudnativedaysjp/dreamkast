@@ -22,7 +22,7 @@ class TalksController < ApplicationController
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
     # talks of cndt2020 and cndo2021 don't have proposals
     # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
-    @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr) || @conference.registered?
+    @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr)
                @talks.where(show_on_timetable: true)
              elsif @conference.cfp_result_visible
                @talks.where(show_on_timetable: true,

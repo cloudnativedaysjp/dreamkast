@@ -32,6 +32,7 @@
 #  conference_id                 :integer
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
+#  occupation_id                 :integer          default(34)
 #
 
 class EmailValidator < ActiveModel::EachValidator
@@ -145,7 +146,7 @@ class Profile < ApplicationRecord
 
   def industry_name
     if industry_id.present?
-      Industry.find(industry_id).name
+      FormModels::Industry.find(industry_id).name
     else
       ''
     end

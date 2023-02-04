@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_041946) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_090158) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -141,13 +141,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_041946) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "industries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "conference_id"
-  end
-
   create_table "links", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "title"
@@ -250,6 +243,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_041946) do
     t.integer "annual_sales_id", default: 11
     t.string "company_fax"
     t.string "calendar_unique_code"
+    t.integer "occupation_id", default: 34
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

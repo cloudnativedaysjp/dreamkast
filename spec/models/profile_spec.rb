@@ -32,6 +32,7 @@
 #  conference_id                 :integer
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
+#  occupation_id                 :integer          default(34)
 #
 
 require 'rails_helper'

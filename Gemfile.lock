@@ -256,7 +256,7 @@ GEM
       net-protocol
     newrelic_rpm (8.10.0)
     nio4r (2.5.8)
-    nokogiri (1.14.0)
+    nokogiri (1.14.1)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth2 (2.0.8)
@@ -552,7 +552,7 @@ DEPENDENCIES
   listen (~> 3.2)
   mysql2 (~> 0.5.4)
   newrelic_rpm
-  nokogiri (= 1.14.0)
+  nokogiri (= 1.14.1)
   octokit (~> 6.0)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)

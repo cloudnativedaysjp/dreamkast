@@ -176,7 +176,7 @@ class ProfilesController < ApplicationController
       :number_of_employee_id,
       :annual_sales_id,
       :company_fax,
-      :occupation_id,
+      :occupation_id
     )
   end
 

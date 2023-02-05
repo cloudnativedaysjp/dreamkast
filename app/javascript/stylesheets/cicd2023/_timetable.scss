@@ -12,7 +12,7 @@ section.timetable {
     .grid {
         display: grid;
         grid-template-rows: repeat(var(--rows), 3px);
-        grid-template-columns: repeat(6, minmax(180px, 240px));
+        grid-template-columns: repeat(3, minmax(240px, 360px));
         grid-auto-columns: 100px;
         overflow-x: auto;
         overflow-scrolling: touch;
@@ -27,6 +27,38 @@ section.timetable {
         align-items: start;
         justify-content: center;
         background-color: rgba(256, 256, 256, 0.9);
+    }
+    .all-track {
+        grid-column: 1 / 4;
+        grid-row: 1 / -1;
+        display: flex;
+        align-items: start;
+        justify-content: left;
+        background-color: rgba(256, 256, 256, 1);
+        margin: 5px 0px;
+        .session {
+            margin: 5px;
+        }
+        h4 {
+            display: flex;
+            margin: 0;
+            align-items: center;
+            font-size: 1rem;
+            padding: 0.2rem;
+            word-wrap: break-word;
+            word-break: break-all;
+            color: #333;
+        }
+        h6 {
+            display: flex;
+            margin: 0 auto;
+            align-items: center;
+            font-size: 0.7rem;
+            padding: 0.2rem;
+            word-wrap: break-word;
+            word-break: break-all;
+            color: #666;
+        }
     }
     .talk {
         --start: calc(1 + var(--track));

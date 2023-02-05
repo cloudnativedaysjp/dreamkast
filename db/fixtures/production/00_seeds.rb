@@ -198,7 +198,7 @@ ConferenceDay.seed(
   {id: 20, date: "2022-11-01", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 
   # CICD2023
-  {id: 21, date: "2023-03-20", start_time: "12:00", end_time: "19:50", conference_id: 8, internal: false},
+  {id: 21, date: "2023-03-20", start_time: "12:20", end_time: "18:00", conference_id: 8, internal: false},
   {id: 22, date: "2023-02-07", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
 )
 
@@ -251,9 +251,9 @@ Track.seed(
   { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
   { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
   
-  { id: 38, number: 1, name: "A", conference_id: 8, room_id: 1},
-  { id: 39, number: 2, name: "B", conference_id: 8, room_id: 2},
-  { id: 40, number: 3, name: "C", conference_id: 8, room_id: 3},
+  { id: 38, number: 1, name: "A", conference_id: 8, room_id: 11},
+  { id: 39, number: 2, name: "B", conference_id: 8, room_id: 12},
+  { id: 40, number: 3, name: "C", conference_id: 8, room_id: 13},
 )
 
 Room.seed(
@@ -421,6 +421,6 @@ end
 Ticket.seed(
   {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 454, conference_id: 7 },
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 7 },
-  {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
+  {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "現地参加(日比谷会場)", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
   {id: "5b31c315-5b70-4238-bf62-ed193480e9fd", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 8 },
 )

@@ -158,7 +158,6 @@ class ProfilesController < ApplicationController
       :last_name_kana,
       :first_name_kana,
       :industry_id,
-      :occupation,
       :company_name_prefix_id,
       :company_name,
       :company_name_suffix_id,
@@ -176,7 +175,8 @@ class ProfilesController < ApplicationController
       :conference_id,
       :number_of_employee_id,
       :annual_sales_id,
-      :company_fax
+      :company_fax,
+      :occupation_id,
     )
   end
 

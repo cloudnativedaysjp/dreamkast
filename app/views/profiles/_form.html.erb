@@ -56,7 +56,7 @@
 
   <div class="form-row form-group">
     <%= form.label :industry_id, "業種" %><span class="required">*</span>
-    <%= form.collection_select :industry_id, ::FormModels::Industry.all, :name, :name, {prompt: "", disabled: ::FormModels::Industry.all.map{|i| i.name if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "industry_id"} %>
+    <%= form.collection_select :industry_id, ::FormModels::Industry.all, :id, :name, {prompt: "", disabled: ::FormModels::Industry.all.map{|i| i.id if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "industry_id"} %>
   </div>
 
   <div class="form-row form-group">
@@ -121,7 +121,7 @@
 
   <div class="form-row form-group">
     <%= form.label :occupation_id, "職種" %><span class="required">*</span>
-    <%= form.collection_select :occupation_id, ::FormModels::Occupation.all, :name, :name, {prompt: "", disabled: ::FormModels::Occupation.all.map{|i| i.name if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "occupation_id"} %>
+    <%= form.collection_select :occupation_id, ::FormModels::Occupation.all, :id, :name, {prompt: "", disabled: ::FormModels::Occupation.all.map{|i| i.id if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "occupation_id"} %>
   </div>
 
   <% if action_name == "new" %>

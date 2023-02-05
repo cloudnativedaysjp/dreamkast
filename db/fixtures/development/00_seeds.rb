@@ -533,4 +533,6 @@ EOS
 Ticket.seed(
   {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 454, conference_id: 7 },
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 7 },
+  {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "オフライン参加", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
+  {id: "5b31c315-5b70-4238-bf62-ed193480e9fd", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 8 },
 )

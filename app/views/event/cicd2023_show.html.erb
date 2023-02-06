@@ -58,6 +58,80 @@
       </div>
     </section>
 
+    <% if @conference.present? && @conference.show_timetable_enabled? %>
+    <section class="page-section timetable bg-secondary">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 text-center">
+            <h2 class="text-white mt-0">Sessions</h2>
+            <hr class="divider light my-4" />
+          </div>
+        </div>
+        <% @conference.conference_days.each do |conference_day| %>
+        <% unless conference_day.internal  %>
+        <div class="top-timetable">
+          <div class="grid" style="--rows: 13">
+            <div class="all-track" style="">
+              <div class="session">
+                <h6>12:00 - 12:10</h6>
+                <h4>オープニング</h4>
+              </div>
+            </div>
+          </div>
+          <div class="grid"
+              style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 - 120 %>">
+            <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
+                <div class="track <%= 'even' if n.zero? || n.even? %>"
+                    style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+            <% end %>
+
+            <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+              <%
+                # 休み時間を除外
+                lunch_break = 10
+                each_break = 0
+                each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:20")) / 60).to_i - each_break - lunch_break
+                row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
+              %>
+              <div class="talk"
+                slot="<%= talk.slot_number %>"
+                style="--track: <%= talk.track.number - 1 %>;
+                        --row-start: <%= row_start %>;
+                        --row-end: <%= row_end  %>;">
+                <div class="content"
+                            talk_id="<%= talk.id %>"
+                            track_number="<%= talk.track.number %>"
+                    style="margin-top:0">
+                  <h6>
+                      <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
+                      <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                      <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
+                      <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
+                      <%= talk.seats_status if @profile.attend_offline? %>
+                  </h6>
+                  <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+                  <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
+                  <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+        <% end %>
+      </div>
+      <div class="grid" style="--rows: 13">
+        <div class="all-track" style="">
+          <div class="session">
+            <h6>18:20 - 19:50</h6>
+            <h4>よるイベ</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <% end %>
+
     <!-- Speakers -->
     <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
     <section class="page-section" id="speakers">
@@ -149,3 +223,4 @@
     </section>
   </div>
 </div>
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>

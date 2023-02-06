@@ -228,65 +228,8 @@ ConferenceDay.seed(
   {id: 20, date: "2022-11-01", start_time: "19:00", end_time: "21:00", conference_id: 7, internal: true}, #Pre event
 
   # CICD2023
-  {id: 21, date: "2023-03-20", start_time: "12:00", end_time: "19:50", conference_id: 8, internal: false},
+  {id: 21, date: "2023-03-20", start_time: "12:20", end_time: "18:00", conference_id: 8, internal: false},
   {id: 22, date: "2023-02-07", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
-)
-
-Industry.seed(
-  { id: 1,  conference_id: 1, name: "IT関連製造業" },
-  { id: 2,  conference_id: 1, name: "電気機器製造業" },
-  { id: 3,  conference_id: 1, name: "通信機器関連製造業" },
-  { id: 4,  conference_id: 1, name: "電子部品/デバイス/電子回路製造業" },
-  { id: 5,  conference_id: 1, name: "自動車/輸送用機器製造業" },
-  { id: 6,  conference_id: 1, name: "産業用/事務用機器製造業" },
-  { id: 7,  conference_id: 1, name: "食料品/飲料製造業" },
-  { id: 8,  conference_id: 1, name: "医薬品/化学製品製造" },
-  { id: 9,  conference_id: 1, name: "素材関連製造業" },
-  { id: 10, conference_id: 1, name: "その他の製造業" },
-  { id: 11, conference_id: 1, name: "ソフトウェアベンダー" },
-  { id: 12, conference_id: 1, name: "受託開発/情報処理サービス" },
-  { id: 13, conference_id: 1, name: "組み込み系ソフトウェア" },
-  { id: 14, conference_id: 1, name: "データセンター事業者" },
-  { id: 15, conference_id: 1, name: "クラウド系ベンダー" },
-  { id: 16, conference_id: 1, name: "SaaS系ベンダー" },
-  { id: 17, conference_id: 1, name: "Webサイト制作" },
-  { id: 18, conference_id: 1, name: "Webマーケティング支援" },
-  { id: 19, conference_id: 1, name: "通信事業者" },
-  { id: 20, conference_id: 1, name: "インターネットサービスプロバイダ" },
-  { id: 21, conference_id: 1, name: "その他の情報サービス業" },
-  { id: 22, conference_id: 1, name: "発電事業者" },
-  { id: 23, conference_id: 1, name: "一般送配電事業者" },
-  { id: 24, conference_id: 1, name: "小売電気事業者" },
-  { id: 25, conference_id: 1, name: "ガス/水道業" },
-  { id: 26, conference_id: 1, name: "その他の公益事業関連" },
-  { id: 27, conference_id: 1, name: "商社/販社/卸" },
-  { id: 29, conference_id: 1, name: "小売/流通（IT関連製品外）" },
-  { id: 30, conference_id: 1, name: "金融（銀行/証券/保険など）" },
-  { id: 31, conference_id: 1, name: "運輸/郵便業" },
-  { id: 32, conference_id: 1, name: "放送/出版/メディア" },
-  { id: 33, conference_id: 1, name: "インターネット関連メディア" },
-  { id: 34, conference_id: 1, name: "旅行/ホテル/レジャー業" },
-  { id: 35, conference_id: 1, name: "商社/販社/卸" },
-  { id: 36, conference_id: 1, name: "外食業" },
-  { id: 37, conference_id: 1, name: "広告代理店/PR会社" },
-  { id: 38, conference_id: 1, name: "印刷/DTP" },
-  { id: 39, conference_id: 1, name: "広告制作/デザイン" },
-  { id: 40, conference_id: 1, name: "専門職（弁護士/公認会計士/税理士など）" },
-  { id: 41, conference_id: 1, name: "コンサルティング" },
-  { id: 42, conference_id: 1, name: "その他のサービス業" },
-  { id: 43, conference_id: 1, name: "映像/音楽産業" },
-  { id: 44, conference_id: 1, name: "医療/福祉/病院" },
-  { id: 45, conference_id: 1, name: "農林/水産/鉱業" },
-  { id: 46, conference_id: 1, name: "建設業" },
-  { id: 47, conference_id: 1, name: "住宅/不動産" },
-  { id: 48, conference_id: 1, name: "政府/官公庁/団体" },
-  { id: 49, conference_id: 1, name: "地方自治体" },
-  { id: 50, conference_id: 1, name: "学校/教育機関" },
-  { id: 51, conference_id: 1, name: "研究所（民間/公共）" },
-  { id: 52, conference_id: 1, name: "自営業/独立事業者" },
-  { id: 53, conference_id: 1, name: "学生" },
-  { id: 54, conference_id: 1, name: "勤めていない" },
-  { id: 55, conference_id: 1, name: "該当なし" }
 )
 
 FormItem.seed(
@@ -339,9 +282,9 @@ Track.seed(
   { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
   { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
 
-  { id: 38, number: 1, name: "A", conference_id: 8, room_id: 1},
-  { id: 39, number: 2, name: "B", conference_id: 8, room_id: 2},
-  { id: 40, number: 3, name: "C", conference_id: 8, room_id: 3},
+  { id: 38, number: 1, name: "A", conference_id: 8, room_id: 11},
+  { id: 39, number: 2, name: "B", conference_id: 8, room_id: 12},
+  { id: 40, number: 3, name: "C", conference_id: 8, room_id: 13},
 )
 
 
@@ -590,4 +533,6 @@ EOS
 Ticket.seed(
   {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 454, conference_id: 7 },
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 7 },
+  {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "現地参加(日比谷会場)", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
+  {id: "5b31c315-5b70-4238-bf62-ed193480e9fd", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 8 },
 )

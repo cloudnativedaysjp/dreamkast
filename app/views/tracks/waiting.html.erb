@@ -119,8 +119,7 @@
           <div class="card-body">
             <div class="card-text">
               <ul>
-                <li><%= link_to "参加者ガイド", "https://sites.google.com/view/cndt2022-guide/", target: :_blank, rel: "noopener noreferrer" %>
-</li>
+                <li><%= link_to "参加者ガイド", "https://sites.google.com/view/cndt2022-guide/", target: :_blank, rel: "noopener noreferrer" %></li>
                 <li><%= link_to '参加方法変更', new_cancel_order_path(order_id: @profile.active_order.id) %></li>
                 <li><%= link_to "オンラインホワイトボード", 'https://miro.com/app/board/uXjVPWsauOI=/', target: :_blank, rel: "noopener noreferrer" %></li>
                 <li><%= link_to "CNDT2022 Blog記事一覧", "https://cloudnativedays.medium.com/list/cndt2022-2200d91cd1b6", target: :_blank, rel: "noopener noreferrer" %>
@@ -136,13 +135,11 @@
       </div>
     </section>
   </div>
-  <div class="row">
-    <% if @conference.show_sponsors %>
-    <section class="page-section" id="sponsors">
-      <%= render 'event/partial/sponsors', conference: @conference %>
-    </section>
-    <% end %>
-  </div>
+  <% if @conference.show_sponsors %>
+  <section class="page-section" id="sponsors">
+    <%= render 'event/partial/sponsors', conference: @conference %>
+  </section>
+  <% end %>
 
 </div>
 <script>

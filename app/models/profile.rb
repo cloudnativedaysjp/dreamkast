@@ -166,7 +166,7 @@ class Profile < ApplicationRecord
 
   def attend_offline?
     if active_order.present?
-      active_order.tickets.first.title == 'オフライン参加'
+      active_order.tickets.first.title == '現地参加'
     else
       false
     end

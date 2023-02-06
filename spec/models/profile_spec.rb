@@ -119,8 +119,8 @@ RSpec.describe(Profile, type: :model) do
       expect(profile.attend_offline?).to(be_truthy)
     end
 
-    it 'should return オフライン参加' do
-      expect(profile.way_to_attend).to(eq('オフライン参加'))
+    it 'should return 現地参加' do
+      expect(profile.way_to_attend).to(eq('現地参加'))
     end
   end
 end

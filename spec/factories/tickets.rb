@@ -44,7 +44,7 @@ FactoryBot.define do
     end
 
     trait :offline do
-      title { 'オフライン参加' }
+      title { '現地参加' }
       description { 'offline' }
       price { 0 }
       stock { 2000 }

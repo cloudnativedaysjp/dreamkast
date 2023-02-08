@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.0'
+ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.4'
@@ -43,7 +43,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.44.0'
+  gem 'rubocop', '~> 1.45.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec', '>= 2.0.0'
   gem 'annotate', require: false

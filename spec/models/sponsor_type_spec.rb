@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  name          :string(255)
 #  order         :integer
+#  visible       :boolean          default(TRUE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  conference_id :bigint           not null

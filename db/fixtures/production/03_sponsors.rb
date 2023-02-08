@@ -1399,6 +1399,12 @@ SponsorType.seed(
     name: "Logo",
     order: 6,
   },
+  {
+    id: 50,
+    conference_id: 8,
+    name: "Tool",
+    order: 7,
+  },
 )
 
 [

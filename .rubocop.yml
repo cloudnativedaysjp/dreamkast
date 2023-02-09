@@ -54,3 +54,6 @@ Naming/HeredocDelimiterNaming:
 
 Style/WordArray:
   Enabled: false
+
+Lint/Debugger:
+  Enabled: false

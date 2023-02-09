@@ -40,10 +40,10 @@ jobs:
     - name: yarn install
       run: |
         yarn
-    - name: Set up Ruby 3.2.0
+    - name: Set up Ruby 3.2.1
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2.0
+        ruby-version: 3.2.1
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run rubocop
       run: |

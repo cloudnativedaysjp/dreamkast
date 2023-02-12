@@ -117,6 +117,30 @@ paths:
           description: Invalid params supplied
         '404':
           description: Track not found
+  /api/v1/speakers:
+    get:
+      tags:
+        - Speaker
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Speaker'
+        '400':
+          description: Invalid [eventAbbr] supplied
+        '404':
+          description: Event not found
   /api/v1/talks:
     get:
       tags:
@@ -1032,6 +1056,50 @@ components:
         videoPlatform: "vimeo"
         videoId: "453935827"
         channelArn: "arn:aws:ivs:us-east-1:607167088920:channel/KdizL0w0PD7i"
+      required:
+        - id
+        - name
+    Speaker:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        company:
+          type: string
+          nullable: true
+        jobTitle:
+          type: string
+        profile:
+          type: string
+        githubId:
+          type: string
+          nullable: true
+        twitterId:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+      example:
+        - id: 1
+          name: "めちゃすごい人"
+          company: "Hoge Inc."
+          jobTitle: "Super Engineer"
+          profile: "This is profile"
+          githubId: "3aae1aa4-563b-4a8a-9116-7ef1f2b1b08c"
+          twitterId: "4639289c-b3fe-4049-8f25-58c2899c1286"
+          avatarUrl: "https://avatars.githubusercontent.com/u/107187?v=4" # r_takaishi's avatar of GitHub
+        - id: 2
+          name: "やんごとない人"
+          company: "Foo Inc."
+          jobTitle: "Great Engineer"
+          profile: "プロフィール"
+          githubId: "b677b66a-917e-4acb-b6ac-b7a09511e103"
+          twitterId: "87b72a9a-257f-4680-ab72-5edb4348124e"
+          avatarUrl: "https://avatars.githubusercontent.com/u/44778132?s=200&v=4" # cloudnativedaysjp's avatar of GitHub
       required:
         - id
         - name

@@ -1102,6 +1102,7 @@ components:
           nullable: true
         slotNum:
           type: number
+          nullable: true
       example:
         - id: 1
           trackId: 2

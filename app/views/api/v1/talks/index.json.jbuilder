@@ -23,5 +23,5 @@ json.array!(@talks) do |talk|
   json.actualStartTime(talk.actual_start_time)
   json.actualEndTime(talk.actual_end_time)
   json.presentationMethod(talk.presentation_method)
-  json.slotNum(talk.slot_number.to_i)
+  json.slotNum(talk.slot_number&.to_i)
 end

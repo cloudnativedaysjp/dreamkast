@@ -175,10 +175,8 @@ class Talk < ApplicationRecord
   end
 
   def slot_number
-    SLOT_MAP.each_with_index do |time, index|
-      if time > start_time.to_time.strftime('%H%M')
-        return index.to_s
-      end
+    SLOT_MAP.find_index do |time|
+      time > start_time.to_time.strftime('%H%M')
     end
   end
 

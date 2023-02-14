@@ -11,6 +11,12 @@ namespace :util do
 
     track_a_talks = [
       {
+        title: '開始までお待ちください',
+        start_time: '18:00:00',
+        end_time: '19:00:00',
+        abstract: 'intermission'
+      },
+      {
         title: 'オープニング/見どころ紹介',
         start_time: '19:00:00',
         end_time: '19:15:00',

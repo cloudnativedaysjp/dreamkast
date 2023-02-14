@@ -11,7 +11,7 @@ FROM ruby:3.2.1 as fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
 RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
-RUN bundle install
+RUN --mount=type=cache,uid=1000,target=/usr/local/bundle bundle install
 
 FROM ruby:3.2.1 as asset-compile
 ENV YARN_VERSION 1.22.19

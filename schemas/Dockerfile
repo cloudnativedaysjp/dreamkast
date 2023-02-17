@@ -1,10 +1,10 @@
-FROM swaggerapi/swagger-codegen-cli-v3:3.0.40 as builder
+FROM swaggerapi/swagger-codegen-cli-v3:3.0.41 as builder
 WORKDIR /mock-seed
 COPY ./swagger.yml ./
 WORKDIR /mock-server
 RUN java -jar /opt/swagger-codegen-cli/swagger-codegen-cli.jar generate -l nodejs-server -i /mock-seed/swagger.yml -l nodejs-server -o ./
 
-FROM node:16.19.0-alpine as mock
+FROM node:16.19.1-alpine as mock
 WORKDIR /mock-server
 COPY --from=builder /mock-server ./
 RUN npm install

@@ -1522,6 +1522,8 @@ components:
                 type: "number"
               timestamp:
                 type: "number"
+              desc:
+                type: "string"
             additionalProperties: false
       additionalProperties: false
     ProfilePoint:

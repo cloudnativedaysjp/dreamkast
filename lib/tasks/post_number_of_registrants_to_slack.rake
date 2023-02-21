@@ -11,8 +11,10 @@ namespace :util do
     end
 
     client = Slack::Web::Client.new
-    resp = client.conversations_list(exclude_archived: true)
-    channels = resp.channels
+    channels = []
+    client.conversations_list(exclude_archived: true) do |resp|
+      channels.concat(resp.channels)
+    end
     conferences = Conference.unarchived
 
     conferences.each do |conference|

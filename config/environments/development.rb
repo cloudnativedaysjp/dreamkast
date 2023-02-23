@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.hosts << 'host.docker.internal'
   # config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
-  config.action_cable.allowed_request_origins = ['http://host.docker.internal:3000/*', 'http://localhost:8080']
+  config.action_cable.allowed_request_origins = ['http://host.docker.internal:3000/*', 'http://localhost:8080', 'http://localhost:3001']
 
 
   # Debug mode disables concatenation and preprocessing of assets.

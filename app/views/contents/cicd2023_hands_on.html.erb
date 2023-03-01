@@ -43,13 +43,17 @@
             </li>
           </ul>
 
-          <br>
+        <br><br>
 
+        <div class="handson-session">
           <h5><strong>『Snyk ハンズオン ワークショップ - Snyk四製品(Snyk Code & Open Source & Container & IaC)の体験』by Snyk株式会社</strong></h5>
-
           <ul>
             <li>
+            <% if @current_user %>
               申し込みURL：<a href="https://go.snyk.io/jp-workshop-20230317.html">https://go.snyk.io/jp-workshop-20230317.html</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CICD2023 サイトにログインしてください。</strong>
+            <% end %>
             </li>
             <li>
             開催日時：2023/03/17 (金) 14:00-16:00
@@ -63,11 +67,19 @@
           <br>
           開発者とセキュリティチームは、カスタムコードのセキュリティ問題とオープンソースの依存関係の脆弱性の両方を簡単に見つけて修正し、リスクを低減して開発のスピードを向上させることができます。ぜひハンズオンセッションでSnykをご体感ください。<br>
           </p>
+        </div>
 
+        <br><br>
+
+        <div class="handson-session">
           <h5><strong>『Sysdigを使ってKubernetes環境のランタイム脅威検知とセキュリティポスチャー管理を実施』by Sysdig Japan合同会社</strong></h5>
           <ul>
             <li>
+            <% if @current_user %>
               申し込みURL：<a href="https://go.sysdig.com/2023.03.17-cloudsecurityhandson_sysdig.html">https://go.sysdig.com/2023.03.17-cloudsecurityhandson_sysdig.html</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CICD2023 サイトにログインしてください。</strong>
+            <% end %>
             </li>
             <li>
             開催日時：2023/03/17 (金) 14:00-16:00

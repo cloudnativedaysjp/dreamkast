@@ -57,6 +57,8 @@
                 <li class="nav-item"><%= link_to "Whiteboard", 'https://miro.com/app/board/uXjVPWsauOI=/', class: "nav-link js-scroll-trigger", target: :_blank, rel: "noopener noreferrer" %></li>
               <% end %>
               <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
+            <% when 'cicd2023' %>
+              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>
           <% end %>
         <% end %>

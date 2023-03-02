@@ -399,6 +399,7 @@ if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
   import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
+  import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 
   Video.seed(
     { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true, slido_id: "styoi2cj"},

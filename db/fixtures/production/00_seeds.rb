@@ -200,6 +200,7 @@ ConferenceDay.seed(
   # CICD2023
   {id: 21, date: "2023-03-20", start_time: "12:20", end_time: "18:00", conference_id: 8, internal: false},
   {id: 22, date: "2023-02-27", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
+  {id: 23, date: "2023-03-04", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal
 )
 
 FormItem.seed(

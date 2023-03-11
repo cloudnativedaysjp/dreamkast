@@ -24,17 +24,27 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
+    date = params[:talk][:date]
+    track_name = params[:talk][:track_name]
     talk = Talk.find(params[:talk][:id])
 
     respond_to do |format|
       on_air_talks_of_other_days = talk.track.talks.accepted_and_intermission.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
       if on_air_talks_of_other_days.size.positive?
+        format.html {
+          update_variables_for_tracks(talk)
+          redirect_to(admin_tracks_path(date:, track_name:), alert: "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air.")
+        }
         format.turbo_stream {
           update_variables_for_tracks(talk)
           flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
         }
       else
         talk.start_streaming
+        format.html {
+          update_variables_for_tracks(talk)
+          redirect_to(admin_tracks_path(date:, track_name:), notice: "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
+        }
         format.turbo_stream {
           update_variables_for_tracks(talk)
           flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
@@ -44,6 +54,8 @@ class Admin::TalksController < ApplicationController
   end
 
   def stop_on_air
+    date = params[:talk][:date]
+    track_name = params[:talk][:track_name]
     talk = Talk.find(params[:talk][:id])
     talk.stop_streaming
     @conference_day = talk.conference_day
@@ -54,6 +66,9 @@ class Admin::TalksController < ApplicationController
                  .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
 
     respond_to do |format|
+      format.html {
+        redirect_to(admin_tracks_path(date:, track_name:), notice: "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
+      }
       format.turbo_stream {
         flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
       }

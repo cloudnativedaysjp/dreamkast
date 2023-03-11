@@ -27,7 +27,7 @@ class Admin::TalksController < ApplicationController
     talk = Talk.find(params[:talk][:id])
 
     respond_to do |format|
-      on_air_talks_of_other_days = talk.track.talks.accepted.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
+      on_air_talks_of_other_days = talk.track.talks.accepted_and_intermission.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
       if on_air_talks_of_other_days.size.positive?
         format.turbo_stream {
           update_variables_for_tracks(talk)

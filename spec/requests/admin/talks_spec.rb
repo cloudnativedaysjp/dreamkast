@@ -69,10 +69,6 @@ describe Admin::SpeakersController, type: :request do
 
   describe 'POST :event/admin/talks#start_on_air' do
     let(:roles) { ['CNDT2020-Admin'] }
-    let!(:talk1) { create(:talk1, :accepted, track_id: 1, conference_day_id: 1) }
-    let!(:talk2) { create(:talk2, :accepted, track_id: 1, conference_day_id: 2) }
-    let!(:video1) { create(:video, talk: talk1) }
-    let!(:video2) { create(:video, talk: talk2) }
 
     before do
       ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
@@ -85,26 +81,59 @@ describe Admin::SpeakersController, type: :request do
       end)
     end
 
-    describe 'If on air talk does not exists on track 1' do
-      let!(:video1) { create(:video, talk: talk1) }
-      let!(:video2) { create(:video, talk: talk2) }
+    describe 'talk is session' do
+      let!(:talk1) { create(:talk1, :accepted, track_id: 1, conference_day_id: 1) }
+      let!(:talk2) { create(:talk2, :accepted, track_id: 1, conference_day_id: 2) }
 
-      it 'success to change to start on air' do
-        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk1.id }, format: 'turbo_stream' }
-        expect(response).to(be_successful)
-        expect(Video.find(talk1.video.id).on_air).to(be_truthy)
+      describe 'If on air talk does not exists on track 1' do
+        let!(:video1) { create(:video, talk: talk1, on_air: false) }
+        let!(:video2) { create(:video, talk: talk2, on_air: false) }
+
+        it 'success to change to start on air' do
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'turbo_stream' }
+          expect(response).to(be_successful)
+          expect(Video.find(talk2.video.id).on_air).to(be_truthy)
+        end
+      end
+
+      describe 'If on air talk exists on track 1' do
+        let!(:video1) { create(:video, talk: talk1, on_air: true) }
+        let!(:video2) { create(:video, talk: talk2, on_air: false) }
+
+        it 'can not to change to start on air' do
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'turbo_stream' }.to_json, headers: { "Content-Type": 'application/json' }
+          expect(response).to(be_successful)
+          expect(Video.find(talk2.video.id).on_air).to(be_falsey)
+          expect(response.body).to(include("Talk id=#{talk1.id} are already on_air."))
+        end
       end
     end
 
-    describe 'If on air talk does not exists on track 1'  do
-      let!(:video1) { create(:video, talk: talk1, on_air: true) }
-      let!(:video2) { create(:video, talk: talk2, on_air: false) }
+    describe 'talk is intermission' do
+      let!(:intermission1) { create(:intermission, track_id: 1, conference_day_id: 1) }
+      let!(:intermission2) { create(:intermission, track_id: 1, conference_day_id: 2) }
 
-      it 'can not to change to start on air' do
-        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id }, format: 'turbo_stream' }.to_json, headers: { "Content-Type": 'application/json' }
-        expect(response).to(be_successful)
-        expect(Video.find(talk2.video.id).on_air).to(be_falsey)
-        expect(response.body).to(include("Talk id=#{talk1.id} are already on_air."))
+      describe 'If on air talk exists on track 1' do
+        let!(:video1) { create(:video, talk: intermission1, on_air: false) }
+        let!(:video2) { create(:video, talk: intermission2, on_air: false) }
+
+        it 'can not to change to start on air' do
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id }, format: 'turbo_stream' }.to_json, headers: { "Content-Type": 'application/json' }
+          expect(response).to(be_successful)
+          expect(Video.find(intermission2.video.id).on_air).to(be_truthy)
+        end
+      end
+
+      context 'exists on air talk is intermission' do
+        let!(:video1) { create(:video, talk: intermission1, on_air: true) }
+        let!(:video2) { create(:video, talk: intermission2, on_air: false) }
+
+        it 'can not to change to start on air' do
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id }, format: 'turbo_stream' }.to_json, headers: { "Content-Type": 'application/json' }
+          expect(response).to(be_successful)
+          expect(Video.find(intermission2.video.id).on_air).to(be_falsey)
+          expect(response.body).to(include("Talk id=#{intermission1.id} are already on_air."))
+        end
       end
     end
   end

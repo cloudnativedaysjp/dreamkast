@@ -35,20 +35,20 @@ class Admin::TalksController < ApplicationController
           update_variables_for_tracks(talk)
           redirect_to(admin_tracks_path(date:, track_name:), alert: "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air.")
         }
-        format.turbo_stream {
-          update_variables_for_tracks(talk)
-          flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-        }
+        # format.turbo_stream {
+        #   update_variables_for_tracks(talk)
+        #   flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
+        # }
       else
         talk.start_streaming
         format.html {
           update_variables_for_tracks(talk)
           redirect_to(admin_tracks_path(date:, track_name:), notice: "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
         }
-        format.turbo_stream {
-          update_variables_for_tracks(talk)
-          flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-        }
+        # format.turbo_stream {
+        #   update_variables_for_tracks(talk)
+        #   flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+        # }
       end
     end
   end
@@ -69,9 +69,9 @@ class Admin::TalksController < ApplicationController
       format.html {
         redirect_to(admin_tracks_path(date:, track_name:), notice: "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
       }
-      format.turbo_stream {
-        flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-      }
+      # format.turbo_stream {
+      #   flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
+      # }
     end
   end
 

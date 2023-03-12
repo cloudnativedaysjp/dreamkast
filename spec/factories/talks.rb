@@ -218,4 +218,18 @@ FactoryBot.define do
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
   end
+
+  factory :intermission, class: Talk do
+    title { '開始までしばらくお待ちください' }
+    start_time { '10:00' }
+    end_time { '11:00' }
+    conference_id { 1 }
+    conference_day_id { 3 }
+    abstract { 'intermission' }
+    talk_difficulty_id { 1 }
+    talk_category_id { 1 }
+    track_id { 1 }
+    show_on_timetable { false }
+    video_published { true }
+  end
 end

@@ -35,8 +35,8 @@ namespace :util do
       %w[17:00:00 17:20:00 休憩 intermission],
       #  17:20:00 18:00:00 Session
       %w[18:00:00 18:20:00 『よるイベ！』は18:20から開催します。しばらくお待ちください intermission],
-      %w[18:20:00 20:00:00 よるイベ！ intermission],
-      %w[20:00:00 23:00:00 本日のイベントは終了しました intermission]
+      %w[18:20:00 19:30:00 よるイベ！ intermission],
+      %w[19:30:00 23:00:00 本日のイベントは終了しました intermission]
     ]
 
     other_track_talks = [
@@ -54,8 +54,8 @@ namespace :util do
       %w[17:00:00 17:20:00 休憩 intermission],
       #  17:20:00 18:00:00 Session
       %w[18:00:00 18:20:00 『よるイベ！』は18:20から開催します。しばらくお待ちください intermission],
-      %w[18:20:00 20:00:00 トラックAにて『よるイベ！』を配信中！ intermission],
-      %w[20:00:00 23:00:00 本日のイベントは終了しました intermission]
+      %w[18:20:00 19:30:00 トラックAにて『よるイベ！』を配信中！ intermission],
+      %w[19:30:00 23:00:00 本日のイベントは終了しました intermission]
     ]
 
 

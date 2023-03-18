@@ -229,7 +229,7 @@ ConferenceDay.seed(
 
   # CICD2023
   {id: 21, date: "2023-03-20", start_time: "12:20", end_time: "18:00", conference_id: 8, internal: false},
-  {id: 22, date: "2023-02-07", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
+  {id: 22, date: "2023-02-27", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
   {id: 23, date: "2023-03-04", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal
   {id: 24, date: "2023-03-19", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal2
 )
@@ -434,6 +434,7 @@ import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
 import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
 import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

@@ -178,6 +178,23 @@ EOS
 EOS
   },
   {
+    id: 9,
+    name: "CloudNative Days Fukuoka 2023",
+    abbr: "cndf2023",
+    theme: "“Unlearning” 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    about: <<'EOS'
+      業務でクラウドを利用していても、その真のパワーを活用できていないと感じている人は多いのではないでしょうか？
+      一方で、高度なクラウド技術を持っているのに、自信が持てなかったり、自らの真価に気づいていない組織も多いのではないでしょうか。
+      そこで、いったん「クラウドネイティブとはかくあるべき」という固定概念を外して、気軽にクラウド技術について語り合いませんか？
+      クラウドやコンテナを使い倒したいインフラエンジニア、クラウドの可能性をもっと引き出したいアプリエンジニアが、知見や課題を共有しながら、新たな人や技術と繋がる場所を作りたいと考えています。
+
+　    そこで、CloudNative Days Japan Tour復活の第一弾として、先進IT・スタートアップコミュニティを擁する福岡の地でCNDF2023を開催します。福岡発で、現地だけでなくオンライン配信を通して、全国のクラウドコミュニティの活性化への貢献を目指します。
+EOS
+  },
+  {
     id: 10,
     name: "Test Event Winter 2020",
     conference_status: "archived",
@@ -232,6 +249,10 @@ ConferenceDay.seed(
   {id: 22, date: "2023-02-27", start_time: "19:00", end_time: "21:00", conference_id: 8, internal: true}, #Pre event
   {id: 23, date: "2023-03-04", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal
   {id: 24, date: "2023-03-19", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal2
+
+  # CNDF2023
+  {id: 25, date: "2023-08-02", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false}, # 前夜祭
+  {id: 25, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
 )
 
 FormItem.seed(

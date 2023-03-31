@@ -33,5 +33,6 @@
     "github-actions",
     "npm",
   ],
+  "prHeader": "✅ マイナーチェンジ以上のアップデートは動作確認をしてからマージすること",
   "reviewers": ["team:dk-rails"]
 }

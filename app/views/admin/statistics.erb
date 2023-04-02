@@ -7,5 +7,28 @@
       <h3>Export to CSV</h3>
       <%= button_to 'エクスポート', admin_export_statistics_path, {method: :get } %>
     </div>
+
+
+    <div class="col-12">
+      <h2>Talks</h2>
+      <table class="table table-striped talks_table" >
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">登録者数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @talks.each do |talk| %>
+          <tr>
+            <td><%= talk.id %></td>
+            <td><%= talk.title %></td>
+            <td><%= talk.registered_talks.size %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 <% end %>

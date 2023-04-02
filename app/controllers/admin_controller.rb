@@ -25,6 +25,7 @@ class AdminController < ApplicationController
   end
 
   def statistics
+    @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
   end
 
   def export_statistics

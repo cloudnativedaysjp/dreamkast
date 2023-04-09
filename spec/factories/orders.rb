@@ -5,7 +5,7 @@
 #  id         :string(255)      not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  profile_id :bigint           not null
+#  profile_id :bigint
 #
 # Indexes
 #

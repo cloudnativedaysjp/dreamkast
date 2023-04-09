@@ -5,7 +5,7 @@
 #  id         :string(255)      not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  profile_id :bigint           not null
+#  profile_id :bigint
 #
 # Indexes
 #
@@ -18,7 +18,7 @@
 class Order < ApplicationRecord
   before_create :set_uuid
 
-  belongs_to :profile
+  belongs_to :profile, optional: true
 
   has_one :cancel_order
   has_many :orders_tickets

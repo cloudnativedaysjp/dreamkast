@@ -18,7 +18,7 @@
 class Order < ApplicationRecord
   before_create :set_uuid
 
-  belongs_to :profile
+  belongs_to :profile, optional: true
 
   has_one :cancel_order
   has_many :orders_tickets

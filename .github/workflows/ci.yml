@@ -32,18 +32,18 @@ jobs:
       shell: bash
       run: |
         docker-compose up -d db redis
-    - name: Set up Node.js 16.19.1
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 16.19.1
+        node-version-file: '.node-version'
         cache: 'yarn'
     - name: yarn install
       run: |
         yarn
-    - name: Set up Ruby 3.2.2
+    - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2.2
+        ruby-version: '.ruby-version'
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run rubocop
       run: |

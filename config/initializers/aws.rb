@@ -4,12 +4,12 @@ if ENV['AWS_ACCESS_KEY_ID']
   Aws::Rails.add_action_mailer_delivery_method(
     :ses,
     credentials: creds,
-    region: 'ap-northeast-1'
+    region: 'us-west-2'
   )
 else
   Aws::Rails.add_action_mailer_delivery_method(
     :ses,
-    region: 'ap-northeast-1'
+    region: 'us-west-2'
   )
 end
 

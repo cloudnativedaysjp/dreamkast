@@ -28,12 +28,14 @@ class Conference < ApplicationRecord
   STATUS_OPENED = 'opened'.freeze
   STATUS_CLOSED = 'closed'.freeze
   STATUS_ARCHIVED = 'archived'.freeze
+  STATUS_MIGRATED = 'migrated'.freeze
 
   enum conference_status: {
     registered: STATUS_REGISTERED,
     opened: STATUS_OPENED,
     closed: STATUS_CLOSED,
-    archived: STATUS_ARCHIVED
+    archived: STATUS_ARCHIVED,
+    migrated: STATUS_MIGRATED
   }
   enum speaker_entry: { speaker_entry_disabled: 0, speaker_entry_enabled: 1 }
   enum attendee_entry: { attendee_entry_disabled: 0, attendee_entry_enabled: 1 }

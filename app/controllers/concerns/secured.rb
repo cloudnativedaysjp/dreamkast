@@ -2,6 +2,7 @@ module Secured
   extend ActiveSupport::Concern
 
   included do
+    before_action :redirect_to_website
     before_action :to_preparance, :redirect_to_registration, if: :should_redirect?
     before_action :logged_in_using_omniauth?, :to_preparance, :need_order?, if: :use_secured_before_action?
     helper_method :admin?, :speaker?, :beta_user?
@@ -12,6 +13,17 @@ module Secured
       set_current_user
     else
       redirect_to('/auth/login?origin=' + request.fullpath)
+    end
+  end
+
+  def redirect_to_website
+    if set_conference.migrated?
+      case [controller_name, action_name]
+      in ['talks', 'show']
+        redirect_to("https://cloudnativedays.jp/#{request.fullpath}")
+      else
+        redirect_to("https://cloudnativedays.jp/#{params[:event]}")
+      end
     end
   end
 

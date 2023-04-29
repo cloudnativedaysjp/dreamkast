@@ -5,6 +5,25 @@ describe TalksController, type: :request do
   let(:roles) { [] }
 
   describe 'GET /cndt2020/talks/:id' do
+    context 'CNDT2020 is migrated' do
+      let!(:cndt2020) { create(:cndt2020, :migrated) }
+      let!(:talk1) { create(:talk1) }
+      let!(:talk2) { create(:talk2) }
+      let!(:video) { create(:video) }
+
+      before do
+        create(:talk_category1, conference: cndt2020)
+        create(:talk_difficulties1, conference: cndt2020)
+      end
+
+      it 'redirect to website' do
+        get '/cndt2020/talks/1'
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status('302'))
+        expect(response).to(redirect_to('https://cloudnativedays.jp/cndt2020/talks/1'))
+      end
+    end
+
     context 'CNDT2020 is registered' do
       let!(:cndt2020) { create(:cndt2020, :registered) }
       let!(:talk1) { create(:talk1) }
@@ -385,6 +404,17 @@ describe TalksController, type: :request do
 
   describe 'GET /cndt2020/talks' do
     let!(:userinfo) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { 'https://cloudnativedays.jp/roles' => 'CNDT2020-Admin', sub: '' } } } } }
+
+    context 'CNDT2020 is migrated' do
+      let!(:cndt2020) { create(:cndt2020, :migrated) }
+
+      it 'redirect to website' do
+        get '/cndt2020/talks'
+        expect(response).to_not(be_successful)
+        expect(response).to(have_http_status('302'))
+        expect(response).to(redirect_to('https://cloudnativedays.jp/cndt2020'))
+      end
+    end
 
     context 'CNDT2020 is registered' do
       before { create(:cndt2020, :registered) }

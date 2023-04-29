@@ -1,5 +1,6 @@
 module Secured
   extend ActiveSupport::Concern
+  WEBSITE_BASE_URL = 'https://cloudnativedays.jp'.freeze
 
   included do
     before_action :redirect_to_website
@@ -20,9 +21,9 @@ module Secured
     if set_conference.migrated?
       case [controller_name, action_name]
       in ['talks', 'show']
-        redirect_to("https://cloudnativedays.jp/#{request.fullpath}")
+        redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s)
       else
-        redirect_to("https://cloudnativedays.jp/#{params[:event]}")
+        redirect_to(URI.join(WEBSITE_BASE_URL, params[:event]).to_s)
       end
     end
   end

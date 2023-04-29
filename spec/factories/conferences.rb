@@ -64,6 +64,11 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       speaker_entry { 0 }
     end
 
+    trait :migrated do
+      conference_status { Conference::STATUS_MIGRATED }
+      speaker_entry { 0 }
+    end
+
     trait :speaker_entry_enabled do
       speaker_entry { 1 }
     end

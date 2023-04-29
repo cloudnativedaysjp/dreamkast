@@ -14,7 +14,7 @@ describe AdminController, type: :request do
         get admin_path(event: 'cndt2020')
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020'))
+        expect(response).to(redirect_to('/auth/login?origin=/cndt2020/admin'))
       end
     end
 
@@ -68,11 +68,11 @@ describe AdminController, type: :request do
 
   describe 'GET admin#users' do
     context "user doesn't logged in" do
-      it 'redirect to event top page' do
+      it 'redirect to login page' do
         get admin_users_path(event: 'cndt2020')
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020'))
+        expect(response).to(redirect_to('/auth/login?origin=/cndt2020/admin/users'))
       end
     end
 

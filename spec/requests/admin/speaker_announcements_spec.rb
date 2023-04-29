@@ -9,11 +9,11 @@ describe Admin::SpeakerAnnouncementsController, type: :request do
   describe 'GET :event/admin/speaker_announcements#index' do
     subject { get(admin_speaker_announcements_path(event: 'cndt2020')) }
     context "user doesn't logged in" do
-      it 'redirect to event top page' do
+      it 'redirect to login page' do
         subject
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020'))
+        expect(response).to(redirect_to('/auth/login?origin=/cndt2020/admin/speaker_announcements'))
       end
     end
 

@@ -103,7 +103,9 @@ module ApplicationHelper
     end
   end
 
-  def vote_api_url(id)
-    File.join(ENV['DREAMKAST_API_ADDR'], 'api/v1/talks', id, 'vote')
+  def vote_api_url
+    [
+      ENV.fetch('DREAMKAST_WEAVER_ADDR', 'http://localhost:8080'), 'query'
+    ].join('/')
   end
 end

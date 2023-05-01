@@ -1,7 +1,9 @@
 module Secured
   extend ActiveSupport::Concern
+  WEBSITE_BASE_URL = 'https://cloudnativedays.jp'.freeze
 
   included do
+    before_action :redirect_to_website
     before_action :to_preparance, :redirect_to_registration, if: :should_redirect?
     before_action :logged_in_using_omniauth?, :to_preparance, :need_order?, if: :use_secured_before_action?
     helper_method :admin?, :speaker?, :beta_user?
@@ -12,6 +14,17 @@ module Secured
       set_current_user
     else
       redirect_to('/auth/login?origin=' + request.fullpath)
+    end
+  end
+
+  def redirect_to_website
+    if set_conference.migrated?
+      case [controller_name, action_name]
+      in ['talks', 'show']
+        redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s)
+      else
+        redirect_to(URI.join(WEBSITE_BASE_URL, params[:event]).to_s)
+      end
     end
   end
 

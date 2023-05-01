@@ -4,6 +4,17 @@ describe EventController, type: :request do
   subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
 
+  context 'CNDT2020 is migrated' do
+    let!(:cndt2020) { create(:cndt2020, :migrated) }
+
+    it 'redirect to website' do
+      get '/cndt2020'
+      expect(response).to_not(be_successful)
+      expect(response).to(have_http_status('302'))
+      expect(response).to(redirect_to('https://cloudnativedays.jp/cndt2020'))
+    end
+  end
+
   describe 'GET event#show' do
     before do
       create(:cndt2020)

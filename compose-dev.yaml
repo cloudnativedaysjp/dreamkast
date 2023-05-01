@@ -31,6 +31,7 @@ services:
       SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
       REVIEW_APP: "true"
       DREAMKAST_NAMESPACE: "localhost"
+      DREAMKAST_WEAVER_ADDR: "localhost:8080"
     tty: true
     stdin_open: true
     tmpfs:

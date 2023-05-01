@@ -105,7 +105,7 @@ module ApplicationHelper
 
   def vote_api_url
     [
-      ENV.fetch('DREAMKAST_WEAVER_ADDR', 'http://localhost:8080'), 'query'
+      ENV['DREAMKAST_WEAVER_ADDR'], 'query'
     ].join('/')
   end
 end

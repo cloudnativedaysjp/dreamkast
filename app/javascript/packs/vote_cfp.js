@@ -21,6 +21,9 @@ toggleVoted = function() {
 }
 
 document.getElementById('vote').addEventListener('click', function() {
+    function print_vote_alert () {
+        alert("投票を受け付けられませんでした。\nしばらく時間をおいてから再度の投票をお願いします。");
+    }
     const voteUrl = document.getElementById('vote').getAttribute('vote_url');
 
     const eventAbbr = document.getElementById('vote').getAttribute('event_name');
@@ -35,16 +38,26 @@ document.getElementById('vote').addEventListener('click', function() {
     const body = JSON.stringify({ query });
     const headers = { 'Content-Type': 'application/json' };
 
-    fetch(voteUrl,{ method, headers, body})
-        .then(r => r.json())
-        .then(data => {
-          if (data.hasOwnProperty('errors')) {
-              alert("投票を受け付けられませんでした。\nしばらく時間をおいてから再度の投票をお願いします。");
-          } else {
-              setVotedId(talkId);
-              toggleVoted();
-          }
-        })
+    try {
+        fetch(voteUrl,{ method, headers, body})
+            .then(r=> {
+              if (!r.ok) {
+                  throw new Error();
+              }
+              data = r.json();
+              if (data.hasOwnProperty('errors')) {
+                  throw new Error();
+              } else {
+                  setVotedId(talkId);
+                  toggleVoted();
+              }
+            })
+            .catch(e => {
+                  print_vote_alert();
+            })
+    } catch(e) {
+        print_vote_alert();
+    }
     return false;
 });
 

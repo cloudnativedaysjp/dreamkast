@@ -371,6 +371,25 @@ TalkCategory.seed(
   { id: 70, conference_id: 7, name: "組織論"},
   { id: 71, conference_id: 7, name: "その他"},
   { id: 72, conference_id: 7, name: "Keynote"},
+
+  { id: 73, conference_id: 9, name: "CI / CD"},
+  { id: 74, conference_id: 9, name: "Customizing / Extending"},
+  { id: 75, conference_id: 9, name: "IoT / Edge"},
+  { id: 76, conference_id: 9, name: "Microservices / Services Mesh"},
+  { id: 77, conference_id: 9, name: "ML / HPC"},
+  { id: 78, conference_id: 9, name: "Networking"},
+  { id: 79, conference_id: 9, name: "Operation / Monitoring / Logging"},
+  { id: 80, conference_id: 9, name: "Application / Development"},
+  { id: 81, conference_id: 9, name: "Runtime"},
+  { id: 82, conference_id: 9, name: "Security"},
+  { id: 83, conference_id: 9, name: "Serverless / FaaS"},
+  { id: 84, conference_id: 9, name: "Storage / Database"},
+  { id: 85, conference_id: 9, name: "Architecture Design"},
+  { id: 86, conference_id: 9, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 87, conference_id: 9, name: "NFV / Edge"},
+  { id: 88, conference_id: 9, name: "組織論"},
+  { id: 89, conference_id: 9, name: "その他"},
+  { id: 90, conference_id: 9, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -399,6 +418,9 @@ TalkDifficulty.seed(
   { id: 57, conference_id: 8, name: "初級者"},
   { id: 58, conference_id: 8, name: "中級者"},
   { id: 59, conference_id: 8, name: "上級者"},
+  { id: 60, conference_id: 9, name: "初級者"},
+  { id: 61, conference_id: 9, name: "中級者"},
+  { id: 62, conference_id: 9, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -447,4 +469,6 @@ Ticket.seed(
   {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 7 },
   {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "現地参加", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
   {id: "5b31c315-5b70-4238-bf62-ed193480e9fd", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 8 },
+  {id: "a7a3e5d5-0d8e-1c29-1c29-7004affe194a", title: "現地参加", description: "aaaa", price: 0, stock: 400, conference_id: 9 },
+  {id: "703dc953-d3dc-5964-7c4a-815ee2498aba", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 9 },
 )

@@ -31,7 +31,7 @@ jobs:
     - name: Run database
       shell: bash
       run: |
-        docker-compose up -d db redis
+        docker compose up -d db redis
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:

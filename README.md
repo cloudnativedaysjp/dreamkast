@@ -12,7 +12,7 @@ See [Docs](docs/README.md)
 
 ## Prerequisites
 
-- Docker Compose
+- Docker Compose V2 (bundled with Docker Desktop or follow [the official doc](https://docs.docker.com/compose/install/linux/)) 
 - Auth0 application keys
 
 ## How to setup dev environment
@@ -116,7 +116,7 @@ aws ecr get-login-password | docker login --username AWS --password-stdin http:/
 Then, setup databases, ui and load balancer by running Docker Compose
 
 ```
-$ docker-compose pull ui
+$ docker compose pull ui
 $ docker compose up -d fifo-worker db redis nginx localstack ui
 ```
 

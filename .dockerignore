@@ -1,11 +1,11 @@
 .git
 .github
 .env
-docker-compose.yaml
+compose.yaml
+compose-dev.yaml
 Dockerfile
 log
 node_modules
-test-docker-compose.yaml
 tmp
 vendor
 config/master.key

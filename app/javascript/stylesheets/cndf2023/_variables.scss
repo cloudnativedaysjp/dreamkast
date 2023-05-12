@@ -4,15 +4,16 @@ $orange: #f4623a;
 $purple: #BD4392;
 $dark-blue: #206A9B;
 $brown: #5c4d42;
-// CNDF2023 Theme color(Temporary)
-$water-surface: #423A57;
-$joy: #EE8591;
-$infinity-blue: #3786C8;
-$horizon-blue: #A0D8EA;
-$text: $water-surface;
+// CNDF2023 Theme color
+$kurotobi-iro: #432f2f;
+$shuiro: #e94709;
+$meadow-green: #65AB31;
+$konpeki-iro: #007bbb;
+$torinoko-iro: #fff1cf;
+$text: $kurotobi-iro;
 //- Override primary color
-$primary: $water-surface;
-$secondary: $infinity-blue;
+$primary: $meadow-green;
+$secondary: $konpeki-iro;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,

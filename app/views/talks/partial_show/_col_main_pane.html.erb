@@ -8,17 +8,17 @@
         <%= render 'talks/partial_show/facebook_share_button', url: request.original_url %>
       </h3>
       <h4>
-        <% if talk.start_time.present? && 
+        <% if talk.start_time.present? &&
               talk.end_time.present? &&
               talk.conference_day.present? %>
-          Track <%= talk.track.name %> 
-          <%= talk.conference_day.date.strftime("%Y/%m/%d") %> 
+          Track <%= talk.track.name %>
+          <%= talk.conference_day.date.strftime("%Y/%m/%d") %>
           <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
         <% elsif talk.proposal.present? && !talk.sponsor_session? %>
-          Proposal 
+          Proposal
           <% case talk.proposal.status %>
           <% when "registered" %>
-          (採択待ち) 
+          (採択待ち)
           <% when "accepted" %>
           (採択)
           <% when "rejected" %>
@@ -38,7 +38,7 @@
       <div class="row py-3">
         <div class="col-auto col-md-auto">
           <% if talk.proposal.present? && talk.proposal.status == 'registered' %>
-            <button class="btn btn-primary inline" id="vote" vote_url="<%= vote_api_url(talk.id.to_s) %>" event_name="<%= @conference.abbr %>" talk_id="<%= talk.id %>" type="button">👍投票する</button>
+            <button class="btn btn-primary inline" id="vote" vote_url="<%= vote_api_url %>" event_name="<%= @conference.abbr %>" talk_id="<%= talk.id %>" type="button">👍投票する</button>
           <% end %>
         </div>
       </div>

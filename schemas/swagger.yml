@@ -141,6 +141,30 @@ paths:
           description: Invalid [eventAbbr] supplied
         '404':
           description: Event not found
+  /api/v1/proposals:
+    get:
+      tags:
+        - Proposal
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proposal'
+        '400':
+          description: Invalid [eventAbbr] supplied
+        '404':
+          description: Event not found
   /api/v1/talks:
     get:
       tags:
@@ -1233,6 +1257,32 @@ components:
         - talkDuration
         - talkDifficulty
         - talkCategory
+    Proposal:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        status:
+          type: string
+        conferenceId:
+          type: number
+        talkId:
+          type: number
+      required:
+        - id
+        - status
+        - conferenceId
+        - talkId
+      example:
+        - id: 1
+          status: "accepted"
+          conferenceId: 1
+          talkId: 1
+        - id: 2
+          status: "rejected"
+          conferenceId: 1
+          talkId: 2
     ChatMessage:
       type: object
       additionalProperties: false

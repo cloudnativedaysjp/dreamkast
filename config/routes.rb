@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:index, :show], path: 'events'
       resources :talks, only: [:index, :show, :update]
+      resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]
       resources :sponsors, only: [:index]

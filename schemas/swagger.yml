@@ -1298,6 +1298,10 @@ components:
           status: "rejected"
           conferenceId: 1
           talkId: 2
+        - id: 3
+          status: "registered"
+          conferenceId: 1
+          talkId: 3
     ChatMessage:
       type: object
       additionalProperties: false

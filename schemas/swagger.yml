@@ -1269,6 +1269,21 @@ components:
           type: number
         talkId:
           type: number
+        title:
+          type: string
+        abstract:
+          type: string
+        speakers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              id:
+                type: number
+        params:
+          type: object
       required:
         - id
         - status

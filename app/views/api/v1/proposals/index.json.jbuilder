@@ -5,7 +5,7 @@ json.array!(@proposals) do |proposal|
   json.title(proposal.talk.title)
   json.status(proposal.status_message)
   json.abstract(proposal.talk.abstract)
-  json.speakers(proposal.talk.speakers.map { |speaker| { id: speaker.id, name: speaker.name } })
+  json.speakers(proposal.talk.speakers.map { |speaker| { id: speaker.id, name: speaker.name, twitterId: speaker.twitter_id } })
   json.params do
     json.talk_difficulty(proposal.talk.talk_difficulty&.name)
     proposal.talk.proposal_items.map do |item|

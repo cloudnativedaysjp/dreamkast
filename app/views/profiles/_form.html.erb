@@ -56,8 +56,16 @@
 
   <div class="form-row form-group">
     <%= form.label :industry_id, "業種" %><span class="required">*</span>
-    <%= form.collection_select :industry_id, ::FormModels::Industry.all, :id, :name, {prompt: "", disabled: ::FormModels::Industry.all.map{|i| i.id if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "industry_id"} %>
+    <%= form.grouped_collection_select(
+      :industry_id,
+      ::FormModels::Industry.all,
+      :child,
+      :name,
+      :id, :name,
+      {prompt: "選択してください"},
+      {required: true, class: "form-control", autocomplete: "industry_id"}) %>
   </div>
+
 
   <div class="form-row form-group">
     <%= form.label :annual_sales_id, "年商規模" %><span class="required">*</span>

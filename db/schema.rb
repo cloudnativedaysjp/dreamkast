@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_28_051104) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -132,6 +132,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
     t.string "conference_status", default: ""
+    t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
+    t.index ["abbr"], name: "index_conferences_on_abbr"
   end
 
   create_table "form_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -256,6 +258,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.text "description"
     t.string "key"
     t.string "value"
+    t.index ["conference_id", "item_number"], name: "index_proposal_item_configs_on_conference_id_and_item_number"
     t.index ["conference_id"], name: "index_proposal_item_configs_on_conference_id"
   end
 
@@ -331,6 +334,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.text "sub"
     t.text "additional_documents"
     t.string "name_mother_tongue"
+    t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
   end
 
   create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -401,6 +405,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "conference_id"
+    t.index ["conference_id"], name: "index_talk_categories_on_conference_id"
   end
 
   create_table "talk_difficulties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -408,6 +413,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "conference_id"
+    t.index ["conference_id"], name: "index_talk_difficulties_on_conference_id"
   end
 
   create_table "talk_times", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -445,6 +451,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
+    t.index ["track_id"], name: "index_talks_on_track_id"
   end
 
   create_table "talks_speakers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -452,6 +459,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.integer "speaker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["speaker_id"], name: "index_talks_speakers_on_speaker_id"
   end
 
   create_table "tickets", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -474,6 +482,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_09_093216) do
     t.datetime "updated_at", null: false
     t.string "video_platform"
     t.bigint "room_id", default: 0
+    t.index ["conference_id"], name: "index_tracks_on_conference_id"
   end
 
   create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -32,6 +32,7 @@
 #  index_talks_on_conference_id       (conference_id)
 #  index_talks_on_talk_category_id    (talk_category_id)
 #  index_talks_on_talk_difficulty_id  (talk_difficulty_id)
+#  index_talks_on_track_id            (track_id)
 #
 
 FactoryBot.define do

@@ -22,6 +22,11 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #
+# Indexes
+#
+#  index_conferences_on_abbr                        (abbr)
+#  index_conferences_on_abbr_and_conference_status  (abbr,conference_status)
+#
 
 require 'rails_helper'
 

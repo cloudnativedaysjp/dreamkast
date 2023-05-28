@@ -18,6 +18,10 @@
 #  github_id            :string(255)
 #  twitter_id           :string(255)
 #
+# Indexes
+#
+#  index_speakers_on_conference_id_and_email  (conference_id,email)
+#
 
 class Speaker < ApplicationRecord
   include ActionView::Helpers::UrlHelper

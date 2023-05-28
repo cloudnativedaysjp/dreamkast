@@ -8,6 +8,10 @@
 #  updated_at    :datetime         not null
 #  conference_id :integer
 #
+# Indexes
+#
+#  index_talk_categories_on_conference_id  (conference_id)
+#
 
 FactoryBot.define do
   factory :talk_category1, class: TalkCategory do

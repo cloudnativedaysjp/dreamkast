@@ -79,6 +79,10 @@ gem "mysql2", "~> 0.5.4"
 
 gem "sentry-ruby"
 gem "sentry-rails"
+gem "sentry-opentelemetry"
+
+gem "opentelemetry-sdk"
+gem "opentelemetry-instrumentation-all"
 
 gem "redis-rails"
 

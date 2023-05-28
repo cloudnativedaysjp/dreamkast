@@ -8,6 +8,6 @@ class AddMultipleIndexes < ActiveRecord::Migration[7.0]
     add_index :talk_difficulties, :conference_id
     add_index :talks_speakers, :speaker_id
     add_index :talks, :track_id
-    add_index :idx_tracks, :conference_id
+    add_index :tracks, :conference_id
   end
 end

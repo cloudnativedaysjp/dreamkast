@@ -1,16 +1,16 @@
 <%= form_with(url: sponsors_url, model: @sponsor_form, local: true) do |form| %>
 
-  <h4>Name</h4>
+  <h4>Name *</h4>
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
-      <%= form.text_area :name, class: "form-control", id: "descriptionInputForm" %>
+      <%= form.text_area :name, class: "form-control", id: "descriptionInputForm", required: true %>
     </div>
   </div>
 
-  <h4>Abbr</h4>
+  <h4>Abbr *</h4>
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
-      <%= form.text_area :abbr, class: "form-control", id: "descriptionInputForm" %>
+      <%= form.text_area :abbr, class: "form-control", id: "descriptionInputForm", required: true %>
     </div>
   </div>
 

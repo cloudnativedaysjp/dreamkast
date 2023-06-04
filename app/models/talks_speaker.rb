@@ -8,6 +8,10 @@
 #  speaker_id :integer
 #  talk_id    :integer
 #
+# Indexes
+#
+#  index_talks_speakers_on_speaker_id  (speaker_id)
+#
 
 class TalksSpeaker < ApplicationRecord
   belongs_to :talk, optional: true

@@ -12,6 +12,10 @@
 #  room_id        :bigint           default(0)
 #  video_id       :string(255)
 #
+# Indexes
+#
+#  index_tracks_on_conference_id  (conference_id)
+#
 
 FactoryBot.define do
   factory :track, class: Track do

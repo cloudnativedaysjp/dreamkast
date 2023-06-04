@@ -15,7 +15,8 @@
 #
 # Indexes
 #
-#  index_proposal_item_configs_on_conference_id  (conference_id)
+#  index_proposal_item_configs_on_conference_id                  (conference_id)
+#  index_proposal_item_configs_on_conference_id_and_item_number  (conference_id,item_number)
 #
 # Foreign Keys
 #

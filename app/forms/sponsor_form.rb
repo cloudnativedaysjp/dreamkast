@@ -27,14 +27,19 @@ class SponsorForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      sponsor.update!(name:, abbr:, url:, description:, speaker_emails:, sponsor_types: sponsor_types.map { |id| SponsorType.find(id) })
-
-      if sponsor.sponsor_attachment_logo_image.present?
-        sponsor.sponsor_attachment_logo_image.update!(file: attachment_logo_image)
-      else
-        logo = SponsorAttachmentLogoImage.new(file: attachment_logo_image, sponsor_id: sponsor.id)
-        logo.save!
+      params = { name:, abbr:, url:, description:, speaker_emails: }
+      params[:sponsor_types] = sponsor_types.map { |id| SponsorType.find(id) } if sponsor_types.present?
+      sponsor.update!(params)
+      if attachment_logo_image
+        if sponsor.sponsor_attachment_logo_image.present?
+          sponsor.sponsor_attachment_logo_image.update!(file: attachment_logo_image)
+        else
+          logo = SponsorAttachmentLogoImage.new(file: attachment_logo_image, sponsor_id: sponsor.id)
+          logo.save!
+        end
       end
+
+      true
     end
   rescue => e
     puts(e)

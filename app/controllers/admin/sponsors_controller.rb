@@ -28,6 +28,7 @@ class Admin::SponsorsController < ApplicationController
 
   def create
     @conference = Conference.find_by(abbr: params[:event])
+    @sponsor_types = @conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: Sponsor.new(conference: @conference))
 
     respond_to do |format|
@@ -41,6 +42,7 @@ class Admin::SponsorsController < ApplicationController
 
   def update
     @sponsor = Sponsor.find(params[:id])
+    @sponsor_types = @conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
     respond_to do |format|

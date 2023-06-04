@@ -1,6 +1,6 @@
 class Api::V1::ConferencesController < ApplicationController
   def index
-    @conferences = Conference.all
+    @conferences = Conference.includes([:conference_days]).all
     render(:index, formats: :json, type: :jbuilder)
   end
 

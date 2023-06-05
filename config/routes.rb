@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'auth/login' => 'auth0#login'
   get 'logout' => 'logout#logout'
 
+  # Healthcheck endpoint
+  get "healthz" => "rails/health#show", as: :rails_health_check
 
   namespace 'api' do
     namespace 'v1' do

@@ -490,8 +490,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_28_051104) do
     t.string "url"
     t.integer "status", default: 0, null: false
     t.json "statistics", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 

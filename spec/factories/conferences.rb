@@ -82,6 +82,14 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       speaker_entry { 0 }
     end
 
+    trait :show_timetable do
+      show_timetable { 1 }
+    end
+
+    trait :hide_timetable do
+      show_timetable { 0 }
+    end
+
     trait :cfp_result_visible do
       cfp_result_visible { true }
     end

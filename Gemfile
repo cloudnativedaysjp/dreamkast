@@ -77,6 +77,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "mysql2", "~> 0.5.4"
 
+gem "stackprof"
 gem "sentry-ruby"
 gem "sentry-rails"
 gem "sentry-opentelemetry"

@@ -20,7 +20,7 @@ gem 'jbuilder', '~> 2.11'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Prometheus client
-gem 'prometheus-client', '~> 4.0.0'
+gem 'prometheus-client', '~> 4.1.0'
 
 gem 'icalendar'
 gem 'rack-cors'

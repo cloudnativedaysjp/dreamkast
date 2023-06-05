@@ -73,9 +73,11 @@
         <%= link_to "このイベントに参加申し込み <br/> (参加無料)".html_safe, registration_path, {method: :get, class: "btn btn-focus btn-xl inline" } %>
       </div>
       <% end %>
-      <div class="col-12 text-center my-4">
-        <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
-      </div>
+      <% if @conference.present? && @conference.show_timetable_enabled? %>
+        <div class="col-12 text-center my-4">
+          <%= button_to 'タイムテーブル', timetables_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

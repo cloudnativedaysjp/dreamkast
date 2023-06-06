@@ -5,6 +5,28 @@ describe TalksController, type: :request do
   let(:roles) { [] }
 
   describe 'GET /cndt2020/talks/:id' do
+    context 'show timetable' do
+      let!(:cndt2020) { create(:cndt2020, :registered, :speaker_entry_enabled, :show_timetable) }
+      let!(:talk1) { create(:talk1) }
+
+      it 'includes timetable button' do
+        get '/cndt2020/talks/1'
+        expect(response).to(be_successful)
+        expect(response.body).to(include('タイムテーブル'))
+      end
+    end
+
+    context 'hide timetable' do
+      let!(:cndt2020) { create(:cndt2020, :registered, :speaker_entry_enabled, :hide_timetable) }
+      let!(:talk1) { create(:talk1) }
+
+      it 'does not includes timetable button' do
+        get '/cndt2020/talks/1'
+        expect(response).to(be_successful)
+        expect(response.body).not_to(include('タイムテーブル'))
+      end
+    end
+
     context 'CNDT2020 is migrated' do
       let!(:cndt2020) { create(:cndt2020, :migrated) }
       let!(:talk1) { create(:talk1) }

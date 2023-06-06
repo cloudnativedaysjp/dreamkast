@@ -1660,13 +1660,6 @@ SponsorType.seed(
   end
 end
 
-Conference.all.each do |conf|
-  if conf.sponsors.any? { |sponsor| sponsor.sponsor_types.empty? }
-    no_sponsor_types = conf.sponsors.select { |sponsor| sponsor.sponsor_types.empty? }
-    raise "Error: Some sponsor hae no sponsor_type in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
-  end
-end
-
 [
   [1, 'canonical', 'sponsors/cndt2020/canonical.png', 1],
   [2, 'casareal', 'sponsors/cndt2020/casareal.png', 1],
@@ -1844,13 +1837,6 @@ end
       url: logo[2]
     }
   )
-end
-
-Conference.all.each do |conf|
-  unless conf.sponsors.all? { |sponsor| sponsor.sponsor_attachment_logo_image.present? }
-    no_sponsor_types = conf.sponsors.select { |sponsor| !sponsor.sponsor_attachment_logo_image }
-    raise "Error: Some sponsor hae no sponsor_logo_image in #{conf.abbr}: #{no_sponsor_types.map(&:abbr).join(', ')}"
-  end
 end
 
 uploader = SponsorAttachmentFileUploader.new(:store)

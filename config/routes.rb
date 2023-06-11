@@ -110,7 +110,7 @@ Rails.application.routes.draw do
     resources :talks, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
-    get 'dashboard' => 'tracks#waiting'
+    get 'dashboard' => 'attendee_dashboards#show'
     get 'tracks/blank' => 'tracks#blank'
     get 'kontest' => 'contents#kontest'
     get 'discussion' => 'contents#discussion'

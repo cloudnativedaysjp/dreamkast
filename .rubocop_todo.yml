@@ -423,3 +423,9 @@ Style/ZeroLengthPredicate:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 239
+
+
+Style/ClassEqualityComparison:
+  Exclude:
+    - 'app/controllers/sponsor_dashboards/speakers_controller.rb'
+    - 'app/controllers/speaker_dashboard/speakers_controller.rb'

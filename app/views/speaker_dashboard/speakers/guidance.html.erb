@@ -1,3 +1,5 @@
+<% provide(:title, 'プロポーザル募集') %>
+
 <div class="container">
 
   <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
@@ -62,7 +64,7 @@
       </ol>
     </div>
 
-    
+
     <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
       <% if logged_in? %>
         <%= button_to 'エントリーする！', speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>

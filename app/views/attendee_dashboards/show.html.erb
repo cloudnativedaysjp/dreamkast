@@ -24,8 +24,24 @@
               <b>チケット</b>
             </div>
             <div class="card-body">
-              <div class="card-text">あなたは <%= @profile.active_order.tickets.first.title %> です</div>
+              <div class="card-text">
+                あなたは <%= @profile.active_order.tickets.first.title %> です</div>
               <div class="card-text">チケットの変更は <%= link_to 'こちら', new_cancel_order_path(order_id: @profile.active_order.id) %> から</div>
+              <div class="card-text">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-text">
+                      Twitterでシェアしよう！
+                    </div>
+                    <div class="card-text">
+                      <input type="text" id="tweet_content" class="form-control" value="<%= "##{@conference.abbr.upcase} に #{@profile.active_order.tickets.first.title} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}" %>" />
+                    </div>
+                  </div>
+                  <div class="card-text text-center mb-3">
+                    <button type="button" id="twitter_share" class="btn btn-secondary">Twitterでシェア</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -30,6 +30,7 @@ import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'
 import './timetable.js'
+import './attendee_dashboard.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 

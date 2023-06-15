@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_28_051104) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -124,14 +124,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_28_051104) do
     t.text "coc"
     t.string "copyright"
     t.text "privacy_policy_for_speaker"
-    t.integer "speaker_entry"
-    t.integer "attendee_entry"
-    t.integer "show_timetable"
+    t.integer "speaker_entry", default: 0
+    t.integer "attendee_entry", default: 0
+    t.integer "show_timetable", default: 0
     t.boolean "cfp_result_visible", default: false
     t.boolean "show_sponsors", default: false
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
-    t.string "conference_status", default: ""
+    t.string "conference_status", default: "registered"
     t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
     t.index ["abbr"], name: "index_conferences_on_abbr"
   end

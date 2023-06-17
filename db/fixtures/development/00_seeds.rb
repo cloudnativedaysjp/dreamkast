@@ -252,7 +252,8 @@ ConferenceDay.seed(
 
   # CNDF2023
   {id: 25, date: "2023-08-02", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false}, # 前夜祭
-  {id: 25, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
+  {id: 26, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
+  {id: 27, date: "2023-06-22", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: true},  # Reherasal
 )
 
 FormItem.seed(
@@ -308,6 +309,10 @@ Track.seed(
   { id: 38, number: 1, name: "A", conference_id: 8, room_id: 11},
   { id: 39, number: 2, name: "B", conference_id: 8, room_id: 12},
   { id: 40, number: 3, name: "C", conference_id: 8, room_id: 13},
+
+  { id: 41, number: 1, name: "A", conference_id: 9, room_id: 11},
+  { id: 42, number: 2, name: "B", conference_id: 9, room_id: 12},
+  { id: 43, number: 3, name: "C", conference_id: 9, room_id: 13},
 )
 
 
@@ -325,6 +330,9 @@ Room.seed(
   {id: 11, conference_id: 8, name: '8F'},
   {id: 12, conference_id: 8, name: '8D'},
   {id: 13, conference_id: 8, name: '8E'},
+  {id: 14, conference_id: 9, name: 'DUMMY'},
+  {id: 15, conference_id: 9, name: 'DUMMY'},
+  {id: 16, conference_id: 9, name: 'DUMMY'},
 )
 
 

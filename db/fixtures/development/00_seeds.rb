@@ -251,9 +251,8 @@ ConferenceDay.seed(
   {id: 24, date: "2023-03-19", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal2
 
   # CNDF2023
-  {id: 25, date: "2023-08-02", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false}, # 前夜祭
-  {id: 26, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
-  {id: 27, date: "2023-06-22", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: true},  # Reherasal
+  {id: 25, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
+  {id: 26, date: "2023-06-22", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: true},  # Reherasal
 )
 
 FormItem.seed(

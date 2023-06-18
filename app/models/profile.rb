@@ -3,6 +3,7 @@
 # Table name: profiles
 #
 #  id                            :bigint           not null, primary key
+#  avatar_data                   :string(255)
 #  calendar_unique_code          :string(255)
 #  company_address               :string(255)
 #  company_address_level1        :string(255)
@@ -18,8 +19,10 @@
 #  email                         :string(255)
 #  first_name                    :string(255)
 #  first_name_kana               :string(255)
+#  is_public                     :boolean
 #  last_name                     :string(255)
 #  last_name_kana                :string(255)
+#  nickname                      :string(255)
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
@@ -30,9 +33,11 @@
 #  company_name_prefix_id        :string(255)
 #  company_name_suffix_id        :string(255)
 #  conference_id                 :integer
+#  github_id                     :string(255)
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
 #  occupation_id                 :integer          default(34)
+#  twitter_id                    :string(255)
 #
 
 class EmailValidator < ActiveModel::EachValidator
@@ -61,6 +66,9 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  include ActionView::Helpers::UrlHelper
+  include AvatarUploader::Attachment(:avatar)
+
   belongs_to_active_hash :company_name_prefix, shortcuts: [:name], class_name: '::FormModels::CompanyNamePrefix'
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
@@ -178,5 +186,13 @@ class Profile < ApplicationRecord
     else
       false
     end
+  end
+
+  def twitter_link
+    link_to(ActionController::Base.helpers.image_tag('Twitter_Social_Icon_Circle_Color.png', width: 20), "https://twitter.com/#{twitter_id}") if twitter_id.present?
+  end
+
+  def github_link
+    link_to(ActionController::Base.helpers.image_tag('GitHub-Mark-64px.png', width: 20), "https://github.com/#{github_id}") if github_id.present?
   end
 end

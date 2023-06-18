@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
   include Secured
 
   before_action :set_conference
-  before_action :set_current_profile, only: [:edit, :update, :destroy]
+  before_action :set_current_profile, only: [:edit, :update, :destroy, :edit_public_profile]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
 
@@ -16,6 +16,9 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+  end
+
+  def edit_public_profile
   end
 
   def create
@@ -49,11 +52,12 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    postal_code = profile_params[:company_postal_code].gsub(/-/, '')
-    tel = profile_params[:company_tel].gsub(/-/, '')
+    params = { conference_id: @conference.id }
+    params[:company_postal_code] = profile_params[:company_postal_code].gsub(/-/, '') if profile_params[:company_postal_code]
+    params[:company_tel] = profile_params[:company_tel].gsub(/-/, '') if profile_params[:company_tel]
 
     respond_to do |format|
-      if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
+      if @profile.update(profile_params.merge(params))
         format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
         format.json { render(:show, status: :ok, location: @profile) }
       else
@@ -96,6 +100,8 @@ class ProfilesController < ApplicationController
     when 'new'
       "/#{params[:event]}/profiles"
     when 'edit'
+      "/#{params[:event]}/profiles/#{params[:id]}"
+    when 'edit_public_profile'
       "/#{params[:event]}/profiles/#{params[:id]}"
     end
   end
@@ -176,7 +182,11 @@ class ProfilesController < ApplicationController
       :number_of_employee_id,
       :annual_sales_id,
       :company_fax,
-      :occupation_id
+      :occupation_id,
+      :nickname,
+      :twitter_id,
+      :github_id,
+      :is_public
     )
   end
 

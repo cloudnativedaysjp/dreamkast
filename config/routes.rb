@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'
     get 'o11y' => 'contents#o11y'
+    get 'attendees' => 'attendees#index'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'
@@ -134,6 +135,7 @@ Rails.application.routes.draw do
     end
     get 'profiles/calendar', to: 'profiles#calendar'
     get 'profiles/new', to: 'profiles#new'
+    get 'profiles/:id/edit_public_profile', to: 'profiles#edit_public_profile'
     post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'
     put 'profiles', to: 'profiles#update'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -246,6 +246,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
     t.string "company_fax"
     t.string "calendar_unique_code"
     t.integer "occupation_id", default: 34
+    t.string "nickname"
+    t.string "twitter_id"
+    t.string "github_id"
+    t.string "avatar_data"
+    t.boolean "is_public"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -490,8 +495,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
     t.string "url"
     t.integer "status", default: 0, null: false
     t.json "statistics", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["talk_id"], name: "index_video_registrations_on_talk_id"
   end
 

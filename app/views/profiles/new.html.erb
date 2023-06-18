@@ -5,7 +5,7 @@
       <div class="block"></div>
 
       <% if logged_in? %>
-        <%= render 'form', profile: @profile %>
+        <%= render 'form', profile: @profile, submit_button_label: "個人情報保護方針に同意して参加登録" %>
       <% else %>
         <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
           <%= button_to 'ログイン / サインアップ', '/auth/auth0', {method: :post, class: "btn btn-focus btn-xl inline" } %>

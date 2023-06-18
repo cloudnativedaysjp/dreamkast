@@ -61,8 +61,6 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  include ActionView::Helpers::UrlHelper
-  include AvatarUploader::Attachment(:avatar)
 
   belongs_to_active_hash :company_name_prefix, shortcuts: [:name], class_name: '::FormModels::CompanyNamePrefix'
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
@@ -182,13 +180,5 @@ class Profile < ApplicationRecord
     else
       false
     end
-  end
-
-  def twitter_link
-    link_to(ActionController::Base.helpers.image_tag('Twitter_Social_Icon_Circle_Color.png', width: 20), "https://twitter.com/#{twitter_id}") if twitter_id.present?
-  end
-
-  def github_link
-    link_to(ActionController::Base.helpers.image_tag('GitHub-Mark-64px.png', width: 20), "https://github.com/#{github_id}") if github_id.present?
   end
 end

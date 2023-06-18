@@ -57,13 +57,13 @@
   <div class="form-row form-group">
     <%= form.label :industry_id, "業種" %><span class="required">*</span>
     <%= form.grouped_collection_select(
-          :industry_id,
-          ::FormModels::Industry.all,
-          :child,
-          :name,
-          :id, :name,
-          {prompt: "選択してください"},
-          {required: true, class: "form-control", autocomplete: "industry_id"}) %>
+      :industry_id,
+      ::FormModels::Industry.all,
+      :child,
+      :name,
+      :id, :name,
+      {prompt: "選択してください"},
+      {required: true, class: "form-control", autocomplete: "industry_id"}) %>
   </div>
 
 
@@ -133,28 +133,28 @@
   </div>
 
   <% if action_name == "new" %>
-    <div class="privacy_policy">
-      <%= markdown @conference.privacy_policy %>
+  <div class="privacy_policy">
+    <%= markdown @conference.privacy_policy %>
 
-      <div class="form-check form-background">
-        <%= form.check_box :agreement, {required: true, class: "form-check-input"}, true, false %>
-        <label class="form-check-label" for="agreement">個人情報の取り扱いについて同意する <span class="required">*</span> <span class="small">ご同意いただけない場合は本セミナーを受講いただくことは出来ません。</span></label>
-      </div>
-      <p></p>
-
-      <% if %w[cndt2020 cndo2021 cicd2021 cndt2021 cnsec2022].include?(@event) %>
-        <%= render 'profiles/sponsors/microsoft', form: form %>
-      <% end %>
-
-      <% if %w[cndt2022].include?(@event) %>
-        <%= render 'profiles/sponsors/ibm', form: form %>
-      <% end %>
-
-      <% if %w[cndt2022].include?(@event) %>
-        <%= render 'profiles/sponsors/redhat', form: form %>
-      <% end %>
-
+    <div class="form-check form-background">
+      <%= form.check_box :agreement, {required: true, class: "form-check-input"}, true, false %>
+      <label class="form-check-label" for="agreement">個人情報の取り扱いについて同意する <span class="required">*</span> <span class="small">ご同意いただけない場合は本セミナーを受講いただくことは出来ません。</span></label>
     </div>
+    <p></p>
+
+    <% if %w[cndt2020 cndo2021 cicd2021 cndt2021 cnsec2022].include?(@event) %>
+      <%= render 'profiles/sponsors/microsoft', form: form %>
+    <% end %>
+
+    <% if %w[cndt2022].include?(@event) %>
+      <%= render 'profiles/sponsors/ibm', form: form %>
+    <% end %>
+
+    <% if %w[cndt2022].include?(@event) %>
+      <%= render 'profiles/sponsors/redhat', form: form %>
+    <% end %>
+
+  </div>
   <% end %>
 
   <div class="form-row form-group justify-content-md-center py-20">

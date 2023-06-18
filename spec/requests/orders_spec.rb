@@ -40,7 +40,7 @@ describe OrdersController, type: :request do
         get '/cndt2020/orders/new'
         expect(response).to(be_successful)
         expect(response).to(have_http_status('200'))
-        expect(response.body).to(include('参加方式'))
+        expect(response.body).to(include('CNDT2020 への参加方法を選択する'))
       end
     end
   end
@@ -86,7 +86,7 @@ describe OrdersController, type: :request do
         post '/cndt2020/orders', params: { order: { ticket_ids: ticket_a.id } }
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020/timetables'))
+        expect(response).to(redirect_to('/cndt2020/public_profiles/new'))
         expect(alice.orders.size).to(eq(1))
       end
     end

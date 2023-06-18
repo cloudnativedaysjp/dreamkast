@@ -4,14 +4,8 @@
       <% flash.each do |key, value| %>
         <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
       <% end %>
-      <div class="card mb-3">
-        <div class="card-header">
-          <b>プロフィールを更新</b>
-        </div>
-        <div class="card-body">
-          <%= render 'form', submit_button_label: "プロフィールを更新する" %>
-        </div>
-      </div>
+      <h2><%= @conference.abbr.upcase %> プロフィール更新フォーム</h2>
+      <%= render 'form', submit_button_label: "プロフィールを更新する" %>
     </div>
   </div>
 </div>

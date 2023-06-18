@@ -117,12 +117,12 @@
           現地会場 アクセス
         </h4>
         <div>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12965.083045452864!2d139.7544269!3d35.6703345!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x21e5463a7e2f1353!2z44CQ6LK444GX5Lya6K2w5a6k44CR5pel5q-U6LC35Zu96Zqb44OT44Or44Kz44Oz44OV44Kh44Os44Oz44K544K544Kv44Ko44Ki!5e0!3m2!1sja!2sjp!4v1671257027678!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13293.419398412529!2d130.4290295!3d33.5960963!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354191f3d17f9f67%3A0x4dbc24679a214290!2z5Y2a5aSa5Zu96Zqb5bGV56S65aC0JuOCq-ODs-ODleOCoeODrOODs-OCueOCu-ODs-OCv-ODvA!5e0!3m2!1sja!2sjp!4v1680107057051!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div>
-        〒100-0011<br/>
-        日比谷国際ビル コンファレンススクエア<br/>
-        東京都千代田区内幸町２丁目２−３ 日比谷国際ビルヂング ８階
+        〒812-0008<br/>
+        博多国際展示場カンファレンスセンター<br/>
+        福岡県福岡市博多区東光２丁目２２−１５
         </div>
       </div>
     </section>
@@ -135,15 +135,13 @@
           <div class="card-body">
             <div class="card-text">
               <ul>
-                <li><%= link_to "参加者ガイド", "https://sites.google.com/view/cicd2023", target: :_blank, rel: "noopener noreferrer" %></li>
                 <li><%= link_to '参加方法変更', new_cancel_order_path(order_id: @profile.active_order.id) %></li>
                 <% if @profile.public_profile.present? %>
                   <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>
                 <% else %>
                   <li><%= link_to '公開プロフィールを登録する', new_public_profile_path %></li>
                 <% end %>
-                <li><%= link_to "オンラインホワイトボード", 'https://miro.com/app/board/uXjVPWsauOI=/', target: :_blank, rel: "noopener noreferrer" %></li>
-                <li><%= link_to "CICD2023 Blog記事一覧", "https://cloudnativedays.medium.com/list/cicd2023-b85803d1a362", target: :_blank, rel: "noopener noreferrer" %>
+                <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %>
               </ul>
             </div>
           </div>

@@ -251,8 +251,8 @@ ConferenceDay.seed(
   {id: 24, date: "2023-03-19", start_time: "09:00", end_time: "21:00", conference_id: 8, internal: true}, #Rehearsal2
 
   # CNDF2023
-  {id: 25, date: "2023-08-02", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false}, # 前夜祭
-  {id: 25, date: "2023-08-03", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: false},
+  {id: 25, date: "2023-08-03", start_time: "10:50", end_time: "18:40", conference_id: 9, internal: false},
+  {id: 26, date: "2023-06-22", start_time: "12:00", end_time: "18:00", conference_id: 9, internal: true},  # Reherasal
 )
 
 FormItem.seed(
@@ -308,6 +308,10 @@ Track.seed(
   { id: 38, number: 1, name: "A", conference_id: 8, room_id: 11},
   { id: 39, number: 2, name: "B", conference_id: 8, room_id: 12},
   { id: 40, number: 3, name: "C", conference_id: 8, room_id: 13},
+
+  { id: 41, number: 1, name: "A", conference_id: 9, room_id: 14},
+  { id: 42, number: 2, name: "B", conference_id: 9, room_id: 15},
+  { id: 43, number: 3, name: "C", conference_id: 9, room_id: 16},
 )
 
 
@@ -325,6 +329,9 @@ Room.seed(
   {id: 11, conference_id: 8, name: '8F'},
   {id: 12, conference_id: 8, name: '8D'},
   {id: 13, conference_id: 8, name: '8E'},
+  {id: 14, conference_id: 9, name: 'A-204'},
+  {id: 15, conference_id: 9, name: 'B-206A'},
+  {id: 16, conference_id: 9, name: 'C-202'},
 )
 
 
@@ -478,6 +485,7 @@ import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
 import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(
@@ -551,14 +559,6 @@ Link.seed(
   {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
   {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
 )
-
-# ChatMessage.seed(
-#   {id: 1, body: "talk1: chat message 1", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
-#   {id: 2, body: "talk1: chat message 2", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 0},
-#   {id: 3, body: "talk1: chat message 3", conference_id: 2, room_id: 101, room_type: 'talk', message_type: 1},
-#   {id: 4, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 0},
-#   {id: 5, body: "talk6: chat message 3", conference_id: 2, room_id: 105, room_type: 'talk', message_type: 1},
-# )
 
 Announcement.seed(
   {id: 1, conference_id: 1, publish_time: "2020-08-24 10:00:00", publish: true, body: <<'EOS'

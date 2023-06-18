@@ -227,3 +227,20 @@ footer ul li {
         text-decoration: none;
     }
 }
+.registration-form {
+    background: rgba(256, 256, 256, 0.8);
+    span.required {
+        color: $red;
+    }
+    a {
+        text-decoration: underline;
+    }
+    .small {
+        font-size: x-small;
+    }
+    .form-background {
+        background: #EEE;
+        padding: 1rem 1rem 1rem 3rem;
+        border-radius: 0.5rem;
+    }
+}

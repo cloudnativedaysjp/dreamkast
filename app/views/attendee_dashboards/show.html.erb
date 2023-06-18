@@ -137,6 +137,11 @@
               <ul>
                 <li><%= link_to "参加者ガイド", "https://sites.google.com/view/cicd2023", target: :_blank, rel: "noopener noreferrer" %></li>
                 <li><%= link_to '参加方法変更', new_cancel_order_path(order_id: @profile.active_order.id) %></li>
+                <% if @profile.public_profile.present? %>
+                  <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>
+                <% else %>
+                  <li><%= link_to '公開プロフィールを登録する', new_public_profile_path %></li>
+                <% end %>
                 <li><%= link_to "オンラインホワイトボード", 'https://miro.com/app/board/uXjVPWsauOI=/', target: :_blank, rel: "noopener noreferrer" %></li>
                 <li><%= link_to "CICD2023 Blog記事一覧", "https://cloudnativedays.medium.com/list/cicd2023-b85803d1a362", target: :_blank, rel: "noopener noreferrer" %>
               </ul>

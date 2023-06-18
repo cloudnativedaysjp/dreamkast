@@ -12,94 +12,166 @@ namespace :util do
       A: [
         {
           title: 'Keynote 1',
-          start_time: '12:00:00',
-          end_time: '12:20:00',
+          start_time: '11:00:00',
+          end_time: '11:20:00',
           abstract: <<~EOS
-            これは キーノート 1 です。
+            Keynote Speaker 1
           EOS
         },
         {
           title: 'Keynote 2',
-          start_time: '12:25:00',
-          end_time: '12:45:00',
+          start_time: '11:25:00',
+          end_time: '11:45:00',
           abstract: <<~EOS
-            これは キーノート 2 です。
+            Keynote Speaker 2
           EOS
         },
         {
           title: 'Keynote 3',
-          start_time: '12:50:00',
-          end_time: '13:10:00',
+          start_time: '11:50:00',
+          end_time: '12:10:00',
           abstract: <<~EOS
-            これは キーノート 3 です。
+            Keynote Speaker 3
           EOS
         },
         {
           title: 'Keynote 4',
-          start_time: '13:15:00',
-          end_time: '13:35:00',
+          start_time: '12:15:00',
+          end_time: '12:35:00',
           abstract: <<~EOS
-            これは キーノート 4 です。
+            Keynote Speaker 4
           EOS
         },
         {
           title: 'Keynote 5',
-          start_time: '13:40:00',
-          end_time: '14:00:00',
+          start_time: '12:40:00',
+          end_time: '13:00:00',
           abstract: <<~EOS
-            これは キーノート 5 です。
+            Diamond Sponsor
           EOS
         },
         {
-          title: 'Session 1 (for track A)',
-          start_time: '14:20:00',
-          end_time: '15:00:00',
+          title: 'A1',
+          start_time: '14:00:00',
+          end_time: '14:40:00',
           abstract: <<~EOS
-            これは トラック A の セッション 1 です。
+            A1
           EOS
         },
         {
-          title: 'Session 2 (for track A)',
-          start_time: '15:20:00',
-          end_time: '16:00:00',
+          title: 'A2',
+          start_time: '15:00:00',
+          end_time: '15:40:00',
           abstract: <<~EOS
-            これは トラック A の セッション 2 です。
+            A2
+          EOS
+        },
+        {
+          title: 'A3',
+          start_time: '16:00:00',
+          end_time: '16:40:00',
+          abstract: <<~EOS
+            A3
+          EOS
+        },
+        {
+          title: 'A4',
+          start_time: '17:00:00',
+          end_time: '17:40:00',
+          abstract: <<~EOS
+            A4
+          EOS
+        },
+        {
+          title: 'A5',
+          start_time: '18:00:00',
+          end_time: '18:40:00',
+          abstract: <<~EOS
+            A5
           EOS
         }
       ],
       B: [
         {
-          title: 'Session 1 (for track B)',
-          start_time: '14:20:00',
-          end_time: '15:00:00',
+          title: 'B1',
+          start_time: '14:00:00',
+          end_time: '14:40:00',
           abstract: <<~EOS
-            これは トラック B の セッション 1 です。
+            B1
           EOS
         },
         {
-          title: 'Session 2 (for track B)',
-          start_time: '15:20:00',
-          end_time: '16:00:00',
+          title: 'B2',
+          start_time: '15:00:00',
+          end_time: '15:40:00',
           abstract: <<~EOS
-            これは トラック B の セッション 2 です。
+            B2
+          EOS
+        },
+        {
+          title: 'B3',
+          start_time: '16:00:00',
+          end_time: '16:40:00',
+          abstract: <<~EOS
+            B3
+          EOS
+        },
+        {
+          title: 'B4',
+          start_time: '17:00:00',
+          end_time: '17:40:00',
+          abstract: <<~EOS
+            B4
+          EOS
+        },
+        {
+          title: 'B5',
+          start_time: '18:00:00',
+          end_time: '18:40:00',
+          abstract: <<~EOS
+            B5
           EOS
         }
       ],
       C: [
         {
-          title: 'Session 1 (for track C)',
-          start_time: '14:20:00',
-          end_time: '15:00:00',
+          title: 'C1',
+          start_time: '14:00:00',
+          end_time: '14:40:00',
           abstract: <<~EOS
-            これは トラック C の セッション 1 です。
+            C1
           EOS
         },
         {
-          title: 'Session 2 (for track C)',
-          start_time: '15:20:00',
-          end_time: '16:00:00',
+          title: 'C2',
+          start_time: '15:00:00',
+          end_time: '15:40:00',
           abstract: <<~EOS
-            これは トラック C の セッション 2 です。
+            C2
+          EOS
+        },
+        {
+          title: 'C3',
+          start_time: '16:00:00',
+          end_time: '16:40:00',
+          abstract: <<~EOS
+            C3
+          EOS
+        },
+        {
+          title: 'C4',
+          start_time: '17:00:00',
+          end_time: '17:40:00',
+          abstract: <<~EOS
+            C4
+          EOS
+        },
+        {
+          title: 'C5',
+          start_time: '18:00:00',
+          end_time: '18:40:00',
+          abstract: <<~EOS
+            C5
           EOS
         }
       ]

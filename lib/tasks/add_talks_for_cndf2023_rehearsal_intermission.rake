@@ -21,33 +21,49 @@ namespace :util do
     tracks = Hash[conference.tracks.map { |track| [track.name, track.id] }]
 
     track_a_talks = [
-      %w[11:00:00 11:50:00 開始までしばらくお待ちください intermission],
-      %w[11:50:00 12:00:00 オープニング intermission],
-      #  12:00:00 12:20:00 Keynote 1
-      %w[12:20:00 12:25:00 休憩 intermission],
-      #  12:25:00 12:45:00 Keynote 2
-      %w[12:45:00 12:50:00 休憩 intermission],
-      #  12:50:00 13:10:00 Keynote 3
-      %w[13:10:00 13:15:00 休憩 intermission],
-      #  13:15:00 13:35:00 Keynote 4
-      %w[13:35:00 13:40:00 休憩 intermission],
-      #  13:40:00 14:00:00 Keynote 5
-      %w[14:00:00 14:20:00 休憩 intermission],
-      #  14:20:00 15:00:00 Session 1
-      %w[15:00:00 15:20:00 休憩 intermission],
-      #  15:20:00 16:00:00 Session 2
-      %w[16:00:00 23:00:00 本日のイベントは終了しました intermission]
+      %w[10:00:00 10:50:00 開始までしばらくお待ちください intermission],
+      %w[10:50:00 11:00:00 オープニング intermission],
+      #  11:00:00 11:20:00 Keynote 1
+      %w[11:20:00 11:25:00 休憩 intermission],
+      #  11:25:00 11:45:00 Keynote 2
+      %w[11:45:00 11:50:00 休憩 intermission],
+      #  11:50:00 12:10:00 Keynote 3
+      %w[12:10:00 12:15:00 休憩 intermission],
+      #  12:15:00 12:35:00 Keynote 4
+      %w[12:35:00 12:40:00 休憩 intermission],
+      #  12:40:00 13:00:00 Keynote 5
+      %w[13:00:00 14:00:00 休憩 intermission],
+      #  14:00:00 14:40:00 Session 1
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  15:00:00 15:40:00 Session 2
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  16:00:00 16:40:00 Session 3
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  17:00:00 17:40:00 Session 4
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  18:00:00 18:40:00 Session 5
+      %w[18:40:00 18:50:00 休憩 intermission],
+      %w[18:50:00 19:00:00 クロージング intermission],
+      %w[19:00:00 23:00:00 本日のイベントは終了しました intermission]
     ]
 
     other_track_talks = [
-      %w[11:00:00 11:50:00 開始までしばらくお待ちください intermission],
-      %w[11:50:00 12:00:00 トラックAでOP実施中！ intermission],
-      %w[12:00:00 14:00:00 トラックAでキーノート配信中！ intermission],
-      %w[14:00:00 14:20:00 休憩 intermission],
-      #  14:20:00 15:00:00 Session 1
-      %w[15:00:00 15:20:00 休憩 intermission],
-      #  15:20:00 16:00:00 Session 2
-      %w[16:00:00 23:00:00 本日のイベントは終了しました intermission]
+      %w[10:00:00 10:50:00 開始までしばらくお待ちください intermission],
+      %w[10:50:00 11:00:00 トラックAでOP実施中！ intermission],
+      %w[11:00:00 13:00:00 トラックAでキーノート配信中！ intermission],
+      %w[13:00:00 14:00:00 休憩 intermission],
+      #  14:00:00 14:40:00 Session 1
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  15:00:00 15:40:00 Session 2
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  16:00:00 16:40:00 Session 3
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  17:00:00 17:40:00 Session 4
+      %w[14:40:00 15:00:00 休憩 intermission],
+      #  18:00:00 18:40:00 Session 5
+      %w[18:40:00 18:50:00 休憩 intermission],
+      %w[18:50:00 19:00:00 トラックAでクロージング実施中！ intermission],
+      %w[19:00:00 23:00:00 本日のイベントは終了しました intermission]
     ]
 
     day = conference.conference_days.find_by(date: '2023-06-22')

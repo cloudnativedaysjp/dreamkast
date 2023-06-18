@@ -246,11 +246,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
     t.string "company_fax"
     t.string "calendar_unique_code"
     t.integer "occupation_id", default: 34
-    t.string "nickname"
-    t.string "twitter_id"
-    t.string "github_id"
-    t.string "avatar_data"
-    t.boolean "is_public"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -282,6 +277,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "public_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "nickname", default: ""
+    t.string "twitter_id", default: ""
+    t.string "github_id", default: ""
+    t.string "avatar_data"
+    t.boolean "is_public", default: false
+    t.index ["profile_id"], name: "index_public_profiles_on_profile_id"
   end
 
   create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -548,6 +553,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
   add_foreign_key "orders_tickets", "tickets"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
+  add_foreign_key "public_profiles", "profiles"
   add_foreign_key "rooms", "conferences"
   add_foreign_key "rooms", "tracks"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"

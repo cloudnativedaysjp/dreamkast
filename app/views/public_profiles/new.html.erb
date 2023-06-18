@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row justify-content-lg-center">
+    <div class="col-12 registration-form py-3 px-md-5">
+      <% flash.each do |key, value| %>
+        <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
+      <% end %>
+      <div class="card mb-3">
+        <div class="card-header">
+          <b>プロフィールを登録</b>
+        </div>
+        <div class="card-body">
+          <%= render 'form', submit_button_label: "プロフィールを登録する" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

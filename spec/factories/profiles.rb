@@ -3,7 +3,6 @@
 # Table name: profiles
 #
 #  id                            :bigint           not null, primary key
-#  avatar_data                   :string(255)
 #  calendar_unique_code          :string(255)
 #  company_address               :string(255)
 #  company_address_level1        :string(255)
@@ -19,10 +18,8 @@
 #  email                         :string(255)
 #  first_name                    :string(255)
 #  first_name_kana               :string(255)
-#  is_public                     :boolean
 #  last_name                     :string(255)
 #  last_name_kana                :string(255)
-#  nickname                      :string(255)
 #  occupation                    :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
@@ -33,11 +30,9 @@
 #  company_name_prefix_id        :string(255)
 #  company_name_suffix_id        :string(255)
 #  conference_id                 :integer
-#  github_id                     :string(255)
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
 #  occupation_id                 :integer          default(34)
-#  twitter_id                    :string(255)
 #
 
 FactoryBot.define do

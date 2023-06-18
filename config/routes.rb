@@ -135,7 +135,6 @@ Rails.application.routes.draw do
     end
     get 'profiles/calendar', to: 'profiles#calendar'
     get 'profiles/new', to: 'profiles#new'
-    get 'profiles/:id/edit_public_profile', to: 'profiles#edit_public_profile'
     post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'
     put 'profiles', to: 'profiles#update'
@@ -143,6 +142,7 @@ Rails.application.routes.draw do
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
     get 'profiles/checkin/:ticket_id', to: 'profiles#checkin'
+    resources :public_profiles
 
 
     delete 'profiles/:id', to: 'profiles#destroy_id'

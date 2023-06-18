@@ -18,9 +18,6 @@ class ProfilesController < ApplicationController
   def edit
   end
 
-  def edit_public_profile
-  end
-
   def create
     postal_code = profile_params[:company_postal_code].gsub(/-/, '')
     tel = profile_params[:company_tel].gsub(/-/, '')

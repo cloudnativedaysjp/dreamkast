@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'
     get 'o11y' => 'contents#o11y'
+    get 'attendees' => 'attendees#index'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

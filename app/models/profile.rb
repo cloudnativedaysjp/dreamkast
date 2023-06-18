@@ -82,7 +82,7 @@ class Profile < ApplicationRecord
   validates :email, presence: true, email: true
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
-  validates :industry_id, presence: false, length: { maximum: 10 }
+  validates :industry_id, length: { maximum: 10 }
   validates :occupation_id, presence: false, length: { maximum: 50 }
   validates :company_name, presence: true, length: { maximum: 128 }
   validates :company_email, presence: true, email: true
@@ -95,8 +95,8 @@ class Profile < ApplicationRecord
   validates :company_fax, presence: false, length: { maximum: 128 }
   validates :department, presence: true, length: { maximum: 128 }
   validates :position, presence: true, length: { maximum: 128 }
-  validates :number_of_employee_id, presence: true, length: { maximum: 128 }
-  validates :annual_sales_id, presence: true, length: { maximum: 128 }
+  validates :number_of_employee_id, length: { maximum: 128 }
+  validates :annual_sales_id, length: { maximum: 128 }
 
   def sub_and_email_must_be_unique_in_a_conference
     if Profile.where(sub:, email:, conference_id:).exists?

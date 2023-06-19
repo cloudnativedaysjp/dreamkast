@@ -3,7 +3,7 @@
 # Table name: public_profiles
 #
 #  id          :bigint           not null, primary key
-#  avatar_data :string(255)
+#  avatar_data :text(65535)
 #  is_public   :boolean          default(FALSE)
 #  nickname    :string(255)      default("")
 #  github_id   :string(255)      default("")

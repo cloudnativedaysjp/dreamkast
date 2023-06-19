@@ -284,7 +284,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
     t.string "nickname", default: ""
     t.string "twitter_id", default: ""
     t.string "github_id", default: ""
-    t.string "avatar_data"
+    t.text "avatar_data"
     t.boolean "is_public", default: false
     t.index ["profile_id"], name: "index_public_profiles_on_profile_id"
   end

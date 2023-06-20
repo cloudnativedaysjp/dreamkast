@@ -6,7 +6,17 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <% if event_name && @profile.present? && @profile.id %>
-        <%= link_to '登録情報変更', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
+        <%= link_to '登録情報を変更する', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
+        <div class="dropdown-divider"></div>
+        <% if @profile.public_profile.present? %>
+          <%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id), class: "dropdown-item" %>
+          <% else %>
+          <%= link_to '公開プロフィールを登録する', new_public_profile_path, class: "dropdown-item" %>
+          <% end %>
+        <div class="dropdown-divider"></div>
+        <% if @profile.active_order.present? %>
+          <%= link_to '参加方法を変更する', new_cancel_order_path(order_id: @profile.active_order.id), class: "dropdown-item"  %>
+        <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>
         <div class="dropdown-divider"></div>

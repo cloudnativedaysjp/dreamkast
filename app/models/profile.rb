@@ -61,6 +61,7 @@ end
 
 class Profile < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to_active_hash :company_name_prefix, shortcuts: [:name], class_name: '::FormModels::CompanyNamePrefix'
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
@@ -72,6 +73,7 @@ class Profile < ApplicationRecord
   has_many :chat_messages
   has_many :orders
   has_many :check_ins
+  has_one :public_profile, dependent: :destroy
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid

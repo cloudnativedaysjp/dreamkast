@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row justify-content-lg-center">
-    <div class="col-12 col-lg-12 registration-form py-3 px-md-5">
+    <div class="col-12 registration-form py-3 px-md-5">
       <% flash.each do |key, value| %>
         <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
       <% end %>
+      <h2><%= @conference.abbr.upcase %> プロフィール登録フォーム</h2>
 
-      <h2>登録情報変更</h2>
-      <%= render 'form', profile: @profile, submit_button_label: "更新する" %>
+      <%= render 'form', submit_button_label: "プロフィールを登録する" %>
     </div>
   </div>
 </div>

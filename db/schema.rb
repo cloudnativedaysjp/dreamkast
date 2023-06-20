@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -279,6 +279,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "public_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "nickname", default: ""
+    t.string "twitter_id", default: ""
+    t.string "github_id", default: ""
+    t.text "avatar_data"
+    t.boolean "is_public", default: false
+    t.index ["profile_id"], name: "index_public_profiles_on_profile_id"
+  end
+
   create_table "registered_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.integer "talk_id"
@@ -543,6 +553,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_015850) do
   add_foreign_key "orders_tickets", "tickets"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
+  add_foreign_key "public_profiles", "profiles"
   add_foreign_key "rooms", "conferences"
   add_foreign_key "rooms", "tracks"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"

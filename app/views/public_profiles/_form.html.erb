@@ -1,0 +1,77 @@
+<%= form_with(url: public_profile_path, model: @public_profile, local: true, class: "needs-validation") do |form| %>
+  <% if @public_profile.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h5>入力内容にエラーがあります:</h5>
+      <ul>
+        <% @public_profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :avatar, '参加者アイコン' %>
+      <!-- will be replaced by Uppy -->
+      <%= form.text_field :avatar,
+                          type: :file,
+                          id: "avatar_upload",
+                          class: "form-control" %>
+
+      <!-- for storing uploaded file data -->
+      <%= form.text_field :avatar,
+                          type: :hidden,
+                          error_handler: false,
+                          class: "upload-data",
+                          value: @public_profile.nil? ? "" : @public_profile.cached_avatar_data %>
+    </div>
+
+    <div class="image-preview">
+      <img src="<%= (@public_profile.avatar_url(:large) || @public_profile.avatar_url) unless @public_profile.nil? %>" height="300" class="rounded" \>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :nickname, "ニックネーム" %><span class="required">*</span>
+      <%= form.text_field :nickname, required: true, class: "form-control", placeholder: "雲太郎" %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :twitter_id, "Twitter ID" %>
+      <%= form.text_field :twitter_id, class: "form-control", placeholder: "cloudnativedays" %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :github_id, "GitHub ID" %>
+      <%= form.text_field :github_id, class: "form-control", placeholder: "cloudnativedays" %>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.label :ticket, "参加方法" %>
+      <p><%= @public_profile.profile.active_order.tickets.first.title %> (<%= link_to '参加方法変更はこちら', new_cancel_order_path(order_id: @profile.active_order.id)%>)</p>
+    </div>
+  </div>
+
+  <div class="form-row form-group form-check">
+    <div class="col-12">
+      <%= form.check_box :is_public, class: "form-check-input" %>
+      <%= form.label :is_public, link_to('参加者一覧ページ', "/#{@conference.abbr}/attendees") + "に上記のプロフィール及びあなたの参加方法を公開する", class: 'form-check-label' %>
+    </div>
+  </div>
+
+
+  <div class="form-row form-group  justify-content-center py-20">
+    <div class="col-4">
+      <%= link_to 'スキップ', dashboard_path, class: "btn btn-secondary" %>
+      <%= form.submit submit_button_label, class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

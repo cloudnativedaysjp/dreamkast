@@ -14,6 +14,6 @@ class AttendeesController < ApplicationController
                        .profiles
                        .joins(:public_profile)
                        .where(public_profile: { is_public: true })
-                       .map { |profile| profile.public_profile }
+                       .map(&:public_profile)
   end
 end

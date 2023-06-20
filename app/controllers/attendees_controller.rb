@@ -1,6 +1,6 @@
 class AttendeesController < ApplicationController
-  # include Secured
-  # before_action :set_profile, :set_speaker
+  include Secured
+  before_action :set_profile, :set_speaker
 
   def index
     conference = Conference.find_by(abbr: params[:event])

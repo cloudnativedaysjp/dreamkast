@@ -1,0 +1,40 @@
+<% provide(:title, '参加者一覧') %>
+
+<div class="container white_background">
+  <h1 class="my-3 text-center">参加者一覧</h1>
+
+  <p>プロフィール設定で「公開する」を設定した参加者が表示されます</p>
+
+  <table class="table">
+    <thead>
+    <tr class="tr-class-1">
+      <th scope="col"></th>
+      <th scope="col">ニックネーム</th>
+      <th scope="col">参加方法</th>
+      <th scope="col">SNS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @public_profiles.each do |public_profile| %>
+      <tr>
+        <td>
+          <% if public_profile.avatar_url.nil? %>
+            <%= image_tag "dummy.png", :size => '40x40', class: 'card-img-top, rounded-circle' %>
+          <% else %>
+            <%= image_tag public_profile.avatar_url, :size => '40x40', class: 'card-img-top, rounded-circle' %>
+          <% end %>
+        </td>
+        <td>
+          <%= public_profile.nickname %>
+        </td>
+        <td>
+          <%= public_profile.profile.orders&.first&.tickets&.first&.title %>
+        </td>
+        <td>
+        <%= public_profile.twitter_link %> <%= public_profile.github_link %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+    </table>
+</div>

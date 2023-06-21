@@ -4,7 +4,7 @@ namespace :db do
     ActiveRecord::Base.logger = Logger.new($stdout)
     Rails.logger.level = Logger::DEBUG
 
-    keynotes = [1907, 1910, 1561, 1911, 1913]
+    keynotes = [1907, 1910, 1882, 1911, 1913]
 
     ActiveRecord::Base.transaction do
       begin

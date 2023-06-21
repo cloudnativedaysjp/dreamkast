@@ -32,7 +32,7 @@ RSpec.describe(ProfileMailer, type: :mailer) do
 
       it { expect(mail.body.encoded).to(include('こんにちは、Tester Test さん。')) }
       it { expect(mail.body.encoded).to(include('この度はOne Day Conferenceにご登録いただき、誠にありがとうございます。')) }
-      it { expect(mail.body.encoded).to(include('One Day Conference は3月11日(木)13時に開催されます')) }
+      it { expect(mail.body.encoded).to(include('One Day Conference は3月11日(木)13:00に開催されます')) }
       it { expect(mail.body.encoded).to(include('https://event.cloudnativedays.jp/oneday')) }
       it { expect(mail.body.encoded).to(include('それでは、Tester Test さんのご参加を心からお待ちしております！')) }
     end
@@ -49,7 +49,7 @@ RSpec.describe(ProfileMailer, type: :mailer) do
 
       it { expect(mail.body.encoded).to(include('こんにちは、Tester Test さん。')) }
       it { expect(mail.body.encoded).to(include('この度はTwo Day Conferenceにご登録いただき、誠にありがとうございます。')) }
-      it { expect(mail.body.encoded).to(include('Two Day Conference は3月11日(木)13時から2日間にわたり開催されます。')) }
+      it { expect(mail.body.encoded).to(include('Two Day Conference は3月11日(木)13:00から2日間にわたり開催されます。')) }
       it { expect(mail.body.encoded).to(include('https://event.cloudnativedays.jp/twoday')) }
       it { expect(mail.body.encoded).to(include('それでは、Tester Test さんのご参加を心からお待ちしております！')) }
     end

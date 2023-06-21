@@ -8,9 +8,9 @@
 <%- first_day = conference_days.first -%>
 <%- day_of_the_week =  days[first_day.date.strftime("%w").to_i] -%>
 <%- if conference_days.length == 1 -%>
-<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H")}" %>時に開催されます。
+<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H:%M")}" %>に開催されます。
 <%- else -%>
-<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H")}" %>時から<%= conference_days.length %>日間にわたり開催されます。
+<%= @conference.name %> は<%= "#{first_day.date.strftime("%-m月%d日")}(#{day_of_the_week})#{first_day.start_time.strftime("%H:%M")}" %>から<%= conference_days.length %>日間にわたり開催されます。
 <%- end -%>
 時間になりましたら CloudNative Days サイトにログインしていただくと
 そのまま視聴画面に切り替わります。

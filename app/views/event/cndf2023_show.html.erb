@@ -117,7 +117,7 @@
                       <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
                       <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
                       <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
-                      <%= talk.seats_status if @profile.attend_offline? %>
+                      <%= talk.seats_status if @profile&.attend_offline? %>
                   </h6>
                   <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
                   <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>

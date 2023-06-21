@@ -75,13 +75,13 @@
           <div class="grid" style="--rows: 13">
             <div class="all-track" style="">
               <div class="session">
-                <h6>12:00 - 12:10</h6>
+                <h6>10:50 - 11:00</h6>
                 <h4>オープニング</h4>
               </div>
             </div>
           </div>
           <div class="grid"
-              style="--rows: <%= ((conference_day.end_time.hour - conference_day.start_time.hour) * 60) + 10 - 120 %>">
+              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 140 + 10 %>">
             <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
                 <div class="track <%= 'even' if n.zero? || n.even? %>"
                     style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -89,11 +89,18 @@
 
             <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
               <%
-                # 休み時間を除外
-                lunch_break = 10
-                each_break = 0
-                each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
-                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 12:20")) / 60).to_i - each_break - lunch_break
+                if talk.start_time.in_time_zone('Asia/Tokyo').hour < 14
+                  lunch_break = 0
+                  each_break = 0
+                else
+                  # 14時以降のセッションについてはお昼休みとセッション間休憩を除外
+                  lunch_break = 55
+                  each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 14) * 20
+                end
+                
+                total_break = lunch_break + each_break
+
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:50")) / 60).to_i - total_break
                 row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
               %>
               <div class="talk"
@@ -126,7 +133,15 @@
       <div class="grid" style="--rows: 13">
         <div class="all-track" style="">
           <div class="session">
-            <h6>18:20 - 19:50</h6>
+            <h6>18:50 - 19:00</h6>
+            <h4>クロージング</h4>
+          </div>
+        </div>
+      </div>
+      <div class="grid" style="--rows: 13">
+        <div class="all-track" style="">
+          <div class="session">
+            <h6>19:00 - 20:00</h6>
             <h4>よるイベ</h4>
           </div>
         </div>

@@ -949,6 +949,12 @@ session_time(
       key: SessionTime::FOURTY_MINUTES,
       params: '40min (full session)',
       description: ''
+    },
+    {
+      id: 119,
+      key: SessionTime::TWENTY_MINUTES,
+      params: '20min (for keynote)',
+      description: ''
     }
   ]
 )

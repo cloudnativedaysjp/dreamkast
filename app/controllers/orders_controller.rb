@@ -18,7 +18,11 @@ class OrdersController < ApplicationController
     @order.orders_tickets.build(ticket_id: order_params[:ticket_ids])
 
     if @order.save
-      redirect_to("/#{event_name}/public_profiles/new")
+      if @profile.public_profile.present?
+        redirect_to("/#{event_name}/public_profiles/#{@public.public_profile.id}/edit")
+      else
+        redirect_to("/#{event_name}/public_profiles/new")
+      end
     else
       respond_to do |format|
         format.html { render(:new) }

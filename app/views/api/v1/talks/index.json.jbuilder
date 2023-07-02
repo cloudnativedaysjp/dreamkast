@@ -24,4 +24,5 @@ json.array!(@talks) do |talk|
   json.actualEndTime(talk.actual_end_time)
   json.presentationMethod(talk.presentation_method)
   json.slotNum(talk.slot_number.to_i)
+  json.allowShowingVideo(talk.allowed_showing_video?)
 end

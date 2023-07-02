@@ -71,8 +71,7 @@ class TalksController < ApplicationController
         if talk.proposal_items.empty?
           false
         else
-          proposal_item = talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL) || []
-          proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any? && talk.archived?
+          talk.allowed_showing_video? && talk.archived?
         end
       else
         (talk.video_published && talk.video.present? && talk.archived?)

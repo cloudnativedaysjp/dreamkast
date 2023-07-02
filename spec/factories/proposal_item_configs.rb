@@ -134,7 +134,7 @@ FactoryBot.define do
     end
 
     trait :all_ng do
-      id { 5 }
+      id { 6 }
       params { 'NG - いずれも公開不可（来場者限定のコンテンツ）' }
       key { 4 }
       value { 'NG - いずれも公開不可（来場者限定のコンテンツ）' }

@@ -184,4 +184,51 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
     end
   end
+
+  describe '#allowed_showing_video?' do
+    before do
+      create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference: cndt2020)
+      create(:proposal_item_configs_whether_it_can_be_published, :only_video, conference: cndt2020)
+      create(:proposal_item_configs_whether_it_can_be_published, :only_slide, conference: cndt2020)
+      create(:proposal_item_configs_whether_it_can_be_published, :all_ng, conference: cndt2020)
+    end
+
+    let!(:cndt2020) { create(:cndt2020) }
+
+    context 'all ok' do
+      let!(:talk) { create(:talk1) }
+      let!(:whether_it_can_be_published) { create(:proposal_item_whether_it_can_be_published, :all_ok, talk:) }
+
+      it 'should be true' do
+        expect(talk.allowed_showing_video?).to(be_truthy)
+      end
+    end
+
+    context 'only video' do
+      let!(:talk) { create(:talk1) }
+      let!(:whether_it_can_be_published) { create(:proposal_item_whether_it_can_be_published, :only_video, talk:) }
+
+      it 'should be true' do
+        expect(talk.allowed_showing_video?).to(be_truthy)
+      end
+    end
+
+    context 'only slide' do
+      let!(:talk) { create(:talk1) }
+      let!(:whether_it_can_be_published) { create(:proposal_item_whether_it_can_be_published, :only_slide, talk:) }
+
+      it 'should be false' do
+        expect(talk.allowed_showing_video?).to(be_falsey)
+      end
+    end
+
+    context 'all_ng' do
+      let!(:talk) { create(:talk1) }
+      let!(:whether_it_can_be_published) { create(:proposal_item_whether_it_can_be_published, :all_ng, talk:) }
+
+      it 'should be false' do
+        expect(talk.allowed_showing_video?).to(be_falsey)
+      end
+    end
+  end
 end

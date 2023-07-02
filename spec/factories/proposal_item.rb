@@ -40,7 +40,7 @@ FactoryBot.define do
     end
 
     trait :all_ng do
-      params { '5' }
+      params { '6' }
     end
   end
 end

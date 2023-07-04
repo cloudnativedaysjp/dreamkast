@@ -447,6 +447,12 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     ChatMessage.where(room_id: id, room_type: 'talk', message_type: 'qa')
   end
 
+  def allowed_showing_video?
+    proposal_item = proposal_items.find_by(label: VideoAndSlidePublished::LABEL)
+    return false if proposal_item.blank?
+    proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any?
+  end
+
   private
 
   def validate_proposal_item_configs

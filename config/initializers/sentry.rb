@@ -6,8 +6,8 @@ Sentry.init do |config|
 
   # To activate performance monitoring, set one of these options.
   # We recommend adjusting the value in production:
-  config.traces_sample_rate = 0.2
-  config.profiles_sample_rate = 0.2
+  config.traces_sample_rate = 0.01
+  config.profiles_sample_rate = 0.01
   # set the instrumenter to use OpenTelemetry instead of Sentry
   config.instrumenter = :otel
 end

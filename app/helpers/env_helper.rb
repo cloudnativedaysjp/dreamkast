@@ -2,9 +2,9 @@ module EnvHelper
   def env_name
     if ENV['REVIEW_APP'] == 'true'
       'review_app'
-    elsif ENV['S3_BUCKET'] == 'dk-us-stg-bucket'
+    elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
       'staging'
-    elsif ENV['S3_BUCKET'] == 'dreamkast-prd-bucket'
+    elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
       'production'
     else
       'others'

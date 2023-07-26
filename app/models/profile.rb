@@ -148,7 +148,7 @@ class Profile < ApplicationRecord
 
   def industry_name
     if industry_id.present?
-      FormModels::Industry.find(industry_id).name
+      FormModels::Industry.all.map { |i| i.attributes[:child] }.flatten.find { |i| i.id == industry_id }.name
     else
       ''
     end

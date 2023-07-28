@@ -21,7 +21,7 @@
           <% if public_profile.avatar_url.nil? %>
             <%= image_tag "dummy.png", :size => '40x40', class: 'card-img-top, rounded-circle' %>
           <% else %>
-            <%= image_tag public_profile.avatar_url, :size => '40x40', class: 'card-img-top, rounded-circle' %>
+            <%= image_tag public_profile.avatar_url(:small), :size => '40x40', class: 'card-img-top, rounded-circle' %>
           <% end %>
         </td>
         <td>

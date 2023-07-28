@@ -39,7 +39,7 @@
     <% if speaker.avatar_url.nil? %>
       <div class="avatar">Avatar: <%= image_tag 'dummy.png', :size => '80x80'  %></div>
     <% else %>
-      <div class="avatar">Avatar: <%= image_tag speaker.avatar_url, :size => '80x80'  %></div>
+      <div class="avatar">Avatar: <%= image_tag speaker.avatar_url(:small) || avatar_url, :size => '80x80'  %></div>
     <% end %>
   </div>
 

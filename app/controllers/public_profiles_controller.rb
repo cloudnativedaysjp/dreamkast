@@ -4,14 +4,17 @@ class PublicProfilesController < ApplicationController
 
   def new
     @public_profile = PublicProfile.new(profile_id: @profile.id)
+    authorize(@public_profile)
   end
 
   def edit
     @public_profile = PublicProfile.find(params[:id])
+    authorize(@public_profile)
   end
 
   def create
     @public_profile = PublicProfile.new(public_profile_params.merge(profile_id: @profile.id))
+    authorize(@public_profile)
 
     if @public_profile.save
       redirect_to("/#{event_name}/timetables")
@@ -24,6 +27,7 @@ class PublicProfilesController < ApplicationController
 
   def update
     @public_profile = PublicProfile.find(params[:id])
+    authorize(@public_profile)
 
     respond_to do |format|
       if @public_profile.update(public_profile_params)
@@ -36,7 +40,14 @@ class PublicProfilesController < ApplicationController
   end
 
   def destroy
+    authorize(@public_profile)
     @public_profile.destroy
+  end
+
+  def pundit_user
+    if @current_user
+      Profile.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    end
   end
 
   helper_method :public_profile_path

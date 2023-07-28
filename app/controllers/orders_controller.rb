@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
 
     if @order.save
       if @profile.public_profile.present?
-        redirect_to("/#{event_name}/public_profiles/#{@public.public_profile.id}/edit")
+        redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
       else
         redirect_to("/#{event_name}/public_profiles/new")
       end

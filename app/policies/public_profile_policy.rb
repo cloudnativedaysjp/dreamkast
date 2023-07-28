@@ -5,6 +5,7 @@ class PublicProfilePolicy < ApplicationPolicy
   def initialize(profile, record)
     @profile = profile
     @record = record
+    super
   end
 
   def new?

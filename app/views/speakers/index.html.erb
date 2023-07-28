@@ -9,7 +9,7 @@
             <% if speaker.avatar_url.nil? %>
                 <%= image_tag 'dummy.png', :size => '80x80'  %>
             <% else %>
-                <%= image_tag speaker.avatar_url, :size => '80x80'  %>
+                <%= image_tag speaker.avatar_url(:small) || speaker.avatar_url, :size => '80x80'  %>
             <% end %>
             </div>
             <div class="card-body">

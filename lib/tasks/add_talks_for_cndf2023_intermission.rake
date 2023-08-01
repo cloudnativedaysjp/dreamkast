@@ -36,11 +36,11 @@ namespace :util do
       #  14:00:00 14:40:00 Session 1
       %w[14:40:00 15:00:00 休憩 intermission],
       #  15:00:00 15:40:00 Session 2
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[15:40:00 16:00:00 休憩 intermission],
       #  16:00:00 16:40:00 Session 3
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[16:40:00 17:00:00 休憩 intermission],
       #  17:00:00 17:40:00 Session 4
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[17:40:00 18:00:00 休憩 intermission],
       #  18:00:00 18:40:00 Session 5
       %w[18:40:00 18:50:00 休憩 intermission],
       %w[18:50:00 19:00:00 クロージング intermission],
@@ -56,11 +56,11 @@ namespace :util do
       #  14:00:00 14:40:00 Session 1
       %w[14:40:00 15:00:00 休憩 intermission],
       #  15:00:00 15:40:00 Session 2
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[15:40:00 16:00:00 休憩 intermission],
       #  16:00:00 16:40:00 Session 3
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[16:40:00 17:00:00 休憩 intermission],
       #  17:00:00 17:40:00 Session 4
-      %w[14:40:00 15:00:00 休憩 intermission],
+      %w[17:40:00 18:00:00 休憩 intermission],
       #  18:00:00 18:40:00 Session 5
       %w[18:40:00 18:50:00 休憩 intermission],
       %w[18:50:00 19:00:00 トラックAでクロージング実施中！ intermission],

@@ -1,4 +1,4 @@
-require 'aws-sdk-mediapackage'
+require 'aws-sdk-mediapackagev2'
 
 module MediaPackageV2Helper
   def media_package_v2_client
@@ -12,9 +12,9 @@ module MediaPackageV2Helper
 
   def channel_group_name
     if review_app?
-      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
+      "review_app_#{review_app_number}_#{conference.abbr}"
     else
-      "#{env_name}_#{conference.abbr}_track#{track.name}"
+      "#{env_name}_#{conference.abbr}"
     end
   end
 

@@ -1,54 +1,52 @@
 class CreateMediaPackageV2Job < ApplicationJob
   include EnvHelper
+  include MediaPackageV2Helper
   include LogoutHelper
 
   # queue_as :default
   self.queue_adapter = :async
 
+  attr_reader :conference, :track
+
   def perform(*args)
     # Rails.logger.level = Logger::DEBUG
     logger.info('Perform CreateMediaPackageV2Job')
-    conference, track = args
-    resource_name = if review_app?
-                      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
-                    else
-                      "#{env_name}_#{conference.abbr}_track#{track.name}"
-                    end
-
-    p(channel_group = MediaPackageV2ChannelGroup.find_by(conference:, track:, name: resource_name))
+    @conference = args[0]
+    tracks = @conference.tracks
+    channel_group = MediaPackageV2ChannelGroup.find_by(conference_id: @conference.id, name: channel_group_name)
     unless channel_group.present?
-      logger.info("creating channel group #{resource_name}...")
-      channel_group = MediaPackageV2ChannelGroup.new(conference:, track:, name: resource_name)
-      logger.error("Failed to create MediaPackageV2ChannelGroup: #{channel_group.errors}") unless channel_group.save
-      channel_group.ensure_resource
+      logger.info("creating channel group #{channel_group_name}...")
+      channel_group = MediaPackageV2ChannelGroup.create!(conference_id: @conference.id, name: channel_group_name)
       logger.info("created channel group: #{channel_group.name}")
     end
     logger.info("channel group: #{channel_group}")
+    channel_group.create_aws_resource
 
-    channel = channel_group.channel
-    unless channel.present?
-      logger.info("creating channel #{resource_name}...")
-      channel = MediaPackageV2Channel.new(conference:, track:, media_package_v2_channel_group_id: channel_group.id, name: resource_name)
-      unless channel_group.save
-        channel.errors.each do |error|
-          logger.error("Failed to create MediaPackageV2Channel: #{error}")
-        end
+    tracks.each do |track|
+      @track = track
+      channel = channel_group.channels.find_by(track_id: track.id)
+      unless channel.present?
+        logger.info("creating channel #{channel_name}...")
+        channel = MediaPackageV2Channel.create!(conference:, track:, media_package_v2_channel_group_id: channel_group.id, name: channel_name)
+        logger.info("created channel: #{channel_group.name}")
       end
-      channel.create_resource
-      logger.info("created channel: #{channel_group.name}")
+      logger.info("channel: #{channel}")
+      channel.create_aws_resource
     end
-    logger.info("channel: #{channel}")
 
-    origin_endpoint = channel.origin_endpoint
-    if origin_endpoint&.empty?
-      logger.info("creating origin endpoint #{resource_name}...")
-      origin_endpoint = MediaPackageV2OriginEndpoint.new(conference:, track:, media_package_v2_channel_group_id: channel_group.id, media_package_v2_channel_id: channel.id, name: resource_name)
-      logger.error("Failed to create MediaPackageV2Channel: #{origin_endpoint.errors}") unless origin_endpoint.save
-      origin_endpoint.ensure_resource
-      logger.info("created origin endpoint: #{origin_endpoint.name}")
+    channel_group.channels.each do |channel|
+      @track = channel.track
+      origin_endpoint = channel.origin_endpoint
+      if origin_endpoint.nil?
+        logger.info("creating origin endpoint #{origin_endpoint_name}...")
+        origin_endpoint = MediaPackageV2OriginEndpoint.create!(conference:, track:, media_package_v2_channel_id: channel.id, name: origin_endpoint_name)
+        logger.info("created origin endpoint: #{origin_endpoint.name}")
+      end
+      logger.info("origin endpoint: #{origin_endpoint}")
+      origin_endpoint.create_aws_resource
     end
-    logger.info("origin endpoint: #{origin_endpoint}")
   rescue => e
     logger.error(e.message)
+    logger.error(e.backtrace.join("\n"))
   end
 end

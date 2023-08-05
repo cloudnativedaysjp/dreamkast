@@ -3,6 +3,7 @@ class Admin::LiveStreamIvsController < ApplicationController
   include MediaLiveHelper
 
   def index
+    @tracks = @conference.tracks
     @ivs = LiveStreamIvs.new
     @ivss = @conference.tracks.map(&:live_stream_ivs).compact
 
@@ -16,6 +17,8 @@ class Admin::LiveStreamIvsController < ApplicationController
 
     @media_package_channels = @conference.tracks.map(&:media_package_channel).compact
     @media_package_channels.each(&:channel)
+
+    @media_package_v2_channels = @conference.tracks.map(&:media_package_v2_channel).compact
 
     respond_to do |format|
       format.html { render(:index) }

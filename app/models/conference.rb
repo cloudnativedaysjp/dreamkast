@@ -70,6 +70,7 @@ class Conference < ApplicationRecord
   has_many :media_package_harvest_jobs
   has_many :tickets
   has_many :rooms
+  has_one :media_package_v2_channel_group
 
   scope :upcoming, -> {
     merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)))

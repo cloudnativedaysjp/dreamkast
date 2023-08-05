@@ -82,6 +82,8 @@ Rails.application.routes.draw do
       post 'bulk_delete_media_live' => 'live_stream_media_live#bulk_delete'
       post 'bulk_create_media_package' => 'live_stream_media_package#bulk_create'
       post 'bulk_delete_media_package' => 'live_stream_media_package#bulk_delete'
+      post 'bulk_create_media_package_v2' => 'live_stream_media_package_v2#bulk_create'
+      post 'bulk_delete_media_package_v2' => 'live_stream_media_package_v2#bulk_delete'
       resources :harvest_jobs
     end
 

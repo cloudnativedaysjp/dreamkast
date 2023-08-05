@@ -2,19 +2,17 @@
 #
 # Table name: media_package_v2_origin_endpoints
 #
-#  id                                :bigint           not null, primary key
-#  name                              :string(255)
-#  conference_id                     :bigint           not null
-#  media_package_v2_channel_group_id :bigint           not null
-#  media_package_v2_channel_id       :bigint           not null
-#  track_id                          :bigint           not null
+#  id                          :bigint           not null, primary key
+#  name                        :string(255)
+#  conference_id               :bigint           not null
+#  media_package_v2_channel_id :bigint           not null
+#  track_id                    :bigint           not null
 #
 # Indexes
 #
 #  index_media_package_v2_origin_endpoints_on_conference_id  (conference_id)
 #  index_media_package_v2_origin_endpoints_on_name           (name) UNIQUE
 #  index_media_package_v2_origin_endpoints_on_track_id       (track_id)
-#  index_origin_endpoints_on_channel_group_id                (media_package_v2_channel_group_id)
 #  index_origin_endpoints_on_channel_id                      (media_package_v2_channel_id)
 #
 # Foreign Keys
@@ -31,7 +29,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
 
   belongs_to :conference
   belongs_to :track
-  belongs_to :media_package_v2_channel
+  belongs_to :channel, class_name: 'MediaPackageV2Channel', foreign_key: :media_package_v2_channel_id
 
   def create_aws_resource
     unless exists_aws_resource?
@@ -87,7 +85,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   end
 
   def exists_aws_resource?
-    media_package_v2_client.describe_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
+    media_package_v2_client.get_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
     true
   rescue Aws::MediaPackageV2::Errors::NotFoundException
     false
@@ -96,9 +94,12 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
     false
   end
 
-  def delete_resource
+  def delete_aws_resource
     media_package_v2_client.delete_origin_endpoint_policy(channel_group_name:, channel_name:, origin_endpoint_name:)
     media_package_v2_client.delete_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
+    while true do
+      break unless exists_aws_resource?
+    end
     update!(name: '')
   rescue => e
     logger.error(e.message.to_s)

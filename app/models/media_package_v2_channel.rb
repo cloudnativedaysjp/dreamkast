@@ -29,7 +29,7 @@ class MediaPackageV2Channel < ApplicationRecord
 
   belongs_to :conference
   belongs_to :track
-  belongs_to :channel_group, class_name: 'MediaPackageV2ChannelGroup'
+  belongs_to :channel_group, class_name: 'MediaPackageV2ChannelGroup', foreign_key: :media_package_v2_channel_group_id
   has_one :origin_endpoint, class_name: 'MediaPackageV2OriginEndpoint'
 
   def create_aws_resource
@@ -44,13 +44,16 @@ class MediaPackageV2Channel < ApplicationRecord
 
   def delete_aws_resource
     media_package_v2_client.delete_channel(channel_group_name:, channel_name:) if exists_aws_resource?
+    while true do
+      break unless exists_aws_resource?
+    end
     update!(name: '')
   rescue => e
     logger.error(e.message.to_s)
   end
 
   def exists_aws_resource?
-    media_package_v2_client.get_channel(channel_group_name: name, channel_name: name)
+    p media_package_v2_client.get_channel(channel_group_name:, channel_name:)
     true
   rescue Aws::MediaPackageV2::Errors::NotFoundException
     false

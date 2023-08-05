@@ -23,28 +23,30 @@ require 'aws-sdk-mediapackagev2'
 
 class MediaPackageV2ChannelGroup < ApplicationRecord
   include EnvHelper
+  include MediaPackageV2Helper
 
   belongs_to :conference
   belongs_to :track
   has_one :channel, class_name: 'MediaPackageV2Channel'
 
-  def ensure_resource
-    unless exists?
-      media_package_v2_client.create_channel_group(channel_group_name: name)
-      # update!(channel_group_name: resp.channel_group_name)
+  def create_aws_resource
+    unless exists_aws_resource?
+      resp = media_package_v2_client.create_channel_group(channel_group_name: name)
+      update!(name: resp.channel_group_name)
     end
   rescue => e
     logger.error(e.message)
-    delete_resource
+    delete_awa_resource
   end
 
-  def delete_resource
-    media_package_v2_client.delete_channel_group(channel_group_name: name) if exists?
+  def delete_aws_resource
+    media_package_v2_client.delete_channel_group(channel_group_name: name) if exists_aws_resource?
+    update!(name: '')
   rescue => e
     logger.error(e.message.to_s)
   end
 
-  def exists?
+  def exists_aws_resource?
     media_package_v2_client.get_channel_group(channel_group_name: name)
     true
   rescue Aws::MediaPackageV2::Errors::NotFoundException
@@ -53,23 +55,4 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
     logger.error(e.message)
     false
   end
-
-  private
-
-  def media_package_v2_client
-    creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-    @client ||= if creds.set?
-                  Aws::MediaPackageV2::Client.new(region: AWS_LIVE_STREAM_REGION, credentials: creds)
-                else
-                  Aws::MediaPackageV2::Client.new(region: AWS_LIVE_STREAM_REGION)
-                end
-  end
-
-  # def get_channel_group_name
-  #   if review_app?
-  #     "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
-  #   else
-  #     "#{env_name}_#{conference.abbr}_track#{track.name}"
-  #   end
-  # end
 end

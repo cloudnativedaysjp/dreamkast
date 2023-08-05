@@ -31,23 +31,24 @@ class MediaPackageV2Channel < ApplicationRecord
   belongs_to :channel_group, class_name: 'MediaPackageV2ChannelGroup'
   has_one :origin_endpoint, class_name: 'MediaPackageV2OriginEndpoint'
 
-  def create_resource
-    unless exists?
-      media_package_v2_client.create_channel(channel_group_name: get_channel_group_name, channel_name: get_channel_name)
-      # update!(channel_group_name: get_channel_group_name, channel_name: resp.channel_name)
+  def create_aws_resource
+    unless exists_aws_resource?
+      resp = media_package_v2_client.create_channel(channel_group_name:, channel_name:)
+      update!(name: resp.channel_name)
     end
   rescue => e
     logger.error(e.message)
     delete_media_package_resources
   end
 
-  def delete_resource
-    media_package_v2_client.delete_channel(id: channel_name) if channel_name.present?
+  def delete_aws_resource
+    media_package_v2_client.delete_channel(channel_group_name:, channel_name:) if exists_aws_resource?
+    update!(name: '')
   rescue => e
     logger.error(e.message.to_s)
   end
 
-  def exists?
+  def exists_aws_resource?
     media_package_v2_client.get_channel(channel_group_name: name, channel_name: name)
     true
   rescue Aws::MediaPackageV2::Errors::NotFoundException
@@ -68,7 +69,7 @@ class MediaPackageV2Channel < ApplicationRecord
                 end
   end
 
-  def get_channel_group_name
+  def channel_group_name
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else
@@ -76,7 +77,7 @@ class MediaPackageV2Channel < ApplicationRecord
     end
   end
 
-  def get_channel_name
+  def channel_name
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -190,6 +190,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
     t.string "endpoint_id"
     t.index ["conference_id"], name: "index_media_package_origin_endpoints_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_origin_endpoints_on_media_package_channel_id"
+  end
+
+  create_table "media_package_v2_channel_groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "track_id", null: false
+    t.string "name"
+    t.index ["conference_id"], name: "index_media_package_v2_channel_groups_on_conference_id"
+    t.index ["name"], name: "index_media_package_v2_channel_groups_on_name", unique: true
+    t.index ["track_id"], name: "index_media_package_v2_channel_groups_on_track_id"
+  end
+
+  create_table "media_package_v2_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "track_id", null: false
+    t.bigint "media_package_v2_channel_group_id", null: false
+    t.string "name"
+    t.index ["conference_id"], name: "index_media_package_v2_channels_on_conference_id"
+    t.index ["media_package_v2_channel_group_id"], name: "index_channels_on_channel_group_id"
+    t.index ["name"], name: "index_media_package_v2_channels_on_name", unique: true
+    t.index ["track_id"], name: "index_media_package_v2_channels_on_track_id"
+  end
+
+  create_table "media_package_v2_origin_endpoints", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "track_id", null: false
+    t.bigint "media_package_v2_channel_group_id", null: false
+    t.bigint "media_package_v2_channel_id", null: false
+    t.string "name"
+    t.index ["conference_id"], name: "index_media_package_v2_origin_endpoints_on_conference_id"
+    t.index ["media_package_v2_channel_group_id"], name: "index_origin_endpoints_on_channel_group_id"
+    t.index ["media_package_v2_channel_id"], name: "index_origin_endpoints_on_channel_id"
+    t.index ["name"], name: "index_media_package_v2_origin_endpoints_on_name", unique: true
+    t.index ["track_id"], name: "index_media_package_v2_origin_endpoints_on_track_id"
   end
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -548,6 +581,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_045613) do
   add_foreign_key "media_package_harvest_jobs", "talks"
   add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
+  add_foreign_key "media_package_v2_channel_groups", "conferences"
+  add_foreign_key "media_package_v2_channel_groups", "tracks"
+  add_foreign_key "media_package_v2_channels", "conferences"
+  add_foreign_key "media_package_v2_channels", "tracks"
+  add_foreign_key "media_package_v2_origin_endpoints", "conferences"
+  add_foreign_key "media_package_v2_origin_endpoints", "tracks"
   add_foreign_key "orders", "profiles"
   add_foreign_key "orders_tickets", "orders"
   add_foreign_key "orders_tickets", "tickets"

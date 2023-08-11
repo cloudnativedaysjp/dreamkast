@@ -1,4 +1,0 @@
----
-applications:
-- name: cndtattend
-  command: bundle exec rake db:migrate db:seed && bundle exec rails s -p $PORT

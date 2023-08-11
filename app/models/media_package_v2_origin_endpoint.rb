@@ -40,17 +40,17 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
           origin_endpoint_name:,
           container_type: 'TS',
           segment: {
-            segment_duration_seconds: 6,
+            segment_duration_seconds: 1,
             segment_name: 'segment',
             ts_use_audio_rendition_group: false,
             include_iframe_only_streams: false,
             ts_include_dvb_subtitles: false
           },
-          startover_window_seconds: 900,
+          startover_window_seconds: 60,
           low_latency_hls_manifests: [
             {
               manifest_name: 'll-hls-index',
-              manifest_window_seconds: 60,
+              manifest_window_seconds: 30,
               program_date_time_interval_seconds: 1
             }
           ]

@@ -64,7 +64,7 @@ module TalksTable
     case message_type
     when 'notice'
       'success'
-    when 'danger'
+    when 'danger', 'alert'
       'danger'
     else
       'primary'

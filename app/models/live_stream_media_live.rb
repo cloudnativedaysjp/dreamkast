@@ -230,6 +230,14 @@ class LiveStreamMediaLive < LiveStream
               password_param:  "/medialive/#{resource_name}"
             }
           ]
+        },
+        {
+          id: 'dest-mediapackagev2',
+          settings: [
+            {
+              url: track.media_package_v2_channel.ingest_endpoint,
+            }
+          ]
         }
       ],
 
@@ -273,6 +281,7 @@ class LiveStreamMediaLive < LiveStream
         caption_descriptions: [],
         output_groups: [
           output_to_mediapackage,
+          output_to_mediapackagev2,
           output_to_ivs
         ],
         timecode_config: {
@@ -321,6 +330,7 @@ class LiveStreamMediaLive < LiveStream
   def output_groups
     [
       output_to_mediapackage,
+      output_to_mediapackagev2,
       output_to_ivs
     ]
   end
@@ -362,7 +372,7 @@ class LiveStreamMediaLive < LiveStream
           program_date_time: 'EXCLUDE',
           program_date_time_period: 600,
           redundant_manifest: 'DISABLED',
-          segment_length: 6,
+          segment_length: 1,
           segmentation_mode: 'USE_SEGMENT_DURATION',
           segments_per_subdirectory: 10000,
           stream_inf_resolution: 'INCLUDE',
@@ -417,6 +427,60 @@ class LiveStreamMediaLive < LiveStream
     }
   end
 
+  def output_to_mediapackagev2
+    {
+      name: 'To MediaPackageV2',
+      output_group_settings: {
+        hls_group_settings: {
+          ad_markers: [],
+          caption_language_mappings: [],
+          caption_language_setting: 'OMIT',
+          client_cache: 'ENABLED',
+          codec_specification: 'RFC_4281',
+          destination: { destination_ref_id: 'dest-mediapackagev2' },
+          directory_structure: 'SINGLE_DIRECTORY',
+          discontinuity_tags: 'INSERT',
+          hls_cdn_settings: {
+            hls_webdav_settings: {
+              connection_retry_interval: 1,
+              filecache_duration: 300,
+              http_transfer_mode: 'NON_CHUNKED',
+              num_retries: 10,
+              restart_delay: 15
+            }
+          },
+          hls_id_3_segment_tagging: 'DISABLED',
+          i_frame_only_playlists: 'DISABLED',
+          incomplete_segment_behavior: 'AUTO',
+          index_n_segments: 10,
+          input_loss_action: 'EMIT_OUTPUT',
+          iv_in_manifest: 'INCLUDE',
+          iv_source: 'FOLLOWS_SEGMENT_NUMBER',
+          keep_segments: 21,
+          manifest_compression: 'NONE',
+          manifest_duration_format: 'INTEGER',
+          mode: 'LIVE',
+          output_selection: 'MANIFESTS_AND_SEGMENTS',
+          program_date_time: 'EXCLUDE',
+          program_date_time_period: 600,
+          redundant_manifest: 'DISABLED',
+          segment_length: 6,
+          segmentation_mode: 'USE_SEGMENT_DURATION',
+          segments_per_subdirectory: 10000,
+          stream_inf_resolution: 'INCLUDE',
+          timed_metadata_id_3_frame: 'PRIV',
+          timed_metadata_id_3_period: 10,
+          ts_file_mode: 'SEGMENTED_FILES'
+        }
+      },
+      outputs: [
+        output(['audio_1'], '_1080p30', 'video_1080p30'),
+        output(['audio_2'], '_720p30', 'video_720p30'),
+        output(['audio_3'], '_480p30', 'video_480p30')
+      ]
+    }
+  end
+
   def output(audio_names, name_modifier, video_description_name)
     {
       audio_description_names: audio_names,
@@ -466,8 +530,8 @@ class LiveStreamMediaLive < LiveStream
           framerate_numerator: 30,
           gop_b_reference: 'ENABLED',
           gop_closed_cadence: 1,
-          gop_num_b_frames: 3,
-          gop_size: 60,
+          gop_num_b_frames: 1,
+          gop_size: 3,
           gop_size_units: 'FRAMES',
           level: 'H264_LEVEL_AUTO',
           look_ahead_rate_control: 'HIGH',

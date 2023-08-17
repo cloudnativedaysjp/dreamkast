@@ -21,6 +21,11 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         :dreamkast_registrants_count,
         docstring: 'Count dreamkast registrants number',
         labels: [:conference_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_talks_count,
+        docstring: 'Count dreamkast talks number',
+        labels: [:conference_id]
       )
     ]
     metrics.each do |metric|
@@ -72,4 +77,22 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       )
     end
   end
+
+  def dreamkast_talks_count(metrics)
+    Conference.all.each do |talks_count|
+      metrics.set(
+        talks_count.talks.count,
+        labels: { conference_id: talks_count.id, talk_difficulty: talks_count.talk_difficulties }
+      )
+    end
+  end
+
+  # def dreamkast_proposal_items_count(metrics)
+  #   ProposalItem.all.each do |proposal_items_count|
+  #     metrics.set(
+  #       proposal_items_count.talk_id.count,
+  #       labels: { presentation_method: ,assumed_visitor: ,execution_phase: ,whether_it_can_be_published: ,session_time: ,language:  }
+  #     )
+  #   end
+
 end

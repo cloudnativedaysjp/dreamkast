@@ -93,7 +93,7 @@ jobs:
       - name: Create a New Image
         run: |
           image_tag_sha="${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}"
-          image_tag_ref="${{ steps.login-ecr.outputs.registry }}${{ steps.meta.outputs.tags }}"
+          image_tag_ref="${{ steps.meta.outputs.tags }}"
 
 
           docker buildx imagetools create \

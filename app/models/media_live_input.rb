@@ -1,47 +1,43 @@
 # == Schema Information
 #
-# Table name: live_streams
+# Table name: media_live_inputs
 #
-#  id            :bigint           not null, primary key
-#  params        :json
-#  type          :string(255)
-#  conference_id :bigint           not null
-#  track_id      :bigint           not null
+#  id                                 :bigint           not null, primary key
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
+#  conference_id                      :bigint           not null
+#  input_id                           :string(255)
+#  media_live_input_security_group_id :bigint           not null
+#  track_id                           :bigint           not null
 #
 # Indexes
 #
-#  index_live_streams_on_conference_id  (conference_id)
-#  index_live_streams_on_track_id       (track_id)
+#  index_media_live_inputs_on_conference_id                       (conference_id)
+#  index_media_live_inputs_on_media_live_input_security_group_id  (media_live_input_security_group_id)
+#  index_media_live_inputs_on_track_id                            (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (media_live_input_security_group_id => media_live_input_security_groups.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
 require 'aws-sdk-medialive'
 
-class MediaLiveInput < LiveStream
+class MediaLiveInput < ApplicationRecord
   include MediaLiveHelper
   include SsmHelper
   include EnvHelper
 
   belongs_to :conference
   belongs_to :track
-
-  attr_accessor :input_security_group
-  attr_accessor :input
-  attr_accessor :channel
-
-  def initialize(input_security_group: nil)
-    @input_security_group = input_security_group
-
-    super
-  end
+  belongs_to :media_live_input_security_group
+  has_one :media_live_channel
 
   def create_aws_resource
     unless exists_aws_resource?
-      input_resp = media_live_client.create_input(create_input_params(@input_security_group.input_security_group_id))
+      input_resp = media_live_client.create_input(create_input_params(media_live_input_security_group.input_security_group_id))
       update!(input_id: input_resp.input.id)
     end
   rescue => e
@@ -61,9 +57,14 @@ class MediaLiveInput < LiveStream
   def delete_aws_resource
     if exists_aws_resource?
       media_live_client.delete_input(input_id:)
+      wait_input_until(:input_deleted, input_id)
     end
   rescue => e
     logger.error(e.message.to_s)
+  end
+
+  def aws_resource
+    @aws_resource ||= media_live_client.describe_input(input_id:)
   end
 
   private

@@ -16,6 +16,7 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     @conference = @streaming_aws_resource.conference
     @track = @streaming_aws_resource.track
 
+    delete_media_live_resources(track)
     delete_media_package_v2_resources(track)
     delete_media_package_resources(track)
 
@@ -68,5 +69,26 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     end
 
     logger.info('Deleted MediaPackage resources...')
+  end
+
+  def delete_media_live_resources(track)
+    logger.info('Deleting MediaLive resources...')
+
+    if track.media_live_channel
+      track.media_live_channel.delete_aws_resource
+      track.media_live_channel.destroy!
+    end
+
+    if track.media_live_input
+      track.media_live_input.delete_aws_resource
+      track.media_live_input.destroy!
+    end
+
+    if track.media_live_input_security_group
+      track.media_live_input_security_group.delete_aws_resource
+      track.media_live_input_security_group.destroy!
+    end
+
+    logger.info('Deleted MediaLive resources...')
   end
 end

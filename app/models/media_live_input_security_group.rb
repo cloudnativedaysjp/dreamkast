@@ -1,17 +1,18 @@
 # == Schema Information
 #
-# Table name: live_streams
+# Table name: media_live_input_security_groups
 #
-#  id            :bigint           not null, primary key
-#  params        :json
-#  type          :string(255)
-#  conference_id :bigint           not null
-#  track_id      :bigint           not null
+#  id                      :bigint           not null, primary key
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  conference_id           :bigint           not null
+#  input_security_group_id :string(255)
+#  track_id                :bigint           not null
 #
 # Indexes
 #
-#  index_live_streams_on_conference_id  (conference_id)
-#  index_live_streams_on_track_id       (track_id)
+#  index_media_live_input_security_groups_on_conference_id  (conference_id)
+#  index_media_live_input_security_groups_on_track_id       (track_id)
 #
 # Foreign Keys
 #
@@ -21,7 +22,7 @@
 
 require 'aws-sdk-medialive'
 
-class MediaLiveInputSecurityGroup < LiveStream
+class MediaLiveInputSecurityGroup < ApplicationRecord
   include MediaLiveHelper
   include SsmHelper
   include EnvHelper
@@ -36,14 +37,14 @@ class MediaLiveInputSecurityGroup < LiveStream
   def create_aws_resources
     unless exists_aws_resource?
       input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
-      update!(input_security_group_id: input_security_group_resp.input_security_group.id)
+      update!(input_security_group_id: input_security_group_resp.security_group.id)
     end
   rescue => e
     logger.error(e.message)
   end
 
   def exists_aws_resource?
-    media_live_client.describe_input_security_group(input_security_group:)
+    media_live_client.describe_input_security_group(input_security_group_id:)
     true
   rescue Aws::MediaLive::Errors::NotFoundException
     false

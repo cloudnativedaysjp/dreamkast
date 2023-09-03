@@ -1,39 +1,38 @@
 # == Schema Information
 #
-# Table name: live_streams
+# Table name: media_live_channels
 #
-#  id            :bigint           not null, primary key
-#  params        :json
-#  type          :string(255)
-#  conference_id :bigint           not null
-#  track_id      :bigint           not null
+#  id                  :bigint           not null, primary key
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  channel_id          :string(255)
+#  conference_id       :bigint           not null
+#  media_live_input_id :bigint           not null
+#  track_id            :bigint           not null
 #
 # Indexes
 #
-#  index_live_streams_on_conference_id  (conference_id)
-#  index_live_streams_on_track_id       (track_id)
+#  index_media_live_channels_on_conference_id        (conference_id)
+#  index_media_live_channels_on_media_live_input_id  (media_live_input_id)
+#  index_media_live_channels_on_track_id             (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (media_live_input_id => media_live_inputs.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
 require 'aws-sdk-medialive'
 
-class MediaLiveChannel < LiveStream
+class MediaLiveChannel < ApplicationRecord
   include MediaLiveHelper
   include SsmHelper
   include EnvHelper
 
   belongs_to :conference
   belongs_to :track
-
-  before_destroy do
-    delete_media_live_resources
-  rescue => e
-    logger.error(e.message)
-  end
+  belongs_to :media_live_input
 
   CHANNEL_CREATING = 'CREATING'.freeze
   CHANNEL_CREATE_FAILED = 'CREATE_FAILED'.freeze
@@ -48,20 +47,9 @@ class MediaLiveChannel < LiveStream
   CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'.freeze
   ERROR = 'ERROR'.freeze
 
-  attr_accessor :input_security_group
-  attr_accessor :input
-  attr_accessor :channel
-
-  def initialize(input_security_group: nil, input: nil)
-    @input_security_group = input_security_group
-    @input = input
-
-    super
-  end
-
   def create_aws_resource
     unless exists_aws_resource?
-      channel_resp = media_live_client.create_channel(create_channel_params(@input.id, @input.name))
+      channel_resp = media_live_client.create_channel(create_channel_params(media_live_input.aws_resource.id, media_live_input.aws_resource.name))
       update!(channel_id: channel_resp.channel.id)
       wait_channel_until(:channel_created, channel_resp.channel.id)
     end
@@ -82,6 +70,7 @@ class MediaLiveChannel < LiveStream
   def delete_aws_resource
     if exists_aws_resource?
       media_live_client.delete_channel(channel_id:)
+      wait_channel_until(:channel_deleted, channel_id)
     end
   rescue => e
     logger.error(e.message.to_s)
@@ -93,6 +82,20 @@ class MediaLiveChannel < LiveStream
 
   def stop_channel
     media_live_client.stop_channel(channel_id:)
+  end
+
+  def idle?
+    aws_resource.state == CHANNEL_IDLE
+  end
+
+  def running?
+    aws_resource.state == CHANNEL_RUNNING
+  end
+
+  def aws_resource
+    if exists_aws_resource?
+      media_live_client.describe_channel(channel_id:)
+    end
   end
 
   def set_recording_target_talk(talk_id)
@@ -186,16 +189,16 @@ class MediaLiveChannel < LiveStream
       tags:,
 
       destinations: [
-        {
-          id: 'dest-ivs',
-          media_package_settings: [],
-          settings: [
-            {
-              url: "rtmps://#{track.live_stream_ivs.ingest_endpoint}:443/app/",
-              stream_name: track.live_stream_ivs.stream_key['value']
-            }
-          ]
-        },
+        # {
+        #   id: 'dest-ivs',
+        #   media_package_settings: [],
+        #   settings: [
+        #     {
+        #       url: "rtmps://#{track.live_stream_ivs.ingest_endpoint}:443/app/",
+        #       stream_name: track.live_stream_ivs.stream_key['value']
+        #     }
+        #   ]
+        # },
         {
           id: 'dest-mediapackage',
           settings: [
@@ -246,18 +249,18 @@ class MediaLiveChannel < LiveStream
           audio_description('audio_2', 192000, 48000),
           audio_description('audio_3', 128000, 48000),
           # For IVS
-          {
-            name: 'audio_al2b0j',
-            audio_selector_name: 'Default',
-            audio_type_control: 'FOLLOW_INPUT',
-            language_code_control: 'FOLLOW_INPUT'
-          }
+          # {
+          #   name: 'audio_al2b0j',
+          #   audio_selector_name: 'Default',
+          #   audio_type_control: 'FOLLOW_INPUT',
+          #   language_code_control: 'FOLLOW_INPUT'
+          # }
         ],
         caption_descriptions: [],
         output_groups: [
           output_to_mediapackage,
           output_to_mediapackagev2,
-          output_to_ivs
+          # output_to_ivs
         ],
         timecode_config: {
           source: 'EMBEDDED'
@@ -268,12 +271,12 @@ class MediaLiveChannel < LiveStream
           video_description('video_720p30', 720, 1280, 3000000, 100),
           video_description('video_480p30', 480, 854, 1500000, 100),
           # For IVS
-          {
-            name: 'video_ue3og',
-            respond_to_afd: 'NONE',
-            scaling_behavior: 'DEFAULT',
-            sharpness: 50
-          }
+          # {
+          #   name: 'video_ue3og',
+          #   respond_to_afd: 'NONE',
+          #   scaling_behavior: 'DEFAULT',
+          #   sharpness: 50
+          # }
         ]
       }
     }
@@ -306,7 +309,7 @@ class MediaLiveChannel < LiveStream
     [
       output_to_mediapackage,
       output_to_mediapackagev2,
-      output_to_ivs
+      # output_to_ivs
     ]
   end
 

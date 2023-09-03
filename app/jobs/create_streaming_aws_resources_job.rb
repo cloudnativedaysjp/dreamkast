@@ -60,23 +60,23 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
   def create_media_package_resources(conference, track)
     logger.info('Perform CreateMediaPackageJob')
 
-    channel= MediaPackageChannel.find_by(conference_id: @conference.id, track_id: track.id)
+    channel = MediaPackageChannel.find_by(conference_id: @conference.id, track_id: track.id)
     unless channel.present?
-      logger.info("creating media package channel group...")
+      logger.info('creating media package channel group...')
       channel = MediaPackageChannel.create!(conference:, track:)
     end
     channel.create_media_package_resources
 
     parameter = MediaPackageParameter.find_by(conference_id: @conference.id, track_id: track.id)
     unless parameter.present?
-      logger.info("creating media package parameter for password...")
+      logger.info('creating media package parameter for password...')
       parameter = MediaPackageParameter.create!(conference:, track:, media_package_channel: channel)
     end
     parameter.create_aws_resources
 
     endpoint = MediaPackageOriginEndpoint.find_by(conference_id: @conference.id, media_package_channel_id: channel.id)
     unless endpoint.present?
-      logger.info("creating media package origin endpoint group...")
+      logger.info('creating media package origin endpoint group...')
       endpoint = MediaPackageOriginEndpoint.new(conference:, media_package_channel: channel)
     end
     endpoint.create_media_package_resources
@@ -87,7 +87,7 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
 
     media_live = LiveStreamMediaLive.find_by(conference:, track:)
     unless media_live.present?
-      logger.info("creating media live resources...")
+      logger.info('creating media live resources...')
       media_live = LiveStreamMediaLive.new(conference:, track:)
     end
     media_live.create_aws_resources

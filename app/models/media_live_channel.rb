@@ -35,18 +35,18 @@ class MediaLiveChannel < LiveStream
     logger.error(e.message)
   end
 
-  CHANNEL_CREATING = 'CREATING'
-  CHANNEL_CREATE_FAILED = 'CREATE_FAILED'
-  CHANNEL_IDLE = 'IDLE'
-  CHANNEL_STARTING = 'STARTING'
-  CHANNEL_RUNNING = 'RUNNING'
-  CHANNEL_RECOVERING = 'RECOVERING'
-  CHANNEL_STOPPING = 'STOPPING'
-  CHANNEL_DELETING = 'DELETING'
-  CHANNEL_DELETED = 'DELETED'
-  CHANNEL_UPDATING = 'UPDATING'
-  CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'
-  ERROR = 'ERROR'
+  CHANNEL_CREATING = 'CREATING'.freeze
+  CHANNEL_CREATE_FAILED = 'CREATE_FAILED'.freeze
+  CHANNEL_IDLE = 'IDLE'.freeze
+  CHANNEL_STARTING = 'STARTING'.freeze
+  CHANNEL_RUNNING = 'RUNNING'.freeze
+  CHANNEL_RECOVERING = 'RECOVERING'.freeze
+  CHANNEL_STOPPING = 'STOPPING'.freeze
+  CHANNEL_DELETING = 'DELETING'.freeze
+  CHANNEL_DELETED = 'DELETED'.freeze
+  CHANNEL_UPDATING = 'UPDATING'.freeze
+  CHANNEL_UPDATE_FAILED = 'UPDATE_FAILED'.freeze
+  ERROR = 'ERROR'.freeze
 
   attr_accessor :input_security_group
   attr_accessor :input
@@ -210,7 +210,7 @@ class MediaLiveChannel < LiveStream
           id: 'dest-mediapackagev2',
           settings: [
             {
-              url: track.media_package_v2_channel.ingest_endpoint,
+              url: track.media_package_v2_channel.ingest_endpoint
             }
           ]
         }

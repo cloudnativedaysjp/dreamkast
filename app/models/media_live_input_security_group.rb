@@ -54,7 +54,7 @@ class MediaLiveInputSecurityGroup < LiveStream
 
   def delete_aws_resource
     if exists_aws_resource?
-      media_live_client.delete_input_security_group(input_security_group_id: )
+      media_live_client.delete_input_security_group(input_security_group_id:)
     end
   rescue => e
     logger.error(e.message.to_s)

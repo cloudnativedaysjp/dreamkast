@@ -16,6 +16,7 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     @conference = @streaming.conference
     @track = @streaming.track
 
+    delete_ivs_resources(track)
     delete_media_live_resources(track)
     delete_media_package_v2_resources(track)
     delete_media_package_resources(track)
@@ -24,6 +25,17 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   rescue => e
     logger.error(e.message)
     logger.error(e.backtrace.join("\n"))
+  end
+
+  def delete_ivs_resources(track)
+    logger.info('Deleting IVS resources...')
+
+    if track.ivs_channel
+      track.ivs_channel.delete_aws_resource
+      track.ivs_channel.destroy!
+    end
+
+    logger.info('Deleted IVS resources...')
   end
 
   def delete_media_package_v2_resources(track)

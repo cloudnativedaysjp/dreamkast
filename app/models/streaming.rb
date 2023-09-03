@@ -29,6 +29,9 @@ class Streaming < ApplicationRecord
   has_one :media_live_channel
   has_one :media_live_input
   has_one :media_package_v2_origin_endpoint
+  has_one :ivs_channel
+  has_one :media_package_channel
+  has_one :media_package_v2_channel
 
   STATUS_CREATING = 'creating'.freeze
   STATUS_CRTEATED = 'created'.freeze

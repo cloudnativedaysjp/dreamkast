@@ -39,7 +39,7 @@ class MediaPackageV2Channel < ApplicationRecord
 
   def create_aws_resource
     unless exists_aws_resource?
-      p resp = media_package_v2_client.create_channel(channel_group_name:, channel_name:)
+      p(resp = media_package_v2_client.create_channel(channel_group_name:, channel_name:))
       update!(name: resp.channel_name)
     end
   end
@@ -68,7 +68,7 @@ class MediaPackageV2Channel < ApplicationRecord
     logger.error(e.message.to_s)
   end
 
-  def ingest_endpoint
+  def ingest_endpoint_url
     channel.ingest_endpoints[0].url
   end
 end

@@ -23,6 +23,9 @@
             <td>Track ID</td><td><%= track.id %></td>
           </tr>
           <tr>
+            <td>IVS Channel</td><td><%= track.ivs_channel&.aws_channel_name %></td>
+          </tr>
+          <tr>
             <td>MediaPackage V2 ChannelGroup</td><td><%= track.media_package_v2_channel_group&.name %></td>
           </tr>
           <tr>

@@ -143,6 +143,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ivs_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "track_id", null: false
+    t.string "streaming_id", null: false
+    t.string "aws_channel_name"
+    t.string "aws_channel_arn"
+    t.string "aws_stream_key"
+    t.index ["aws_channel_name"], name: "index_ivs_channel_on_aws_channel_name", unique: true
+    t.index ["conference_id"], name: "index_ivs_channel_on_conference_id"
+    t.index ["streaming_id"], name: "index_ivs_channel_on_streaming_id"
+    t.index ["track_id"], name: "index_ivs_channel_on_track_id"
+  end
+
   create_table "links", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "title"
@@ -642,6 +655,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
+  add_foreign_key "ivs_channels", "conferences"
+  add_foreign_key "ivs_channels", "streamings"
+  add_foreign_key "ivs_channels", "tracks"
   add_foreign_key "links", "conferences"
   add_foreign_key "live_streams", "conferences"
   add_foreign_key "live_streams", "tracks"

@@ -17,14 +17,24 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
     @conference = @streaming.conference
     @track = @streaming.track
 
+    create_ivs_channel_resources(conference, track)
     create_media_package_v2_resources(conference, track)
     create_media_package_resources(conference, track)
     create_media_live_resources(conference, track)
 
     @streaming.update!(status: 'created')
   rescue => e
+    @streaming.update!(status: 'error')
     logger.error(e.message)
     logger.error(e.backtrace.join("\n"))
+  end
+
+  def create_ivs_channel_resources(conference, track)
+    logger.info('Perform IVS Channel')
+
+    channel = IvsChannel.find_or_create_by(conference_id: conference.id, track_id: track.id, streaming_id: streaming.id)
+    logger.info("channel: #{channel}")
+    channel.create_aws_resource
   end
 
   def create_media_package_v2_resources(conference, track)
@@ -62,7 +72,7 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
   def create_media_live_resources(conference, track)
     logger.info('Perform CreateMediaLiveJob')
 
-    parameter = MediaPackageParameter.find_by(conference_id: conference.id, track_id: track.id, streaming_id: streaming.id)
+    MediaPackageParameter.find_by(conference_id: conference.id, track_id: track.id, streaming_id: streaming.id)
 
     input_security_group = MediaLiveInputSecurityGroup.find_or_create_by(conference_id: conference.id, track_id: track.id, streaming_id: streaming.id)
     logger.info("input_security_group: #{input_security_group}")

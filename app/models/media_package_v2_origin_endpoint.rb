@@ -115,6 +115,6 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   end
 
   def playback_url
-    aws_resource&.low_latency_hls_manifests.first.url
+    aws_resource&.low_latency_hls_manifests&.first&.url
   end
 end

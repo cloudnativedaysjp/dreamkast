@@ -29,6 +29,7 @@ class Track < ApplicationRecord
   has_one :media_live_channel
   has_one :media_live_input
   has_one :media_live_input_security_group
+  has_one :ivs_channel
 
   belongs_to :room, optional: true
 

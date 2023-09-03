@@ -37,11 +37,11 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
   def create_aws_resource
     unless exists_aws_resource?
       resp = media_package_v2_client.create_channel_group(channel_group_name:)
-      p resp
+      p(resp)
       update!(name: resp.channel_group_name)
     end
-  # rescue => e
-  #   logger.error(e.message)
+    # rescue => e
+    #   logger.error(e.message)
     # delete_aws_resource
   end
 
@@ -51,8 +51,8 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
       break unless exists_aws_resource?
     end
     update!(name: '')
-  # rescue => e
-  #   logger.error(e.message.to_s)
+    # rescue => e
+    #   logger.error(e.message.to_s)
   end
 
   def exists_aws_resource?

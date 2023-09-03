@@ -98,4 +98,5 @@ module MediaLiveHelper
       client.delete_input(input_id: input.id)
     end
   end
+
 end

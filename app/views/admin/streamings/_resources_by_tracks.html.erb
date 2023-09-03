@@ -29,7 +29,7 @@
             <% end %>
           </td>
           <td>
-            <% if track.streaming && track.streaming.status == 'deleted' %>
+            <% if track.streaming && %w(deleted error).include?(track.streaming.status) %>
               <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
             <% elsif track.streaming.nil? || track.streaming.status == 'deleted' %>
               <%= form_with(url: admin_streamings_path, model: Streaming.new, method: :post, local: true) do |form| %>

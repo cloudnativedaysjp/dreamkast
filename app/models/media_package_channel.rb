@@ -55,17 +55,24 @@ class MediaPackageChannel < ApplicationRecord
   end
 
   def create_media_package_resources
-    resp = media_package_client.create_channel(create_channel_params)
-    update!(channel_id: resp.id)
+    unless exists_aws_resource?
+      resp = media_package_client.create_channel(create_channel_params)
+      update!(channel_id: resp.id)
+    end
+  end
+
+  def exists_aws_resource?
+    media_package_client.describe_channel(id: channel_id)
+    true
+  rescue Aws::MediaPackage::Errors::NotFoundException
+    false
   rescue => e
-    logger.error(e.message)
-    delete_aws_resource
+    logger.error(e.message.to_s)
+    false
   end
 
   def delete_aws_resource
-    media_package_client.delete_channel(id: channel_id)
-  rescue => e
-    logger.error(e.message.to_s)
+    media_package_client.delete_channel(id: channel_id) if exists_aws_resource?
   end
 
   private

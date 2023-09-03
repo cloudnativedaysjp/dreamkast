@@ -2,24 +2,27 @@
 #
 # Table name: media_live_channels
 #
-#  id                  :bigint           not null, primary key
+#  id                  :string(255)      not null, primary key
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  channel_id          :string(255)
 #  conference_id       :bigint           not null
-#  media_live_input_id :bigint           not null
+#  media_live_input_id :string(255)      not null
+#  streaming_id        :string(255)      not null
 #  track_id            :bigint           not null
 #
 # Indexes
 #
 #  index_media_live_channels_on_conference_id        (conference_id)
 #  index_media_live_channels_on_media_live_input_id  (media_live_input_id)
+#  index_media_live_channels_on_streaming_id         (streaming_id)
 #  index_media_live_channels_on_track_id             (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
 #  fk_rails_...  (media_live_input_id => media_live_inputs.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
@@ -30,9 +33,12 @@ class MediaLiveChannel < ApplicationRecord
   include SsmHelper
   include EnvHelper
 
+  before_create :set_uuid
+
   belongs_to :conference
   belongs_to :track
   belongs_to :media_live_input
+  belongs_to :streaming
 
   CHANNEL_CREATING = 'CREATING'.freeze
   CHANNEL_CREATE_FAILED = 'CREATE_FAILED'.freeze
@@ -49,9 +55,9 @@ class MediaLiveChannel < ApplicationRecord
 
   def create_aws_resource
     unless exists_aws_resource?
-      channel_resp = media_live_client.create_channel(create_channel_params(media_live_input.aws_resource.id, media_live_input.aws_resource.name))
-      update!(channel_id: channel_resp.channel.id)
-      wait_channel_until(:channel_created, channel_resp.channel.id)
+      resp = media_live_client.create_channel(create_channel_params(media_live_input.aws_resource.id, media_live_input.aws_resource.name))
+      update!(channel_id: resp.channel.id)
+      wait_channel_until(:channel_created, resp.channel.id)
     end
   rescue => e
     logger.error(e.message)
@@ -85,11 +91,11 @@ class MediaLiveChannel < ApplicationRecord
   end
 
   def idle?
-    aws_resource.state == CHANNEL_IDLE
+    exists_aws_resource? && aws_resource.state == CHANNEL_IDLE
   end
 
   def running?
-    aws_resource.state == CHANNEL_RUNNING
+    exists_aws_resource? && aws_resource.state == CHANNEL_RUNNING
   end
 
   def aws_resource

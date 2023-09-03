@@ -25,7 +25,7 @@ class Track < ApplicationRecord
   has_one :media_package_v2_channel_group
   has_one :media_package_v2_channel
   has_one :media_package_v2_origin_endpoint
-  has_one :streaming_aws_resource
+  has_one :streaming
   has_one :media_live_channel
   has_one :media_live_input
   has_one :media_live_input_security_group

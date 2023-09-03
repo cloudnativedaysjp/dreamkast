@@ -61,9 +61,9 @@ Rails.application.routes.draw do
       resource :timetable, only: [:update]
       resources :announcements
       resources :speaker_announcements
-      resources :streaming_aws_resources
-      post 'create_aws_resources' => 'streaming_aws_resources#create_aws_resources'
-      post 'delete_aws_resources' => 'streaming_aws_resources#delete_aws_resources'
+      resources :streamings
+      post 'create_aws_resources' => 'streamings#create_aws_resources'
+      post 'delete_aws_resources' => 'streamings#delete_aws_resources'
       post 'start_media_live_channel' => 'media_live_channel#start_channel'
       post 'stop_media_live_channel' => 'media_live_channel#stop_channel'
 

@@ -17,7 +17,7 @@
     <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
     <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
     <%= render 'admin/nav_item', name: 'IVS', path: admin_live_stream_ivs_path, active: action_name == 'live_stream_ivs' %>
-    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streaming_aws_resources_path, active: action_name == 'streaming_aws_resource' %>
+    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: action_name == 'streaming' %>
     <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: action_name == 'media_package_harvest_job' %>
     <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>

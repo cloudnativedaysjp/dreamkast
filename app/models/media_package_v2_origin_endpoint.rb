@@ -2,22 +2,25 @@
 #
 # Table name: media_package_v2_origin_endpoints
 #
-#  id                          :bigint           not null, primary key
+#  id                          :string(255)      not null, primary key
 #  name                        :string(255)
 #  conference_id               :bigint           not null
-#  media_package_v2_channel_id :bigint           not null
+#  media_package_v2_channel_id :string(255)
+#  streaming_id                :string(255)      not null
 #  track_id                    :bigint           not null
 #
 # Indexes
 #
 #  index_media_package_v2_origin_endpoints_on_conference_id  (conference_id)
 #  index_media_package_v2_origin_endpoints_on_name           (name) UNIQUE
+#  index_media_package_v2_origin_endpoints_on_streaming_id   (streaming_id)
 #  index_media_package_v2_origin_endpoints_on_track_id       (track_id)
 #  index_origin_endpoints_on_channel_id                      (media_package_v2_channel_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
@@ -26,6 +29,8 @@ require 'aws-sdk-mediapackagev2'
 class MediaPackageV2OriginEndpoint < ApplicationRecord
   include EnvHelper
   include MediaPackageV2Helper
+
+  before_create :set_uuid
 
   belongs_to :conference
   belongs_to :track

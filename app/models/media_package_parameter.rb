@@ -2,24 +2,27 @@
 #
 # Table name: media_package_parameters
 #
-#  id                       :bigint           not null, primary key
+#  id                       :string(255)      not null, primary key
 #  name                     :string(255)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  conference_id            :bigint           not null
 #  media_package_channel_id :bigint           not null
+#  streaming_id             :string(255)      not null
 #  track_id                 :bigint           not null
 #
 # Indexes
 #
 #  index_media_package_parameters_on_conference_id             (conference_id)
 #  index_media_package_parameters_on_media_package_channel_id  (media_package_channel_id)
+#  index_media_package_parameters_on_streaming_id              (streaming_id)
 #  index_media_package_parameters_on_track_id                  (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
 #  fk_rails_...  (media_package_channel_id => media_package_channels.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
@@ -29,6 +32,8 @@ class MediaPackageParameter < ApplicationRecord
   include MediaLiveHelper
   include SsmHelper
   include EnvHelper
+
+  before_create :set_uuid
 
   belongs_to :conference
   belongs_to :track

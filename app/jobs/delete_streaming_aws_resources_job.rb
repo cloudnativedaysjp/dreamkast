@@ -12,15 +12,15 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   def perform(*args)
     # Rails.logger.level = Logger::DEBUG
     logger.info('Perform DeleteStreamingAwsResourcesJob')
-    @streaming_aws_resource = args[0]
-    @conference = @streaming_aws_resource.conference
-    @track = @streaming_aws_resource.track
+    @streaming = args[0]
+    @conference = @streaming.conference
+    @track = @streaming.track
 
     delete_media_live_resources(track)
     delete_media_package_v2_resources(track)
     delete_media_package_resources(track)
 
-    @streaming_aws_resource.update!(status: 'deleted')
+    @streaming.update!(status: 'deleted')
   rescue => e
     logger.error(e.message)
     logger.error(e.backtrace.join("\n"))
@@ -50,14 +50,14 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   def delete_media_package_resources(track)
     logger.info('Deleting MediaPackage resources...')
 
-    if track.media_package_channel.media_package_origin_endpoints.any?
+    if track.media_package_channel&.media_package_origin_endpoints&.any?
       track.media_package_channel.media_package_origin_endpoints.each do |endpoint|
         endpoint.delete_aws_resource
         endpoint.destroy!
       end
     end
 
-    if track.media_package_channel.media_package_parameter
+    if track.media_package_channel&.media_package_parameter
       track.media_package_channel.media_package_parameter.delete_aws_resource
       track.media_package_channel.media_package_parameter.destroy!
     end

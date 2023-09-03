@@ -2,10 +2,11 @@
 #
 # Table name: media_package_v2_channels
 #
-#  id                                :bigint           not null, primary key
+#  id                                :string(255)      not null, primary key
 #  name                              :string(255)
 #  conference_id                     :bigint           not null
-#  media_package_v2_channel_group_id :bigint           not null
+#  media_package_v2_channel_group_id :string(255)
+#  streaming_id                      :string(255)      not null
 #  track_id                          :bigint           not null
 #
 # Indexes
@@ -13,11 +14,13 @@
 #  index_channels_on_channel_group_id                (media_package_v2_channel_group_id)
 #  index_media_package_v2_channels_on_conference_id  (conference_id)
 #  index_media_package_v2_channels_on_name           (name) UNIQUE
+#  index_media_package_v2_channels_on_streaming_id   (streaming_id)
 #  index_media_package_v2_channels_on_track_id       (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #  fk_rails_...  (track_id => tracks.id)
 #
 
@@ -27,6 +30,8 @@ class MediaPackageV2Channel < ApplicationRecord
   include EnvHelper
   include MediaPackageV2Helper
 
+  before_create :set_uuid
+
   belongs_to :conference
   belongs_to :track
   belongs_to :channel_group, class_name: 'MediaPackageV2ChannelGroup', foreign_key: :media_package_v2_channel_group_id
@@ -34,12 +39,9 @@ class MediaPackageV2Channel < ApplicationRecord
 
   def create_aws_resource
     unless exists_aws_resource?
-      resp = media_package_v2_client.create_channel(channel_group_name:, channel_name:)
+      p resp = media_package_v2_client.create_channel(channel_group_name:, channel_name:)
       update!(name: resp.channel_name)
     end
-  rescue => e
-    logger.error(e.message)
-    delete_aws_resource
   end
 
   def delete_aws_resource
@@ -48,8 +50,6 @@ class MediaPackageV2Channel < ApplicationRecord
       break unless exists_aws_resource?
     end
     update!(name: '')
-  rescue => e
-    logger.error(e.message.to_s)
   end
 
   def exists_aws_resource?

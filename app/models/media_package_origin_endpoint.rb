@@ -6,6 +6,7 @@
 #  conference_id            :bigint           not null
 #  endpoint_id              :string(255)
 #  media_package_channel_id :bigint           not null
+#  streaming_id             :string(255)
 #
 # Indexes
 #
@@ -24,6 +25,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
 
   belongs_to :conference
   belongs_to :media_package_channel
+  belongs_to :streaming
 
   def origin_endpoint
     @origin_endpoint ||= media_package_client.describe_origin_endpoint(id: endpoint_id)

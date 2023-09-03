@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -162,37 +162,43 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
     t.index ["track_id"], name: "index_live_streams_on_track_id"
   end
 
-  create_table "media_live_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_live_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.bigint "media_live_input_id", null: false
+    t.string "streaming_id", null: false
+    t.string "media_live_input_id", null: false
     t.string "channel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_media_live_channels_on_conference_id"
     t.index ["media_live_input_id"], name: "index_media_live_channels_on_media_live_input_id"
+    t.index ["streaming_id"], name: "index_media_live_channels_on_streaming_id"
     t.index ["track_id"], name: "index_media_live_channels_on_track_id"
   end
 
-  create_table "media_live_input_security_groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_live_input_security_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
+    t.string "streaming_id", null: false
     t.string "input_security_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_media_live_input_security_groups_on_conference_id"
+    t.index ["streaming_id"], name: "index_media_live_input_security_groups_on_streaming_id"
     t.index ["track_id"], name: "index_media_live_input_security_groups_on_track_id"
   end
 
-  create_table "media_live_inputs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_live_inputs", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.bigint "media_live_input_security_group_id", null: false
+    t.string "streaming_id", null: false
+    t.string "media_live_input_security_group_id", null: false
     t.string "input_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_media_live_inputs_on_conference_id"
     t.index ["media_live_input_security_group_id"], name: "index_media_live_inputs_on_media_live_input_security_group_id"
+    t.index ["streaming_id"], name: "index_media_live_inputs_on_streaming_id"
     t.index ["track_id"], name: "index_media_live_inputs_on_track_id"
   end
 
@@ -200,6 +206,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
     t.string "channel_id", default: ""
+    t.string "streaming_id"
     t.index ["channel_id"], name: "index_media_package_channels_on_channel_id"
     t.index ["conference_id"], name: "index_media_package_channels_on_conference_id"
     t.index ["track_id"], name: "index_media_package_channels_on_track_id"
@@ -222,50 +229,59 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
     t.bigint "conference_id", null: false
     t.bigint "media_package_channel_id", null: false
     t.string "endpoint_id"
+    t.string "streaming_id"
     t.index ["conference_id"], name: "index_media_package_origin_endpoints_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_origin_endpoints_on_media_package_channel_id"
   end
 
-  create_table "media_package_parameters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_parameters", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
+    t.string "streaming_id", null: false
     t.bigint "media_package_channel_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_media_package_parameters_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_parameters_on_media_package_channel_id"
+    t.index ["streaming_id"], name: "index_media_package_parameters_on_streaming_id"
     t.index ["track_id"], name: "index_media_package_parameters_on_track_id"
   end
 
-  create_table "media_package_v2_channel_groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_v2_channel_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
+    t.string "streaming_id", null: false
     t.string "name"
     t.index ["conference_id"], name: "index_media_package_v2_channel_groups_on_conference_id"
     t.index ["name"], name: "index_media_package_v2_channel_groups_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channel_groups_on_streaming_id"
     t.index ["track_id"], name: "index_media_package_v2_channel_groups_on_track_id"
   end
 
-  create_table "media_package_v2_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_v2_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.bigint "media_package_v2_channel_group_id", null: false
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_group_id"
     t.string "name"
     t.index ["conference_id"], name: "index_media_package_v2_channels_on_conference_id"
     t.index ["media_package_v2_channel_group_id"], name: "index_channels_on_channel_group_id"
     t.index ["name"], name: "index_media_package_v2_channels_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channels_on_streaming_id"
     t.index ["track_id"], name: "index_media_package_v2_channels_on_track_id"
   end
 
-  create_table "media_package_v2_origin_endpoints", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "media_package_v2_origin_endpoints", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
-    t.bigint "media_package_v2_channel_id", null: false
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_id"
     t.string "name"
     t.index ["conference_id"], name: "index_media_package_v2_origin_endpoints_on_conference_id"
     t.index ["media_package_v2_channel_id"], name: "index_origin_endpoints_on_channel_id"
     t.index ["name"], name: "index_media_package_v2_origin_endpoints_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
     t.index ["track_id"], name: "index_media_package_v2_origin_endpoints_on_track_id"
   end
 
@@ -487,15 +503,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
     t.index ["conference_id"], name: "index_stats_of_registrants_on_conference_id"
   end
 
-  create_table "streaming_aws_resources", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "streamings", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "track_id", null: false
     t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conference_id", "track_id"], name: "index_streaming_aws_resources_on_conference_id_and_track_id", unique: true
-    t.index ["conference_id"], name: "index_streaming_aws_resources_on_conference_id"
-    t.index ["track_id"], name: "index_streaming_aws_resources_on_track_id"
+    t.index ["conference_id", "track_id"], name: "index_streamings_on_conference_id_and_track_id", unique: true
+    t.index ["conference_id"], name: "index_streamings_on_conference_id"
+    t.index ["track_id"], name: "index_streamings_on_track_id"
   end
 
   create_table "talk_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -631,11 +647,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
   add_foreign_key "live_streams", "tracks"
   add_foreign_key "media_live_channels", "conferences"
   add_foreign_key "media_live_channels", "media_live_inputs"
+  add_foreign_key "media_live_channels", "streamings"
   add_foreign_key "media_live_channels", "tracks"
   add_foreign_key "media_live_input_security_groups", "conferences"
+  add_foreign_key "media_live_input_security_groups", "streamings"
   add_foreign_key "media_live_input_security_groups", "tracks"
   add_foreign_key "media_live_inputs", "conferences"
   add_foreign_key "media_live_inputs", "media_live_input_security_groups"
+  add_foreign_key "media_live_inputs", "streamings"
   add_foreign_key "media_live_inputs", "tracks"
   add_foreign_key "media_package_channels", "conferences"
   add_foreign_key "media_package_channels", "tracks"
@@ -646,12 +665,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
   add_foreign_key "media_package_parameters", "conferences"
   add_foreign_key "media_package_parameters", "media_package_channels"
+  add_foreign_key "media_package_parameters", "streamings"
   add_foreign_key "media_package_parameters", "tracks"
   add_foreign_key "media_package_v2_channel_groups", "conferences"
+  add_foreign_key "media_package_v2_channel_groups", "streamings"
   add_foreign_key "media_package_v2_channel_groups", "tracks"
   add_foreign_key "media_package_v2_channels", "conferences"
+  add_foreign_key "media_package_v2_channels", "streamings"
   add_foreign_key "media_package_v2_channels", "tracks"
   add_foreign_key "media_package_v2_origin_endpoints", "conferences"
+  add_foreign_key "media_package_v2_origin_endpoints", "streamings"
   add_foreign_key "media_package_v2_origin_endpoints", "tracks"
   add_foreign_key "orders", "profiles"
   add_foreign_key "orders_tickets", "orders"
@@ -668,8 +691,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_02_045801) do
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
-  add_foreign_key "streaming_aws_resources", "conferences"
-  add_foreign_key "streaming_aws_resources", "tracks"
+  add_foreign_key "streamings", "conferences"
+  add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"
   add_foreign_key "tickets", "conferences"
   add_foreign_key "video_registrations", "talks"

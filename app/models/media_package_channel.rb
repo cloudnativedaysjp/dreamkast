@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  channel_id    :string(255)      default("")
 #  conference_id :bigint           not null
+#  streaming_id  :string(255)
 #  track_id      :bigint           not null
 #
 # Indexes
@@ -25,8 +26,10 @@ class MediaPackageChannel < ApplicationRecord
 
   belongs_to :conference
   belongs_to :track
-  has_many :media_package_origin_endpoints
+  belongs_to :streaming
+
   has_one :media_package_parameter
+  has_many :media_package_origin_endpoints
   has_many :media_package_harvest_jobs
 
   def channel

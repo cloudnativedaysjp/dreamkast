@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-10">
+    <h3>配信用URL一覧</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <table class="table table-striped" >
+      <thead>
+      <tr>
+        <th scope="col">Track Name (ID)</th>
+        <th scope="col">Destination URL</th>
+        <th scope="col">Playback URL</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tracks.each do |track| %>
+        <tr>
+          <td><%= track.name %> (<%= track.id %>)</td>
+          <td><%= track.streaming&.destination_url %></td>
+          <td><%= track.streaming&.playback_url %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

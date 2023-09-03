@@ -84,7 +84,7 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       it { is_expected.to(have_sent_email.with_subject('oneday運営からのお知らせ')) }
       it { expect(mail.body.encoded).to(include("#{speaker.name}様")) }
       it { expect(mail.body.encoded).to(include('新しいお知らせが到着しました。')) }
-      it { expect(mail.body.encoded).to(include('確認するには、イベントサイトのスピーカーダッシュボードをご確認ください。')) }
+      it { expect(mail.body.encoded).to(include('確認するには、イベントサイトの登壇者ダッシュボードをご確認ください。')) }
       it { expect(mail.body.encoded).to(include('https://event.cloudnativedays.jp/oneday')) }
     end
     subject(:mail) { described_class.inform_speaker_announcement(conference, speaker).deliver_now }

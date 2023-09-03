@@ -98,7 +98,7 @@ class TalksController < ApplicationController
 
   private
 
-  # CFP募集期間中はスピーカー登録だけでも表示する
+  # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def new_user?
     (speaker? && set_conference.speaker_entry_enabled?) || super
@@ -113,7 +113,7 @@ class TalksController < ApplicationController
     params.require(:talk).permit(:title, :abstract, :movie_url, :track, :start_time, :end_time, :talk_difficulty_id, :talk_category_id)
   end
 
-  # CFP募集期間中はスピーカー登録だけでも表示する
+  # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def should_redirect?
     super && (!speaker? || !set_conference.speaker_entry_enabled?)

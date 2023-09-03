@@ -14,8 +14,8 @@
           <%= link_to '公開プロフィールを登録する', new_public_profile_path, class: "dropdown-item" %>
           <% end %>
         <div class="dropdown-divider"></div>
-        <% if @profile.active_order.present? %>
-          <%= link_to '参加方法を変更する', new_cancel_order_path(order_id: @profile.active_order.id), class: "dropdown-item"  %>
+        <% if @profile.participation.present? %>
+          <%= link_to '参加方法を変更する', edit_profile_path(id: @profile.id, anchor: "participation"), class: "dropdown-item"  %>
         <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>

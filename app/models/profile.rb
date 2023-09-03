@@ -21,6 +21,7 @@
 #  last_name                     :string(255)
 #  last_name_kana                :string(255)
 #  occupation                    :string(255)
+#  participation                 :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
 #  created_at                    :datetime         not null
@@ -71,7 +72,6 @@ class Profile < ApplicationRecord
   has_many :agreements
   has_many :form_items, through: :agreements
   has_many :chat_messages
-  has_many :orders
   has_many :check_ins
   has_one :public_profile, dependent: :destroy
 
@@ -99,6 +99,11 @@ class Profile < ApplicationRecord
   validates :position, presence: true, length: { maximum: 128 }
   validates :number_of_employee_id, length: { maximum: 128 }
   validates :annual_sales_id, length: { maximum: 128 }
+
+  enum :participation, {
+    online: 'オンライン参加',
+    offline: '現地参加'
+  }
 
   def sub_and_email_must_be_unique_in_a_conference
     if Profile.where(sub:, email:, conference_id:).exists?
@@ -158,27 +163,15 @@ class Profile < ApplicationRecord
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
 
-  def active_order
-    orders.find { |order| order.cancel_order.nil? }
-  end
-
   def way_to_attend
-    active_order.tickets.first.title
+    participation_before_type_cast
   end
 
   def attend_offline?
-    if active_order.present?
-      active_order.tickets.first.title == '現地参加'
-    else
-      false
-    end
+    offline?
   end
 
   def attend_online?
-    if active_order.present?
-      active_order.tickets.first.title == 'オンライン参加'
-    else
-      false
-    end
+    online?
   end
 end

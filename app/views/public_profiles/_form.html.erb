@@ -56,7 +56,7 @@
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.label :ticket, "参加方法" %>
-      <p><%= @public_profile.profile.active_order.tickets.first.title %> (<%= link_to '参加方法変更はこちら', new_cancel_order_path(order_id: @profile.active_order.id)%>)</p>
+      <p><%= @public_profile.profile.participation_before_type_cast %> (<%= link_to '参加方法変更はこちら', edit_profile_path(id: @public_profile.profile.id, anchor: "participation")%>)</p>
     </div>
   </div>
 

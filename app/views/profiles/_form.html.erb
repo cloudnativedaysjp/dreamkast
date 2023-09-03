@@ -135,10 +135,11 @@
   <div class="form-row form-group">
     <div class="col-12 col-md-6" id="participation" >
       <%= form.label :participation, "参加方法" %></br>
-      <%= form.radio_button :participation, :online, { class: "form-control" } %>
-      <%= form.label :online %>
-      <%= form.radio_button :participation, :offline, { class: "form-control" } %>
-      <%= form.label :offline %>
+      <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online" } %>
+      <%= form.label :online, { for: "participation_online" } %>
+      </br>
+      <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" } %>
+      <%= form.label :offline, { for: "participation_offline" } %>
     </div>
   </div>
 

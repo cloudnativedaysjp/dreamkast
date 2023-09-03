@@ -141,7 +141,7 @@ EOS
 
     世の中の在り方が広がっても、私たちは共に物理的・時間的な距離を乗り越えていきます。
     クラウドネイティブの世界が広がっても、私たちは共に新しい未知の道を開拓し続けていきます。
-    
+
     これまでもこれからも、広がり続けるクラウドネイティブにおいて、様々な人・会社・技術・考え方で目指す多様性を受け入れ、共に時間を共有し、新しい地図を広げていきましょう。
 EOS
   },
@@ -157,11 +157,11 @@ EOS
     CI/CD Conference 2023 by CloudNative Days（CICD2023）は、CI/CDに特化したテックカンファレンスです。
 
     1st SprintであるCI/CD Conference 2021での『技術を知り、試して、取り入れる』から、2nd Sprintである今回はより具体的に『ともに回す高速なアプリケーション開発ライフサイクル』をコンセプトとして掲げました。
-    
+
     クラウドネイティブにアプリケーション開発のライフサイクルを回すことによって、設計、開発、テスト、デプロイ、運用、フィードバックのサイクルを高速化できます。
-    
+
     このカンファレンスでは、それぞれのフェーズでの知見を交流させて新たな気づきを得ることで、次のSprintでの更なる改善・進化の実現を目的とします。
-    
+
     開発と運用の垣根を超えて、継続的に価値を高めるライフサイクルをともに回していける世界を一緒に体験してみましょう！
 EOS
   },
@@ -273,11 +273,11 @@ Track.seed(
   { id: 35, number: 4, name: "D", conference_id: 7, room_id: 4},
   { id: 36, number: 5, name: "E", conference_id: 7, room_id: 5},
   { id: 37, number: 6, name: "F", conference_id: 7, room_id: 6},
-  
+
   { id: 38, number: 1, name: "A", conference_id: 8, room_id: 11},
   { id: 39, number: 2, name: "B", conference_id: 8, room_id: 12},
   { id: 40, number: 3, name: "C", conference_id: 8, room_id: 13},
-  
+
   { id: 41, number: 1, name: "A", conference_id: 9, room_id: 14},
   { id: 42, number: 2, name: "B", conference_id: 9, room_id: 15},
   { id: 43, number: 3, name: "C", conference_id: 9, room_id: 16},
@@ -359,7 +359,7 @@ TalkCategory.seed(
   { id: 52, conference_id: 4, name: "組織論"},
   { id: 53, conference_id: 4, name: "その他"},
   { id: 54, conference_id: 4, name: "Keynote"},
-  
+
   { id: 55, conference_id: 7, name: "CI / CD"},
   { id: 56, conference_id: 7, name: "Customizing / Extending"},
   { id: 57, conference_id: 7, name: "IoT / Edge"},
@@ -471,11 +471,3 @@ EOS
   )
 end
 
-Ticket.seed(
-  {id: "7b02e975-8418-4b40-a01d-f8011cc705e3", title: "オフライン参加", description: "aaaa", price: 0, stock: 454, conference_id: 7 },
-  {id: "15ac6d96-5083-496d-9fd1-327f320a2f7b", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 7 },
-  {id: "f4d09974-c6af-4fab-bb60-d394058e9eb8", title: "現地参加", description: "aaaa", price: 0, stock: 500, conference_id: 8 },
-  {id: "5b31c315-5b70-4238-bf62-ed193480e9fd", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 8 },
-  {id: "a7a3e5d5-0d8e-1c29-1c29-7004affe194a", title: "現地参加", description: "aaaa", price: 0, stock: 400, conference_id: 9 },
-  {id: "703dc953-d3dc-5964-7c4a-815ee2498aba", title: "オンライン参加", description: "aaaa", price: 0, stock: 3500, conference_id: 9 },
-)

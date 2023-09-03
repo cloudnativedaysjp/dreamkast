@@ -14,8 +14,6 @@ require 'rails_helper'
 RSpec.describe(RegisteredTalk, type: :model) do
   describe 'calcurate acquired seats' do
     let(:cndt2020) { create(:cndt2020) }
-    let(:online_ticket) { create(:ticket, :online, conference: cndt2020) }
-    let(:offline_ticket) { create(:ticket, :offline, conference: cndt2020) }
     let!(:talk1) { create(:talk1, conference: cndt2020) }
     context 'attend offline' do
       let(:profile) { create(:alice, :on_cndt2020, :offline, conference: cndt2020) }

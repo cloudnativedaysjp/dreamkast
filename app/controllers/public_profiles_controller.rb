@@ -1,6 +1,6 @@
 class PublicProfilesController < ApplicationController
   include Secured
-  before_action :set_conference
+  before_action :set_conference, :set_profile
 
   def new
     @public_profile = PublicProfile.new(profile_id: @profile.id)

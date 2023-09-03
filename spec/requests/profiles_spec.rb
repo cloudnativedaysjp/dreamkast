@@ -74,14 +74,14 @@ describe ProfilesController, type: :request do
     end
   end
 
-  describe 'GET /cndt2020/profiles/checkin/:ticket_id without profile' do
+  describe 'GET /cndt2020/profiles/checkin without profile' do
     subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
     before do
       allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
     end
 
-    context 'GET /profiles/checkin/:id' do
+    context 'GET /profiles/checkin' do
       it 'should redirect to registration' do
         get '/cndt2020/profiles/checkin'
         expect(response).to(redirect_to('/cndt2020/registration'))

@@ -141,7 +141,7 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
-    get 'profiles/checkin/:ticket_id', to: 'profiles#checkin'
+    get 'profiles/checkin', to: 'profiles#checkin'
     resources :public_profiles
 
 

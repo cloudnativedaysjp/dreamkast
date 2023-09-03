@@ -109,4 +109,12 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   rescue => e
     logger.error(e.message.to_s)
   end
+
+  def aws_resource
+    @aws_resource = media_package_v2_client.get_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
+  end
+
+  def playback_url
+    aws_resource&.low_latency_hls_manifests.first.url
+  end
 end

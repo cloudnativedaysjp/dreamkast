@@ -27,6 +27,8 @@ class Streaming < ApplicationRecord
   belongs_to :conference
   belongs_to :track
   has_one :media_live_channel
+  has_one :media_live_input
+  has_one :media_package_v2_origin_endpoint
 
   STATUS_CREATING = 'creating'.freeze
   STATUS_CRTEATED = 'created'.freeze
@@ -34,10 +36,10 @@ class Streaming < ApplicationRecord
   STATUS_DELETED  = 'deleted'.freeze
 
   def destination_url
-    ""
+    media_live_input&.destination_url
   end
 
   def playback_url
-    ""
+    media_package_v2_origin_endpoint&.playback_url
   end
 end

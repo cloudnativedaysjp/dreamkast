@@ -38,6 +38,7 @@ class MediaLiveInput < ApplicationRecord
   belongs_to :conference
   belongs_to :track
   belongs_to :media_live_input_security_group
+  belongs_to :streaming
   has_one :media_live_channel
 
   def create_aws_resource
@@ -69,7 +70,11 @@ class MediaLiveInput < ApplicationRecord
   end
 
   def aws_resource
-    @aws_resource ||= media_live_client.describe_input(input_id:)
+    @aws_resource = media_live_client.describe_input(input_id:)
+  end
+
+  def destination_url
+    aws_resource&.destinations&.first&.url
   end
 
   private

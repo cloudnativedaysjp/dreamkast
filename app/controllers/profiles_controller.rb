@@ -104,15 +104,9 @@ class ProfilesController < ApplicationController
   end
 
   def checkin
-    ticket = Ticket.find_by(id: params[:ticket_id])
-    if @profile.present? &&
-       ticket.present? &&
-       @profile.active_order.present? &&
-       CheckIn.where(profile_id: @profile.id, order_id: @profile.active_order.id, ticket_id: ticket.id).empty?
+    if @profile.present?
       c = CheckIn.new
       c.profile_id = @profile.id
-      c.order_id = @profile.active_order.id
-      c.ticket_id = ticket.id
       c.save
 
       # TODO: This is a temporary solution. We should replace hardcoded values after CNDT2022.

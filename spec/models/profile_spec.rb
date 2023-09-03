@@ -21,6 +21,7 @@
 #  last_name                     :string(255)
 #  last_name_kana                :string(255)
 #  occupation                    :string(255)
+#  participation                 :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
 #  created_at                    :datetime         not null
@@ -40,8 +41,6 @@ require 'rails_helper'
 RSpec.describe(Profile, type: :model) do
   let(:cndt2020) { create(:cndt2020) }
   let(:profile) { create(:alice, :on_cndt2020, conference: cndt2020) }
-  let(:online_ticket) { create(:ticket, :online, conference: cndt2020) }
-  let(:offline_ticket) { create(:ticket, :offline, conference: cndt2020) }
 
   it 'is valid with a all params' do
     expect(profile).to(be_valid)
@@ -95,10 +94,6 @@ RSpec.describe(Profile, type: :model) do
   end
 
   context 'attend online' do
-    before do
-      create(:order, profile:, tickets: [online_ticket])
-    end
-
     it 'should be online' do
       expect(profile.attend_online?).to(be_truthy)
       expect(profile.attend_offline?).to(be_falsey)
@@ -111,7 +106,7 @@ RSpec.describe(Profile, type: :model) do
 
   context 'attend offline' do
     before do
-      create(:order, profile:, tickets: [offline_ticket])
+      profile[:participation] = Profile.participations[:offline]
     end
 
     it 'should be offline' do

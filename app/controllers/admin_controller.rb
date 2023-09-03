@@ -26,7 +26,6 @@ class AdminController < ApplicationController
 
   def statistics
     @talks = @conference.talks.includes(:registered_talks).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
-    @tickets = @conference.tickets.includes(:check_ins)
   end
 
   def export_statistics

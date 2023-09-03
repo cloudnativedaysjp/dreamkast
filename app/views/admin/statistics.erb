@@ -9,29 +9,6 @@
     </div>
 
     <div class="col-12">
-      <h2>チケット情報</h2>
-      <table class="table table-striped talks_table" >
-        <tr>
-          <th>チケット種別</th>
-          <th>席数</th>
-          <th>登録者数</th>
-          <th>残席</th>
-          <th>チェックイン済</th>
-        </tr>
-        <% @tickets.each do |ticket| %>
-          <tr>
-            <td><%= ticket.title %></td>
-            <td><%= ticket.stock %></td>
-            <td><%= ticket.occupied %></td>
-            <td><%= ticket.remaining_stock %></td>
-            <td><%= ticket.check_ins.size %></td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
-
-
-    <div class="col-12">
       <h2>Talks</h2>
       <table class="table table-striped talks_table" >
         <thead>

@@ -21,7 +21,7 @@
 
 require 'aws-sdk-medialive'
 
-class LiveStreamMediaLive < LiveStream
+class MediaLiveChannel < LiveStream
   include MediaLiveHelper
   include SsmHelper
   include EnvHelper
@@ -52,90 +52,37 @@ class LiveStreamMediaLive < LiveStream
   attr_accessor :input
   attr_accessor :channel
 
-  def initialize(attributes = nil)
-    @params = {}
+  def initialize(input_security_group: nil, input: nil)
+    @input_security_group = input_security_group
+    @input = input
+
     super
   end
 
-  def get_input_from_aws
-    self.input = media_live_client.describe_input(input_id:)
-  end
-
-  def get_channel_from_aws
-    self.channel = media_live_client.describe_channel(channel_id:)
-  end
-
-  def channel_name
-    channel&.name
-  end
-
-  def channel_id
-    params&.dig('channel_id')
-  end
-
-  def input_security_group_id
-    params&.dig('input_security_group_id')
-  end
-
-  def channel_state
-    channel&.state
-  end
-
-  def input_id
-    params&.dig('input_id')
-  end
-
-  def input_name
-    input&.name
-  end
-
-  def destination_url
-    input ? input.destinations[0].url : ''
-  end
-
-  def playback_url
-    cloudfront_url = "https://#{cloudfront_domain_name}"
-    object_key = destination.gsub("s3://#{bucket_name}/", '')
-
-    "#{cloudfront_url}/#{object_key}.m3u8"
-  end
-
-  def destination
-    channel&.destinations[0].settings[0].url
-  end
-
-  def recording_talk_id
-    params&.dig('talk_id')
-  end
-
-  def create_aws_resources
-    create_parameter("/medialive/#{resource_name}", track.media_package_channel.ingest_endpoint_password)
-
-    input_security_group_resp = media_live_client.create_input_security_group(create_input_security_groups_params)
-    params = { input_security_group_id: input_security_group_resp.security_group.id }
-    update!(params:)
-
-    input_resp = media_live_client.create_input(create_input_params(input_security_group_resp.security_group.id))
-    params = params.merge(input_id: input_resp.input.id, input_arn: input_resp.input.arn)
-    update!(params:)
-
-    channel_resp = media_live_client.create_channel(create_channel_params(input_resp.input.id, input_resp.input.name))
-    params = params.merge(channel_id: channel_resp.channel.id, channel_arn: channel_resp.channel.arn)
-    update!(params:)
-
-    wait_channel_until(:channel_created, channel_resp.channel.id)
+  def create_aws_resource
+    unless exists_aws_resource?
+      channel_resp = media_live_client.create_channel(create_channel_params(@input.id, @input.name))
+      update!(channel_id: channel_resp.channel.id)
+      wait_channel_until(:channel_created, channel_resp.channel.id)
+    end
   rescue => e
     logger.error(e.message)
-    delete_media_live_resources(input_id: input_resp.input.id, channel_id: channel_resp.channel.id, input_security_group_id: input_security_group_resp.security_group.id)
   end
 
-  def delete_media_live_resources(input_id: self.input_id, channel_id: self.channel_id, input_security_group_id: self.input_security_group_id)
-    media_live_client.delete_channel(channel_id:) if channel_id
-    wait_channel_until(:channel_deleted, channel_id) if channel_id
-    media_live_client.delete_input(input_id:) if input_id
-    wait_input_until(:input_deleted, input_id) if input_id
-    media_live_client.delete_input_security_group(input_security_group_id:) if input_security_group_id
-    delete_parameter("/medialive/#{resource_name}")
+  def exists_aws_resource?
+    media_live_client.describe_channel(channel_id:)
+    true
+  rescue Aws::MediaLive::Errors::NotFoundException
+    false
+  rescue => e
+    logger.error(e.message)
+    false
+  end
+
+  def delete_aws_resource
+    if exists_aws_resource?
+      media_live_client.delete_channel(channel_id:)
+    end
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -148,7 +95,35 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.stop_channel(channel_id:)
   end
 
+  def set_recording_target_talk(talk_id)
+    media_live_client.update_channel(
+      {
+        channel_id:,
+        destinations: [
+          {
+            id: 'destination1',
+            media_package_settings: [],
+            settings: [
+              {
+                url: "#{destination_base}/talks/#{talk_id}/playlist"
+              }
+            ]
+          }
+        ]
+      }
+    )
+    params[:talk_id] = talk_id
+    update!(params:)
+  rescue => e
+    logger.error(e.message)
+    logger.error(e.backtrace.join("\n"))
+  end
+
   private
+
+  def destination_base
+    "s3://#{bucket_name}/medialive/#{conference.abbr}"
+  end
 
   def bucket_name
     case env_name

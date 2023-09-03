@@ -15,23 +15,23 @@ class DeleteMediaPackageV2Job < ApplicationJob
       if origin_endpoint
         origin_endpoint.delete_aws_resource
         if origin_endpoint.exists_aws_resource?
-          raise "Failed to delete origin_endpoint: #{origin_endpoint}"
+          raise("Failed to delete origin_endpoint: #{origin_endpoint}")
         end
         origin_endpoint.destroy!
       end
 
       channel.delete_aws_resource
       if channel.exists_aws_resource?
-        raise "Failed to delete channel: #{channel}"
+        raise("Failed to delete channel: #{channel}")
       end
       channel.destroy!
     end
 
     channel_group = conference.media_package_v2_channel_group
-    if channel_group.channels.size == 0
+    if channel_group.channels.empty?
       channel_group.delete_aws_resource
       if channel_group.exists_aws_resource?
-        raise "Failed to delete channel_group: #{channel_group}"
+        raise("Failed to delete channel_group: #{channel_group}")
       end
       channel_group.destroy!
     end

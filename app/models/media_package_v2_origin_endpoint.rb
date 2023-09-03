@@ -97,7 +97,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   def delete_aws_resource
     media_package_v2_client.delete_origin_endpoint_policy(channel_group_name:, channel_name:, origin_endpoint_name:)
     media_package_v2_client.delete_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
-    while true do
+    loop do
       break unless exists_aws_resource?
     end
     update!(name: '')

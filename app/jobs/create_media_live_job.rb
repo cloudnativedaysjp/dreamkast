@@ -12,7 +12,7 @@ class CreateMediaLiveJob < ApplicationJob
 
     logger.error("Failed to create LiveStreamMediaLive: #{media_live.errors}") unless media_live.save
 
-    media_live.create_media_live_resources
+    media_live.create_aws_resources
   rescue => e
     logger.error(e.message)
   end

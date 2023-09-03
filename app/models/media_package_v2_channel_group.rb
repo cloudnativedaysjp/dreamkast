@@ -5,15 +5,18 @@
 #  id            :bigint           not null, primary key
 #  name          :string(255)
 #  conference_id :bigint           not null
+#  track_id      :bigint           not null
 #
 # Indexes
 #
 #  index_media_package_v2_channel_groups_on_conference_id  (conference_id)
 #  index_media_package_v2_channel_groups_on_name           (name) UNIQUE
+#  index_media_package_v2_channel_groups_on_track_id       (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
+#  fk_rails_...  (track_id => tracks.id)
 #
 
 require 'aws-sdk-mediapackagev2'
@@ -23,7 +26,8 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
   include MediaPackageV2Helper
 
   belongs_to :conference
-  has_many :channels, class_name: 'MediaPackageV2Channel'
+  belongs_to :track
+  has_one :channel, class_name: 'MediaPackageV2Channel'
 
   def create_aws_resource
     unless exists_aws_resource?
@@ -37,7 +41,7 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
 
   def delete_aws_resource
     media_package_v2_client.delete_channel_group(channel_group_name:) if exists_aws_resource?
-    while true do
+    loop do
       break unless exists_aws_resource?
     end
     update!(name: '')

@@ -25,10 +25,6 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   belongs_to :conference
   belongs_to :media_package_channel
 
-  before_destroy do
-    delete_media_package_resources
-  end
-
   def origin_endpoint
     @origin_endpoint ||= media_package_client.describe_origin_endpoint(id: endpoint_id)
   rescue => e
@@ -40,10 +36,10 @@ class MediaPackageOriginEndpoint < ApplicationRecord
     update!(endpoint_id: resp.id)
   rescue => e
     logger.error(e.message)
-    delete_media_package_resources
+    delete_aws_resource
   end
 
-  def delete_media_package_resources
+  def delete_aws_resource
     media_package_client.delete_origin_endpoint(id: endpoint_id)
   rescue => e
     logger.error(e.message.to_s)

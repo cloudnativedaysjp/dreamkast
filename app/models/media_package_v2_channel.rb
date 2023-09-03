@@ -39,12 +39,12 @@ class MediaPackageV2Channel < ApplicationRecord
     end
   rescue => e
     logger.error(e.message)
-    delete_media_package_resources
+    delete_aws_resource
   end
 
   def delete_aws_resource
     media_package_v2_client.delete_channel(channel_group_name:, channel_name:) if exists_aws_resource?
-    while true do
+    loop do
       break unless exists_aws_resource?
     end
     update!(name: '')
@@ -53,7 +53,7 @@ class MediaPackageV2Channel < ApplicationRecord
   end
 
   def exists_aws_resource?
-    p media_package_v2_client.get_channel(channel_group_name:, channel_name:)
+    media_package_v2_client.get_channel(channel_group_name:, channel_name:)
     true
   rescue Aws::MediaPackageV2::Errors::NotFoundException
     false

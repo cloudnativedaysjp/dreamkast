@@ -6,7 +6,8 @@ class CreateMediaPackageV2Job < ApplicationJob
   # queue_as :default
   self.queue_adapter = :async
 
-  attr_reader :conference, :track
+  attr_reader :conference
+  attr_reader :track
 
   def perform(*args)
     # Rails.logger.level = Logger::DEBUG

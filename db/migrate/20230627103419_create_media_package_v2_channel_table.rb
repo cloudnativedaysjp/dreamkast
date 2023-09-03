@@ -3,6 +3,7 @@ class CreateMediaPackageV2ChannelTable < ActiveRecord::Migration[7.0]
 
     create_table :media_package_v2_channel_groups do |t|
       t.belongs_to :conference, null: false, foreign_key: true, type: :bigint
+      t.belongs_to :track, null: false, foreign_key: true, type: :bigint
       t.string :name, null: true
       t.index :name, unique: true
     end

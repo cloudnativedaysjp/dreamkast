@@ -22,7 +22,10 @@ class Track < ApplicationRecord
   has_one :live_stream_ivs
   has_one :live_stream_media_live
   has_one :media_package_channel
+  has_one :media_package_v2_channel_group
   has_one :media_package_v2_channel
+  has_one :media_package_v2_origin_endpoint
+  has_one :streaming_aws_resource
   belongs_to :room, optional: true
 
   def on_air_talk

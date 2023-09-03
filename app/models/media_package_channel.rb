@@ -26,16 +26,11 @@ class MediaPackageChannel < ApplicationRecord
   belongs_to :conference
   belongs_to :track
   has_many :media_package_origin_endpoints
+  has_one :media_package_parameter
   has_many :media_package_harvest_jobs
 
-  before_destroy do
-    delete_media_package_resources
-  rescue => e
-    logger.error(e.message)
-  end
-
   def channel
-    @channel ||= media_package_client.describe_channel(id: channel_id)
+    @channel = media_package_client.describe_channel(id: channel_id)
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -61,10 +56,10 @@ class MediaPackageChannel < ApplicationRecord
     update!(channel_id: resp.id)
   rescue => e
     logger.error(e.message)
-    delete_media_package_resources
+    delete_aws_resource
   end
 
-  def delete_media_package_resources
+  def delete_aws_resource
     media_package_client.delete_channel(id: channel_id)
   rescue => e
     logger.error(e.message.to_s)

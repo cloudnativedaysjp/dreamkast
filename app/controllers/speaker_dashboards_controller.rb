@@ -7,8 +7,9 @@ class SpeakerDashboardsController < ApplicationController
   end
 
   private
+
   helper_method :sponsor?
-  
+
   def sponsor?
     !@conference.sponsors.where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").empty?
   end

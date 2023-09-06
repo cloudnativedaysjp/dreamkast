@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]
+      resources :streamings, only: [:index]
       resources :sponsors, only: [:index]
       resources :speakers, only: [:index, :show]
       resources :chat_messages, only: [:index, :create, :update]

@@ -43,7 +43,7 @@ class MediaLiveInput < ApplicationRecord
 
   def create_aws_resource
     unless exists_aws_resource?
-      input_resp = media_live_client.create_input(create_input_params(media_live_input_security_group.input_security_group_id))
+      input_resp = media_live_client.create_input(create_input_params)
       update!(input_id: input_resp.input.id)
     end
   rescue => e
@@ -79,32 +79,6 @@ class MediaLiveInput < ApplicationRecord
 
   private
 
-  def destination_base
-    "s3://#{bucket_name}/medialive/#{conference.abbr}"
-  end
-
-  def bucket_name
-    case env_name
-    when 'production'
-      'dreamkast-ivs-stream-archive-prd'
-    when 'staging'
-      'dreamkast-ivs-stream-archive-stg'
-    else
-      'dreamkast-ivs-stream-archive-dev'
-    end
-  end
-
-  def cloudfront_domain_name
-    case env_name
-    when 'staging'
-      'd3i2o0iduabu0p.cloudfront.net'
-    when 'production'
-      'd3pun3ptcv21q4.cloudfront.net'
-    else
-      'd1jzp6sbtx9by.cloudfront.net'
-    end
-  end
-
   def resource_name
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
@@ -113,25 +87,18 @@ class MediaLiveInput < ApplicationRecord
     end
   end
 
-  def create_input_security_groups_params
-    {
-      tags:,
-      whitelist_rules: [{ cidr: '0.0.0.0/0' }]
-    }
-  end
-
   def tags
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     tags
   end
 
-  def create_input_params(input_security_group_id)
+  def create_input_params
     {
       name: resource_name,
       type: 'RTMP_PUSH',
       destinations: [{ stream_name: "#{random_string}/#{random_string}" }],
-      input_security_groups: [input_security_group_id],
+      input_security_groups: [media_live_input_security_group.input_security_group_id],
       tags:
     }
   end

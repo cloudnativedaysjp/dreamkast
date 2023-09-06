@@ -103,57 +103,7 @@ class MediaLiveChannel < ApplicationRecord
     end
   end
 
-  def set_recording_target_talk(talk_id)
-    media_live_client.update_channel(
-      {
-        channel_id:,
-        destinations: [
-          {
-            id: 'destination1',
-            media_package_settings: [],
-            settings: [
-              {
-                url: "#{destination_base}/talks/#{talk_id}/playlist"
-              }
-            ]
-          }
-        ]
-      }
-    )
-    params[:talk_id] = talk_id
-    update!(params:)
-  rescue => e
-    logger.error(e.message)
-    logger.error(e.backtrace.join("\n"))
-  end
-
   private
-
-  def destination_base
-    "s3://#{bucket_name}/medialive/#{conference.abbr}"
-  end
-
-  def bucket_name
-    case env_name
-    when 'production'
-      'dreamkast-ivs-stream-archive-prd'
-    when 'staging'
-      'dreamkast-ivs-stream-archive-stg'
-    else
-      'dreamkast-ivs-stream-archive-dev'
-    end
-  end
-
-  def cloudfront_domain_name
-    case env_name
-    when 'staging'
-      'd3i2o0iduabu0p.cloudfront.net'
-    when 'production'
-      'd3pun3ptcv21q4.cloudfront.net'
-    else
-      'd1jzp6sbtx9by.cloudfront.net'
-    end
-  end
 
   def resource_name
     if review_app?
@@ -161,33 +111,6 @@ class MediaLiveChannel < ApplicationRecord
     else
       "#{env_name}_#{conference.abbr}_track#{track.name}"
     end
-  end
-
-  def create_input_security_groups_params
-    {
-      tags:,
-      whitelist_rules: [{ cidr: '0.0.0.0/0' }]
-    }
-  end
-
-  def tags
-    tags = { 'Environment' => env_name }
-    tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
-    tags
-  end
-
-  def create_input_params(input_security_group_id)
-    {
-      name: resource_name,
-      type: 'RTMP_PUSH',
-      destinations: [{ stream_name: "#{random_string}/#{random_string}" }],
-      input_security_groups: [input_security_group_id],
-      tags:
-    }
-  end
-
-  def random_string
-    ('a'..'z').to_a.sample(10).join
   end
 
   def create_channel_params(input_id, input_name)

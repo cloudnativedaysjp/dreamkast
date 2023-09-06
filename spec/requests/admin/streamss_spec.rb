@@ -6,11 +6,19 @@ describe Admin::SpeakersController, type: :request do
 
   before do
     conference = create(:cndt2020)
-    create(:streaming, status: 'created', conference:, track: conference.tracks.first)
+    streaming = create(:streaming, status: 'created', conference:, track: conference.tracks.first)
+    channel_group = create(:media_package_v2_channel_group, streaming:)
+    channel = create(:media_package_v2_channel, streaming:, channel_group:)
+    create(:media_package_v2_origin_endpoint, streaming:, channel:)
   end
 
   context 'user logged in' do
     before do
+      Streaming.define_method(:original, Streaming.instance_method(:playback_url))
+      allow_any_instance_of(Streaming).to(receive(:playback_url) do |*_arg|
+        'https://example.cloudnativedays.jp/index.m3u8'
+      end)
+
       ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
       allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
         if arg[1] == :userinfo
@@ -34,6 +42,7 @@ describe Admin::SpeakersController, type: :request do
         expect(response).to(have_http_status('200'))
 
         expect(response.body).to(include('created'))
+        expect(response.body).to(include('https://example.cloudnativedays.jp/index.m3u8'))
       end
     end
   end

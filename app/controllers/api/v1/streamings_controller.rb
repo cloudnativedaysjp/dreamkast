@@ -1,10 +1,8 @@
 class Api::V1::StreamingsController < ApplicationController
-  # include SecuredAdmin
+  include SecuredPublicApi
 
   def index
-    p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa'
-    p params
-    p @conference ||= Conference.find_by(abbr: params[:eventAbbr])
-    p @streamings = @conference.streamings
+    @conference ||= Conference.find_by(abbr: params[:eventAbbr])
+    @streamings = @conference.streamings
   end
 end

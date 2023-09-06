@@ -6,6 +6,14 @@ class SpeakerDashboardsController < ApplicationController
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
   end
 
+  private
+
+  helper_method :sponsor?
+
+  def sponsor?
+    !@conference.sponsors.where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").empty?
+  end
+
   def logged_in_using_omniauth?
     if logged_in?
       @current_user = session[:userinfo]

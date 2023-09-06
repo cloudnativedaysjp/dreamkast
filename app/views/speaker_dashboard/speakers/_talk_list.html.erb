@@ -4,6 +4,11 @@
       <b>Sessions</b>
       <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions') %>
     </div>
+    <% if sponsor? %>
+    <div class="alert alert-info alert-sponsor" role="alert">
+      スポンサーセッションを変更する場合は、<%= link_to 'スポンサーダッシュボード', sponsor_dashboards_login_path %>から変更をお願いします
+    </div>
+    <% end %>
     <% @talks.each do |talk| %>
       <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
     <% end %>

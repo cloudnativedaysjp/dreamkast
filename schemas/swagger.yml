@@ -1040,7 +1040,7 @@ components:
         theme: "ともに踏み出すCloudNative祭"
         about: "『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。"
         privacy_policy: "プライバシーポリシーだよ"
-        privacy_policy_for_speaker: "スピーカー向けのポリシーだよ"
+        privacy_policy_for_speaker: "登壇者向けのポリシーだよ"
         copyright: "CloudNative Days Committee"
         coc: "CoCだよ"
       required:

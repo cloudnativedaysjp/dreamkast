@@ -67,8 +67,6 @@ Rails.application.routes.draw do
       put 'talks' => 'talks#update_talks'
       post 'start_on_air' => 'talks#start_on_air'
       post 'stop_on_air' => 'talks#stop_on_air'
-      post 'start_recording' => 'talks#start_recording'
-      post 'stop_recording' => 'talks#stop_recording'
       put 'proposals' => 'proposals#update_proposals'
       resources :tracks, only: [:index]
       put 'tracks' => 'tracks#update_tracks'

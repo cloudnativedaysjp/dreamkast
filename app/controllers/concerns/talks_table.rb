@@ -5,9 +5,7 @@ module TalksTable
     helper_method :active_date_tab?,
                   :active_track_tab?,
                   :on_air_url,
-                  :recording_url,
                   :confirm_message,
-                  :confirm_recording_message,
                   :alert_type,
                   :recording?,
                   :waiting_to_start?,
@@ -32,14 +30,6 @@ module TalksTable
     end
   end
 
-  def recording_url(talk)
-    if recording?(talk)
-      admin_stop_recording_path
-    else
-      admin_start_recording_path
-    end
-  end
-
   def confirm_message(talk)
     if talk.video.on_air?
       "Waitingに切り替えます:\n#{talk.speaker_names.join(',')} #{talk.title}"
@@ -48,33 +38,15 @@ module TalksTable
     end
   end
 
-  def confirm_recording_message(track, talk)
-    if media_live && media_live.recording_talk_id != talk.id
-      "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
-    else
-      if track.live_stream_media_live && track.live_stream_media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
-        "録画を停止します:\n#{talk.speaker_names.join(',')} #{talk.title}"
-      else
-        "録画を開始します:\n#{talk.speaker_names.join(',')} #{talk.title}"
-      end
-    end
-  end
-
   def alert_type(message_type)
     case message_type
     when 'notice'
       'success'
-    when 'danger'
+    when 'danger', 'alert'
       'danger'
     else
       'primary'
     end
-  end
-
-  def idle?(talk)
-    media_live &&
-      media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_IDLE
   end
 
   def recording?(talk)

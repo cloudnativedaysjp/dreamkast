@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
   end
 
   # カンファレンス開催前、かつCFP中
-  # カンファレンス開催前、かつ自身がスピーカーの場合(CFP締め切り後)
-  # カンファレンス開催中、かつ自身がスピーカーの場合
-  # カンファレンス開催後、かつ自身がスピーカーの場合（開催後に資料URLを追加することを想定）
+  # カンファレンス開催前、かつ自身が登壇者の場合(CFP締め切り後)
+  # カンファレンス開催中、かつ自身が登壇者の場合
+  # カンファレンス開催後、かつ自身が登壇者の場合（開催後に資料URLを追加することを想定）
   def display_speaker_dashboard_link?
     (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
   end

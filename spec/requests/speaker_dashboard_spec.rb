@@ -50,7 +50,7 @@ describe SpeakerDashboardsController, type: :request do
           get '/cndt2020/speaker_dashboard'
           expect(response).to(be_successful)
           expect(response).to(have_http_status('200'))
-          expect(response.body).to(include('スピーカーダッシュボード'))
+          expect(response.body).to(include('登壇者ダッシュボード'))
         end
       end
 
@@ -64,7 +64,7 @@ describe SpeakerDashboardsController, type: :request do
             get '/cndt2020/speaker_dashboard'
             expect(response).to(be_successful)
             expect(response).to(have_http_status('200'))
-            expect(response.body).to(include('スピーカーダッシュボード'))
+            expect(response.body).to(include('登壇者ダッシュボード'))
             expect(response.body).to(include('entry'))
           end
         end
@@ -76,7 +76,7 @@ describe SpeakerDashboardsController, type: :request do
 
           it 'response includes header text' do
             get '/cndt2020/speaker_dashboard'
-            expect(response.body).to(include('スピーカーダッシュボード'))
+            expect(response.body).to(include('登壇者ダッシュボード'))
           end
           it_should_behave_like :request_is_successful
           it_should_behave_like :response_includes_edit_button

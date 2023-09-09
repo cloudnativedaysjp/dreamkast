@@ -8,7 +8,7 @@ Online Conference System written in Ruby on Rails
 
 ## About Dreamkast platform
 
-See [Docs](docs/README.md)
+See [Notion](https://www.notion.so/cloudnativedays/Dreamkast-Team-bc787244afdc45b880c014bd61891aa8) (Member only)
 
 ## Prerequisites
 

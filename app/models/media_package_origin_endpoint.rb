@@ -3,50 +3,52 @@
 # Table name: media_package_origin_endpoints
 #
 #  id                       :bigint           not null, primary key
-#  conference_id            :bigint           not null
 #  endpoint_id              :string(255)
 #  media_package_channel_id :bigint           not null
+#  streaming_id             :string(255)
 #
 # Indexes
 #
-#  index_media_package_origin_endpoints_on_conference_id             (conference_id)
 #  index_media_package_origin_endpoints_on_media_package_channel_id  (media_package_channel_id)
+#  index_media_package_origin_endpoints_on_streaming_id              (streaming_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (conference_id => conferences.id)
 #  fk_rails_...  (media_package_channel_id => media_package_channels.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #
 
 class MediaPackageOriginEndpoint < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper
 
-  belongs_to :conference
   belongs_to :media_package_channel
+  belongs_to :streaming
 
-  before_destroy do
-    delete_media_package_resources
-  end
 
   def origin_endpoint
-    @origin_endpoint ||= media_package_client.describe_origin_endpoint(id: endpoint_id)
+    @origin_endpoint = media_package_client.describe_origin_endpoint(id: endpoint_id)
   rescue => e
     logger.error(e.message.to_s)
   end
 
-  def create_media_package_resources
+  def create_aws_resource
     resp = media_package_client.create_origin_endpoint(create_params)
     update!(endpoint_id: resp.id)
-  rescue => e
-    logger.error(e.message)
-    delete_media_package_resources
   end
 
-  def delete_media_package_resources
-    media_package_client.delete_origin_endpoint(id: endpoint_id)
+  def exists_aws_resource?
+    media_package_client.describe_origin_endpoint(id: endpoint_id)
+    true
+  rescue Aws::MediaPackage::Errors::NotFoundException
+    false
   rescue => e
     logger.error(e.message.to_s)
+    false
+  end
+
+  def delete_aws_resource
+    media_package_client.delete_origin_endpoint(id: endpoint_id)
   end
 
   private
@@ -83,13 +85,5 @@ class MediaPackageOriginEndpoint < ApplicationRecord
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     tags
-  end
-
-  def resource_name
-    if review_app?
-      "review_app_#{review_app_number}_#{conference.abbr}_track#{media_package_channel.track.name}"
-    else
-      "#{env_name}_#{conference.abbr}_track#{media_package_channel.track.name}"
-    end
   end
 end

@@ -2,40 +2,30 @@
 #
 # Table name: media_package_channels
 #
-#  id            :bigint           not null, primary key
-#  channel_id    :string(255)      default("")
-#  conference_id :bigint           not null
-#  track_id      :bigint           not null
+#  id           :bigint           not null, primary key
+#  channel_id   :string(255)      default("")
+#  streaming_id :string(255)
 #
 # Indexes
 #
-#  index_media_package_channels_on_channel_id     (channel_id)
-#  index_media_package_channels_on_conference_id  (conference_id)
-#  index_media_package_channels_on_track_id       (track_id)
+#  index_media_package_channels_on_channel_id    (channel_id)
+#  index_media_package_channels_on_streaming_id  (streaming_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (conference_id => conferences.id)
-#  fk_rails_...  (track_id => tracks.id)
+#  fk_rails_...  (streaming_id => streamings.id)
 #
 
 class MediaPackageChannel < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper
 
-  belongs_to :conference
-  belongs_to :track
+  belongs_to :streaming
   has_many :media_package_origin_endpoints
   has_many :media_package_harvest_jobs
 
-  before_destroy do
-    delete_media_package_resources
-  rescue => e
-    logger.error(e.message)
-  end
-
   def channel
-    @channel ||= media_package_client.describe_channel(id: channel_id)
+    @channel = media_package_client.describe_channel(id: channel_id)
   rescue => e
     logger.error(e.message.to_s)
   end
@@ -56,18 +46,25 @@ class MediaPackageChannel < ApplicationRecord
     ingest_endpoints[0]['password']
   end
 
-  def create_media_package_resources
-    resp = media_package_client.create_channel(create_channel_params)
-    update!(channel_id: resp.id)
-  rescue => e
-    logger.error(e.message)
-    delete_media_package_resources
+  def create_aws_resource
+    unless exists_aws_resource?
+      resp = media_package_client.create_channel(create_channel_params)
+      update!(channel_id: resp.id)
+    end
   end
 
-  def delete_media_package_resources
-    media_package_client.delete_channel(id: channel_id)
+  def exists_aws_resource?
+    media_package_client.describe_channel(id: channel_id)
+    true
+  rescue Aws::MediaPackage::Errors::NotFoundException
+    false
   rescue => e
     logger.error(e.message.to_s)
+    false
+  end
+
+  def delete_aws_resource
+    media_package_client.delete_channel(id: channel_id)
   end
 
   private
@@ -84,13 +81,5 @@ class MediaPackageChannel < ApplicationRecord
     tags = { 'Environment' => env_name }
     tags['ReviewAppNumber'] = review_app_number.to_s if ENV['DREAMKAST_NAMESPACE']
     tags
-  end
-
-  def resource_name
-    if review_app?
-      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
-    else
-      "#{env_name}_#{conference.abbr}_track#{track.name}"
-    end
   end
 end

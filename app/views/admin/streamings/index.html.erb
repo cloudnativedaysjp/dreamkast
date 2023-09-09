@@ -20,6 +20,8 @@
           <th scope="col">リソース</th>
           <th scope="col">一括作成</th>
           <th scope="col">一括削除</th>
+          <th scope="col">MediaLive Channel</th>
+          <th scope="col">MediaLive Channel Status</th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +52,20 @@
                 <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
               <% end %>
             </td>
+            <td>
+              <% if track.streaming&.media_live_channel %>
+                <% if track.streaming.media_live_channel.idle? %>
+                  <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
+                <% elsif track.streaming&.media_live_channel.running? %>
+                  <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% if track.streaming&.media_live_channel %>
+                <%= track.streaming.media_live_channel.aws_resource&.state %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
         </tbody>
@@ -69,6 +85,7 @@
         <thead>
         <tr>
           <th scope="col">Track Name (ID)</th>
+          <th scope="col">Destination URL</th>
           <th scope="col">Playback URL</th>
         </tr>
         </thead>
@@ -76,6 +93,7 @@
         <% @tracks.each do |track| %>
           <tr>
             <td><%= track.name %> (<%= track.id %>)</td>
+            <td><%= track.streaming&.destination_url %></td>
             <td><%= track.streaming&.playback_url %></td>
           </tr>
         <% end %>
@@ -103,6 +121,9 @@
           </tr>
           <tr>
             <td>MediaPackage Channel</td><td><%= track.streaming&.media_package_channel&.channel_id %></td>
+          </tr>
+          <tr>
+            <td>MediaLive Channel</td><td><%= track.streaming&.media_live_channel&.channel_id %></td>
           </tr>
           </tbody>
         </table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_072210) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -150,6 +150,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
     t.json "params"
     t.index ["conference_id"], name: "index_live_streams_on_conference_id"
     t.index ["track_id"], name: "index_live_streams_on_track_id"
+  end
+
+  create_table "media_live_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_live_input_id", null: false
+    t.string "channel_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_live_input_id"], name: "index_media_live_channels_on_media_live_input_id"
+    t.index ["streaming_id"], name: "index_media_live_channels_on_streaming_id"
+  end
+
+  create_table "media_live_input_security_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "input_security_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["streaming_id"], name: "index_media_live_input_security_groups_on_streaming_id"
+  end
+
+  create_table "media_live_inputs", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_live_input_security_group_id", null: false
+    t.string "input_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_live_input_security_group_id"], name: "index_media_live_inputs_on_media_live_input_security_group_id"
+    t.index ["streaming_id"], name: "index_media_live_inputs_on_streaming_id"
   end
 
   create_table "media_package_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -548,6 +576,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
   add_foreign_key "links", "conferences"
   add_foreign_key "live_streams", "conferences"
   add_foreign_key "live_streams", "tracks"
+  add_foreign_key "media_live_channels", "media_live_inputs"
+  add_foreign_key "media_live_channels", "streamings"
+  add_foreign_key "media_live_input_security_groups", "streamings"
+  add_foreign_key "media_live_inputs", "media_live_input_security_groups"
+  add_foreign_key "media_live_inputs", "streamings"
   add_foreign_key "media_package_channels", "streamings"
   add_foreign_key "media_package_harvest_jobs", "conferences"
   add_foreign_key "media_package_harvest_jobs", "media_package_channels"

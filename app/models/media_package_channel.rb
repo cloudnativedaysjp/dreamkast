@@ -64,7 +64,7 @@ class MediaPackageChannel < ApplicationRecord
   end
 
   def delete_aws_resource
-    media_package_client.delete_channel(id: channel_id)
+    media_package_client.delete_channel(id: channel_id) if exists_aws_resource?
   end
 
   private

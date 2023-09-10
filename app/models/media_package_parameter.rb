@@ -48,7 +48,7 @@ class MediaPackageParameter < ApplicationRecord
   end
 
   def delete_aws_resource
-    delete_parameter("/medialive/#{resource_name}")
+    delete_parameter("/medialive/#{resource_name}") if exists_aws_resource?
   rescue => e
     logger.error(e.message.to_s)
   end

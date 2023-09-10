@@ -48,7 +48,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   end
 
   def delete_aws_resource
-    media_package_client.delete_origin_endpoint(id: endpoint_id)
+    media_package_client.delete_origin_endpoint(id: endpoint_id) if exists_aws_resource?
   end
 
   private

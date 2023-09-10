@@ -36,8 +36,6 @@ class MediaPackageParameter < ApplicationRecord
       create_parameter("/medialive/#{resource_name}", media_package_channel.ingest_endpoint_password)
       update!(name: "/medialive/#{resource_name}")
     end
-  rescue => e
-    logger.error(e.message)
   end
 
   def exists_aws_resource?
@@ -49,8 +47,6 @@ class MediaPackageParameter < ApplicationRecord
 
   def delete_aws_resource
     delete_parameter("/medialive/#{resource_name}") if exists_aws_resource?
-  rescue => e
-    logger.error(e.message.to_s)
   end
 
   private

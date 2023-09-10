@@ -28,8 +28,6 @@ class MediaPackageOriginEndpoint < ApplicationRecord
 
   def origin_endpoint
     @origin_endpoint = media_package_client.describe_origin_endpoint(id: endpoint_id)
-  rescue => e
-    logger.error(e.message.to_s)
   end
 
   def create_aws_resource

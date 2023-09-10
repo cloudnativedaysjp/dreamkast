@@ -26,8 +26,6 @@ class MediaPackageChannel < ApplicationRecord
 
   def channel
     @channel = media_package_client.describe_channel(id: channel_id)
-  rescue => e
-    logger.error(e.message.to_s)
   end
 
   def ingest_endpoints

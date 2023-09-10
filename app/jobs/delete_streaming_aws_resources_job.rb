@@ -43,21 +43,10 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   def delete_media_package_resources
     logger.info('Deleting MediaPackage resources...')
 
-    if @streaming.media_package_origin_endpoint
-      @streaming.media_package_origin_endpoint.delete_aws_resource
-      @streaming.media_package_origin_endpoint.destroy!
-    end
-
-    if @streaming.media_package_parameter
-      @streaming.media_package_parameter.delete_aws_resource
-      @streaming.media_package_parameter.destroy!
-    end
-
-    if @streaming.media_package_channel
-      @streaming.media_package_channel.media_package_harvest_jobs&.each(&:destroy)
-      @streaming.media_package_channel.delete_aws_resource
-      @streaming.media_package_channel.destroy!
-    end
+    @streaming.media_package_origin_endpoint&.destroy!
+    @streaming.media_package_parameter&.destroy!
+    @streaming.media_package_channel&.media_package_harvest_jobs&.each(&:destroy)
+    @streaming.media_package_channel&.destroy!
 
     logger.info('Deleted MediaPackage resources...')
   end

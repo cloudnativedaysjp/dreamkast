@@ -26,6 +26,10 @@ class MediaPackageParameter < ApplicationRecord
   include SsmHelper
   include EnvHelper
 
+  before_destroy do
+    delete_aws_resource
+  end
+
   before_create :set_uuid
 
   belongs_to :streaming

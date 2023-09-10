@@ -22,6 +22,10 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper
 
+  before_destroy do
+    delete_aws_resource
+  end
+
   belongs_to :media_package_channel
   belongs_to :streaming
 

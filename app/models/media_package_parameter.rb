@@ -26,9 +26,7 @@ class MediaPackageParameter < ApplicationRecord
   include SsmHelper
   include EnvHelper
 
-  before_destroy do
-    delete_aws_resource
-  end
+  before_destroy :delete_aws_resource
 
   before_create :set_uuid
 

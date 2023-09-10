@@ -20,9 +20,7 @@ class MediaPackageChannel < ApplicationRecord
   include MediaPackageHelper
   include EnvHelper
 
-  before_destroy do
-    delete_aws_resource
-  end
+  before_destroy :delete_aws_resource
 
   belongs_to :streaming
   has_many :media_package_origin_endpoints

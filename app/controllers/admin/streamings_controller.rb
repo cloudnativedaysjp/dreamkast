@@ -11,7 +11,7 @@ class Admin::StreamingsController < ApplicationController
 
     respond_to do |format|
       if @streaming.save && create_aws_resources
-        format.html { redirect_to(admin_streamings_path, notice: 'Streaming AWS Resources is creating...') }
+        format.html { redirect_to(admin_streamings_path, notice: 'Creating AWS streaming resources. Please wait few minutes') }
         format.json { render(:show, status: :ok, location: @job) }
       else
         format.html { redirect_to(admin_streaming_path, flash: { error: @job.errors.messages }) }

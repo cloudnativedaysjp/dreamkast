@@ -57,8 +57,6 @@ class MediaPackageV2Channel < ApplicationRecord
 
   def channel
     @channel ||= media_package_v2_client.get_channel(channel_group_name:, channel_name:)
-  rescue => e
-    logger.error(e.message.to_s)
   end
 
   def ingest_endpoint_url

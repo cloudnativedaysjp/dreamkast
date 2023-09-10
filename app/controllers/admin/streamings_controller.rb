@@ -30,7 +30,7 @@ class Admin::StreamingsController < ApplicationController
     DeleteStreamingAwsResourcesJob.perform_later(@streaming)
     @streaming.update!(status: 'deleting')
     respond_to do |format|
-      format.html { redirect_to(admin_streamings_path, notice: 'Streaming AWS Resources is deleting...') }
+      format.html { redirect_to(admin_streamings_path, notice: 'Deleting AWS streaming resources...') }
       format.json { head(:no_content) }
     end
   end

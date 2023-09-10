@@ -24,6 +24,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   include MediaPackageV2Helper
 
   before_create :set_uuid
+  before_destroy :delete_aws_resource
 
   belongs_to :streaming
   belongs_to :channel, class_name: 'MediaPackageV2Channel', foreign_key: :media_package_v2_channel_id
@@ -89,10 +90,12 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   end
 
   def delete_aws_resource
-    media_package_v2_client.delete_origin_endpoint_policy(channel_group_name:, channel_name:, origin_endpoint_name:)
-    media_package_v2_client.delete_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
-    loop do
-      break unless exists_aws_resource?
+    if exists_aws_resource?
+      media_package_v2_client.delete_origin_endpoint_policy(channel_group_name:, channel_name:, origin_endpoint_name:)
+      media_package_v2_client.delete_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
+      loop do
+        break unless exists_aws_resource?
+      end
     end
     update!(name: '')
   end

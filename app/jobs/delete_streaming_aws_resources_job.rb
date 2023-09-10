@@ -21,20 +21,9 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   def delete_media_package_v2_resources
     logger.info('Deleting MediaPackageV2 resources...')
 
-    if @streaming.media_package_v2_origin_endpoint
-      @streaming.media_package_v2_origin_endpoint.delete_aws_resource
-      @streaming.media_package_v2_origin_endpoint.destroy!
-    end
-
-    if @streaming.media_package_v2_channel
-      @streaming.media_package_v2_channel.delete_aws_resource
-      @streaming.media_package_v2_channel.destroy!
-    end
-
-    if @streaming.media_package_v2_channel_group
-      @streaming.media_package_v2_channel_group.delete_aws_resource
-      @streaming.media_package_v2_channel_group.destroy!
-    end
+    @streaming.media_package_v2_origin_endpoint&.destroy!
+    @streaming.media_package_v2_channel&.destroy!
+    @streaming.media_package_v2_channel_group&.destroy!
 
     logger.info('Deleted MediaPackageV2 resources...')
   end

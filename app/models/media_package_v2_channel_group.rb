@@ -22,6 +22,7 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
   include MediaPackageV2Helper
 
   before_create :set_uuid
+  before_destroy :delete_aws_resource
 
   belongs_to :streaming
   has_one :channel, class_name: 'MediaPackageV2Channel'
@@ -34,11 +35,13 @@ class MediaPackageV2ChannelGroup < ApplicationRecord
   end
 
   def delete_aws_resource
-    media_package_v2_client.delete_channel_group(channel_group_name:) if exists_aws_resource?
-    loop do
-      break unless exists_aws_resource?
+    if exists_aws_resource?
+      media_package_v2_client.delete_channel_group(channel_group_name:)
+      loop do
+        break unless exists_aws_resource?
+      end
+      update!(name: '')
     end
-    update!(name: '')
   end
 
   def exists_aws_resource?

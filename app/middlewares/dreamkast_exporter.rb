@@ -101,17 +101,17 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
     Talk.count_talks_by_difficulty_and_conference.each do |talk_difficulties_count|
       metrics.set(
         talk_difficulties_count.count,
-        labels: { conference_id: talk_difficulties_count.conference_id,talk_difficulty_name: talk_difficulties_count.name }
+        labels: { conference_id: talk_difficulties_count.conference_id, talk_difficulty_name: talk_difficulties_count.name }
       )
     end
   end
 
   def dreamkast_select_proposal_items(metrics)
     ProposalItem.all.each do |proposal_items|
-    metrics.set(
-      proposal_items.talk_id,
-      labels: { conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
-    )
+      metrics.set(
+        proposal_items.talk_id,
+        labels: { conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
+      )
     end
   end
 end

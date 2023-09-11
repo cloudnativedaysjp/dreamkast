@@ -248,7 +248,6 @@ class Talk < ApplicationRecord
       .select('COUNT(*) AS count, talk_difficulties.name, talks.conference_id')
   end
 
-
   def category
     talk_category.present? ? talk_category.name : ''
   end

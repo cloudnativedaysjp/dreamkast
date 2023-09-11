@@ -38,5 +38,5 @@ class ProposalItem < ApplicationRecord
       .from('proposal_items')
       .left_joins(:talk)
       .where(label: ['presentation_method', 'assumed_visitor', 'execution_phase', 'whether_it_can_be_published', 'session_time', 'language'])
-    end
   end
+end

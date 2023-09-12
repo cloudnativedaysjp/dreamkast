@@ -35,7 +35,7 @@ RSpec.describe(TracksController, type: :request) do
             expect(response.body).to(include('Alice様へのお知らせ'))
           end
 
-          context 'wnen announcement is not published' do
+          context 'when announcement is not published' do
             before do
               create(:speaker_announcement, speakers: [alice])
             end

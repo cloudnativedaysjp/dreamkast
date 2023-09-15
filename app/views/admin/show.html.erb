@@ -8,6 +8,7 @@
   <h2><%= @conference.name %></h2>
   <ul>
     <li>カンファレンスステータス: <%= @conference.conference_status %></li>
+    <li>リハーサルモード: <%= @conference.rehearsal_mode ? 'オン' : 'オフ' %></li>
     <li>CFPの結果公開: <%= @conference.cfp_result_visible ? '公開' : '非公開' %></li>
     <li>登壇者のエントリー: <%= @conference.speaker_entry %></li>
     <li>参加者の申し込み: <%= @conference.attendee_entry %></li>

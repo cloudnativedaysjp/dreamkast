@@ -36,6 +36,7 @@ class Admin::ConferencesController < ApplicationController
 
   def conference_params
     params.require(:conference).permit(:conference_status,
+                                       :rehearsal_mode,
                                        :cfp_result_visible,
                                        :speaker_entry,
                                        :attendee_entry,

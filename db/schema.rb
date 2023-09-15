@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -132,6 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
     t.string "conference_status", default: "registered"
+    t.boolean "rehearsal_mode", default: false, null: false
     t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
     t.index ["abbr"], name: "index_conferences_on_abbr"
   end

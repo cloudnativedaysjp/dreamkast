@@ -15,6 +15,7 @@
 #  name                       :string(255)
 #  privacy_policy             :text(65535)
 #  privacy_policy_for_speaker :text(65535)
+#  rehearsal_mode             :boolean          default(FALSE), not null
 #  show_sponsors              :boolean          default(FALSE)
 #  show_timetable             :integer          default("show_timetable_disabled")
 #  speaker_entry              :integer          default("speaker_entry_disabled")

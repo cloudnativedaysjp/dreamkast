@@ -7,6 +7,7 @@
 #  about                      :text(65535)
 #  attendee_entry             :integer          default("attendee_entry_disabled")
 #  brief                      :string(255)
+#  capacity                   :integer
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
@@ -49,6 +50,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     end
     coc { 'this is coc' }
+    capacity { 2 }
 
     trait :registered do
       conference_status { Conference::STATUS_REGISTERED }

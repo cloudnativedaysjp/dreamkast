@@ -138,8 +138,13 @@
       <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online" } %>
       <%= form.label :online, "リモート参加", { for: "participation_online" } %>
       </br>
-      <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" } %>
-      <%= form.label :offline, "現地参加", { for: "participation_offline" } %>
+      <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" , disabled: @conference.reach_capacity? } %>
+      <% if @conference.reach_capacity? %>
+        <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "reached_capacity"} %>
+        <span class="warning" >現地参加は定員に達したためお申込みいただけません</span>
+      <% else %>
+        <%= form.label :offline, "現地参加", { for: "participation_offline" } %>
+      <% end %>
     </div>
   </div>
 

@@ -96,6 +96,9 @@ FactoryBot.define do
 
     trait :on_cndt2020 do
       conference_id { 1 }
+      trait :offline do
+        participation { 'オフライン参加' }
+      end
     end
 
     trait :on_cndo2021 do

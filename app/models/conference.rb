@@ -7,6 +7,7 @@
 #  about                      :text(65535)
 #  attendee_entry             :integer          default("attendee_entry_disabled")
 #  brief                      :string(255)
+#  capacity                   :integer
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
@@ -82,6 +83,11 @@ class Conference < ApplicationRecord
   scope :unarchived, -> {
     merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)).or(where(conference_status: Conference::STATUS_CLOSED)))
   }
+
+  def reach_capacity?
+    return false if capacity.nil?
+    profiles.where(participation: "offline").size >= capacity
+  end
 
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor

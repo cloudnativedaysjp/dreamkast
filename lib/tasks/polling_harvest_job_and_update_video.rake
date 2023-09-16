@@ -23,7 +23,7 @@ namespace :util do
         body = []
         body << 'アーカイブの作成が完了しました:'
         body << "Track :#{harvest_job.talk.track.name}"
-        body << "スピーカー: #{harvest_job.talk.speaker_names.join("\n")}"
+        body << "登壇者: #{harvest_job.talk.speaker_names.join("\n")}"
         body << "セッション: #{harvest_job.talk.title}"
         body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
 

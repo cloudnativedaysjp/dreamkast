@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Generate token
         id: generate_token
@@ -29,7 +29,7 @@ jobs:
           private_key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -68,7 +68,7 @@ jobs:
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
 
       - name: Checkout dreamkast-infra
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: cloudnativedaysjp/dreamkast-infra
           path: dreamkast-infra
@@ -103,7 +103,7 @@ jobs:
           branch: main
 
       - name: Checkout dreamkast-ui
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: cloudnativedaysjp/dreamkast-ui
           path: dreamkast-ui

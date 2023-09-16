@@ -27,6 +27,12 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   private
 
+  helper_method :sponsor?
+
+  def sponsor?
+    false
+  end
+
   def logged_in_using_omniauth?
     if logged_in?
       @current_user = session[:userinfo]

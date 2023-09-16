@@ -58,6 +58,7 @@ class Conference < ApplicationRecord
   has_many :talk_times
   has_many :talk_categories
   has_many :talk_difficulties
+  has_many :streamings
   has_many :speakers
   has_many :announcements
   has_many :speaker_announcements

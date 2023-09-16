@@ -1,6 +1,6 @@
 <% if f.object.proposal && f.object.proposal.accepted? %>
   <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, disabled: 'disabled'} %>
 <% else %>
-  <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params} %>
+  <%= radio_button_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: "#{label}_#{item.params}"} %>
 <% end %>
 <%= label label, item.params, {class: 'form-check-label'} %><br>

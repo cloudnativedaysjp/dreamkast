@@ -5,7 +5,7 @@
 <% else %>
   スポンサー担当者名: <%= @sponsor_profile.name %> ( <%= link_to 'Edit', edit_sponsor_dashboards_sponsor_profile_path(id: @sponsor_profile.id) %> )
 
-  <h2 class="py-3 pl-2">スピーカープロフィール</h2>
+  <h2 class="py-3 pl-2">登壇者プロフィール</h2>
   <div class="col-12 mb-4">
     <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
   </div>

@@ -148,35 +148,7 @@ class LiveStreamMediaLive < LiveStream
     media_live_client.stop_channel(channel_id:)
   end
 
-  def set_recording_target_talk(talk_id)
-    media_live_client.update_channel(
-      {
-        channel_id:,
-        destinations: [
-          {
-            id: 'destination1',
-            media_package_settings: [],
-            settings: [
-              {
-                url: "#{destination_base}/talks/#{talk_id}/playlist"
-              }
-            ]
-          }
-        ]
-      }
-    )
-    params[:talk_id] = talk_id
-    update!(params:)
-  rescue => e
-    logger.error(e.message)
-    logger.error(e.backtrace.join("\n"))
-  end
-
   private
-
-  def destination_base
-    "s3://#{bucket_name}/medialive/#{conference.abbr}"
-  end
 
   def bucket_name
     case env_name

@@ -56,4 +56,54 @@
       </table>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-10">
+      <h3>配信用URL一覧</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped" >
+        <thead>
+        <tr>
+          <th scope="col">Track Name (ID)</th>
+          <th scope="col">Playback URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @tracks.each do |track| %>
+          <tr>
+            <td><%= track.name %> (<%= track.id %>)</td>
+            <td><%= track.streaming&.playback_url %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <% @tracks.each do |track| %>
+    <div class="row">
+      <div class="col-10">
+        <h3>Track <%= track.name %>: リソース詳細</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <table class="table table-striped" >
+          <tbody>
+          <tr>
+            <td>Track ID</td><td><%= track.id %></td>
+          </tr>
+          <tr>
+            <td>MediaPackage V2 ChannelGroup</td><td><%= track.streaming&.media_package_v2_channel_group&.name %></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
 <% end %>

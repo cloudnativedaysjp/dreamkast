@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_132249) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -190,6 +190,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
     t.string "endpoint_id"
     t.index ["conference_id"], name: "index_media_package_origin_endpoints_on_conference_id"
     t.index ["media_package_channel_id"], name: "index_media_package_origin_endpoints_on_media_package_channel_id"
+  end
+
+  create_table "media_package_v2_channel_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "name"
+    t.index ["name"], name: "index_media_package_v2_channel_groups_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channel_groups_on_streaming_id"
+  end
+
+  create_table "media_package_v2_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_group_id"
+    t.string "name"
+    t.index ["media_package_v2_channel_group_id"], name: "index_channels_on_channel_group_id"
+    t.index ["name"], name: "index_media_package_v2_channels_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channels_on_streaming_id"
+  end
+
+  create_table "media_package_v2_origin_endpoints", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_id"
+    t.string "name"
+    t.index ["media_package_v2_channel_id"], name: "index_origin_endpoints_on_channel_id"
+    t.index ["name"], name: "index_media_package_v2_origin_endpoints_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
   end
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -559,6 +584,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_103419) do
   add_foreign_key "media_package_harvest_jobs", "talks"
   add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
+  add_foreign_key "media_package_v2_channel_groups", "streamings"
+  add_foreign_key "media_package_v2_channels", "streamings"
+  add_foreign_key "media_package_v2_origin_endpoints", "streamings"
   add_foreign_key "orders", "profiles"
   add_foreign_key "orders_tickets", "orders"
   add_foreign_key "orders_tickets", "tickets"

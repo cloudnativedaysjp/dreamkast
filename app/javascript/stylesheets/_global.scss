@@ -227,10 +227,17 @@ footer ul li {
         text-decoration: none;
     }
 }
+
 .registration-form {
     background: rgba(256, 256, 256, 0.8);
     span.required {
         color: $red;
+    }
+    span.warning {
+        color: $red;
+    }
+    .reached_capacity {
+        text-decoration: line-through;
     }
     a {
         text-decoration: underline;

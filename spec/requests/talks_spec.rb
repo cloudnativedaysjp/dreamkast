@@ -95,7 +95,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, :with_order, conference: cndt2020)
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -187,8 +187,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:alice, :with_order, conference: cndt2020)
-            create(:alice, :with_order, conference: cndo2021)
+            create(:alice, conference: cndt2020)
+            create(:alice, conference: cndo2021)
 
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
@@ -280,8 +280,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:alice, :with_order, conference: cndt2020)
-            create(:alice, :with_order, conference: cndo2021)
+            create(:alice, conference: cndt2020)
+            create(:alice, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
@@ -372,8 +372,8 @@ describe TalksController, type: :request do
         context 'user already registered' do
           let!(:cndo2021) { create(:cndo2021) }
           before do
-            create(:alice, :with_order, conference: cndt2020)
-            create(:alice, :with_order, conference: cndo2021)
+            create(:alice, conference: cndt2020)
+            create(:alice, conference: cndo2021)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end

@@ -18,9 +18,6 @@ namespace :util do
         ChatMessage.where(profile_id: profile.id).each do |chat_message|
           chat_message.update!(profile_id: nil)
         end
-        Order.where(profile_id: profile.id).each do |order|
-          order.update!(profile_id: nil)
-        end
         CheckIn.where(profile_id: profile.id).each do |check_in|
           check_in.update!(profile_id: nil)
         end

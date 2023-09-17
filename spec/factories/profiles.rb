@@ -21,6 +21,7 @@
 #  last_name                     :string(255)
 #  last_name_kana                :string(255)
 #  occupation                    :string(255)
+#  participation                 :string(255)
 #  position                      :string(255)
 #  sub                           :string(255)
 #  created_at                    :datetime         not null
@@ -56,20 +57,17 @@ FactoryBot.define do
     conference_id { 1 }
     number_of_employee_id { 2 }
     annual_sales_id { 3 }
+    participation { 'オンライン参加' }
 
     trait :on_cndt2020 do
       conference_id { 1 }
+      trait :offline do
+        participation { 'オフライン参加' }
+      end
     end
 
     trait :on_cndo2021 do
       conference_id { 2 }
-    end
-
-    trait :with_order do
-      after(:build) do |profile|
-        ticket = profile.conference.tickets.find_by(title: 'ticket a')
-        create(:order, profile:, tickets: [ticket])
-      end
     end
   end
 
@@ -94,20 +92,17 @@ FactoryBot.define do
     conference_id { 1 }
     number_of_employee_id { 4 }
     annual_sales_id { 5 }
+    participation { 'オンライン参加' }
 
     trait :on_cndt2020 do
       conference_id { 1 }
+      trait :offline do
+        participation { 'オフライン参加' }
+      end
     end
 
     trait :on_cndo2021 do
       conference_id { 2 }
-    end
-
-    trait :with_order do
-      after(:build) do |profile|
-        ticket = profile.conference.tickets.find_by(title: 'ticket a')
-        create(:order, profile:, tickets: [ticket])
-      end
     end
   end
 end

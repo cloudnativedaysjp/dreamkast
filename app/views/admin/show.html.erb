@@ -12,25 +12,9 @@
     <li>登壇者のエントリー: <%= @conference.speaker_entry %></li>
     <li>参加者の申し込み: <%= @conference.attendee_entry %></li>
     <li>タイムテーブルを表示: <%= @conference.show_timetable %></li>
+    <li>現地参加定員: <%= @conference.capacity %></li>
     <li>スポンサーを表示: <%= @conference.show_sponsors ? '表示' : '非表示' %></li>
   </ul>
-  <h3>チケット情報</h3>
-  <table>
-    <tr>
-      <th>チケット種別</th>
-      <th>席数</th>
-      <th>登録者数</th>
-      <th>残席</th>
-    </tr>
-    <% @conference.tickets.each do |ticket| %>
-    <tr>
-      <td><%= ticket.title %></td>
-      <td><%= ticket.stock %></td>
-      <td><%= ticket.occupied %></td>
-      <td><%= ticket.remaining_stock %></td>
-    </tr>
-    <% end %>
-  </table>
   <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id), class: 'btn btn-primary' %>
 
   <hr>

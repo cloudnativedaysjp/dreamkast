@@ -1,6 +1,6 @@
 class PublicProfilesController < ApplicationController
   include Secured
-  before_action :set_conference
+  before_action :set_conference, :set_profile
 
   def new
     @public_profile = PublicProfile.new(profile_id: @profile.id)
@@ -31,7 +31,7 @@ class PublicProfilesController < ApplicationController
 
     respond_to do |format|
       if @public_profile.update(public_profile_params)
-        format.html { redirect_to(edit_public_profile_path(id: @public_profile.id), notice: 'プロフィールのの変更が完了しました') }
+        format.html { redirect_to(edit_public_profile_path(id: @public_profile.id), notice: 'プロフィールの変更が完了しました') }
         format.json { render(:show, status: :ok, location: @public_profile) }
       else
         format.html { render(:edit, notice: 'プロフィールの変更時にエラーが発生しました') }

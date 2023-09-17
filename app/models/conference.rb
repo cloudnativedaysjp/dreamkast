@@ -86,7 +86,7 @@ class Conference < ApplicationRecord
 
   def reach_capacity?
     return false if capacity.nil?
-    profiles.where(participation: "offline").size >= capacity
+    profiles.where(participation: 'offline').size >= capacity
   end
 
   def remaining_date

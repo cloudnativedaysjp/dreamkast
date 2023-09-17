@@ -43,7 +43,7 @@ RSpec.describe(Conference, type: :model) do
       end
     end
     context 'when 2 user is offline' do
-      let(:bob) {create(:bob, :on_cndt2020, :offline, conference: cndt2020) }
+      let(:bob) { create(:bob, :on_cndt2020, :offline, conference: cndt2020) }
       it 'return true' do
         expect(alice.offline?).to(be_truthy)
         expect(bob.offline?).to(be_truthy)
@@ -51,7 +51,7 @@ RSpec.describe(Conference, type: :model) do
       end
     end
     context 'when 1 user is offline and 1 user is online' do
-      let(:bob) {create(:bob, :on_cndt2020, conference: cndt2020) }
+      let(:bob) { create(:bob, :on_cndt2020, conference: cndt2020) }
       it 'return false' do
         expect(alice.offline?).to(be_truthy)
         expect(bob.online?).to(be_truthy)

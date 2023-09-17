@@ -109,7 +109,7 @@
     <%= form.label :occupation_id, "職種" %><span class="required">*</span>
     <%= form.collection_select :occupation_id, ::FormModels::Occupation.all, :id, :name, {prompt: "", disabled: ::FormModels::Occupation.all.map{|i| i.id if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "occupation_id"} %>
   </div>
-  
+
   <div class="form-row form-group">
     <%= form.label :industry_id, "業種" %>
     <%= form.grouped_collection_select(
@@ -130,6 +130,22 @@
   <div class="form-row form-group">
     <%= form.label :number_of_employee_id, "従業員数" %>
     <%= form.collection_select :number_of_employee_id, ::FormModels::NumberOfEmployee.all, :id, :name, {prompt: ""}, {class: "form-control", autocomplete: "number-of-employee-id"} %>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6" id="participation" >
+      <%= form.label :participation, "参加方法" %></br>
+      <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online" } %>
+      <%= form.label :online, "リモート参加", { for: "participation_online" } %>
+      </br>
+      <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" , disabled: @conference.reach_capacity? } %>
+      <% if @conference.reach_capacity? %>
+        <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "reached_capacity"} %>
+        <span class="warning" >現地参加は定員に達したためお申込みいただけません</span>
+      <% else %>
+        <%= form.label :offline, "現地参加", { for: "participation_offline" } %>
+      <% end %>
+    </div>
   </div>
 
   <% if action_name == "new" %>

@@ -7,6 +7,7 @@
 #  about                      :text(65535)
 #  attendee_entry             :integer          default("attendee_entry_disabled")
 #  brief                      :string(255)
+#  capacity                   :integer
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
@@ -50,6 +51,7 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     end
     coc { 'this is coc' }
+    capacity { 2 }
 
     trait :registered do
       conference_status { Conference::STATUS_REGISTERED }
@@ -108,8 +110,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 4, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_4')
       create(:track, id: 5, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_5')
       create(:track, id: 6, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_6')
-      create(:ticket, :a, conference:)
-      create(:ticket, :b, conference:)
     end
   end
 
@@ -145,8 +145,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 14, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 15, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 16, number: 7, name: 'G', conference_id: conference.id, video_id: 'video_7')
-      create(:ticket, :a, conference:)
-      create(:ticket, :b, conference:)
     end
   end
 

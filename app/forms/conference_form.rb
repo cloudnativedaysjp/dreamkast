@@ -10,6 +10,7 @@ class ConferenceForm
   attr_accessor :attendee_entry
   attr_accessor :show_timetable
   attr_accessor :show_sponsors
+  attr_accessor :capacity
   attr_accessor :brief
   attr_accessor :privacy_policy
   attr_accessor :privacy_policy_for_speaker
@@ -98,7 +99,7 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(conference_status:, rehearsal_mode:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, brief:, privacy_policy:, privacy_policy_for_speaker:)
+      conference.update!(conference_status:, rehearsal_mode:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, capacity:, brief:, privacy_policy:, privacy_policy_for_speaker:)
     end
   rescue => e
     puts(e)
@@ -128,6 +129,7 @@ class ConferenceForm
       show_timetable: conference.show_timetable,
       show_sponsors: conference.show_sponsors,
       links:,
+      capacity: conference.capacity,
       conference_days:,
       brief: conference.brief,
       privacy_policy: conference.privacy_policy,

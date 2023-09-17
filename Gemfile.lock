@@ -84,13 +84,13 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.628.0)
+    aws-partitions (1.817.0)
     aws-record (2.7.0)
       aws-sdk-dynamodb (~> 1.18)
-    aws-sdk-core (3.144.0)
+    aws-sdk-core (3.181.0)
       aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.525.0)
-      aws-sigv4 (~> 1.1)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
     aws-sdk-dynamodb (1.76.0)
       aws-sdk-core (~> 3, >= 3.127.0)
@@ -106,6 +106,9 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sdk-mediapackage (1.56.0)
       aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-mediapackagev2 (1.5.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-rails (3.6.3)
       aws-record (~> 2)
@@ -132,6 +135,7 @@ GEM
       rack (~> 2)
     aws-sigv4 (1.5.1)
       aws-eventstream (~> 1, >= 1.0.2)
+    base64 (0.1.1)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
@@ -455,8 +459,9 @@ GEM
     opentelemetry-semantic_conventions (1.8.0)
       opentelemetry-api (~> 1.0)
     parallel (1.22.1)
-    parser (3.2.1.0)
+    parser (3.2.2.3)
       ast (~> 2.4.1)
+      racc
     pluginator (1.5.0)
     pre-commit (0.39.0)
       pluginator (~> 1.5)
@@ -540,7 +545,7 @@ GEM
       redis-store (>= 1.2, < 2)
     redis-store (1.9.1)
       redis (>= 4, < 5)
-    regexp_parser (2.7.0)
+    regexp_parser (2.8.1)
     rexml (3.2.5)
     roda (3.59.0)
       rack
@@ -561,14 +566,16 @@ GEM
       rspec-mocks (~> 3.11)
       rspec-support (~> 3.11)
     rspec-support (3.12.0)
-    rubocop (1.52.0)
+    rubocop (1.56.3)
+      base64 (~> 0.1.1)
       json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
-      parser (>= 3.2.0.0)
+      parser (>= 3.2.2.3)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.28.0, < 2.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
@@ -577,11 +584,11 @@ GEM
       rubocop (~> 1.41)
     rubocop-factory_bot (2.23.1)
       rubocop (~> 1.33)
-    rubocop-rails (2.19.1)
+    rubocop-rails (2.21.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
-    rubocop-rspec (2.22.0)
+    rubocop-rspec (2.23.2)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
@@ -702,6 +709,7 @@ DEPENDENCIES
   aws-sdk-ivs
   aws-sdk-medialive
   aws-sdk-mediapackage
+  aws-sdk-mediapackagev2
   aws-sdk-rails
   aws-sdk-s3 (~> 1.14)
   aws-sdk-ssm
@@ -741,9 +749,9 @@ DEPENDENCIES
   redis-rails
   rexml (~> 3.2, >= 3.2.4)
   rspec-rails
-  rubocop (~> 1.52.0)
+  rubocop (~> 1.56.0)
   rubocop-rails
-  rubocop-rspec (>= 2.22.0)
+  rubocop-rspec
   sass-rails (>= 6)
   seed-fu
   sentry-opentelemetry

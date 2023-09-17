@@ -39,7 +39,11 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
 
       ProfileMailer.registered(@profile, @conference).deliver_later
-      redirect_to(new_order_path)
+      if @profile.public_profile.present?
+        redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
+      else
+        redirect_to("/#{event_name}/public_profiles/new")
+      end
     else
       respond_to do |format|
         format.html { render(:new) }
@@ -51,7 +55,6 @@ class ProfilesController < ApplicationController
   def update
     postal_code = profile_params[:company_postal_code].gsub(/-/, '')
     tel = profile_params[:company_tel].gsub(/-/, '')
-
     respond_to do |format|
       if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
         format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
@@ -101,15 +104,9 @@ class ProfilesController < ApplicationController
   end
 
   def checkin
-    ticket = Ticket.find_by(id: params[:ticket_id])
-    if @profile.present? &&
-       ticket.present? &&
-       @profile.active_order.present? &&
-       CheckIn.where(profile_id: @profile.id, order_id: @profile.active_order.id, ticket_id: ticket.id).empty?
+    if @profile.present?
       c = CheckIn.new
       c.profile_id = @profile.id
-      c.order_id = @profile.active_order.id
-      c.ticket_id = ticket.id
       c.save
 
       # TODO: This is a temporary solution. We should replace hardcoded values after CNDT2022.
@@ -171,6 +168,7 @@ class ProfilesController < ApplicationController
       :company_tel,
       :department,
       :position,
+      :participation,
       :roles,
       :conference_id,
       :number_of_employee_id,

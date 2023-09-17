@@ -61,13 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
     t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
-  create_table "cancel_orders", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "order_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_cancel_orders_on_order_id"
-  end
-
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
@@ -93,13 +86,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
 
   create_table "check_ins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "profile_id"
-    t.string "order_id"
-    t.string "ticket_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_check_ins_on_order_id"
     t.index ["profile_id"], name: "index_check_ins_on_profile_id"
-    t.index ["ticket_id"], name: "index_check_ins_on_ticket_id"
   end
 
   create_table "conference_days", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -133,6 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
     t.string "committee_name", default: "CloudNative Days Committee", null: false
     t.string "conference_status", default: "registered"
     t.boolean "rehearsal_mode", default: false, null: false
+    t.integer "capacity"
     t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
     t.index ["abbr"], name: "index_conferences_on_abbr"
   end
@@ -164,12 +154,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
   end
 
   create_table "media_package_channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
-    t.bigint "track_id", null: false
     t.string "channel_id", default: ""
+    t.string "streaming_id"
     t.index ["channel_id"], name: "index_media_package_channels_on_channel_id"
-    t.index ["conference_id"], name: "index_media_package_channels_on_conference_id"
-    t.index ["track_id"], name: "index_media_package_channels_on_track_id"
+    t.index ["streaming_id"], name: "index_media_package_channels_on_streaming_id"
   end
 
   create_table "media_package_harvest_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -186,11 +174,46 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
   end
 
   create_table "media_package_origin_endpoints", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
     t.bigint "media_package_channel_id", null: false
     t.string "endpoint_id"
-    t.index ["conference_id"], name: "index_media_package_origin_endpoints_on_conference_id"
+    t.string "streaming_id"
     t.index ["media_package_channel_id"], name: "index_media_package_origin_endpoints_on_media_package_channel_id"
+    t.index ["streaming_id"], name: "index_media_package_origin_endpoints_on_streaming_id"
+  end
+
+  create_table "media_package_parameters", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.bigint "media_package_channel_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_package_channel_id"], name: "index_media_package_parameters_on_media_package_channel_id"
+    t.index ["streaming_id"], name: "index_media_package_parameters_on_streaming_id"
+  end
+
+  create_table "media_package_v2_channel_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "name"
+    t.index ["name"], name: "index_media_package_v2_channel_groups_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channel_groups_on_streaming_id"
+  end
+
+  create_table "media_package_v2_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_group_id"
+    t.string "name"
+    t.index ["media_package_v2_channel_group_id"], name: "index_channels_on_channel_group_id"
+    t.index ["name"], name: "index_media_package_v2_channels_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_channels_on_streaming_id"
+  end
+
+  create_table "media_package_v2_origin_endpoints", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_id"
+    t.string "name"
+    t.index ["media_package_v2_channel_id"], name: "index_origin_endpoints_on_channel_id"
+    t.index ["name"], name: "index_media_package_v2_origin_endpoints_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
   end
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -198,22 +221,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
     t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "orders", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_orders_on_profile_id"
-  end
-
-  create_table "orders_tickets", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "order_id", null: false
-    t.string "ticket_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_orders_tickets_on_order_id"
-    t.index ["ticket_id"], name: "index_orders_tickets_on_ticket_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -247,6 +254,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
     t.string "company_fax"
     t.string "calendar_unique_code"
     t.integer "occupation_id", default: 34
+    t.string "participation"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -484,17 +492,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
     t.index ["speaker_id"], name: "index_talks_speakers_on_speaker_id"
   end
 
-  create_table "tickets", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
-    t.string "title", null: false
-    t.text "description", null: false
-    t.integer "price", null: false
-    t.integer "stock", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["conference_id"], name: "index_tickets_on_conference_id"
-  end
-
   create_table "tracks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number"
     t.string "name"
@@ -546,23 +543,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
   add_foreign_key "announcements", "conferences"
   add_foreign_key "booths", "conferences"
   add_foreign_key "booths", "sponsors"
-  add_foreign_key "cancel_orders", "orders"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
   add_foreign_key "links", "conferences"
   add_foreign_key "live_streams", "conferences"
   add_foreign_key "live_streams", "tracks"
-  add_foreign_key "media_package_channels", "conferences"
-  add_foreign_key "media_package_channels", "tracks"
+  add_foreign_key "media_package_channels", "streamings"
   add_foreign_key "media_package_harvest_jobs", "conferences"
   add_foreign_key "media_package_harvest_jobs", "media_package_channels"
   add_foreign_key "media_package_harvest_jobs", "talks"
-  add_foreign_key "media_package_origin_endpoints", "conferences"
   add_foreign_key "media_package_origin_endpoints", "media_package_channels"
-  add_foreign_key "orders", "profiles"
-  add_foreign_key "orders_tickets", "orders"
-  add_foreign_key "orders_tickets", "tickets"
+  add_foreign_key "media_package_origin_endpoints", "streamings"
+  add_foreign_key "media_package_parameters", "media_package_channels"
+  add_foreign_key "media_package_parameters", "streamings"
+  add_foreign_key "media_package_v2_channel_groups", "streamings"
+  add_foreign_key "media_package_v2_channels", "streamings"
+  add_foreign_key "media_package_v2_origin_endpoints", "streamings"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "public_profiles", "profiles"
@@ -578,6 +575,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_101121) do
   add_foreign_key "streamings", "conferences"
   add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"
-  add_foreign_key "tickets", "conferences"
   add_foreign_key "video_registrations", "talks"
 end

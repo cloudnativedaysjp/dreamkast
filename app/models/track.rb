@@ -21,7 +21,6 @@ class Track < ApplicationRecord
   has_many :talks
   has_one :live_stream_ivs
   has_one :live_stream_media_live
-  has_one :media_package_channel
   has_one :streaming
 
   belongs_to :room, optional: true

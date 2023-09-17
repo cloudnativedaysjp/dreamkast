@@ -22,4 +22,15 @@ module MediaPackageHelper
 
     channels.select { |channel| channel_ids.include?(channel.id) }
   end
+
+  def resource_name
+    conference = streaming.conference
+    track = streaming.track
+
+    if review_app?
+      "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
+    else
+      "#{env_name}_#{conference.abbr}_track#{track.name}"
+    end
+  end
 end

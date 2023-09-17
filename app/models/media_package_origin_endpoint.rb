@@ -33,8 +33,10 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   end
 
   def create_aws_resource
-    resp = media_package_client.create_origin_endpoint(create_params)
-    update!(endpoint_id: resp.id)
+    unless exists_aws_resource?
+      resp = media_package_client.create_origin_endpoint(create_params)
+      update!(endpoint_id: resp.id)
+    end
   end
 
   def exists_aws_resource?

@@ -54,6 +54,9 @@ class MediaPackageParameter < ApplicationRecord
   private
 
   def resource_name
+    conference = streaming.conference
+    track = streaming.track
+
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else

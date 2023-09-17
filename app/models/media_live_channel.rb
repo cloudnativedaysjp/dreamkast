@@ -150,7 +150,8 @@ class MediaLiveChannel < ApplicationRecord
     }
 
     if streaming.media_package_channel
-      output_group_media_package = OutputGroupMediaPackage.new(resource_name, streaming.media_package_channel.ingest_endpoint_url, streaming.media_package_channel.ingest_endpoint_username, streaming.media_package_channel.ingest_endpoint_password)
+      output_group_media_package = OutputGroupMediaPackage.new(resource_name, streaming.media_package_channel.ingest_endpoint_url, streaming.media_package_channel.ingest_endpoint_username,
+                                                               streaming.media_package_channel.ingest_endpoint_password)
       params[:destinations] << output_group_media_package.destination
       params[:encoder_settings][:audio_descriptions].concat(output_group_media_package.audio_descriptions)
       params[:encoder_settings][:output_groups] << output_group_media_package.output_group

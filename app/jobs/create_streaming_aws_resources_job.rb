@@ -61,7 +61,6 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
     endpoint.create_aws_resource
   end
 
-
   def create_media_live_resources
     logger.info('Perform CreateMediaLiveJob')
 

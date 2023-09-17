@@ -41,7 +41,6 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     logger.info('Deleted MediaPackage resources...')
   end
 
-
   def delete_media_live_resources
     logger.info('Deleting MediaLive resources...')
 

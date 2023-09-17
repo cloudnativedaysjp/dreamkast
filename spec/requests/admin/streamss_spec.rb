@@ -10,6 +10,12 @@ describe Admin::SpeakersController, type: :request do
     channel_group = create(:media_package_v2_channel_group, streaming:)
     channel = create(:media_package_v2_channel, streaming:, channel_group:)
     create(:media_package_v2_origin_endpoint, streaming:, channel:)
+
+    [MediaLiveChannel, MediaLiveInput, MediaPackageChannel, MediaPackageOriginEndpoint, MediaPackageV2Channel, MediaPackageV2OriginEndpoint].each do |klass|
+      allow_any_instance_of(klass).to(receive(:aws_resource) do |*_arg|
+        nil
+      end)
+    end
   end
 
   context 'user logged in' do
@@ -26,6 +32,10 @@ describe Admin::SpeakersController, type: :request do
         else
           arg[0].send(:original, arg[1])
         end
+      end)
+
+      allow_any_instance_of(MediaLiveChannel).to(receive(:state) do |*_arg|
+        'IDLE'
       end)
     end
 

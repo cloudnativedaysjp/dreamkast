@@ -87,6 +87,10 @@ class MediaLiveChannel < ApplicationRecord
     aws_resource && aws_resource.state == CHANNEL_RUNNING
   end
 
+  def state
+    aws_resource&.state
+  end
+
   def aws_resource
     @aws_resource ||= media_live_client.describe_channel(channel_id:)
   end

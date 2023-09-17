@@ -80,17 +80,15 @@ class MediaLiveChannel < ApplicationRecord
   end
 
   def idle?
-    exists_aws_resource? && aws_resource.state == CHANNEL_IDLE
+    aws_resource && aws_resource.state == CHANNEL_IDLE
   end
 
   def running?
-    exists_aws_resource? && aws_resource.state == CHANNEL_RUNNING
+    aws_resource && aws_resource.state == CHANNEL_RUNNING
   end
 
   def aws_resource
-    if exists_aws_resource?
-      media_live_client.describe_channel(channel_id:)
-    end
+    @aws_resource ||= media_live_client.describe_channel(channel_id:)
   end
 
   private

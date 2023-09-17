@@ -3,7 +3,21 @@ class Admin::StreamingsController < ApplicationController
 
 
   def index
-    @tracks = @conference.tracks
+    @tracks = @conference.tracks.includes(streaming: [
+      :conference,
+      :media_live_channel,
+      :media_live_input,
+      :media_package_channel,
+      :media_package_origin_endpoint,
+      :media_package_v2_channel_group,
+      :media_package_v2_origin_endpoint,
+    ])
+    threads = @tracks.map(&:streaming).map{|streaming| [:media_live_channel, :media_live_input, :media_package_origin_endpoint, :media_package_v2_origin_endpoint,].map{|r| streaming.send(r)}}.flatten.map do |resource|
+      Thread.new do
+        resource.aws_resource
+      end
+    end
+    threads.each(&:join)
   end
 
   def create

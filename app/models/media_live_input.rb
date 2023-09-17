@@ -57,7 +57,7 @@ class MediaLiveInput < ApplicationRecord
   end
 
   def aws_resource
-    @aws_resource = media_live_client.describe_input(input_id:) if input_id
+    @aws_resource ||= media_live_client.describe_input(input_id:) if input_id
   end
 
   def destination_url

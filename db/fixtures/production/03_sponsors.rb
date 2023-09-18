@@ -42,5 +42,4 @@ SponsorType.seed(
     name: "Tool",
     order: 8,
   },
-
 )

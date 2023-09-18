@@ -185,6 +185,7 @@ EOS
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
+    capacity: 100,
     about: <<'EOS'
       業務でクラウドを利用していても、その真のパワーを活用できていないと感じている人は多いのではないでしょうか？
       一方で、高度なクラウド技術を持っているのに、自信が持てなかったり、自らの真価に気づいていない組織も多いのではないでしょうか。
@@ -193,7 +194,6 @@ EOS
 
 　    そこで、CloudNative Days Japan Tour復活の第一弾として、先進IT・スタートアップコミュニティを擁する福岡の地でCNDF2023を開催します。福岡発で、現地だけでなくオンライン配信を通して、全国のクラウドコミュニティの活性化への貢献を目指します。
 EOS
-    capacity: 100
   },
   {
     id: 10,

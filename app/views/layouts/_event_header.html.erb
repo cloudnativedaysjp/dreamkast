@@ -37,28 +37,6 @@
             <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
 
             <% case event_name %>
-            <% when 'cndt2020' %>
-              <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Kontest", kontest_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Links", links_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
-            <% when 'cicd2021' %>
-              <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cndt2021' %>
-              <li class="nav-item"><%= link_to "Team", team_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Job Board", job_board_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'o11y2022' %>
-              <li class="nav-item"><%= link_to "Committee", team_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cndt2022' %>
-              <% if logged_in? && @profile.present? %>
-                <li class="nav-item"><%= link_to "Whiteboard", 'https://miro.com/app/board/uXjVPWsauOI=/', class: "nav-link js-scroll-trigger", target: :_blank, rel: "noopener noreferrer" %></li>
-              <% end %>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cicd2023' %>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndf2023' %>
               <li class="nav-item"><%= link_to "Attendee List", attendees_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>

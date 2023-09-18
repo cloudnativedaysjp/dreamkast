@@ -158,15 +158,9 @@
     </div>
     <p></p>
 
-    <% if %w[cndt2020 cndo2021 cicd2021 cndt2021 cnsec2022].include?(@event) %>
+    <% if %w[change_if_special_sponsor_exists].include?(@event) %>
       <%= render 'profiles/sponsors/microsoft', form: form %>
-    <% end %>
-
-    <% if %w[cndt2022].include?(@event) %>
       <%= render 'profiles/sponsors/ibm', form: form %>
-    <% end %>
-
-    <% if %w[cndt2022].include?(@event) %>
       <%= render 'profiles/sponsors/redhat', form: form %>
     <% end %>
 

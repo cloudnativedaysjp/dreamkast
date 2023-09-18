@@ -10,11 +10,7 @@
     </div>
 
     <div class="modal-body">
-      <% if event_name == 'cicd2021' %>
-        <%= render 'talks/partial_show/col_talk_category_block_cicd2021', talk: @talk %>
-      <% else %>
-        <%= render 'talks/partial_show/col_talk_category_block', talk: @talk %>
-      <% end %>
+      <%= render 'talks/partial_show/col_talk_category_block', talk: @talk %>
       <p class="card-text"><%= simple_format(@talk.abstract) %></p>
     </div>
     <div class="modal-body">

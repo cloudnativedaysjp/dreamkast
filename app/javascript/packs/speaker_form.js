@@ -26,13 +26,17 @@ $(document).on('click', '.remove_talk_field', function(event) {
 });
 
 
-$(document).on('change', '.radio_button_presentation_methods', function(event) {
-    console.log("clicked")
-    if ($(this).attr('params') == '事前収録') {
-        $(".radio_button_session_times.20min").attr("disabled", false);
-    } else {
-        e = $(this).closest('div.talk-field').find(".radio_button_session_times.20min").first()
-        e.prop('checked', false)
-        e.attr("disabled", true);
-    }
-})
+
+window.onload = function() {
+　　document.getElementById('speaker_talks_attributes_0_talk_category_id').addEventListener('change', function(event) {
+        console.log('changed');
+        console.log($(this).attr('params'));
+        if ($(this).attr('params') == 'Keynote') {
+            $(".radio_button_session_times.20min").attr("disabled", false);
+        } else {
+            e = $(this).closest('div.talk-field').find(".radio_button_session_times.20min").first()
+            e.prop('checked', false)
+            e.attr("disabled", true);
+        }
+    });
+}

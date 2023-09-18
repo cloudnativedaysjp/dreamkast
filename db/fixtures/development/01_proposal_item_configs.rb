@@ -967,3 +967,108 @@ language(
     {id: 118, params: 'EN'},
   ]
 )
+
+## CNDT2023
+assumed_visitor(
+  conference_id: 10,
+  item_number: 1,
+  items: [
+    {id: 120, params: 'architect - システム設計'},
+    {id: 121, params: 'developer - システム開発'},
+    {id: 122, params: 'app-developer - アプリケーション開発'},
+    {id: 123, params: 'operator/sys-admin - 運用管理/システム管理'},
+    {id: 124, params: 'CxO/biz - ビジネス層'},
+    {id: 125, params: 'その他'}
+  ]
+)
+
+execution_phase(
+  conference_id: 10,
+  item_number: 2,
+  items: [
+    {id: 126, params: 'Dev/QA（開発環境）'},
+    {id: 127, params: 'PoC（検証）'},
+    {id: 128, params: 'Production（本番環境）'},
+    {id: 129, params: 'Other'},
+  ]
+)
+
+whether_it_can_be_published(
+  conference_id: 10,
+  item_number: 3,
+  items: [
+    {
+      id: 130,
+      params: 'All okay - スライド・動画両方ともに公開可',
+      description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.',
+      key: VideoAndSlidePublished::ALL_OK,
+      value: 'All okay - スライド・動画両方ともに公開可'
+    },
+    {
+      id: 131,
+      params: 'Only Slide - スライドのみ公開可',
+      description: '',
+      key: VideoAndSlidePublished::ONLY_SLIDE,
+      value: 'Only Slide - スライドのみ公開可'
+    },
+    {
+      id: 132,
+      params: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
+      description: '',
+      key: VideoAndSlidePublished::ALL_NG,
+      value: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
+    },
+    {
+      id: 133,
+      params: 'その他',
+      description: '',
+      key: VideoAndSlidePublished::OTHERS,
+      value: 'その他'
+    }
+  ]
+)
+
+presentation_method(
+  conference_id: 10,
+  item_number: 4,
+  items: [
+    {
+      id: 134,
+      params: '現地登壇',
+      description: "プロポーザル採択後は登壇方法を変更することができません"
+    },
+    {
+      id: 135,
+      params: '事前収録',
+      description: ''
+    },
+  ]
+)
+
+session_time(
+  conference_id: 10,
+  item_number: 5,
+  items: [
+    {
+      id: 136,
+      key: SessionTime::FOURTY_MINUTES,
+      params: '40min (full session)',
+      description: ''
+    },
+    {
+      id: 139,
+      key: SessionTime::TWENTY_MINUTES,
+      params: '20min (for keynote)',
+      description: ''
+    }
+  ]
+)
+
+language(
+  conference_id: 10,
+  item_number: 6,
+  items: [
+    {id: 137, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
+    {id: 138, params: 'EN'},
+  ]
+)

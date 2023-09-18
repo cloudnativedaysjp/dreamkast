@@ -4,6 +4,7 @@ class ConferenceForm
   include ActiveModel::Validations
 
   attr_accessor :conference_status
+  attr_accessor :rehearsal_mode
   attr_accessor :cfp_result_visible
   attr_accessor :speaker_entry
   attr_accessor :attendee_entry
@@ -98,7 +99,7 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(conference_status:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, capacity:, brief:, privacy_policy:, privacy_policy_for_speaker:)
+      conference.update!(conference_status:, rehearsal_mode:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, capacity:, brief:, privacy_policy:, privacy_policy_for_speaker:)
     end
   rescue => e
     puts(e)
@@ -121,6 +122,7 @@ class ConferenceForm
   def default_attributes
     {
       conference_status: conference.conference_status,
+      rehearsal_mode: conference.rehearsal_mode,
       cfp_result_visible: conference.cfp_result_visible,
       speaker_entry: conference.speaker_entry,
       attendee_entry: conference.attendee_entry,

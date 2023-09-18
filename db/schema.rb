@@ -121,6 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
     t.string "brief"
     t.string "committee_name", default: "CloudNative Days Committee", null: false
     t.string "conference_status", default: "registered"
+    t.boolean "rehearsal_mode", default: false, null: false
     t.integer "capacity"
     t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
     t.index ["abbr"], name: "index_conferences_on_abbr"

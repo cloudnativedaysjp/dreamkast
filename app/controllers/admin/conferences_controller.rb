@@ -19,10 +19,7 @@ class Admin::ConferencesController < ApplicationController
 
     respond_to do |format|
       if @conference_form.save
-        if @conference.opened?
-          path = "/#{@conference.abbr}/#{@conference.abbr == 'cndt2020' ? 'tracks' : 'ui/'}"
-          ActionCable.server.broadcast('waiting_channel', { msg: 'redirect to tracks', redirectTo: path })
-        end
+        ActionCable.server.broadcast('waiting_channel', { msg: 'redirect to tracks', redirectTo: "/#{@conference.abbr}/ui/" }) if @conference.opened?
         redirect_path = if referrer_controller == 'admin/proposals'
                           admin_proposals_path
                         else
@@ -39,6 +36,7 @@ class Admin::ConferencesController < ApplicationController
 
   def conference_params
     params.require(:conference).permit(:conference_status,
+                                       :rehearsal_mode,
                                        :cfp_result_visible,
                                        :speaker_entry,
                                        :attendee_entry,

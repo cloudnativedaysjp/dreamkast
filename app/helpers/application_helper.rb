@@ -108,4 +108,5 @@ module ApplicationHelper
       ENV['DREAMKAST_WEAVER_ADDR'], 'query'
     ].join('/')
   end
+
 end

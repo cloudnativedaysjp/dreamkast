@@ -242,3 +242,20 @@
 .white_background {
     background: rgba(255, 255, 255, 0.95);
 }
+
+
+// Customize navvar
+// Base styling for the navbar
+#mainNav {
+    height: 70px;
+    .navbar-brand {
+        width: 120px;
+        height: 160px;
+        position: absolute;
+        z-index: 10;
+        box-shadow: $box-shadow;
+        top: 0px;
+        display: block;
+        background-color: $white;
+    }
+}

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Admin::SpeakersController, type: :request do
   subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'alice' } }, extra: { raw_info: { sub: 'alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { ['CNDT2020-Admin'] }
-  let!(:conference) { create(:cndt2020)}
+  let!(:conference) { create(:cndt2020) }
 
   before do
     ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
@@ -17,7 +17,6 @@ describe Admin::SpeakersController, type: :request do
   end
 
   describe 'GET :event/admin/streamings#index' do
-
     before do
       streaming = create(:streaming, status: 'created', conference:, track: conference.tracks.first)
       channel_group = create(:media_package_v2_channel_group, streaming:)
@@ -61,7 +60,7 @@ describe Admin::SpeakersController, type: :request do
       allow_any_instance_of(CreateStreamingAwsResourcesJob).to(receive(:perform) { true })
     end
     it 'returns a success response' do
-      post admin_streamings_path(event: 'cndt2020'), params: {streaming: {conference_id: conference.id, track_id: conference.tracks.first.id, status: "creating"} }
+      post admin_streamings_path(event: 'cndt2020'), params: { streaming: { conference_id: conference.id, track_id: conference.tracks.first.id, status: 'creating' } }
       expect(response).to_not(be_successful)
       expect(response).to(have_http_status('302'))
       expect(response.body).to(redirect_to('/cndt2020/admin/streamings'))

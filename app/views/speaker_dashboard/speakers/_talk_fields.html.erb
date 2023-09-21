@@ -27,7 +27,7 @@
     <div class="field pb-3">
       <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
       <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
-      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
     </div>
   <% end %>
 

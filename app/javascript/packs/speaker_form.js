@@ -1,38 +1,60 @@
-$(document).on('click', '.add_talk_fields', function(event) {
-    event.preventDefault();
-    var regexp, time;
-    time = new Date().getTime();
-    regexp = new RegExp($(this).data('id'), 'g');
-    $('.talk-fields').append($(this).data('fields').replace(regexp, time));
-    if ($('div:visible.talk-field').length >= 3) {
-        $('.add-talk').hide()
-    }
-    return false;
-})
+const fieldLength = () => {
+    let sum = 0;
+    Object.keys(document.getElementsByClassName('talk-field')).forEach((key) => {
+        if(document.getElementsByClassName('talk-field')[key].hidden == false){
+            sum += 1;
+        }
+    })
+    return sum;
+}
 
-$(document).on('click', '.remove_talk_field', function(event) {
-    event.preventDefault();
-    if (confirm("このセッションを削除しますか？")) {
-        $(this).parent().find('.destroy_flag_field').val(1)
-        $(this).closest('.talk-field').hide();
-        $(this).parent().find('input').removeAttr('required max min maxlength pattern');
-        $(this).parent().find('textarea').removeAttr('required max min maxlength pattern');
-        $(this).parent().find('select').removeAttr('required max min maxlength pattern');
-        if ($('div:visible.talk-field').length < 3) {
-            $('.add-talk').show()
+
+window.onload = () => {
+    document.getElementsByClassName('add_talk_fields')[0].addEventListener('click', (e) => {
+        e.preventDefault();
+        const time = new Date().getTime();
+        const regexp = new RegExp(e.target.dataset.id, 'g');
+        let div = document.createElement('div');
+        div.innerHTML = e.target.dataset.fields.replace(regexp, time);
+        document.getElementsByClassName('talk-fields')[0].append(div);
+        if (fieldLength() >= 3) {
+            document.getElementsByClassName('add-talk')[0].hidden = true;
+        }
+        addDeleteButtonListener(div.querySelector('.remove_talk_field'));
+        return false;
+    });
+    document.getElementsByClassName('remove_talk_field').forEach((obj) => {addDeleteButtonListener(obj)});
+}
+
+document.addEventListener('change', (e) => {
+    if (e.target.classList.contains('talk-categories')) {
+        const radio20min = e.target.parentElement.parentElement.querySelector('._20min');
+        if (e.target.selectedOptions[0].innerHTML == 'Keynote') {
+            radio20min.disabled = false;
+            radio20min.checked = true;
+        } else {
+            radio20min.checked = false;
+            radio20min.disabled = true;
         }
     }
     return false;
 });
 
+const addDeleteButtonListener = (obj) => {
+    obj.removeEventListener('click', buttonListener);
+    obj.addEventListener('click', buttonListener);
+}
 
-$(document).on('change', '.radio_button_presentation_methods', function(event) {
-    console.log("clicked")
-    if ($(this).attr('params') == '事前収録') {
-        $(".radio_button_session_times.20min").attr("disabled", false);
-    } else {
-        e = $(this).closest('div.talk-field').find(".radio_button_session_times.20min").first()
-        e.prop('checked', false)
-        e.attr("disabled", true);
+const buttonListener = (e) => {
+    e.preventDefault();
+    if (confirm("このセッションを削除しますか？")) {
+        e.target.parentElement.querySelector('.destroy_flag_field').value = 1;
+        e.target.closest('.talk-field').hidden = true;
+        e.target.parentElement.querySelector('input').removeAttribute('required max min maxlength pattern');
+        e.target.parentElement.querySelector('textarea').removeAttribute('required max min maxlength pattern');
+        e.target.parentElement.querySelector('select').removeAttribute('required max min maxlength pattern');
+        if (fieldLength() < 3) {
+            document.getElementsByClassName('add-talk')[0].hidden = false;
+        }
     }
-})
+}

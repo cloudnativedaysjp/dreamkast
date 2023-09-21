@@ -4,5 +4,6 @@
     登壇者募集中!
     <% end %>
   </p>
-  <%= link_to speaker_entry_button_name, speaker_entry_button_path, {method: :get, class: "btn btn-entry btn-xl  m-2" } %>
+  <%= link_to speaker_entry_button_name, speaker_entry_button_path, {method: :get, class: "btn btn-entry btn-xl  m-2" } %><br/>
+  <%= link_to 'プロポーザル一覧を見る', talks_path, {method: :get, class: "btn btn-secondary btn-xl  m-2" } %>
 <% end %>

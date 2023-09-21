@@ -26,7 +26,7 @@
               <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
 
-            <% if @conference.speaker_entry_enabled? %>
+            <% if @conference.present? && @conference.speaker_entry_enabled? %>
               <li class="nav-item"><%= link_to "プロポーザル一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
             <% elsif %>
               <li class="nav-item dropdown">

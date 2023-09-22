@@ -91,6 +91,7 @@ jobs:
           images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
           tags: |
             type=ref,event=branch
+            type=ref,event=tag
 
       - name: Create a New Image
         run: |

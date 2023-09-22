@@ -22,21 +22,17 @@
             <% end %>
           <% end %>
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
-            <% if @conference.present? && @conference.opened? %>
-              <li class="nav-item"><%= link_to "Booths", booths_path, class: "nav-link js-scroll-trigger" %></li>
-            <% end %>
-
-            <li class="nav-item dropdown">
-              <%= link_to "SessionList", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <% if @conference.present? && @conference.show_timetable_enabled? %>
-                  <%= link_to 'Timetable', timetables_path, class: "dropdown-item", data: {"turbolinks" => false} %>
-                  <div class="dropdown-divider"></div>
+            <% if @conference.present? && @conference.speaker_entry_enabled? %>
+              <li class="nav-item"><%= link_to "プロポーザル一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
+            <% elsif %>
+              <li class="nav-item dropdown">
+                <% if @conference.present? &&  @conference.show_timetable_enabled? %>
+                <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
-                <%= link_to 'セッションリスト', talks_path, class: "dropdown-item", data: {"turbolinks" => false} %>
-              </div>
-            </li>
-            <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
+              </li>
+            <% end %>
 
             <% case event_name %>
             <% when 'cndt2020' %>

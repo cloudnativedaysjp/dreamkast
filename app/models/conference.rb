@@ -93,4 +93,8 @@ class Conference < ApplicationRecord
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
   end
+
+  def iminonaimethod
+    p 'aaa'
+  end
 end

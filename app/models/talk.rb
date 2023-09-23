@@ -242,6 +242,12 @@ class Talk < ApplicationRecord
     talk_difficulty.present? ? talk_difficulty.name : ''
   end
 
+  def self.count_talks_by_difficulty_and_conference
+    joins(:talk_difficulty)
+      .group('talk_difficulties.name', 'talks.conference_id')
+      .select('COUNT(*) AS count, talk_difficulties.name, talks.conference_id')
+  end
+
   def category
     talk_category.present? ? talk_category.name : ''
   end

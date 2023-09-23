@@ -78,13 +78,25 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def bucket_name
-    case env_name
-    when 'production'
-      'dreamkast-ivs-stream-archive-prd'
-    when 'staging'
-      'dreamkast-ivs-stream-archive-stg'
-    else
-      'dreamkast-ivs-stream-archive-dev'
+    case AWS_LIVE_STREAM_REGION
+    when 'us-east-1'
+      case env_name
+      when 'production'
+        'dreamkast-ivs-stream-archive-prd'
+      when 'staging'
+        'dreamkast-ivs-stream-archive-stg'
+      else
+        'dreamkast-ivs-stream-archive-dev'
+      end
+    when 'us-west-2'
+      case env_name
+      when 'production'
+        'dreamkast-archive-prd-us-west-2'
+      when 'staging'
+        'dreamkast-archive-stg-us-west-2'
+      else
+        'dreamkast-archive-dev-us-west-2'
+      end
     end
   end
 

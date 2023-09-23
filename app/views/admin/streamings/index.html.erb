@@ -1,133 +1,56 @@
 <%= render 'admin/layout' do %>
-  <div class="row mb-2">
-    <div class="col-10 d-flex align-items-center">
-      <h2>配信用AWSリソース管理</h2>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-10">
-      <h3>Track毎の配信用リソース一覧</h3>
-    </div>
-  </div>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <%= link_to 'リソース管理', admin_streamings_path(tab: 'default'),
+                    {
+                      class: "nav-item nav-link #{@tab == 'default' ? 'active' : ''}",
+                      id: "nav-default-tab",
+                      role: "tab",
+                      'aria-controls': "nav-default",
+                      'aria-selected': "true",
+                    }
+        %>
 
-  <div class="row">
-    <div class="col">
-      <table class="table table-striped talks_table" >
-        <thead>
-        <tr>
-          <th scope="col">Track</th>
-          <th scope="col">リソース</th>
-          <th scope="col">一括作成</th>
-          <th scope="col">一括削除</th>
-          <th scope="col">MediaLive Channel</th>
-          <th scope="col">MediaLive Channel Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @tracks.each do |track| %>
-          <tr>
-            <td>
-              <%= track.name %>
-            </td>
-            <td>
-              <% if track.streaming %>
-                <%= track.streaming.status %>
-              <% end %>
-            </td>
-            <td>
-              <% if track.streaming && %w(deleted error).include?(track.streaming.status) %>
-                <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
-              <% elsif track.streaming.nil? || track.streaming.status == 'deleted' %>
-                <%= form_with(url: admin_streamings_path, model: Streaming.new, method: :post, local: true) do |form| %>
-                  <%= form.hidden_field :conference_id, value: @conference.id %>
-                  <%= form.hidden_field :track_id, value: track.id %>
-                  <%= form.hidden_field :status, value: 'creating' %>
-                  <%= form.submit "配信用リソースを一括作成", class: "btn btn-primary" %>
-                <% end %>
-              <% end %>
-            </td>
-            <td>
-              <% if track.streaming && track.streaming.status != 'deleted' %>
-                <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
-              <% end %>
-            </td>
-            <td>
-              <% if track.streaming&.media_live_channel %>
-                <% if track.streaming.media_live_channel.idle? %>
-                  <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
-                <% elsif track.streaming&.media_live_channel.running? %>
-                  <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
-                <% end %>
-              <% end %>
-            </td>
-            <td>
-              <% if track.streaming&.media_live_channel %>
-                <%= track.streaming.media_live_channel.state %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+      <%= link_to '配信確認', admin_streamings_path(tab: 'preview'),
+                    {
+                      class: "nav-item nav-link #{@tab == 'preview' ? 'active' : ''}}",
+                      id: "nav-preview-tab",
+                      role: "tab",
+                      'aria-controls': "nav-preview",
+                      'aria-selected': "true",
+                    }
+        %>
 
-  <div class="row">
-    <div class="col-10">
-      <h3>配信用URL一覧</h3>
+      <%= link_to 'リソース詳細', admin_streamings_path(tab: 'details'),
+                    {
+                      class: "nav-item nav-link #{@tab == 'details' ? 'active' : ''}}",
+                      id: "nav-details-tab",
+                      role: "tab",
+                      'aria-controls': "nav-details",
+                      'aria-selected': "true",
+                    }
+      %>
     </div>
-  </div>
+  </nav>
 
-  <div class="row">
-    <div class="col">
-      <table class="table table-striped" >
-        <thead>
-        <tr>
-          <th scope="col">Track Name (ID)</th>
-          <th scope="col">Destination URL</th>
-          <th scope="col">Playback URL</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @tracks.each do |track| %>
-          <tr>
-            <td><%= track.name %> (<%= track.id %>)</td>
-            <td><%= track.streaming&.destination_url %></td>
-            <td><%= track.streaming&.playback_url %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <% @tracks.each do |track| %>
-    <div class="row">
-      <div class="col-10">
-        <h3>Track <%= track.name %>: リソース詳細</h3>
+  <div class="tab-content" id="nav-tabContent">
+    <% if @tab == 'default' %>
+      <div class="tab-pane fade show active" id="nav-default" role="tabpanel" aria-labelledby="nav-default-tab">
+        <%= render 'admin/streamings/default' %>
       </div>
-    </div>
+    <% end %>
 
-    <div class="row">
-      <div class="col">
-        <table class="table table-striped" >
-          <tbody>
-          <tr>
-            <td>Track ID</td><td><%= track.id %></td>
-          </tr>
-          <tr>
-            <td>MediaPackage V2 ChannelGroup</td><td><%= track.streaming&.media_package_v2_channel_group&.name %></td>
-          </tr>
-          <tr>
-            <td>MediaPackage Channel</td><td><%= track.streaming&.media_package_channel&.channel_id %></td>
-          </tr>
-          <tr>
-            <td>MediaLive Channel</td><td><%= track.streaming&.media_live_channel&.channel_id %></td>
-          </tr>
-          </tbody>
-        </table>
+    <% if @tab == 'preview' %>
+      <div class="tab-pane fade show active" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+        <%= render 'admin/streamings/preview' %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+
+    <% if @tab == 'details' %>
+      <div class="tab-pane fade show active" id="nav-details" role="tabpanel" aria-labelledby="nav-details-tab">
+        <%= render 'admin/streamings/details' %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

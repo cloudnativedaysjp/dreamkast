@@ -1,0 +1,34 @@
+<div class="row mb-2">
+  <div class="col-10 d-flex align-items-center">
+    <h2>配信用AWSリソース詳細</h2>
+  </div>
+</div>
+
+<% @tracks.each do |track| %>
+  <div class="row">
+    <div class="col-10">
+      <h3>Track <%= track.name %>: リソース詳細</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped" >
+        <tbody>
+        <tr>
+          <td>Track ID</td><td><%= track.id %></td>
+        </tr>
+        <tr>
+          <td>MediaPackage V2 ChannelGroup</td><td><%= track.streaming&.media_package_v2_channel_group&.name %></td>
+        </tr>
+        <tr>
+          <td>MediaPackage Channel</td><td><%= track.streaming&.media_package_channel&.channel_id %></td>
+        </tr>
+        <tr>
+          <td>MediaLive Channel</td><td><%= track.streaming&.media_live_channel&.channel_id %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

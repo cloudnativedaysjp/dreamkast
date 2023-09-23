@@ -28,13 +28,15 @@ class MediaPackageOriginEndpoint < ApplicationRecord
   belongs_to :streaming
 
 
-  def origin_endpoint
-    @origin_endpoint = media_package_client.describe_origin_endpoint(id: endpoint_id)
+  def aws_resource
+    @aws_resource ||= media_package_client.describe_origin_endpoint(id: endpoint_id)
   end
 
   def create_aws_resource
-    resp = media_package_client.create_origin_endpoint(create_params)
-    update!(endpoint_id: resp.id)
+    unless exists_aws_resource?
+      resp = media_package_client.create_origin_endpoint(create_params)
+      update!(endpoint_id: resp.id)
+    end
   end
 
   def exists_aws_resource?

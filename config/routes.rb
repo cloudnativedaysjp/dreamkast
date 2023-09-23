@@ -65,6 +65,8 @@ Rails.application.routes.draw do
       resources :streamings
       post 'create_aws_resources' => 'streamings#create_aws_resources'
       post 'delete_aws_resources' => 'streamings#delete_aws_resources'
+      post 'start_media_live_channel' => 'media_live_channel#start_channel'
+      post 'stop_media_live_channel' => 'media_live_channel#stop_channel'
 
       post 'publish_timetable' => 'timetables#publish'
       post 'close_timetable' => 'timetables#close'

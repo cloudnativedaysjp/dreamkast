@@ -19,6 +19,7 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
 
     create_media_package_v2_resources
     create_media_package_resources
+    create_media_live_resources
 
     @streaming.update!(status: 'created')
   rescue => e
@@ -58,5 +59,23 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
     endpoint = MediaPackageOriginEndpoint.find_or_create_by(streaming_id: @streaming.id, media_package_channel_id: channel.id)
     logger.info("endpoint: #{endpoint}")
     endpoint.create_aws_resource
+  end
+
+  def create_media_live_resources
+    logger.info('Perform CreateMediaLiveJob')
+
+    MediaPackageParameter.find_by(streaming_id: @streaming.id)
+
+    input_security_group = MediaLiveInputSecurityGroup.find_or_create_by(streaming_id: @streaming.id)
+    logger.info("input_security_group: #{input_security_group}")
+    input_security_group.create_aws_resources
+
+    input = MediaLiveInput.find_or_create_by(streaming_id: @streaming.id, media_live_input_security_group_id: input_security_group.id)
+    logger.info("input: #{input}")
+    input.create_aws_resource
+
+    channel = MediaLiveChannel.find_or_create_by(streaming_id: @streaming.id, media_live_input_id: input.id)
+    logger.info("channel: #{channel}")
+    channel.create_aws_resource
   end
 end

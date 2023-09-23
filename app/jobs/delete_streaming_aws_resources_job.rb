@@ -10,8 +10,9 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     logger.info('Perform DeleteStreamingAwsResourcesJob')
     @streaming = args[0]
 
-    delete_media_package_v2_resources
+    delete_media_live_resources
     delete_media_package_resources
+    delete_media_package_v2_resources
 
     @streaming.update!(status: 'deleted')
   rescue => e
@@ -38,5 +39,26 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     @streaming.media_package_channel&.destroy!
 
     logger.info('Deleted MediaPackage resources...')
+  end
+
+  def delete_media_live_resources
+    logger.info('Deleting MediaLive resources...')
+
+    if @streaming.media_live_channel
+      @streaming.media_live_channel.delete_aws_resource
+      @streaming.media_live_channel.destroy!
+    end
+
+    if @streaming.media_live_input
+      @streaming.media_live_input.delete_aws_resource
+      @streaming.media_live_input.destroy!
+    end
+
+    if @streaming.media_live_input_security_group
+      @streaming.media_live_input_security_group.delete_aws_resource
+      @streaming.media_live_input_security_group.destroy!
+    end
+
+    logger.info('Deleted MediaLive resources...')
   end
 end

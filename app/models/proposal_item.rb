@@ -32,5 +32,4 @@ class ProposalItem < ApplicationRecord
       params.map { |param| ProposalItemConfig.find(param.to_i) }
     end
   end
-
 end

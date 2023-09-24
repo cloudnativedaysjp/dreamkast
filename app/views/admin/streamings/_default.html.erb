@@ -92,7 +92,10 @@
       <% @tracks.each do |track| %>
         <tr>
           <td><%= track.name %> (<%= track.id %>)</td>
-          <td><%= track.streaming&.destination_url %></td>
+          <td class="dest_url_box">
+            <div class="dest_url"><%= track.streaming&.destination_url %>aaaa</div>
+            <div class="copy_button"><%= image_tag "icons/copy.svg" %></div>
+          </td>
           <td><%= track.streaming&.playback_url %></td>
         </tr>
       <% end %>

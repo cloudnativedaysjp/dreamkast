@@ -22,6 +22,15 @@
     </div>
   </div>
 
+  <h3>Rehearsal Mode</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.check_box :rehearsal_mode %>
+      <%= form.label :rehearsal_mode, 'On' %><br>
+    </div>
+  </div>
+
   <h3>Proposal Result Visible Status</h3>
 
   <div class="form-row form-group">
@@ -59,6 +68,14 @@
     <div class="col-12 col-md-6">
       <%= form.check_box :show_sponsors %>
       <%= form.label :show_sponsors, 'Visible' %><br>
+    </div>
+  </div>
+
+  <h3>Offline Capacity</h3>
+
+  <div class="form-row form-group">
+    <div class="col-12 col-md-6">
+      <%= form.number_field :capacity %>
     </div>
   </div>
 

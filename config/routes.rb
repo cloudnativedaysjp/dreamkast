@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]
+      resources :streamings, only: [:index]
       resources :sponsors, only: [:index]
       resources :speakers, only: [:index, :show]
       resources :chat_messages, only: [:index, :create, :update]
@@ -61,6 +62,10 @@ Rails.application.routes.draw do
       resource :timetable, only: [:update]
       resources :announcements
       resources :speaker_announcements
+      resources :streamings
+      post 'create_aws_resources' => 'streamings#create_aws_resources'
+      post 'delete_aws_resources' => 'streamings#delete_aws_resources'
+
       post 'publish_timetable' => 'timetables#publish'
       post 'close_timetable' => 'timetables#close'
       get 'preview_timetable' => 'timetables#preview'
@@ -139,16 +144,13 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
-    get 'profiles/checkin/:ticket_id', to: 'profiles#checkin'
+    get 'profiles/checkin', to: 'profiles#checkin'
     resources :public_profiles
 
 
     delete 'profiles/:id', to: 'profiles#destroy_id'
     put 'profiles/:id/role', to: 'profiles#set_role'
     resources :links, only: [:index]
-
-    resources :orders, only: [:new, :create]
-    resources :cancel_orders
 
     get 'preparation' => 'event#preparation'
   end

@@ -1009,6 +1009,8 @@ components:
           type: string
         status:
           type: string
+        rehearsalMode:
+          type: boolean
         theme:
           type: string
         about:

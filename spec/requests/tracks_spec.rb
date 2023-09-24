@@ -9,7 +9,7 @@ RSpec.describe(TracksController, type: :request) do
     describe 'logged in and registered' do
       before do
         cndt2020 = create(:cndt2020)
-        create(:alice, :with_order, conference: cndt2020)
+        create(:alice, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -35,7 +35,7 @@ RSpec.describe(TracksController, type: :request) do
             expect(response.body).to(include('Alice様へのお知らせ'))
           end
 
-          context 'wnen announcement is not published' do
+          context 'when announcement is not published' do
             before do
               create(:speaker_announcement, speakers: [alice])
             end
@@ -123,7 +123,7 @@ RSpec.describe(TracksController, type: :request) do
     describe 'logged in and registered' do
       before do
         cndt2020 = create(:cndt2020, :opened)
-        create(:alice, :with_order, conference: cndt2020)
+        create(:alice, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 

@@ -21,12 +21,12 @@
         <div class="mt-3">
           <div class="card">
             <div class="card-header">
-              <b>チケット</b>
+              <b>参加方法</b>
             </div>
             <div class="card-body">
               <div class="card-text">
-                あなたは <%= @profile.active_order.tickets.first.title %> です</div>
-              <div class="card-text">チケットの変更は <%= link_to 'こちら', new_cancel_order_path(order_id: @profile.active_order.id) %> から</div>
+                あなたは <%= @profile.participation_before_type_cast %> です</div>
+              <div class="card-text">参加方法の変更は <%= link_to 'こちら', edit_profile_path(id: @profile.id) %> から</div>
               <div class="card-text">
                 <div class="card">
                   <div class="card-body">
@@ -34,7 +34,7 @@
                       Twitterでシェアしよう！
                     </div>
                     <div class="card-text">
-                      <input type="text" id="tweet_content" class="form-control" value="<%= "##{@conference.abbr.upcase} に #{@profile.active_order.tickets.first.title} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}" %>" />
+                      <input type="text" id="tweet_content" class="form-control" value="<%= "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}" %>" />
                     </div>
                   </div>
                   <div class="card-text text-center mb-3">
@@ -135,7 +135,7 @@
           <div class="card-body">
             <div class="card-text">
               <ul>
-                <li><%= link_to '参加方法変更', new_cancel_order_path(order_id: @profile.active_order.id) %></li>
+                <li><%= link_to '参加方法変更', edit_profile_path(id: @profile.id, anchor: "participation") %></li>
                 <% if @profile.public_profile.present? %>
                   <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>
                 <% else %>

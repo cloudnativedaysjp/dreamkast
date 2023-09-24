@@ -3,6 +3,7 @@ json.array!(@conferences) do |conference|
   json.name(conference.name)
   json.abbr(conference.abbr)
   json.status(conference.conference_status)
+  json.rehearsalMode(conference.rehearsal_mode)
   json.theme(conference.theme)
   json.about(conference.about)
   json.privacy_policy(conference.privacy_policy)

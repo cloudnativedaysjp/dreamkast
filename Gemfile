@@ -43,9 +43,9 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.52.0'
+  gem 'rubocop', '~> 1.56.0'
   gem 'rubocop-rails'
-  gem 'rubocop-rspec', '>= 2.22.0'
+  gem 'rubocop-rspec'
   gem 'annotate', require: false
 end
 
@@ -112,6 +112,7 @@ gem 'psych', '< 6'
 gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 gem "aws-sdk-mediapackage"
+gem "aws-sdk-mediapackagev2"
 gem "aws-sdk-ssm"
 
 gem 'active_hash'

@@ -6,7 +6,6 @@ describe AdminController, type: :request do
 
   before do
     create(:cndt2020)
-    create(:ticket, :a, conference: Conference.find_by(abbr: 'cndt2020'))
   end
 
   describe 'GET :event/admin#statistics' do
@@ -34,8 +33,6 @@ describe AdminController, type: :request do
             get admin_statistics_path(event: 'cndt2020')
             expect(response).to(be_successful)
             expect(response).to(have_http_status('200'))
-
-            expect(response.body).to(include('ticket a'))
           end
         end
       end

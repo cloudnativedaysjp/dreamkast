@@ -7,6 +7,7 @@
 #  about                      :text(65535)
 #  attendee_entry             :integer          default("attendee_entry_disabled")
 #  brief                      :string(255)
+#  capacity                   :integer
 #  cfp_result_visible         :boolean          default(FALSE)
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
@@ -15,6 +16,7 @@
 #  name                       :string(255)
 #  privacy_policy             :text(65535)
 #  privacy_policy_for_speaker :text(65535)
+#  rehearsal_mode             :boolean          default(FALSE), not null
 #  show_sponsors              :boolean          default(FALSE)
 #  show_timetable             :integer          default("show_timetable_disabled")
 #  speaker_entry              :integer          default("speaker_entry_disabled")
@@ -58,6 +60,7 @@ class Conference < ApplicationRecord
   has_many :talk_times
   has_many :talk_categories
   has_many :talk_difficulties
+  has_many :streamings
   has_many :speakers
   has_many :announcements
   has_many :speaker_announcements
@@ -68,7 +71,6 @@ class Conference < ApplicationRecord
   has_many :admin_profiles
   has_many :live_stream_media_live
   has_many :media_package_harvest_jobs
-  has_many :tickets
   has_many :rooms
 
   scope :upcoming, -> {
@@ -82,6 +84,11 @@ class Conference < ApplicationRecord
   scope :unarchived, -> {
     merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)).or(where(conference_status: Conference::STATUS_CLOSED)))
   }
+
+  def reach_capacity?
+    return false if capacity.nil?
+    profiles.where(participation: 'offline').size >= capacity
+  end
 
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor

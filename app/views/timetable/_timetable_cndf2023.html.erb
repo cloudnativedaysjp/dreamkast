@@ -27,7 +27,7 @@
             lunch_break = 55
             each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 14) * 20
           end
-          
+
           total_break = lunch_break + each_break
 
           row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:50")) / 60).to_i - total_break
@@ -42,7 +42,7 @@
           <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
           <% form_status = talk.sold_out? if @profile.attend_offline? %>
           <%= form.check_box "talks[#{talk.id}]",
-                              { 
+                              {
                                 talk_id: talk.id,
                                 day_slot: talk.day_slot,
                                 talk_number: talk.talk_number,

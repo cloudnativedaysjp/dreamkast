@@ -1,0 +1,47 @@
+// Variables
+//- Override and add to color system
+$orange: #f4623a;
+$purple: #BD4392;
+$dark-blue: #206A9B;
+$brown: hsl(25, 16%, 31%);
+// CNDT2023 Theme color
+$magenta2023: #BE3455;
+$toranomon-orange: #CF6C39;
+$hibiya-green: #268A69;
+$solacity-blue: #195B73;
+$ariake-cream: #FFEDBB;
+$text: #2F2524;
+//- Override primary color
+$primary: $magenta2023;
+$secondary: $toranomon-orange;
+//- Override font system
+$font-family-sans-serif: "din-2014",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-family-serif: "din-2014",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-family-base: $font-family-serif;
+$headings-font-family: $font-family-sans-serif;
+//- Add custom variables
+$navbar-height: 4.5rem;

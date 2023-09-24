@@ -8,7 +8,7 @@ describe ContentsController, type: :request do
 
       before do
         cndt2020 = create(:cndt2020)
-        create(:alice, :with_order, conference: cndt2020)
+        create(:alice, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 
@@ -55,7 +55,7 @@ describe ContentsController, type: :request do
 
       before do
         cndt2020 = create(:cndt2020)
-        create(:alice, :with_order, conference: cndt2020)
+        create(:alice, conference: cndt2020)
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
       end
 

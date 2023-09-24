@@ -250,7 +250,7 @@ class Talk < ApplicationRecord
 
   def self.count_proposal_params
     joins(:proposal_items)
-      .group('talks.conference_id', 'proposal_items.label',  'proposal_items.params')
+      .group('talks.conference_id', 'proposal_items.label', 'proposal_items.params')
       .select('talks.conference_id, proposal_items.label, proposal_items.params, count(talks.id) as count')
   end
 

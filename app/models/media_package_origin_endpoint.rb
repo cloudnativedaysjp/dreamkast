@@ -53,6 +53,10 @@ class MediaPackageOriginEndpoint < ApplicationRecord
     media_package_client.delete_origin_endpoint(id: endpoint_id) if exists_aws_resource?
   end
 
+  def url
+    aws_resource&.url
+  end
+
   private
 
   def create_params

@@ -9,11 +9,12 @@ class Admin::HarvestJobsController < ApplicationController
   def new
     @harvest_job = MediaPackageHarvestJob.new
     @talk = Talk.find(params[:talk_id])
-    @media_package_channel = @talk.track.media_package_channel
+    streaming = @talk.track.streaming
+    @media_package_channel = streaming.media_package_channel
 
     @initial_start_time = "#{initial_date}T#{@talk.start_time.strftime('%H:%M')}:00+09:00"
     @initial_end_time = "#{initial_date}T#{@talk.end_time.strftime('%H:%M')}:00+09:00"
-    @base_url = @talk.track.media_package_channel.media_package_origin_endpoints.first.origin_endpoint.url
+    @base_url = streaming.media_package_origin_endpoint.url
     @preview_url = "#{@base_url}?start=#{@initial_start_time}&end=#{@initial_end_time}"
   end
 

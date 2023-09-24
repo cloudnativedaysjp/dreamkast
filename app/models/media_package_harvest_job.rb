@@ -69,7 +69,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def resource_name
-    track = media_package_channel.track
+    track = media_package_channel.streaming.track
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else

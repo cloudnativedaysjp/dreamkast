@@ -40,8 +40,6 @@ class MediaPackageHarvestJob < ApplicationRecord
     resp = media_package_client.create_harvest_job(create_params)
     resp = media_package_client.describe_harvest_job(id: resp.id)
     update!(job_id: resp.id, status: resp.status)
-  rescue => e
-    logger.error(e.message)
   end
 
   def video_url

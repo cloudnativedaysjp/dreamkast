@@ -7,10 +7,6 @@ module TalksTable
                   :on_air_url,
                   :confirm_message,
                   :alert_type,
-                  :recording?,
-                  :waiting_to_start?,
-                  :waiting_to_stop?,
-                  :recording_control_button_label,
                   :already_recorded?
   end
 
@@ -46,36 +42,6 @@ module TalksTable
       'danger'
     else
       'primary'
-    end
-  end
-
-  def recording?(talk)
-    media_live &&
-      media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_RUNNING
-  end
-
-  def waiting_to_start?(talk)
-    media_live &&
-      media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STARTING
-  end
-
-  def waiting_to_stop?(talk)
-    media_live &&
-      media_live.recording_talk_id == talk.id &&
-      media_live.channel_state == LiveStreamMediaLive::CHANNEL_STOPPING
-  end
-
-  def recording_control_button_label(talk)
-    if recording?(talk)
-      'Recording'
-    elsif waiting_to_start?(talk)
-      'Waiting to start recording'
-    elsif waiting_to_stop?(talk)
-      'Waiting to stop recording'
-    else
-      'Start Record'
     end
   end
 

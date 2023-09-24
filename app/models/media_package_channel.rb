@@ -26,12 +26,12 @@ class MediaPackageChannel < ApplicationRecord
   has_many :media_package_origin_endpoints
   has_many :media_package_harvest_jobs
 
-  def channel
-    @channel = media_package_client.describe_channel(id: channel_id)
+  def aws_resource
+    @channel ||= media_package_client.describe_channel(id: channel_id)
   end
 
   def ingest_endpoints
-    channel.dig('hls_ingest', 'ingest_endpoints')
+    aws_resource.dig('hls_ingest', 'ingest_endpoints')
   end
 
   def ingest_endpoint_url

@@ -58,12 +58,12 @@ class MediaPackageV2Channel < ApplicationRecord
     false
   end
 
-  def channel
+  def aws_resource
     @channel ||= media_package_v2_client.get_channel(channel_group_name:, channel_name:)
   end
 
   def ingest_endpoint_url
-    channel.ingest_endpoints[0].url
+    aws_resource.ingest_endpoints[0].url
   end
 
   private

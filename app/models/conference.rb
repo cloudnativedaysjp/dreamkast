@@ -95,6 +95,6 @@ class Conference < ApplicationRecord
   end
 
   def iminonaimethod
-    p 'aaa'
+    p('aaa')
   end
 end

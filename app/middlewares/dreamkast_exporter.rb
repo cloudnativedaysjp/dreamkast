@@ -33,7 +33,7 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         labels: [:conference_id, :talk_difficulty_name]
       ),
       Prometheus::Client::Gauge.new(
-        :dreamkast_select_proposal_items,
+        :dreamkast_proposal_params_count,
         docstring: 'select dreamkast proposal items',
         labels: [:conference_id, :proposal_items_label, :proposal_items_params]
       )
@@ -106,10 +106,10 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
     end
   end
 
-  def dreamkast_select_proposal_items(metrics)
-    ProposalItem.all.each do |proposal_items|
+  def dreamkast_proposal_params_count(metrics)
+    Talk.count_proposal_params.each do |proposal_items|
       metrics.set(
-        proposal_items.talk_id,
+        proposal_items.count,
         labels: { conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
       )
     end

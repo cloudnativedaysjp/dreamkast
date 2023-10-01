@@ -8,8 +8,8 @@ class AddStreamingIdColumnsToMediaPackageTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end unless ActiveRecord::Base.connection.table_exists?(:media_package_parameters)
 
-    add_belongs_to :media_package_channels, :streaming, null: true, foreign_key: true, type: :string, collation: 'utf8mb4_0900_ai_ci'
-    add_belongs_to :media_package_origin_endpoints, :streaming, null: true, foreign_key: true, type: :string, collation: 'utf8mb4_0900_ai_ci'
+    add_belongs_to :media_package_channels, :streaming, null: true, foreign_key: true, type: :string
+    add_belongs_to :media_package_origin_endpoints, :streaming, null: true, foreign_key: true, type: :string
 
     remove_belongs_to :media_package_channels, :conference
     remove_belongs_to :media_package_channels, :track

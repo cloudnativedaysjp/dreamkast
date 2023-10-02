@@ -248,12 +248,6 @@ class Talk < ApplicationRecord
       .select('COUNT(*) AS count, talk_difficulties.name, talks.conference_id')
   end
 
-  def self.count_proposal_params
-    joins(:proposal_items)
-      .group('talks.conference_id', 'proposal_items.label', 'proposal_items.params')
-      .select('talks.conference_id, proposal_items.label, proposal_items.params, count(talks.id) as count')
-  end
-
   def category
     talk_category.present? ? talk_category.name : ''
   end

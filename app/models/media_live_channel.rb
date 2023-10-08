@@ -92,7 +92,7 @@ class MediaLiveChannel < ApplicationRecord
   end
 
   def aws_resource
-    @aws_resource ||= media_live_client.describe_channel(channel_id:)
+    @aws_resource ||= media_live_client.describe_channel(channel_id:) if channel_id
   end
 
   private

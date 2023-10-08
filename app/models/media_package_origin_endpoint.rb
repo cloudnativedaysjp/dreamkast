@@ -29,7 +29,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
 
 
   def aws_resource
-    @aws_resource ||= media_package_client.describe_origin_endpoint(id: endpoint_id)
+    @aws_resource ||= media_package_client.describe_origin_endpoint(id: endpoint_id) if endpoint_id
   end
 
   def create_aws_resource

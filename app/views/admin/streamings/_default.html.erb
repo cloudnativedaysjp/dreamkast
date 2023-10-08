@@ -104,7 +104,7 @@
   </div>
 </div>
 
-<% if @tracks.map(&:streaming).any?{ |s| s.error_cause.present? } %>
+<% if @tracks.map(&:streaming).compact.any?{ |s| s.error_cause.present? } %>
   <div class="row">
     <div class="col-10">
       <h3>エラー一覧</h3>

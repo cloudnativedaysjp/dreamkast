@@ -17,14 +17,14 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
     @conference = @streaming.conference
     @track = @streaming.track
 
-    @streaming.update!(error_cause: "")
+    @streaming.update!(error_cause: '')
 
     create_media_package_v2_resources
     create_media_package_resources
     create_media_live_resources
 
     @streaming.update!(status: 'created')
-    @streaming.update!(error_cause: "")
+    @streaming.update!(error_cause: '')
   rescue => e
     @streaming.update!(status: 'error', error_cause: e.message)
     logger.error(e.message)

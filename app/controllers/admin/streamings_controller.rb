@@ -3,7 +3,7 @@ class Admin::StreamingsController < ApplicationController
 
 
   def index
-    @tab = params[:tab] || "default"
+    @tab = params[:tab] || 'default'
     @tracks = @conference.tracks.includes(streaming: [
                                             :conference,
                                             :media_live_channel,

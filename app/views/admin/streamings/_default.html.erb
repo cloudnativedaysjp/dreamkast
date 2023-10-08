@@ -103,3 +103,38 @@
     </table>
   </div>
 </div>
+
+<% if @tracks.map(&:streaming).any?{ |s| s.error_cause.present? } %>
+  <div class="row">
+    <div class="col-10">
+      <h3>エラー一覧</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped talks_table" >
+        <thead>
+        <tr>
+          <th scope="col">Track</th>
+          <th scope="col">エラーメッセージ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @tracks.each do |track| %>
+          <tr>
+            <td>
+              <%= track.name %>
+            </td>
+            <td>
+              <% if track.streaming %>
+                <%= track.streaming.error_cause %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

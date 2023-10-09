@@ -34,30 +34,6 @@ section.proposals {
             font-weight: bold;
             font-size: small;
         }
-        &:nth-of-type(4n + 1) {
-            border: 1px solid $toranomon-orange;
-            .category {
-                background-color: $toranomon-orange;
-            }
-        } 
-        &:nth-of-type(4n + 2)  {
-            border: 1px solid $hibiya-green;
-            .category {
-                background-color: $hibiya-green;
-            }
-        }
-        &:nth-of-type(4n + 3) {
-            border: 1px solid $solacity-blue;
-            .category {
-                background-color: $solacity-blue;
-            }
-        }
-        &:nth-of-type(4n + 4) {
-            border: 1px solid $magenta2023;
-            .category {
-                background-color: $magenta2023;
-            }
-        }
         img {
             display: none;
         }
@@ -107,18 +83,6 @@ section.proposals {
                 left: 0.5em;
                 width: 3em;
                 height: 3em;
-            }
-            &:nth-of-type(4n + 1) {
-                box-shadow: 5px 5px 0px $toranomon-orange;
-            } 
-            &:nth-of-type(4n + 2)  {
-                box-shadow: 5px 5px 0px $hibiya-green;
-            }
-            &:nth-of-type(4n + 3) {
-                box-shadow: 5px 5px 0px $solacity-blue;
-            }
-            &:nth-of-type(4n + 4) {
-                box-shadow: 5px 5px 0px $magenta2023;
             }
         }
     }

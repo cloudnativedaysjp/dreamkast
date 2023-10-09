@@ -18,3 +18,108 @@ table.talks-frame td {
     vertical-align: middle;
     margin: 0;
 }
+
+
+section.proposals {
+    a.proposal {
+        display: block;
+        width: 100%;
+        margin: 1em;
+        &:hover{
+            background-color: #EEE;
+            opacity: 0.8;
+        }
+        .category {
+            color: #FFF;
+            font-weight: bold;
+            font-size: small;
+        }
+        &:nth-of-type(4n + 1) {
+            border: 1px solid $toranomon-orange;
+            .category {
+                background-color: $toranomon-orange;
+            }
+        } 
+        &:nth-of-type(4n + 2)  {
+            border: 1px solid $hibiya-green;
+            .category {
+                background-color: $hibiya-green;
+            }
+        }
+        &:nth-of-type(4n + 3) {
+            border: 1px solid $solacity-blue;
+            .category {
+                background-color: $solacity-blue;
+            }
+        }
+        &:nth-of-type(4n + 4) {
+            border: 1px solid $magenta2023;
+            .category {
+                background-color: $magenta2023;
+            }
+        }
+        img {
+            display: none;
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+    section.proposals {
+        margin: 3em 0em 3em 0em;
+        justify-content: space-between;
+        display: flex;
+        gap: 2em;
+        a.proposal {
+            width: 15em;
+            justify-content: center;
+            padding: 1em;
+            position: relative;
+            margin: 0em;
+            display: flexbox;
+            .category {
+                z-index: 2;
+                position: absolute;
+                top: -0.5em;
+                left: 4em;
+                padding: 0em 1em;
+                color: #FFF;
+                font-weight: bold;
+                font-size: small;
+            }
+            h3 {
+                margin-top: 1em;
+                font-size: large;
+            }
+            h4 {
+                font-size: medium;
+            }
+            h5{
+                font-size: small;
+            }
+            img {
+                z-index: 3;
+                display: block;
+                border-radius: 50%;
+                position: absolute;
+                top: -1.5em;
+                left: 0.5em;
+                width: 3em;
+                height: 3em;
+            }
+            &:nth-of-type(4n + 1) {
+                box-shadow: 5px 5px 0px $toranomon-orange;
+            } 
+            &:nth-of-type(4n + 2)  {
+                box-shadow: 5px 5px 0px $hibiya-green;
+            }
+            &:nth-of-type(4n + 3) {
+                box-shadow: 5px 5px 0px $solacity-blue;
+            }
+            &:nth-of-type(4n + 4) {
+                box-shadow: 5px 5px 0px $magenta2023;
+            }
+        }
+    }
+}

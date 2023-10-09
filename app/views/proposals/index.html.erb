@@ -1,44 +1,23 @@
 <% provide(:title, 'プロポーザル一覧') %>
 
 <div class="container white_background">
-  <h1 class="my-3 text-center">プロポーザル一覧</h1>
-  <div class="row">
-    <table class="table table-striped talks_table talks-frame" data-toggle="table" data-filter-control="true">
-      <thead>
-      <tr class="tr-class-1">
-        <th scope="col">Title</th>
-        <th scope="col">Speakers</th>
-        <th data-field="category" data-filter-control="select" scope="col">Category</th>
-      </tr>
-      </thead>
-      <tbody>
-
-      <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
+  <h1 class="mx-3 mt-5 text-center">プロポーザル一覧</h1>
+  <section class="row proposals">
+    <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
         <% talk = proposal.talk %>
-
-        <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
-
-          <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
-            <%= link_to talk.title, proposal_path(id: talk.id), data: {"turbolinks" => false} %>
-          </td>
-
-          <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>">
-            <ul class="p-0 vertical-middle">
-              <% talk.speakers.each do |speaker| %>
-                <li class="speaker"><%= speaker.name %></li>
-              <% end %>
-            </ul>
-          </td>
-
-
-          <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
+        <%= link_to proposal_path(id: talk.id), class: "proposal", data: {"turbolinks" => false} do %>
+          <div class="category">
             <%= talk.talk_category.name if talk.talk_category.present? %>
-          </td>
-
-        </tr>
-      <% end %>
-
-      </tbody>
-    </table>
-  </div>
+          </div>
+          <%= image_tag talk.speakers[0].avatar_or_dummy_url(:medium) %>
+          <h3>
+            <%= talk.title %>
+          </h3>
+          <% talk.speakers.each do |speaker| %>
+            <h5><%= speaker.company if speaker.company != "" %></h5>
+            <h4><%= speaker.name %></h4>
+          <% end %>
+        <% end %>
+    <% end %>
+  </section>
 </div>

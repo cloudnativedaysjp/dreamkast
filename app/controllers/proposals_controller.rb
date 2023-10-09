@@ -15,16 +15,7 @@ class ProposalsController < ApplicationController
   end
 
   def proposal_status
-    case @proposal.status
-    when 'registered'
-      '(採択待ち)'
-    when 'accepted'
-      '(採択)'
-    when 'rejected'
-      '(落選)'
-    else
-      ''
-    end
+    "($#{@proposal.status_message})"
   end
 
   def use_secured_before_action?

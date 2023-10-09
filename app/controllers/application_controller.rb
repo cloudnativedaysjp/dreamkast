@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
     (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
   end
 
-  helper_method :sponsor_logo_class, :days, :display_dashboard_link?
+  helper_method :sponsor_logo_class, :days, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
 
   private
 
@@ -100,6 +100,22 @@ class ApplicationController < ActionController::Base
 
   def display_dashboard_link?
     @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
+  end
+
+  def display_proposals?
+    @conference.present? && @conference.attendee_entry_disabled?
+  end
+
+  def display_talks?
+    @conference.present? && @conference.attendee_entry_enabled?
+  end
+
+  def display_timetable?
+    @conference.present? &&  @conference.show_timetable_enabled?
+  end
+
+  def display_attendees?
+    @conference.present? && @conference.attendee_entry_enabled?
   end
 
   def days

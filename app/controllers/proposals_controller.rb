@@ -16,14 +16,14 @@ class ProposalsController < ApplicationController
 
   def proposal_status
     case @proposal.status
-    when "registered"
-      "(採択待ち)"
-    when "accepted"
-      "(採択)"
-    when "rejected"
-      "(落選)"
+    when 'registered'
+      '(採択待ち)'
+    when 'accepted'
+      '(採択)'
+    when 'rejected'
+      '(落選)'
     else
-      ""
+      ''
     end
   end
 

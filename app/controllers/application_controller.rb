@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
   end
 
   def display_timetable?
-    @conference.present? &&  @conference.show_timetable_enabled?
+    @conference.present? && @conference.show_timetable_enabled?
   end
 
   def display_attendees?

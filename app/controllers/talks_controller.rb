@@ -14,7 +14,7 @@ class TalksController < ApplicationController
     @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
 
     if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
-      redirect_to "/#{event_name}/proposals/#{@talk.proposal.id}"
+      redirect_to("/#{event_name}/proposals/#{@talk.proposal.id}")
     end
     raise(ActiveRecord::RecordNotFound) unless @talk
   end
@@ -23,7 +23,7 @@ class TalksController < ApplicationController
     @conference = Conference.find_by(abbr: event_name)
 
     if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
-      redirect_to "/#{event_name}/proposals"
+      redirect_to("/#{event_name}/proposals")
     end
 
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')

@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
     (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
   end
 
-  helper_method :sponsor_logo_class, :days
+  helper_method :sponsor_logo_class, :days, :display_dashboard_link?
 
   private
 
@@ -96,6 +96,10 @@ class ApplicationController < ActionController::Base
     if event_name && Conference.where(abbr: event_name).empty?
       raise(ActiveRecord::RecordNotFound)
     end
+  end
+
+  def display_dashboard_link?
+    @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
   end
 
   def days

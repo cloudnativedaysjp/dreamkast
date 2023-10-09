@@ -1,4 +1,6 @@
 class ProposalsController < ApplicationController
+  include Secured
+  before_action :set_current_user, :set_profile, :set_speaker
 
   helper_method :proposal_status
   def show
@@ -23,5 +25,9 @@ class ProposalsController < ApplicationController
     else
       ""
     end
+  end
+
+  def use_secured_before_action?
+    false
   end
 end

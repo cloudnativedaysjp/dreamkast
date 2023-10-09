@@ -1,0 +1,39 @@
+<% content_for(:ogp) do%>
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="<%= full_title(@talk.title) %>" />
+  <meta property="og:description" content="<%= @talk.abstract[0, 100] %>" />
+  <% if @talk.speakers.length != 0 %>
+    <meta property="og:image" content="<%= image_url @talk.speakers[0].avatar_or_dummy_url %>" />
+  <% end %>
+<% end %>
+<% provide(:title, @talk.title) %>
+
+<div class="container white_background talk-page">
+  <div class="row my-3">
+
+    <div class="col-12 col-lg-8 main-pane">
+      <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
+    </div>
+
+    <div class="col-12 col-lg-4 sub-pane mt-3 mt-lg-0">
+      <%= render 'proposals/partial_show/col_sub_pane', talk: @talk %>
+    </div>
+
+    <% if @conference.attendee_entry_enabled? %>
+      <div class="col-12 p-3 other-talks">
+        <%= render 'proposals/partial_show/col_other_proposals', conference: @conference %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<% if @current_user %>
+  <script>
+      window.talk_id = "<%= @talk.id %>";
+      window.talk_name = "<%= @talk.title %>";
+  </script>
+  <%= javascript_pack_tag 'talks.js' %>
+<% end %>
+<%= javascript_pack_tag 'vote_cfp.js' %>

@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     end
 
     resources :talks, only: [:show, :index]
+    resources :proposals, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'attendee_dashboards#show'

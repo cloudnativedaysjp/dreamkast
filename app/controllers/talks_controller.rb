@@ -12,11 +12,19 @@ class TalksController < ApplicationController
   def show
     @conference = Conference.find_by(abbr: event_name)
     @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
+
+    if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
+      redirect_to "/#{event_name}/proposals/#{@talk.proposal.id}"
+    end
     raise(ActiveRecord::RecordNotFound) unless @talk
   end
 
   def index
     @conference = Conference.find_by(abbr: event_name)
+
+    if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
+      redirect_to "/#{event_name}/proposals"
+    end
 
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])

@@ -30,6 +30,7 @@ import './admin.js'
 import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'
+import './copy.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
     //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)

@@ -29,7 +29,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
 
 
   def aws_resource
-    @aws_resource ||= media_package_client.describe_origin_endpoint(id: endpoint_id)
+    @aws_resource ||= media_package_client.describe_origin_endpoint(id: endpoint_id) if endpoint_id
   end
 
   def create_aws_resource
@@ -51,6 +51,10 @@ class MediaPackageOriginEndpoint < ApplicationRecord
 
   def delete_aws_resource
     media_package_client.delete_origin_endpoint(id: endpoint_id) if exists_aws_resource?
+  end
+
+  def url
+    aws_resource&.url
   end
 
   private

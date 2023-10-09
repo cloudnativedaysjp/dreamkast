@@ -1,0 +1,25 @@
+<div class="row mb-2">
+  <div class="col-10 d-flex align-items-center">
+    <h2>配信確認</h2>
+  </div>
+</div>
+
+<% @tracks.each do |track| %>
+  <div class="col-10 d-flex align-items-center">
+    <h3>Track <%= track.name %></h3>
+  </div>
+
+  <% if track.streaming.present? %>
+    <div class="row">
+      <video
+        id="my-player"
+        class="video-js video-js vjs-16-9 vjs-big-play-centered"
+        data-setup='{"fluid": true, "liveui": true,   "enableWorker": true,  "lowLatencyMode": true  "backBufferLength": 1}'
+        controls
+        preload="auto"
+      >
+        <source src="<%= track.streaming&.playback_url %>" type="application/x-mpegURL" />
+      </video>
+  <% end %>
+<% end %>
+</div>

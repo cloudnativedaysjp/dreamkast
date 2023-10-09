@@ -31,6 +31,7 @@ import './cropbox.js'
 import './timetable.js'
 import './attendee_dashboard.js'
 import './particles.min.js'
+import './copy.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 

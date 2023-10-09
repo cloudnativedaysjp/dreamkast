@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_08_080958) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -453,6 +453,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_121212) do
     t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "error_cause"
     t.index ["conference_id", "track_id"], name: "index_streamings_on_conference_id_and_track_id", unique: true
     t.index ["conference_id"], name: "index_streamings_on_conference_id"
     t.index ["track_id"], name: "index_streamings_on_track_id"

@@ -58,7 +58,7 @@
         </td>
         <td>
           <% if talk.video && talk.abstract != 'intermission' %>
-            <% if !waiting_to_stop?(talk) && already_recorded?(talk) %>
+            <% if already_recorded?(talk) %>
               <div class="btn btn-primary">録画済み</div>
             <% else %>
               未録画

@@ -27,7 +27,7 @@ class MediaPackageChannel < ApplicationRecord
   has_many :media_package_harvest_jobs
 
   def aws_resource
-    @channel ||= media_package_client.describe_channel(id: channel_id)
+    @channel ||= media_package_client.describe_channel(id: channel_id) if channel_id
   end
 
   def ingest_endpoints

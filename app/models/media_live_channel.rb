@@ -92,7 +92,7 @@ class MediaLiveChannel < ApplicationRecord
   end
 
   def aws_resource
-    @aws_resource ||= media_live_client.describe_channel(channel_id:)
+    @aws_resource ||= media_live_client.describe_channel(channel_id:) if channel_id
   end
 
   private
@@ -525,7 +525,7 @@ class MediaLiveChannel < ApplicationRecord
             program_date_time: 'EXCLUDE',
             program_date_time_period: 600,
             redundant_manifest: 'DISABLED',
-            segment_length: 6,
+            segment_length: 1,
             segmentation_mode: 'USE_SEGMENT_DURATION',
             segments_per_subdirectory: 10000,
             stream_inf_resolution: 'INCLUDE',
@@ -600,8 +600,8 @@ class MediaLiveChannel < ApplicationRecord
             gop_b_reference: 'ENABLED',
             gop_closed_cadence: 1,
             gop_num_b_frames: 1,
-            gop_size: 3,
-            gop_size_units: 'FRAMES',
+            gop_size: 1,
+            gop_size_units: 'SECONDS',
             level: 'H264_LEVEL_AUTO',
             look_ahead_rate_control: 'HIGH',
             num_ref_frames: 3,

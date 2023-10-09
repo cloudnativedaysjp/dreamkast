@@ -117,6 +117,28 @@ paths:
           description: Invalid params supplied
         '404':
           description: Track not found
+  /api/v1/streamings:
+    get:
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Streaming'
+        '400':
+          description: Invalid [eventAbbr] supplied
+        '404':
+          description: Event not found
   /api/v1/speakers:
     get:
       tags:
@@ -1085,6 +1107,22 @@ components:
       required:
         - id
         - name
+    Streaming:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        trackId:
+          type: number
+        destinationUrl:
+          type: string
+        playbackUrl:
+          type: string
+        mediaLiveChannelStatus:
+          type: string
     Speaker:
       type: object
       additionalProperties: false

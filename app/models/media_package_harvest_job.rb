@@ -40,8 +40,6 @@ class MediaPackageHarvestJob < ApplicationRecord
     resp = media_package_client.create_harvest_job(create_params)
     resp = media_package_client.describe_harvest_job(id: resp.id)
     update!(job_id: resp.id, status: resp.status)
-  rescue => e
-    logger.error(e.message)
   end
 
   def video_url
@@ -69,7 +67,7 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def resource_name
-    track = media_package_channel.track
+    track = media_package_channel.streaming.track
     if review_app?
       "review_app_#{review_app_number}_#{conference.abbr}_track#{track.name}"
     else
@@ -78,13 +76,25 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def bucket_name
-    case env_name
-    when 'production'
-      'dreamkast-ivs-stream-archive-prd'
-    when 'staging'
-      'dreamkast-ivs-stream-archive-stg'
-    else
-      'dreamkast-ivs-stream-archive-dev'
+    case AWS_LIVE_STREAM_REGION
+    when 'us-east-1'
+      case env_name
+      when 'production'
+        'dreamkast-ivs-stream-archive-prd'
+      when 'staging'
+        'dreamkast-ivs-stream-archive-stg'
+      else
+        'dreamkast-ivs-stream-archive-dev'
+      end
+    when 'us-west-2'
+      case env_name
+      when 'production'
+        'dreamkast-archive-prd-us-west-2'
+      when 'staging'
+        'dreamkast-archive-stg-us-west-2'
+      else
+        'dreamkast-archive-dev-us-west-2'
+      end
     end
   end
 

@@ -68,7 +68,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
                   "Effect": "Allow",
                   "Principal": "*",
                   "Action": "mediapackagev2:GetObject",
-                  "Resource": "arn:aws:mediapackagev2:us-east-1:607167088920:channelGroup/#{channel_group_name}/channel/#{channel_name}/originEndpoint/#{origin_endpoint_name}"
+                  "Resource": "arn:aws:mediapackagev2:us-west-2:607167088920:channelGroup/#{channel_group_name}/channel/#{channel_name}/originEndpoint/#{origin_endpoint_name}"
                 }
               ]
             }

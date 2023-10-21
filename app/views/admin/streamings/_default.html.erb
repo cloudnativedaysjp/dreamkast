@@ -49,6 +49,8 @@
           <td>
             <% if track.streaming && track.streaming.status != 'deleted' && track.streaming&.media_live_channel&.idle? %>
               <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
+            <% elsif track.streaming&.media_live_channel && track.streaming&.media_live_channel&.state != 'IDLE'  %>
+              <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, disabled: true, title: 'MediaLive ChannelがIDLEの時のみ削除可能です', class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
             <% end %>
           </td>
           <td>

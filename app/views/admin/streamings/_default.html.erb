@@ -36,7 +36,7 @@
           </td>
           <td>
             <% if track.streaming && %w(deleted error).include?(track.streaming.status) %>
-              <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
+              <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
             <% elsif track.streaming.nil? || track.streaming.status == 'deleted' %>
               <%= form_with(url: admin_streamings_path, model: Streaming.new, method: :post, local: true) do |form| %>
                 <%= form.hidden_field :conference_id, value: @conference.id %>
@@ -48,15 +48,15 @@
           </td>
           <td>
             <% if track.streaming && track.streaming.status != 'deleted' && track.streaming&.media_live_channel&.idle? %>
-              <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
+              <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
             <% end %>
           </td>
           <td>
             <% if track.streaming&.media_live_channel %>
               <% if track.streaming.media_live_channel.idle? %>
-                <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
+                <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary", data: { confirm: "MediaLive Channelを起動しますか？"}}) %>
               <% elsif track.streaming&.media_live_channel.running? %>
-                <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary"}) %>
+                <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary", data: { confirm: "MediaLive Channelを停止しますか？"}}) %>
               <% end %>
             <% end %>
           </td>

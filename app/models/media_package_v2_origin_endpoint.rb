@@ -18,10 +18,12 @@
 #  fk_rails_...  (streaming_id => streamings.id)
 #
 require 'aws-sdk-mediapackagev2'
+require 'aws-sdk-cloudfront'
 
 class MediaPackageV2OriginEndpoint < ApplicationRecord
   include EnvHelper
   include MediaPackageV2Helper
+  include CloudfrontHelper
 
   before_create :set_uuid
   before_destroy :delete_aws_resource
@@ -101,12 +103,122 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   end
 
   def aws_resource
-    @aws_resource ||= media_package_v2_client.get_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:)
+    @aws_resource ||= media_package_v2_client.get_origin_endpoint(channel_group_name:, channel_name:, origin_endpoint_name:) if origin_endpoint_name
   end
 
   def playback_url
-    aws_resource&.low_latency_hls_manifests&.first&.url
+    origin_url = aws_resource&.low_latency_hls_manifests&.first&.url
+    resp = cloudfront_client.get_distribution({ id: distribution_id })
+    "https://#{resp.distribution.domain_name}#{URI.parse(origin_url).path}"
   rescue Aws::MediaPackageV2::Errors::NotFoundException
     ''
+  end
+
+  def remove_origin_and_behavior
+    resp = cloudfront_client.get_distribution({ id: distribution_id })
+    etag = resp.etag
+    distr = resp.distribution
+
+    return unless distr.distribution_config.origins.items.any? { |origin| origin.id == origin_endpoint_name }
+    new_origins = distr.distribution_config.origins.items.reject { |origin| origin.id == origin_endpoint_name }
+    distr.distribution_config.origins.quantity -= 1
+    distr.distribution_config.origins.items = new_origins
+
+    return unless distr.distribution_config.cache_behaviors.items.any? { |behavior| behavior.target_origin_id == origin_endpoint_name }
+    new_cache_behaviors = distr.distribution_config.cache_behaviors.items.reject { |behavior| behavior.target_origin_id == origin_endpoint_name }
+    distr.distribution_config.cache_behaviors.quantity -= 1
+    distr.distribution_config.cache_behaviors.items = new_cache_behaviors
+
+
+    cloudfront_client.update_distribution({
+                                            id: distribution_id,
+                                             if_match: etag,
+                                             distribution_config: distr.distribution_config
+                                          })
+  end
+
+  def add_origin_and_behavior
+    resp = cloudfront_client.get_distribution({ id: distribution_id })
+    etag = resp.etag
+    distr = resp.distribution
+
+    new_origin = {
+      id: origin_endpoint_name,
+      domain_name: URI.parse(aws_resource.low_latency_hls_manifests[0].url).host,
+      origin_path: '',
+      custom_headers: {
+        quantity: 0
+      },
+      custom_origin_config: {
+        http_port: 80,
+        https_port: 443,
+        origin_protocol_policy: 'https-only',
+        origin_ssl_protocols: {
+          quantity: 1,
+          items: ['TLSv1.2']
+        },
+        origin_read_timeout: 30,
+        origin_keepalive_timeout: 5
+      }
+    }
+
+    new_cache_behavior = {
+      path_pattern: "/out/v1/#{origin_endpoint_name}/*",
+      target_origin_id: origin_endpoint_name.to_s,
+      trusted_signers: {
+        enabled: false,
+        quantity: 0
+      },
+      trusted_key_groups: {
+        enabled: false,
+        quantity: 0
+      },
+      viewer_protocol_policy: 'https-only',
+      allowed_methods: {
+        quantity: 2,
+        items: %w[HEAD GET],
+        cached_methods: {
+          quantity: 2,
+          items: %w[HEAD GET]
+        }
+      },
+      smooth_streaming: false,
+      compress: true,
+      lambda_function_associations: {
+        quantity: 0
+      },
+      function_associations: {
+        quantity: 0
+      },
+      field_level_encryption_id: '',
+      cache_policy_id: cache_policy.id
+    }
+
+    new_origins = distr.distribution_config.origins.items << new_origin
+    distr.distribution_config.origins.quantity += 1
+    distr.distribution_config.origins.items = new_origins
+
+    new_cache_behaviors = distr.distribution_config.cache_behaviors.items << new_cache_behavior
+    distr.distribution_config.cache_behaviors.quantity += 1
+    distr.distribution_config.cache_behaviors.items = new_cache_behaviors
+
+    cloudfront_client.update_distribution({
+                                            id: distribution_id,
+                                             if_match: etag,
+                                             distribution_config: distr.distribution_config
+                                          })
+  end
+
+  def cache_policy
+    marker = nil
+    cache_policies = []
+    loop do
+      resp = cloudfront_client.list_cache_policies({ type: 'managed', max_items: 1, marker: })
+      cache_policies.concat(resp.cache_policy_list.items)
+      break unless resp.cache_policy_list.next_marker
+      marker = resp.cache_policy_list.next_marker
+    end
+
+    cache_policies.find { |policy| policy.cache_policy.cache_policy_config.name == 'Managed-Elemental-MediaPackage' }.cache_policy
   end
 end

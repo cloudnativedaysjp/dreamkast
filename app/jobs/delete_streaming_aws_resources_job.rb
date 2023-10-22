@@ -27,6 +27,7 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   def delete_media_package_v2_resources
     logger.info('Deleting MediaPackageV2 resources...')
 
+    @streaming.media_package_v2_origin_endpoint&.remove_origin_and_behavior
     @streaming.media_package_v2_origin_endpoint&.destroy!
     @streaming.media_package_v2_channel&.destroy!
     @streaming.media_package_v2_channel_group&.destroy!

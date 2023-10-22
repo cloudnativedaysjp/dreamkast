@@ -10,7 +10,7 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
     logger.info('Perform DeleteStreamingAwsResourcesJob')
     @streaming = args[0]
 
-    @streaming.update!(error_cause: '')
+    @streaming.update!(error_cause: '', status: 'deleting')
 
     delete_media_live_resources
     delete_media_package_resources

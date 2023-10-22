@@ -17,7 +17,7 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
     @conference = @streaming.conference
     @track = @streaming.track
 
-    @streaming.update!(error_cause: '')
+    @streaming.update!(error_cause: '', status: 'creating')
 
     create_media_package_v2_resources
     create_media_package_resources

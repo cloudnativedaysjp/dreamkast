@@ -53,7 +53,36 @@
     }
     section.timetable {
         width: 100%;
-    }   
+    }
+}
+#exhibition {
+    
+}
+#exhibition a{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+#exhibition a .project {
+    border: 1px solid #999;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    @media (min-width: 576px) {
+        width: 45%;
+    }
+}
+#exhibition a .project:hover {
+    box-shadow: 0px 0px 5px #CCC;
+}
+#exhibition a .project img {
+    max-height: 60px;
+    display: block;
+    margin: 0px auto;
 }
 #particles-js {
     position: absolute;

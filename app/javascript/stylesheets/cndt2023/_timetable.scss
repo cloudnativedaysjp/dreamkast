@@ -1,7 +1,8 @@
 section.timetable {
     display: block;
-    width: 98%;
+    width: 100%;
     margin: 0 auto;
+    background-color: $primary;
     .date {
         display: flex;
         -webkit-overflow-scrolling: touch;
@@ -12,7 +13,7 @@ section.timetable {
     .grid {
         display: grid;
         grid-template-rows: repeat(var(--rows), 3px);
-        grid-template-columns: repeat(3, minmax(240px, 360px));
+        grid-template-columns: repeat(4, minmax(180px, 240px));
         grid-auto-columns: 100px;
         overflow-x: auto;
         overflow-scrolling: touch;
@@ -29,7 +30,7 @@ section.timetable {
         background-color: rgba(256, 256, 256, 0.9);
     }
     .all-track {
-        grid-column: 1 / 4;
+        grid-column: 1 / 5;
         grid-row: 1 / -1;
         display: flex;
         align-items: start;

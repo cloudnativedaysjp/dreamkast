@@ -70,7 +70,7 @@ class Talk < ApplicationRecord
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
 
-  SLOT_MAP = ['1200', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
+  SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
   scope :on_air, -> {
     includes(:video).where(videos: { on_air: 1 })

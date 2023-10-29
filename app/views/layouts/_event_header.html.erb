@@ -3,9 +3,7 @@
   <div class="container">
     <% if @conference %>
       <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
-        <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/logo_vertical.png") %>
-          <%= image_tag "#{@conference.abbr}/logo_vertical.png", class: "img-fluid header_logo" %>
-        <% elsif FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>
+        <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>
           <%= image_tag "#{@conference.abbr}/header_logo.png", class: "img-fluid header_logo" %>
         <% else %>
           <p><%= @conference.name %></p>
@@ -27,6 +25,7 @@
             <% elsif %>
               <li class="nav-item dropdown">
                 <% if @conference.present? &&  @conference.show_timetable_enabled? %>
+                <li class="nav-item"><%= link_to "参加者一覧", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
                 <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>

@@ -341,10 +341,10 @@ Track.seed(
   { id: 42, number: 2, name: "B", conference_id: 9, room_id: 15},
   { id: 43, number: 3, name: "C", conference_id: 9, room_id: 16},
 
-  { id: 44, number: 1, name: "A", conference_id: 10, room_id: 14},
-  { id: 45, number: 2, name: "B", conference_id: 10, room_id: 15},
-  { id: 46, number: 3, name: "C", conference_id: 10, room_id: 16},
-  { id: 47, number: 3, name: "D", conference_id: 10, room_id: 16},
+  { id: 44, number: 1, name: "A", conference_id: 10, room_id: 17},
+  { id: 45, number: 2, name: "B", conference_id: 10, room_id: 18},
+  { id: 46, number: 3, name: "C", conference_id: 10, room_id: 19},
+  { id: 47, number: 4, name: "D", conference_id: 10, room_id: 20},
 )
 
 
@@ -545,7 +545,7 @@ import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals propos
 import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
-#import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

@@ -38,3 +38,17 @@ require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"
 // import "controllers"
+
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('scroll', function () {
+        var fvHeight = document.querySelector('#mainNav').offsetHeight;
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var header = document.querySelector('#mainNav');
+
+        if (fvHeight < scrollTop) {
+            header.classList.add('changed-header');
+        } else {
+            header.classList.remove('changed-header');
+        }
+    });
+});

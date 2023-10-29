@@ -187,24 +187,9 @@
               <p class="text-black-75 mb-4 text-center"><%= line %></p>
             <% end %>
           </div>
-          <div class="col-lg-12 text-center mt-4">
-            <h2 class="text-black mt-0">オンラインでもオフラインでも楽しめる企画</h2>
-            <hr class="divider my-4" />
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                <%= image_tag 'cndt2022/exhibition.jpg', style: 'width: 100%'%>
-              </div>
-              <div class="col-12 col-sm-6 align-self-top text-left">
-                <p>参加者が様々な形で交流できるような企画を用意しています！</p>
-                <ul>
-                  <li>オフライン・オンライン両方が参加可能な広げる企画</li>
-                  <li>オフラインの会場感がオンラインに広がる企画</li>
-                  <li>相互交流が広がる企画</li>
-                </ul> 
-                <p>※企画の詳細については後日公開予定です</p>
-                
-              </div>
-            </div>
+          <div class="col-lg-12 text-center mt-4 projects">
+            <h2 class="text-black mt-0">企画一覧</h2>
+            <%= render(partial: "contents/cndt2023/projects") %>
           </div>
         </div>
       </div>

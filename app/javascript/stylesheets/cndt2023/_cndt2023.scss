@@ -271,53 +271,53 @@
 }
 
 
-// Customize navvar
-// Base styling for the navbar
-#mainNav {
-    height: 70px;
-    .navbar-brand {
-        width: 120px;
-        height: 160px;
-        position: absolute;
-        z-index: 10;
-        box-shadow: $box-shadow;
-        top: 0px;
-        display: block;
-        background-color: $white;
-        @media (max-width: 576px) {
-            width: 90px;
-            height: 120px;
-        }
-        img.vertical{
-            display: block;
-        }
-        img.horizontal{
-            display: none;
-        }
-    }
+// // Customize navvar
+// // Base styling for the navbar
+// #mainNav {
+//     height: 70px;
+//     .navbar-brand {
+//         width: 120px;
+//         height: 160px;
+//         position: absolute;
+//         z-index: 10;
+//         box-shadow: $box-shadow;
+//         top: 0px;
+//         display: block;
+//         background-color: $white;
+//         @media (max-width: 576px) {
+//             width: 90px;
+//             height: 120px;
+//         }
+//         img.vertical{
+//             display: block;
+//         }
+//         img.horizontal{
+//             display: none;
+//         }
+//     }
     
-}
+// }
 
-#mainNav.changed-header {
-    .navbar-brand {
-        width: 200px;
-        box-shadow: none;
-        position: absolute;
-        background-color: unset;
-        top: 0px;
-        @media (max-width: 576px) {
-            width: 90px;
-            height: 120px;
-        }
-        img.vertical{
-            display: none;
-        }
-        img.horizontal{
-            display: block;
-        }
-    }
+// #mainNav.changed-header {
+//     .navbar-brand {
+//         width: 200px;
+//         box-shadow: none;
+//         position: absolute;
+//         background-color: unset;
+//         top: 0px;
+//         @media (max-width: 576px) {
+//             width: 90px;
+//             height: 120px;
+//         }
+//         img.vertical{
+//             display: none;
+//         }
+//         img.horizontal{
+//             display: block;
+//         }
+//     }
     
-}
+// }
 
 .talk-page {
     margin-top: 80px;

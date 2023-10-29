@@ -55,9 +55,7 @@
         width: 100%;
     }
 }
-#exhibition {
-    
-}
+
 #exhibition a{
     text-decoration: none;
     display: flex;
@@ -289,6 +287,33 @@
         @media (max-width: 576px) {
             width: 90px;
             height: 120px;
+        }
+        img.vertical{
+            display: block;
+        }
+        img.horizontal{
+            display: none;
+        }
+    }
+    
+}
+
+#mainNav.changed-header {
+    .navbar-brand {
+        width: 200px;
+        box-shadow: none;
+        position: absolute;
+        background-color: unset;
+        top: 0px;
+        @media (max-width: 576px) {
+            width: 90px;
+            height: 120px;
+        }
+        img.vertical{
+            display: none;
+        }
+        img.horizontal{
+            display: block;
         }
     }
     

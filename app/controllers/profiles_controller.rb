@@ -38,7 +38,7 @@ class ProfilesController < ApplicationController
       Agreement.create!(profile_id: @profile.id, form_item_id: 8, value: 1) if agreement_params['redhat_require_email_cndt2022']
       Agreement.create!(profile_id: @profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
 
-      #TODO: ProfileMailer.registered(@profile, @conference).deliver_later
+      ProfileMailer.registered(@profile, @conference).deliver_later
       if @profile.public_profile.present?
         redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
       else

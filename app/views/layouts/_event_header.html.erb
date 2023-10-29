@@ -28,10 +28,10 @@
             <% elsif %>
               <li class="nav-item dropdown">
                 <% if @conference.present? &&  @conference.show_timetable_enabled? %>
+                <li class="nav-item"><%= link_to "参加者一覧", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
                 <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
-                <li class="nav-item"><%= link_to "参加者一覧", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
               </li>
             <% end %>

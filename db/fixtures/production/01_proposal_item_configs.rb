@@ -1054,12 +1054,14 @@ session_time(
       id: 136,
       key: SessionTime::FOURTY_MINUTES,
       params: '_40min (full session)',
+      value: '40',
       description: ''
     },
     {
       id: 139,
       key: SessionTime::TWENTY_MINUTES,
       params: '_20min (for keynote)',
+      value: '20',
       description: ''
     }
   ]

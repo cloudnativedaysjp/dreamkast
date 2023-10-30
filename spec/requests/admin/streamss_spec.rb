@@ -66,4 +66,19 @@ describe Admin::SpeakersController, type: :request do
       expect(response.body).to(redirect_to('/cndt2020/admin/streamings'))
     end
   end
+
+  describe 'POST :event/admin/delete_aws_resources' do
+    before do
+      allow_any_instance_of(CreateStreamingAwsResourcesJob).to(receive(:perform) { true })
+    end
+
+    let(:streaming) { create(:streaming, status: 'created', conference:, track: conference.tracks.first) }
+
+    it 'returns a success response' do
+      post admin_delete_aws_resources_path(id: streaming.id, event: 'cndt2020')
+      expect(response).to_not(be_successful)
+      expect(response).to(have_http_status('302'))
+      expect(response.body).to(redirect_to('/cndt2020/admin/streamings'))
+    end
+  end
 end

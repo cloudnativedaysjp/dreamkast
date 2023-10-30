@@ -113,6 +113,7 @@ gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 gem "aws-sdk-mediapackage"
 gem "aws-sdk-mediapackagev2"
+gem "aws-sdk-cloudfront"
 gem "aws-sdk-ssm"
 
 gem 'active_hash'

@@ -613,7 +613,7 @@ def session_time(conference_id:, item_number:, items:)
         params: item[:params],
         description: item[:description],
         key: item[:key],
-        value: item[:params],
+        value: item[:value] || item[:params],
       }
     end
   )

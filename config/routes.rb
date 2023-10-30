@@ -123,6 +123,7 @@ Rails.application.routes.draw do
     get 'job-board' => 'contents#job_board'
     get 'o11y' => 'contents#o11y'
     get 'attendees' => 'attendees#index'
+    get 'community_lt' => 'contents#community_lt'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

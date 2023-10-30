@@ -34,4 +34,9 @@ class ContentsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     render(:o11y)
   end
+
+  def community_lt
+    @conference = Conference.find_by(abbr: params[:event])
+    render("contents/#{@conference.abbr}/community_lt")
+  end
 end

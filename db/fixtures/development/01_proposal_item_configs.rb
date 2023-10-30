@@ -613,7 +613,7 @@ def session_time(conference_id:, item_number:, items:)
         params: item[:params],
         description: item[:description],
         key: item[:key],
-        value: item[:params],
+        value: item[:value] || item[:params],
       }
     end
   )
@@ -1053,12 +1053,14 @@ session_time(
       id: 136,
       key: SessionTime::FOURTY_MINUTES,
       params: '_40min (full session)',
+      value: '40',
       description: ''
     },
     {
       id: 139,
       key: SessionTime::TWENTY_MINUTES,
       params: '_20min (for keynote)',
+      value: '20',
       description: ''
     }
   ]

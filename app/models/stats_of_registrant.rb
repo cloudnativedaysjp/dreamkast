@@ -4,6 +4,8 @@
 #
 #  id                    :bigint           not null, primary key
 #  number_of_registrants :integer
+#  offline_attendees     :decimal(10, )
+#  online_attendees      :decimal(10, )
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  conference_id         :bigint

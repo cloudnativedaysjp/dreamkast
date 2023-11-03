@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_08_080958) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_03_061142) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -444,6 +444,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_08_080958) do
     t.integer "number_of_registrants"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "offline_attendees", precision: 10
+    t.decimal "online_attendees", precision: 10
     t.index ["conference_id"], name: "index_stats_of_registrants_on_conference_id"
   end
 

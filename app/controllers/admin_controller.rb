@@ -32,10 +32,9 @@ class AdminController < ApplicationController
     f = Tempfile.create('statistics.csv')
     @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: params[:event])
     CSV.open(f.path, 'wb') do |csv|
-      csv << %w[id item count]
-      csv << ['', 'registered_user_count', Profile.where(conference_id: @conference.id).count]
+      csv << %w[id item online_participation_size offline_participation_size]
       @conference.talks.each do |talk|
-        csv << %W[#{talk.id} #{talk.title} #{talk.registered_talks.size}]
+        csv << %W[#{talk.id} #{talk.title} #{online_participation_size} #{offline_participation_size}]
       end
     end
     send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: File.stat(f.path).size)

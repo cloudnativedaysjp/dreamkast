@@ -15,7 +15,8 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Title</th>
-          <th scope="col">登録者数</th>
+          <th scope="col">登録者数(現地)</th>
+          <th scope="col">登録者数(オンライン)</th>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +24,8 @@
           <tr>
             <td><%= talk.id %></td>
             <td><%= talk.title %></td>
-            <td><%= talk.registered_talks.size %></td>
+            <td><%= talk.offline_participation_size %></td>
+            <td><%= talk.online_participation_size %></td>
           </tr>
         <% end %>
         </tbody>

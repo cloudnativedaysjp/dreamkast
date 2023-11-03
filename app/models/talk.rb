@@ -459,6 +459,14 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any?
   end
 
+  def online_participation_size
+    registered_talks.select { |rt| rt.profile.participation == 'online' }.size
+  end
+
+  def offline_participation_size
+    registered_talks.select { |rt| rt.profile.participation == 'offline' }.size
+  end
+
   private
 
   def validate_proposal_item_configs

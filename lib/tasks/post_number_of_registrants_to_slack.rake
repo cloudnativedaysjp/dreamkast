@@ -48,7 +48,7 @@ namespace :util do
         client.chat_postMessage(channel: "##{conference.abbr}", text: body.join('\n'), username: "#{conference.abbr.upcase} 参加者速報")
       end
 
-      if conference.abbr == 'tyo2023'
+      if conference.abbr == 'cndt2023'
         client.chat_postMessage(channel: '#tyo2023', text: body.join('\n'), username: "#{conference.abbr.upcase} 参加者速報")
       end
     end

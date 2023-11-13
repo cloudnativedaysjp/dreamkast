@@ -45,11 +45,11 @@ namespace :util do
       end
 
       if channels.any? { |c| c.name == conference.abbr }
-        client.chat_postMessage(channel: "##{conference.abbr}", text: body.join('\n'), username: "#{conference.abbr.upcase} 参加者速報")
+        client.chat_postMessage(channel: "##{conference.abbr}", text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
       end
 
       if conference.abbr == 'tyo2023'
-        client.chat_postMessage(channel: '#tyo2023', text: body.join('\n'), username: "#{conference.abbr.upcase} 参加者速報")
+        client.chat_postMessage(channel: '#tyo2023', text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
       end
     end
   end

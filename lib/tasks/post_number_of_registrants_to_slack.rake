@@ -32,8 +32,8 @@ namespace :util do
 
           body = []
           body << "#{stats.created_at.strftime("%Y-%m-%d %H:%M")} 時点の参加者登録数は #{stats.online_attendees + stats.offline_attendees} 人です！"
-          body << "オンライン参加: #{stats.online_attendees}人 (#{stats.online_attendees - yesterday_stats.online_attendees})"
-          body << "現地参加: #{stats.offline_attendees}人 (#{stats.offline_attendees - yesterday_stats.offline_attendees})"
+          body << "オンライン参加: #{stats.online_attendees}人 (+#{stats.online_attendees - yesterday_stats.online_attendees}人)"
+          body << "現地参加: #{stats.offline_attendees}人 (+#{stats.offline_attendees - yesterday_stats.offline_attendees}人)"
           if conference.abbr == 'cndt2021'
             body << '登録者数目標: 4000人'
             body << "達成率: #{(stats.number_of_registrants.to_f / 4000 * 100).round}%"

@@ -33,7 +33,7 @@ class AdminController < ApplicationController
     @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: params[:event])
     CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
-      @conference.talks.each do |talk|
+      @conference.talks.accepted.each do |talk|
         csv << %W[#{talk.id} #{talk.title} #{talk.online_participation_size} #{talk.offline_participation_size}]
       end
     end

@@ -34,7 +34,7 @@ class AdminController < ApplicationController
     CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
       @conference.talks.each do |talk|
-        csv << %W[#{talk.id} #{talk.title} #{online_participation_size} #{offline_participation_size}]
+        csv << %W[#{talk.id} #{talk.title} #{talk.online_participation_size} #{talk.offline_participation_size}]
       end
     end
     send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: File.stat(f.path).size)

@@ -39,4 +39,14 @@ class ContentsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     render("contents/#{@conference.abbr}/community_lt")
   end
+
+  def yurucafe
+    @conference = Conference.find_by(abbr: params[:event])
+    render("contents/#{@conference.abbr}/yurucafe")
+  end
+
+  def stamprally
+    @conference = Conference.find_by(abbr: params[:event])
+    render("contents/#{@conference.abbr}/stamprally")
+  end
 end

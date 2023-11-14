@@ -124,6 +124,8 @@ Rails.application.routes.draw do
     get 'o11y' => 'contents#o11y'
     get 'attendees' => 'attendees#index'
     get 'community_lt' => 'contents#community_lt'
+    get 'yurucafe' => 'contents#yurucafe'
+    get 'stamprally' => 'contents#stamprally'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'

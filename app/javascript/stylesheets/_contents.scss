@@ -2,6 +2,9 @@
     img.eyecatch{
         display: block;
         margin: 0 auto;
+        @media (max-width: 576px) {
+            width: 100%;
+        }
     }
     hr {
         width: 50%;

@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 col-md-12 py-3 contents" id="handson">
+  <div class="row p-md-4" id="contents">
+    <div class="col-12 col-md-12 py-3" id="handson">
       <%= image_tag 'cndt2023/hands-on.png', style: 'width: 100%'%>
       <h2 class="text-center mt-4" id="">
-        CNDT2023 Hands-on week
+        CNDT2023 Hands-on
       </h2>
       <h4 class="text-center mb-3">
         開催期間：2023/12/4 (月)〜2023/12/8 (金)（CNDT2023 前週）
@@ -102,7 +102,13 @@
         <li>オンライン会場：Zoom</li>
         </p>
       </div>
-      
+      <hr />
+      <div class="col-12 my-4">
+        <h2 class="text-center mt-4">企画一覧</h2>
+        <section class="projects">
+          <%= render(partial: "contents/cndt2023/projects") %>
+        </section>
+      </div>
     </div>
   </div>
 </div>

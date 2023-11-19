@@ -1,112 +1,108 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-12 py-3 contents">
-      <div class="card h-100">
-        <div class="card-body">
-          <%= image_tag 'cndt2023/hands-on.png', style: 'width: 100%'%>
-          <h4 class="card-title" id="kontest" style="color: #2E2F30">
-            CNDT2023 Hands-on
-          </h4>
-          <h6 class="card-subtitle text-muted mb-3">
-            開催期間：2023/12/4 (月)〜2023/12/8 (金)（CNDT2023 前週）
-          </h6>
+    <div class="col-12 col-md-12 py-3 contents" id="handson">
+      <%= image_tag 'cndt2023/hands-on.png', style: 'width: 100%'%>
+      <h2 class="text-center mt-4" id="">
+        CNDT2023 Hands-on week
+      </h2>
+      <h4 class="text-center mb-3">
+        開催期間：2023/12/4 (月)〜2023/12/8 (金)（CNDT2023 前週）
+      </h4>
+      <p>
+        CloudNative Days Tokyo 2023では、以前のObservability Conference 2022で好評だった Co-located ハンズオンを開催することになりました。
+      </p>
+      <p>
+        Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDT2023で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
+      </p>
+      <h3 class="mt-4">申込方法・参加方法</h3>
+      <p>
+        申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+      </p>
+      <p>
+        イベントはオフラインまたはオンラインで実施され、各ハンズオンが提供するZoom・Google Meets・Microsoft Teamsなどを利用します。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+      </p>
 
-          <p class="card-text">
-           CloudNative Days Tokyo 2023では、以前のObservability Conference 2022で好評だった Co-located ハンズオンを開催することになりました。
-          </p>
-
-          <p class="card-text">
-            Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDT2023で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
-          </p>
-          <br>
-          <h5><strong>申込方法・参加方法</strong></h5>
-
-          <p class="card-text">
-            申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
-          </p>
-          <p class="card-text">
-            イベントはオフラインまたはオンラインで実施され、各ハンズオンが提供するZoom・Google Meets・Microsoft Teamsなどを利用します。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
-          </p>
-          <br>
-          <h5><strong>スケジュール</strong></h5>
-          <p class="card-text">
-          <ul>
-            開催期間: 2023/12/4 (月)〜2023/12/8 (金)（CNDT2023 前週）
-            <li><a href="#hc0">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</a></li>
-            <ul><li>2023/12/8（金）10:00 - 17:00 （途中お昼休憩あり）</li></ul>
-            <li><a href="#hc1">『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</a></li>
-            <ul><li>2023/12/7（木）13:00 - 15:00</li></ul>
-          </ul>
-
-          <div class="handson-session">
-            <h5 id="hc0"><strong>『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</strong></h5>
-            <ul>
-              <li>
-                <% if @current_user %>
-                  申し込みURL：<a href="https://docs.google.com/forms/d/e/1FAIpQLSf41IhlbwDO-vNe0UCoJ6_EwnxN8eCyF5A4_JGGJ5wwvozUdw/viewform">https://docs.google.com/forms/d/e/1FAIpQLSf41IhlbwDO-vNe0UCoJ6_EwnxN8eCyF5A4_JGGJ5wwvozUdw/viewform</a>
-                <% else %>
-                  <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
-                <% end %>
-              </li>
-              <li>
-                開催日時：2023/12/8（金）10:00 - 17:00 （途中お昼休憩あり）
-              </li>
-            </ul>
-            <p class="card-text">
-            このハンズオンは、KubernetesやCloudNative技術に精通したメンバーが、2023年現在でデファクトとなっている新しい技術について一気に学べるように設計したハンズオンです。
-            下記のような様々なトピックを、手を動かしながら1日で学ぶことができます。<br> 
-
-            【学べるOSS】
-            <ul>
-              <li>Prometheus</li>
-              <li>Grafana</li>
-              <li>Open Telemetry</li>
-              <li>Cilium</li>
-              <li>Argo CD</li>
-              <li>Argo Rollouts</li>
-              <li>Istio</li>
-              <li>Hubble</li>
-            </ul>
-
-            【参加情報】
-            <ul>
-              <li>参加：無料</li>
-              <li>定員：オフライン20名（先着）、オンライン10名（先着）</li>
-              <li>オフライン会場：渋谷スクランブルスクエア 21F（東京都渋谷区渋谷2-24-12）</li>
-              <li>※渋谷スクランブルスクエアへのアクセス・入館方法は<a href="https://www.cyberagent.co.jp/way/list/detail/id=25112">こちら</a></li>
-            </ul>
-            <li>オンライン会場：Zoom</li>
-            </p>
-            <h5 id="hc1"><strong>『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</strong></h5>
-            <a href="https://www.dynatrace.com/ja/" target="_blank"><%= image_tag 'sponsors/cndt2022/dynatrace.png', :width => '30%' %></a>
-            <ul>
-              <li>
-                <% if @current_user %>
-                  申し込みURL：TBD
-                <% else %>
-                  <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
-                <% end %>
-              </li>
-              <li>
-                開催日時：2023/12/7（木）13:00 - 15:00
-              </li>
-            </ul>
-            <p class="card-text">
-            クラウドコンピューティングを利用して、デジタルサービスを提供する企業にとって、Site Reliability Engineering (SRE) の実践は不可欠になっています。<br>
-            SREは、可用性、パフォーマンス、ユーザー体験、およびビジネスKPIに関するサービスレベルアグリーメント（SLA）を満たすために役立つものです。<br>
-            <br>
-            本ハンズオンではDynatraceを利用してSLIの定義からSLOを策定し、ダッシュボードの作成までを行います。<br>
-            本セッションを通じて、SREを実践するために必要なDynatraceを学ぶことができます。<br>
-
-            <ul>
-              【講師プロフィール】
-              <li>Dynatrace合同会社 角田 勝義 (AIOpsエバンジェリスト)</li>
-              <li>ネットワークエンジニアとして、設計・構築などに従事。その後、アプリケーションデリバリーやセキュリティ製品のプリセールスエンジニアとして広くインフラ領域に携わる。クラウドネイティブ技術に興味を持ちコンテナやKubernetesを中心にモニタリングやオブザーバビリティの重要性を広めるために日々奮闘中。</li>
-            </ul>
-            </p>
-          </div>
-        </div>
+      <h3 class="mt-4">開催予定ハンズオン</h3>
+      <div class="session">
+        <h5 class="time">2023/12/7（木）13:00 - 15:00</h5>
+        <h4 class="title"><a href="#hc0">『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</a></h4>
       </div>
+      <div class="session">
+        <h5 class="time">2023/12/8（金）10:00 - 17:00 （途中お昼休憩あり）</h5>
+        <h4 class="title"><a href="#hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</a></h4>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc0">『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</h3>
+        <a href="https://www.dynatrace.com/ja/" target="_blank"><%= image_tag 'sponsors/cndt2022/dynatrace.png', class: "logo" %></a>
+        <ul>
+          <li>
+            <% if @current_user %>
+              申し込みURL：TBD
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2023/12/7（木）13:00 - 15:00
+          </li>
+        </ul>
+        <p>
+        クラウドコンピューティングを利用して、デジタルサービスを提供する企業にとって、Site Reliability Engineering (SRE) の実践は不可欠になっています。<br>
+        SREは、可用性、パフォーマンス、ユーザー体験、およびビジネスKPIに関するサービスレベルアグリーメント（SLA）を満たすために役立つものです。<br>
+        <br>
+        本ハンズオンではDynatraceを利用してSLIの定義からSLOを策定し、ダッシュボードの作成までを行います。<br>
+        本セッションを通じて、SREを実践するために必要なDynatraceを学ぶことができます。<br>
+
+      <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>Dynatrace合同会社 角田 勝義 (AIOpsエバンジェリスト)</li>
+          <li>ネットワークエンジニアとして、設計・構築などに従事。その後、アプリケーションデリバリーやセキュリティ製品のプリセールスエンジニアとして広くインフラ領域に携わる。クラウドネイティブ技術に興味を持ちコンテナやKubernetesを中心にモニタリングやオブザーバビリティの重要性を広めるために日々奮闘中。</li>
+        </ul>
+        </p>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</h3>
+        <ul>
+          <li>
+            <% if @current_user %>
+              申し込みURL：<a href="https://docs.google.com/forms/d/e/1FAIpQLSf41IhlbwDO-vNe0UCoJ6_EwnxN8eCyF5A4_JGGJ5wwvozUdw/viewform">https://docs.google.com/forms/d/e/1FAIpQLSf41IhlbwDO-vNe0UCoJ6_EwnxN8eCyF5A4_JGGJ5wwvozUdw/viewform</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2023/12/8（金）10:00 - 17:00 （途中お昼休憩あり）
+          </li>
+        </ul>
+        <p >
+        このハンズオンは、KubernetesやCloudNative技術に精通したメンバーが、2023年現在でデファクトとなっている新しい技術について一気に学べるように設計したハンズオンです。
+        下記のような様々なトピックを、手を動かしながら1日で学ぶことができます。<br> 
+
+        <h5>【学べるOSS】</h5>
+        <ul>
+          <li>Prometheus</li>
+          <li>Grafana</li>
+          <li>Open Telemetry</li>
+          <li>Cilium</li>
+          <li>Argo CD</li>
+          <li>Argo Rollouts</li>
+          <li>Istio</li>
+          <li>Hubble</li>
+        </ul>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：オフライン20名（先着）、オンライン10名（先着）</li>
+          <li>オフライン会場：渋谷スクランブルスクエア 21F（東京都渋谷区渋谷2-24-12）</li>
+          <li>※渋谷スクランブルスクエアへのアクセス・入館方法は<a href="https://www.cyberagent.co.jp/way/list/detail/id=25112">こちら</a></li>
+        </ul>
+        <li>オンライン会場：Zoom</li>
+        </p>
+      </div>
+      
     </div>
   </div>
 </div>

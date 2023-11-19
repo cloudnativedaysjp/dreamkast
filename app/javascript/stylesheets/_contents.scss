@@ -28,3 +28,35 @@
         }
     }
 }
+
+#handson {
+    a {
+        text-decoration: underline dotted #CCC;
+        text-underline-offset: 0.2em;
+    }
+    .session {
+        margin: 2em 0;
+        h5{
+            font-size: medium;
+            border-left: 5px solid $primary;
+            padding-left: 5px;
+        }
+        h4{
+            font-size: large;
+        }
+    }
+    .handson-session{
+        h3 {
+            font-size: x-large;
+            font-weight: bold;
+            border-left: 5px solid $primary;
+            padding-left: 5px;
+        }
+        .logo {
+            display: block;
+            margin: 30px auto;
+            width: 30%;
+            max-width: 300px;
+        }
+    }
+}

@@ -21,14 +21,14 @@
           <% end %>
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <% if @conference.present? && @conference.speaker_entry_enabled? %>
-              <li class="nav-item"><%= link_to "プロポーザル一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
+              <li class="nav-item"><%= link_to "プロポーザル", talks_path, class: "nav-link js-scroll-trigger" %></li>
             <% elsif %>
               <li class="nav-item dropdown">
                 <% if @conference.present? &&  @conference.show_timetable_enabled? %>
-                <li class="nav-item"><%= link_to "参加者一覧", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "参加者", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
-                <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "セッション", talks_path, class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
               </li>
             <% end %>
@@ -59,7 +59,7 @@
             <% when 'cndf2023' %>
               <li class="nav-item"><%= link_to "Attendee List", attendees_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndt2023' %>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
+              <li class="nav-item"><%= link_to "企画一覧", "#{root_url}#{event_name}#project-list", class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>
           <% end %>
         <% end %>

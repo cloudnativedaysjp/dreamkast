@@ -338,3 +338,20 @@
 .talk-page {
     margin-top: 80px;
 }
+
+#community-lt div.community{
+    border-bottom: 1px dotted #CCC;
+    a {
+        text-decoration: underline dotted #CCC 1px;
+        text-underline-offset: 0.2em;
+    }
+    &:hover{
+        background-color: #EEE;
+    }
+    .description{
+        white-space: pre-wrap;
+    }
+    .time {
+        font-weight: bold;
+    }
+}

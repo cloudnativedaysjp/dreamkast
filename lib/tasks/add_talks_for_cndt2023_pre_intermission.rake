@@ -29,7 +29,7 @@ namespace :util do
       %w[20:00:00 20:40:00 セッション2 intermission],
       %w[20:45:00 20:55:00 CNDT2023の見どころ紹介 intermission],
       %w[20:55:00 21:00:00 クロージング intermission],
-      %w[21:00:00 21:10:00 本日のイベントは終了しました intermission],
+      %w[21:00:00 21:10:00 本日のイベントは終了しました intermission]
     ]
 
     day = conference.conference_days.find_by(date: '2023-11-20')

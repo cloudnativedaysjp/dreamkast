@@ -1,6 +1,179 @@
+<%
+lts = [
+  {
+    date: "12/11(月)",
+    communities: [
+      {
+        name: "OutSystems User Groups Tokyo",
+        url: "https://usergroups.outsystems.com/tokyo/",
+        description: nil,
+        logo: "dummy.png",
+        time: "12:55-13:00"
+      },
+      {
+        name: "OpenShift Lounge+",
+        url: "https://openshift.connpass.com/",
+        description: "Kubernetes ディストリビューションのひとつである「OpenShift」のユーザーグループイベントです。Red Hat社員を含む有志によって運営しています。OpenShiftを最近知ったという方からOpenShiftを本番環境でフル活用しているエンジニアまでどなたもご参加いただけるイベントを開催しています。OpenShift や K8s に限らずクラウドネイティブ技術ネタで盛り上がる空間を目指しています。一緒に楽しみましょう！",
+        logo: "dummy.png",
+        time: "13:00-13:05"
+      },
+      {
+        name: "Kubernetes Meetup Tokyo",
+        url: "https://k8sjp.connpass.com/",
+        description: "Kubernetes Meetup Tokyo は強力なコンテナオーケストレーションツールである Kubernetes について詳しく聞く会です！",
+        logo: "kubernetes-tokyo-square-transparent.png",
+        time: "13:05-13:10"
+      },
+      {
+        name: "EM Oasis",
+        url: "https://emoasis.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "13:10-13:15"
+      },
+      {
+        name: "JAWS-UG（AWS Users Group – Japan）",
+        url: "https://jaws-ug.jp/",
+        description: "JAWS-UGとは、AWS (Amazon Web Services) が提供するクラウドコンピューティングを利用する人々の集まり（コミュニティ）です。
+一人ではできない学びや交流を目的としてボランティアによる勉強会の開催や交流イベントなどを行なっています。
+私たちは日本全国に「支部」の形でグループを持ち、それぞれのテーマに基づいて活動を行なっています。
+
+※このコミュニティーは、非営利目的で活動しています。",
+        logo: "jaws-vertical-logo@2x.png",
+        time: "14:05-14:10"
+      },
+      {
+        name: "SRE Lounge / SRE NEXT",
+        url: "https://sre-next.org/",
+        description: "SRE Lounge/NEXT は 「サイト信頼性エンジニアリング 」のコンセプトに共感したり、興味がある人々のためのオープンなコミュニティです。登壇発表／ディスカッション／LT／フリートーク など様々なイベント開催や、Slackでのコミュニケーションを行っています。コミュニティを通じて信頼性に関心のある人々同士がつながり、日本のSREシーンやプロダクトづくりを盛り上げること目的としています。",
+        logo: "srenextlogo_2_square_dark.svg",
+        time: "14:10-14:15"
+      },
+      {
+        name: "技術書同人誌博覧会",
+        url: "https://gishohaku.dev",
+        description: "技術書同人誌博覧会（技書博）は、技術に関する同人誌の即売会です。ITの他に、理工/数学/デザイン/マネジメントなど幅広い技術を取り扱っています。エンジニアのアウトプットを応援したい＆増やしたいという思いからこのイベントが生まれました。初心者にもベテランにも優しく、ゆったりと交流しながら知識を深め、仲間を作ったり成長できるような場所を目指しています。",
+        logo: "gishohaku-short-alpha-black.svg",
+        time: "15:05-15:10"
+      },
+      {
+        name: "Object-Oriented Conference",
+        url: "https://ooc.dev",
+        description: "Object-Oriented Conferenceは、アーキテクチャや分析設計をはじめ現場で活かすためのプラクティスなどを扱う、国内唯一のオブジェクト指向をテーマにしたITカンファレンスです。次回2024年3月24日に開催します。",
+        logo: "dummy.png",
+        time: "15:10-15:15"
+      },
+      {
+        name: "datatech-jp",
+        url: "https://datatech-jp.github.io/",
+        description: "",
+        logo: "dummy.png",
+        time: "16:05-16:10"
+      },
+      {
+        name: "Kubernetes Meetup Novice",
+        url: "https://k8s-novice-jp.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "16:10-16:15"
+      },
+      {
+        name: "日本DNSオペレーターズグループ",
+        url: "https://dnsops.jp/",
+        description: "インターネットのさまざまなサービスは、 DNSによる名前解決を暗黙の前提としています。 しかし、そのように重要なサービスであるにもかかわらず、 DNS運用に関する知識・情報の共有は十分になされているとはいえません。 DNSOPS.JPでは、この現状を改善するため、 DNSに関連するさまざまな知識・情報の共有や問題解決を図り、 DNSの健全で安定した運用の継続をめざします。
+これまでは、特にDNSサービス運用者を対象とした活動を行ってきましたが、今後はDNSを利用する全ての方々や関係者との交流を通じて、DNS利用者のサービス安定運用に貢献する取り組みを推進していきます。",
+        logo: "dnsops-jp-logo.png",
+        time: "17:05-17:10"
+      },
+      {
+        name: "NRUG SRE支部とJAWS-UG SRE支部",
+        url: "https://nrug-sre.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "17:10-17:15"
+      },
+      
+    ]
+  },
+  {
+    date: "12/12(火)",
+    communities: [
+      {
+        name: "Forkwell Community",
+        url: "https://forkwell.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "13:00-13:05"
+      },
+      {
+        name: "OCHaCafe",
+        url: "https://ochacafe.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "13:05-13:10"
+      },
+      {
+        name: "RancherJP",
+        url: "https://rancherjp.connpass.com/",
+        description: "<a href=\"https://rancherjp.connpass.com/\">RancherJP</a>は、OSSのK8s管理プラットフォーム Rancher の日本国内での普及を目的としたユーザーコミュニティです。
+<a href=\"https://cnjp.connpass.com/\">Cloud Native JP</a>は、Cloud Native技術に関連するテーマとしたイベントを開催しもっと気軽に挑戦するきっかけを作るユーザコミュニティです。
+<a href=\"https://otfsg-tokyo.connpass.com/\">OTFSG Tokyo</a>はHudi、Iceberg、Delta等データレイクのためのデータフォーマットに関する知見や知識を共有する勉強会です。",
+        logo: "rancherjp-logo-horiz-color.png",
+        time: "13:10-13:15"
+      },
+      {
+        name: "MLOps community",
+        url: "https://mlops.connpass.com/",
+        description: "",
+        logo: "dummy.png",
+        time: "14:05-14:10"
+      },
+      {
+        name: "NETCON",
+        url: "https://www.janog.gr.jp/meeting/janog53/netcon/",
+        description: "ネットワークエンジニアのためのコンテストです。
+JANOG参加者が誰でも参加できるネットワークコンテストを開催します。
+コンテストでは、実際にトラブルが起きているネットワーク環境を提供します。
+それらを実際に解いていただくことで、ネットワークエンジニアとしてトラブルシューティングの勘を高めていこうという企画です。",
+        logo: "dummy.png",
+        time: "14:10-14:15"
+      },
+      {
+        name: "Database Engineering Meetup",
+        url: "",
+        description: "Database Engineering Meetupはデータベース関連の幅広いテーマについてゆるく話し合う会です。昨今クラウド業界を中心に多種多様なデータベースが新たに提供されており、開発者は自分のニーズにあったデータベースを選ぶ時代が到来しています。産業界・学術界を含めた様々な立場からの多様なデータベースに関する講演を主なコンテンツとし、データベースに関わる・もっと関わりたい方々が楽しめる場とすることによって、日本のデータベースコミュニティを盛り上げていきます。",
+        logo: "dummy.png",
+        time: "15:05-15:10"
+      },
+      {
+        name: "Jagu'e'r AI/ML 分科会",
+        url: "https://jaguer.jp/aiml/",
+        description: "Google Cloud を使用した AI 領域におけるデータの活用を支援します。AI/ML領域を盛り上げるため、日本国内外における AI/ML 関連プロジェクトの推進等における課題を共有し、日本におけるデータの高度利用を推進し、また、理論・テクノロジーとしてのAI/MLへの理解を深めることで、前述の課題に対する革新的なソリューション、およびビジネスアイデアの創出を行う場を提供しています。",
+        logo: "jaguer.svg",
+        time: "15:10-15:15"
+      },
+      {
+        name: "MLSE 機械学習オペレーションWG / LangCheck",
+        url: "https://sites.google.com/view/sig-mlse/wg#h.k4b7euhpss8g",
+        description: "",
+        logo: "dummy.png",
+        time: "16:05-16:10"
+      },
+      {
+        name: "OSSPH",
+        url: "https://ossph.org/",
+        description: "",
+        logo: "dummy.png",
+        time: "16:10-16:15"
+      },
+    ]
+  }
+]
+
+
+%>
 
 <div class="container">
-
   <div class="row p-md-4" id="contents">
     <div class="col-12 my-4">
       <%= image_tag 'cndt2023/community-lt.png', class: "eyecatch" %>
@@ -8,36 +181,25 @@
       <p>長く続いたコロナ禍によってリアルなイベントの開催が難しくなり、その結果コミュニティの分断や活動量の低下が起きてしまいました。ですが最近は、再び集まろうという機運が高まってきているように感じています。</p>
       <p>そこで！ 今回はCNDT2023の会場にLTスペースを設置し、技術コミュニティのみなさんと一緒にLT大会を開催します。あなたの知らない素敵なコミュニティに出会えるチャンスです！</p>
     </div>
-    <div class="col-12 my-4">
-      <h2 class="text-center mb-3">参加コミュニティ</h2>
-      <ul>
-        <li>OutSystems User Groups Tokyo</li>
-        <li>EM Oasis</li>
-        <li>MLSE 機械学習オペレーションWG / LangCheck</li>
-        <li>OCHaCafe</li>
-        <li>技術書同人誌博覧会</li>
-        <li>Object-Oriented Conference</li>
-        <li>SRE Lounge / SRE NEXT</li>
-        <li>OSSPH</li>
-        <li>MLOps community</li>
-        <li>RancherJP</li>
-        <li>JAWS-UG（AWS Users Group – Japan）</li>
-        <li>datatech-jp</li>
-        <li>Kubernetes Meetup Novice</li>
-        <li>日本DNSオペレーターズグループ</li>
-        <li>NETCON</li>
-        <li>Jagu'e'r AI/ML 分科会</li>
-        <li>Forkwell Community</li>
-        <li>Database Engineering Meetup</li>
-        <li>Kubernetes Meetup Tokyo</li>
-        <li>NRUG SRE支部とJAWS-UG SRE支部</li>
-        <li>OpenShift Lounge+</li>
-      </ul>
-      (順不同)
-    </div>
-    <div class="col-12 my-4">
-      <h2 class="text-center mt-4">タイムスケジュール</h2>
-      現在調整中です
+    <div class="col-12 my-4" id="community-lt">
+      <h2 class="text-center mb-3">タイムテーブル</h2>
+      <% lts.each do |lt| %>
+        <h3 class="text-center mt-4"><%= lt[:date] %></h3>
+        <div class="timetable container">
+          <% lt[:communities].each do |community| %>
+          <div class="community row py-4">
+            <div class="col-2">
+              <a href="<%= community[:url] %>" target="_blank"><%= image_tag("cndt2023/community/#{community[:logo]}", style: "width: 100%;") unless community[:logo].blank? %></a>
+            </div>
+            <div class="col-10">
+              <div class="time"><%= community[:time] %></div>
+              <h4 class=""><a href="<%= community[:url] %>" target="_blank"><%= community[:name] %></a></h4>
+              <div class="description"><%= sanitize community[:description] %></div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     <div class="col-12 my-4">
       <h2 class="text-center mt-4">開催場所</h2>

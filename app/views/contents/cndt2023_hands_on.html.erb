@@ -147,6 +147,34 @@
       </div>
 
       <div class="handson-session">
+      <h3 id="hc3">『Webアプリケーションの脆弱性診断を簡単に試してみよう』by 株式会社スリーシェイク</h3>
+      <a href="https://www.securify.jp/" target="_blank"><%= image_tag 'cndt2023/handson/securify.png', class: "logo" %></a>
+      <ul>
+        <li>
+          <% if @current_user %>
+            申し込みURL：<a href="https://www.securify.jp/event-seminar/handson-web/">https://www.securify.jp/event-seminar/handson-web/</a>
+          <% else %>
+            <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
+          <% end %>
+        </li>
+        <li>
+          開催日時：2023/12/7（木）12:00 - 13:00
+        </li>
+      </ul>
+      <p>
+        Securify Webアプリケーション診断はSQLインジェクションなどのAPIやWebアプリケーションにまつわる脆弱性を簡単に見つけられるツールになっています。<br>
+        誰でもホワイトハッカーになった気持ちで簡単に試せるツールとなっており、ハンズオンでは実際のデモのWebサイトに対して脆弱性診断を実施します<br>
+        <br>
+        <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>手塚 卓也 (Incubation事業部部長)</li>
+          <li>自治体やデータベースマーケティング会社でのインフラ設計/構築/運用を主に経験し、2018 年 10 月に 3-Shake に Join。<br>
+          3-Shake Join 後は Google Cloud / AWS / kubernetes / ServiceMesh など様々な技術的アプローチを駆使し、大手からベンチャー等規模を問わず様々な組織に対してSREのコンサルティングや実践を行っている。</li>
+        </ul>
+      </p>
+      </div>
+
+      <div class="handson-session">
         <h3 id="hc0">『【SRE実践講座】 クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</h3>
         <a href="https://www.dynatrace.com/ja/" target="_blank"><%= image_tag 'cndt2023/handson/dynatrace.png', class: "logo" %></a>
         <ul>

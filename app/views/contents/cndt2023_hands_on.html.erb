@@ -24,16 +24,71 @@
 
       <h3 class="mt-4">開催予定ハンズオン</h3>
       <div class="session">
+        <h5 class="time">2023/12/5（火）13:00 - 15:00</h5>
+        <h4 class="title"><a href="#hc0">『CNDTスペシャル - OpenShift超基礎編ハンズオンもくもく会』by OpenShift Lounge+</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2023/12/6（水）13:00 - 15:00</h5>
+        <h4 class="title"><a href="#hc1">『CNDTスペシャル - OpenShiftを活用したサーバーレスを体験』by OpenShift Lounge+</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2023/12/6（水）10:00 - 12:00</h5>
+        <h4 class="title"><a href="#hc2">『CloudNatixを利用したkubernetesオペレーションの最適化ハンズオン』by NECソリューションイノベータ</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2023/12/7（木）12:00 - 13:00</h5>
+        <h4 class="title"><a href="#hc3">『Webアプリケーションの脆弱性診断を簡単に試してみよう』by 株式会社スリーシェイク</a></h4>
+      </div>
+      <div class="session">
         <h5 class="time">2023/12/7（木）13:00 - 15:00</h5>
-        <h4 class="title"><a href="#hc0">『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</a></h4>
+        <h4 class="title"><a href="#hc4">『【SRE実践講座】 クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2023/12/7（木）14:00 - 16:00</h5>
+        <h4 class="title"><a href="#hc5">『CNDTスペシャル - Red Hat Device Edgeで俺だけの最強のOSイメージを構築！』by OpenShift Lounge+</a></h4>
       </div>
       <div class="session">
         <h5 class="time">2023/12/8（金）10:00 - 17:00 （途中お昼休憩あり）</h5>
-        <h4 class="title"><a href="#hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</a></h4>
+        <h4 class="title"><a href="#hc6">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Tokyo 2023 実行委員会</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2023/12/8（金）13:00 - 15:00</h5>
+        <h4 class="title"><a href="#hc7">『CNDTスペシャル - 次世代コンテナランタイム Podmanを体験』by OpenShift Lounge+</a></h4>
       </div>
 
       <div class="handson-session">
-        <h3 id="hc0">『【SRE実践講座】  クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</h3>
+      <h3 id="hc0">『CNDTスペシャル - OpenShift超基礎編ハンズオンもくもく会』by OpenShift Lounge+</h3>
+      <a href="https://openshift.connpass.com/" target="_blank"><%= image_tag 'cndt2023/handson/redhat.png', class: "logo" %></a>
+      <ul>
+        <li>
+          <% if @current_user %>
+            申し込みURL：<a href="https://openshift.connpass.com/event/301853/">https://openshift.connpass.com/event/301853/</a>
+          <% else %>
+            <strong class="alert-url">申し込みURLを表示するには CNDT2023 サイトにログインしてください。</strong>
+          <% end %>
+        </li>
+        <li>
+          開催日時：2023/12/5（火）13:00 - 15:00
+        </li>
+      </ul>
+      <p>
+        CNDT2023のCo-located Handson Eventとして、"OpenShift Handson Week" を開催します。<br>
+        今回は第一弾です。<br>
+        Kubernetes経験者の方、K8s未経験でOpenShiftからスタートされる方、コンテナもK8sもOpenShiftも全くの未経験でこれから楽しみたい方、い>ずれの方でもクイックにOpenShiftに触れられる会です。<br>
+        <br>
+        参加者おひとりずつが、各自Admin権限のある専有OpenShiftクラスター を利用できますので、1人1クラスターの環境を自由に使って、お好きなトピックを楽しんでください。<br>
+        <br>
+        OpenShift基礎体験
+        <ul>
+          <li>ArgoCDを使ったOpenShift GitOps体験</li>
+          <li>Tektonを使ったOpenShift Pipelines体験</li>
+          <li>Multicluster管理体験</li>
+          <li>自由に使えるOpenShift環境 (Admin権限で自由に触れます)</li>
+        </ul>
+      </p>
+      </div>
+      <div class="handson-session">
+        <h3 id="hc0">『【SRE実践講座】 クラウドネイティブなオブザーバビリティを実現するDynatraceのハンズオンセミナー開催！』by Dynatrace合同会社</h3>
         <a href="https://www.dynatrace.com/ja/" target="_blank"><%= image_tag 'cndt2023/handson/dynatrace.png', class: "logo" %></a>
         <ul>
           <li>

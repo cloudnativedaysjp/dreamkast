@@ -195,7 +195,7 @@ EOS
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
-    capacity: 400,
+    capacity: 550,
     about: <<'EOS'
     "CloudNative Days"は、技術を学び、技術と人・人と人の繋がりを深めるテックカンファレンスです。
     コロナ禍で生じたコミュニティの分断を乗り越え、一体感を再び取り戻し、仲間や友達と共に成長しましょう。

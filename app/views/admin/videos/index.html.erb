@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         <% @talks.each do |talk| %>
-          <tr style="font-size: 0.5rem">
+          <tr>
             <td><%= talk.id %></td>
             <td><%= talk.speakers.map(&:name).join(", ") %></td>
             <td><%= talk.title %></td>

@@ -107,9 +107,9 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
   end
 
   def playback_url
-    aws_resource&.low_latency_hls_manifests&.first&.url
-    # resp = cloudfront_client.get_distribution({ id: distribution_id })
-    # "https://#{resp.distribution.domain_name}#{URI.parse(origin_url).path}"
+    origin_url = aws_resource&.low_latency_hls_manifests&.first&.url
+    resp = cloudfront_client.get_distribution({ id: distribution_id })
+    "https://#{resp.distribution.domain_name}#{URI.parse(origin_url).path}"
   rescue Aws::MediaPackageV2::Errors::NotFoundException
     ''
   end

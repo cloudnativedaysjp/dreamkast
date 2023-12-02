@@ -35,6 +35,6 @@ class ProposalItem < ApplicationRecord
 
   def self.select_proposal_items
     ProposalItem.joins(:talk)
-                 .select(:talks.id AS talk_id, :label, :params, :conference_id)
+                .select(:talks.id(AS(talk_id)), :label, :params, :conference_id)
   end
 end

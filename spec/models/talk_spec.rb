@@ -237,4 +237,58 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
     end
   end
+
+  describe '#offline_participation_size' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let!(:bob) { create(:bob, :on_cndt2020, :offline, conference: cndt2020) }
+
+    context 'only online' do
+      before do
+        create(:registered_talk, talk:, profile: alice)
+      end
+
+      it 'return 0' do
+        expect(talk.offline_participation_size).to(eq(0))
+      end
+    end
+
+    context 'has one offline registration' do
+      before do
+        create(:registered_talk, talk:, profile: alice)
+        create(:registered_talk, talk:, profile: bob)
+      end
+      it 'return 1' do
+        expect(talk.offline_participation_size).to(eq(1))
+      end
+    end
+  end
+
+  describe '#online_participation_size' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+    let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
+    let!(:bob) { create(:bob, :on_cndt2020, :offline, conference: cndt2020) }
+
+    context 'only offline' do
+      before do
+        create(:registered_talk, talk:, profile: bob)
+      end
+
+      it 'return 0' do
+        expect(talk.online_participation_size).to(eq(0))
+      end
+    end
+
+    context 'has one online registration' do
+      before do
+        create(:registered_talk, talk:, profile: alice)
+        create(:registered_talk, talk:, profile: bob)
+      end
+      it 'return 1' do
+        expect(talk.online_participation_size).to(eq(1))
+      end
+    end
+  end
 end

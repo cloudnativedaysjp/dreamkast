@@ -213,7 +213,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
     marker = nil
     cache_policies = []
     loop do
-      resp = cloudfront_client.list_cache_policies({ type: 'managed', max_items: 1, marker: })
+      resp = cloudfront_client.list_cache_policies({ type: 'custom', max_items: 10, marker: })
       cache_policies.concat(resp.cache_policy_list.items)
       break unless resp.cache_policy_list.next_marker
       marker = resp.cache_policy_list.next_marker

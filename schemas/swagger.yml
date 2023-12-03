@@ -1236,6 +1236,10 @@ components:
           type: number
         allowShowingVideo:
           type: boolean
+        offlineParticipationCount:
+          type: number
+        onlineParticipationCount:
+          type: number
       example:
         - id: 1
           trackId: 2
@@ -1301,6 +1305,8 @@ components:
         - talkDuration
         - talkDifficulty
         - talkCategory
+        - offlineParticipationCount
+        - onlineParticipationCount
     Proposal:
       type: object
       additionalProperties: false

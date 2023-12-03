@@ -25,4 +25,6 @@ json.array!(@talks) do |talk|
   json.presentationMethod(talk.presentation_method)
   json.slotNum(talk.slot_number.to_i)
   json.allowShowingVideo(talk.allowed_showing_video?)
+  json.offlineParticipationCount(talk.offline_participation_size)
+  json.onlineParticipationCount(talk.online_participation_size)
 end

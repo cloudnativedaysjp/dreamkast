@@ -219,6 +219,15 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
       marker = resp.cache_policy_list.next_marker
     end
 
-    cache_policies.find { |policy| policy.cache_policy.cache_policy_config.name == 'Managed-Elemental-MediaPackage' }.cache_policy
+    cache_policies.find { |policy| policy.cache_policy.cache_policy_config.name == cache_policy_name }.cache_policy
+  end
+
+  def cache_policy_name
+    case env_name
+    when 'production'
+      'MediaPackageV2_prd'
+    else
+      'MediaPackageV2_stg'
+    end
   end
 end

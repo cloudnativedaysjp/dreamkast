@@ -20,10 +20,6 @@ class AdminController < ApplicationController
     redirect_to(logout_url.to_s)
   end
 
-  def users
-    @profiles = Profile.where(conference_id: @conference.id)
-  end
-
   def statistics
     @talks = @conference.talks.includes(:registered_talks).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
   end

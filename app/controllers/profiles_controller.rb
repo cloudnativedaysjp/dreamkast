@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
   include Secured
 
   before_action :set_conference
-  before_action :set_current_profile, only: [:edit, :update, :destroy]
+  before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
 
@@ -108,22 +108,6 @@ class ProfilesController < ApplicationController
       c = CheckIn.new
       c.profile_id = @profile.id
       c.save
-
-      # TODO: This is a temporary solution. We should replace hardcoded values after CNDT2022.
-      begin
-        if ['dreamkast', 'dreamkast-staging'].include?(ENV['DREAMKAST_NAMESPACE'])
-          checkin_point_event_id = '0bdce2ed486744c1205feca7070b31dd66b0649c'
-          bonus_point_event_id = '21735f8eb9f786cc2f054c2df12606f8a659001a'
-        else
-          checkin_point_event_id = '438f2da574029a62ff2f24be87fee2cf583d130b'
-          bonus_point_event_id = '62292c67bd1d3ff19ee7f4c001bc09a828b4f784'
-        end
-        api_client = DreamkastApiClient.new(@conference.abbr)
-        api_client.add_point(checkin_point_event_id, @profile.id) # 会場チェックイン
-        api_client.add_point(bonus_point_event_id, @profile.id) if @profile.created_at < Time.parse('2023-03-20') # 事前登録ボーナス
-      rescue => e
-        p(e)
-      end
     elsif @profile.nil?
       redirect_to("/#{params[:event]}/registration")
     else

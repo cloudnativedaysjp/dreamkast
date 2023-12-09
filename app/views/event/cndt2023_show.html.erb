@@ -96,7 +96,7 @@
                   lunch_break = 80
                   each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
                 end
-                
+
                 total_break = lunch_break + each_break
 
                 row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 09:50")) / 60).to_i - total_break
@@ -164,8 +164,10 @@
               <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
                   <li>
-                    <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
-                    <%= speaker&.name %>
+                    <div style="width: min-content">
+                      <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
+                      <%= speaker&.name %>
+                    </div>
                   </li>
                 <% end %>
               <% end %>

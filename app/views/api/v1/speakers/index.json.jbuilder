@@ -6,5 +6,5 @@ json.array!(@speakers) do |speaker|
   json.profile(speaker.profile)
   json.githubId(speaker.github_id)
   json.twitterId(speaker.twitter_id)
-  json.avatarUrl(speaker.avatar_url)
+  json.avatarUrl(speaker.avatar_or_dummy_url(:medium))
 end

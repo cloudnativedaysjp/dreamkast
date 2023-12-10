@@ -5,9 +5,6 @@ class AttendeeDashboardsController < ApplicationController
 
   def show
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
-    if @conference.opened?
-      redirect_to(tracks_path)
-    end
 
     @announcements = @conference.announcements.published
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?

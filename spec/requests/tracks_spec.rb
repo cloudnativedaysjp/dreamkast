@@ -141,7 +141,7 @@ RSpec.describe(TracksController, type: :request) do
           get '/cndt2020'
           expect(response).to_not(be_successful)
           expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('/cndt2020/dashboard'))
+          expect(response).to(redirect_to('/cndt2020/ui'))
         end
       end
     end

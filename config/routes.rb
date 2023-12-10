@@ -41,11 +41,13 @@ Rails.application.routes.draw do
     get 'admin/debug' => 'admin#debug'
     get 'admin/chat' => 'admin#chat'
     get 'admin/accesslog' => 'admin#accesslog'
-    get 'admin/users' => 'admin#users'
     get 'admin/statistics' => 'admin#statistics'
     get 'admin/export_statistics' => 'admin#export_statistics'
     delete 'admin/destroy_user' => 'admin#destroy_user'
     namespace :admin do
+      get 'users' => 'profiles#index'
+      resources :profiles
+      resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
       resources :booths, only: [:index, :show]

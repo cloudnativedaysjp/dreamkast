@@ -1,6 +1,10 @@
 class Admin::ProfilesController < ApplicationController
   include SecuredAdmin
 
+  def index
+    @profiles = Profile.where(conference_id: @conference.id)
+  end
+
   def export_profiles
     profiles = Profile.export(@conference.id)
     filename = './tmp/profiles.csv'

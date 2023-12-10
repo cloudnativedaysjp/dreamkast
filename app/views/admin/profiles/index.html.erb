@@ -1,0 +1,47 @@
+<%= render 'admin/layout' do %>
+  <div class="row">
+    <h2>Registered users</h2>
+  </div>
+
+  <div class="row">
+    <h2>Export to CSV</h2>
+    <div class="col-12 form-group">
+      <%= button_to 'エクスポート', admin_export_profiles_path, {method: :get } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Name(Kana)</th>
+        <th scope="col">登録に用いたEmail</th>
+        <th scope="col">参加方法</th>
+        <th scope="col">チェックイン</th>
+        <th scope="col">チェックイン時刻</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @profiles.each do |profile| %>
+        <tr>
+          <td><%= profile.last_name %> <%= profile.first_name %></td>
+          <td><%= profile.last_name_kana %> <%= profile.first_name_kana %></td>
+          <td><%= profile.email %></td>
+          <td><%= Profile.participations[profile.participation] %></td>
+          <td><%= profile.check_ins.present? ? "チェックイン済み" : "未チェックイン" %></td>
+          <td><%= profile.check_ins.present? ? profile.check_ins.first.created_at : "" %></td>
+          <td>
+            <% if profile.check_ins.empty? %>
+              <%= link_to 'チェックインする', admin_check_ins_path(check_in: {profile_id: profile.id}), method: :post, data: { confirm: "#{profile.last_name} #{profile.first_name} をチェックインする"} %>
+            <% else %>
+              <%= link_to 'チェックインを解除する', admin_check_in_path(id: profile.check_ins.first.id), method: :delete, data: { confirm: "#{profile.last_name} #{profile.first_name} のチェックインを解除する"} %>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

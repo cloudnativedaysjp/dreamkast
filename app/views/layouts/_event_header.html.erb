@@ -60,7 +60,9 @@
               <li class="nav-item"><%= link_to "Attendee List", attendees_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndt2023' %>
               <li class="nav-item"><%= link_to "企画一覧", "#{root_url}#{event_name}#project-list", class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "お問い合わせ", 'https://docs.google.com/forms/d/e/1FAIpQLSebjgStNdgMe8XJHnyn_gF4xv8t4jGB8hw8Jrcr04DYLZis0Q/viewform?usp=sf_link', class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
+              <% if @conference.opened? %>
+                <li class="nav-item"><%= link_to "お問い合わせ", 'https://docs.google.com/forms/d/e/1FAIpQLSebjgStNdgMe8XJHnyn_gF4xv8t4jGB8hw8Jrcr04DYLZis0Q/viewform?usp=sf_link', class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

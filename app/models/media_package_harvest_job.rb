@@ -99,13 +99,25 @@ class MediaPackageHarvestJob < ApplicationRecord
   end
 
   def cloudfront_domain_name(bucket_name)
-    case bucket_name
-    when 'dreamkast-ivs-stream-archive-prd'
-      'd3pun3ptcv21q4.cloudfront.net'
-    when 'dreamkast-ivs-stream-archive-stg'
-      'd3i2o0iduabu0p.cloudfront.net'
-    else
-      'd1jzp6sbtx9by.cloudfront.net'
+    case AWS_LIVE_STREAM_REGION
+    when 'us-east-1'
+      case bucket_name
+      when 'dreamkast-ivs-stream-archive-prd'
+        'd3pun3ptcv21q4.cloudfront.net'
+      when 'dreamkast-ivs-stream-archive-stg'
+        'd3i2o0iduabu0p.cloudfront.net'
+      else
+        'd1jzp6sbtx9by.cloudfront.net'
+      end
+    when 'us-west-2'
+      case bucket_name
+      when 'dreamkast-archive-prd-us-west-2'
+        'd3pun3ptcv21q4.cloudfront.net'
+      when 'dreamkast-archive-stg-us-west-2'
+        'd3i2o0iduabu0p.cloudfront.net'
+      else
+        'd1jzp6sbtx9by.cloudfront.net'
+      end
     end
   end
 end

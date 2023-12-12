@@ -1,37 +1,347 @@
-<!-- Masthead-->
-<header class="masthead">
-    <div class="container h-100">
+<div id="<%= @conference.abbr %>" >
+  <div class="contents">
+    <section class="page-section bg-primary" id="masthead">
+      <div class="container">
+        <div id="particles-js"></div>
         <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-lg-12 align-self-end">
-                <h1 class="text-uppercase text-white font-weight-bold"><%= @conference.name %></h1>
-                <hr class="divider my-4" />
-                <p class="text-white-75 font-weight-light">+Native 〜ともに創るクラウドネイティブの世界〜</p>
-            </div>
-          <div class="col-lg-12 align-self-center">
-                <p class="text-white-75 font-weight-light">2020/09/08-09 オンライン開催</p>
-                <p class="text-white-75 font-weight-light">参加費無料</p>
-                <% if @conference.closed? %>
-                  <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
-                <% end %>
+          <div class="col-12 col-sm-8">
+              <h2 class="font-weight-bold text-white">
+                <span class="font-weight-light">+Native</span><br />
+                ともに飛び出せ！<br />
+              </h2>
+              <h1 class="font-weight-bold text-white"><%= @conference.name %></h1>
           </div>
-          <% if @conference.closed? %>
-            <%= render 'event/partial/buttons', conference: @conference %>
-          <% else %>
-            <%= render 'event/partial/speaker_entry_button', conference: @conference %>
-            <%= render 'event/partial/attendee_entry_button', conference: @conference %>
-          <% end %>
+          <div class="col-12 col-sm-4 align-self-end text-white">
+              <p class="date">
+                12/11-12
+              </p>
+              <p class="remaining">
+                <% if @conference.remaining_date > 0 %>
+                開催まであと<span class="remaining-date"><%= @conference.remaining_date %></span>日!
+                <% elsif @conference.remaining_date > -1 && @conference.opened? %>
+                ただいま開催中！
+                <% end %>
+              </p>
+              <p class="font-weight-bold">
+              ハイブリッド開催！
+              </p>
+              <p class="text-white">
+              有明セントラルタワーホール&カンファレンス<br/>
+              +オンライン<br/>
+              参加費無料
+              </p>
+              <p class="">
+              #CNDT2023
+              </p>
+              <% if @conference.closed? || @conference.archived? %>
+                <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
+              <% end %>
+          </div>
         </div>
-    </div>
-</header>
-<!-- About-->
-<section class="page-section bg-primary" id="about">
-  <%= render 'event/partial/about', conference: @conference %>
-</section>
+      </div>
+    </section>
 
-<section class="page-section" id="sponsors">
-  <%= render 'event/partial/sponsors', conference: @conference %>
-</section>
+    <section class="page-section" id="entry">
+      <div class="container">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+          <div class="col-12 align-self-center">
+            <% if @conference.closed? || @conference.archived?%>
+              <%= render 'event/partial/buttons', conference: @conference %>
+            <% else %>
+              <%= render 'event/partial/speaker_entry_button', conference: @conference %>
+              <%= render 'event/partial/attendee_entry_button', conference: @conference %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="page-section bg-secondary" id="information">
-  <%= render 'event/partial/information', conference: @conference %>
-</section>
+    <% if @conference.present? && @conference.show_timetable_enabled? %>
+    <section class="page-section timetable bg-secondary">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 text-center">
+            <h2 class="text-white mt-0">Sessions</h2>
+            <hr class="divider light my-4" />
+          </div>
+        </div>
+        <% @conference.conference_days.each do |conference_day| %>
+        <% unless conference_day.internal  %>
+        <div class="top-timetable">
+          <div class="col-12 text-center">
+            <h3 class="text-white mt-3"><%= conference_day.date %></h3>
+          </div>
+          <div class="grid" style="--rows: 13">
+            <div class="all-track" style="">
+              <div class="session">
+                <h6>09:50 - 10:00</h6>
+                <h4>オープニング</h4>
+              </div>
+            </div>
+          </div>
+          <div class="grid"
+              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 10 %>">
+            <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
+                <div class="track <%= 'even' if n.zero? || n.even? %>"
+                    style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+            <% end %>
+
+            <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+              <%
+                if talk.start_time.in_time_zone('Asia/Tokyo').hour < 13
+                  lunch_break = 0
+                  each_break = 0
+                else
+                  # 14時以降のセッションについてはお昼休みとセッション間休憩を除外
+                  lunch_break = 80
+                  each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
+                end
+
+                total_break = lunch_break + each_break
+
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 09:50")) / 60).to_i - total_break
+                row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
+              %>
+              <div class="talk"
+                slot="<%= talk.slot_number %>"
+                style="--track: <%= talk.track.number - 1 %>;
+                        --row-start: <%= row_start %>;
+                        --row-end: <%= row_end  %>;">
+                <div class="content"
+                            talk_id="<%= talk.id %>"
+                            track_number="<%= talk.track.number %>"
+                    style="margin-top:0">
+                  <h6>
+                      <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
+                      <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                      <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
+                      <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
+                      <%= talk.seats_status if @profile&.attend_offline? %>
+                  </h6>
+                  <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+                  <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
+                  <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+          <% if conference_day.id == 28%>
+          <div class="grid" style="--rows: 13">
+            <div class="all-track" style="">
+              <div class="session">
+                <h6>18:10 - 18:30</h6>
+                <h4>クロージング</h4>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <% if conference_day.id == 27 %>
+          <div class="grid" style="--rows: 13">
+            <div class="all-track" style="">
+              <div class="session">
+                <h6>18:30 - 20:00</h6>
+                <h4>よるイベ(懇親会) ※<%= link_to '別途申込み要', 'https://eventregist.com/e/cndt2023_party', {target: '_blank', style: 'text-decoration: underline'} %></h4>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        <% end %>
+        <% end %>
+      </div>
+    </section>
+    <% end %>
+
+    <!-- Speakers -->
+    <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
+    <section class="page-section" id="speakers">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12 text-center">
+            <h2 class="text-black mt-0">Speakers</h2>
+            <hr class="divider  my-4" />
+            <ul class="">
+              <% @talks.each do |talk| %>
+                <% talk.speakers.each do |speaker| %>
+                  <li>
+                    <div style="width: min-content">
+                      <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
+                      <%= speaker&.name %>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <% end %>
+
+    <!-- About-->
+    <section class="page-section" id="about">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="text-black mt-0">About</h2>
+            <hr class="divider  my-4" />
+            <% @conference.about.split("\n").each do |line| %>
+              <p class="text-black-75 mb-4 text-center"><%= line %></p>
+            <% end %>
+          </div>
+          <div class="col-lg-12 text-center mt-4 projects" id="project-list">
+            <h2 class="text-black mt-0">企画一覧</h2>
+            <%= render(partial: "contents/cndt2023/projects") %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Access -->
+    <section class="page-section" id="access">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="text-black mt-0">Access</h2>
+            <hr class="divider light my-4" />
+          </div>
+          <div class="col-12 col-sm-6">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12971.28918811224!2d139.7937274!3d35.6321071!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeea9641b7480ced0!2z5pyJ5piO44K744Oz44OI44Op44Or44K_44Ov44O8IOODm-ODvOODqybjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e0!3m2!1sja!2sjp!4v1668349214585!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-12 col-sm-6 align-self-top">
+              <p class="text-white">
+                〒135-0063<br/>
+                有明セントラルタワー ホール＆カンファレンス 3F<br/>
+                東京都江東区有明3-7-18
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
+    <% end %>
+
+    <section class="page-section bg-secondary" id="information">
+      <%= render 'event/partial/information', conference: @conference %>
+    </section>
+  </div>
+</div>
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+  <script>
+particlesJS('particles-js',
+  {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#FFEDBB"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#FFEDBB",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 4,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true,
+  }
+
+);
+  </script>

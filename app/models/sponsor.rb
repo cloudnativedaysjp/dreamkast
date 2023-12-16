@@ -4,7 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  abbr           :string(255)
-#  description    :text(65535)
+#  description    :text(16777215)
 #  name           :string(255)
 #  speaker_emails :string(255)
 #  url            :string(255)

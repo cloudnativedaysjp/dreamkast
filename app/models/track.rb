@@ -14,6 +14,7 @@
 #
 # Indexes
 #
+#  idx_tracks                     (conference_id)
 #  index_tracks_on_conference_id  (conference_id)
 #
 

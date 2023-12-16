@@ -6,7 +6,7 @@
 #  file_data  :string(255)
 #  link       :string(255)
 #  public     :boolean
-#  text       :text(65535)
+#  text       :text(16777215)
 #  title      :string(255)
 #  type       :string(255)
 #  url        :string(255)

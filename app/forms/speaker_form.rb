@@ -55,7 +55,7 @@ class SpeakerForm
           # talk doesn't exists
           unless params[:_destroy] == '1'
             params.delete(:_destroy)
-            params[:type] = 'Session'
+            params[:type] = params[:sponsor_id] ? 'SponsorSession' : 'Session'
             params[:show_on_timetable] = true
             params[:video_published] = true
             proposal_item_params = {}

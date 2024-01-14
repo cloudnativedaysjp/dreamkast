@@ -61,6 +61,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
 
           talk = speaker.talks.first
           expect(talk.time).to(eq(40))
+          expect(talk.type).to(eq('Session'))
         end
       end
     end

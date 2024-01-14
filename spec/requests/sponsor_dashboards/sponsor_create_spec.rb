@@ -40,6 +40,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
                 '1644323265675' =>
                   {
                     'sponsor_id' => sponsor.id,
+                    'type' => 'SponsorSession',
                     'title' => 'すごいセッション',
                     'abstract' => 'すごいぞ！',
                     'talk_difficulty_id' => '41',

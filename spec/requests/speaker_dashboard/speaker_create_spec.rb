@@ -38,6 +38,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
               '1644323265675' =>
                 {
                   'title' => 'すごいセッション',
+                  'type' => 'Session',
                   'abstract' => 'すごいぞ！',
                   'talk_difficulty_id' => '41',
                   'assumed_visitors' => [assumed_visitor.id],

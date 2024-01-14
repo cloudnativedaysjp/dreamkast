@@ -84,6 +84,9 @@
 
   <% if @sponsor %>
     <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
+    <%= f.hidden_field :type, value: 'SponsorSession' %>
+  <% else %>
+    <%= f.hidden_field :type, value: 'Session' %>
   <% end %>
 
   <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>

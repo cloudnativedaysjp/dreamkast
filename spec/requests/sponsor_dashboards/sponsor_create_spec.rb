@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe(SponsorDashboards::SpeakersController, type: :request) do
   admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
-  context "POST /cndt2020/speaker_dashboard/speakers" do
+  context 'POST /cndt2020/speaker_dashboard/speakers' do
     context 'user already logged in' do
       context "user doesn't registered" do
         before do
@@ -53,7 +53,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
                   }
               }
             }
-            post("/cndt2020/speaker_dashboard/speakers", params: { speaker: params })
+            post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
 
             expect(response).to_not(be_successful)
             expect(response).to(have_http_status('302'))

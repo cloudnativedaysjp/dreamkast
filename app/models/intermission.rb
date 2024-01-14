@@ -36,5 +36,4 @@
 #  index_talks_on_track_id            (track_id)
 #
 class Intermission < Talk
-
 end

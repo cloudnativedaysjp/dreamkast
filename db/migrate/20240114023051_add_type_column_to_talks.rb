@@ -5,6 +5,7 @@ class AddTypeColumnToTalks < ActiveRecord::Migration[7.0]
     Talk.where('sponsor_id IS NULL').update_all(type: 'SponsorSession')
     Talk.where('abstract = "intermission"').update_all(type: 'Intermission')
     Talk.where('sponsor_id IS NULL').where('abstract != "intermission"').update_all(type: 'Session')
+    Talk.reset_column_information
 
     change_column_null :talks, :type, false
   end

@@ -16,6 +16,7 @@
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
 #  title                 :string(255)
+#  type                  :string(255)      not null
 #  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

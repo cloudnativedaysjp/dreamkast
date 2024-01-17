@@ -8,8 +8,8 @@ namespace :util do
 
     ActiveRecord::Base.transaction do
       conference = Conference.find_by(abbr:)
-      unless conference.archived?
-        raise "#{conference.abbr} is not archived yet"
+      unless conference.archived? || conference.migrated?
+        raise "#{conference.abbr} is not archived or migrated yet"
       end
       conference.profiles.each do |profile|
         AccessLog.where(profile_id: profile.id).each(&:destroy!)
@@ -21,6 +21,7 @@ namespace :util do
         CheckIn.where(profile_id: profile.id).each do |check_in|
           check_in.update!(profile_id: nil)
         end
+        PublicProfile.where(profile_id: profile.id).destroy_all
         profile.destroy!
       end
     end

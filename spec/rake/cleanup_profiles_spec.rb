@@ -58,7 +58,7 @@ describe 'cleanup_profiles' do
     let!(:cndt2020) { create(:cndt2020, :registered) }
 
     it 'doesn\'t work' do
-      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived or migrated yet'))
     end
   end
 
@@ -66,7 +66,7 @@ describe 'cleanup_profiles' do
     let!(:cndt2020) { create(:cndt2020, :opened) }
 
     it 'doesn\'t work' do
-      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived or migrated yet'))
     end
   end
 
@@ -74,7 +74,7 @@ describe 'cleanup_profiles' do
     let!(:cndt2020) { create(:cndt2020, :closed) }
 
     it 'doesn\'t work' do
-      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived yet'))
+      expect { @rake[task].invoke }.to(raise_error('cndt2020 is not archived or migrated yet'))
     end
   end
 end

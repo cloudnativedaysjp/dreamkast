@@ -501,6 +501,10 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
+Talk::Type::KLASSES.each do |klass|
+  Talk::Type.seed({id: klass.name})
+end
+
 if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
   import_dummy_data('cndo2021', %w(talks speakers talks_speakers))

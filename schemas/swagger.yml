@@ -1173,6 +1173,13 @@ components:
       properties:
         id:
           type: number
+        type:
+          type: string
+          enum:
+            - Session
+            - SponsorSession
+            - KeynoteSession
+            - Intermission
         conferenceId:
           type: number
         trackId:

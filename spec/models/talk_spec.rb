@@ -16,6 +16,7 @@
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
 #  title                 :string(255)
+#  type                  :string(255)      not null
 #  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -29,10 +30,15 @@
 #
 # Indexes
 #
+#  fk_rails_9c6f538eea                (type)
 #  index_talks_on_conference_id       (conference_id)
 #  index_talks_on_talk_category_id    (talk_category_id)
 #  index_talks_on_talk_difficulty_id  (talk_difficulty_id)
 #  index_talks_on_track_id            (track_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (type => talk_types.id)
 #
 
 require 'rails_helper'

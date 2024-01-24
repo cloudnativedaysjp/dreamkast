@@ -16,6 +16,7 @@
 #  start_offset          :integer          default(0), not null
 #  start_time            :time
 #  title                 :string(255)
+#  type                  :string(255)      not null
 #  video_published       :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -29,15 +30,21 @@
 #
 # Indexes
 #
+#  fk_rails_9c6f538eea                (type)
 #  index_talks_on_conference_id       (conference_id)
 #  index_talks_on_talk_category_id    (talk_category_id)
 #  index_talks_on_talk_difficulty_id  (talk_difficulty_id)
 #  index_talks_on_track_id            (track_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (type => talk_types.id)
+#
 
 FactoryBot.define do
   factory :talk1, class: Talk do
     id { 1 }
+    type { 'Session' }
     title { 'talk1' }
     start_time { '12:00' }
     end_time { '12:40' }
@@ -73,6 +80,7 @@ FactoryBot.define do
 
   factory :talk2, class: Talk do
     id { 2 }
+    type { 'Session' }
     title { 'talk2' }
     start_time { '12:00' }
     end_time { '12:40' }
@@ -98,6 +106,7 @@ FactoryBot.define do
 
   factory :talk3, class: Talk do
     id { 3 }
+    type { 'Session' }
     title { 'talk3' }
     start_time { '13:00' }
     end_time { '13:40' }
@@ -120,6 +129,7 @@ FactoryBot.define do
 
   factory :talk_rejekt, class: Talk do
     id { 5 }
+    type { 'Session' }
     title { 'Rejected Talk' }
     start_time { '19:00' }
     end_time { '21:00' }
@@ -134,6 +144,7 @@ FactoryBot.define do
 
   factory :talk_cm, class: Talk do
     id { 4 }
+    type { 'Session' }
     title { 'CM' }
     start_time { '10:00' }
     end_time { '11:00' }
@@ -149,6 +160,7 @@ FactoryBot.define do
 
   factory :cndo_talk1, class: Talk do
     id { 10 }
+    type { 'Session' }
     title { 'talk1' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -165,6 +177,7 @@ FactoryBot.define do
 
   factory :cndo_talk2, class: Talk do
     id { 11 }
+    type { 'Session' }
     title { 'talk2' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -180,6 +193,7 @@ FactoryBot.define do
 
   factory :cndt2021_talk1, class: Talk do
     id { 12 }
+    type { 'Session' }
     title { 'talk1' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -196,6 +210,7 @@ FactoryBot.define do
 
   factory :sponsor_session, class: Talk do
     title { 'sponsor_session' }
+    type { 'SponsorSession' }
     start_time { '12:30' }
     end_time { '12:40' }
     conference_id { 1 }
@@ -209,6 +224,7 @@ FactoryBot.define do
 
   factory :has_no_conference_days, class: Talk do
     id { 100 }
+    type { 'Session' }
     title { 'not accepted talk' }
     abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 1 }
@@ -222,6 +238,7 @@ FactoryBot.define do
 
   factory :intermission, class: Talk do
     title { '開始までしばらくお待ちください' }
+    type { 'Intermission' }
     start_time { '10:00' }
     end_time { '11:00' }
     conference_id { 1 }

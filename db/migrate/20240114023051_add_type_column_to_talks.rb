@@ -9,15 +9,15 @@ class AddTypeColumnToTalks < ActiveRecord::Migration[7.0]
       Talk::Type.seed({id: klass.name})
     end
 
-    add_column :talks, :type, :string, after: :id
+    add_column :talks, :type, :string, after: :id, collation: 'utf8mb4_0900_ai_ci'
 
-    Talk.where('sponsor_id IS NULL').update_all(type: 'SponsorSession')
+    Talk.where('sponsor_id IS NOT NULL').update_all(type: 'SponsorSession')
     Talk.where('abstract = "intermission"').update_all(type: 'Intermission')
     Talk.where('sponsor_id IS NULL').where('abstract != "intermission"').update_all(type: 'Session')
     Talk.reset_column_information
 
     change_column_null :talks, :type, false
-    add_foreign_key :talks, :talk_types, column: :type
+    add_foreign_key :talks, :talk_types, column: :type, primary_key: :id
   end
 
   def down

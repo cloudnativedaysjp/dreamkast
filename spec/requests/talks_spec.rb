@@ -71,12 +71,6 @@ describe TalksController, type: :request do
           expect(response).to(be_successful)
           expect(response.body).not_to(include('player.vimeo.com'))
         end
-
-        it "doesn't includes slido iframe" do
-          get '/cndt2020/talks/1'
-          expect(response).to(be_successful)
-          expect(response.body).not_to(include('sli.do'))
-        end
       end
 
       context 'user logged in' do
@@ -105,18 +99,6 @@ describe TalksController, type: :request do
             expect(response).to(have_http_status('200'))
             expect(response.body).to(include('タイムテーブル'))
             expect(response.body).to(include(talk2.title))
-          end
-
-          it 'includes slido iframe if it has slido id' do
-            get '/cndt2020/talks/1'
-            expect(response).to(be_successful)
-            expect(response.body).to(include('sli.do'))
-          end
-
-          it 'includes twitter iframe if it not have slido id' do
-            get '/cndt2020/talks/2'
-            expect(response).to(be_successful)
-            expect(response.body).to(include('twitter-timeline'))
           end
 
           context 'talk is archived' do

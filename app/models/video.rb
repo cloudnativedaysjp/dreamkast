@@ -9,7 +9,6 @@
 #  video_file_data :text(65535)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  slido_id        :string(255)
 #  talk_id         :integer
 #  video_id        :string(255)
 #
@@ -28,7 +27,6 @@ class Video < ApplicationRecord
         list['current'][video.talk.track.number - 1] = {
           video_id: video.video_id,
           site: video.site,
-          slido_id: video.slido_id,
           id: video.talk.id,
           title: video.talk.title,
           start_time: video.talk.start_time&.strftime('%H:%M'),

@@ -1,8 +1,4 @@
-<% if @current_user && talk.video.present? && talk.video.slido_id.present? %>
-  <iframe src="https://app.sli.do/event/<%= talk.video.slido_id %>" id="slido" class="tab-pane" frameborder="0" style="min-height: 560px; width: 100%"></iframe>
-<% else %>
-  <div class="social">
-    <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Posts by cloudnativedays</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-<% end %>
+<div class="social">
+  <a class="twitter-timeline" data-height="600" href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Posts by cloudnativedays</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>

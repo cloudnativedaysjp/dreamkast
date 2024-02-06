@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_14_023051) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_06_101323) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -560,7 +560,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_14_023051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "video_id"
-    t.string "slido_id"
     t.text "video_file_data"
   end
 

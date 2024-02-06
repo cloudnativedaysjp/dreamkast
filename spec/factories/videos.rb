@@ -9,7 +9,6 @@
 #  video_file_data :text(65535)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  slido_id        :string(255)
 #  talk_id         :integer
 #  video_id        :string(255)
 #
@@ -20,7 +19,6 @@ FactoryBot.define do
     site { 'MyString' }
     url { 'MyString' }
     on_air { false }
-    slido_id { '1234' }
     video_id { '1234' }
 
     trait :on_air do

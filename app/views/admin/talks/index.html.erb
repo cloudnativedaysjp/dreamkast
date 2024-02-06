@@ -25,7 +25,7 @@
         <th scope="col">Time</th>
         <th scope="col">公開可否</th>
         <th scope="col">Video File</th>
-        <th scope="col">Vimeo ID</th>
+        <th scope="col">Video URL</th>
         <th scope="col">On Air</th>
       </tr>
       </thead>
@@ -62,7 +62,7 @@
             </td>
             <td>
               <% video_id = talk.video ? talk.video.video_id : nil %>
-              <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "vimeo id", size: "9" %>
+              <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "video url", size: "9" %>
             </td>
             <td class="on_air_group btn-group-toggle">
               <% if talk.video %>

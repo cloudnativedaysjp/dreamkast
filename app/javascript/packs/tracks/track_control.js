@@ -1,7 +1,6 @@
 window.update_track = function(track){
     clearInterval(window.timer);
     if(track === undefined || track === null){
-        document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/455128631?autoplay=1&loop=0&autopause=0");
         document.getElementById("twitter").href = "http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020";
         document.getElementById("twitter").innerHTML = "Twitterでつぶやく<br/>#CNDT2020";
         document.getElementById("title").innerHTML = "放送開始までしばらくお待ちください";
@@ -10,7 +9,6 @@ window.update_track = function(track){
         document.getElementById("time").innerHTML = "現在このトラックに放送中のセッションはありません。<br/>次のセッションをお待ちいただくか、他のトラックをご覧ください。";
         window.selected_talk_id = "0";
     }else{
-        document.getElementById("video").contentWindow.location.replace("https://player.vimeo.com/video/" + track.video_id + "?autoplay=1&loop=0&autopause=0");
         document.getElementById("twitter").href = "http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2020/&related=@cloudnativedays&hashtags=CNDT2020_" + track.track_name;
         document.getElementById("twitter").innerHTML = "Twitterでつぶやく<br/>#CNDT2020_" + track.track_name;
         document.getElementById("title").innerHTML = track.title;

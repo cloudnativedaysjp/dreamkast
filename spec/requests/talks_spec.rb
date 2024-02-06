@@ -66,10 +66,10 @@ describe TalksController, type: :request do
           expect(response.body).to(include(talk1.title))
         end
 
-        it "doesn't includes vimeo iframe" do
+        it "doesn't includes video tag" do
           get '/cndt2020/talks/1'
           expect(response).to(be_successful)
-          expect(response.body).not_to(include('player.vimeo.com'))
+          expect(response.body).not_to(include('<video'))
         end
       end
 
@@ -106,10 +106,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).not_to(include('player.vimeo.com'))
+              expect(response.body).not_to(include('<video'))
             end
           end
 
@@ -118,10 +118,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).not_to(include('player.vimeo.com'))
+              expect(response.body).not_to(include('<video'))
             end
           end
         end
@@ -145,10 +145,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it "doesn't includes vimeo iframe" do
+          it "doesn't includes video tag" do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('player.vimeo.com'))
+            expect(response.body).not_to(include('<video'))
           end
         end
 
@@ -157,10 +157,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
           end
 
-          it "doesn't includes vimeo iframe" do
+          it "doesn't includes video tag" do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('player.vimeo.com'))
+            expect(response.body).not_to(include('<video'))
           end
         end
       end
@@ -176,16 +176,16 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it ' includes vimeo iframe if video_published is true' do
+          it ' includes video tag if video_published is true' do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to(include('player.vimeo.com'))
+            expect(response.body).to(include('<video'))
           end
 
-          it "doesn't includes vimeo iframe if video_published is false" do
+          it "doesn't includes video tag if video_published is false" do
             get '/cndt2020/talks/2'
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('player.vimeo.com'))
+            expect(response.body).not_to(include('<video'))
           end
 
           it 'return 404 when you try to show talk that is not included conference' do
@@ -199,10 +199,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).to(include('player.vimeo.com'))
+              expect(response.body).to(include('<video'))
             end
           end
 
@@ -211,10 +211,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).not_to(include('player.vimeo.com'))
+              expect(response.body).not_to(include('<video'))
             end
           end
         end
@@ -238,10 +238,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it 'includes vimeo iframe' do
+          it 'includes video tag' do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to_not(include('player.vimeo.com'))
+            expect(response.body).to_not(include('<video'))
           end
         end
 
@@ -250,10 +250,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
           end
 
-          it "doesn't includes vimeo iframe" do
+          it "doesn't includes video tag" do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to_not(include('player.vimeo.com'))
+            expect(response.body).to_not(include('<video'))
           end
         end
       end
@@ -268,16 +268,16 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it ' includes vimeo iframe if video_published is true' do
+          it ' includes video tag if video_published is true' do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to(include('player.vimeo.com'))
+            expect(response.body).to(include('<video'))
           end
 
-          it "doesn't includes vimeo iframe if video_published is false" do
+          it "doesn't includes video tag if video_published is false" do
             get '/cndt2020/talks/2'
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('player.vimeo.com'))
+            expect(response.body).not_to(include('<video'))
           end
 
           it 'return 404 when you try to show talk that is not included conference' do
@@ -291,10 +291,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).to(include('player.vimeo.com'))
+              expect(response.body).to(include('<video'))
             end
           end
 
@@ -303,10 +303,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).not_to(include('player.vimeo.com'))
+              expect(response.body).not_to(include('<video'))
             end
           end
         end
@@ -330,10 +330,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it 'includes vimeo iframe' do
+          it 'includes video tag' do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to(include('player.vimeo.com'))
+            expect(response.body).to(include('<video'))
           end
         end
 
@@ -342,10 +342,10 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
           end
 
-          it "doesn't includes vimeo iframe" do
+          it "doesn't includes video tag" do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to_not(include('player.vimeo.com'))
+            expect(response.body).to_not(include('<video'))
           end
         end
       end
@@ -360,16 +360,16 @@ describe TalksController, type: :request do
             allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
           end
 
-          it ' includes vimeo iframe if video_published is true' do
+          it ' includes video tag if video_published is true' do
             get '/cndt2020/talks/1'
             expect(response).to(be_successful)
-            expect(response.body).to(include('player.vimeo.com'))
+            expect(response.body).to(include('<video'))
           end
 
-          it "doesn't includes vimeo iframe if video_published is false" do
+          it "doesn't includes video tag if video_published is false" do
             get '/cndt2020/talks/2'
             expect(response).to(be_successful)
-            expect(response.body).not_to(include('player.vimeo.com'))
+            expect(response.body).not_to(include('<video'))
           end
 
           it 'return 404 when you try to show talk that is not included conference' do
@@ -383,10 +383,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(true))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).to(include('player.vimeo.com'))
+              expect(response.body).to(include('<video'))
             end
           end
 
@@ -395,10 +395,10 @@ describe TalksController, type: :request do
               allow_any_instance_of(Talk).to(receive(:archived?).and_return(false))
             end
 
-            it 'includes vimeo iframe' do
+            it 'includes video tag' do
               get '/cndt2020/talks/1'
               expect(response).to(be_successful)
-              expect(response.body).not_to(include('player.vimeo.com'))
+              expect(response.body).not_to(include('<video'))
             end
           end
         end

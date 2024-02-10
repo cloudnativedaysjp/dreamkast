@@ -98,22 +98,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def display_dashboard_link?
-    @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
-  end
-
-  def display_proposals?
-    @conference.present? && @conference.attendee_entry_disabled?
-  end
-
-  def display_talks?
-    @conference.present? && @conference.attendee_entry_enabled?
-  end
-
-  def display_timetable?
-    @conference.present? && @conference.show_timetable_enabled?
-  end
-
   def display_attendees?
     @conference.present? && @conference.attendee_entry_enabled?
   end

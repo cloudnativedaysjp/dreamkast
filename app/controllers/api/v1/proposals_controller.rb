@@ -8,9 +8,9 @@ class Api::V1::ProposalsController < ApplicationController
     @conference = Conference.find_by(abbr: params[:eventAbbr])
     query = { conference_id: @conference.id }
     @proposals = Proposal
-        .includes(:talk)
-        .where(query)
-        .where(talk: { type: "Session" })
+                 .includes(:talk)
+                 .where(query)
+                 .where(talk: { type: 'Session' })
     render(:index, formats: :json, type: :jbuilder)
   end
 end

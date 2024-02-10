@@ -28,7 +28,7 @@ describe Api::V1::ProposalsController, type: :request do
       it 'return only session talk' do
         get '/api/v1/proposals?eventAbbr=cndt2020'
         expect(response).to(have_http_status(:ok))
-        expect(response.parsed_body.length).to(eq 2)
+        expect(response.parsed_body.length).to(eq(2))
       end
     end
   end

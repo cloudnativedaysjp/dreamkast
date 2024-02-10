@@ -9,25 +9,32 @@ class TalksController < ApplicationController
     end
   end
 
+  # - プロポーザルの採択結果を表示する場合
+  #   - プロポーザルが採択されている場合：セッション情報を表示する
+  #   - プロポーザルが採択されていない場合：404を返す
+  # - プロポーザルの採択結果を表示しない場合：404を返す
+  # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
     @conference = Conference.find_by(abbr: event_name)
     @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
 
-    if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
-      redirect_to("/#{event_name}/proposals/#{@talk.proposal.id}")
+    redirect_to(talk_path(id: @talk.proposal)) unless @conference.cfp_result_visible
+
+    if @conference.cfp_result_visible && @talk.proposal.rejected?
+      raise(ActiveRecord::RecordNotFound)
     end
+
     raise(ActiveRecord::RecordNotFound) unless @talk
   end
 
   def index
     @conference = Conference.find_by(abbr: event_name)
 
-    if @conference.speaker_entry_enabled? && @conference.attendee_entry_enabled?
-      redirect_to("/#{event_name}/proposals")
-    end
-
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
+
+    redirect_to(proposals_path) unless @conference.cfp_result_visible
+
     # talks of cndt2020 and cndo2021 don't have proposals
     # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
     @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr)

@@ -20,7 +20,7 @@
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Status</th>
-        <th scope="col">SponsorSession?</th>
+        <th scope="col">Type</th>
       </tr>
       </thead>
       <tbody>
@@ -40,7 +40,7 @@
             </td>
 
             <td>
-              <%= proposal.talk.sponsor.present? ? proposal.talk.sponsor.name : '' %>
+              <%= proposal.talk.type %>
             </td>
           </tr>
         <% end %>

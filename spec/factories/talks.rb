@@ -220,6 +220,12 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { true }
     document_url { 'http://' }
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
+    end
   end
 
   factory :has_no_conference_days, class: Talk do
@@ -249,5 +255,25 @@ FactoryBot.define do
     track_id { 1 }
     show_on_timetable { false }
     video_published { true }
+  end
+
+  factory :keynote_session, class: Talk do
+    title { 'keynote_session' }
+    type { 'KeynoteSession' }
+    start_time { '12:30' }
+    end_time { '12:40' }
+    conference_id { 1 }
+    conference_day_id { 1 }
+    talk_difficulty_id { 1 }
+    track_id { 1 }
+    show_on_timetable { true }
+    video_published { true }
+    document_url { 'http://' }
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
+    end
   end
 end

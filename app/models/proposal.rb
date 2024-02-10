@@ -18,6 +18,7 @@ class Proposal < ApplicationRecord
     'rejected' => '不採択'
   }.freeze
 
+  belongs_to :conference
   belongs_to :talk
 
   def speakers

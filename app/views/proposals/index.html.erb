@@ -2,6 +2,9 @@
 
 <div class="container white_background">
   <h1 class="mx-3 mt-5 text-center">プロポーザル一覧</h1>
+  <% if @conference.cfp_result_visible %>
+    <p>CFPは終了しました。採択結果は<%= link_to 'こちら', talks_path %></p>
+  <% end %>
   <section class="row proposals">
     <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
         <% talk = proposal.talk %>

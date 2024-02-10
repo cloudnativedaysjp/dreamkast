@@ -3,6 +3,13 @@ class ProposalsController < ApplicationController
   before_action :set_current_user, :set_profile, :set_speaker
 
   helper_method :proposal_status
+
+  def logged_in_using_omniauth?
+    if logged_in?
+      set_current_user
+    end
+  end
+
   def show
     @conference = Conference.find_by(abbr: event_name)
     @proposal = Proposal.find_by(id: params[:id], conference_id: @conference.id)
@@ -11,7 +18,7 @@ class ProposalsController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: event_name)
-    @proposals = @conference.proposals
+    @proposals = Proposal.includes(talk: [:speakers, :talk_category, :talks_speakers]).where(conference_id: @conference.id, talks: { type: Session.model_name.to_s })
   end
 
   def proposal_status
@@ -19,6 +26,12 @@ class ProposalsController < ApplicationController
   end
 
   def use_secured_before_action?
+    false
+  end
+
+  private
+
+  def should_redirect?
     false
   end
 end

@@ -7,11 +7,7 @@
         <%= render 'proposals/partial_show/twitter_share_button', hash_tag: conference.abbr.upcase %>
         <%= render 'proposals/partial_show/facebook_share_button', url: request.original_url %>
       </h3>
-      <h4>
-        <% if talk.proposal.present? && !talk.sponsor_session? %>
-          Proposal <%= proposal_status %>
-        <% end %>
-      </h4>
+      <%= render 'proposals/partial_show/proposal_result', talk: talk %>
 
       <div class="row py-3">
         <%= render 'proposals/partial_show/col_talk_category_block', talk: talk %>

@@ -14,17 +14,19 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
-          <% if @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
-            <% if logged_in? && @profile.present? %>
-              <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
-            <% end %>
+
+          <% if display_dashboard_link? %>
+            <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
+
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
-            <% if @conference.present? && @conference.speaker_entry_enabled? %>
+            <% if display_proposals? %>
               <li class="nav-item"><%= link_to "プロポーザル", talks_path, class: "nav-link js-scroll-trigger" %></li>
-            <% elsif %>
+            <% end %>
+
+            <% if display_talks? %>
               <li class="nav-item dropdown">
-                <% if @conference.present? &&  @conference.show_timetable_enabled? %>
+                <% if display_timetable? %>
                 <li class="nav-item"><%= link_to "参加者", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
@@ -34,8 +36,6 @@
             <% end %>
 
             <% case event_name %>
-            <% when 'cndf2023' %>
-              <li class="nav-item"><%= link_to "Attendee List", attendees_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndt2023' %>
               <li class="nav-item"><%= link_to "企画一覧", "#{root_url}#{event_name}#project-list", class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% end %>

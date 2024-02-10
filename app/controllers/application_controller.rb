@@ -49,7 +49,8 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?, :display_contact_url?
+  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?,
+                :display_timetable?, :display_contact_url?
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
@@ -138,7 +139,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def display_dashboard_link?
+    @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
+  end
+
+  def display_proposals?
+    @conference.present? && @conference.attendee_entry_disabled?
+  end
+
+  def display_talks?
+    @conference.present? && @conference.attendee_entry_enabled?
+  end
+
+  def display_timetable?
+    @conference.present? && @conference.show_timetable_enabled?
+  end
+
   def display_contact_url?
-    @conference.contact_url.present? && (@conference.opened? || @conference.closed? || @conference.archived?)
+    @conference.present? && @conference.contact_url.present? && (@conference.opened? || @conference.closed? || @conference.archived?)
   end
 end

@@ -44,6 +44,7 @@ class Admin::ConferencesController < ApplicationController
                                        :show_sponsors,
                                        :brief,
                                        :capacity,
+                                       :contact_url,
                                        :privacy_policy,
                                        :privacy_policy_for_speaker,
                                        links_attributes: [:id, :title, :url, :description, :_destroy],

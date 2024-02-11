@@ -12,6 +12,7 @@
 #  coc                        :text(65535)
 #  committee_name             :string(255)      default("CloudNative Days Committee"), not null
 #  conference_status          :string(255)      default("registered")
+#  contact_url                :text(65535)
 #  copyright                  :string(255)
 #  name                       :string(255)
 #  privacy_policy             :text(65535)

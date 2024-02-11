@@ -14,17 +14,19 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
-          <% if @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
-            <% if logged_in? && @profile.present? %>
-              <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
-            <% end %>
+
+          <% if display_dashboard_link? %>
+            <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
+
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
-            <% if @conference.present? && @conference.speaker_entry_enabled? %>
+            <% if display_proposals? %>
               <li class="nav-item"><%= link_to "プロポーザル", talks_path, class: "nav-link js-scroll-trigger" %></li>
-            <% elsif %>
+            <% end %>
+
+            <% if display_talks? %>
               <li class="nav-item dropdown">
-                <% if @conference.present? &&  @conference.show_timetable_enabled? %>
+                <% if display_timetable? %>
                 <li class="nav-item"><%= link_to "参加者", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger" %></li>
                 <% end %>
@@ -34,35 +36,12 @@
             <% end %>
 
             <% case event_name %>
-            <% when 'cndt2020' %>
-              <li class="nav-item"><%= link_to "Speakers", speakers_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Kontest", kontest_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Links", links_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
-            <% when 'cicd2021' %>
-              <li class="nav-item"><%= link_to "Discussion Board", discussion_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cndt2021' %>
-              <li class="nav-item"><%= link_to "Team", team_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <li class="nav-item"><%= link_to "Job Board", job_board_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'o11y2022' %>
-              <li class="nav-item"><%= link_to "Committee", team_path, class: "nav-link js-scroll-trigger" %></li>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cndt2022' %>
-              <% if logged_in? && @profile.present? %>
-                <li class="nav-item"><%= link_to "Whiteboard", 'https://miro.com/app/board/uXjVPWsauOI=/', class: "nav-link js-scroll-trigger", target: :_blank, rel: "noopener noreferrer" %></li>
-              <% end %>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cicd2023' %>
-              <li class="nav-item"><%= link_to "Hands-on (Co-located)", hands_on_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% when 'cndf2023' %>
-              <li class="nav-item"><%= link_to "Attendee List", attendees_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
             <% when 'cndt2023' %>
               <li class="nav-item"><%= link_to "企画一覧", "#{root_url}#{event_name}#project-list", class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-              <% if @conference.opened? %>
-                <li class="nav-item"><%= link_to "お問い合わせ", 'https://docs.google.com/forms/d/e/1FAIpQLSebjgStNdgMe8XJHnyn_gF4xv8t4jGB8hw8Jrcr04DYLZis0Q/viewform?usp=sf_link', class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
-              <% end %>
+            <% end %>
+
+            <% if display_contact_url? %>
+              <li class="nav-item"><%= link_to "お問い合わせ", @conference.contact_url, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
             <% end %>
           <% end %>
         <% end %>

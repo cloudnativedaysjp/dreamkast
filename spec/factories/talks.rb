@@ -71,9 +71,21 @@ FactoryBot.define do
       track { create(:track, :has_room) }
     end
 
+    trait :registered do
+      after(:build) do |talk|
+        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
+      end
+    end
+
     trait :accepted do
       after(:build) do |talk|
-        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+        create(:proposal, :accepted, talk:, conference_id: talk.conference_id)
+      end
+    end
+
+    trait :rejected do
+      after(:build) do |talk|
+        create(:proposal, :rejected, talk:, conference_id: talk.conference_id)
       end
     end
   end
@@ -97,9 +109,21 @@ FactoryBot.define do
       conference_day_id { 1 }
     end
 
+    trait :registered do
+      after(:build) do |talk|
+        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
+      end
+    end
+
     trait :accepted do
       after(:build) do |talk|
-        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+        create(:proposal, :accepted, talk:, conference_id: talk.conference_id)
+      end
+    end
+
+    trait :rejected do
+      after(:build) do |talk|
+        create(:proposal, :rejected, talk:, conference_id: talk.conference_id)
       end
     end
   end
@@ -119,9 +143,25 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { false }
 
+    trait :conference_day_id_1 do
+      conference_day_id { 1 }
+    end
+
+    trait :registered do
+      after(:build) do |talk|
+        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
+      end
+    end
+
     trait :accepted do
       after(:build) do |talk|
-        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+        create(:proposal, :accepted, talk:, conference_id: talk.conference_id)
+      end
+    end
+
+    trait :rejected do
+      after(:build) do |talk|
+        create(:proposal, :rejected, talk:, conference_id: talk.conference_id)
       end
     end
   end

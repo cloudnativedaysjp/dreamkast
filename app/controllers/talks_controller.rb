@@ -18,7 +18,9 @@ class TalksController < ApplicationController
     @conference = Conference.find_by(abbr: event_name)
     @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
 
-    redirect_to(talk_path(id: @talk.proposal)) unless @conference.cfp_result_visible
+    unless @conference.cfp_result_visible
+      raise(ActiveRecord::RecordNotFound)
+    end
 
     if @conference.cfp_result_visible && @talk.proposal.rejected?
       raise(ActiveRecord::RecordNotFound)
@@ -33,7 +35,9 @@ class TalksController < ApplicationController
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
 
-    redirect_to(proposals_path) unless @conference.cfp_result_visible
+    if !@conference.cfp_result_visible && !@conference.archived?
+      redirect_to(proposals_path)
+    end
 
     # talks of cndt2020 and cndo2021 don't have proposals
     # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する

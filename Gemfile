@@ -106,7 +106,6 @@ gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
 
-gem "octokit", "~> 8.0"
 gem 'psych', '< 6'
 
 gem "aws-sdk-medialive"

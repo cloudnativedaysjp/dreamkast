@@ -98,6 +98,9 @@ GEM
     aws-sdk-dynamodb (1.76.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-ivs (1.23.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.58.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
@@ -702,6 +705,7 @@ DEPENDENCIES
   annotate
   awesome_nested_set!
   aws-sdk-cloudfront
+  aws-sdk-ivs
   aws-sdk-medialive
   aws-sdk-mediapackage
   aws-sdk-mediapackagev2

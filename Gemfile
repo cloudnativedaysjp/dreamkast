@@ -108,6 +108,7 @@ gem 'slack-incoming-webhooks'
 
 gem 'psych', '< 6'
 
+gem "aws-sdk-ivs"
 gem "aws-sdk-medialive"
 gem "aws-sdk-mediapackage"
 gem "aws-sdk-mediapackagev2"

@@ -69,7 +69,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "mysql2", "~> 0.5.5"
+gem "mysql2", "~> 0.5.6"
 
 gem "stackprof"
 gem "sentry-ruby"
@@ -106,7 +106,6 @@ gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
 
-gem "octokit", "~> 8.0"
 gem 'psych', '< 6'
 
 gem "aws-sdk-ivs"

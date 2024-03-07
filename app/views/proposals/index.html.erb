@@ -1,0 +1,26 @@
+<% provide(:title, 'プロポーザル一覧') %>
+
+<div class="container white_background">
+  <h1 class="mx-3 mt-5 text-center">プロポーザル一覧</h1>
+  <% if @conference.cfp_result_visible %>
+    <p>CFPは終了しました。採択結果は<%= link_to 'こちら', talks_path %></p>
+  <% end %>
+  <section class="row proposals">
+    <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
+        <% talk = proposal.talk %>
+        <%= link_to proposal_path(id: talk.id), class: "proposal", data: {"turbolinks" => false} do %>
+          <div class="category">
+            <%= talk.talk_category.name if talk.talk_category.present? %>
+          </div>
+          <%= image_tag talk.speakers[0].avatar_or_dummy_url(:medium) %>
+          <h3>
+            <%= talk.title %>
+          </h3>
+          <% talk.speakers.each do |speaker| %>
+            <h5><%= speaker.company if speaker.company != "" %></h5>
+            <h4><%= speaker.name %></h4>
+          <% end %>
+        <% end %>
+    <% end %>
+  </section>
+</div>

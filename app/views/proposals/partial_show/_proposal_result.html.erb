@@ -1,0 +1,3 @@
+<% if talk.proposal.present? && !talk.sponsor_session? %>
+  <h4>Proposal: (<%= talk.proposal.status_message %>)</h4>
+<% end %>

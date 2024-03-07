@@ -86,6 +86,14 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       speaker_entry { 0 }
     end
 
+    trait :attendee_entry_enabled do
+      attendee_entry { 1 }
+    end
+
+    trait :attendee_entry_disabled do
+      attendee_entry { 0 }
+    end
+
     trait :show_timetable do
       show_timetable { 1 }
     end

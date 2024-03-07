@@ -218,6 +218,29 @@ EOS
 EOS
   },
   {
+    id: 11,
+    name: "CloudNative Days Summer 2024",
+    abbr: "cnds2024",
+    theme: "Synergy 〜その先の、道へ。出会いと変化を紡ぐ場所〜",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    capacity: 300,
+    about: <<'EOS'
+    この夏、CloudNative Daysは札幌という新天地で次の旅路をはじめます。
+    初めての地で、さまざまな背景や経験を持つ参加者が集まり、新たな学び、繋がりを築きます。
+
+    参加者の中には、あなた自身と、あるいは所属組織と<br/>同じ悩みや境遇を抱える方がいるかもしれません。
+    また、新たな一歩を踏み出せずにいる人もいることでしょう。
+
+    共感し合える仲間と出会い、時間を分かち合うことで新たなアイデアを創造したり、
+    先駆者の知見に触れることで次の道を探るための場がここにはあります。
+
+    出会いと変化を紡ぎ、未来への一歩を踏み出す1日にしましょう。
+    さぁ、その先の、道へ。
+EOS
+  },
+  {
     id: 110,
     name: "Test Event Winter 2020",
     conference_status: "archived",
@@ -281,6 +304,10 @@ ConferenceDay.seed(
   {id: 27, date: "2023-12-11", start_time: "10:00", end_time: "18:00", conference_id: 10, internal: false},
   {id: 28, date: "2023-12-12", start_time: "10:00", end_time: "18:00", conference_id: 10, internal: false}, 
   {id: 29, date: "2023-11-20", start_time: "12:00", end_time: "18:00", conference_id: 10, internal: true},  # Pre event
+
+  # CNDS2024
+  {id: 30, date: "2024-06-14", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: true},
+  {id: 31, date: "2024-06-15", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: false}, 
 )
 
 FormItem.seed(
@@ -345,6 +372,10 @@ Track.seed(
   { id: 45, number: 2, name: "B", conference_id: 10, room_id: 18},
   { id: 46, number: 3, name: "C", conference_id: 10, room_id: 19},
   { id: 47, number: 4, name: "D", conference_id: 10, room_id: 20},
+
+  { id: 48, number: 1, name: "A", conference_id: 11, room_id: 21},
+  { id: 49, number: 2, name: "B", conference_id: 11, room_id: 22},
+  { id: 50, number: 3, name: "C", conference_id: 11, room_id: 23},
 )
 
 
@@ -369,6 +400,9 @@ Room.seed(
   {id: 18, conference_id: 10, name: 'B-Room2'},
   {id: 19, conference_id: 10, name: 'C-Boardroom'},
   {id: 20, conference_id: 10, name: 'D-Room6'},
+  {id: 21, conference_id: 11, name: 'A'},
+  {id: 22, conference_id: 11, name: 'B'},
+  {id: 23, conference_id: 11, name: 'C'},
 )
 
 
@@ -486,6 +520,25 @@ TalkCategory.seed(
   { id: 106, conference_id: 10, name: "組織論"},
   { id: 107, conference_id: 10, name: "その他"},
   { id: 108, conference_id: 10, name: "Keynote"},
+
+  { id: 109, conference_id: 11, name: "CI / CD"},
+  { id: 110, conference_id: 11, name: "Customizing / Extending"},
+  { id: 111, conference_id: 11, name: "IoT / Edge"},
+  { id: 112, conference_id: 11, name: "Microservices / Services Mesh"},
+  { id: 113, conference_id: 11, name: "ML / HPC"},
+  { id: 114, conference_id: 11, name: "Networking"},
+  { id: 115, conference_id: 11, name: "Operation / Monitoring / Logging"},
+  { id: 116, conference_id: 11, name: "Application / Development"},
+  { id: 117, conference_id: 11, name: "Runtime"},
+  { id: 118, conference_id: 11, name: "Security"},
+  { id: 119, conference_id: 11, name: "Serverless / FaaS"},
+  { id: 120, conference_id: 11, name: "Storage / Database"},
+  { id: 121, conference_id: 11, name: "Architecture Design"},
+  { id: 122, conference_id: 11, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 123, conference_id: 11, name: "NFV / Edge"},
+  { id: 124, conference_id: 11, name: "組織論"},
+  { id: 125, conference_id: 11, name: "その他"},
+  { id: 126, conference_id: 11, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -523,6 +576,9 @@ TalkDifficulty.seed(
   { id: 63, conference_id: 10, name: "初級者"},
   { id: 64, conference_id: 10, name: "中級者"},
   { id: 65, conference_id: 10, name: "上級者"},
+  { id: 66, conference_id: 11, name: "初級者"},
+  { id: 67, conference_id: 11, name: "中級者"},
+  { id: 68, conference_id: 11, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -550,6 +606,7 @@ import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposa
 import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
+#import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

@@ -186,7 +186,7 @@
             <h2 class="text-black mt-0">About</h2>
             <hr class="divider  my-4" />
             <% @conference.about.split("\n").each do |line| %>
-              <p class="text-black-75 mb-4 text-center"><%= line %></p>
+              <p class="text-black-75 mb-4 text-center"><%= line.html_safe %></p>
             <% end %>
           </div>
         </div>

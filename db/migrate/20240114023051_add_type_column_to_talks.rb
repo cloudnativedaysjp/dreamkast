@@ -1,7 +1,7 @@
 class AddTypeColumnToTalks < ActiveRecord::Migration[7.0]
   def up
 
-    unless table_exists? :talk_typess
+    unless table_exists? :talk_types
       create_table :talk_types, id: :string do |t|
         t.timestamps
       end

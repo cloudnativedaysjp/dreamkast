@@ -4,7 +4,7 @@
     <% talk = proposal.talk %>
 
     <div class="card talk">
-      <a href="<%= url_for(controller: "talks",action: "show", id: talk.id) %>">
+      <a href="<%= url_for(controller: "proposals",action: "show", id: proposal.id) %>">
         <h3><%= talk.title %></h3>
         <p><%= talk.abstract[..40] if talk.abstract.present? %></p>
       </a>

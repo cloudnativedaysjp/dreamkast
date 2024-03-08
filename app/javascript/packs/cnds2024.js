@@ -32,6 +32,7 @@ import './timetable.js'
 import './attendee_dashboard.js'
 import './particles.min.js'
 import './copy.js'
+import './speaker_form.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 

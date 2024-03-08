@@ -1,7 +1,7 @@
 <div class="card-body">
   <h4 class="card-title session-title">
     <%= talk.title %>
-    <%= link_to (image_tag "icons/box-arrow-up-right.svg"), talk_path(id: talk.id) %>
+    <%= link_to (image_tag "icons/box-arrow-up-right.svg"), proposal_path(id: talk.proposal.id) %>
   </h4>
   <% if talk.talk_category.present? %>
     <h6 class="card-subtitle mb-2 text-muted"><%= talk.talk_category.name %> /

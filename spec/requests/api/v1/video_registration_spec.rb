@@ -13,7 +13,7 @@ describe Api::V1::Talks::VideoRegistrationController, type: :request do
       it 'confirm json schema' do
         get('/api/v1/talks/1/video_registration', headers:)
         expect(response).to(have_http_status(:ok))
-        assert_response_schema_confirm
+        assert_response_schema_confirm(200)
       end
     end
 

@@ -31,7 +31,7 @@ describe Api::V1::ChatMessagesController, type: :request do
       it 'confirm json schema' do
         put '/api/v1/chat_messages/1', params: { eventAbbr: 'cndt2020', body: 'hogehoge' }
         expect(response).to(have_http_status(:no_content))
-        assert_response_schema_confirm
+        assert_response_schema_confirm(204)
       end
 
       it 'succeed request' do
@@ -54,7 +54,7 @@ describe Api::V1::ChatMessagesController, type: :request do
     it 'confirm json schema' do
       put "/api/v1/chat_messages/#{msg.id}", params: { eventAbbr: 'cndt2020', body: 'hogehoge' }
       expect(response).to(have_http_status(:forbidden))
-      assert_response_schema_confirm
+      assert_response_schema_confirm(403)
     end
 
     it 'succeed request' do

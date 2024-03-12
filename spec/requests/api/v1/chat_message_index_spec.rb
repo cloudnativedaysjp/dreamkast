@@ -37,7 +37,7 @@ describe Api::V1::ChatMessagesController, type: :request do
 
     it 'confirm json schema' do
       get '/api/v1/chat_messages?eventAbbr=cndt2020&roomId=1&roomType=talk'
-      assert_response_schema_confirm
+      assert_response_schema_confirm(200)
     end
   end
 end

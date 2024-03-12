@@ -328,7 +328,7 @@ paths:
         - name: roomId
           in: query
           description: ID of chat room
-          required: true
+          required: false
           schema:
             type: string
         - name: roomType
@@ -344,6 +344,12 @@ paths:
           schema:
             type: string
             format: date-time
+        - name: profileId
+          in: query
+          description: ID of profile
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK

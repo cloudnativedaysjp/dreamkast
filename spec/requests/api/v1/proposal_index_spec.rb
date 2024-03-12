@@ -9,7 +9,6 @@ describe Api::V1::ProposalsController, type: :request do
 
     it 'confirm json schema' do
       get '/api/v1/proposals?eventAbbr=cndt2020'
-      expect(response).to(have_http_status(:ok))
       assert_response_schema_confirm(200)
     end
 

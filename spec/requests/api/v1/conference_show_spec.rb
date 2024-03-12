@@ -10,7 +10,6 @@ describe Api::V1::ConferencesController, type: :request do
 
       it 'should have valid conference' do
         get '/api/v1/events/cndt2020'
-        expect(response).to(have_http_status(:ok))
         expect(response.body).to(include('cndt2020'))
         expect(response.body).not_to(include('cndo2021'))
         assert_response_schema_confirm(200)

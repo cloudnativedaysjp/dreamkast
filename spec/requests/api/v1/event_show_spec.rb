@@ -8,7 +8,6 @@ describe EventController, type: :request do
 
     it 'confirm json schema' do
       get '/api/v1/events/cndt2020'
-      expect(response).to(have_http_status(:ok))
       assert_response_schema_confirm(200)
     end
 

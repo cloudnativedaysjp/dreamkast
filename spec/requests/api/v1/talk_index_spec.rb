@@ -12,7 +12,6 @@ describe TalksController, type: :request do
 
       it 'confirm json schema' do
         get '/api/v1/talks?eventAbbr=cndt2020'
-        expect(response).to(have_http_status(:ok))
         assert_response_schema_confirm(200)
         expect(response.body).to(include('talk1'))
         expect(response.body).to(include('talk3'))
@@ -44,7 +43,6 @@ describe TalksController, type: :request do
 
       it 'confirm json schema' do
         get '/api/v1/talks?eventAbbr=cndt2020'
-        expect(response).to(have_http_status(:ok))
         assert_response_schema_confirm(200)
 
         expect(response.body).to(include('talk1'))

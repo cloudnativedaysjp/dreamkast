@@ -117,8 +117,6 @@ gem "aws-sdk-ssm"
 
 gem 'active_hash'
 
-gem "http", "~> 5.1"
-
 gem "turbo-rails"
 
 gem 'slack-ruby-client'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_10_070615) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_13_151437) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -124,6 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_10_070615) do
     t.boolean "rehearsal_mode", default: false, null: false
     t.integer "capacity"
     t.text "contact_url"
+    t.text "sponsor_guideline_url"
     t.index ["abbr", "conference_status"], name: "index_conferences_on_abbr_and_conference_status"
     t.index ["abbr"], name: "index_conferences_on_abbr"
   end

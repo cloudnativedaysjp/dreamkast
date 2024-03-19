@@ -10,10 +10,9 @@ describe Api::V1::ConferencesController, type: :request do
 
       it 'confirm json schema' do
         get '/api/v1/events'
-        expect(response).to(have_http_status(:ok))
         expect(response.body).to(include('cndt2020'))
         expect(response.body).to(include('cndo2021'))
-        assert_response_schema_confirm
+        assert_response_schema_confirm(200)
       end
     end
   end

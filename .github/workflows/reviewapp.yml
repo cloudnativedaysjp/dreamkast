@@ -5,6 +5,8 @@ on: pull_request
 jobs:
   labeling:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
+    permissions:
+      pull-requests: write
     name: grant 'reviewapps' label
     if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
     steps:

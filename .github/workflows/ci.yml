@@ -20,8 +20,9 @@ on:
 jobs:
   run-test:
     runs-on: ubuntu-22.04
-    permissions:
-      pull-requests: write
+    # permissions:
+    #   pull-requests: write
+    permissions: write-all
     if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
     - uses: actions/checkout@v4

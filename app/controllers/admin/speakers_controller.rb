@@ -1,6 +1,5 @@
 class Admin::SpeakersController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
     @speakers = @conference.speakers

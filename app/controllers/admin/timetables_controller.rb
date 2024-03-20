@@ -1,6 +1,5 @@
 class Admin::TimetablesController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   before_action :set_profile
 

@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def show
     @session = session

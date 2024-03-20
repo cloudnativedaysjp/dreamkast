@@ -68,8 +68,7 @@ class ProfilesController < ApplicationController
 
   def destroy
     @profile.destroy
-    reset_session
-    redirect_to(auth0_logout_url.to_s)
+    redirect_to(logout_url)
   end
 
   def destroy_id

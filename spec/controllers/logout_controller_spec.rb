@@ -14,7 +14,7 @@ RSpec.describe(LogoutController, type: :controller) do
 
     it 'redirects to Auth0 logout URL' do
       get :logout
-      expect(response).to(redirect_to('https://example.com/v2/logout?returnTo=http%3A%2F%2Ftest.host%2F&client_id=auth0_client_id'))
+      expect(response).to(redirect_to('https://example.com/v2/logout?client_id=auth0_client_id&returnTo=http%3A%2F%2Ftest.host%2F'))
     end
 
     it 'calls reset_session' do

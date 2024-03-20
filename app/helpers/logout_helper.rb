@@ -1,5 +1,5 @@
 module LogoutHelper
-  def logout_url
+  def auth0_logout_url
     domain = ENV['AUTH0_DOMAIN']
     client_id = ENV['AUTH0_CLIENT_ID']
     request_params = {

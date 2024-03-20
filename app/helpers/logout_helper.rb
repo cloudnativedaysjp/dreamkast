@@ -7,6 +7,6 @@ module LogoutHelper
       client_id:
     }
 
-    URI::HTTPS.build(host: domain, path: '/v2/logout', query: request_params.to_query)
+    URI::HTTPS.build(host: domain, path: '/v2/logout', query: request_params.to_query).to_s
   end
 end

@@ -15,6 +15,7 @@ class ConferenceForm
   attr_accessor :brief
   attr_accessor :privacy_policy
   attr_accessor :privacy_policy_for_speaker
+  attr_accessor :sponsor_guideline_url
 
   delegate :persisted?, to: :conference
 
@@ -100,7 +101,8 @@ class ConferenceForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      conference.update!(conference_status:, rehearsal_mode:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, capacity:, contact_url:, brief:, privacy_policy:, privacy_policy_for_speaker:)
+      conference.update!(conference_status:, rehearsal_mode:, cfp_result_visible:, speaker_entry:, attendee_entry:, show_timetable:, show_sponsors:, capacity:, contact_url:, brief:, privacy_policy:, privacy_policy_for_speaker:,
+                         sponsor_guideline_url:)
     end
   rescue => e
     puts(e)
@@ -135,7 +137,8 @@ class ConferenceForm
       conference_days:,
       brief: conference.brief,
       privacy_policy: conference.privacy_policy,
-      privacy_policy_for_speaker: conference.privacy_policy_for_speaker
+      privacy_policy_for_speaker: conference.privacy_policy_for_speaker,
+      sponsor_guideline_url: conference.sponsor_guideline_url
     }
   end
 end

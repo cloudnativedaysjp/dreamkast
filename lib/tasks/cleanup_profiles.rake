@@ -1,8 +1,10 @@
 namespace :util do
   desc 'cleanup_profiles'
   task cleanup_profiles: :environment do
-    ActiveRecord::Base.logger = Logger.new($stdout)
-    Rails.logger.level = Logger::DEBUG
+    unless Rails.env.test?
+      ActiveRecord::Base.logger = Logger.new($stdout)
+      Rails.logger.level = Logger::DEBUG
+    end
 
     abbr = ENV.fetch('EVENT_ABBR')
 

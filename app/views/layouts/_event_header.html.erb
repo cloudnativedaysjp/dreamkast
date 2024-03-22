@@ -15,6 +15,10 @@
       <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
         <% unless event_name.nil? %>
 
+          <% if display_sponsor_guideline_url? %>
+            <li class="nav-item"><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
+          <% end %>
+
           <% if display_dashboard_link? %>
             <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>

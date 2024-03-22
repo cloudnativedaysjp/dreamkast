@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
     (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
   end
 
-  helper_method :sponsor_logo_class, :days, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
+  helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
 
   private
 
@@ -141,6 +141,10 @@ class ApplicationController < ActionController::Base
     else
       action_name.to_s
     end
+  end
+
+  def display_sponsor_guideline_url?
+    @conference&.sponsor_guideline_url
   end
 
   def display_dashboard_link?

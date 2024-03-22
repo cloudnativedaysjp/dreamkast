@@ -21,7 +21,7 @@ class AddTypeColumnToTalks < ActiveRecord::Migration[7.0]
     Talk.reset_column_information
 
     change_column_null :talks, :type, false
-    unless foreign_key_exists?(:talks, :talk_types)
+    unless foreign_key_exists?(:talks, :talk_types, column: :type, primary_key: :id)
       add_foreign_key :talks, :talk_types, column: :type, primary_key: :id
     end
   end

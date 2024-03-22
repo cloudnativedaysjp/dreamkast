@@ -15,6 +15,7 @@
     <li>タイムテーブルを表示: <%= @conference.show_timetable %></li>
     <li>現地参加定員: <%= @conference.capacity %></li>
     <li>Contact Url: <%= @conference.contact_url %></li>
+    <li>Sponsor Guideline Url: <%= link_to @conference.sponsor_guideline_url, @conference.sponsor_guideline_url, target: '_blank' %></li>
     <li>スポンサーを表示: <%= @conference.show_sponsors ? '表示' : '非表示' %></li>
   </ul>
   <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id), class: 'btn btn-primary' %>

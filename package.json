@@ -18,7 +18,7 @@
         "popper.js": "1.16.1",
         "stimulus": "^3.2.1",
         "turbolinks": "5.2.0",
-        "video.js": "8.5.2"
+        "video.js": "8.10.0"
     },
     "version": "0.1.0",
     "devDependencies": {

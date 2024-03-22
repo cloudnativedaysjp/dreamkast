@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
   end
 
   def display_sponsor_guideline_url?
-    @conference && @conference.sponsor_guideline_url
+    @conference&.sponsor_guideline_url
   end
 
   def display_dashboard_link?

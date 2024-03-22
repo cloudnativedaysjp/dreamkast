@@ -1488,6 +1488,43 @@ SponsorType.seed(
     name: "Tool",
     order: 6,
   },
+
+  {
+    id: 64,
+    conference_id: 11,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 65,
+    conference_id: 11,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 66,
+    conference_id: 11,
+    name: "Booth",
+    order: 3,
+  },
+  {
+    id: 67,
+    conference_id: 11,
+    name: "Logo",
+    order: 4,
+  },
+  {
+    id: 68,
+    conference_id: 11,
+    name: "Tool",
+    order: 5,
+  },
+  {
+    id: 69,
+    conference_id: 11,
+    name: "Support",
+    order: 6,
+  },
 )
 
 [

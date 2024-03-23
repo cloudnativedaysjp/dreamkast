@@ -2,7 +2,7 @@
     "name": "cndtattend",
     "private": true,
     "dependencies": {
-        "@hotwired/turbo-rails": "^7.2.4",
+        "@hotwired/turbo-rails": "^8.0.0",
         "@rails/actioncable": "7.0.6",
         "@rails/activestorage": "7.0.6",
         "@rails/ujs": "7.0.6",

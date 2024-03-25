@@ -1,7 +1,6 @@
 class CreateStreamingAwsResourcesJob < ApplicationJob
   include EnvHelper
   include MediaPackageV2Helper
-  include LogoutHelper
 
   # queue_as :default
   self.queue_adapter = :async

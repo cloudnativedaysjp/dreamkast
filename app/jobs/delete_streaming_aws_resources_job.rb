@@ -1,6 +1,5 @@
 class DeleteStreamingAwsResourcesJob < ApplicationJob
   include EnvHelper
-  include LogoutHelper
 
   # queue_as :default
   self.queue_adapter = :async

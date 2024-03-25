@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def show
     @session = session
@@ -16,8 +15,7 @@ class AdminController < ApplicationController
   def destroy_user
     @profile = Profile.find_by(sub: @current_user[:extra][:raw_info][:sub])
     @profile.destroy
-    reset_session
-    redirect_to(logout_url.to_s)
+    redirect_to(logout_url)
   end
 
   def statistics

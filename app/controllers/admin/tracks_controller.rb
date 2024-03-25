@@ -1,6 +1,5 @@
 class Admin::TracksController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
   include TalksTable
 
   def index

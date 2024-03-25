@@ -1,6 +1,5 @@
 class Admin::ProposalsController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
     @proposals = @conference.proposals

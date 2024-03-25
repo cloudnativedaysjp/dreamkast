@@ -1,6 +1,5 @@
 class Admin::TeamsController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def show
     @admin_profiles = @conference.admin_profiles.order(name: 'ASC')

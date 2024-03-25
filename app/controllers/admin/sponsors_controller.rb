@@ -1,6 +1,5 @@
 class Admin::SponsorsController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
   def new
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor_types = @conference.sponsor_types

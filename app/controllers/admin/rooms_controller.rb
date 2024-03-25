@@ -1,6 +1,5 @@
 class Admin::RoomsController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
     @rooms = @conference.rooms

@@ -1,6 +1,5 @@
 class Admin::LinksController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
     @links = Link.where(conference_id: @conference.id)

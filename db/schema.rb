@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_151437) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_23_074114) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -341,7 +341,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_151437) do
     t.string "name", null: false
     t.text "description"
     t.integer "number_of_seats", default: 0, null: false
-    t.integer "integer", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_rooms_on_conference_id"

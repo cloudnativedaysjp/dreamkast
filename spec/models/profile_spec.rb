@@ -61,7 +61,7 @@ RSpec.describe(Profile, type: :model) do
   end
 
   it 'is invalid if company_email is not a valid format' do
-    profile[:email] = 'foobar'
+    profile[:company_email] = 'foobar'
     expect(profile).to(be_invalid)
   end
 

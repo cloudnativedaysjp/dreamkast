@@ -97,7 +97,6 @@ services:
       - DEFAULT_REGION=ap-northeast-1
       - DATA_DIR=/var/lib/localstack/data
     volumes:
-      - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
       - ./localstack/init:/etc/localstack/init:ro
       - ./localstack:/var/lib/localstack
     ports:

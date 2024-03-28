@@ -20,7 +20,7 @@
 #  fk_rails_...  (sponsor_id => sponsors.id)
 #
 FactoryBot.define do
-  factory :boothe do
+  factory :booth do
     sponsor { nil }
     published { '' }
   end

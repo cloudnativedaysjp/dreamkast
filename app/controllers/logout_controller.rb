@@ -1,7 +1,7 @@
 class LogoutController < ApplicationController
   def logout
     reset_session
-    redirect_to(auth0_logout_url)
+    redirect_to(auth0_logout_url, allow_other_host: true)
   end
 
   private

@@ -21,9 +21,9 @@ module Secured
     if set_conference.migrated?
       case [controller_name, action_name]
       in ['talks', 'show']
-        redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s)
+        redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s, allow_other_host: true)
       else
-        redirect_to(URI.join(WEBSITE_BASE_URL, params[:event]).to_s)
+        redirect_to(URI.join(WEBSITE_BASE_URL, params[:event]).to_s, allow_other_host: true)
       end
     end
   end

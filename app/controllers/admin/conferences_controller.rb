@@ -1,6 +1,5 @@
 class Admin::ConferencesController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
   end

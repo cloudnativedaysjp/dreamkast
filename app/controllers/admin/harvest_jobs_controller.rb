@@ -1,6 +1,5 @@
 class Admin::HarvestJobsController < ApplicationController
   include SecuredAdmin
-  include LogoutHelper
 
   def index
     @harvest_jobs = @conference.media_package_harvest_jobs

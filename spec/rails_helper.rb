@@ -70,6 +70,7 @@ RSpec.configure do |config|
   config.add_setting(:committee_options)
   config.committee_options = {
     schema_path: Rails.root.join('schemas', 'swagger.yml').to_s,
+    strict_reference_validation: true,
   }
   include Committee::Rails::Test::Methods
   config.include(ActiveJob::TestHelper)

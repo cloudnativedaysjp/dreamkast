@@ -4,7 +4,7 @@ class NotFound < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base
   include EnvHelper
-  include Pundit
+  include Pundit::Authorization
 
   before_action :set_sentry_context, :event_exists?
 

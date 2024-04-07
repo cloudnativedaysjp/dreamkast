@@ -10,8 +10,8 @@ class Admin::TalksController < ApplicationController
         head(:no_content)
 
         filename = Talk.export_csv(@conference, @talks)
-        stat = File.stat("./tmp/#{filename}.csv")
-        send_file("./tmp/#{filename}.csv", filename: "#{filename}.csv", length: stat.size)
+        stat = File.stat("./tmp/#{filename}")
+        send_file("./tmp/#{filename}", filename: filename, length: stat.size)
       end
     end
   end

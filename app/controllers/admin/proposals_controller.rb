@@ -10,9 +10,9 @@ class Admin::ProposalsController < ApplicationController
         head(:no_content)
 
         @talks = @conference.talks.order('conference_day_id ASC, start_time ASC, track_id ASC')
-        filename = Talk.export_csv(@conference, @talks)
-        stat = File.stat("./tmp/#{filename}")
-        send_file("./tmp/#{filename}", filename: filename, length: stat.size)
+        filepath = Talk.export_csv(@conference, @talks)
+        stat = File.stat(filepath)
+        send_file(filepath, filename: File.basename(filepath), length: stat.size)
       end
     end
   end

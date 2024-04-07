@@ -148,11 +148,12 @@ class Talk < ApplicationRecord
       end
     end
 
-    File.open("./tmp/#{filename}", 'w', encoding: 'UTF-8') do |file|
+    filepath = Rails.root.join('tmp', filename)
+    File.open(filepath, 'w', encoding: 'UTF-8') do |file|
       file.write(csv)
     end
 
-    filename
+    filepath
   end
 
   def self.updatable_attributes

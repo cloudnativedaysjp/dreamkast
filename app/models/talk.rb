@@ -148,7 +148,7 @@ class Talk < ApplicationRecord
       end
     end
 
-    File.open("./#{filename}.csv", 'w', encoding: 'UTF-8') do |file|
+    File.open("./tmp/#{filename}.csv", 'w', encoding: 'UTF-8') do |file|
       file.write(csv)
     end
 

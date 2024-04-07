@@ -29,7 +29,10 @@ Rails.application.config.action_dispatch.cookies_same_site_protection = :lax
 #
 # This change is not backwards compatible with earlier Rails versions.
 # It's best enabled when your entire app is migrated and stable on 6.1.
-Rails.application.config.action_controller.urlsafe_csrf_tokens = true
+# Rails.application.config.action_controller.urlsafe_csrf_tokens = true
+# `urlsafe_csrf_tokens` configuration option is deprecated in Rails 7.0.
+# @see https://github.com/rails/rails/blob/v7.0.8.4/railties/lib/rails/application/configuration.rb#L179-L181
+Rails.application.config.action_controller.delete(:urlsafe_csrf_tokens)
 
 # Specify whether `ActiveSupport::TimeZone.utc_to_local` returns a time with an
 # UTC offset or a UTC time.

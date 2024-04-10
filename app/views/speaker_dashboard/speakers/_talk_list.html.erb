@@ -2,7 +2,11 @@
   <div class="card">
     <div class="card-header">
       <b>Sessions</b>
-      <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions'), data: {"turbolinks" => false} %>
+      <% if @sponsor %>
+        <%= link_to (image_tag "icons/pencil-square.svg"), edit_sponsor_dashboards_speaker_path(id: @speaker.id, sponsor_id: @sponsor.id, anchor: 'sessions'), data: {"turbolinks" => false} %>
+      <% else %>
+        <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions'), data: {"turbolinks" => false} %>
+      <% end %>
     </div>
     <% if sponsor? %>
     <div class="alert alert-info alert-sponsor" role="alert">

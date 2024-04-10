@@ -1,7 +1,11 @@
 <div class="card">
   <div class="card-header">
     <b>Profile</b>
-    <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'speaker') %>
+    <% if @sponsor %>
+      <%= link_to (image_tag "icons/pencil-square.svg"), edit_sponsor_dashboards_speaker_path(id: @speaker.id, sponsor_id: @sponsor.id, anchor: 'speaker') %>
+    <% else %>
+      <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'speaker') %>
+    <% end %>
   </div>
   <% if @speaker && @speaker.avatar_url.present? %>
   <%= image_tag @speaker.avatar_url(:large) || @speaker.avatar_url, size: '160x160', class: "mx-auto mt-3" %>

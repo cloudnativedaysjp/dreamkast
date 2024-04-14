@@ -48,8 +48,4 @@ module TalksTable
   def already_recorded?(talk)
     talk.video.video_id.present?
   end
-
-  def media_live
-    @track.live_stream_media_live
-  end
 end

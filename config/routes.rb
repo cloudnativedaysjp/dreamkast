@@ -140,13 +140,11 @@ Rails.application.routes.draw do
     resources :attachments, only: [:show]
 
     # Profile
-    resources :profiles, only: [:new, :edit, :update, :destroy, :create]
+    resources :profiles, only: [:new, :edit, :update, :create]
     namespace :profiles do
       post 'talks', to: 'talks#create'
     end
     get 'profiles/calendar', to: 'profiles#calendar'
-    get 'profiles/new', to: 'profiles#new'
-    post 'profiles', to: 'profiles#create'
     post 'profiles/:id', to: 'profiles#edit'
     put 'profiles', to: 'profiles#update'
     delete 'profiles', to: 'profiles#destroy'

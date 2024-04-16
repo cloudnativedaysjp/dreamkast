@@ -6,14 +6,6 @@ class Admin::LiveStreamIvsController < ApplicationController
     @ivs = LiveStreamIvs.new
     @ivss = @conference.tracks.map(&:live_stream_ivs).compact
 
-    @media_lives = @conference.tracks.map(&:live_stream_media_live).compact
-    get_media_live_channels_from_aws(@media_lives.map(&:channel_id)).each do |channel|
-      @media_lives.find { |media_live| media_live.channel_id == channel.id }.channel = channel
-    end
-    get_media_live_inputs_from_aws(@media_lives.map(&:input_id)).each do |input|
-      @media_lives.find { |media_live| media_live.input_id == input.id }.input = input
-    end
-
     @media_package_channels = @conference.tracks.map(&:media_package_channel).compact
     @media_package_channels.each(&:channel)
 

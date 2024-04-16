@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.1.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
@@ -20,7 +20,7 @@ gem 'jbuilder', '~> 2.11'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Prometheus client
-gem 'prometheus-client', '~> 4.0.0'
+gem 'prometheus-client', '~> 4.2.0'
 
 gem 'icalendar'
 gem 'rack-cors'
@@ -43,7 +43,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.56.0'
+  gem 'rubocop', '~> 1.63.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'annotate', require: false
@@ -121,6 +121,6 @@ gem "turbo-rails"
 
 gem 'slack-ruby-client'
 
-gem 'nokogiri', '1.16.2'
+gem 'nokogiri', '1.16.4'
 
 gem 'faraday-retry'

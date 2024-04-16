@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_23_074114) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_16_161214) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -337,14 +337,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_23_074114) do
 
   create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.bigint "track_id"
     t.string "name", null: false
     t.text "description"
     t.integer "number_of_seats", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_rooms_on_conference_id"
-    t.index ["track_id"], name: "index_rooms_on_track_id"
   end
 
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -607,7 +605,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_23_074114) do
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "public_profiles", "profiles"
   add_foreign_key "rooms", "conferences"
-  add_foreign_key "rooms", "tracks"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"
   add_foreign_key "speaker_announcement_middles", "speakers"
   add_foreign_key "speaker_announcements", "conferences"

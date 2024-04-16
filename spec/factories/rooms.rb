@@ -9,17 +9,14 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  conference_id   :bigint           not null
-#  track_id        :bigint
 #
 # Indexes
 #
 #  index_rooms_on_conference_id  (conference_id)
-#  index_rooms_on_track_id       (track_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
-#  fk_rails_...  (track_id => tracks.id)
 #
 FactoryBot.define do
   factory :room, class: Room do

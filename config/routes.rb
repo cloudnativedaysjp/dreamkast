@@ -87,10 +87,6 @@ Rails.application.routes.draw do
       resources :live_stream_ivs, only: [:index, :create]
       post 'bulk_create_ivs' => 'live_stream_ivs#bulk_create'
       post 'bulk_delete_ivs' => 'live_stream_ivs#bulk_delete'
-      post 'bulk_create_media_live' => 'live_stream_media_live#bulk_create'
-      post 'bulk_delete_media_live' => 'live_stream_media_live#bulk_delete'
-      post 'bulk_create_media_package' => 'live_stream_media_package#bulk_create'
-      post 'bulk_delete_media_package' => 'live_stream_media_package#bulk_delete'
       resources :harvest_jobs
     end
 

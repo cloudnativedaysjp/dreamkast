@@ -117,7 +117,7 @@ describe Talk, type: :model do
 
     context 'has full attributes' do
       it 'export csv' do
-        File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|
+        File.open(Talk.export_csv(cndt2020, [talk]), 'r', encoding: 'UTF-8') do |file|
           expect(file.read).to(eq(expected))
         end
       end
@@ -132,7 +132,7 @@ describe Talk, type: :model do
         EOS
       }
       it 'export csv without attributes will be decided later' do
-        File.open("./#{Talk.export_csv(cndt2020, [talk])}.csv", 'r', encoding: 'UTF-8') do |file|
+        File.open(Talk.export_csv(cndt2020, [talk]), 'r', encoding: 'UTF-8') do |file|
           expect(file.read).to(eq(expected))
         end
       end

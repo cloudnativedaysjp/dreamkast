@@ -107,7 +107,7 @@ class Talk < ApplicationRecord
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
-    filename = "#{conference.abbr}_#{date}_#{track_name}"
+    filename = "#{conference.abbr}_#{date}_#{track_name}.csv"
     columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
 
     labels = conference.proposal_item_configs.map(&:label).uniq
@@ -148,11 +148,12 @@ class Talk < ApplicationRecord
       end
     end
 
-    File.open("./#{filename}.csv", 'w', encoding: 'UTF-8') do |file|
+    filepath = Rails.root.join('tmp', filename)
+    File.open(filepath, 'w', encoding: 'UTF-8') do |file|
       file.write(csv)
     end
 
-    filename
+    filepath
   end
 
   def self.updatable_attributes

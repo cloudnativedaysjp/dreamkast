@@ -22,6 +22,8 @@
 #
 
 FactoryBot.define do
+  factory :sponsor_profile
+
   factory :sponsor_alice, class: SponsorProfile do
     sub { 'alice' }
     email { 'alice@example.com' }

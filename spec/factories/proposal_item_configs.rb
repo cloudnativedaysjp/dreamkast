@@ -24,6 +24,8 @@
 #
 
 FactoryBot.define do
+  factory :proposal_item_config
+
   factory :check_box_item_config_1, class: ProposalItemConfig do
     type { 'ProposalItemConfigCheckBox' }
     label { 'check_box_item_1' }

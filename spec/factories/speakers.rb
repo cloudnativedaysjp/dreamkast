@@ -24,6 +24,8 @@
 #
 
 FactoryBot.define do
+  factory :speaker
+
   factory :speaker_alice, class: Speaker do
     id { 1 }
     sub { 'aaa' }

@@ -10,6 +10,8 @@
 #
 
 FactoryBot.define do
+  factory :form_item
+
   factory :form_item1, class: FormItem do
     id { 1 }
     conference_id { 1 }

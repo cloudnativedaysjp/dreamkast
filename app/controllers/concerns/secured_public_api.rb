@@ -26,7 +26,7 @@ module SecuredPublicApi
     JsonWebToken.verify(http_token)
   end
 
-  def set_current_user_from_claim(claim)
+  def set_current_user_from_claim(claim) # rubocop:disable Naming/AccessorMethodName
     @current_user = {}
     @current_user[:info] = {}
     @current_user[:extra] = {}

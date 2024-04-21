@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
-    if set_current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+    if current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
       redirect_to(dashboard_path)
     end
     @event = params[:event]

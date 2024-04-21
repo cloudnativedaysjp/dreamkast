@@ -47,7 +47,7 @@ module Secured
   end
 
   def new_user?
-    logged_in? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+    logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
   end
 
   def admin?

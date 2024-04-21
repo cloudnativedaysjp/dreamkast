@@ -1,15 +1,4 @@
-module TalksTable
-  extend ActiveSupport::Concern
-
-  included do
-    helper_method :active_date_tab?,
-                  :active_track_tab?,
-                  :on_air_url,
-                  :confirm_message,
-                  :alert_type,
-                  :already_recorded?
-  end
-
+module Admin::TalkTableHelper
   def active_date_tab?(conference_day)
     conference_day.date.strftime('%Y-%m-%d') == @date
   end

@@ -1,6 +1,5 @@
 class Admin::TracksController < ApplicationController
   include SecuredAdmin
-  include TalksTable
 
   def index
     @date = params[:date] || @conference.conference_days.first.date.strftime('%Y-%m-%d')

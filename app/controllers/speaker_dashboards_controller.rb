@@ -1,6 +1,6 @@
 class SpeakerDashboardsController < ApplicationController
   include SecuredSpeaker
-  before_action :logged_in_using_omniauth?, :set_speaker
+  before_action :set_speaker
 
   def show
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?

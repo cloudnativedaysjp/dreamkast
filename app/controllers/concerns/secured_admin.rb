@@ -35,7 +35,7 @@ module SecuredAdmin
   end
 
   def set_current_user
-    @current_user ||= session[:userinfo]
+    current_user
   end
 
   def get_or_create_admin_profile

@@ -20,6 +20,6 @@ module SecuredApi
   end
 
   def set_current_user
-    @current_user ||= session[:userinfo]
+    current_user
   end
 end

@@ -71,7 +71,7 @@ module Secured
   end
 
   def set_current_user
-    @current_user ||= session[:userinfo]
+    current_user
   end
 
   def is_admin?

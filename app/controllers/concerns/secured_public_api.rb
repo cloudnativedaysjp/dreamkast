@@ -11,7 +11,7 @@ module SecuredPublicApi
 
   def authenticate_request!
     claim = verify_token
-    current_user(claim[0])
+    set_current_user_from_claim(claim[0])
   rescue JWT::VerificationError, JWT::DecodeError
     render(json: { errors: ['Not Authenticated'] }, status: :unauthorized)
   end
@@ -26,7 +26,7 @@ module SecuredPublicApi
     JsonWebToken.verify(http_token)
   end
 
-  def current_user(claim)
+  def set_current_user_from_claim(claim) # rubocop:disable Naming/AccessorMethodName
     @current_user = {}
     @current_user[:info] = {}
     @current_user[:extra] = {}

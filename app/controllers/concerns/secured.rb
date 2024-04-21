@@ -51,7 +51,7 @@ module Secured
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    conference && current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
   end
 
   def speaker?

@@ -42,6 +42,8 @@
 #
 
 FactoryBot.define do
+  factory :talk
+
   factory :talk1, class: Talk do
     id { 1 }
     type { 'Session' }

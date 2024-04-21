@@ -17,6 +17,8 @@
 #
 
 FactoryBot.define do
+  factory :conference_day
+
   factory :day1, class: ConferenceDay do
     id { 1 }
     conference_id { 1 }

@@ -19,6 +19,8 @@
 #
 
 FactoryBot.define do
+  factory :proposal_item
+
   factory :check_box_item_1, class: ProposalItem do
     label { 'check_box_item_1' }
   end

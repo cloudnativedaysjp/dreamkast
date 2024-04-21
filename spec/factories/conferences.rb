@@ -33,6 +33,8 @@
 #
 
 FactoryBot.define do
+  factory :conference
+
   factory :cndt2020, class: Conference do
     id { 1 }
     name { 'CloudNative Days Tokyo 2020' }

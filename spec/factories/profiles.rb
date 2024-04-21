@@ -37,6 +37,8 @@
 #
 
 FactoryBot.define do
+  factory :profile
+
   factory :alice, class: Profile do
     sub { 'alice' }
     email { 'alice@example.com' }

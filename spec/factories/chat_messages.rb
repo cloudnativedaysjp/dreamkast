@@ -34,6 +34,8 @@
 #  fk_rails_...  (speaker_id => speakers.id)
 #
 FactoryBot.define do
+  factory :chat_message
+
   sequence :body do |i|
     "chat message #{i}"
   end

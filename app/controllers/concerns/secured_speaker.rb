@@ -7,15 +7,7 @@ module SecuredSpeaker
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to("/#{params[:event]}/speaker_dashboard")
-    end
-  end
-
-  def set_current_user
-    current_user
+    redirect_to("/#{params[:event]}/speaker_dashboard") unless logged_in?
   end
 
   def logged_in?
@@ -31,10 +23,6 @@ module SecuredSpeaker
   end
 
   def prepare_create
-    if logged_in?
-      set_current_user
-    else
-      redirect_to("/#{params[:event]}/speakers/guidance")
-    end
+    redirect_to("/#{params[:event]}/speakers/guidance") unless logged_in?
   end
 end

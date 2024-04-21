@@ -2,7 +2,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
 
   skip_before_action :logged_in_using_omniauth?, only: [:new, :guidance]
-  before_action :set_current_user, only: [:guidance]
   before_action :prepare_create, only: [:new]
 
   # GET :event/speaker_dashboard/speakers/guidance

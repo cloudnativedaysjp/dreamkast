@@ -34,9 +34,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      @current_user = session[:userinfo]
-    end
+    current_user
   end
 
   def set_sponsor_profile

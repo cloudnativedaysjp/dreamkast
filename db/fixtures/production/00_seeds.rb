@@ -277,8 +277,8 @@ ConferenceDay.seed(
   {id: 29, date: "2023-11-20", start_time: "12:00", end_time: "18:00", conference_id: 10, internal: true},  # Pre event
 
   # CNDS2024
-  {id: 30, date: "2024-06-14", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: true},
-  {id: 31, date: "2024-06-15", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: false}, 
+  {id: 30, date: "2024-06-14", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: true},
+  {id: 31, date: "2024-06-15", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: false}, 
 )
 
 FormItem.seed(

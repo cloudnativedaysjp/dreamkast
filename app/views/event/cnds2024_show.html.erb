@@ -86,7 +86,7 @@
           <div class="grid" style="--rows: 13">
             <div class="all-track" style="">
               <div class="session">
-                <h6>09:50 - 10:00</h6>
+                <h6>10:20 - 10:30</h6>
                 <h4>オープニング</h4>
               </div>
             </div>
@@ -111,7 +111,7 @@
 
                 total_break = lunch_break + each_break
 
-                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 09:50")) / 60).to_i - total_break
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:20")) / 60).to_i - total_break
                 row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
               %>
               <div class="talk"
@@ -138,26 +138,14 @@
             <% end %>
           </div>
         </div>
-          <% if conference_day.id == 28%>
-          <div class="grid" style="--rows: 13">
-            <div class="all-track" style="">
-              <div class="session">
-                <h6>18:10 - 18:30</h6>
-                <h4>クロージング</h4>
-              </div>
+        <div class="grid" style="--rows: 13">
+          <div class="all-track" style="">
+            <div class="session">
+              <h6>18:10 - 18:20</h6>
+              <h4>クロージング</h4>
             </div>
           </div>
-          <% end %>
-          <% if conference_day.id == 27 %>
-          <div class="grid" style="--rows: 13">
-            <div class="all-track" style="">
-              <div class="session">
-                <h6>18:30 - 20:00</h6>
-                <h4>よるイベ(懇親会) ※<%= link_to '別途申込み要', 'https://eventregist.com/e/cndt2023_party', {target: '_blank', style: 'text-decoration: underline'} %></h4>
-              </div>
-            </div>
-          </div>
-          <% end %>
+        </div>
         <% end %>
         <% end %>
       </div>

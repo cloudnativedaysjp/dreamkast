@@ -47,7 +47,7 @@
                               false %>
           <% end %>
           <div class="content
-                      <%= 'checked' if @current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
+                      <%= 'checked' if current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
                       talk_id="<%= talk.id %>"
                       track_number="<%= talk.track.number %>"
                style="margin-top:0">

@@ -17,7 +17,7 @@
       <%= form.check_box "talks[#{talk.id}]", { talk_id: talk.id, checked: talks_checked?(talk.id)}, true, false %>
       <% end %>
 
-        <div class="content <%= 'checked' if @current_user && talks_checked?(talk.id) %>" talk_id="<%= talk.id %>" track_number="<%= talk.track.number %>">
+        <div class="content <%= 'checked' if current_user && talks_checked?(talk.id) %>" talk_id="<%= talk.id %>" track_number="<%= talk.track.number %>">
           <h6>
               <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
           </h6>

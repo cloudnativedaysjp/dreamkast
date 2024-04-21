@@ -122,8 +122,8 @@ class TalksController < ApplicationController
   end
 
   def speaker?
-    return false if @current_user.nil?
-    Speaker.find_by(email: @current_user[:info][:email], conference_id: set_conference.id).present?
+    return false if current_user.nil?
+    Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id).present?
   end
 
   def talk_params

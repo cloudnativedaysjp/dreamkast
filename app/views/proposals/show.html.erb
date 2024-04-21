@@ -31,7 +31,7 @@
 </div>
 
 
-<% if @current_user %>
+<% if current_user %>
   <script>
       window.talk_id = "<%= @talk.id %>";
       window.talk_name = "<%= @talk.title %>";

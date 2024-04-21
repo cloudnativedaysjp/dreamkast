@@ -1,6 +1,6 @@
 class SponsorDashboards::SponsorDashboardsController < ApplicationController
   include SecuredSponsor
-  before_action :logged_in_using_omniauth?, :set_sponsor_profile
+  before_action :set_sponsor_profile
 
   def show
     @sponsor = Sponsor.find(params[:sponsor_id])

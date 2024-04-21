@@ -606,7 +606,7 @@ import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposa
 import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
-#import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

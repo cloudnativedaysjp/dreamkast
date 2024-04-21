@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="grid"
-              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 10 %>">
+              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 150 + 10 %>">
             <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
                 <div class="track <%= 'even' if n.zero? || n.even? %>"
                     style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -105,7 +105,7 @@
                   each_break = 0
                 else
                   # 14時以降のセッションについてはお昼休みとセッション間休憩を除外
-                  lunch_break = 80
+                  lunch_break = 70
                   each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
                 end
 

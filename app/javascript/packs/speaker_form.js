@@ -9,7 +9,7 @@ const fieldLength = () => {
 }
 
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementsByClassName('add_talk_fields')[0].addEventListener('click', (e) => {
         e.preventDefault();
         const time = new Date().getTime();
@@ -24,7 +24,7 @@ window.onload = () => {
         return false;
     });
     document.getElementsByClassName('remove_talk_field').forEach((obj) => {addDeleteButtonListener(obj)});
-}
+})
 
 document.addEventListener('change', (e) => {
     if (e.target.classList.contains('talk-categories')) {

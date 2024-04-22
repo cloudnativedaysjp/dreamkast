@@ -8,8 +8,7 @@ const fieldLength = () => {
     return sum;
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
+const addTalkFieldListener = () => {
     document.getElementsByClassName('add_talk_fields')[0].addEventListener('click', (e) => {
         e.preventDefault();
         const time = new Date().getTime();
@@ -23,8 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
         addDeleteButtonListener(div.querySelector('.remove_talk_field'));
         return false;
     });
+}
+
+const removeTalkFieldListener = () => {
     document.getElementsByClassName('remove_talk_field').forEach((obj) => {addDeleteButtonListener(obj)});
-})
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        addTalkFieldListener();
+        removeTalkFieldListener()
+    })
+} else {
+    addTalkFieldListener();
+    removeTalkFieldListener()
+}
+
 
 document.addEventListener('change', (e) => {
     if (e.target.classList.contains('talk-categories')) {

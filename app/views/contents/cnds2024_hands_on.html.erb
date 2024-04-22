@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row p-md-4" id="contents">
     <div class="col-12 col-md-12 py-3" id="handson">
-      <%= image_tag 'cnds2024/hands-on.png', style: 'width: 100%'%>
+      <%= image_tag 'cnds2024/hands-on-full.png', style: 'width: 100%'%>
       <h2 class="text-center mt-4" id="">
         CNDS2024 Hands-on
       </h2>
@@ -82,12 +82,18 @@
 
 
       <hr />
+
+      <%
+=begin %>
       <div class="col-12 my-4">
         <h2 class="text-center mt-4">企画一覧</h2>
         <section class="projects">
           <%= render(partial: "contents/cnds2024/projects") %>
         </section>
       </div>
+      <%
+=end %>
+
     </div>
   </div>
 </div>

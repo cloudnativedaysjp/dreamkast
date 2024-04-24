@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row p-md-4" id="contents">
+    <div class="col-12 col-md-12 py-3" id="handson">
+      <%= image_tag 'cnds2024/hands-on-full.png', style: 'width: 100%'%>
+      <h2 class="text-center mt-4" id="">
+        CNDS2024 Hands-on
+      </h2>
+      <h4 class="text-center mb-3">
+        開催日時：2024/6/14 (金) 10:30 - 17:30 （途中お昼休憩あり）
+      </h4>
+      <p>
+        CloudNative Days Summer 2024では、以前のCloudNative Days Tokyo 2023で好評だった Co-located ハンズオンを開催することになりました。
+      </p>
+      <p>
+        Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDS2024で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
+      </p>
+      <h3 class="mt-4">申込方法・参加方法</h3>
+      <p>
+        申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+      </p>
+      <p>
+        イベントはオフラインまたはオンラインで実施され、各ハンズオンが提供するZoom・Google Meets・Microsoft Teamsなどを利用します。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+      </p>
+
+      <h3 class="mt-4">開催予定ハンズオン</h3>
+      <div class="session">
+        <h5 class="time">2024/6/14 (金) 10:30 - 17:30 （途中お昼休憩あり）</h5>
+        <h4 class="title"><a href="#hc6">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Summer 2024 実行委員会</a></h4>
+      </div>
+
+
+      <div class="handson-session">
+        <h3 id="hc6">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Summer 2024 実行委員会</h3>
+        <ul>
+          <li>
+            <% if @current_user %>
+              申し込みURL：<a href="https://docs.google.com/forms/d/e/1FAIpQLSfMKLrNV80-woD6q3kxAoXLqP7AruSxQoeI7tCtEEdZCpYw5A/viewform">https://docs.google.com/forms/d/e/1FAIpQLSfMKLrNV80-woD6q3kxAoXLqP7AruSxQoeI7tCtEEdZCpYw5A/viewform</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDS2024 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2024/6/14 (金) 10:30 - 17:30 （途中お昼休憩あり）
+          </li>
+        </ul>
+        <p>
+          このハンズオンは、Kubernetesやクラウドネイティブ技術に精通したメンバーが、2024年現在でデファクトとなっている（デファクトになりそうな）新しい技術について一気に学べるように設計したハンズオンです。
+          下記のような様々なトピックを、手を動かしながら1日で学ぶことができます。<br>
+          2023年に開催した際には、申し込みわずか半日で定員の4倍の申し込みがあり、急遽増枠した大人気イベントです。<br>
+
+          <h5>【学べるOSS】</h5>
+          <ul>
+            <li>Docker</li>
+            <li>Kubernetes</li>
+            <li>Prometheus</li>
+            <li>Grafana</li>
+            <li>Pyroscope</li>
+            <li>Loki</li>
+            <li>Tempo</li>
+            <li>Open Telemetry</li>
+            <li>Cilium</li>
+            <li>Argo CD</li>
+            <li>Argo Rollouts</li>
+            <li>Istio</li>
+            <li>Hubble</li>
+          </ul>
+
+          <h5>【参加情報】</h5>
+          <ul>
+            <li>参加：無料</li>
+            <li>定員：オフライン20名（先着）、オンライン10名（先着）</li>
+            <li>オフライン会場：札幌エルプラザ@NECソリューションイノベータ 10F（〒060-0808 北海道札幌市北区北８条西３丁目）</li>
+            <ul>
+              <li>アクセス・入館方法は後日メールにてご連絡いたします。</li>
+            </ul>
+            <li>オンライン会場：Zoom</li>
+          </ul>
+          <h5>【講師プロフィール】</h5>
+          CloudNative Days Summer 2024 実行委員会有志
+        </p>
+      </div>
+
+
+      <hr />
+
+      <%
+=begin %>
+      <div class="col-12 my-4">
+        <h2 class="text-center mt-4">企画一覧</h2>
+        <section class="projects">
+          <%= render(partial: "contents/cnds2024/projects") %>
+        </section>
+      </div>
+      <%
+=end %>
+
+    </div>
+  </div>
+</div>

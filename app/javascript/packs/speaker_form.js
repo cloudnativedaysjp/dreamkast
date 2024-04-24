@@ -8,7 +8,7 @@ const fieldLength = () => {
     return sum;
 }
 
-const addTalkFieldListener = () => {
+const initializeAddTalkButton = () => {
     document.getElementsByClassName('add_talk_fields')[0].addEventListener('click', (e) => {
         e.preventDefault();
         const time = new Date().getTime();
@@ -24,18 +24,18 @@ const addTalkFieldListener = () => {
     });
 }
 
-const removeTalkFieldListener = () => {
+const initializeRemoveTalkButton = () => {
     document.getElementsByClassName('remove_talk_field').forEach((obj) => {addDeleteButtonListener(obj)});
 }
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        addTalkFieldListener();
-        removeTalkFieldListener()
+        initializeAddTalkButton();
+        initializeRemoveTalkButton()
     })
 } else {
-    addTalkFieldListener();
-    removeTalkFieldListener()
+    initializeAddTalkButton();
+    initializeRemoveTalkButton()
 }
 
 

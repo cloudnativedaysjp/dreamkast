@@ -306,8 +306,8 @@ ConferenceDay.seed(
   {id: 29, date: "2023-11-20", start_time: "12:00", end_time: "18:00", conference_id: 10, internal: true},  # Pre event
 
   # CNDS2024
-  {id: 30, date: "2024-06-14", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: true},
-  {id: 31, date: "2024-06-15", start_time: "10:00", end_time: "18:00", conference_id: 11, internal: false}, 
+  {id: 30, date: "2024-06-14", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: true},
+  {id: 31, date: "2024-06-15", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: false}, 
 )
 
 FormItem.seed(
@@ -606,7 +606,7 @@ import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposa
 import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
-#import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

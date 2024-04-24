@@ -94,7 +94,6 @@ Rails.application.routes.draw do
 
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
     get '/speakers/guidance' => 'speaker_dashboard/speakers#guidance'
-    resources :speakers, only: [:index, :show]
     get '/speaker_dashboard' => 'speaker_dashboards#show'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]

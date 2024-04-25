@@ -37,35 +37,25 @@
         </div>
       <% end %>
 
-      <!-- div class="mt-3" id="project-list">
+      <div class="mt-3" id="project-list">
         <div class="card">
           <div class="card-header">
             <b>企画一覧</b>
           </div>
           <div class="card-body" id="exhibition">
-            <%= link_to community_lt_path do %>
+            <%= link_to "https://eventregist.com/e/cnds2024_party" do %>
               <div class="project">
-                <%= image_tag 'cndt2023/community-lt.png' %>
-              </div>
-            <% end %>
-            <%= link_to yurucafe_path do %>
-              <div class="project">
-                <%= image_tag 'cndt2023/yurucafe-banner.png' %>
-              </div>
-            <% end %>
-            <%= link_to stamprally_path do %>
-              <div class="project">
-                <%= image_tag 'cndt2023/stamprally-banner.png' %>
+                <%= image_tag 'cnds2024/zenyasai.png' %>
               </div>
             <% end %>
             <%= link_to hands_on_path do %>
               <div class="project">
-                <%= image_tag 'cndt2023/handson.png' %>
+                <%= image_tag 'cnds2024/handson.png' %>
               </div>
             <% end %>
           </div>
         </div>
-      </div -->
+      </div>
       <% if @profile.instance_of?(Profile) %>
         <div class="mt-3">
           <div class="card">

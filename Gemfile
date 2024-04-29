@@ -124,3 +124,6 @@ gem 'slack-ruby-client'
 gem 'nokogiri', '1.16.2'
 
 gem 'faraday-retry'
+
+# QRcode rendering
+gem "rqrcode", "~> 2.0"

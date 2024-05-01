@@ -1,0 +1,16 @@
+<div class="a8">
+  <div class="logo-image">
+    <%= image_tag "cndt2023/header_logo.png", class: "img-fluid header_logo" %>
+  </div>
+  <div class="profile">
+    <div class="qrcode">
+      <img src=<%= "data:image/png;base64,#{@profile.qrcode_image}" %> />
+      <%= h("受付用QRコード") %>
+    </div>
+    <div class="detail">
+      <%= h("<Attendee>") %>
+      <%= image_tag @profile.public_profile.avatar_url(:small) %>
+      Name: <%= @profile.public_profile.nickname %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+.a8-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+
+.a8 {
+  border: 1px solid black;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  .logo-image{
+    margin-top: 3rem;
+  }
+  .profile {
+    display: inherit;
+    margin-top: 2rem;
+    flex-direction: row;
+    .qrcode{
+      display: inherit;
+      margin-right: 2rem;
+      flex-direction: column;
+    }
+    .detail{
+      display: inherit;
+      margin-left: 2rem;
+      flex-direction: column;
+    }
+  }
+}
+
+@media print {
+  .a8-container {
+    page-break-after: always; // コンテンツの後に改ページ
+  }
+}

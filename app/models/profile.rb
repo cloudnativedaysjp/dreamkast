@@ -73,6 +73,8 @@ class Profile < ApplicationRecord
   has_many :form_items, through: :agreements
   has_many :chat_messages
   has_many :check_ins
+  has_many :check_in_conferences
+  has_many :check_in_talks
   has_one :public_profile, dependent: :destroy
 
   before_create do

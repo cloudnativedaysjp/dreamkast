@@ -40,4 +40,12 @@ module SecuredPublicApi
     end
     @current_user
   end
+
+  def conference
+    @conference ||= Conference.find_by(abbr: params[:eventAbbr])
+  end
+
+  def set_conference
+    conference
+  end
 end

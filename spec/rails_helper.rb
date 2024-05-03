@@ -79,6 +79,7 @@ end
 def claim
   [JSON.parse('{
     "https://cloudnativedays.jp/roles": [
+      "CNDT2020-Admin",
       "CNDT2022-Admin",
       "CNSEC2022-Admin"
     ],

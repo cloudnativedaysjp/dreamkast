@@ -84,6 +84,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
   end
 
+  create_table "check_in_conferences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "timestamp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_check_in_conferences_on_conference_id"
+    t.index ["profile_id"], name: "index_check_in_conferences_on_profile_id"
+  end
+
+  create_table "check_in_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "timestamp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_check_in_talks_on_profile_id"
+    t.index ["talk_id"], name: "index_check_in_talks_on_talk_id"
+  end
+
   create_table "check_ins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.datetime "created_at", null: false
@@ -575,6 +595,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
+  add_foreign_key "check_in_conferences", "conferences"
+  add_foreign_key "check_in_conferences", "profiles"
+  add_foreign_key "check_in_talks", "profiles"
+  add_foreign_key "check_in_talks", "talks"
   add_foreign_key "links", "conferences"
   add_foreign_key "live_streams", "conferences"
   add_foreign_key "live_streams", "tracks"

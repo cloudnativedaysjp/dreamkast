@@ -74,13 +74,6 @@ module Secured
     @current_user ||= session[:userinfo]
   end
 
-  def is_admin?
-    # respond_to do |format|
-    #   format.html { redirect_to controller: "track", action: "show", id: 1 }
-    #   format.json { render json: "Forbidden", status: :forbidden }
-    # end
-  end
-
   private
 
   def use_secured_before_action?

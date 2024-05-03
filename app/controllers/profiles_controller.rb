@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
-    if current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+    if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
       redirect_to(dashboard_path)
     end
     @event = params[:event]
@@ -23,8 +23,8 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-    @profile.sub = @current_user[:extra][:raw_info][:sub]
-    @profile.email = @current_user[:info][:email]
+    @profile.sub = current_user[:extra][:raw_info][:sub]
+    @profile.email = current_user[:info][:email]
 
     if @profile.save
       Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
@@ -126,7 +126,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
   end
 
   def profile_params

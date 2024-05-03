@@ -16,7 +16,7 @@
           </h6>
           <h6 class="card-subtitle mb-3">
             参加URL：
-            <% if @current_user %>
+            <% if current_user %>
               <a href="https://miro.com/app/board/o9J_kodoxUo=/" target="_blank">https://miro.com/app/board/o9J_kodoxUo=/</a> (Miroが開きます)
             <% else %>
               <strong>表示するには CNDT2020 サイトにログインしてください。</strong>
@@ -26,7 +26,7 @@
           <p class="card-text">この CNDT2020 Discussion Board は、ともに悩みを共有し、ともに解決して一歩進んでいくことを目的に作られています。議論の多様性を認めあって、友好的な場にしましょう。オンラインだからこその電子ボード上で、URLや画像を共有しながら気軽に情報交換することができます。</p>
           <p class="card-text"><strong>初級者も歓迎しています！</strong></p>
           
-          <% if @current_user %>
+          <% if current_user %>
             <hr />
             <h4>↓ Discussion Board 現在の様子</h4>
             <iframe src="https://miro.com/app/embed/o9J_kodoxUo=/?autoplay=yep" style="width: 100%; min-height: 600px;" frameborder="0" scrolling="no" allowfullscreen></iframe>

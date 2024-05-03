@@ -3,10 +3,10 @@
 <script async src="https://cdn-edge.karte.io/8ecf5f9dea00108ea97718d81a3c6b4f/edge.js"></script>
 <!-- End KARTE Tag -->
 
-<% if @current_user %>
+<% if current_user %>
     <script>
         krt('send', 'identify', {
-            user_id: "<%= @current_user[:extra][:raw_info][:sub] %>",
+            user_id: "<%= current_user[:extra][:raw_info][:sub] %>",
             event: "<%= event_name %>",
         })
     </script>

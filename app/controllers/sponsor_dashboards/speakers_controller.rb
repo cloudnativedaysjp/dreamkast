@@ -9,7 +9,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
     if current_user
-      if Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+      if Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
         redirect_to(speaker_dashboard_path)
       end
     end
@@ -35,8 +35,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
-    @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = @current_user[:info][:email]
+    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.email = current_user[:info][:email]
 
     respond_to do |format|
       if r = @speaker_form.save
@@ -60,8 +60,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, sponsor: @sponsor, conference: @conference)
-    @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = @current_user[:info][:email]
+    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.email = current_user[:info][:email]
     # @speaker_form.load
     exists_talks = @speaker.talk_ids
 
@@ -91,8 +91,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
   end
 
   def pundit_user
-    if @current_user
-      Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    if current_user
+      Speaker.find_by(conference: @conference.id, email: current_user[:info][:email])
     end
   end
 

@@ -11,7 +11,7 @@ class SpeakerDashboardsController < ApplicationController
   helper_method :sponsor?
 
   def sponsor?
-    !@conference.sponsors.where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").empty?
+    !@conference.sponsors.where('speaker_emails like(?)', "%#{current_user[:info][:email]}%").empty?
   end
 
   def logged_in_using_omniauth?
@@ -20,8 +20,8 @@ class SpeakerDashboardsController < ApplicationController
 
   def set_speaker
     @conference ||= Conference.find_by(abbr: params[:event])
-    if @current_user
-      @speaker = Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+    if current_user
+      @speaker = Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
       @talks = @speaker ? @speaker.talks.not_sponsor : []
     end
   end

@@ -1,1 +1,1 @@
-json.current_user(@current_user)
+json.current_user(current_user)

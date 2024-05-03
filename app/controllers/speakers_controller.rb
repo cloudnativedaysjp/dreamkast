@@ -5,9 +5,7 @@ class SpeakersController < ApplicationController
   before_action :set_profile
 
   def logged_in_using_omniauth?
-    if session[:userinfo].present?
-      @current_user = session[:userinfo]
-    end
+    current_user
   end
 
   # GET /speakers

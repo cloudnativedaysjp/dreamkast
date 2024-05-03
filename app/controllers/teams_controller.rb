@@ -3,9 +3,7 @@ class TeamsController < ApplicationController
   before_action :set_conference, :set_profile, :set_speaker
 
   def logged_in_using_omniauth?
-    if session[:userinfo].present?
-      @current_user = session[:userinfo]
-    end
+    current_user
   end
 
   def show

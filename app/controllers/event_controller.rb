@@ -21,9 +21,7 @@ class EventController < ApplicationController
   end
 
   def set_current_user
-    if session[:userinfo].present?
-      @current_user = session[:userinfo]
-    end
+    current_user
   end
 
   def privacy

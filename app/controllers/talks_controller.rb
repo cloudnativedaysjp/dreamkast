@@ -4,9 +4,7 @@ class TalksController < ApplicationController
   helper_method :talk_start_to_end
 
   def logged_in_using_omniauth?
-    if session[:userinfo].present?
-      @current_user = session[:userinfo]
-    end
+    current_user
   end
 
   # - プロポーザルの採択結果を表示する場合

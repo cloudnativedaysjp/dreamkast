@@ -15,7 +15,7 @@ module SecuredSponsor
   end
 
   def set_current_user
-    @current_user = session[:userinfo]
+    current_user
   end
 
   def logged_in?

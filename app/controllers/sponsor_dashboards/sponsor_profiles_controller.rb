@@ -11,7 +11,7 @@ class SponsorDashboards::SponsorProfilesController < ApplicationController
     unless logged_in?
       redirect_to(sponsor_dashboards_login_path)
     else
-      if set_current_user
+      if current_user
         if SponsorProfile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
           redirect_to(sponsor_dashboards_path)
         end

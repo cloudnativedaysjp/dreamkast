@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def current_user
+    unless defined?(@current_user)
+      @current_user = session[:userinfo]
+    end
+    @current_user
+  end
+  helper_method :current_user
+
   def user_not_authorized
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end

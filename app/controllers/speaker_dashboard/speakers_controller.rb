@@ -16,7 +16,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    if set_current_user
+    if current_user
       if Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
         redirect_to(speaker_dashboard_path)
       end

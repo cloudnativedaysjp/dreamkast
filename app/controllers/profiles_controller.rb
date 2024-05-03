@@ -27,16 +27,7 @@ class ProfilesController < ApplicationController
     @profile.email = current_user[:info][:email]
 
     if @profile.save
-      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
-
-      Agreement.create!(profile_id: @profile.id, form_item_id: 6, value: 1) if agreement_params['ibm_require_email_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 7, value: 1) if agreement_params['ibm_require_tel_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 8, value: 1) if agreement_params['redhat_require_email_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
+      create_agreements(@profile)
 
       ProfileMailer.registered(@profile, @conference).deliver_later
       if @profile.public_profile.present?
@@ -174,5 +165,18 @@ class ProfilesController < ApplicationController
       :redhat_require_email_cndt2022,
       :redhat_require_tel_cndt2022
     )
+  end
+
+  def create_agreements(profile)
+    Agreement.create!(profile_id: profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
+    Agreement.create!(profile_id: profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
+    Agreement.create!(profile_id: profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
+    Agreement.create!(profile_id: profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
+    Agreement.create!(profile_id: profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
+
+    Agreement.create!(profile_id: profile.id, form_item_id: 6, value: 1) if agreement_params['ibm_require_email_cndt2022']
+    Agreement.create!(profile_id: profile.id, form_item_id: 7, value: 1) if agreement_params['ibm_require_tel_cndt2022']
+    Agreement.create!(profile_id: profile.id, form_item_id: 8, value: 1) if agreement_params['redhat_require_email_cndt2022']
+    Agreement.create!(profile_id: profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
   end
 end

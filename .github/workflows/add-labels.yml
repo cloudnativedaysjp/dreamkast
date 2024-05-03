@@ -1,0 +1,54 @@
+name: add labels for some cases
+
+on: pull_request
+
+jobs:
+  reviewapps:
+    name: grant 'reviewapps' label if there are any changes in PR's source code.
+    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: check-paths-ignore
+        uses: tj-actions/changed-files@v42
+        with:
+          files_ignore: |
+            .github/**/*.yml
+            **.md
+
+      # to trigger other Actions caused by adding reviewapp Label
+      - name: Generate token
+        if: steps.check-paths-ignore.outputs.any_changed == 'true'
+        id: generate_token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Labeling 'reviewapps' to PR
+        if: steps.check-paths-ignore.outputs.any_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate_token.outputs.token }}
+          result-encoding: string
+          script: |
+            const targetLabel = 'reviewapps';
+            issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            flag = false;
+            issue.data.labels.filter(label => {
+              if (label.name == targetLabel) { flag = true; };
+            });
+            if (!flag) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: [targetLabel]
+              });
+            }

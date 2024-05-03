@@ -30,7 +30,7 @@
       </tr>
       </thead>
       <tbody>
-      <%= form_with(url: admin_talks_path, local: true, id: "talk_list", method: "put") do |f| %>
+      <%= form_with(url: admin_talks_path, id: "talk_list", method: "put") do |f| %>
         <% @talks.each do |talk| %>
           <tr>
             <td><%= talk.id %></td>

@@ -8,10 +8,4 @@ module SecuredApi
   def logged_in_using_omniauth?
     raise(Forbidden) unless logged_in?
   end
-
-  private
-
-  def logged_in?
-    session[:userinfo].present?
-  end
 end

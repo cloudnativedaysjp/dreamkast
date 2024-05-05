@@ -59,6 +59,7 @@ module Secured
   end
 
   def conference
+    ActiveSupport::Deprecation.warn('conference is deprecated. Please use @conference instead.')
     @conference ||= Conference.find_by(abbr: event_name)
   end
 

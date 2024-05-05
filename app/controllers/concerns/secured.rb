@@ -14,7 +14,8 @@ module Secured
   end
 
   def redirect_to_website
-    if set_conference.migrated?
+    set_conference
+    if @conference.migrated?
       case [controller_name, action_name]
       in ['talks', 'show']
         redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s, allow_other_host: true)
@@ -31,7 +32,8 @@ module Secured
   end
 
   def should_redirect?
-    new_user? && !set_conference.archived?
+    set_conference
+    new_user? && !@conference.archived?
   end
 
   def redirect_to_registration
@@ -43,7 +45,8 @@ module Secured
   end
 
   def new_user?
-    logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    set_conference
+    logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: @conference.id)
   end
 
   def admin?

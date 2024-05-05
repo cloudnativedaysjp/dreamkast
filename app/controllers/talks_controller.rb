@@ -118,12 +118,14 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def new_user?
-    (speaker? && set_conference.speaker_entry_enabled?) || super
+    set_conference
+    (speaker? && @conference.speaker_entry_enabled?) || super
   end
 
   def speaker?
     return false if current_user.nil?
-    Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id).present?
+    set_conference
+    Speaker.find_by(email: current_user[:info][:email], conference_id: @conference.id).present?
   end
 
   def talk_params
@@ -133,7 +135,8 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def should_redirect?
-    super && (!speaker? || !set_conference.speaker_entry_enabled?)
+    set_conference
+    super && (!speaker? || !@conference.speaker_entry_enabled?)
   end
 
   def talk_start_to_end(talk)

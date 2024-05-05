@@ -120,7 +120,8 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    set_conference
+    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: @conference.id)
   end
 
   def profile_params

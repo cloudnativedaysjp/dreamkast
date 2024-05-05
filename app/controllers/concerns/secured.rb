@@ -27,7 +27,7 @@ module Secured
   def to_preparance
     # ログイン状態
     # かつカンファレンスが一般参加応募不可状態
-    redirect_to(preparation_url) if conference.attendee_entry_disabled? && logged_in?
+    redirect_to(preparation_url) if @conference.attendee_entry_disabled? && logged_in?
   end
 
   def should_redirect?
@@ -47,15 +47,15 @@ module Secured
   end
 
   def admin?
-    conference && current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    @conference && current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Speaker")
   end
 
   def beta_user?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Beta")
   end
 
   def conference

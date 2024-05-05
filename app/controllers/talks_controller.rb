@@ -14,7 +14,7 @@ class TalksController < ApplicationController
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
     @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     unless @conference.cfp_result_visible
       raise(ActiveRecord::RecordNotFound)

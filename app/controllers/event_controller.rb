@@ -40,7 +40,6 @@ class EventController < ApplicationController
 
   # CFP募集期間は登壇者登録の有無でリダイレクトする
   def should_redirect?
-    set_conference
     if @conference.speaker_entry_enabled?
       @speaker.present?
     else

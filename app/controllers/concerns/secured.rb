@@ -3,7 +3,7 @@ module Secured
   WEBSITE_BASE_URL = 'https://cloudnativedays.jp'.freeze
 
   included do
-    before_action :redirect_to_website
+    before_action :set_conference, :redirect_to_website
     before_action :to_preparance, :redirect_to_registration, if: :should_redirect?
     before_action :logged_in_using_omniauth?, :to_preparance, if: :use_secured_before_action?
     helper_method :admin?, :speaker?, :beta_user?
@@ -14,7 +14,6 @@ module Secured
   end
 
   def redirect_to_website
-    set_conference
     if @conference.migrated?
       case [controller_name, action_name]
       in ['talks', 'show']
@@ -32,7 +31,6 @@ module Secured
   end
 
   def should_redirect?
-    set_conference
     new_user? && !@conference.archived?
   end
 
@@ -45,7 +43,6 @@ module Secured
   end
 
   def new_user?
-    set_conference
     logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: @conference.id)
   end
 

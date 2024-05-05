@@ -10,11 +10,7 @@ module Secured
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to('/auth/login?origin=' + request.fullpath)
-    end
+    redirect_to('/auth/login?origin=' + request.fullpath) unless logged_in?
   end
 
   def redirect_to_website
@@ -68,10 +64,6 @@ module Secured
 
   def event_name
     params[:event]
-  end
-
-  def set_current_user
-    current_user
   end
 
   private

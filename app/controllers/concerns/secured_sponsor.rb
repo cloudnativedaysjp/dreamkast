@@ -7,15 +7,7 @@ module SecuredSponsor
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to("/#{params[:event]}/sponsor_dashboards/login")
-    end
-  end
-
-  def set_current_user
-    current_user
+    redirect_to("/#{params[:event]}/sponsor_dashboards/login") unless logged_in?
   end
 
   def logged_in?

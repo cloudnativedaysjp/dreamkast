@@ -7,11 +7,7 @@ module SecuredAdmin
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to('/auth/login?origin=' + request.fullpath)
-    end
+    redirect_to('/auth/login?origin=' + request.fullpath) unless logged_in?
   end
 
   def logged_in?
@@ -32,10 +28,6 @@ module SecuredAdmin
 
   def is_admin?
     raise(Forbidden) unless admin?
-  end
-
-  def set_current_user
-    current_user
   end
 
   def get_or_create_admin_profile

@@ -3,7 +3,7 @@ class EventController < ApplicationController
   include SponsorHelper
   include ActionView::Helpers::UrlHelper
 
-  before_action :set_current_user, :set_profile, :set_speaker
+  before_action :set_profile, :set_speaker
 
   def show
     @conference = Conference
@@ -18,10 +18,6 @@ class EventController < ApplicationController
 
       render(event_view)
     end
-  end
-
-  def set_current_user
-    current_user
   end
 
   def privacy

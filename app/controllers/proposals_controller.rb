@@ -1,13 +1,11 @@
 class ProposalsController < ApplicationController
   include Secured
-  before_action :set_current_user, :set_profile, :set_speaker
+  before_action :set_profile, :set_speaker
 
   helper_method :proposal_status
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    end
+    # nop
   end
 
   def show

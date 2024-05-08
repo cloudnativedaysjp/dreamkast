@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def logged_in?
+    !!current_user
+  end
+  helper_method :logged_in?
+
   def user_not_authorized
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end

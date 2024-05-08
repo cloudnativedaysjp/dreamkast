@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def logged_in?
-    !!session[:userinfo]
-  end
-
   def authenticate
     return if logged_in?
     redirect_to(root_path, alert: 'ログインしてください')

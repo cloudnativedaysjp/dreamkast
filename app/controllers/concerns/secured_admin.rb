@@ -10,10 +10,6 @@ module SecuredAdmin
     redirect_to('/auth/login?origin=' + request.fullpath) unless logged_in?
   end
 
-  def logged_in?
-    session[:userinfo].present?
-  end
-
   def admin?
     current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
   end

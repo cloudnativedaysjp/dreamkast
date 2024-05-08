@@ -38,10 +38,6 @@ module Secured
     redirect_to("/#{params[:event]}/registration") unless ['profiles'].include?(controller_name)
   end
 
-  def logged_in?
-    session[:userinfo].present?
-  end
-
   def new_user?
     logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
   end

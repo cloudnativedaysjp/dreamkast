@@ -1518,13 +1518,19 @@ SponsorType.seed(
     id: 68,
     conference_id: 11,
     name: "Tool",
-    order: 5,
+    order: 6,
   },
   {
     id: 69,
     conference_id: 11,
     name: "Support",
-    order: 6,
+    order: 7,
+  },
+  {
+    id: 70,
+    conference_id: 11,
+    name: "CM",
+    order: 5,
   },
 )
 

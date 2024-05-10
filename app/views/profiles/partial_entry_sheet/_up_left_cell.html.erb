@@ -1,6 +1,13 @@
 <div class="a8">
   <div class="logo-image">
-    <%= image_tag "cndt2023/header_logo.png", class: "img-fluid header_logo" %>
+    <%= image_tag "#{@conference.abbr}/header_logo.png", class: "img-fluid header_logo" %>
+  </div>
+  <div class="attendance">
+    <% if @speaker.present? %>
+      <%= h("登壇者") %>
+    <% else %>
+      <%= h("一般参加") %>
+    <% end %>
   </div>
   <div class="profile">
     <div class="qrcode">
@@ -8,9 +15,17 @@
       <%= h("受付用QRコード") %>
     </div>
     <div class="detail">
-      <%= h("<Attendee>") %>
-      <%= image_tag @profile.public_profile.avatar_url(:small) %>
-      Name: <%= @profile.public_profile.nickname %>
+      <% if @speaker.present? %>
+        <%= image_tag @speaker.avatar_url(:small), class: "avatar-image" %>
+        Name: <%= @speaker.name %>
+      <% elsif @profile.public_profile.present? %>
+        <%= image_tag @profile.public_profile.avatar_url(:small), class: "avatar-image" %>
+        Name: <%= @profile.public_profile.nickname %>
+      <% end %>
+      <% if @profile.public_profile.present? %>
+        </br>
+        X(Twitter) ID: <%= @profile.public_profile.twitter_id %>
+      <% end %>
     </div>
   </div>
 </div>

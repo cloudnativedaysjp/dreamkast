@@ -12,8 +12,11 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  .logo-image{
+  .logo-image {
     margin-top: 3rem;
+  }
+  .attendance {
+    font-size: xxx-large;
   }
   .profile {
     display: inherit;
@@ -28,12 +31,26 @@
       display: inherit;
       margin-left: 2rem;
       flex-direction: column;
+      font-size: x-large;
+    }
+    img.avatar-image{
+      width: 80px;
+      margin: 20px;
     }
   }
+}
+
+#printButton {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 3rem;
 }
 
 @media print {
   .a8-container {
     page-break-after: always; // コンテンツの後に改ページ
+  }
+  #printButton {
+    display: none;
   }
 }

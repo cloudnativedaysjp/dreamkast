@@ -4,13 +4,14 @@ class ProfilesController < ApplicationController
   before_action :set_conference
   before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin, :entry_sheet]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
+  before_action :find_profile, only: [:destroy_id, :set_role]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
   before_action :set_current_user, :set_speaker, only: [:entry_sheet]
 
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
-    if set_current_user && Profile.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+    if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
       redirect_to(dashboard_path)
     end
     @event = params[:event]
@@ -24,20 +25,14 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-    @profile.sub = @current_user[:extra][:raw_info][:sub]
-    @profile.email = @current_user[:info][:email]
+    @profile.sub = current_user[:extra][:raw_info][:sub]
+    @profile.email = current_user[:info][:email]
 
     if @profile.save
       Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
       Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
       Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
       Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 5, value: 1) if agreement_params['agree_ms_cndo2021']
-
-      Agreement.create!(profile_id: @profile.id, form_item_id: 6, value: 1) if agreement_params['ibm_require_email_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 7, value: 1) if agreement_params['ibm_require_tel_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 8, value: 1) if agreement_params['redhat_require_email_cndt2022']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 9, value: 1) if agreement_params['redhat_require_tel_cndt2022']
 
       ProfileMailer.registered(@profile, @conference).deliver_later
       if @profile.public_profile.present?
@@ -129,7 +124,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
   end
 
   def set_speaker

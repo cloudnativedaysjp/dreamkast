@@ -10,11 +10,7 @@ module Secured
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to('/auth/login?origin=' + request.fullpath)
-    end
+    redirect_to('/auth/login?origin=' + request.fullpath) unless logged_in?
   end
 
   def redirect_to_website
@@ -42,24 +38,20 @@ module Secured
     redirect_to("/#{params[:event]}/registration") unless ['profiles'].include?(controller_name)
   end
 
-  def logged_in?
-    session[:userinfo].present?
-  end
-
   def new_user?
-    logged_in? && !Profile.find_by(email: set_current_user[:info][:email], conference_id: set_conference.id)
+    logged_in? && !Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
   end
 
   def admin?
-    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    conference && current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
   end
 
   def beta_user?
-    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
   end
 
   def conference
@@ -68,17 +60,6 @@ module Secured
 
   def event_name
     params[:event]
-  end
-
-  def set_current_user
-    @current_user ||= session[:userinfo]
-  end
-
-  def is_admin?
-    # respond_to do |format|
-    #   format.html { redirect_to controller: "track", action: "show", id: 1 }
-    #   format.json { render json: "Forbidden", status: :forbidden }
-    # end
   end
 
   private

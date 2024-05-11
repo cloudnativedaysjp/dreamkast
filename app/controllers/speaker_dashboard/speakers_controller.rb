@@ -2,7 +2,6 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
 
   skip_before_action :logged_in_using_omniauth?, only: [:new, :guidance]
-  before_action :set_current_user, only: [:guidance]
   before_action :prepare_create, only: [:new]
 
   # GET :event/speaker_dashboard/speakers/guidance
@@ -16,8 +15,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    if set_current_user
-      if Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
+    if current_user
+      if Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
         redirect_to(speaker_dashboard_path)
       end
     end
@@ -43,8 +42,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
-    @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = @current_user[:info][:email]
+    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.email = current_user[:info][:email]
 
     respond_to do |format|
       if r = @speaker_form.save
@@ -69,8 +68,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
-    @speaker_form.sub = @current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = @current_user[:info][:email]
+    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.email = current_user[:info][:email]
     # @speaker_form.load
     exists_talks = @speaker.talk_ids
 
@@ -106,8 +105,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   def pundit_user
-    if @current_user
-      Speaker.find_by(conference: @conference.id, email: @current_user[:info][:email])
+    if current_user
+      Speaker.find_by(conference: @conference.id, email: current_user[:info][:email])
     end
   end
 

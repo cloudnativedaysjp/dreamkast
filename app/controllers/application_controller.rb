@@ -16,6 +16,19 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def current_user
+    unless defined?(@current_user)
+      @current_user = session[:userinfo]
+    end
+    @current_user
+  end
+  helper_method :current_user
+
+  def logged_in?
+    !!current_user
+  end
+  helper_method :logged_in?
+
   def user_not_authorized
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end
@@ -122,16 +135,16 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile
-    @profile = if @current_user && (set_conference.opened? || set_conference.registered?)
-                 Profile.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+    @profile = if current_user && (set_conference.opened? || set_conference.registered?)
+                 Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
                else
                  GuestProfile.new
                end
   end
 
   def set_speaker
-    if @current_user
-      @speaker = Speaker.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
+    if current_user
+      @speaker = Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
     end
   end
 

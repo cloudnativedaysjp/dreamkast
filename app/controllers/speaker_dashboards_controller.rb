@@ -3,6 +3,7 @@ class SpeakerDashboardsController < ApplicationController
   before_action :set_speaker
 
   def show
+    @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
   end
 
@@ -11,20 +12,10 @@ class SpeakerDashboardsController < ApplicationController
   helper_method :sponsor?
 
   def sponsor?
-    !@conference.sponsors.where('speaker_emails like(?)', "%#{@current_user[:info][:email]}%").empty?
+    !@conference.sponsors.where('speaker_emails like(?)', "%#{current_user[:info][:email]}%").empty?
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      @current_user = session[:userinfo]
-    end
-  end
-
-  def set_speaker
-    @conference ||= Conference.find_by(abbr: params[:event])
-    if @current_user
-      @speaker = Speaker.find_by(conference_id: @conference.id, email: @current_user[:info][:email])
-      @talks = @speaker ? @speaker.talks.not_sponsor : []
-    end
+    current_user
   end
 end

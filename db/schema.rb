@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_16_161214) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -244,13 +244,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_161214) do
     t.index ["media_package_v2_channel_id"], name: "index_origin_endpoints_on_channel_id"
     t.index ["name"], name: "index_media_package_v2_origin_endpoints_on_name", unique: true
     t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
-  end
-
-  create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "content"
-    t.string "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

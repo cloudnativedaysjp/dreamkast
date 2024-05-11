@@ -27,7 +27,7 @@
                               false %>
           <% end %>
           <div class="content
-                      <%= 'checked' if @current_user && talks_checked?(talk.id) %>"
+                      <%= 'checked' if current_user && talks_checked?(talk.id) %>"
                       talk_id="<%= talk.id %>"
                       track_number="<%= talk.track.number %>">
             <h6>

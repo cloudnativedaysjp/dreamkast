@@ -7,26 +7,14 @@ module SecuredSponsor
   end
 
   def logged_in_using_omniauth?
-    if logged_in?
-      set_current_user
-    else
-      redirect_to("/#{params[:event]}/sponsor_dashboards/login")
-    end
-  end
-
-  def set_current_user
-    @current_user = session[:userinfo]
-  end
-
-  def logged_in?
-    session[:userinfo].present?
+    redirect_to("/#{params[:event]}/sponsor_dashboards/login") unless logged_in?
   end
 
   def admin?
-    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    @current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Speaker")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Speaker")
   end
 end

@@ -110,7 +110,8 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def entry_sheet;end
+  def entry_sheet
+  end
 
   helper_method :profile_url
 

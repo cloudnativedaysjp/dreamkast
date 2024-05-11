@@ -142,7 +142,7 @@ class Profile < ApplicationRecord
   end
 
   def qrcode_image
-    Base64.strict_encode64(RQRCode::QRCode.new([{ data: JSON.dump({profile_id: id}), mode: :byte_8bit }]).as_png.to_s)
+    Base64.strict_encode64(RQRCode::QRCode.new([{ data: JSON.dump({ profile_id: id }), mode: :byte_8bit }]).as_png.to_s)
   end
 
   def export_ics

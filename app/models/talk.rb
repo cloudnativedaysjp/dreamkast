@@ -60,6 +60,7 @@ class Talk < ApplicationRecord
   has_many :media_package_harvest_jobs
 
   has_many :proposal_items, autosave: true, dependent: :destroy
+  has_many :profiles, through: :registered_talks
 
   validates :conference_id, presence: true
   validates :title, presence: true

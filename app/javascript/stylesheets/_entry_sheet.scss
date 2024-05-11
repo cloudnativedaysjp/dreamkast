@@ -38,6 +38,33 @@
       margin: 20px;
     }
   }
+
+  .table {
+    tr {
+      padding-top: 2px;
+      padding-bottom: 2px;
+      line-height: 1;
+      font-size: 12px;
+      height: auto;
+    }
+    td {
+      padding: 0.5rem;
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
+    }
+  }
+
+  .timetable-list {
+    display: flex;
+  }
+  h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  h4 {
+    text-align: center;
+  }
 }
 
 #printButton {

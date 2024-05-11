@@ -1,0 +1,37 @@
+<div class="a8">
+  <h3>登録セッション</h3>
+
+  <div class="timetable-list">
+    <% @conference.conference_days.externals.each do |conference_day| %>
+      <div class="entry-timetable">
+        <table class="table table-striped">
+          <thead>
+            <h4><%= conference_day.date.strftime('%Y年 %m月 %d日') %></h4>
+            <tr>
+              <th>Session Title</th>
+              <th>Start</th>
+              <th>Room</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @profile.talks.where(conference_day: conference_day).each do |talk| %>
+              <tr>
+                <% if talk.title.length >= 15 %>
+                  <td><%= talk.title.slice(...13) + "..."  %></td>
+                <% else %>
+                  <td><%= talk.title %></td>
+                <% end %>
+                <td><%= talk.start_time.strftime('%H:%M') %> ~</td>
+                <% if talk.track.room.name.length >= 10 %>
+                  <td><%= talk.track.room.name.slice(...8) + ".."  %></td>
+                <% else %>
+                  <td><%= talk.track.room.name %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

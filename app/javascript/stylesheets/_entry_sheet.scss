@@ -2,16 +2,26 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+
+  // viewport に対して100%のサイズ
   height: 100vh;
   width: 100vw;
 }
 
 .a8 {
+  // viewport に対して50%のサイズ
+  height: 50vh;
+  width: 50vw;
+
   border: 1px solid black;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+
+  // A8サイズを超過したら落とす
+  min-height: 0;
+  overflow: hidden;
   .logo-image {
     margin-top: 3rem;
   }
@@ -56,6 +66,7 @@
 
   .timetable-list {
     display: flex;
+    flex-direction: row;
   }
   h3 {
     margin-top: 1rem;

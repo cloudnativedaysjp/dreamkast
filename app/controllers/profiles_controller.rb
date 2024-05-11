@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
   skip_before_action :logged_in_using_omniauth?, only: [:new]
   before_action :find_profile, only: [:destroy_id, :set_role]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]
-  before_action :set_current_user, :set_speaker, only: [:entry_sheet]
+  before_action :set_speaker, only: [:entry_sheet]
 
   def new
     @profile = Profile.new
@@ -126,12 +126,6 @@ class ProfilesController < ApplicationController
 
   def set_current_profile
     @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
-  end
-
-  def set_speaker
-    if @current_user
-      @speaker = Speaker.find_by(email: @current_user[:info][:email], conference_id: set_conference.id)
-    end
   end
 
   def profile_params

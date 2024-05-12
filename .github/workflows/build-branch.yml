@@ -1,6 +1,8 @@
-name: build container image
+name: build container image when branches are pushed
 
-on: push
+on:
+  push:
+    branches: ["*"]
 
 jobs:
   build:
@@ -24,7 +26,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
+          aws-region: us-west-2
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -48,7 +50,6 @@ jobs:
             "X64" ) arch="amd64" ;;
             "ARM64" ) arch="arm64" ;;
           esac
-
           echo "tag=${{ github.sha }}-${arch}" >> $GITHUB_OUTPUT
 
       - name: Build
@@ -71,30 +72,21 @@ jobs:
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
+          aws-region: us-west-2
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
-          tags: |
-            type=ref,event=branch
       - name: Create a New Image
         run: |
           image_tag_sha="${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}"
-
-
           docker buildx imagetools create \
             --tag ${image_tag_sha} \
             ${image_tag_sha}-amd64

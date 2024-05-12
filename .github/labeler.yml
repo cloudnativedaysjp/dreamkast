@@ -1,0 +1,5 @@
+reviewapps:
+  - changed-files:
+    - all-globs-to-any-file:
+      - '!.github/**/*.yml'
+      - '!**/*.md'

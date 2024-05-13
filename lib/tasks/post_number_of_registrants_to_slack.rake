@@ -18,6 +18,7 @@ namespace :util do
     conferences = Conference.unarchived
 
     conferences.each do |conference|
+      puts "conference: #{conference.abbr}"
       body = ''
 
       ActiveRecord::Base.transaction do
@@ -45,7 +46,9 @@ namespace :util do
       end
 
       if channels.any? { |c| c.name == conference.abbr }
-        client.chat_postMessage(channel: "##{conference.abbr}", text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
+        puts "channel: #{conference.abbr} username: #{conference.abbr.upcase} 参加者速報 text: #{body.join("\n")}"
+        resp = client.chat_postMessage(channel: "##{conference.abbr}", text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
+        p resp
       end
 
       if conference.abbr == 'cndt2023'

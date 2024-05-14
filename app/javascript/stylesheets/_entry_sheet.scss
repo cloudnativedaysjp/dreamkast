@@ -22,6 +22,7 @@
   // A8サイズを超過したら落とす
   min-height: 0;
   overflow: hidden;
+
   .logo-image {
     margin-top: 3rem;
   }
@@ -68,14 +69,29 @@
     display: flex;
     flex-direction: row;
   }
+
   h3 {
     margin-top: 1rem;
     margin-bottom: 1rem;
     text-align: center;
   }
+
   h4 {
     text-align: center;
   }
+}
+
+.bottom {
+  justify-content: center;
+  grid-column: 1 / 3;  // 2列使う
+  grid-row: 2 / 3;     // 1行で表示
+  width: 100vw;
+}
+
+.bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #printButton {

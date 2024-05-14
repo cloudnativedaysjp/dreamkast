@@ -17,6 +17,10 @@
         <% if @profile.participation.present? %>
           <%= link_to '参加方法を変更する', edit_profile_path(id: @profile.id, anchor: "participation"), class: "dropdown-item"  %>
         <% end %>
+        <% if @profile.attend_offline? %>
+          <div class="dropdown-divider"></div>
+          <%= link_to '参加表を印刷する', profiles_entry_sheet_path(id: @profile.id, anchor: "entry-sheet"), class: "dropdown-item"  %>
+        <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>
         <div class="dropdown-divider"></div>

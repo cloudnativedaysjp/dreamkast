@@ -104,6 +104,10 @@
   .a8-container {
     page-break-after: always; // コンテンツの後に改ページ
   }
+  nav {
+    display: none;
+  }
+
   #printButton {
     display: none;
   }

@@ -63,7 +63,7 @@ group :development do
 end
 
 group :test do
-  gem 'rexml', '~> 3.2', '>= 3.2.4'
+  gem 'rexml', '~> 3.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

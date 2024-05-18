@@ -112,7 +112,7 @@ class Profile < ApplicationRecord
   end
 
   def self.export(event_id)
-    attr = %w[id email 姓 名 セイ メイ 業種 職種 勤務先名/所属団体 郵便番号 都道府県 勤務先住所1（都道府県以下） 勤務先住所2（ビル名） 電話番号 メールアドレス]
+    attr = %w[id email 姓 名 セイ メイ 業種 職種 勤務先名/所属団体 郵便番号 都道府県 勤務先住所1（都道府県以下） 勤務先住所2（ビル名） 電話番号 メールアドレス 参加方法]
     CSV.generate do |csv|
       csv << attr
       Profile.where(conference_id: event_id).each do |profile|
@@ -131,7 +131,8 @@ class Profile < ApplicationRecord
           profile.company_address_level2.to_s + profile.company_address_line1.to_s,
           profile.company_address_line2,
           profile.company_tel,
-          profile.company_email
+          profile.company_email,
+          Profile.participations[profile.participation]
         ]
       end
     end

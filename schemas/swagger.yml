@@ -31,6 +31,34 @@ paths:
                 $ref: '#/components/schemas/Profile'
         '403':
           description: You don't logged in
+  /api/v1/check_in_event:
+    post:
+      tags:
+        - CheckIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInEvent'
+      responses:
+        '201':
+          description: CREATED
+        '400':
+          description: Invalid params supplied
+  /api/v1/check_in_talk:
+    post:
+      tags:
+        - CheckIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInTalk'
+      responses:
+        '201':
+          description: CREATED
+        '400':
+          description: Invalid params supplied
   /api/v1/events:
     get:
       tags:
@@ -1025,4 +1053,30 @@ components:
         }
         createdAt: "2022-04-30T10:06:33.938Z"
         updatedAt: "2022-05-30T22:02:11.123Z"
-
+    CheckInEvent:
+      type: object
+      properties:
+        profileId:
+          type: string
+        eventId:
+          type: string
+        timestamp:
+          type: number
+      required:
+        - profileId
+        - eventAbbr
+        - check_in_timestamp
+    CheckInTalk:
+      type: object
+      properties:
+        profileId:
+          type: string
+        talkId:
+          type: string
+        timestamp:
+          type: number
+      required:
+        - eventAbbr
+        - profileId
+        - talkId
+        - check_in_timestamp

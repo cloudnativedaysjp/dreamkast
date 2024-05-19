@@ -73,6 +73,7 @@ class Conference < ApplicationRecord
   has_many :admin_profiles
   has_many :media_package_harvest_jobs
   has_many :rooms
+  has_many :check_in_conferences
 
   scope :upcoming, -> {
     merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)))

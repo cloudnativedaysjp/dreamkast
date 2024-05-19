@@ -2,7 +2,7 @@ module SecuredSpeaker
   extend ActiveSupport::Concern
 
   included do
-    before_action :logged_in_using_omniauth?
+    before_action :set_conference, :logged_in_using_omniauth?
     helper_method :admin?, :speaker?
   end
 

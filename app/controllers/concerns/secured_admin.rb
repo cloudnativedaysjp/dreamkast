@@ -2,7 +2,8 @@ module SecuredAdmin
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_conference, :logged_in_using_omniauth?, :is_admin?, :get_or_create_admin_profile, if: :use_secured_before_action?
+    before_action :set_conference
+    before_action :logged_in_using_omniauth?, :is_admin?, :get_or_create_admin_profile, if: :use_secured_before_action?
     helper_method :admin?, :speaker?
   end
 
@@ -11,10 +12,11 @@ module SecuredAdmin
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
   end
 
   def conference
+    ActiveSupport::Deprecation.warn('conference is deprecated. Please use @conference instead.')
     @conference ||= Conference.find_by(abbr: event_name)
   end
 
@@ -27,7 +29,7 @@ module SecuredAdmin
   end
 
   def get_or_create_admin_profile
-    @admin_profile ||= AdminProfile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @admin_profile ||= AdminProfile.find_by(email: current_user[:info][:email], conference_id: @conference.id)
 
     if admin? && @admin_profile.blank?
       @admin_profile = AdminProfile.new(conference_id: @conference.id)

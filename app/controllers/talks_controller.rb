@@ -14,7 +14,7 @@ class TalksController < ApplicationController
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
     @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     unless @conference.cfp_result_visible
       raise(ActiveRecord::RecordNotFound)
@@ -118,12 +118,12 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def new_user?
-    (speaker? && set_conference.speaker_entry_enabled?) || super
+    (speaker? && @conference.speaker_entry_enabled?) || super
   end
 
   def speaker?
     return false if current_user.nil?
-    Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id).present?
+    Speaker.find_by(email: current_user[:info][:email], conference_id: @conference.id).present?
   end
 
   def talk_params
@@ -133,7 +133,7 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def should_redirect?
-    super && (!speaker? || !set_conference.speaker_entry_enabled?)
+    super && (!speaker? || !@conference.speaker_entry_enabled?)
   end
 
   def talk_start_to_end(talk)

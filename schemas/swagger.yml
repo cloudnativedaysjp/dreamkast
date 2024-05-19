@@ -1065,7 +1065,7 @@ components:
       required:
         - profileId
         - eventAbbr
-        - timestamp
+        - check_in_timestamp
     CheckInTalk:
       type: object
       properties:
@@ -1079,4 +1079,4 @@ components:
         - eventAbbr
         - profileId
         - talkId
-        - timestamp
+        - check_in_timestamp

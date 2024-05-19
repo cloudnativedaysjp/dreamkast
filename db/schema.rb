@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
   create_table "check_in_conferences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id", null: false
-    t.datetime "timestamp", null: false
+    t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_check_in_conferences_on_conference_id"
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
   create_table "check_in_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.bigint "profile_id", null: false
-    t.datetime "timestamp", null: false
+    t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_check_in_talks_on_profile_id"

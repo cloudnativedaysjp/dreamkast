@@ -2,12 +2,12 @@
 #
 # Table name: check_in_conferences
 #
-#  id            :bigint           not null, primary key
-#  timestamp     :datetime         not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  conference_id :bigint           not null
-#  profile_id    :bigint           not null
+#  id                 :bigint           not null, primary key
+#  check_in_timestamp :datetime         not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  conference_id      :bigint           not null
+#  profile_id         :bigint           not null
 #
 # Indexes
 #

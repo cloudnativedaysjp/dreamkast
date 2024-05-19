@@ -144,6 +144,10 @@ class Profile < ApplicationRecord
     update!(calendar_unique_code: SecureRandom.uuid)
   end
 
+  def qrcode_image
+    Base64.strict_encode64(RQRCode::QRCode.new([{ data: JSON.dump({ profile_id: id }), mode: :byte_8bit }]).as_png.to_s)
+  end
+
   def export_ics
     cal = Icalendar::Calendar.new
     filename = Rails.root.join('tmp', "#{calendar_unique_code}.ics").to_s

@@ -1,0 +1,114 @@
+.a8-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  // viewport に対して100%のサイズ
+  height: 100vh;
+  width: 100vw;
+}
+
+.a8 {
+  // viewport に対して50%のサイズ
+  height: 50vh;
+  width: 50vw;
+
+  border: 1px solid black;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+
+  // A8サイズを超過したら落とす
+  min-height: 0;
+  overflow: hidden;
+
+  .logo-image {
+    margin-top: 3rem;
+  }
+  .attendance {
+    font-size: xxx-large;
+  }
+  .profile {
+    display: inherit;
+    margin-top: 2rem;
+    flex-direction: row;
+    .qrcode{
+      display: inherit;
+      margin-right: 2rem;
+      flex-direction: column;
+    }
+    .detail{
+      display: inherit;
+      margin-left: 2rem;
+      flex-direction: column;
+      font-size: x-large;
+    }
+    img.avatar-image{
+      width: 80px;
+      margin: 20px;
+    }
+  }
+
+  .table {
+    tr {
+      padding-top: 2px;
+      padding-bottom: 2px;
+      line-height: 1;
+      font-size: 12px;
+      height: auto;
+    }
+    td {
+      padding: 0.5rem;
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
+    }
+  }
+
+  .timetable-list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  h4 {
+    text-align: center;
+  }
+}
+
+.bottom {
+  justify-content: center;
+  grid-column: 1 / 3;  // 2列使う
+  grid-row: 2 / 3;     // 1行で表示
+  width: 100vw;
+}
+
+.bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#printButton {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+@media print {
+  .a8-container {
+    page-break-after: always; // コンテンツの後に改ページ
+  }
+  nav {
+    display: none;
+  }
+
+  #printButton {
+    display: none;
+  }
+}

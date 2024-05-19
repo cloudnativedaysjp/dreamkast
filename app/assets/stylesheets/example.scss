@@ -1,0 +1,16 @@
+.a8-container {
+  display: grid;
+  color: red;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 297mm; /* A4の高さ */
+  width: 210mm; /* A4の幅 */
+}
+
+.a8 {
+  border: 1px solid black; /* 各A8の境界線 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

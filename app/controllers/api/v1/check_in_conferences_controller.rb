@@ -9,7 +9,7 @@ class Api::V1::CheckInConferencesController < ApplicationController
   def create
     @params = check_in_conference_params(JSON.parse(request.body.read, { symbolize_names: true }))
     profile = Profile.find(@params[:profileId])
-    check_in_timestamp = Time.at(@params[:check_in_timestamp])
+    check_in_timestamp = Time.zone.at(@params[:check_in_timestamp])
     @check_in = CheckInConference.new(profile:, conference:, check_in_timestamp:)
 
     if @check_in.save

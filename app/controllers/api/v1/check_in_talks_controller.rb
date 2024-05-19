@@ -9,7 +9,7 @@ class Api::V1::CheckInTalksController < ApplicationController
   def create
     talk = Talk.find(check_in_talk_params[:talkId])
     profile = Profile.find(check_in_talk_params[:profileId])
-    check_in_timestamp = Time.at(check_in_talk_params[:check_in_timestamp])
+    check_in_timestamp = Time.zone.at(check_in_talk_params[:check_in_timestamp])
     @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:)
 
     if @check_in.save

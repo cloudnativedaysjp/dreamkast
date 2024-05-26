@@ -1,4 +1,4 @@
-class Api::V1::CheckInEventsController < ApplicationController
+class Api::V1::CheckInConferencesController < ApplicationController
   include SecuredPublicApi
   before_action :set_profile
 
@@ -7,7 +7,7 @@ class Api::V1::CheckInEventsController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
   def create
-    @params = check_in_events_params(JSON.parse(request.body.read, { symbolize_names: true }))
+    @params = check_in_conferences_params(JSON.parse(request.body.read, { symbolize_names: true }))
     profile = Profile.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
     @check_in = CheckInConference.new(profile:, conference:, check_in_timestamp:)
@@ -19,7 +19,7 @@ class Api::V1::CheckInEventsController < ApplicationController
     end
   end
 
-  def check_in_events_params(params)
+  def check_in_conferences_params(params)
     json_params = ActionController::Parameters.new(params)
     json_params.permit(:profileId, :eventAbbr, :checkInTimestamp)
   end

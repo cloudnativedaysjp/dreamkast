@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       resources :chat_messages, only: [:index, :create, :update]
       resources :booths, only: [:show]
       resources :debug, only: [:index]
-      resources :check_in_conferences, only: [:create]
+      resources :check_in_conferences, only: [:create], path: 'check_in_events'
       resources :check_in_talks, only: [:create]
       namespace 'talks' do
         get ':id/video_registration' => 'video_registration#show'

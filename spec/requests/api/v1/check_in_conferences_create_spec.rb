@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::CheckInEventsController, type: :request do
+describe Api::V1::CheckInConferencesController, type: :request do
   describe 'POST /api/v1/check_in_events' do
     let!(:cndt2020) { create(:cndt2020) }
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }

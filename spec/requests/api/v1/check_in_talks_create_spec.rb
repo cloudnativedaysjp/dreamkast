@@ -8,7 +8,7 @@ describe Api::V1::CheckInTalksController, type: :request do
 
     context 'create without JWT token' do
       it 'return 401' do
-        post('/api/v1/check_in_talks', params: { eventAbbr: 'cndt2020', talkId: talk.id, profileId: alice.id, check_in_timestamp: 1_715_483_605 }, as: :json)
+        post('/api/v1/check_in_talks', params: { eventAbbr: 'cndt2020', talkId: talk.id, profileId: alice.id, checkInTimestamp: 1_715_483_605 }, as: :json)
         expect(response).to(have_http_status(:unauthorized))
       end
     end
@@ -19,7 +19,7 @@ describe Api::V1::CheckInTalksController, type: :request do
       end
 
       it 'return ok' do
-        post('/api/v1/check_in_talks', params: { eventAbbr: 'cndt2020', talkId: talk.id, profileId: alice.id, check_in_timestamp: 1_715_483_605 }, as: :json)
+        post('/api/v1/check_in_talks', params: { eventAbbr: 'cndt2020', talkId: talk.id, profileId: alice.id, checkInTimestamp: 1_715_483_605 }, as: :json)
         expect(response).to(have_http_status(:created))
       end
     end

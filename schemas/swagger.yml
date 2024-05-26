@@ -31,7 +31,7 @@ paths:
                 $ref: '#/components/schemas/Profile'
         '403':
           description: You don't logged in
-  /api/v1/check_in_event:
+  /api/v1/check_in_events:
     post:
       tags:
         - CheckIn
@@ -45,7 +45,7 @@ paths:
           description: CREATED
         '400':
           description: Invalid params supplied
-  /api/v1/check_in_talk:
+  /api/v1/check_in_talks:
     post:
       tags:
         - CheckIn
@@ -1058,25 +1058,27 @@ components:
       properties:
         profileId:
           type: string
-        eventId:
+        eventAbbr:
           type: string
-        timestamp:
+        checkInTimestamp:
           type: number
       required:
         - profileId
         - eventAbbr
-        - check_in_timestamp
+        - checkInTimestamp
     CheckInTalk:
       type: object
       properties:
         profileId:
           type: string
+        eventAbbr:
+          type: string
         talkId:
           type: string
-        timestamp:
+        checkInTimestamp:
           type: number
       required:
         - eventAbbr
         - profileId
         - talkId
-        - check_in_timestamp
+        - checkInTimestamp

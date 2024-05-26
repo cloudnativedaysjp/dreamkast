@@ -7,9 +7,10 @@ class Api::V1::CheckInTalksController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
   def create
-    talk = Talk.find(check_in_talk_params[:talkId])
-    profile = Profile.find(check_in_talk_params[:profileId])
-    check_in_timestamp = Time.zone.at(check_in_talk_params[:check_in_timestamp])
+    @params = check_in_talks_params(JSON.parse(request.body.read, { symbolize_names: true }))
+    talk = Talk.find(@params[:talkId])
+    profile = Profile.find(@params[:profileId])
+    check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
     @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:)
 
     if @check_in.save
@@ -19,8 +20,8 @@ class Api::V1::CheckInTalksController < ApplicationController
     end
   end
 
-  def check_in_talk_params
-    json_params = ActionController::Parameters.new(JSON.parse(request.body.read))
-    json_params.permit(:eventAbbr, :profileId, :talkId, :check_in_timestamp)
+  def check_in_talks_params(params)
+    json_params = ActionController::Parameters.new(params)
+    json_params.permit(:eventAbbr, :profileId, :talkId, :checkInTimestamp)
   end
 end

@@ -4,10 +4,11 @@ class Admin::CheckInEventsController < ApplicationController
   def create
     @check_in = CheckInConference.new(check_in_events_params.merge(conference_id: conference.id, check_in_timestamp: DateTime.now))
     @profile = Profile.find(@check_in.profile_id)
+
     if @check_in.save
-      redirect_back(fallback_location: "#{conference.abbr}/admin", notice: "#{@profile.last_name} #{@profile.first_name} がチェックインしました")
+      redirect_to(admin_speaker_check_in_statuses_path)
     else
-      redirect_back(fallback_location: "#{conference.abbr}/admin", notice: "#{@profile.last_name} #{@profile.first_name} のチェックインに失敗しました")
+      redirect_to(admin_speaker_check_in_statuses_path, error: "#{@profile.last_name} #{@profile.first_name} がチェックインに失敗しました")
     end
   end
 

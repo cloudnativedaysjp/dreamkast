@@ -8,7 +8,7 @@ describe Admin::CheckInEventsController, type: :request do
   let!(:alice) { create(:alice, :on_cndt2020) }
 
   describe 'POST /:event/admin/check_in_events' do
-    subject { post(admin_check_in_events_path(event: 'cndt2020'), params: { check_in_event: params }) }
+    subject { post(admin_check_in_events_path(event: 'cndt2020'), params: { check_in_event: params }, headers: { 'HTTP_REFERER' => admin_speaker_check_in_statuses_path(event: 'cndt2020') }) }
 
     context 'create' do
       let(:roles) { ['CNDT2020-Admin'] }

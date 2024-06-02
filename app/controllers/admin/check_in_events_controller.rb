@@ -6,9 +6,20 @@ class Admin::CheckInEventsController < ApplicationController
     @profile = Profile.find(@check_in.profile_id)
 
     if @check_in.save
-      redirect_to(admin_speaker_check_in_statuses_path)
+      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false)
     else
-      redirect_to(admin_speaker_check_in_statuses_path, error: "#{@profile.last_name} #{@profile.first_name} がチェックインに失敗しました")
+      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false)
+    end
+  end
+
+  def destroy_all
+    @check_ins = CheckInConference.where(profile_id: check_in_events_params[:profile_id], conference_id: conference.id)
+    @profile = Profile.find(check_in_events_params[:profile_id])
+
+    if @check_ins.map(&:destroy!)
+      redirect_back(fallback_location: "#{conference.abbr}/admin")
+    else
+      redirect_back(fallback_location: "#{conference.abbr}/admin")
     end
   end
 

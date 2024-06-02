@@ -52,7 +52,7 @@ jobs:
             for exp in $EXPECTED; do
               [ "$act" = "$exp" ] && EXIST=true
             done
-            [ $EXIST != true ] && continue
+            [ $EXIST = true ] && continue
             bash -x $act/cleanup.sh
             rm -rf $act
           done

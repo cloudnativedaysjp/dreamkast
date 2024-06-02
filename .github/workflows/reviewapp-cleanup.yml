@@ -19,6 +19,13 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
       - name: Checkout dreamkast-infra
         uses: actions/checkout@v4
         with:
@@ -45,7 +52,7 @@ jobs:
             for exp in $EXPECTED; do
               [ "$act" = "$exp" ] && EXIST=true
             done
-            [ $EXIST = true ] && continue
+            [ $EXIST != true ] && continue
             bash -x $act/cleanup.sh
             rm -rf $act
           done

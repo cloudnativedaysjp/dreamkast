@@ -8,7 +8,7 @@ class Admin::CheckInEventsController < ApplicationController
     if @check_in.save
       redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false)
     else
-      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false)
+      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false, notice: "#{@profile.last_name} #{@profile.first_name} のチェックインに失敗しました")
     end
   end
 
@@ -19,7 +19,7 @@ class Admin::CheckInEventsController < ApplicationController
     if @check_ins.map(&:destroy!)
       redirect_back(fallback_location: "#{conference.abbr}/admin")
     else
-      redirect_back(fallback_location: "#{conference.abbr}/admin")
+      redirect_back(fallback_location: "#{conference.abbr}/admin", notice: "#{@profile.last_name} #{@profile.first_name} のチェックインキャンセルに失敗しました")
     end
   end
 

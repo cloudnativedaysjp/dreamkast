@@ -2,6 +2,9 @@
   <% flash.each do |message_type, message| %>
     <div class="alert alert-info" role="alert">
       <%= message %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   <% end %>
 
@@ -37,7 +40,10 @@
             <td><%= talk.title %></td>
             <td>
               <% if speaker.attendee_profile&.check_in_conferences.nil? || speaker.attendee_profile&.check_in_conferences&.empty? %>
-                <%= link_to 'チェックインする', admin_check_in_events_path(check_in_event: {profile_id: speaker.attendee_profile&.id}), method: :post, data: { confirm: "#{speaker.attendee_profile&.last_name} #{speaker.attendee_profile&.first_name} をチェックインする"} %>
+                <%= form_with(url: admin_check_in_events_path, method: "post", remote: true) do |f| %>
+                  <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile&.id %>
+                  <%= f.submit 'チェックイン', data: { confirm: "#{speaker.attendee_profile&.last_name} #{speaker.attendee_profile&.first_name} をチェックインする"} %>
+                <% end %>
               <% else %>
                 チェックイン済み
               <% end %>

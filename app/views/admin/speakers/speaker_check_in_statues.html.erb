@@ -46,6 +46,10 @@
                 <% end %>
               <% else %>
                 チェックイン済み
+                <%= form_with(url: admin_check_in_events_path, method: "delete", remote: true) do |f| %>
+                  <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile.id %>
+                  <%= f.submit '(チェックインをキャンセル)', data: { confirm: "#{speaker.attendee_profile.last_name} #{speaker.attendee_profile.first_name} のイベントへのチェックインをキャンセルしますか？"} %>
+                <% end %>
               <% end %>
             </td>
           </tr>

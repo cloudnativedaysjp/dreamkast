@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       get 'export_profiles' => 'profiles#export_profiles'
       get 'speaker_check_in_statuses' => 'speakers#check_in_statuses'
       resources :check_in_events, only: [:create]
+      delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index]
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'

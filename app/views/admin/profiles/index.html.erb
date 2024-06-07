@@ -33,11 +33,18 @@
           <td><%= profile.check_ins.present? ? "チェックイン済み" : "未チェックイン" %></td>
           <td><%= profile.check_ins.present? ? profile.check_ins.first.created_at : "" %></td>
           <td>
-            <% if profile.check_ins.empty? %>
-              <%= link_to 'チェックインする', admin_check_ins_path(check_in: {profile_id: profile.id}), method: :post, data: { confirm: "#{profile.last_name} #{profile.first_name} をチェックインする"} %>
+            <% if profile.check_in_conferences.nil? || profile.check_in_conferences.empty? %>
+              <%= form_with(url: admin_check_in_events_path, method: "post", remote: true) do |f| %>
+                <%= f.hidden_field "check_in_event[profile_id]", value: profile.id %>
+                <%= f.submit 'チェックイン', data: { confirm: "#{profile.last_name} #{profile.first_name} をチェックインする"} %>
+              <% end %>
             <% else %>
-              <%= link_to 'チェックインを解除する', admin_check_in_path(id: profile.check_ins.first.id), method: :delete, data: { confirm: "#{profile.last_name} #{profile.first_name} のチェックインを解除する"} %>
-          <% end %>
+              チェックイン済み
+              <%= form_with(url: admin_check_in_events_path, method: "delete", remote: true) do |f| %>
+                <%= f.hidden_field "check_in_event[profile_id]", value: profile.id %>
+                <%= f.submit '(チェックインをキャンセル)', data: { confirm: "#{profile.last_name} #{profile.first_name} のイベントへのチェックインをキャンセルしますか？"} %>
+              <% end %>
+            <% end %>
           </td>
         </tr>
       <% end %>

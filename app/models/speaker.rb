@@ -90,4 +90,8 @@ class Speaker < ApplicationRecord
   def has_accepted_proposal?
     talks.find { |e| e.proposal.status == 'accepted' }.present?
   end
+
+  def attendee_profile
+    conference.profiles.where(sub:).first
+  end
 end

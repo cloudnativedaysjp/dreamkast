@@ -42,6 +42,15 @@ class Admin::SpeakersController < ApplicationController
     send_file(filename, filename: "speaker-#{Time.now.strftime("%F")}.csv", length: stat.size)
   end
 
+  def check_in_statuses
+    @speakers = @conference.speakers
+    @talks = @speakers.map { |speaker| speaker.talks.accepted }.flatten
+
+    respond_to do |format|
+      format.html { render(:'admin/speakers/speaker_check_in_statues') }
+    end
+  end
+
   private
 
   def speaker_params
@@ -59,7 +68,7 @@ class Admin::SpeakersController < ApplicationController
                                     talks_attributes: [:id, :title, :abstract, :conference_id, :_destroy, :talk_category_id, :talk_time_id])
   end
 
-  helper_method :speaker_url
+  helper_method :speaker_url, :session_type_name, :speaker_check_in_status
 
   def speaker_url
     case action_name
@@ -67,6 +76,27 @@ class Admin::SpeakersController < ApplicationController
       "/#{params[:event]}/admin/speaker"
     when 'edit'
       "/#{params[:event]}/admin/speakers/#{params[:id]}"
+    end
+  end
+
+  def session_type_name(talk)
+    case talk.type
+    when 'Session'
+      'CFP'
+    when 'Keynote'
+      'Keynote'
+    when 'SponsorSession'
+      'スポンサー'
+    else
+      ''
+    end
+  end
+
+  def speaker_check_in_status(speaker)
+    if speaker.attendee_profile&.check_in_conferences&.order(check_in_timestamp: :asc)&.first.present?
+      '受付済み'
+    else
+      '未受付'
     end
   end
 end

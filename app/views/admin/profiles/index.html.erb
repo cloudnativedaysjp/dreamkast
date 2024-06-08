@@ -18,6 +18,7 @@
         <th scope="col">Name(Kana)</th>
         <th scope="col">登録に用いたEmail</th>
         <th scope="col">参加方法</th>
+        <th scope="col">QRコード</th>
         <th scope="col">チェックイン</th>
         <th scope="col">チェックイン時刻</th>
         <th scope="col"></th>
@@ -30,6 +31,7 @@
           <td><%= profile.last_name_kana %> <%= profile.first_name_kana %></td>
           <td><%= profile.email %></td>
           <td><%= Profile.participations[profile.participation] %></td>
+          <td><%= link_to 'QRコードを表示する', profiles_entry_sheet_path(id: profile.id) %></td>
           <td><%= profile.check_ins.present? ? "チェックイン済み" : "未チェックイン" %></td>
           <td><%= profile.check_ins.present? ? profile.check_ins.first.created_at : "" %></td>
           <td>

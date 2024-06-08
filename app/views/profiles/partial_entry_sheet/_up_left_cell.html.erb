@@ -18,12 +18,16 @@
 
       <!-- 登壇者の場合は登壇者プロフィールを使用 -->
       <% if @speaker.present? %>
-        <%= image_tag @speaker.avatar_url(:small), class: "avatar-image" %>
+        <% if @speaker.avatar_data %>
+          <%= image_tag @speaker.avatar_url(:small), class: "avatar-image" %>
+        <% end %>
         Name: <%= @speaker.name %>
 
       <!-- 一般参加者の場合はPublicProfileを参照 -->
       <% elsif @profile.public_profile.present? %>
-        <%= image_tag @profile.public_profile.avatar_url(:small), class: "avatar-image" %>
+        <% if @profile.public_profile.avatar_data %>
+          <%= image_tag @profile.public_profile.avatar_url(:small), class: "avatar-image" %>
+        <% end %>
         Name: <%= @profile.public_profile.nickname %>
       <% end %>
 

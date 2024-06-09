@@ -13,7 +13,7 @@
   height: 50vh;
   width: 50vw;
 
-  border: 1px solid black;
+  border: 1px dotted #CCC;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -29,33 +29,36 @@
   .attendance {
     font-size: xxx-large;
   }
-  .profile {
-    display: inherit;
-    margin-top: 2rem;
-    flex-direction: row;
-    .qrcode{
-      display: inherit;
-      margin-right: 2rem;
-      flex-direction: column;
+  .qrcode{
+    img{
+      width: 400px;
+      height: 400px;
     }
-    .detail{
-      display: inherit;
-      margin-left: 2rem;
-      flex-direction: column;
-      font-size: x-large;
+  }
+  .detail{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: x-large;
+    .avatar{
+      align-items: center;
+      margin: 20px 0;
+      img.avatar-image{
+        margin: 0 auto;
+        width: 160px;
+      }
     }
-    img.avatar-image{
-      width: 80px;
-      margin: 20px;
-    }
+  }
+  .x-icon {
+    display: inline;
   }
 
   .table {
+    font-size: 17px;
     tr {
       padding-top: 2px;
       padding-bottom: 2px;
       line-height: 1;
-      font-size: 12px;
       height: auto;
     }
     td {

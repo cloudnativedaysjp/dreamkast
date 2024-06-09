@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  grid-gap: 0;
 
   // viewport に対して100%のサイズ
   height: 100vh;
@@ -13,7 +14,6 @@
   height: 50vh;
   width: 50vw;
 
-  border: 1px solid black;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -81,17 +81,26 @@
   }
 }
 
+.right {
+  border-left: 0.3px dashed gray;
+}
+
+.left{
+  border-right: 0.3px dashed gray;
+}
+
 .bottom {
   justify-content: center;
   grid-column: 1 / 3;  // 2列使う
   grid-row: 2 / 3;     // 1行で表示
   width: 100vw;
+  border-top: 1px dashed gray;
 }
 
 .bottom img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 #printButton {

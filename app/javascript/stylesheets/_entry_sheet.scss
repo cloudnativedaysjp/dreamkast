@@ -125,3 +125,25 @@
     display: none;
   }
 }
+
+// QRコード表示ページのスタイル
+.qr_view {
+  // 600px以下の場合（スマートフォンの想定）
+  @media only screen and (max-width: 700px) {
+    img { width: 50%; }
+    h5 { margin-top: 20%; }
+  }
+
+  // 600px以上の場合（PCの想定）
+  @media only screen and (min-width: 700px) {
+    img { height: 40vh; }
+  }
+
+  // 表示スタイル
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h5 { text-align: center; }
+}

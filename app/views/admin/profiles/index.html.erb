@@ -19,8 +19,7 @@
         <th scope="col">登録に用いたEmail</th>
         <th scope="col">参加方法</th>
         <th scope="col">QRコード</th>
-        <th scope="col">チェックイン</th>
-        <th scope="col">チェックイン時刻</th>
+        <th scope="col">チェックイン状況</th>
         <th scope="col"></th>
       </tr>
       </thead>
@@ -32,8 +31,7 @@
           <td><%= profile.email %></td>
           <td><%= Profile.participations[profile.participation] %></td>
           <td><%= link_to 'QRコードを表示する', profiles_entry_sheet_path(id: profile.id) %></td>
-          <td><%= profile.check_ins.present? ? "チェックイン済み" : "未チェックイン" %></td>
-          <td><%= profile.check_ins.present? ? profile.check_ins.first.created_at : "" %></td>
+          <td><%= profile.check_in_conferences.present? ? profile.check_in_conferences.first.created_at : "未チェックイン" %></td>
           <td>
             <% if profile.check_in_conferences.nil? || profile.check_in_conferences.empty? %>
               <%= form_with(url: admin_check_in_events_path, method: "post", remote: true) do |f| %>

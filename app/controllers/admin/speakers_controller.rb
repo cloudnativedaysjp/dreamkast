@@ -94,9 +94,9 @@ class Admin::SpeakersController < ApplicationController
 
   def speaker_check_in_status(speaker)
     if speaker.attendee_profile&.check_in_conferences&.order(check_in_timestamp: :asc)&.first.present?
-      '受付済み'
+      speaker.attendee_profile&.check_in_conferences&.order(check_in_timestamp: :asc)&.first&.check_in_timestamp
     else
-      '未受付'
+      '未チェックイン'
     end
   end
 end

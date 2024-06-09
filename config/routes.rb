@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     namespace :admin do
       get 'users' => 'profiles#index'
       resources :profiles
+      get 'entry_sheet' => 'profiles#entry_sheet'
       resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]

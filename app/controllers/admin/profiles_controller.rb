@@ -15,4 +15,11 @@ class Admin::ProfilesController < ApplicationController
     stat = File.stat(filename)
     send_file(filename, filename: "profiles-#{Time.now.strftime("%F")}.csv", length: stat.size)
   end
+
+  def entry_sheet
+    @profile = Profile.find(params[:id])
+    @speaker = conference.speakers.find_by(sub: @profile.sub)
+
+    render('profiles/entry_sheet')
+  end
 end

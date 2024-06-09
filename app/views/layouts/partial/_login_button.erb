@@ -17,9 +17,17 @@
         <% if @profile.participation.present? %>
           <%= link_to '参加方法を変更する', edit_profile_path(id: @profile.id, anchor: "participation"), class: "dropdown-item"  %>
         <% end %>
+
+        <!-- 現地参加の場合のみ有効 -->
         <% if @profile.attend_offline? %>
           <div class="dropdown-divider"></div>
           <%= link_to '参加表を印刷する', profiles_entry_sheet_path, class: "dropdown-item"  %>
+
+          <!-- 開催中のみQRコードビューを有効にする -->
+          <% if @conference.present? && @conference.opened? %>
+            <div class="dropdown-divider"></div>
+            <%= link_to '受付用QRコードを表示する', profiles_view_qr_path, class: "dropdown-item"  %>
+          <% end %>
         <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>

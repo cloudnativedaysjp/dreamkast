@@ -100,11 +100,24 @@
   margin-top: 3rem;
 }
 
+.warning {
+  text-align: center;
+}
+
 @media print {
   .a8-container {
     page-break-after: always; // コンテンツの後に改ページ
   }
+
+  .warning{
+    display: none;
+  }
+
   nav {
+    display: none;
+  }
+
+  footer{
     display: none;
   }
 

@@ -21,7 +21,7 @@
         <!-- 現地参加の場合のみ有効 -->
         <% if @profile.attend_offline? %>
           <div class="dropdown-divider"></div>
-          <%= link_to '参加表を印刷する', profiles_entry_sheet_path, class: "dropdown-item"  %>
+          <%= link_to '参加証を印刷する', profiles_entry_sheet_path, class: "dropdown-item"  %>
 
           <!-- 開催中のみQRコードビューを有効にする -->
           <% if @conference.present? && @conference.opened? %>

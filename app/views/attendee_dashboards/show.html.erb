@@ -73,8 +73,8 @@
               <div class="card-text">参加方法の変更は <%= link_to 'こちら', edit_profile_path(id: @profile.id) %> から</div>
               </br>
               <% if @profile.attend_offline? %>
-                <div class="card-text">当日の参加受付には参加表の印刷が必要となっております</div>
-                <div class="card-text">参加表は <%= link_to 'こちら', profiles_entry_sheet_path %> から印刷してお持ちください</div>
+                <div class="card-text">当日の参加受付には参加証の印刷が必要となっております</div>
+                <div class="card-text">参加証は <%= link_to 'こちら', profiles_entry_sheet_path %> から印刷してお持ちください</div>
               <% end %>
               </br>
               <div class="card-text">

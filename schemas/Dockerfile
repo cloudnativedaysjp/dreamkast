@@ -1,4 +1,4 @@
-FROM swaggerapi/swagger-codegen-cli-v3:3.0.56 as builder
+FROM swaggerapi/swagger-codegen-cli-v3:3.0.57 as builder
 WORKDIR /mock-seed
 COPY ./swagger.yml ./
 WORKDIR /mock-server

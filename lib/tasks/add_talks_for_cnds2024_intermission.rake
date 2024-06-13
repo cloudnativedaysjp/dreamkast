@@ -70,7 +70,7 @@ namespace :util do
     %w[B C].each do |track_name|
       other_track_talks.each do |arr|
         param = { start_time: arr[0], end_time: arr[1], title: arr[2], abstract: arr[3] }
-        add_talk(param.merge(type: 'Intermission', conference_id: conference.id, conference_day_id: day.id, track_id: tracks[track_name], show_on_timetable: true))
+        add_talk(param.merge(type: 'Intermission', conference_id: conference.id, conference_day_id: day.id, track_id: tracks[track_name], show_on_timetable: false))
       end
     end
   end

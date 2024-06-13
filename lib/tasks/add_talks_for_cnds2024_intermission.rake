@@ -57,7 +57,7 @@ namespace :util do
       %w[17:00:00 17:20:00 休憩 intermission],
       #  17:20    18:00    Session 5
       %w[18:10:00 18:20:00 トラックAでクロージング実施中！ intermission],
-      %w[18:10:00 23:00:00 本日のイベントは終了しました intermission]
+      %w[18:20:00 23:00:00 本日のイベントは終了しました intermission]
     ]
 
     day = conference.conference_days.find_by(date: '2024-06-15')

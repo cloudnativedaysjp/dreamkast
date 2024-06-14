@@ -187,7 +187,7 @@
             <div class="card-text">
               <ul>
                 <li><%= link_to '参加証を印刷する', profiles_entry_sheet_path %></li>
-                <li><%= link_to '参加用二次元バーコードを印刷する', profiles_view_qr_path %></li>
+                <li><%= link_to '参加用二次元バーコードを表示する', profiles_view_qr_path %></li>
                 <li><%= link_to '参加方法変更', edit_profile_path(id: @profile.id, anchor: "participation") %></li>
                 <% if @profile.public_profile.present? %>
                   <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>

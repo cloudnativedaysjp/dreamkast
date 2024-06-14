@@ -75,6 +75,7 @@
               <% if @profile.attend_offline? %>
                 <div class="card-text">当日の参加受付には参加証の印刷が必要となっております</div>
                 <div class="card-text">参加証は <%= link_to 'こちら', profiles_entry_sheet_path %> から印刷してお持ちください</div>
+                <div class="card-text">スマートフォンで受け付け用の二次元バーコードを表示する場合は <%= link_to 'こちら', profiles_view_qr_path %></div>
               <% end %>
               </br>
               <div class="card-text">
@@ -185,6 +186,8 @@
           <div class="card-body">
             <div class="card-text">
               <ul>
+                <li><%= link_to '参加証を印刷する', profiles_entry_sheet_path %></li>
+                <li><%= link_to '参加用二次元バーコードを印刷する', profiles_view_qr_path %></li>
                 <li><%= link_to '参加方法変更', edit_profile_path(id: @profile.id, anchor: "participation") %></li>
                 <% if @profile.public_profile.present? %>
                   <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>

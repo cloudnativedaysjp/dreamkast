@@ -12,8 +12,8 @@ class EventController < ApplicationController
                   .find_by(abbr: event_name)
     @talks = @conference.talks.accepted.includes(:talks_speakers, :speakers)
     if !@conference.speaker_entry_enabled? and logged_in?
-      redirect_to("/#{@conference.abbr}/dashboard") if @conference.registered?
-      redirect_to("/#{@conference.abbr}/ui") if @conference.opened?
+      redirect_to("/#{@conference.abbr}/dashboard") && return if @conference.registered?
+      redirect_to("/#{@conference.abbr}/ui") && return if @conference.opened?
     end
     render(event_view)
   end

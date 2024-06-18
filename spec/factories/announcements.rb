@@ -3,7 +3,7 @@
 # Table name: announcements
 #
 #  id            :bigint           not null, primary key
-#  body          :text(65535)
+#  body          :text(16777215)
 #  publish       :boolean
 #  publish_time  :datetime
 #  conference_id :bigint           not null

@@ -31,6 +31,7 @@
 # Indexes
 #
 #  fk_rails_9c6f538eea                (type)
+#  idx_talks                          (track_id)
 #  index_talks_on_conference_id       (conference_id)
 #  index_talks_on_talk_category_id    (talk_category_id)
 #  index_talks_on_talk_difficulty_id  (talk_difficulty_id)

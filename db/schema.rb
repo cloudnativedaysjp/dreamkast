@@ -11,13 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
-  create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "sub"
-    t.string "page"
-    t.string "ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", collation: "utf8mb4_0900_ai_ci"
+    t.string "sub", collation: "utf8mb4_0900_ai_ci"
+    t.string "page", collation: "utf8mb4_0900_ai_ci"
+    t.string "ip", collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "profile_id"
   end
 
@@ -115,7 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["talk_id"], name: "index_check_in_talks_on_talk_id"
   end
 
-  create_table "check_ins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "check_ins", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -277,11 +277,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "profile_surveys", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "sub"
-    t.string "email"
-    t.string "last_name"
-    t.string "first_name"
+    t.datetime "filled_at"
+    t.string "url"
+    t.string "generation"
+    t.string "industry"
+    t.string "department"
+    t.string "occupation"
+    t.string "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "sub", collation: "utf8mb4_0900_ai_ci"
+    t.string "email", collation: "utf8mb4_0900_ai_ci"
+    t.string "last_name", collation: "utf8mb4_0900_ai_ci"
+    t.string "first_name", collation: "utf8mb4_0900_ai_ci"
     t.integer "industry_id"
     t.string "occupation", collation: "utf8mb4_0900_ai_ci"
     t.string "company_name", collation: "utf8mb4_0900_ai_ci"
@@ -515,11 +528,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type", null: false
-    t.string "title"
-    t.text "abstract"
-    t.string "movie_url"
+  create_table "talks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "type", null: false, collation: "utf8mb4_0900_ai_ci"
+    t.string "title", collation: "utf8mb4_0900_ai_ci"
+    t.text "abstract", size: :medium, collation: "utf8mb4_0900_ai_ci"
+    t.string "movie_url", collation: "utf8mb4_0900_ai_ci"
     t.time "start_time"
     t.time "end_time"
     t.bigint "talk_difficulty_id"
@@ -584,10 +597,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.string "site", collation: "utf8mb4_0900_ai_ci"
     t.string "url", collation: "utf8mb4_0900_ai_ci"
     t.boolean "on_air"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "video_id"
-    t.text "video_file_data"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "video_id", collation: "utf8mb4_0900_ai_ci"
+    t.text "video_file_data", size: :medium, collation: "utf8mb4_0900_ai_ci"
   end
 
   create_table "viewer_counts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

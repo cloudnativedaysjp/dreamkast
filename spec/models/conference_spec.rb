@@ -22,7 +22,7 @@
 #  show_timetable             :integer          default("show_timetable_disabled")
 #  speaker_entry              :integer          default("speaker_entry_disabled")
 #  sponsor_guideline_url      :text(65535)
-#  theme                      :text(65535)
+#  theme                      :text(16777215)
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_19_113910) do
   create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -164,15 +164,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_links_on_conference_id"
-  end
-
-  create_table "live_streams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
-    t.bigint "track_id", null: false
-    t.string "type"
-    t.json "params"
-    t.index ["conference_id"], name: "index_live_streams_on_conference_id"
-    t.index ["track_id"], name: "index_live_streams_on_track_id"
   end
 
   create_table "media_live_channels", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -600,8 +591,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_29_040134) do
   add_foreign_key "check_in_talks", "profiles"
   add_foreign_key "check_in_talks", "talks"
   add_foreign_key "links", "conferences"
-  add_foreign_key "live_streams", "conferences"
-  add_foreign_key "live_streams", "tracks"
   add_foreign_key "media_live_channels", "media_live_inputs"
   add_foreign_key "media_live_channels", "streamings"
   add_foreign_key "media_live_input_security_groups", "streamings"

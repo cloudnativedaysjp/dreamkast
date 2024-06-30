@@ -67,9 +67,6 @@ interface _RbsRailsPathHelpers
   def admin_update_offset_path: (*untyped) -> String
   def admin_attachment_path: (*untyped) -> String
   def admin_team_path: (*untyped) -> String
-  def admin_live_stream_ivs_path: (*untyped) -> String
-  def admin_bulk_create_ivs_path: (*untyped) -> String
-  def admin_bulk_delete_ivs_path: (*untyped) -> String
   def admin_bulk_create_media_live_path: (*untyped) -> String
   def admin_bulk_delete_media_live_path: (*untyped) -> String
   def admin_bulk_create_media_package_path: (*untyped) -> String
@@ -221,7 +218,6 @@ interface _RbsRailsPathHelpers
   def admin_update_offset_url: (*untyped) -> String
   def admin_attachment_url: (*untyped) -> String
   def admin_team_url: (*untyped) -> String
-  def admin_live_stream_ivs_url: (*untyped) -> String
   def admin_bulk_create_ivs_url: (*untyped) -> String
   def admin_bulk_delete_ivs_url: (*untyped) -> String
   def admin_bulk_create_media_live_url: (*untyped) -> String

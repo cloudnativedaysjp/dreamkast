@@ -90,9 +90,6 @@ Rails.application.routes.draw do
       get 'team' => 'teams#show'
       put 'team' => 'teams#update'
 
-      resources :live_stream_ivs, only: [:index, :create]
-      post 'bulk_create_ivs' => 'live_stream_ivs#bulk_create'
-      post 'bulk_delete_ivs' => 'live_stream_ivs#bulk_delete'
       resources :harvest_jobs
     end
 

@@ -6,10 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // CSSのみを含むエントリーから、exportされたJavaScriptファイルを削除する
 // この例では、entry.customは対応する空のcustom.jsファイルを作成する
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
+const mode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
 module.exports = {
-  mode: "production",
-  devtool: "source-map",
+  mode: mode,
+  optimization: {
+    moduleIds: 'deterministic',
+  },
   entry: {
     application: [
       "./app/javascript/packs/application.js",

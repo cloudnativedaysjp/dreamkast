@@ -10,9 +10,9 @@
     <%= csp_meta_tag %>
     <%= favicon_link_tag('favicon.ico') %>
     <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
-    <%= stylesheet_pack_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag event_js_path, 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
 
     <script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
 

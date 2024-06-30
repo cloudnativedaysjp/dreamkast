@@ -14,6 +14,7 @@
         "bootstrap-table": "1.22.1",
         "cropperjs": "1.6.0",
         "css-loader": "^7.1.2",
+        "file-loader": "^6.2.0",
         "jquery": "3.7.1",
         "mini-css-extract-plugin": "^2.9.0",
         "popper.js": "1.16.1",

@@ -59,6 +59,7 @@ group :development do
   gem 'rbs_rails', require: false
   gem 'pre-commit', require: false
   gem 'execjs', require: false
+  gem 'foreman'
 end
 
 group :test do

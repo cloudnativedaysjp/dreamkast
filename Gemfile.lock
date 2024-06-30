@@ -180,6 +180,7 @@ GEM
     faraday-retry (2.0.0)
       faraday (~> 2.0)
     ffi (1.15.5)
+    foreman (0.88.1)
     gli (2.21.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -691,6 +692,7 @@ DEPENDENCIES
   execjs
   factory_bot_rails
   faraday-retry
+  foreman
   icalendar
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)

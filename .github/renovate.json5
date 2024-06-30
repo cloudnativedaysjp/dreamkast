@@ -25,9 +25,16 @@
       "excludePackageNames": ["video.js"], // because CI was failed
       "groupName": "all minor, or patch dependencies on npm",
     },
+    {
+      "matchManagers": ["ruby-version", "dockerfile"],
+      "groupName": "ruby-updates",
+      "groupSlug": "ruby-updates",
+      "enabled": true
+    },
   ],
   "enabledManagers": [
     "bundler",
+    "ruby-version",
     "dockerfile",
     "docker-compose",
     "github-actions",

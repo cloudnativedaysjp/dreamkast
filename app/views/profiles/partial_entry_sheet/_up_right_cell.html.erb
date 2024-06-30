@@ -16,12 +16,12 @@
           <tbody>
             <% @profile.talks.where(conference_day: conference_day).each do |talk| %>
               <tr>
-                <% if talk.title.length >= 15 %>
-                  <td><%= talk.title.slice(...13) + "..."  %></td>
+                <% if talk.title.length >= 19 %>
+                  <td><%= talk.title.slice(...17) + "..."  %></td>
                 <% else %>
                   <td><%= talk.title %></td>
                 <% end %>
-                <td><%= talk.start_time.strftime('%H:%M') %> ~</td>
+                <td><%= talk.start_time.strftime('%H:%M') %></td>
                 <% if talk.track.room.name.length >= 10 %>
                   <td><%= talk.track.room.name.slice(...8) + ".."  %></td>
                 <% else %>

@@ -10,4 +10,11 @@ Sentry.init do |config|
   config.profiles_sample_rate = 0.0001
   # set the instrumenter to use OpenTelemetry instead of Sentry
   config.instrumenter = :otel
+
+  config.before_send_transaction = lambda do |event, _hint|
+    # Sentry への接続 transaction 自体は Sentry に送らない
+    return nil if event.transaction == 'connect'
+
+    event
+  end
 end

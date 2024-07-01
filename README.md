@@ -83,7 +83,6 @@ You need to install shared-mime-info
 ```
 $ yarn install --check-files
 $ bundle install
-$ bundle exec rake webpacker:compile
 ```
 
 Then, create `.env-local` file and fill these values. If you don't know correct values, please ask us.
@@ -120,16 +119,10 @@ $ docker compose pull ui
 $ docker compose up -d fifo-worker db redis nginx localstack ui
 ```
 
-Run the application
+Run the application and builder js and css
 
 ```
-$ ./entrypoint.sh
-```
-
-Run Webpack dev server in case you want to edit JavaScript.
-
-```
-$ ./bin/webpack-dev-server
+$  bundle exec foreman start -f Procfile.dev "$@" -e .env
 ```
 
 ## DB migration and to add seed data

@@ -1,8 +1,9 @@
 // Import custom variables and override default Bootstrap variables
 @import "./_variables.scss";
 // Import Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-table/src/bootstrap-table';
+//@import 'bootstrap-icons/font/bootstrap-icons';
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-table/src/bootstrap-table';
 // Import custom styles
 @import "./_global.scss";
 @import "./_navbar.scss";

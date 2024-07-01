@@ -179,4 +179,8 @@ class ApplicationController < ActionController::Base
   def display_contact_url?
     @conference.present? && @conference.contact_url.present? && (@conference.opened? || @conference.closed? || @conference.archived?)
   end
+  helper_method :admin?
+  def admin?
+    false
+  end
 end

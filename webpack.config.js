@@ -6,10 +6,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // CSSのみを含むエントリーから、exportされたJavaScriptファイルを削除する
 // この例では、entry.customは対応する空のcustom.jsファイルを作成する
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const mode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
+process.env.RAILS_ENV = process.env.RAILS_ENV || 'development'
+process.env.NODE_ENV = process.env.NODE_ENV || process.env.RAILS_ENV
 
 module.exports = {
-  mode: mode,
+  mode: ['development', 'production'].includes(process.env.NODE_ENV) ? process.env.NODE_ENV : 'development',
+  devtool: "source-map",
   optimization: {
     moduleIds: 'deterministic',
   },
@@ -17,7 +19,42 @@ module.exports = {
     application: [
       "./app/javascript/packs/application.js",
       './app/javascript/stylesheets/application.scss',
-    ]
+    ],
+    cnds2024: [
+      "./app/javascript/packs/cnds2024.js",
+      './app/javascript/stylesheets/cnds2024.scss',
+    ],
+    cndo2021: [
+      "./app/javascript/packs/cndo2021.js",
+      './app/javascript/stylesheets/cndo2021.scss',
+    ],
+    booth: [
+      "./app/javascript/packs/booth.js",
+    ],
+    talks: [
+      "./app/javascript/packs/talks.js",
+    ],
+    vote_cfp: [
+      "./app/javascript/packs/vote_cfp.js",
+    ],
+    'admin/tracks': [
+      "./app/javascript/packs/admin/tracks/index.js",
+    ],
+    'admin/tracks/media_live': [
+      "./app/javascript/packs/admin/tracks/media_live.js",
+    ],
+    'admin/tracks/tracks_control': [
+      "./app/javascript/packs/admin/tracks/tracks_control.js",
+    ],
+    'chat/index': [
+      "./app/javascript/packs/chat/index.js",
+    ],
+    'tracks/waiting_channel': [
+      "./app/javascript/packs/tracks/waiting_channel.js",
+    ],
+    'tracks/track_channel': [
+      "./app/javascript/packs/tracks/track_channel.js",
+    ],
   },
   module: {
     rules: [
@@ -48,5 +85,9 @@ module.exports = {
     }),
     new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin(),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ]
 }

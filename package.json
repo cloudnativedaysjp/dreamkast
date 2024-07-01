@@ -3,6 +3,7 @@
     "private": true,
     "dependencies": {
         "@hotwired/turbo-rails": "^8.0.0",
+        "@popperjs/core": "^2.11.8",
         "@rails/actioncable": "7.0.6",
         "@rails/activestorage": "7.0.6",
         "@rails/ujs": "7.0.6",
@@ -10,14 +11,20 @@
         "@uppy/core": "3.5.0",
         "@uppy/dashboard": "3.5.2",
         "@uppy/xhr-upload": "3.4.0",
+        "autoprefixer": "^10.4.19",
         "bootstrap": "4.6.2",
-        "bootstrap-table": "1.22.1",
+        "bootstrap-icons": "^1.11.3",
+        "bootstrap-table": "1.21.2",
         "cropperjs": "1.6.0",
         "css-loader": "^7.1.2",
         "file-loader": "^6.2.0",
         "jquery": "3.7.1",
         "mini-css-extract-plugin": "^2.9.0",
+        "nodemon": "^3.1.4",
+        "particles.js": "^2.0.0",
         "popper.js": "1.16.1",
+        "postcss": "^8.4.39",
+        "postcss-cli": "^11.0.0",
         "sass": "^1.77.6",
         "sass-loader": "^14.2.1",
         "stimulus": "^3.2.1",
@@ -30,6 +37,12 @@
     "version": "0.1.0",
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+        "build:css": "yarn build:css:compile && yarn build:css:prefix",
+        "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+        "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
+        "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
+    },
+    "devDependencies": {
+        "webpack-bundle-analyzer": "^4.10.2"
     }
 }

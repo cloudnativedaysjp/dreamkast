@@ -16,7 +16,6 @@ import '../stylesheets/cicd2021'
 import './bootstrap_custom.js'
 import './bootstrap-table.js'
 import './utils'
-import './bootstrap-table-filter-control.js'
 import jquery from 'jquery';
 window.$ = window.jquery = jquery;
 import './jquery.easing.min.js'

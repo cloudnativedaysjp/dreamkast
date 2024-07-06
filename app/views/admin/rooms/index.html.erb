@@ -18,7 +18,7 @@
       </tr>
       </thead>
       <tbody>
-      <%= form_with(url: admin_rooms_path, local: true, id: "room_list", method: :put) do |f| %>
+      <%= form_with(url: admin_rooms_path, id: "room_list", method: :put) do |f| %>
         <% @rooms.each do |room| %>
           <%= fields_for 'rooms[]', room do |fr| %>
 

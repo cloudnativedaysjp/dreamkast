@@ -1,4 +1,4 @@
-<%= form_with(url: public_profile_path, model: @public_profile, local: true, class: "needs-validation") do |form| %>
+<%= form_with(url: public_profile_path, model: @public_profile, class: "needs-validation") do |form| %>
   <% if @public_profile.errors.any? %>
     <div id="error_explanation" class="alert alert-danger" role="alert">
       <h5>入力内容にエラーがあります:</h5>

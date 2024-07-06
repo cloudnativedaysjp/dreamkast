@@ -4,7 +4,7 @@
 
       <h2>AdminProfile 登録情報変更</h2>
 
-      <%= form_with(url: admin_admin_profile_path, model: @admin_profile, local: true, class: "needs-validation") do |form| %>
+      <%= form_with(url: admin_admin_profile_path, model: @admin_profile, class: "needs-validation") do |form| %>
         <% if @admin_profile.errors.any? %>
           <div id="error_explanation" class="alert alert-danger" role="alert">
             <h5>入力内容にエラーがあります:</h5>

@@ -19,7 +19,6 @@
 
 class Track < ApplicationRecord
   has_many :talks
-  has_one :live_stream_ivs
   has_one :streaming
 
   belongs_to :room, optional: true

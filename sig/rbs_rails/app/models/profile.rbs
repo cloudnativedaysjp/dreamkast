@@ -1045,6 +1045,114 @@ class Profile < ::ApplicationRecord
     def restore_company_fax!: () -> void
 
     def clear_company_fax_change: () -> void
+
+    def calendar_unique_code: () -> String?
+
+    def calendar_unique_code=: (String?) -> String?
+
+    def calendar_unique_code?: () -> bool
+
+    def calendar_unique_code_changed?: () -> bool
+
+    def calendar_unique_code_change: () -> [ String?, String? ]
+
+    def calendar_unique_code_will_change!: () -> void
+
+    def calendar_unique_code_was: () -> String?
+
+    def calendar_unique_code_previously_changed?: () -> bool
+
+    def calendar_unique_code_previous_change: () -> Array[String?]?
+
+    def calendar_unique_code_previously_was: () -> String?
+
+    def calendar_unique_code_before_last_save: () -> String?
+
+    def calendar_unique_code_change_to_be_saved: () -> Array[String?]?
+
+    def calendar_unique_code_in_database: () -> String?
+
+    def saved_change_to_calendar_unique_code: () -> Array[String?]?
+
+    def saved_change_to_calendar_unique_code?: () -> bool
+
+    def will_save_change_to_calendar_unique_code?: () -> bool
+
+    def restore_calendar_unique_code!: () -> void
+
+    def clear_calendar_unique_code_change: () -> void
+
+    def occupation_id: () -> Integer?
+
+    def occupation_id=: (Integer?) -> Integer?
+
+    def occupation_id?: () -> bool
+
+    def occupation_id_changed?: () -> bool
+
+    def occupation_id_change: () -> [ Integer?, Integer? ]
+
+    def occupation_id_will_change!: () -> void
+
+    def occupation_id_was: () -> Integer?
+
+    def occupation_id_previously_changed?: () -> bool
+
+    def occupation_id_previous_change: () -> Array[Integer?]?
+
+    def occupation_id_previously_was: () -> Integer?
+
+    def occupation_id_before_last_save: () -> Integer?
+
+    def occupation_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def occupation_id_in_database: () -> Integer?
+
+    def saved_change_to_occupation_id: () -> Array[Integer?]?
+
+    def saved_change_to_occupation_id?: () -> bool
+
+    def will_save_change_to_occupation_id?: () -> bool
+
+    def restore_occupation_id!: () -> void
+
+    def clear_occupation_id_change: () -> void
+
+    def participation: () -> String?
+
+    def participation=: (String?) -> String?
+
+    def participation?: () -> bool
+
+    def participation_changed?: () -> bool
+
+    def participation_change: () -> [ String?, String? ]
+
+    def participation_will_change!: () -> void
+
+    def participation_was: () -> String?
+
+    def participation_previously_changed?: () -> bool
+
+    def participation_previous_change: () -> Array[String?]?
+
+    def participation_previously_was: () -> String?
+
+    def participation_before_last_save: () -> String?
+
+    def participation_change_to_be_saved: () -> Array[String?]?
+
+    def participation_in_database: () -> String?
+
+    def saved_change_to_participation: () -> Array[String?]?
+
+    def saved_change_to_participation?: () -> bool
+
+    def will_save_change_to_participation?: () -> bool
+
+    def restore_participation!: () -> void
+
+    def clear_participation_change: () -> void
   end
   include GeneratedAttributeMethods
   def registered_talks: () -> RegisteredTalk::ActiveRecord_Associations_CollectionProxy
@@ -1067,7 +1175,24 @@ class Profile < ::ApplicationRecord
   def chat_messages=: (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage]) -> (ChatMessage::ActiveRecord_Associations_CollectionProxy | Array[ChatMessage])
   def chat_message_ids: () -> Array[Integer]
   def chat_message_ids=: (Array[Integer]) -> Array[Integer]
-
+  def check_ins: () -> CheckIn::ActiveRecord_Associations_CollectionProxy
+  def check_ins=: (CheckIn::ActiveRecord_Associations_CollectionProxy | Array[CheckIn]) -> (CheckIn::ActiveRecord_Associations_CollectionProxy | Array[CheckIn])
+  def check_in_ids: () -> Array[Integer]
+  def check_in_ids=: (Array[Integer]) -> Array[Integer]
+  def check_in_conferences: () -> CheckInConference::ActiveRecord_Associations_CollectionProxy
+  def check_in_conferences=: (CheckInConference::ActiveRecord_Associations_CollectionProxy | Array[CheckInConference]) -> (CheckInConference::ActiveRecord_Associations_CollectionProxy | Array[CheckInConference])
+  def check_in_conference_ids: () -> Array[Integer]
+  def check_in_conference_ids=: (Array[Integer]) -> Array[Integer]
+  def check_in_talks: () -> CheckInTalk::ActiveRecord_Associations_CollectionProxy
+  def check_in_talks=: (CheckInTalk::ActiveRecord_Associations_CollectionProxy | Array[CheckInTalk]) -> (CheckInTalk::ActiveRecord_Associations_CollectionProxy | Array[CheckInTalk])
+  def check_in_talk_ids: () -> Array[Integer]
+  def check_in_talk_ids=: (Array[Integer]) -> Array[Integer]
+  def public_profile: () -> PublicProfile?
+  def public_profile=: (PublicProfile?) -> PublicProfile?
+  def build_public_profile: (untyped) -> PublicProfile
+  def create_public_profile: (untyped) -> PublicProfile
+  def create_public_profile!: (untyped) -> PublicProfile
+  def reload_public_profile: () -> PublicProfile?
   def company_name_prefix: () -> FormModels::CompanyNamePrefix
   def company_name_prefix=: (FormModels::CompanyNamePrefix?) -> FormModels::CompanyNamePrefix?
   def reload_company_name_prefix: () -> FormModels::CompanyNamePrefix?

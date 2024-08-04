@@ -184,13 +184,13 @@ class SponsorsSponsorType < ::ApplicationRecord
   end
   include GeneratedAttributeMethods
 
-  def sponsor: () -> Sponsor
+  def sponsor: () -> Sponsor?
   def sponsor=: (Sponsor?) -> Sponsor?
   def reload_sponsor: () -> Sponsor?
   def build_sponsor: (untyped) -> Sponsor
   def create_sponsor: (untyped) -> Sponsor
   def create_sponsor!: (untyped) -> Sponsor
-  def sponsor_type: () -> SponsorType
+  def sponsor_type: () -> SponsorType?
   def sponsor_type=: (SponsorType?) -> SponsorType?
   def reload_sponsor_type: () -> SponsorType?
   def build_sponsor_type: (untyped) -> SponsorType

@@ -181,6 +181,78 @@ class StatsOfRegistrant < ::ApplicationRecord
     def restore_updated_at!: () -> void
 
     def clear_updated_at_change: () -> void
+
+    def offline_attendees: () -> BigDecimal?
+
+    def offline_attendees=: (BigDecimal?) -> BigDecimal?
+
+    def offline_attendees?: () -> bool
+
+    def offline_attendees_changed?: () -> bool
+
+    def offline_attendees_change: () -> [ BigDecimal?, BigDecimal? ]
+
+    def offline_attendees_will_change!: () -> void
+
+    def offline_attendees_was: () -> BigDecimal?
+
+    def offline_attendees_previously_changed?: () -> bool
+
+    def offline_attendees_previous_change: () -> Array[BigDecimal?]?
+
+    def offline_attendees_previously_was: () -> BigDecimal?
+
+    def offline_attendees_before_last_save: () -> BigDecimal?
+
+    def offline_attendees_change_to_be_saved: () -> Array[BigDecimal?]?
+
+    def offline_attendees_in_database: () -> BigDecimal?
+
+    def saved_change_to_offline_attendees: () -> Array[BigDecimal?]?
+
+    def saved_change_to_offline_attendees?: () -> bool
+
+    def will_save_change_to_offline_attendees?: () -> bool
+
+    def restore_offline_attendees!: () -> void
+
+    def clear_offline_attendees_change: () -> void
+
+    def online_attendees: () -> BigDecimal?
+
+    def online_attendees=: (BigDecimal?) -> BigDecimal?
+
+    def online_attendees?: () -> bool
+
+    def online_attendees_changed?: () -> bool
+
+    def online_attendees_change: () -> [ BigDecimal?, BigDecimal? ]
+
+    def online_attendees_will_change!: () -> void
+
+    def online_attendees_was: () -> BigDecimal?
+
+    def online_attendees_previously_changed?: () -> bool
+
+    def online_attendees_previous_change: () -> Array[BigDecimal?]?
+
+    def online_attendees_previously_was: () -> BigDecimal?
+
+    def online_attendees_before_last_save: () -> BigDecimal?
+
+    def online_attendees_change_to_be_saved: () -> Array[BigDecimal?]?
+
+    def online_attendees_in_database: () -> BigDecimal?
+
+    def saved_change_to_online_attendees: () -> Array[BigDecimal?]?
+
+    def saved_change_to_online_attendees?: () -> bool
+
+    def will_save_change_to_online_attendees?: () -> bool
+
+    def restore_online_attendees!: () -> void
+
+    def clear_online_attendees_change: () -> void
   end
   include GeneratedAttributeMethods
 

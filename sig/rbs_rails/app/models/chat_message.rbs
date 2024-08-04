@@ -548,13 +548,13 @@ class ChatMessage < ::ApplicationRecord
   def child_ids: () -> Array[Integer]
   def child_ids=: (Array[Integer]) -> Array[Integer]
 
-  def parent: () -> ChatMessage
+  def parent: () -> ChatMessage?
   def parent=: (ChatMessage?) -> ChatMessage?
   def reload_parent: () -> ChatMessage?
   def build_parent: (untyped) -> ChatMessage
   def create_parent: (untyped) -> ChatMessage
   def create_parent!: (untyped) -> ChatMessage
-  def profile: () -> Profile
+  def profile: () -> Profile?
   def profile=: (Profile?) -> Profile?
   def reload_profile: () -> Profile?
   def build_profile: (untyped) -> Profile

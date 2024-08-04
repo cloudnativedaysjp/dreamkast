@@ -289,31 +289,60 @@ class Track < ::ApplicationRecord
     def restore_video_platform!: () -> void
 
     def clear_video_platform_change: () -> void
+
+    def room_id: () -> Integer?
+
+    def room_id=: (Integer?) -> Integer?
+
+    def room_id?: () -> bool
+
+    def room_id_changed?: () -> bool
+
+    def room_id_change: () -> [ Integer?, Integer? ]
+
+    def room_id_will_change!: () -> void
+
+    def room_id_was: () -> Integer?
+
+    def room_id_previously_changed?: () -> bool
+
+    def room_id_previous_change: () -> Array[Integer?]?
+
+    def room_id_previously_was: () -> Integer?
+
+    def room_id_before_last_save: () -> Integer?
+
+    def room_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def room_id_in_database: () -> Integer?
+
+    def saved_change_to_room_id: () -> Array[Integer?]?
+
+    def saved_change_to_room_id?: () -> bool
+
+    def will_save_change_to_room_id?: () -> bool
+
+    def restore_room_id!: () -> void
+
+    def clear_room_id_change: () -> void
   end
   include GeneratedAttributeMethods
   def talks: () -> Talk::ActiveRecord_Associations_CollectionProxy
   def talks=: (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk]) -> (Talk::ActiveRecord_Associations_CollectionProxy | Array[Talk])
   def talk_ids: () -> Array[Integer]
   def talk_ids=: (Array[Integer]) -> Array[Integer]
-  def live_stream_ivs: () -> LiveStreamIvs?
-  def live_stream_ivs=: (LiveStreamIvs?) -> LiveStreamIvs?
-  def build_live_stream_ivs: (untyped) -> LiveStreamIvs
-  def create_live_stream_ivs: (untyped) -> LiveStreamIvs
-  def create_live_stream_ivs!: (untyped) -> LiveStreamIvs
-  def reload_live_stream_ivs: () -> LiveStreamIvs?
-  def live_stream_media_live: () -> LiveStreamMediaLive?
-  def live_stream_media_live=: (LiveStreamMediaLive?) -> LiveStreamMediaLive?
-  def build_live_stream_media_live: (untyped) -> LiveStreamMediaLive
-  def create_live_stream_media_live: (untyped) -> LiveStreamMediaLive
-  def create_live_stream_media_live!: (untyped) -> LiveStreamMediaLive
-  def reload_live_stream_media_live: () -> LiveStreamMediaLive?
-  def media_package_channel: () -> MediaPackageChannel?
-  def media_package_channel=: (MediaPackageChannel?) -> MediaPackageChannel?
-  def build_media_package_channel: (untyped) -> MediaPackageChannel
-  def create_media_package_channel: (untyped) -> MediaPackageChannel
-  def create_media_package_channel!: (untyped) -> MediaPackageChannel
-  def reload_media_package_channel: () -> MediaPackageChannel?
-
+  def streaming: () -> Streaming?
+  def streaming=: (Streaming?) -> Streaming?
+  def build_streaming: (untyped) -> Streaming
+  def create_streaming: (untyped) -> Streaming
+  def create_streaming!: (untyped) -> Streaming
+  def reload_streaming: () -> Streaming?
+  def room: () -> Room?
+  def room=: (Room?) -> Room?
+  def reload_room: () -> Room?
+  def build_room: (untyped) -> Room
+  def create_room: (untyped) -> Room
+  def create_room!: (untyped) -> Room
   module GeneratedAssociationMethods
   end
   include GeneratedAssociationMethods

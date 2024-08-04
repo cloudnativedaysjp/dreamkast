@@ -38,78 +38,6 @@ class MediaPackageChannel < ::ApplicationRecord
 
     def clear_id_change: () -> void
 
-    def conference_id: () -> Integer
-
-    def conference_id=: (Integer) -> Integer
-
-    def conference_id?: () -> bool
-
-    def conference_id_changed?: () -> bool
-
-    def conference_id_change: () -> [ Integer?, Integer? ]
-
-    def conference_id_will_change!: () -> void
-
-    def conference_id_was: () -> Integer?
-
-    def conference_id_previously_changed?: () -> bool
-
-    def conference_id_previous_change: () -> Array[Integer?]?
-
-    def conference_id_previously_was: () -> Integer?
-
-    def conference_id_before_last_save: () -> Integer?
-
-    def conference_id_change_to_be_saved: () -> Array[Integer?]?
-
-    def conference_id_in_database: () -> Integer?
-
-    def saved_change_to_conference_id: () -> Array[Integer?]?
-
-    def saved_change_to_conference_id?: () -> bool
-
-    def will_save_change_to_conference_id?: () -> bool
-
-    def restore_conference_id!: () -> void
-
-    def clear_conference_id_change: () -> void
-
-    def track_id: () -> Integer
-
-    def track_id=: (Integer) -> Integer
-
-    def track_id?: () -> bool
-
-    def track_id_changed?: () -> bool
-
-    def track_id_change: () -> [ Integer?, Integer? ]
-
-    def track_id_will_change!: () -> void
-
-    def track_id_was: () -> Integer?
-
-    def track_id_previously_changed?: () -> bool
-
-    def track_id_previous_change: () -> Array[Integer?]?
-
-    def track_id_previously_was: () -> Integer?
-
-    def track_id_before_last_save: () -> Integer?
-
-    def track_id_change_to_be_saved: () -> Array[Integer?]?
-
-    def track_id_in_database: () -> Integer?
-
-    def saved_change_to_track_id: () -> Array[Integer?]?
-
-    def saved_change_to_track_id?: () -> bool
-
-    def will_save_change_to_track_id?: () -> bool
-
-    def restore_track_id!: () -> void
-
-    def clear_track_id_change: () -> void
-
     def channel_id: () -> String?
 
     def channel_id=: (String?) -> String?
@@ -145,6 +73,42 @@ class MediaPackageChannel < ::ApplicationRecord
     def restore_channel_id!: () -> void
 
     def clear_channel_id_change: () -> void
+
+    def streaming_id: () -> String?
+
+    def streaming_id=: (String?) -> String?
+
+    def streaming_id?: () -> bool
+
+    def streaming_id_changed?: () -> bool
+
+    def streaming_id_change: () -> [ String?, String? ]
+
+    def streaming_id_will_change!: () -> void
+
+    def streaming_id_was: () -> String?
+
+    def streaming_id_previously_changed?: () -> bool
+
+    def streaming_id_previous_change: () -> Array[String?]?
+
+    def streaming_id_previously_was: () -> String?
+
+    def streaming_id_before_last_save: () -> String?
+
+    def streaming_id_change_to_be_saved: () -> Array[String?]?
+
+    def streaming_id_in_database: () -> String?
+
+    def saved_change_to_streaming_id: () -> Array[String?]?
+
+    def saved_change_to_streaming_id?: () -> bool
+
+    def will_save_change_to_streaming_id?: () -> bool
+
+    def restore_streaming_id!: () -> void
+
+    def clear_streaming_id_change: () -> void
   end
   include GeneratedAttributeMethods
   def media_package_origin_endpoints: () -> MediaPackageOriginEndpoint::ActiveRecord_Associations_CollectionProxy
@@ -156,18 +120,12 @@ class MediaPackageChannel < ::ApplicationRecord
   def media_package_harvest_job_ids: () -> Array[Integer]
   def media_package_harvest_job_ids=: (Array[Integer]) -> Array[Integer]
 
-  def conference: () -> Conference
-  def conference=: (Conference?) -> Conference?
-  def reload_conference: () -> Conference?
-  def build_conference: (untyped) -> Conference
-  def create_conference: (untyped) -> Conference
-  def create_conference!: (untyped) -> Conference
-  def track: () -> Track
-  def track=: (Track?) -> Track?
-  def reload_track: () -> Track?
-  def build_track: (untyped) -> Track
-  def create_track: (untyped) -> Track
-  def create_track!: (untyped) -> Track
+  def streaming: () -> Streaming
+  def streaming=: (Streaming?) -> Streaming?
+  def reload_streaming: () -> Streaming?
+  def build_streaming: (untyped) -> Streaming
+  def create_streaming: (untyped) -> Streaming
+  def create_streaming!: (untyped) -> Streaming
   module GeneratedAssociationMethods
   end
   include GeneratedAssociationMethods

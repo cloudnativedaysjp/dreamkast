@@ -220,6 +220,12 @@ class Proposal < ::ApplicationRecord
   end
   include GeneratedAttributeMethods
 
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
   def talk: () -> Talk
   def talk=: (Talk?) -> Talk?
   def reload_talk: () -> Talk?

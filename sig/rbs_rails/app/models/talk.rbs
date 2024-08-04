@@ -38,6 +38,42 @@ class Talk < ::ApplicationRecord
 
     def clear_id_change: () -> void
 
+    def type: () -> String
+
+    def type=: (String) -> String
+
+    def type?: () -> bool
+
+    def type_changed?: () -> bool
+
+    def type_change: () -> [ String?, String? ]
+
+    def type_will_change!: () -> void
+
+    def type_was: () -> String?
+
+    def type_previously_changed?: () -> bool
+
+    def type_previous_change: () -> Array[String?]?
+
+    def type_previously_was: () -> String?
+
+    def type_before_last_save: () -> String?
+
+    def type_change_to_be_saved: () -> Array[String?]?
+
+    def type_in_database: () -> String?
+
+    def saved_change_to_type: () -> Array[String?]?
+
+    def saved_change_to_type?: () -> bool
+
+    def will_save_change_to_type?: () -> bool
+
+    def restore_type!: () -> void
+
+    def clear_type_change: () -> void
+
     def title: () -> String?
 
     def title=: (String?) -> String?
@@ -793,6 +829,78 @@ class Talk < ::ApplicationRecord
     def restore_end_offset!: () -> void
 
     def clear_end_offset_change: () -> void
+
+    def number_of_seats: () -> Integer
+
+    def number_of_seats=: (Integer) -> Integer
+
+    def number_of_seats?: () -> bool
+
+    def number_of_seats_changed?: () -> bool
+
+    def number_of_seats_change: () -> [ Integer?, Integer? ]
+
+    def number_of_seats_will_change!: () -> void
+
+    def number_of_seats_was: () -> Integer?
+
+    def number_of_seats_previously_changed?: () -> bool
+
+    def number_of_seats_previous_change: () -> Array[Integer?]?
+
+    def number_of_seats_previously_was: () -> Integer?
+
+    def number_of_seats_before_last_save: () -> Integer?
+
+    def number_of_seats_change_to_be_saved: () -> Array[Integer?]?
+
+    def number_of_seats_in_database: () -> Integer?
+
+    def saved_change_to_number_of_seats: () -> Array[Integer?]?
+
+    def saved_change_to_number_of_seats?: () -> bool
+
+    def will_save_change_to_number_of_seats?: () -> bool
+
+    def restore_number_of_seats!: () -> void
+
+    def clear_number_of_seats_change: () -> void
+
+    def acquired_seats: () -> Integer
+
+    def acquired_seats=: (Integer) -> Integer
+
+    def acquired_seats?: () -> bool
+
+    def acquired_seats_changed?: () -> bool
+
+    def acquired_seats_change: () -> [ Integer?, Integer? ]
+
+    def acquired_seats_will_change!: () -> void
+
+    def acquired_seats_was: () -> Integer?
+
+    def acquired_seats_previously_changed?: () -> bool
+
+    def acquired_seats_previous_change: () -> Array[Integer?]?
+
+    def acquired_seats_previously_was: () -> Integer?
+
+    def acquired_seats_before_last_save: () -> Integer?
+
+    def acquired_seats_change_to_be_saved: () -> Array[Integer?]?
+
+    def acquired_seats_in_database: () -> Integer?
+
+    def saved_change_to_acquired_seats: () -> Array[Integer?]?
+
+    def saved_change_to_acquired_seats?: () -> bool
+
+    def will_save_change_to_acquired_seats?: () -> bool
+
+    def restore_acquired_seats!: () -> void
+
+    def clear_acquired_seats_change: () -> void
   end
   include GeneratedAttributeMethods
   def talks_speakers: () -> TalksSpeaker::ActiveRecord_Associations_CollectionProxy
@@ -807,18 +915,22 @@ class Talk < ::ApplicationRecord
   def speakers=: (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker]) -> (Speaker::ActiveRecord_Associations_CollectionProxy | Array[Speaker])
   def speaker_ids: () -> Array[Integer]
   def speaker_ids=: (Array[Integer]) -> Array[Integer]
-  def profiles: () -> Profile::ActiveRecord_Associations_CollectionProxy
-  def profiles=: (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile]) -> (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile])
-  def profile_ids: () -> Array[Integer]
-  def profile_ids=: (Array[Integer]) -> Array[Integer]
   def media_package_harvest_jobs: () -> MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy
   def media_package_harvest_jobs=: (MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy | Array[MediaPackageHarvestJob]) -> (MediaPackageHarvestJob::ActiveRecord_Associations_CollectionProxy | Array[MediaPackageHarvestJob])
   def media_package_harvest_job_ids: () -> Array[Integer]
   def media_package_harvest_job_ids=: (Array[Integer]) -> Array[Integer]
+  def check_in_talks: () -> CheckInTalk::ActiveRecord_Associations_CollectionProxy
+  def check_in_talks=: (CheckInTalk::ActiveRecord_Associations_CollectionProxy | Array[CheckInTalk]) -> (CheckInTalk::ActiveRecord_Associations_CollectionProxy | Array[CheckInTalk])
+  def check_in_talk_ids: () -> Array[Integer]
+  def check_in_talk_ids=: (Array[Integer]) -> Array[Integer]
   def proposal_items: () -> ProposalItem::ActiveRecord_Associations_CollectionProxy
   def proposal_items=: (ProposalItem::ActiveRecord_Associations_CollectionProxy | Array[ProposalItem]) -> (ProposalItem::ActiveRecord_Associations_CollectionProxy | Array[ProposalItem])
   def proposal_item_ids: () -> Array[Integer]
   def proposal_item_ids=: (Array[Integer]) -> Array[Integer]
+  def profiles: () -> Profile::ActiveRecord_Associations_CollectionProxy
+  def profiles=: (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile]) -> (Profile::ActiveRecord_Associations_CollectionProxy | Array[Profile])
+  def profile_ids: () -> Array[Integer]
+  def profile_ids=: (Array[Integer]) -> Array[Integer]
   def proposal: () -> Proposal?
   def proposal=: (Proposal?) -> Proposal?
   def build_proposal: (untyped) -> Proposal
@@ -837,13 +949,13 @@ class Talk < ::ApplicationRecord
   def create_video: (untyped) -> Video
   def create_video!: (untyped) -> Video
   def reload_video: () -> Video?
-  def talk_category: () -> TalkCategory
+  def talk_category: () -> TalkCategory?
   def talk_category=: (TalkCategory?) -> TalkCategory?
   def reload_talk_category: () -> TalkCategory?
   def build_talk_category: (untyped) -> TalkCategory
   def create_talk_category: (untyped) -> TalkCategory
   def create_talk_category!: (untyped) -> TalkCategory
-  def talk_difficulty: () -> TalkDifficulty
+  def talk_difficulty: () -> TalkDifficulty?
   def talk_difficulty=: (TalkDifficulty?) -> TalkDifficulty?
   def reload_talk_difficulty: () -> TalkDifficulty?
   def build_talk_difficulty: (untyped) -> TalkDifficulty
@@ -855,25 +967,25 @@ class Talk < ::ApplicationRecord
   def build_conference: (untyped) -> Conference
   def create_conference: (untyped) -> Conference
   def create_conference!: (untyped) -> Conference
-  def conference_day: () -> ConferenceDay
+  def conference_day: () -> ConferenceDay?
   def conference_day=: (ConferenceDay?) -> ConferenceDay?
   def reload_conference_day: () -> ConferenceDay?
   def build_conference_day: (untyped) -> ConferenceDay
   def create_conference_day: (untyped) -> ConferenceDay
   def create_conference_day!: (untyped) -> ConferenceDay
-  def track: () -> Track
+  def track: () -> Track?
   def track=: (Track?) -> Track?
   def reload_track: () -> Track?
   def build_track: (untyped) -> Track
   def create_track: (untyped) -> Track
   def create_track!: (untyped) -> Track
-  def sponsor: () -> Sponsor
+  def sponsor: () -> Sponsor?
   def sponsor=: (Sponsor?) -> Sponsor?
   def reload_sponsor: () -> Sponsor?
   def build_sponsor: (untyped) -> Sponsor
   def create_sponsor: (untyped) -> Sponsor
   def create_sponsor!: (untyped) -> Sponsor
-  def talk_time: () -> TalkTime
+  def talk_time: () -> TalkTime?
   def talk_time=: (TalkTime?) -> TalkTime?
   def reload_talk_time: () -> TalkTime?
   def build_talk_time: (untyped) -> TalkTime

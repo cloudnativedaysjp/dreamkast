@@ -290,42 +290,6 @@ class Video < ::ApplicationRecord
 
     def clear_video_id_change: () -> void
 
-    def slido_id: () -> String?
-
-    def slido_id=: (String?) -> String?
-
-    def slido_id?: () -> bool
-
-    def slido_id_changed?: () -> bool
-
-    def slido_id_change: () -> [ String?, String? ]
-
-    def slido_id_will_change!: () -> void
-
-    def slido_id_was: () -> String?
-
-    def slido_id_previously_changed?: () -> bool
-
-    def slido_id_previous_change: () -> Array[String?]?
-
-    def slido_id_previously_was: () -> String?
-
-    def slido_id_before_last_save: () -> String?
-
-    def slido_id_change_to_be_saved: () -> Array[String?]?
-
-    def slido_id_in_database: () -> String?
-
-    def saved_change_to_slido_id: () -> Array[String?]?
-
-    def saved_change_to_slido_id?: () -> bool
-
-    def will_save_change_to_slido_id?: () -> bool
-
-    def restore_slido_id!: () -> void
-
-    def clear_slido_id_change: () -> void
-
     def video_file_data: () -> String?
 
     def video_file_data=: (String?) -> String?

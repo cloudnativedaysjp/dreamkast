@@ -1,0 +1,12 @@
+name: wip
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Prepare-tag
+        run: echo "Hello, World"

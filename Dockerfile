@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.7
 
-FROM node:18.12.0-slim as node
+FROM node:20.16.0-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \

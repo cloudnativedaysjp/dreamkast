@@ -14,7 +14,6 @@ require("turbolinks").start()
 // const imagePath = (name) => images(name, true)
 import '../stylesheets/cndf2023'
 import './bootstrap_custom.js'
-import './bootstrap-table.js'
 import './utils'
 import jquery from 'jquery';
 window.$ = window.jquery = jquery;

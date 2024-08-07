@@ -12,15 +12,11 @@ require("turbolinks").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/application'
+// import '../stylesheets/application'
+import $ from 'jquery'
 import './bootstrap_custom.js'
-import './bootstrap-table.js'
-import './utils'
-import './bootstrap-table-filter-control.js'
-import jquery from 'jquery';
-window.$ = window.jquery = jquery;
-import './jquery.easing.min.js'
-import './jquery.magnific-popup.min.js'
+import 'bootstrap-table'
+window.jQuery = $
 import './scripts.js'
 import './timetable.js'
 import './talks.js'
@@ -32,8 +28,7 @@ import './speaker_form.js'
 import './cropbox.js'
 import './copy.js'
 
-require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
-    //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)
+//require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)
 
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"

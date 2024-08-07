@@ -1,5 +1,5 @@
 window.onload = () => {
-    document.getElementsByClassName('copy_button').forEach((elm) => {
+    Array.from(document.getElementsByClassName('copy_button')).forEach((elm) => {
         elm.addEventListener('click', (e) => {
             const url = e.target.parentElement.parentElement.querySelector('.dest_url').textContent
             const parent = e.target.parentElement

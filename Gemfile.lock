@@ -154,6 +154,8 @@ GEM
     content_disposition (1.0.0)
     crass (1.0.6)
     csv (3.3.0)
+    cssbundling-rails (1.4.0)
+      railties (>= 6.0.0)
     date (3.3.4)
     diff-lcs (1.5.0)
     docile (1.4.0)
@@ -180,6 +182,7 @@ GEM
       faraday (~> 2.0)
     ffi (1.17.0)
     fileutils (1.7.2)
+    foreman (0.88.1)
     gli (2.21.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -196,6 +199,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.1)
+    jsbundling-rails (1.3.0)
+      railties (>= 6.0.0)
     json (2.7.2)
     json_schema (0.21.0)
     jwt (2.5.0)
@@ -465,8 +470,6 @@ GEM
       rack (>= 2.0.0)
     rack-protection (2.2.2)
       rack
-    rack-proxy (0.7.2)
-      rack
     rack-test (2.1.0)
       rack (>= 1.3)
     rack-timeout (0.6.3)
@@ -592,7 +595,6 @@ GEM
     seed-fu (2.3.9)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
-    semantic_range (3.0.0)
     sentry-opentelemetry (5.9.0)
       opentelemetry-sdk (~> 1.0)
       sentry-ruby (~> 5.9.0)
@@ -672,11 +674,6 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -702,12 +699,15 @@ DEPENDENCIES
   byebug
   committee
   committee-rails
+  cssbundling-rails
   execjs
   factory_bot_rails
   faraday-retry
+  foreman
   icalendar
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
+  jsbundling-rails
   listen (~> 3.2)
   mysql2 (~> 0.5.6)
   nokogiri (= 1.16.5)
@@ -751,7 +751,6 @@ DEPENDENCIES
   tzinfo-data
   uppy-s3_multipart (~> 1.0)
   web-console (>= 3.3.0)
-  webpacker (~> 5.0)
 
 BUNDLED WITH
    2.5.9

@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.7
 
-FROM node:16.20.2-slim as node
+FROM node:18.12.0-slim as node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
@@ -26,6 +26,7 @@ COPY --link config config
 COPY --link Rakefile Rakefile
 COPY --link app app
 COPY --link Gemfile* ./
+COPY --link webpack.config.js webpack.config.js
 COPY --link package.json yarn.lock ./
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle

@@ -2,7 +2,7 @@ name: build container image when branches are pushed
 
 on:
   push:
-    branches: ["*"]
+    branches:
 
 jobs:
   build:

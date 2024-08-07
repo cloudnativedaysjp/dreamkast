@@ -9,7 +9,11 @@ const fieldLength = () => {
 }
 
 const initializeAddTalkButton = () => {
-    document.getElementsByClassName('add_talk_fields')[0].addEventListener('click', (e) => {
+    const fields = Array.from(document.getElementsByClassName('add_talk_fields'))
+    if (fields.length === 0) {
+        return;
+    }
+    fields[0].addEventListener('click', (e) => {
         e.preventDefault();
         const time = new Date().getTime();
         const regexp = new RegExp(e.target.dataset.id, 'g');
@@ -25,7 +29,7 @@ const initializeAddTalkButton = () => {
 }
 
 const initializeRemoveTalkButton = () => {
-    document.getElementsByClassName('remove_talk_field').forEach((obj) => {addDeleteButtonListener(obj)});
+    Array.from(document.getElementsByClassName('remove_talk_field')).forEach((obj) => {addDeleteButtonListener(obj)});
 }
 
 if (document.readyState === 'loading') {

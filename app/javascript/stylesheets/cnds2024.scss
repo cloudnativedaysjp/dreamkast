@@ -1,8 +1,14 @@
 // Import custom variables and override default Bootstrap variables
 @import "./cnds2024/_variables.scss";
 // Import Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-table/src/bootstrap-table';
+//@import "bootstrap";
+//@import "~bootstrap/scss/bootstrap";
+//@import 'bootstrap/scss/bootstrap';
+//@import 'bootstrap-table/src/bootstrap-table';
+//@import "bootstrap/scss/bootstrap";
+//@import "custom";
+@import "~bootstrap/scss/bootstrap";
+@import "bootstrap-table/dist/bootstrap-table.min.css";
 // Import custom styles
 @import "./_global.scss";
 @import "./_navbar.scss";

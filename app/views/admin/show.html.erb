@@ -48,4 +48,4 @@
 <script>
     window.track_list=<%= @current["current"].to_json.html_safe %>;
 </script>
-<%= javascript_pack_tag 'admin/tracks/index.js' %>
+<%= javascript_include_tag 'admin/tracks.js' %>

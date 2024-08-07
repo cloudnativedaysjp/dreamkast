@@ -98,7 +98,7 @@
                     style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
             <% end %>
 
-            <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+            <% conference_day.talks.includes([:track, :speakers, :talks_speakers, :proposal]).where(show_on_timetable: true).each do |talk| %>
               <%
                 if talk.start_time.in_time_zone('Asia/Tokyo').hour < 13
                   lunch_break = 0

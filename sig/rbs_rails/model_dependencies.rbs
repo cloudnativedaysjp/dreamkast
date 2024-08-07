@@ -24,9 +24,11 @@ class TalksSpeaker::ActiveRecord_Associations_CollectionProxy < ActiveRecord::As
 end
 class RegisteredTalk::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
-class Profile::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+class CheckInTalk::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ProposalItem::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class Profile::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class SpeakerAnnouncement::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
@@ -35,6 +37,10 @@ end
 class FormItem::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ChatMessage::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class CheckIn::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
+class CheckInConference::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class FormModels::CompanyNamePrefix < ActiveHash::Base
 end
@@ -56,6 +62,8 @@ class TalkCategory::ActiveRecord_Associations_CollectionProxy < ActiveRecord::As
 end
 class TalkDifficulty::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
+class Streaming::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+end
 class Announcement::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ProposalItemConfig::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
@@ -64,7 +72,7 @@ class StatsOfRegistrant::ActiveRecord_Associations_CollectionProxy < ActiveRecor
 end
 class AdminProfile::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
-class LiveStreamMediaLive::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+class Room::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class ActiveRecord::Associations::CollectionProxy < ActiveRecord::Relation
 end

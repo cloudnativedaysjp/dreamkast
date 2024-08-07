@@ -217,6 +217,42 @@ class SponsorType < ::ApplicationRecord
     def restore_updated_at!: () -> void
 
     def clear_updated_at_change: () -> void
+
+    def visible: () -> bool?
+
+    def visible=: (bool?) -> bool?
+
+    def visible?: () -> bool
+
+    def visible_changed?: () -> bool
+
+    def visible_change: () -> [ bool?, bool? ]
+
+    def visible_will_change!: () -> void
+
+    def visible_was: () -> bool?
+
+    def visible_previously_changed?: () -> bool
+
+    def visible_previous_change: () -> Array[bool?]?
+
+    def visible_previously_was: () -> bool?
+
+    def visible_before_last_save: () -> bool?
+
+    def visible_change_to_be_saved: () -> Array[bool?]?
+
+    def visible_in_database: () -> bool?
+
+    def saved_change_to_visible: () -> Array[bool?]?
+
+    def saved_change_to_visible?: () -> bool
+
+    def will_save_change_to_visible?: () -> bool
+
+    def restore_visible!: () -> void
+
+    def clear_visible_change: () -> void
   end
   include GeneratedAttributeMethods
   def sponsors_sponsor_types: () -> SponsorsSponsorType::ActiveRecord_Associations_CollectionProxy

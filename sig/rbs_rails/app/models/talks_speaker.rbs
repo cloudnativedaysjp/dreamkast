@@ -184,13 +184,13 @@ class TalksSpeaker < ::ApplicationRecord
   end
   include GeneratedAttributeMethods
 
-  def talk: () -> Talk
+  def talk: () -> Talk?
   def talk=: (Talk?) -> Talk?
   def reload_talk: () -> Talk?
   def build_talk: (untyped) -> Talk
   def create_talk: (untyped) -> Talk
   def create_talk!: (untyped) -> Talk
-  def speaker: () -> Speaker
+  def speaker: () -> Speaker?
   def speaker=: (Speaker?) -> Speaker?
   def reload_speaker: () -> Speaker?
   def build_speaker: (untyped) -> Speaker

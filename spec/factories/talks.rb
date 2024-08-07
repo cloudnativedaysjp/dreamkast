@@ -255,6 +255,7 @@ FactoryBot.define do
     type { 'SponsorSession' }
     start_time { '12:30' }
     end_time { '12:40' }
+    abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 1 }
     conference_day_id { 1 }
     talk_difficulty_id { 1 }

@@ -35,5 +35,22 @@ describe TalksController, type: :request do
         expect(response.body).to(include('"conferenceDayDate":null'))
       end
     end
+
+    describe 'talk belongs to sponsor' do
+      let!(:event) { create(:cndt2020) }
+      let!(:sponsor) { create(:sponsor) }
+      let!(:talk) { create(:sponsor_session, sponsor_id: sponsor.id) }
+
+      it 'confirm json schema' do
+        get "/api/v1/talks/#{talk.id}"
+        assert_response_schema_confirm(200)
+        expect(response.body).to(include('スポンサー1株式会社'))
+      end
+
+      it 'succeed request' do
+        get "/api/v1/talks/#{talk.id}"
+        expect(response.status).to(eq(200))
+      end
+    end
   end
 end

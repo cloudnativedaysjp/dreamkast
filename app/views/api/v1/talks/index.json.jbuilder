@@ -28,4 +28,5 @@ json.array!(@talks) do |talk|
   json.allowShowingVideo(talk.allowed_showing_video?)
   json.offlineParticipationCount(talk.offline_participation_size)
   json.onlineParticipationCount(talk.online_participation_size)
+  json.sponsor(talk.sponsor.present? ? { id: talk.sponsor.id, name: talk.sponsor.name } : nil)
 end

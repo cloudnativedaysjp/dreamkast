@@ -1,0 +1,282 @@
+class PublicProfile < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[PublicProfile, ActiveRecord_Relation, Integer]
+
+  module GeneratedAttributeMethods
+    def id: () -> Integer
+
+    def id=: (Integer) -> Integer
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ Integer?, Integer? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> Integer?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[Integer?]?
+
+    def id_previously_was: () -> Integer?
+
+    def id_before_last_save: () -> Integer?
+
+    def id_change_to_be_saved: () -> Array[Integer?]?
+
+    def id_in_database: () -> Integer?
+
+    def saved_change_to_id: () -> Array[Integer?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def profile_id: () -> Integer
+
+    def profile_id=: (Integer) -> Integer
+
+    def profile_id?: () -> bool
+
+    def profile_id_changed?: () -> bool
+
+    def profile_id_change: () -> [ Integer?, Integer? ]
+
+    def profile_id_will_change!: () -> void
+
+    def profile_id_was: () -> Integer?
+
+    def profile_id_previously_changed?: () -> bool
+
+    def profile_id_previous_change: () -> Array[Integer?]?
+
+    def profile_id_previously_was: () -> Integer?
+
+    def profile_id_before_last_save: () -> Integer?
+
+    def profile_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def profile_id_in_database: () -> Integer?
+
+    def saved_change_to_profile_id: () -> Array[Integer?]?
+
+    def saved_change_to_profile_id?: () -> bool
+
+    def will_save_change_to_profile_id?: () -> bool
+
+    def restore_profile_id!: () -> void
+
+    def clear_profile_id_change: () -> void
+
+    def nickname: () -> String?
+
+    def nickname=: (String?) -> String?
+
+    def nickname?: () -> bool
+
+    def nickname_changed?: () -> bool
+
+    def nickname_change: () -> [ String?, String? ]
+
+    def nickname_will_change!: () -> void
+
+    def nickname_was: () -> String?
+
+    def nickname_previously_changed?: () -> bool
+
+    def nickname_previous_change: () -> Array[String?]?
+
+    def nickname_previously_was: () -> String?
+
+    def nickname_before_last_save: () -> String?
+
+    def nickname_change_to_be_saved: () -> Array[String?]?
+
+    def nickname_in_database: () -> String?
+
+    def saved_change_to_nickname: () -> Array[String?]?
+
+    def saved_change_to_nickname?: () -> bool
+
+    def will_save_change_to_nickname?: () -> bool
+
+    def restore_nickname!: () -> void
+
+    def clear_nickname_change: () -> void
+
+    def twitter_id: () -> String?
+
+    def twitter_id=: (String?) -> String?
+
+    def twitter_id?: () -> bool
+
+    def twitter_id_changed?: () -> bool
+
+    def twitter_id_change: () -> [ String?, String? ]
+
+    def twitter_id_will_change!: () -> void
+
+    def twitter_id_was: () -> String?
+
+    def twitter_id_previously_changed?: () -> bool
+
+    def twitter_id_previous_change: () -> Array[String?]?
+
+    def twitter_id_previously_was: () -> String?
+
+    def twitter_id_before_last_save: () -> String?
+
+    def twitter_id_change_to_be_saved: () -> Array[String?]?
+
+    def twitter_id_in_database: () -> String?
+
+    def saved_change_to_twitter_id: () -> Array[String?]?
+
+    def saved_change_to_twitter_id?: () -> bool
+
+    def will_save_change_to_twitter_id?: () -> bool
+
+    def restore_twitter_id!: () -> void
+
+    def clear_twitter_id_change: () -> void
+
+    def github_id: () -> String?
+
+    def github_id=: (String?) -> String?
+
+    def github_id?: () -> bool
+
+    def github_id_changed?: () -> bool
+
+    def github_id_change: () -> [ String?, String? ]
+
+    def github_id_will_change!: () -> void
+
+    def github_id_was: () -> String?
+
+    def github_id_previously_changed?: () -> bool
+
+    def github_id_previous_change: () -> Array[String?]?
+
+    def github_id_previously_was: () -> String?
+
+    def github_id_before_last_save: () -> String?
+
+    def github_id_change_to_be_saved: () -> Array[String?]?
+
+    def github_id_in_database: () -> String?
+
+    def saved_change_to_github_id: () -> Array[String?]?
+
+    def saved_change_to_github_id?: () -> bool
+
+    def will_save_change_to_github_id?: () -> bool
+
+    def restore_github_id!: () -> void
+
+    def clear_github_id_change: () -> void
+
+    def avatar_data: () -> String?
+
+    def avatar_data=: (String?) -> String?
+
+    def avatar_data?: () -> bool
+
+    def avatar_data_changed?: () -> bool
+
+    def avatar_data_change: () -> [ String?, String? ]
+
+    def avatar_data_will_change!: () -> void
+
+    def avatar_data_was: () -> String?
+
+    def avatar_data_previously_changed?: () -> bool
+
+    def avatar_data_previous_change: () -> Array[String?]?
+
+    def avatar_data_previously_was: () -> String?
+
+    def avatar_data_before_last_save: () -> String?
+
+    def avatar_data_change_to_be_saved: () -> Array[String?]?
+
+    def avatar_data_in_database: () -> String?
+
+    def saved_change_to_avatar_data: () -> Array[String?]?
+
+    def saved_change_to_avatar_data?: () -> bool
+
+    def will_save_change_to_avatar_data?: () -> bool
+
+    def restore_avatar_data!: () -> void
+
+    def clear_avatar_data_change: () -> void
+
+    def is_public: () -> bool?
+
+    def is_public=: (bool?) -> bool?
+
+    def is_public?: () -> bool
+
+    def is_public_changed?: () -> bool
+
+    def is_public_change: () -> [ bool?, bool? ]
+
+    def is_public_will_change!: () -> void
+
+    def is_public_was: () -> bool?
+
+    def is_public_previously_changed?: () -> bool
+
+    def is_public_previous_change: () -> Array[bool?]?
+
+    def is_public_previously_was: () -> bool?
+
+    def is_public_before_last_save: () -> bool?
+
+    def is_public_change_to_be_saved: () -> Array[bool?]?
+
+    def is_public_in_database: () -> bool?
+
+    def saved_change_to_is_public: () -> Array[bool?]?
+
+    def saved_change_to_is_public?: () -> bool
+
+    def will_save_change_to_is_public?: () -> bool
+
+    def restore_is_public!: () -> void
+
+    def clear_is_public_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def profile: () -> Profile
+  def profile=: (Profile?) -> Profile?
+  def reload_profile: () -> Profile?
+  def build_profile: (untyped) -> Profile
+  def create_profile: (untyped) -> Profile
+  def create_profile!: (untyped) -> Profile
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PublicProfile, Integer]
+    include Enumerable[PublicProfile]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[PublicProfile, Integer]
+  end
+end

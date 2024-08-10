@@ -1,0 +1,342 @@
+class Streaming < ::ApplicationRecord
+  extend _ActiveRecord_Relation_ClassMethods[Streaming, ActiveRecord_Relation, String]
+
+  module GeneratedAttributeMethods
+    def id: () -> String
+
+    def id=: (String) -> String
+
+    def id?: () -> bool
+
+    def id_changed?: () -> bool
+
+    def id_change: () -> [ String?, String? ]
+
+    def id_will_change!: () -> void
+
+    def id_was: () -> String?
+
+    def id_previously_changed?: () -> bool
+
+    def id_previous_change: () -> Array[String?]?
+
+    def id_previously_was: () -> String?
+
+    def id_before_last_save: () -> String?
+
+    def id_change_to_be_saved: () -> Array[String?]?
+
+    def id_in_database: () -> String?
+
+    def saved_change_to_id: () -> Array[String?]?
+
+    def saved_change_to_id?: () -> bool
+
+    def will_save_change_to_id?: () -> bool
+
+    def restore_id!: () -> void
+
+    def clear_id_change: () -> void
+
+    def conference_id: () -> Integer
+
+    def conference_id=: (Integer) -> Integer
+
+    def conference_id?: () -> bool
+
+    def conference_id_changed?: () -> bool
+
+    def conference_id_change: () -> [ Integer?, Integer? ]
+
+    def conference_id_will_change!: () -> void
+
+    def conference_id_was: () -> Integer?
+
+    def conference_id_previously_changed?: () -> bool
+
+    def conference_id_previous_change: () -> Array[Integer?]?
+
+    def conference_id_previously_was: () -> Integer?
+
+    def conference_id_before_last_save: () -> Integer?
+
+    def conference_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def conference_id_in_database: () -> Integer?
+
+    def saved_change_to_conference_id: () -> Array[Integer?]?
+
+    def saved_change_to_conference_id?: () -> bool
+
+    def will_save_change_to_conference_id?: () -> bool
+
+    def restore_conference_id!: () -> void
+
+    def clear_conference_id_change: () -> void
+
+    def track_id: () -> Integer
+
+    def track_id=: (Integer) -> Integer
+
+    def track_id?: () -> bool
+
+    def track_id_changed?: () -> bool
+
+    def track_id_change: () -> [ Integer?, Integer? ]
+
+    def track_id_will_change!: () -> void
+
+    def track_id_was: () -> Integer?
+
+    def track_id_previously_changed?: () -> bool
+
+    def track_id_previous_change: () -> Array[Integer?]?
+
+    def track_id_previously_was: () -> Integer?
+
+    def track_id_before_last_save: () -> Integer?
+
+    def track_id_change_to_be_saved: () -> Array[Integer?]?
+
+    def track_id_in_database: () -> Integer?
+
+    def saved_change_to_track_id: () -> Array[Integer?]?
+
+    def saved_change_to_track_id?: () -> bool
+
+    def will_save_change_to_track_id?: () -> bool
+
+    def restore_track_id!: () -> void
+
+    def clear_track_id_change: () -> void
+
+    def status: () -> String
+
+    def status=: (String) -> String
+
+    def status?: () -> bool
+
+    def status_changed?: () -> bool
+
+    def status_change: () -> [ String?, String? ]
+
+    def status_will_change!: () -> void
+
+    def status_was: () -> String?
+
+    def status_previously_changed?: () -> bool
+
+    def status_previous_change: () -> Array[String?]?
+
+    def status_previously_was: () -> String?
+
+    def status_before_last_save: () -> String?
+
+    def status_change_to_be_saved: () -> Array[String?]?
+
+    def status_in_database: () -> String?
+
+    def saved_change_to_status: () -> Array[String?]?
+
+    def saved_change_to_status?: () -> bool
+
+    def will_save_change_to_status?: () -> bool
+
+    def restore_status!: () -> void
+
+    def clear_status_change: () -> void
+
+    def created_at: () -> ActiveSupport::TimeWithZone
+
+    def created_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def created_at?: () -> bool
+
+    def created_at_changed?: () -> bool
+
+    def created_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def created_at_will_change!: () -> void
+
+    def created_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_previously_changed?: () -> bool
+
+    def created_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def created_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def created_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_created_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_created_at?: () -> bool
+
+    def will_save_change_to_created_at?: () -> bool
+
+    def restore_created_at!: () -> void
+
+    def clear_created_at_change: () -> void
+
+    def updated_at: () -> ActiveSupport::TimeWithZone
+
+    def updated_at=: (ActiveSupport::TimeWithZone) -> ActiveSupport::TimeWithZone
+
+    def updated_at?: () -> bool
+
+    def updated_at_changed?: () -> bool
+
+    def updated_at_change: () -> [ ActiveSupport::TimeWithZone?, ActiveSupport::TimeWithZone? ]
+
+    def updated_at_will_change!: () -> void
+
+    def updated_at_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_previously_changed?: () -> bool
+
+    def updated_at_previous_change: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_previously_was: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_before_last_save: () -> ActiveSupport::TimeWithZone?
+
+    def updated_at_change_to_be_saved: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def updated_at_in_database: () -> ActiveSupport::TimeWithZone?
+
+    def saved_change_to_updated_at: () -> Array[ActiveSupport::TimeWithZone?]?
+
+    def saved_change_to_updated_at?: () -> bool
+
+    def will_save_change_to_updated_at?: () -> bool
+
+    def restore_updated_at!: () -> void
+
+    def clear_updated_at_change: () -> void
+
+    def error_cause: () -> String?
+
+    def error_cause=: (String?) -> String?
+
+    def error_cause?: () -> bool
+
+    def error_cause_changed?: () -> bool
+
+    def error_cause_change: () -> [ String?, String? ]
+
+    def error_cause_will_change!: () -> void
+
+    def error_cause_was: () -> String?
+
+    def error_cause_previously_changed?: () -> bool
+
+    def error_cause_previous_change: () -> Array[String?]?
+
+    def error_cause_previously_was: () -> String?
+
+    def error_cause_before_last_save: () -> String?
+
+    def error_cause_change_to_be_saved: () -> Array[String?]?
+
+    def error_cause_in_database: () -> String?
+
+    def saved_change_to_error_cause: () -> Array[String?]?
+
+    def saved_change_to_error_cause?: () -> bool
+
+    def will_save_change_to_error_cause?: () -> bool
+
+    def restore_error_cause!: () -> void
+
+    def clear_error_cause_change: () -> void
+  end
+  include GeneratedAttributeMethods
+
+  def media_package_v2_channel_group: () -> MediaPackageV2ChannelGroup?
+  def media_package_v2_channel_group=: (MediaPackageV2ChannelGroup?) -> MediaPackageV2ChannelGroup?
+  def build_media_package_v2_channel_group: (untyped) -> MediaPackageV2ChannelGroup
+  def create_media_package_v2_channel_group: (untyped) -> MediaPackageV2ChannelGroup
+  def create_media_package_v2_channel_group!: (untyped) -> MediaPackageV2ChannelGroup
+  def reload_media_package_v2_channel_group: () -> MediaPackageV2ChannelGroup?
+  def media_package_v2_channel: () -> MediaPackageV2Channel?
+  def media_package_v2_channel=: (MediaPackageV2Channel?) -> MediaPackageV2Channel?
+  def build_media_package_v2_channel: (untyped) -> MediaPackageV2Channel
+  def create_media_package_v2_channel: (untyped) -> MediaPackageV2Channel
+  def create_media_package_v2_channel!: (untyped) -> MediaPackageV2Channel
+  def reload_media_package_v2_channel: () -> MediaPackageV2Channel?
+  def media_package_v2_origin_endpoint: () -> MediaPackageV2OriginEndpoint?
+  def media_package_v2_origin_endpoint=: (MediaPackageV2OriginEndpoint?) -> MediaPackageV2OriginEndpoint?
+  def build_media_package_v2_origin_endpoint: (untyped) -> MediaPackageV2OriginEndpoint
+  def create_media_package_v2_origin_endpoint: (untyped) -> MediaPackageV2OriginEndpoint
+  def create_media_package_v2_origin_endpoint!: (untyped) -> MediaPackageV2OriginEndpoint
+  def reload_media_package_v2_origin_endpoint: () -> MediaPackageV2OriginEndpoint?
+  def media_package_channel: () -> MediaPackageChannel?
+  def media_package_channel=: (MediaPackageChannel?) -> MediaPackageChannel?
+  def build_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel: (untyped) -> MediaPackageChannel
+  def create_media_package_channel!: (untyped) -> MediaPackageChannel
+  def reload_media_package_channel: () -> MediaPackageChannel?
+  def media_package_origin_endpoint: () -> MediaPackageOriginEndpoint?
+  def media_package_origin_endpoint=: (MediaPackageOriginEndpoint?) -> MediaPackageOriginEndpoint?
+  def build_media_package_origin_endpoint: (untyped) -> MediaPackageOriginEndpoint
+  def create_media_package_origin_endpoint: (untyped) -> MediaPackageOriginEndpoint
+  def create_media_package_origin_endpoint!: (untyped) -> MediaPackageOriginEndpoint
+  def reload_media_package_origin_endpoint: () -> MediaPackageOriginEndpoint?
+  def media_package_parameter: () -> MediaPackageParameter?
+  def media_package_parameter=: (MediaPackageParameter?) -> MediaPackageParameter?
+  def build_media_package_parameter: (untyped) -> MediaPackageParameter
+  def create_media_package_parameter: (untyped) -> MediaPackageParameter
+  def create_media_package_parameter!: (untyped) -> MediaPackageParameter
+  def reload_media_package_parameter: () -> MediaPackageParameter?
+  def media_live_channel: () -> MediaLiveChannel?
+  def media_live_channel=: (MediaLiveChannel?) -> MediaLiveChannel?
+  def build_media_live_channel: (untyped) -> MediaLiveChannel
+  def create_media_live_channel: (untyped) -> MediaLiveChannel
+  def create_media_live_channel!: (untyped) -> MediaLiveChannel
+  def reload_media_live_channel: () -> MediaLiveChannel?
+  def media_live_input: () -> MediaLiveInput?
+  def media_live_input=: (MediaLiveInput?) -> MediaLiveInput?
+  def build_media_live_input: (untyped) -> MediaLiveInput
+  def create_media_live_input: (untyped) -> MediaLiveInput
+  def create_media_live_input!: (untyped) -> MediaLiveInput
+  def reload_media_live_input: () -> MediaLiveInput?
+  def media_live_input_security_group: () -> MediaLiveInputSecurityGroup?
+  def media_live_input_security_group=: (MediaLiveInputSecurityGroup?) -> MediaLiveInputSecurityGroup?
+  def build_media_live_input_security_group: (untyped) -> MediaLiveInputSecurityGroup
+  def create_media_live_input_security_group: (untyped) -> MediaLiveInputSecurityGroup
+  def create_media_live_input_security_group!: (untyped) -> MediaLiveInputSecurityGroup
+  def reload_media_live_input_security_group: () -> MediaLiveInputSecurityGroup?
+  def conference: () -> Conference
+  def conference=: (Conference?) -> Conference?
+  def reload_conference: () -> Conference?
+  def build_conference: (untyped) -> Conference
+  def create_conference: (untyped) -> Conference
+  def create_conference!: (untyped) -> Conference
+  def track: () -> Track
+  def track=: (Track?) -> Track?
+  def reload_track: () -> Track?
+  def build_track: (untyped) -> Track
+  def create_track: (untyped) -> Track
+  def create_track!: (untyped) -> Track
+  module GeneratedAssociationMethods
+  end
+  include GeneratedAssociationMethods
+
+  module GeneratedRelationMethods
+  end
+
+  class ActiveRecord_Relation < ::ActiveRecord::Relation
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Streaming, String]
+    include Enumerable[Streaming]
+  end
+
+  class ActiveRecord_Associations_CollectionProxy < ::ActiveRecord::Associations::CollectionProxy
+    include GeneratedRelationMethods
+    include _ActiveRecord_Relation[Streaming, String]
+  end
+end

@@ -377,12 +377,6 @@ class Sponsor < ::ApplicationRecord
   def create_sponsor_attachment_miro: (untyped) -> SponsorAttachmentMiro
   def create_sponsor_attachment_miro!: (untyped) -> SponsorAttachmentMiro
   def reload_sponsor_attachment_miro: () -> SponsorAttachmentMiro?
-  def booth: () -> Booth?
-  def booth=: (Booth?) -> Booth?
-  def build_booth: (untyped) -> Booth
-  def create_booth: (untyped) -> Booth
-  def create_booth!: (untyped) -> Booth
-  def reload_booth: () -> Booth?
   def conference: () -> Conference
   def conference=: (Conference?) -> Conference?
   def reload_conference: () -> Conference?

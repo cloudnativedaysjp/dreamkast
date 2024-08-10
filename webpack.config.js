@@ -28,9 +28,6 @@ module.exports = {
       "./app/javascript/packs/cndo2021.js",
       './app/javascript/stylesheets/cndo2021.scss',
     ],
-    booth: [
-      "./app/javascript/packs/booth.js",
-    ],
     talks: [
       "./app/javascript/packs/talks.js",
     ],

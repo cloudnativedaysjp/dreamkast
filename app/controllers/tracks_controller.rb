@@ -14,7 +14,6 @@ class TracksController < ApplicationController
     @talks = @conference.talks.eager_load(:talk_category, :talk_difficulty).all
     @talk_categories = @conference.talk_categories
     @talk_difficulties = @conference.talk_difficulties
-    @booths = @conference.booths.published
   end
 
   def reload

@@ -29,7 +29,6 @@ interface _RbsRailsPathHelpers
   def admin_path: (*untyped) -> String
   def admin_debug_path: (*untyped) -> String
   def admin_chat_path: (*untyped) -> String
-  def admin_accesslog_path: (*untyped) -> String
   def admin_statistics_path: (*untyped) -> String
   def admin_export_statistics_path: (*untyped) -> String
   def admin_destroy_user_path: (*untyped) -> String
@@ -211,7 +210,6 @@ interface _RbsRailsPathHelpers
   def admin_url: (*untyped) -> String
   def admin_debug_url: (*untyped) -> String
   def admin_chat_url: (*untyped) -> String
-  def admin_accesslog_url: (*untyped) -> String
   def admin_statistics_url: (*untyped) -> String
   def admin_export_statistics_url: (*untyped) -> String
   def admin_destroy_user_url: (*untyped) -> String

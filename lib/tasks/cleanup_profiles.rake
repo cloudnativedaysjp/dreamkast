@@ -14,7 +14,6 @@ namespace :util do
         raise "#{conference.abbr} is not archived or migrated yet"
       end
       conference.profiles.each do |profile|
-        AccessLog.where(profile_id: profile.id).each(&:destroy!)
         RegisteredTalk.where(profile_id: profile.id).each(&:destroy!)
         Agreement.where(profile_id: profile.id).each(&:destroy!)
         ChatMessage.where(profile_id: profile.id).each do |chat_message|

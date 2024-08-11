@@ -1,146 +1,135 @@
 <%= form_with(url: admin_conference_path, model: conference_form, method: :patch) do |form| %>
+  <h3>Edit Conference</h3>
 
-  <h3>Conference Status</h3>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Field</th>
+      <th scope="col">Value</th>
+    </tr>
+    </thead>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <% @conference_form.conference.class.conference_statuses.keys.each do |key| %>
-        <%= form.radio_button :conference_status, key %>
-        <%= form.label :conference_status, key %><br>
-      <% end %>
-    </div>
-  </div>
+    <tbody>
+    <tr>
+      <td><%= form.label :conference_status, 'Status' %></td>
+      <td><%= form.select :conference_status, @conference_form.conference.class.conference_statuses%></td>
+    </tr>
 
-  <h3>Speaker Entry Status</h3>
+    <tr>
+      <td><%= form.label :speaker_entry, 'Speaker Entry Status' %></td>
+      <td><%= form.select :speaker_entry, @conference_form.conference.class.speaker_entries.map { |k, v| [k, k] }.to_h %></td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <% @conference_form.conference.class.speaker_entries.keys.each do |key| %>
-        <%= form.radio_button :speaker_entry, key %>
-        <%= form.label :speaker_entry, key %><br>
-      <% end %>
-    </div>
-  </div>
+    <tr>
+      <td>Rehearsal Mode</td>
+      <td>
+        <%= form.check_box :rehearsal_mode %>
+        <%= form.label :rehearsal_mode, 'On' %><br>
+      </td>
+    </tr>
 
-  <h3>Rehearsal Mode</h3>
+    <tr>
+      <td>Proposal Result Visible Status</td>
+      <td>
+        <%= form.check_box :cfp_result_visible %>
+        <%= form.label :cfp_result_visible, 'Visible' %><br>
+      </td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.check_box :rehearsal_mode %>
-      <%= form.label :rehearsal_mode, 'On' %><br>
-    </div>
-  </div>
+    <tr>
+      <td><%= form.label :attendee_entry, 'Attendee Entry Status' %></td>
+      <td><%= form.select :attendee_entry, @conference_form.conference.class.attendee_entries.map { |k, v| [k, k] }.to_h %></td>
+    </tr>
 
-  <h3>Proposal Result Visible Status</h3>
+    <tr>
+      <td><%= form.label :show_timetable, 'Timetable Visible Status' %></td>
+      <td><%= form.select :show_timetable, @conference_form.conference.class.show_timetables.map { |k, v| [k, k] }.to_h %></td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.check_box :cfp_result_visible %>
-      <%= form.label :cfp_result_visible, 'Visible' %><br>
-    </div>
-  </div>
+    <tr>
+      <td>Sponsors Visible Status</td>
+      <td>
+        <%= form.check_box :show_sponsors %>
+        <%= form.label :show_sponsors, 'Visible' %><br>
+      </td>
+    </tr>
 
-  <h3>Attendee Entry Status</h3>
+    <tr>
+      <td><%= form.label :capacity, 'Offline Capacity' %></td>
+      <td><%= form.number_field :capacity %></td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <% @conference_form.conference.class.attendee_entries.keys.each do |key| %>
-        <%= form.radio_button :attendee_entry, key %>
-        <%= form.label :attendee_entry, key %><br>
-      <% end %>
-    </div>
-  </div>
+    <tr>
+      <td><%= form.label :contact_url, 'Contact Url' %></td>
+      <td><%= form.text_field :contact_url %></td>
+    </tr>
 
-  <h3>Timetable Visible Status</h3>
+    <tr>
+      <td><%= form.label :sponsor_guideline_url, 'Sponsor Guideline Url' %></td>
+      <td><%= form.text_field :sponsor_guideline_url %></td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <% @conference_form.conference.class.show_timetables.keys.each do |key| %>
-        <%= form.radio_button :show_timetable, key %>
-        <%= form.label :show_timetable, key %><br>
-      <% end %>
-    </div>
-  </div>
+    <tr>
+      <td><%= form.label :brief, 'Conference briefs' %></td>
+      <td><%= form.text_field :brief %></td>
+    </tr>
 
-  <h3>Sponsors Visible Status</h3>
+    <tr>
+      <td><%= form.label :privacy_policy, 'Privacy Policy (for attendees)' %></td>
+      <td><%= form.text_area :privacy_policy, {class: "privacy-policy"} %></td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.check_box :show_sponsors %>
-      <%= form.label :show_sponsors, 'Visible' %><br>
-    </div>
-  </div>
+    <tr>
+      <td><%= form.label :privacy_policy_for_speaker, 'Privacy Policy (for speakers)' %></td>
+      <td><%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %></td>
+    </tr>
 
-  <h3>Offline Capacity</h3>
+    <tr>
+      <td><%= form.label :links, 'Links' %></td>
+      <td>
+        <div class="link-fields">
+          <p><%= link_to_add_link_fields "Add Link", form, :links, class: 'add-link btn btn-primary' %></p>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">URL</th>
+              <th scope="col">Description</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= form.fields_for :links do |f| %>
+              <%= render 'admin/conferences/link_fields', :f => f %>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </td>
+    </tr>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.number_field :capacity %>
-    </div>
-  </div>
+    <tr>
+      <td><%= form.label :conference_days , 'Conference Days' %></td>
+      <td>
+        <div class="conference-day-fields">
+          <%= form.fields_for :conference_days do |f| %>
+            <div class="conference-day-field">
+              <div class="form-row form-group">
+                <div class="col-12 col-mb-6">
+                  <%= f.label :date, "Date" %>
+                  <%= f.text_field :date %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+    </tr>
 
-  <h3>Contact Url</h3>
-
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.text_field :contact_url %>
-    </div>
-  </div>
-
-  <h3>Sponsor Guideline Url</h3>
-
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.text_field :sponsor_guideline_url %>
-    </div>
-  </div>
-
-  <h3>Links</h3>
-  <div class="link-fields">
-    <%= form.fields_for :links do |f| %>
-      <%= render 'admin/conferences/link_fields', :f => f %>
-    <% end %>
-  </div>
-
-  <p><%= link_to_add_link_fields "Add Link", form, :links, class: 'add-link btn btn-primary' %></p>
-
-  <h3>Conference Days</h3>
-
-  <div class="conference-day-fields">
-    <%= form.fields_for :conference_days do |f| %>
-      <%= render 'admin/conferences/conference_day_fields', :f => f %>
-    <% end %>
-  </div>
-
-  <h3>Conference briefs</h3>
-
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.text_field :brief %>
-    </div>
-  </div>
-
-  <h3>Privacy Policy (for attendees)</h3>
-
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.text_area :privacy_policy, {class: "privacy-policy"} %>
-    </div>
-  </div>
-
-  <h3>Privacy Policy (for speakers)</h3>
-
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %>
-    </div>
-  </div>
-
+    </tbody>
+  </table>
   <div class="form-row form-group">
     <div class="col-12 col-md-6">
       <%= form.submit class: "btn btn-primary" %>
     </div>
   </div>
-
-
 <% end %>

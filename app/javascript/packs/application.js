@@ -21,7 +21,7 @@ import './scripts.js'
 import './timetable.js'
 import './talks.js'
 import './conference_form.js'
-import './admin.js'
+
 import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'

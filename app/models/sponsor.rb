@@ -29,17 +29,12 @@ class Sponsor < ApplicationRecord
   has_one :sponsor_attachment_vimeo, dependent: :delete
   has_one :sponsor_attachment_zoom, dependent: :delete
   has_one :sponsor_attachment_miro, dependent: :delete
-  has_one :booth, dependent: :delete
 
   has_many :sponsor_attachment_pdfs, dependent: :delete_all
   has_many :sponsor_attachment_key_images, dependent: :delete_all
   has_many :sponsors_sponsor_types, dependent: :delete_all
   has_many :sponsor_types, through: :sponsors_sponsor_types
   has_many :talks
-
-  def booth_info
-    { id: booth.id, opened: booth.published }
-  end
 
   def booth_sponsor?
     sponsor_types.each do |type|

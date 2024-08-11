@@ -22,7 +22,6 @@ interface _RbsRailsPathHelpers
   def api_v1_speaker_path: (*untyped) -> String
   def api_v1_chat_messages_path: (*untyped) -> String
   def api_v1_chat_message_path: (*untyped) -> String
-  def api_v1_booth_path: (*untyped) -> String
   def api_v1_debug_index_path: (*untyped) -> String
   def api_v1_check_in_conferences_path: (*untyped) -> String
   def api_v1_check_in_talks_path: (*untyped) -> String
@@ -48,8 +47,6 @@ interface _RbsRailsPathHelpers
   def new_admin_sponsor_path: (*untyped) -> String
   def edit_admin_sponsor_path: (*untyped) -> String
   def admin_sponsor_path: (*untyped) -> String
-  def admin_booths_path: (*untyped) -> String
-  def admin_booth_path: (*untyped) -> String
   def admin_conferences_path: (*untyped) -> String
   def edit_admin_conference_path: (*untyped) -> String
   def admin_conference_path: (*untyped) -> String
@@ -139,8 +136,6 @@ interface _RbsRailsPathHelpers
   def registration_path: (*untyped) -> String
   def privacy_path: (*untyped) -> String
   def coc_path: (*untyped) -> String
-  def booths_path: (*untyped) -> String
-  def booth_path: (*untyped) -> String
   def attachment_path: (*untyped) -> String
   def profiles_path: (*untyped) -> String
   def new_profile_path: (*untyped) -> String
@@ -209,7 +204,6 @@ interface _RbsRailsPathHelpers
   def api_v1_speaker_url: (*untyped) -> String
   def api_v1_chat_messages_url: (*untyped) -> String
   def api_v1_chat_message_url: (*untyped) -> String
-  def api_v1_booth_url: (*untyped) -> String
   def api_v1_debug_index_url: (*untyped) -> String
   def api_v1_check_in_conferences_url: (*untyped) -> String
   def api_v1_check_in_talks_url: (*untyped) -> String
@@ -235,8 +229,6 @@ interface _RbsRailsPathHelpers
   def new_admin_sponsor_url: (*untyped) -> String
   def edit_admin_sponsor_url: (*untyped) -> String
   def admin_sponsor_url: (*untyped) -> String
-  def admin_booths_url: (*untyped) -> String
-  def admin_booth_url: (*untyped) -> String
   def admin_conferences_url: (*untyped) -> String
   def edit_admin_conference_url: (*untyped) -> String
   def admin_conference_url: (*untyped) -> String
@@ -326,8 +318,6 @@ interface _RbsRailsPathHelpers
   def registration_url: (*untyped) -> String
   def privacy_url: (*untyped) -> String
   def coc_url: (*untyped) -> String
-  def booths_url: (*untyped) -> String
-  def booth_url: (*untyped) -> String
   def attachment_url: (*untyped) -> String
   def profiles_url: (*untyped) -> String
   def new_profile_url: (*untyped) -> String

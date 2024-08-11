@@ -222,7 +222,6 @@ Style/InverseMethods:
 Style/Lambda:
   Exclude:
     - 'app/models/announcement.rb'
-    - 'app/models/booth.rb'
     - 'app/models/conference.rb'
     - 'app/models/conference_day.rb'
     - 'app/models/talk.rb'
@@ -366,7 +365,6 @@ Style/StringLiteralsInInterpolation:
 Style/SymbolProc:
   Exclude:
     - 'app/helpers/application_helper.rb'
-    - 'app/models/booth.rb'
     - 'app/models/video.rb'
     - 'app/views/api/v1/sponsors/index.json.jbuilder'
 

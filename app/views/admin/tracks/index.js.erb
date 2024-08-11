@@ -1,5 +1,0 @@
-$("#messages").html('<%= j(render partial: 'admin/tracks/partial/messages', locals: {flash: flash}) %>');
-
-recording_group_target = document.getElementById('talks_table_tbody');
-html = "<%= j(render partial: 'admin/tracks/partial/talks_table', locals: {conference_day: @conference_day, talks: @talks, track: @track}) %>"
-recording_group_target.innerHTML = html

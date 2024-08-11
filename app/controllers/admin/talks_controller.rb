@@ -22,63 +22,34 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
-    date = params[:talk][:date]
-    track_name = params[:talk][:track_name]
-    talk = Talk.find(params[:talk][:id])
+    @talk = Talk.find(params[:talk][:id])
 
     respond_to do |format|
-      on_air_talks_of_other_days = talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == talk.conference_day.id }.select { |t| t.video.on_air? }
+      on_air_talks_of_other_days = @talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == @talk.conference_day.id }.select { |t| t.video.on_air? }
       if on_air_talks_of_other_days.size.positive?
-        format.html {
-          update_variables_for_tracks(talk)
-          redirect_to(admin_tracks_path(date:, track_name:), alert: "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air.")
+        format.turbo_stream {
+          flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
+          # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
         }
-        # format.turbo_stream {
-        #   update_variables_for_tracks(talk)
-        #   flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-        # }
       else
-        talk.start_streaming
-        format.html {
-          update_variables_for_tracks(talk)
-          redirect_to(admin_tracks_path(date:, track_name:), notice: "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
+        @talk.start_streaming
+        format.turbo_stream {
+          flash[:notice] = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
+          # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
         }
-        # format.turbo_stream {
-        #   update_variables_for_tracks(talk)
-        #   flash[:notice] = "OnAirに切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-        # }
       end
     end
   end
 
   def stop_on_air
-    date = params[:talk][:date]
-    track_name = params[:talk][:track_name]
-    talk = Talk.find(params[:talk][:id])
-    talk.stop_streaming
-    @conference_day = talk.conference_day
-    @track = talk.track
-    @talks = talk.track
-                 .talks
-                 .where(conference_day_id: talk.conference_day.id, track_id: talk.track.id)
-                 .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
+    @talk = Talk.find(params[:talk][:id])
+    @talk.stop_streaming
 
     respond_to do |format|
-      format.html {
-        redirect_to(admin_tracks_path(date:, track_name:), notice: "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}")
+      format.turbo_stream {
+        flash.now[:notice] = "Waitingに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
+        # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
       }
-      # format.turbo_stream {
-      #   flash[:notice] = "Waiting に切り替えました: #{talk.start_to_end} #{talk.speaker_names.join(',')} #{talk.title}"
-      # }
     end
-  end
-
-  private
-
-  def update_variables_for_tracks(talk)
-    @conference_day = talk.conference_day
-    @track = talk.track
-    @talks = Talk.all.where(conference_day_id: @conference_day.id, track_id: @track.id)
-                 .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
   end
 end

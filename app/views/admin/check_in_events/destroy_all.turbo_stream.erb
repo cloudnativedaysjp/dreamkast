@@ -1,0 +1,11 @@
+<%= turbo_stream.prepend "messages" do %>
+  <%= render partial: 'admin/tracks/partial/messages' %>
+<% end %>
+
+<%= turbo_stream.replace "check_in_status_#{@profile.id}" do %>
+  <%= render partial: 'admin/profiles/partial/check_in_status', locals: { profile: @profile } %>
+<% end %>
+
+<%= turbo_stream.replace "profile_#{@profile.id}" do %>
+  <%= render partial: 'admin/profiles/partial/check_in_button', locals: { profile: @profile } %>
+<% end %>

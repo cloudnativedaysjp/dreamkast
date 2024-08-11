@@ -5,10 +5,13 @@ class Admin::CheckInEventsController < ApplicationController
     @check_in = CheckInConference.new(check_in_events_params.merge(conference_id: conference.id, check_in_timestamp: DateTime.now))
     @profile = Profile.find(@check_in.profile_id)
 
-    if @check_in.save
-      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false)
-    else
-      redirect_back(fallback_location: "#{conference.abbr}/admin", allow_other_host: false, notice: "#{@profile.last_name} #{@profile.first_name} のチェックインに失敗しました")
+    respond_to do |format|
+      if @check_in.save
+        flash.now[:notice] = "#{@profile.last_name} #{@profile.first_name} をチェックインしました"
+      else
+        flash.now[:alert] = "#{@profile.last_name} #{@profile.first_name} のチェックインに失敗しました"
+      end
+      format.turbo_stream
     end
   end
 
@@ -16,10 +19,13 @@ class Admin::CheckInEventsController < ApplicationController
     @check_ins = CheckInConference.where(profile_id: check_in_events_params[:profile_id], conference_id: conference.id)
     @profile = Profile.find(check_in_events_params[:profile_id])
 
-    if @check_ins.map(&:destroy!)
-      redirect_back(fallback_location: "#{conference.abbr}/admin")
-    else
-      redirect_back(fallback_location: "#{conference.abbr}/admin", notice: "#{@profile.last_name} #{@profile.first_name} のチェックインキャンセルに失敗しました")
+    respond_to do |format|
+      if @check_ins.map(&:destroy!)
+        flash.now[:notice] = "#{@profile.last_name} #{@profile.first_name} のチェックインをキャンセルしました"
+      else
+        flash.now[:alert] = "#{@profile.last_name} #{@profile.first_name} のチェックインキャンセルに失敗しました"
+      end
+      format.turbo_stream
     end
   end
 

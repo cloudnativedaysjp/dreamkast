@@ -29,7 +29,7 @@
         "sass-loader": "^14.2.1",
         "stimulus": "^3.2.1",
         "turbolinks": "5.2.0",
-        "video.js": "8.5.2",
+        "video.js": "8.17.3",
         "webpack": "^5.92.1",
         "webpack-cli": "^5.1.4",
         "webpack-remove-empty-scripts": "^1.0.4"

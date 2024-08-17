@@ -19,7 +19,6 @@ import './bootstrap_custom.js'
 import './utils'
 import './scripts.js'
 import './talks.js'
-import './contents.js'
 import './speaker_form.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

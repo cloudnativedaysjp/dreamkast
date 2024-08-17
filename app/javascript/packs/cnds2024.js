@@ -17,7 +17,6 @@ import "./controllers/index.js"
 import './bootstrap_custom.js'
 import './scripts.js'
 import './talks.js'
-import './contents.js'
 import './cropbox.js'
 import './timetable.js'
 import "particles.js";

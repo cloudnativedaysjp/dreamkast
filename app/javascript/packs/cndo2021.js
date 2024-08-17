@@ -22,7 +22,6 @@ import './conference_form.js'
 import './contents.js'
 import './cropbox.js'
 import './timetable.js'
-import './attendee_dashboard.js'
 import "particles.js";
 import './copy.js'
 import './speaker_form.js'

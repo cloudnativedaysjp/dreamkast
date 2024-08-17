@@ -5,7 +5,7 @@
 
 import "@hotwired/turbo-rails"
 Turbo.session.drive = false
-// import "./controllers/index.js"
+import "./controllers/index.js"
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -21,7 +21,6 @@ import './conference_form.js'
 import './contents.js'
 import './cropbox.js'
 import './timetable.js'
-import './attendee_dashboard.js'
 import "particles.js";
 import './copy.js'
 import './speaker_form.js'

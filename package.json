@@ -2,6 +2,8 @@
     "name": "cndtattend",
     "private": true,
     "dependencies": {
+        "@hotwired/stimulus": "^3.2.2",
+        "@hotwired/stimulus-webpack-helpers": "^1.0.1",
         "@hotwired/turbo-rails": "8.0.4",
         "@popperjs/core": "^2.11.8",
         "@rails/actioncable": "7.2.0",

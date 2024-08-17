@@ -19,7 +19,6 @@ import 'bootstrap-table'
 window.jQuery = $
 import './scripts.js'
 import './talks.js'
-import './sponsor_form.js'
 import './conference_form.js'
 import './admin.js'
 import './contents.js'

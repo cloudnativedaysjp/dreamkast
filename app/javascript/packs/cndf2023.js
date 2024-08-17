@@ -12,14 +12,10 @@ require("turbolinks").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/cndf2023'
+import $ from 'jquery'
 import './bootstrap_custom.js'
-import './bootstrap-table.js'
-import './utils'
-import jquery from 'jquery';
-window.$ = window.jquery = jquery;
-import './jquery.easing.min.js'
-import './jquery.magnific-popup.min.js'
+import 'bootstrap-table'
+window.jQuery = $
 import './scripts.js'
 import './talks.js'
 import './conference_form.js'
@@ -30,8 +26,6 @@ import './cropbox.js'
 import './timetable.js'
 import './attendee_dashboard.js'
 import './copy.js'
-
-require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"

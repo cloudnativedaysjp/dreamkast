@@ -15,7 +15,6 @@ import "./controllers/index.js"
 // const imagePath = (name) => images(name, true)
 // import '../stylesheets/cnds2024'
 import './bootstrap_custom.js'
-// import './scripts.js'
 import './talks.js'
 import './cropbox.js'
 import './timetable.js'

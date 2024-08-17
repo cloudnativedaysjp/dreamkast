@@ -16,7 +16,6 @@ Rails.start()
 // const imagePath = (name) => images(name, true)
 import '../stylesheets/cndf2023'
 import './bootstrap_custom.js'
-import './scripts.js'
 import './talks.js'
 import './speaker_form.js'
 import './cropbox.js'

@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_19_113910) do
-  create_table "access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "sub"
-    t.string "page"
-    t.string "ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "profile_id"
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2024_08_11_144947) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -49,16 +39,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_113910) do
     t.text "body"
     t.boolean "publish"
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
-  end
-
-  create_table "booths", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
-    t.bigint "sponsor_id", null: false
-    t.boolean "published"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["conference_id"], name: "index_booths_on_conference_id"
-    t.index ["sponsor_id"], name: "index_booths_on_sponsor_id"
   end
 
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -581,8 +561,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_113910) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "announcements", "conferences"
-  add_foreign_key "booths", "conferences"
-  add_foreign_key "booths", "sponsors"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"

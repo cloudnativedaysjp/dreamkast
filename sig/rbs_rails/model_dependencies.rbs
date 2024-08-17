@@ -52,8 +52,6 @@ class Proposal::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associ
 end
 class Track::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
-class Booth::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
-end
 class Link::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
 end
 class TalkTime::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy

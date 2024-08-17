@@ -859,10 +859,6 @@ class Conference < ::ApplicationRecord
   def sponsor_types=: (SponsorType::ActiveRecord_Associations_CollectionProxy | Array[SponsorType]) -> (SponsorType::ActiveRecord_Associations_CollectionProxy | Array[SponsorType])
   def sponsor_type_ids: () -> Array[Integer]
   def sponsor_type_ids=: (Array[Integer]) -> Array[Integer]
-  def booths: () -> Booth::ActiveRecord_Associations_CollectionProxy
-  def booths=: (Booth::ActiveRecord_Associations_CollectionProxy | Array[Booth]) -> (Booth::ActiveRecord_Associations_CollectionProxy | Array[Booth])
-  def booth_ids: () -> Array[Integer]
-  def booth_ids=: (Array[Integer]) -> Array[Integer]
   def links: () -> Link::ActiveRecord_Associations_CollectionProxy
   def links=: (Link::ActiveRecord_Associations_CollectionProxy | Array[Link]) -> (Link::ActiveRecord_Associations_CollectionProxy | Array[Link])
   def link_ids: () -> Array[Integer]

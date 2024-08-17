@@ -12,7 +12,7 @@ require("turbolinks").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/cicd2021'
+import $ from 'jquery'
 import './bootstrap_custom.js'
 import './utils'
 import jquery from 'jquery';
@@ -21,10 +21,8 @@ import './jquery.easing.min.js'
 import './jquery.magnific-popup.min.js'
 import './scripts.js'
 import './talks.js'
-import './sponsor_form.js'
 import './conference_form.js'
 import './admin.js'
 import './contents.js'
 import './speaker_form.js'
 
-require.context('images', true, /\.(png|jpg|jpeg|svg)$/)

@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       resources :sponsors, only: [:index]
       resources :speakers, only: [:index, :show]
       resources :chat_messages, only: [:index, :create, :update]
-      resources :booths, only: [:show]
       resources :debug, only: [:index]
       resources :check_in_conferences, only: [:create], path: 'check_in_events'
       resources :check_in_talks, only: [:create]
@@ -42,7 +41,6 @@ Rails.application.routes.draw do
     get 'admin' => 'admin#show'
     get 'admin/debug' => 'admin#debug'
     get 'admin/chat' => 'admin#chat'
-    get 'admin/accesslog' => 'admin#accesslog'
     get 'admin/statistics' => 'admin#statistics'
     get 'admin/export_statistics' => 'admin#export_statistics'
     delete 'admin/destroy_user' => 'admin#destroy_user'
@@ -53,7 +51,6 @@ Rails.application.routes.draw do
       resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
-      resources :booths, only: [:index, :show]
       resources :conferences, only: [:index, :show, :edit, :update]
       resources :speakers, only: [:index, :edit, :update]
       get 'export_speakers' => 'speakers#export_speakers'
@@ -134,7 +131,6 @@ Rails.application.routes.draw do
     get 'privacy' => 'event#privacy'
     get 'coc' => 'event#coc'
 
-    resources :booths, only: [:index, :show]
     resources :attachments, only: [:show]
 
     # Profile

@@ -16,15 +16,11 @@ Rails.start()
 // const imagePath = (name) => images(name, true)
 import '../stylesheets/cndt2023'
 import './bootstrap_custom.js'
-import './utils'
 import './scripts.js'
 import './talks.js'
 import './cropbox.js'
 import './timetable.js'
-import './particles.min.js'
-import './copy.js'
 
-require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"

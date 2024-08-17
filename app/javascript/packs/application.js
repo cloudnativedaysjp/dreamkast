@@ -19,6 +19,5 @@ import './timetable.js'
 import './talks.js'
 import './speaker_form.js'
 import './cropbox.js'
-import './copy.js'
 
 //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)

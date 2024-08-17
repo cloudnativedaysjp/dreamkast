@@ -23,7 +23,6 @@ import './speaker_form.js'
 import './cropbox.js'
 import './timetable.js'
 
-import './copy.js'
 
 require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 

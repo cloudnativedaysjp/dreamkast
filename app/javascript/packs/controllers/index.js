@@ -12,3 +12,6 @@ import { application } from "./application.js"
 
 import ShareRegistrationController from "./share_registration_controller.js"
 application.register("share-registration", ShareRegistrationController)
+
+import RemoveLinkFieldController from "./remove_link_field_controller.js"
+application.register("remove-link-field", RemoveLinkFieldController)

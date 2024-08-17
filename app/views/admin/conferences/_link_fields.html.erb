@@ -1,4 +1,4 @@
-<div class="link-field">
+<div class="link-field" data-controller="remove-link-field">
   <div class="form-row form-group">
     <div class="col-12 col-mb-6">
       <tr><%= f.text_field :title %></tr>
@@ -6,7 +6,7 @@
       <tr><%= f.text_field :description %></tr>
       <tr>
         <%= f.hidden_field :_destroy %>
-        <%= link_to 'Delete', '#', class: 'remove_link_field' %>
+        <%= link_to 'Delete', '#', class: 'remove_link_field', data: {"data-action": "click->remove-link-field#remove" } %>
       </tr>
     </div>
   </div>

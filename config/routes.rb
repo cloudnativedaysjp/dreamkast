@@ -51,7 +51,9 @@ Rails.application.routes.draw do
       resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
-      resources :conferences, only: [:index, :show, :edit, :update]
+      resources :conferences, only: [:index, :show, :edit, :update] do
+        post 'add_link' => 'conferences#add_link'
+      end
       resources :speakers, only: [:index, :edit, :update]
       get 'export_speakers' => 'speakers#export_speakers'
       get 'export_profiles' => 'profiles#export_profiles'

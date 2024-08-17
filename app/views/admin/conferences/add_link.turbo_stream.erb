@@ -1,0 +1,5 @@
+<%= turbo_stream.append "link_fields" do %>
+  render turbo_stream: turbo_stream.append("links-fields", partial: "admin/conferences/link_fields", locals: { f: form_with(model: @conference, local: true) { |form| form.fields_for(:links, link) } })
+
+  <%= render partial: 'admin/conferences/link_fields', locals: { f: form_with_model(@link) } %>
+<% end %>

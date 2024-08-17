@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = [ "tweet_content" ]
+    static targets = ["hiddenInput", "linkField"]
 
-    remove() {
-        const value = this.tweet_contentTarget.value
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(value)}`);
+    remove(event) {
+        this.hiddenInputTarget.value = '1';
+        this.linkFieldTarget.style.display = 'none';
+        event.preventDefault();
     }
 }

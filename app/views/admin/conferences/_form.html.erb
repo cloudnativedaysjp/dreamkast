@@ -87,24 +87,22 @@
     <tr>
       <td><%= form.label :links, 'Links' %></td>
       <td>
-        <div class="link-fields">
-          <p><%= link_to_add_link_fields "Add Link", form, :links, class: 'add-link btn btn-primary' %></p>
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">URL</th>
-              <th scope="col">Description</th>
-              <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <%= form.fields_for :links do |f| %>
-              <%= render 'admin/conferences/link_fields', :f => f %>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
+        <p><%= link_to "Add Link", admin_conference_add_link_path(conference_id: @conference.abbr), method: :post, data: { turbo_method: :post } %></p>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">URL</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody id="link_fields">
+          <%= form.fields_for :links do |f| %>
+            <%= render 'admin/conferences/link_fields', :f => f %>
+          <% end %>
+          </tbody>
+        </table>
       </td>
     </tr>
 

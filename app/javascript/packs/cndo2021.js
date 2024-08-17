@@ -18,7 +18,6 @@ Rails.start()
 import './bootstrap_custom.js'
 import './scripts.js'
 import './talks.js'
-import './conference_form.js'
 import './contents.js'
 import './cropbox.js'
 import './timetable.js'

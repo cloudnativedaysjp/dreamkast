@@ -17,7 +17,6 @@ Turbo.session.drive = false
 import './bootstrap_custom.js'
 import './timetable.js'
 import './talks.js'
-import './conference_form.js'
 import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'

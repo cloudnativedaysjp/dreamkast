@@ -15,7 +15,6 @@ require("turbolinks").start()
 // import '../stylesheets/cnds2024'
 import $ from 'jquery'
 import './bootstrap_custom.js'
-import 'bootstrap-table'
 window.jQuery = $
 import './scripts.js'
 import './talks.js'

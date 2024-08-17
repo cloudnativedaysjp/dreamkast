@@ -15,7 +15,6 @@ require("turbolinks").start()
 // import '../stylesheets/cndo2021'
 import $ from 'jquery'
 import './bootstrap_custom.js'
-import 'bootstrap-table'
 window.jQuery = $
 import './scripts.js'
 import './talks.js'
@@ -28,4 +27,3 @@ import './attendee_dashboard.js'
 import "particles.js";
 import './copy.js'
 import './speaker_form.js'
-import './admin/tracks/index.js'

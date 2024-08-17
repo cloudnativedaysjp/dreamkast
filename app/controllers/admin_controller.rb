@@ -7,11 +7,6 @@ class AdminController < ApplicationController
     @current = Video.on_air(@conference)
   end
 
-  def accesslog
-    # TODO: pagenation入れる
-    @logs = AccessLog.all.order(id: 'DESC').limit(50)
-  end
-
   def destroy_user
     @profile = Profile.find_by(sub: current_user[:extra][:raw_info][:sub])
     @profile.destroy

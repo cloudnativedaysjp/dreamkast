@@ -41,7 +41,6 @@ Rails.application.routes.draw do
     get 'admin' => 'admin#show'
     get 'admin/debug' => 'admin#debug'
     get 'admin/chat' => 'admin#chat'
-    get 'admin/accesslog' => 'admin#accesslog'
     get 'admin/statistics' => 'admin#statistics'
     get 'admin/export_statistics' => 'admin#export_statistics'
     delete 'admin/destroy_user' => 'admin#destroy_user'

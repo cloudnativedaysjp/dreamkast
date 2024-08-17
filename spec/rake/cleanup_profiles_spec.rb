@@ -19,7 +19,6 @@ describe 'cleanup_profiles' do
   describe 'archived conference' do
     let!(:cndt2020) { create(:cndt2020, :archived) }
     let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020) }
-    let!(:access_log) { create(:access_log, profile: alice) }
     let!(:talk) { create(:talk1) }
     let!(:registered_talk) { create(:registered_talk, profile: alice, talk:) }
     let!(:form_item) { create(:form_item1) }
@@ -30,11 +29,6 @@ describe 'cleanup_profiles' do
     it 'delete profiles related of conference' do
       @rake[task].invoke
       expect(Profile.where(conference_id: cndt2020.id).size).to(eq(0))
-    end
-
-    it 'delete access logs related of profile' do
-      @rake[task].invoke
-      expect(AccessLog.where(profile_id: alice.id).size).to(eq(0))
     end
 
     it 'delete registered talks related of profile' do

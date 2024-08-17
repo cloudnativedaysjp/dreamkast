@@ -27,4 +27,3 @@ import './attendee_dashboard.js'
 import "particles.js";
 import './copy.js'
 import './speaker_form.js'
-import './admin/tracks/index.js'

@@ -14,23 +14,18 @@ require("turbolinks").start()
 // const imagePath = (name) => images(name, true)
 import $ from 'jquery'
 import './bootstrap_custom.js'
-
-import './utils'
-import jquery from 'jquery';
-window.$ = window.jquery = jquery;
-import './jquery.easing.min.js'
-import './jquery.magnific-popup.min.js'
+window.jQuery = $
 import './scripts.js'
 import './talks.js'
 import './conference_form.js'
 import './admin.js'
 import './contents.js'
-import './speaker_form.js'
 import './cropbox.js'
 import './timetable.js'
 import './attendee_dashboard.js'
+import "particles.js";
 import './copy.js'
-
+import './speaker_form.js'
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"
 // import "controllers"

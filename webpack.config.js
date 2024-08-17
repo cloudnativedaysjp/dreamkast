@@ -28,6 +28,18 @@ module.exports = {
       "./app/javascript/packs/cndo2021.js",
       './app/javascript/stylesheets/cndo2021.scss',
     ],
+    cndt2023: [
+      "./app/javascript/packs/cndt2023.js",
+      './app/javascript/stylesheets/cndt2023.scss',
+    ],
+    cndf2023: [
+      "./app/javascript/packs/cndf2023.js",
+      './app/javascript/stylesheets/cndf2023.scss',
+    ],
+    cicd2021: [
+      "./app/javascript/packs/cicd2021.js",
+      './app/javascript/stylesheets/cicd2021.scss',
+    ],
     talks: [
       "./app/javascript/packs/talks.js",
     ],

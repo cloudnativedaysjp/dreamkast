@@ -14,14 +14,10 @@ Turbo.session.drive = false
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 // import '../stylesheets/application'
-import $ from 'jquery'
 import './bootstrap_custom.js'
-window.jQuery = $
-import './scripts.js'
 import './timetable.js'
 import './talks.js'
 import './conference_form.js'
-
 import './contents.js'
 import './speaker_form.js'
 import './cropbox.js'

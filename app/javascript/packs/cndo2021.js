@@ -15,9 +15,7 @@ Rails.start()
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 // import '../stylesheets/cndo2021'
-import $ from 'jquery'
 import './bootstrap_custom.js'
-window.jQuery = $
 import './scripts.js'
 import './talks.js'
 import './conference_form.js'

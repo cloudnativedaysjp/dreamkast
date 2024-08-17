@@ -14,19 +14,21 @@ Rails.start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import $ from 'jquery'
+import '../stylesheets/cndt2023'
 import './bootstrap_custom.js'
-window.jQuery = $
+import './utils'
 import './scripts.js'
 import './talks.js'
+import './sponsor_form.js'
 import './conference_form.js'
 import './contents.js'
 import './cropbox.js'
 import './timetable.js'
 import './attendee_dashboard.js'
-import "particles.js";
+import './particles.min.js'
 import './copy.js'
-import './speaker_form.js'
+
+require.context('images', true, /\.(png|jpg|jpeg|svg)$/)
 
 // import 'regenerator-runtime/runtime'
 // import "@hotwired/turbo-rails"

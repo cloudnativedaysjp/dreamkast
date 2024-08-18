@@ -8,7 +8,13 @@ describe Admin::CheckInEventsController, type: :request do
   let!(:alice) { create(:alice, :on_cndt2020) }
 
   describe 'POST /:event/admin/check_in_events' do
-    subject { post(admin_check_in_events_path(event: 'cndt2020'), params: { check_in_event: params }, headers: { 'HTTP_REFERER' => admin_speaker_check_in_statuses_path(event: 'cndt2020') }) }
+    subject do
+      post(admin_check_in_events_path(event: 'cndt2020'),
+           params: {
+             check_in_event: params
+           },
+           as: :turbo_stream)
+    end
 
     context 'create' do
       let(:roles) { ['CNDT2020-Admin'] }
@@ -20,15 +26,22 @@ describe Admin::CheckInEventsController, type: :request do
         }
       }
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            session[:userinfo]
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       it 'return ok' do
         subject
 
-        expect(response).to_not(be_successful)
-        expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to(admin_speaker_check_in_statuses_path(event: 'cndt2020')))
+        expect(flash.now[:notice]).to(eq('alice Alice をチェックインしました'))
+        expect(response).to(be_successful)
+        expect(response).to(have_http_status('200'))
       end
     end
   end

@@ -29,13 +29,11 @@ class Admin::TalksController < ApplicationController
       if on_air_talks_of_other_days.size.positive?
         format.turbo_stream {
           flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-          # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
         }
       else
         @talk.start_streaming
         format.turbo_stream {
           flash[:notice] = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
-          # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
         }
       end
     end
@@ -48,7 +46,6 @@ class Admin::TalksController < ApplicationController
     respond_to do |format|
       format.turbo_stream {
         flash.now[:notice] = "Waitingに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
-        # render(partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk })
       }
     end
   end

@@ -70,6 +70,11 @@ jobs:
           cleanup ReviewApps by GHA in ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
           EOM
 
+      - name: Set current unixtime as env variable
+        env:
+          TZ: 'Asia/Tokyo'
+        run: echo "UNIXTIME=$(date +'+%s')" >> $GITHUB_ENV
+
       - name: Push changes
         if: steps.commit_files.outcome == 'success'
         uses: ad-m/github-push-action@master
@@ -77,7 +82,7 @@ jobs:
           github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
-          branch: staging/dk-main
+          branch: staging/dk-main_${{ env.UNIXTIME }}
 
       - name: Create and Merge Pull Request
         if: steps.commit_files.outcome == 'success'
@@ -90,7 +95,7 @@ jobs:
               repo: "dreamkast-infra",
               title: "Automated PR (staging/dk-main)",
               body: "**this PR is automatically created & merged**",
-              head: "staging/dk-main",
+              head: "staging/dk-main_${{ env.UNIXTIME }}",
               base: "main"
             });
             await github.rest.pulls.merge({

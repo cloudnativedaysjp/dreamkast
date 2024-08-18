@@ -51,13 +51,18 @@ jobs:
           git add -A
           git commit -am "Bump docker tag (${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA})"
 
+      - name: Set current unixtime as env variable
+        env:
+          TZ: 'Asia/Tokyo'
+        run: echo "UNIXTIME=$(date +'+%s')" >> $GITHUB_ENV
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
-          branch: staging/dk-main
+          branch: staging/dk-main_${{ env.UNIXTIME }}
 
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v7"
@@ -69,7 +74,7 @@ jobs:
               repo: "dreamkast-infra",
               title: "Automated PR (staging/dk-main)",
               body: "**this PR is automatically created & merged**",
-              head: "staging/dk-main",
+              head: "staging/dk-main_${{ env.UNIXTIME }}",
               base: "main"
             });
             await github.rest.pulls.merge({

@@ -41,7 +41,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PREFIX: dk-
-        shell: bash -x {0}
+        shell: bash -xe {0}
         run: |
           EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'$PREFIX'\1/g')"
           ACTUAL="$(ls | grep -E ^$PREFIX)"

@@ -9,9 +9,11 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   def index
     @conference = Conference.find_by(abbr: params[:eventAbbr])
-    query = { conference_id: @conference.id, room_type: params[:roomType], room_id: params[:roomId] }
+    query = { conference_id: @conference.id, room_type: params[:roomType] }
     query[:created_at] = params[:createdFrom] if params[:createdFrom]
     query[:reply_to] = params[:replyTo] if params[:replyTo]
+    query[:room_id] = params[:roomId] if params[:roomId]
+    query[:profile_id] = params[:profileId] if params[:profileId]
     @chat_messages = ChatMessage.where(query)
     render(:index, formats: :json, type: :jbuilder)
   end

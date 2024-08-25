@@ -7,9 +7,6 @@ gem 'rails', '~> 7.0.5'
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.11'
 gem 'jsbundling-rails'
@@ -116,7 +113,7 @@ gem "aws-sdk-ssm"
 
 gem 'active_hash'
 
-gem "turbo-rails"
+gem "turbo-rails", "2.0.5"
 
 gem 'slack-ruby-client'
 

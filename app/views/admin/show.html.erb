@@ -6,17 +6,59 @@
   <% end %>
 
   <h2><%= @conference.name %></h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Field</th>
+      <th scope="col">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>カンファレンスステータス</td>
+      <td><%= @conference.conference_status %></td>
+    </tr>
+    <tr>
+      <td>リハーサルモード</td>
+      <td><%= @conference.rehearsal_mode ? 'オン' : 'オフ' %></td>
+    </tr>
+    <tr>
+      <td>CFPの結果公開</td>
+      <td><%= @conference.cfp_result_visible ? '公開' : '非公開' %></td>
+    </tr>
+    <tr>
+      <td>登壇者のエントリー</td>
+      <td><%= @conference.speaker_entry %></td>
+    </tr>
+    <tr>
+      <td>参加者の申し込み</td>
+      <td><%= @conference.attendee_entry %></td>
+    </tr>
+    <tr>
+      <td>タイムテーブルを表示</td>
+      <td><%= @conference.show_timetable %></td>
+    </tr>
+    <tr>
+      <td>現地参加定員</td>
+      <td><%= @conference.capacity %></td>
+    </tr>
+    <tr>
+      <td>Contact Url</td>
+      <td><%= @conference.contact_url %></td>
+    </tr>
+    <tr>
+      <td>Sponsor Guideline Url</td>
+      <td><%= link_to @conference.sponsor_guideline_url, @conference.sponsor_guideline_url, target: '_blank' %></td>
+    </tr>
+    <tr>
+      <td>スポンサーを表示</td>
+      <td><%= @conference.show_sponsors ? '表示' : '非表示' %></td>
+    </tr>
+    </tbody>
+  </table>
+
   <ul>
-    <li>カンファレンスステータス: <%= @conference.conference_status %></li>
-    <li>リハーサルモード: <%= @conference.rehearsal_mode ? 'オン' : 'オフ' %></li>
-    <li>CFPの結果公開: <%= @conference.cfp_result_visible ? '公開' : '非公開' %></li>
-    <li>登壇者のエントリー: <%= @conference.speaker_entry %></li>
-    <li>参加者の申し込み: <%= @conference.attendee_entry %></li>
-    <li>タイムテーブルを表示: <%= @conference.show_timetable %></li>
-    <li>現地参加定員: <%= @conference.capacity %></li>
-    <li>Contact Url: <%= @conference.contact_url %></li>
-    <li>Sponsor Guideline Url: <%= link_to @conference.sponsor_guideline_url, @conference.sponsor_guideline_url, target: '_blank' %></li>
-    <li>スポンサーを表示: <%= @conference.show_sponsors ? '表示' : '非表示' %></li>
+
   </ul>
   <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id), class: 'btn btn-primary' %>
 

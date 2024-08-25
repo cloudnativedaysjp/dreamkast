@@ -31,6 +31,20 @@ class Admin::ConferencesController < ApplicationController
     end
   end
 
+  def add_link
+    @conference_form = ConferenceForm.new(conference: @conference)
+
+    helpers.fields(model: @conference_form) do |f|
+      f.fields_for(:links, Link.new, child_index: Process.clock_gettime(Process::CLOCK_REALTIME, :millisecond)) do |ff|
+        render(turbo_stream: turbo_stream.append(
+          'link_fields',
+          partial: 'admin/conferences/link_fields',
+          locals: { f: ff }
+        ))
+      end
+    end
+  end
+
   private
 
   def conference_params

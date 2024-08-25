@@ -1,0 +1,14 @@
+<div id="profile_<%= profile.id %>">
+  <% if profile.check_in_conferences.nil? || profile.check_in_conferences.empty? %>
+    <%= form_with(url: admin_check_in_events_path, method: "post") do |f| %>
+      <%= f.hidden_field "check_in_event[profile_id]", value: profile.id %>
+      <%= f.submit 'チェックイン', data: { turbo_confirm: "#{profile.last_name} #{profile.first_name} をチェックインする"} %>
+    <% end %>
+  <% else %>
+    チェックイン済み
+    <%= form_with(url: admin_check_in_events_path, method: "delete", remote: true) do |f| %>
+      <%= f.hidden_field "check_in_event[profile_id]", value: profile.id %>
+      <%= f.submit '(チェックインをキャンセル)', data: { turbo_confirm: "#{profile.last_name} #{profile.first_name} のイベントへのチェックインをキャンセルしますか？"} %>
+    <% end %>
+  <% end %>
+</div>

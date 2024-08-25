@@ -87,11 +87,10 @@ describe Admin::SpeakersController, type: :request do
         let!(:video2) { create(:video, talk: talk2, on_air: false) }
 
         it 'success to change to start on air' do
-          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id } }
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('302'))
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(talk2.video.id).on_air).to(be_truthy)
-          expect(response).to(redirect_to('http://www.example.com/cndt2020/admin/tracks'))
         end
       end
 
@@ -100,11 +99,10 @@ describe Admin::SpeakersController, type: :request do
         let!(:video2) { create(:video, talk: talk2, on_air: false) }
 
         it 'can not to change to start on air' do
-          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id } }.to_json, headers: { "Content-Type": 'application/json' }
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('302'))
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(talk2.video.id).on_air).to(be_falsey)
-          expect(response).to(redirect_to('http://www.example.com/cndt2020/admin/tracks'))
           expect(flash[:alert]).to(include("Talk id=#{talk1.id} are already on_air."))
         end
       end
@@ -119,10 +117,9 @@ describe Admin::SpeakersController, type: :request do
         let!(:video2) { create(:video, talk: intermission2, on_air: false) }
 
         it 'can not to change to start on air' do
-          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id } }.to_json, headers: { "Content-Type": 'application/json' }
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('http://www.example.com/cndt2020/admin/tracks'))
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(intermission2.video.id).on_air).to(be_truthy)
         end
       end
@@ -132,10 +129,9 @@ describe Admin::SpeakersController, type: :request do
         let!(:video2) { create(:video, talk: intermission2, on_air: false) }
 
         it 'can not to change to start on air' do
-          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id } }.to_json, headers: { "Content-Type": 'application/json' }
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('http://www.example.com/cndt2020/admin/tracks'))
+          post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(intermission2.video.id).on_air).to(be_falsey)
           expect(flash[:alert]).to(include("Talk id=#{intermission1.id} are already on_air."))
         end

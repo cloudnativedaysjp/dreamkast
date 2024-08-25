@@ -1,0 +1,3 @@
+<div id="check_in_status_<%= profile.id %>">
+  <%= profile.check_in_conferences.present? ? profile.check_in_conferences.first.created_at : "未チェックイン" %>
+</div>

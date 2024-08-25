@@ -63,7 +63,7 @@ module.exports = {
     ],
     'tracks/track_channel': [
       "./app/javascript/packs/tracks/track_channel.js",
-    ],
+    ]
   },
   module: {
     rules: [
@@ -94,9 +94,5 @@ module.exports = {
     }),
     new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin(),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
-    })
   ]
 }

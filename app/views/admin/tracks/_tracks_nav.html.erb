@@ -14,7 +14,65 @@
   </div>
 </nav>
 
-<%= render partial: 'admin/tracks/partial/talks_table', locals: {conference_day: conference_day, talks: @talks, track: @track}%>
+<%= turbo_frame_tag 'talks', src: @talks.nil? ? admin_talks_path : nil do %>
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col" style="width: 200px;">Time</th>
+      <th scope="col">Speakers<br/>Title</th>
+      <th scope="col">On Air</th>
+      <th scope="col">Recording</th>
+      <th scope="col">Recording Status</th>
+    </tr>
+    </thead>
+
+    <tbody id="talks_table_tbody">
+    <% @talks.each do |talk| %>
+      <tr>
+        <td><%= talk.id %></td>
+        <td>
+          Planned<br/>
+          <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+          <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+          <br/>
+          Offset<br/>
+          <%= text_field_tag("time[][#{talk.id.to_s}][startOffset]", talk.start_offset.to_s, {size: 1, form: 'time', class: 'start-offset'}) %>-
+          <%= text_field_tag("time[][#{talk.id.to_s}][endOffset]", talk.end_offset.to_s, {size: 1, form: 'time'}) %>
+          <br/>
+          Actual<br/>
+          <%= text_field_tag(talk.id.to_s + "_actual_start", talk.actual_start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
+          <%= text_field_tag(talk.id.to_s + "_actual_end", talk.actual_end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+        </td>
+        <td>
+          <h5><%= talk.title %></h5>
+          <ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
+        </td>
+        <td >
+          <% if talk.video %>
+            <%= render('admin/tracks/partial/on_air_button', talk: talk) %>
+          <% end %>
+        </td>
+        <td>
+          <% if talk.abstract != 'intermission' && talk.live? && talk.recordable? %>
+            <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
+          <% end %>
+        </td>
+        <td>
+          <% if talk.video && talk.abstract != 'intermission' %>
+            <% if already_recorded?(talk) %>
+              <div class="btn btn-primary">録画済み</div>
+            <% else %>
+              未録画
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    </tbody>
+  </table>
+<% end %>
 
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Video URL は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)

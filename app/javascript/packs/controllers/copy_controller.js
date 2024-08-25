@@ -4,7 +4,7 @@ export default class extends Controller {
     static targets = ["button", "url"]
 
     copy(event) {
-        console.log("AAAAAAAAAAAAAAAAAAAAAA")
+       
         event.preventDefault();
         const url = this.urlTarget.textContent;
         const parent = event.target.parentElement;

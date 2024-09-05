@@ -91,7 +91,7 @@ services:
       - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/
       - NEXT_PUBLIC_EVENT_SALT=cndt2022
   localstack:
-    image: localstack/localstack:latest
+    image: localstack/localstack:2.3.2
     environment:
       - SERVICES=sqs
       - DEFAULT_REGION=ap-northeast-1
@@ -102,7 +102,7 @@ services:
     ports:
       - 4566:4566
     healthcheck:
-      test: awslocal sqs list-queues --output=text | grep default
+      test: awslocal sqs list-queues --region ap-northeast-1 --output=text | grep default
       interval: 10s
       timeout: 60s
       retries: 10

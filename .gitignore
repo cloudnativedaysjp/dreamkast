@@ -55,3 +55,4 @@ package-lock.json
 localstack
 /app/assets/builds/*
 !/app/assets/builds/.keep
+.aider*

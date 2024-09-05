@@ -118,10 +118,26 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  if ENV['REVIEW_APP'] == 'true'
+    config.routes.default_url_options[:host] = "#{ENV['DREAMKAST_NAMESPACE'].gsub(/dreamkast-dk-/, '')}.dev.cloudnativedays.jp"
+  elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
+    config.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
+  elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
+    config.routes.default_url_options[:host] = 'event.cloudnativedays.jp'
+  end
+
   OmniAuth.config.on_failure = Proc.new do |env|
     message_key = env['omniauth.error.type']
     error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)
     new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}&error_description=#{error_description}"
     Rack::Response.new(['302 Moved'], 302, 'Location' => new_path).finish
   end
+end
+
+if ENV['REVIEW_APP'] == 'true'
+  Rails.application.routes.default_url_options[:host] = "#{ENV['DREAMKAST_NAMESPACE'].gsub(/dreamkast-dk-/, '')}.dev.cloudnativedays.jp"
+elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
+  Rails.application.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
+elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
+  Rails.application.routes.default_url_options[:host] = 'event.cloudnativedays.jp'
 end

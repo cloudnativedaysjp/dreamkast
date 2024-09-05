@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_11_144947) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -349,6 +349,32 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_11_144947) do
     t.index ["conference_id"], name: "index_speaker_announcements_on_conference_id"
   end
 
+  create_table "speaker_invitation_accepts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "speaker_invitation_id", null: false
+    t.bigint "conference_id", null: false
+    t.bigint "speaker_id", null: false
+    t.bigint "talk_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id", "speaker_id", "talk_id"], name: "index_speaker_invitation_accepts_on_conference_speaker_talk", unique: true
+    t.index ["conference_id"], name: "index_speaker_invitation_accepts_on_conference_id"
+    t.index ["speaker_id"], name: "index_speaker_invitation_accepts_on_speaker_id"
+    t.index ["speaker_invitation_id"], name: "index_speaker_invitation_accepts_on_speaker_invitation_id"
+    t.index ["talk_id"], name: "index_speaker_invitation_accepts_on_talk_id"
+  end
+
+  create_table "speaker_invitations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.bigint "conference_id", null: false
+    t.string "email", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_speaker_invitations_on_conference_id"
+    t.index ["talk_id"], name: "index_speaker_invitations_on_talk_id"
+  end
+
   create_table "speakers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "profile"
@@ -592,6 +618,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_11_144947) do
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"
   add_foreign_key "speaker_announcement_middles", "speakers"
   add_foreign_key "speaker_announcements", "conferences"
+  add_foreign_key "speaker_invitation_accepts", "conferences"
+  add_foreign_key "speaker_invitation_accepts", "speaker_invitations"
+  add_foreign_key "speaker_invitation_accepts", "speakers"
+  add_foreign_key "speaker_invitation_accepts", "talks"
+  add_foreign_key "speaker_invitations", "conferences"
+  add_foreign_key "speaker_invitations", "talks"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"

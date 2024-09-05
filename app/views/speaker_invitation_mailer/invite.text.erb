@@ -1,0 +1,12 @@
+<%= @invited_by.name %> さんから、下記のプロポーザルの共同スピーカーとして招待されました。
+
+タイトル: <%= @talk.title %>
+概要: <%= @talk.abstract %>
+
+共同スピーカーとして登録するには、以下のリンクをクリックしてください。
+
+<%= @new_accept_url %>
+
+このURLは24時間有効です。
+
+<%= render '/layouts/footer' %>

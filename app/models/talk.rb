@@ -59,6 +59,7 @@ class Talk < ApplicationRecord
   has_many :profiles, through: :registered_talks
   has_many :media_package_harvest_jobs
   has_many :check_in_talks
+  has_many :speaker_invitations
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks

@@ -72,8 +72,8 @@ const buttonListener = (e) => {
         e.target.parentElement.querySelector('.destroy_flag_field').value = 1;
         e.target.closest('.talk-field').hidden = true;
         ['input', 'textarea', 'select'].forEach((selector) => {
-            ['required', 'max', 'min', 'maxlength', 'pattern'].forEach((attr) => {
-                e.target.parentElement.querySelectorAll(selector).forEach((elm) => {
+            e.target.parentElement.querySelectorAll(selector).forEach((elm) => {
+                ['required', 'max', 'min', 'maxlength', 'pattern'].forEach((attr) => {
                     elm.removeAttribute(attr);
                 })
             })

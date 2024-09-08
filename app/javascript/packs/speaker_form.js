@@ -71,9 +71,13 @@ const buttonListener = (e) => {
     if (confirm("このセッションを削除しますか？")) {
         e.target.parentElement.querySelector('.destroy_flag_field').value = 1;
         e.target.closest('.talk-field').hidden = true;
-        e.target.parentElement.querySelector('input').removeAttribute('required max min maxlength pattern');
-        e.target.parentElement.querySelector('textarea').removeAttribute('required max min maxlength pattern');
-        e.target.parentElement.querySelector('select').removeAttribute('required max min maxlength pattern');
+        ['input', 'textarea', 'select'].forEach((selector) => {
+            ['required', 'max', 'min', 'maxlength', 'pattern'].forEach((attr) => {
+                e.target.parentElement.querySelectorAll(selector).forEach((elm) => {
+                    elm.removeAttribute(attr);
+                })
+            })
+        })
         if (fieldLength() < 3) {
             document.getElementsByClassName('add-talk')[0].hidden = false;
         }

@@ -22,6 +22,8 @@ namespace :util do
         CheckIn.where(profile_id: profile.id).each do |check_in|
           check_in.update!(profile_id: nil)
         end
+        CheckInConference.where(profile_id: profile.id).destroy_all
+        CheckInTalk.where(profile_id: profile.id).destroy_all
         PublicProfile.where(profile_id: profile.id).destroy_all
         profile.destroy!
       end

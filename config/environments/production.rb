@@ -127,7 +127,13 @@ Rails.application.configure do
 end
 
 if ENV['REVIEW_APP'] == 'true'
-  Rails.application.routes.default_url_options[:host] = "#{ENV['DREAMKAST_NAMESPACE'].gsub(/dreamkast-dk-/, '')}.dev.cloudnativedays.jp"
+  match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/)
+  if match
+    pr_number = match[1]
+    Rails.application.routes.default_url_options[:host] = "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp.dev.cloudnativedays.jp"
+  else
+    raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
+  end
 elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
   Rails.application.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
 elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'

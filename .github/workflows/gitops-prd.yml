@@ -62,7 +62,7 @@ jobs:
           github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
-          branch: production/dk-main_${{ env.UNIXTIME }}
+          branch: gitops/production/dk-main_${{ env.UNIXTIME }}
 
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v7"
@@ -72,9 +72,9 @@ jobs:
             const pr = await github.rest.pulls.create({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
-              title: "Automated PR (production/dk-main)",
+              title: "Automated PR (gitops/production/dk-main)",
               body: "**this PR is automatically created & merged**",
-              head: "production/dk-main_${{ env.UNIXTIME }}",
+              head: "gitops/production/dk-main_${{ env.UNIXTIME }}",
               base: "main"
             });
             await github.rest.pulls.merge({

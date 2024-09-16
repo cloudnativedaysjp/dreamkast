@@ -25,7 +25,7 @@ class SpeakerInvitation < ApplicationRecord
   belongs_to :talk
   belongs_to :conference
 
-  has_one :speaker_invitation_accept
+  has_one :speaker_invitation_accept, dependent: :destroy
 
 
   validates :email, presence: true

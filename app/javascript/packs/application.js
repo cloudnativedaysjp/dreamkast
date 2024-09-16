@@ -17,6 +17,5 @@ import './bootstrap_custom.js'
 import './timetable.js'
 import './talks.js'
 import './speaker_form.js'
-import './cropbox.js'
 
 //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)

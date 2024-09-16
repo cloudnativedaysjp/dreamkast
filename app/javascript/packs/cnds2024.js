@@ -16,7 +16,6 @@ import "./controllers/index.js"
 // import '../stylesheets/cnds2024'
 import './bootstrap_custom.js'
 import './talks.js'
-import './cropbox.js'
 import './timetable.js'
 import "particles.js";
 import './speaker_form.js'

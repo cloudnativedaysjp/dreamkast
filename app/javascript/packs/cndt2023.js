@@ -17,7 +17,6 @@ Rails.start()
 import '../stylesheets/cndt2023'
 import './bootstrap_custom.js'
 import './talks.js'
-import './cropbox.js'
 import './timetable.js'
 
 

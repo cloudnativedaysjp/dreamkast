@@ -18,7 +18,6 @@ import '../stylesheets/cndf2023'
 import './bootstrap_custom.js'
 import './talks.js'
 import './speaker_form.js'
-import './cropbox.js'
 import './timetable.js'
 
 

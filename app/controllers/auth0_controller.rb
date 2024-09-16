@@ -8,7 +8,7 @@ class Auth0Controller < ApplicationController
 
     if request.env['omniauth.origin']
       uri = URI.parse(request.env['omniauth.origin'])
-      uri.query = if uri.params.nil?
+      uri.query = if uri.query.nil?
                     "state=#{params[:state]}"
                   else
                     "#{uri.query}&state=#{params[:state]}"

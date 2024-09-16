@@ -5,8 +5,6 @@ export default class extends Controller {
     static targets = [ "fileInput" ]
 
     connect() {
-        console.log("1111111111111111111111")
-        console.log(this.fileInputTargets)
         this.fileInputTargets.forEach(fileInput => {
             console.log(fileInput)
             this.cropUpload(fileInput)

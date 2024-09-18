@@ -7,6 +7,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
   def invite
     return redirect_to(new_speaker_invitation_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = Conference.find_by(abbr: params[:event])
+    @speaker = Speaker.find_by(conference: @conference, email: current_user[:info][:email])
     @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
   end
 
@@ -24,7 +25,11 @@ class SpeakerInvitationAcceptsController < ApplicationController
     end
     @talk = @speaker_invitation.talk
     @proposal = @talk.proposal
-    @speaker = Speaker.new(conference: @conference, email: current_user[:info][:email])
+    @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
+                 Speaker.find_by(conference: @conference, email: current_user[:info][:email])
+               else
+                 Speaker.new(conference: @conference, email: current_user[:info][:email])
+               end
   end
 
   def create
@@ -36,7 +41,12 @@ class SpeakerInvitationAcceptsController < ApplicationController
         speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:speaker_invitation_id)
 
-        @speaker = Speaker.new(speaker_param)
+        @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
+                     Speaker.find_by(conference: @conference, email: current_user[:info][:email])
+                   else
+                     Speaker.new(conference: @conference, email: current_user[:info][:email])
+                   end
+        @speaker.update!(speaker_param)
         @speaker.save!
 
         @talk = @speaker_invitation.talk

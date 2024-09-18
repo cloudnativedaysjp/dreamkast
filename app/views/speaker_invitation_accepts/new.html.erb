@@ -9,10 +9,16 @@
       <% end %>
 
       <% if flash.keys.size == 0 %>
-        プロポーザル 「<%= @talk.title %> (<%= @talk.speaker_names.join('/') %>)」に共同スピーカーとして登録します。登録する場合は下記の登壇者情報を入力し、「登録する」ボタンをクリックしてください。
+        <p>プロポーザル 「<%= @talk.title %> (<%= @talk.speaker_names.join('/') %>)」に共同スピーカーとして登録します。</p>
+        <% if @speaker.present? %>
+          <p>スピーカーとして既に登録済みのため、フォームに既存の情報が入力済みです。</p>
+          <p>問題なければ「登録する」ボタンをクリックしてください。</p>
+        <% else %>
+          <p>登録する場合はフォームに登壇者情報を入力し、「登録する」ボタンをクリックしてください。</p>
+        <% end %>
 
 
-        <%= form_with(url: speaker_invitation_accepts_path, model: @speaker) do |form| %>
+        <%= form_with(url: speaker_invitation_accepts_path, model: @speaker, method: :post) do |form| %>
           <%= form.hidden_field :speaker_invitation_id, value: @speaker_invitation.id %>
 
           <section class="speaker-information py-3">

@@ -85,18 +85,20 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_registrants_count(metrics)
+    profile_counts = Profile.group(:conference_id).count
     Conference.all.each do |conf|
       metrics.set(
-        conf.profiles.count,
+        profile_counts[conf.id] || 0,
         labels: { conference_id: conf.id }
       )
     end
   end
 
   def dreamkast_talks_count(metrics)
+    talk_counts = Talk.group(:conference_id).count
     Conference.all.each do |talks_count|
       metrics.set(
-        talks_count.talks.count,
+        talk_counts[talks_count.id] || 0,
         labels: { conference_id: talks_count.id }
       )
     end

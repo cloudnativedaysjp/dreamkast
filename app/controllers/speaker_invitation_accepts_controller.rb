@@ -24,7 +24,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
     end
     @talk = @speaker_invitation.talk
     @proposal = @talk.proposal
-    @speaker = Speaker.new(conference: @conference, email: current_user[:info][:email], name: current_user[:info][:name])
+    @speaker = Speaker.new(conference: @conference, email: current_user[:info][:email])
   end
 
   def create
@@ -33,7 +33,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
         @conference = Conference.find_by(abbr: params[:event])
         @speaker_invitation = SpeakerInvitation.find(params[:speaker][:speaker_invitation_id])
 
-        speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email], name: current_user[:info][:name])
+        speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:speaker_invitation_id)
 
         @speaker = Speaker.new(speaker_param)

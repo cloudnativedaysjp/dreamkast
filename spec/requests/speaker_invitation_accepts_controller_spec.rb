@@ -27,7 +27,7 @@ describe SpeakerInvitationAcceptsController, type: :request do
     it 'redirects if coming from Auth0' do
       get speaker_invitation_accepts_invite_path(event: conference.abbr, token: speaker_invitation.token, state: 'some_state')
       expect(response).to(have_http_status('302'))
-      expect(response).to(redirect_to(speaker_invitation_accepts_path))
+      expect(response).to(redirect_to(new_speaker_invitation_accept_path(token: speaker_invitation.token)))
     end
   end
 

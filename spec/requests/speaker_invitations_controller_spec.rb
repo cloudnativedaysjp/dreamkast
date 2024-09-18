@@ -63,12 +63,12 @@ describe(SpeakerInvitationsController, type: :request) do
 
       it 'sets an error flash message' do
         post speaker_invitations_path(event: conference.abbr), params: { speaker_invitation: invalid_attributes }
-        expect(flash.now[:alert]).to(eq('Failed to send invitation.'))
+        expect(flash[:alert]).to(eq(' への招待メール送信に失敗しました: Emailを入力してください'))
       end
 
       it 'redirects to the speaker dashboard' do
         post speaker_invitations_path(event: conference.abbr), params: { speaker_invitation: invalid_attributes }
-        expect(response).to(redirect_to("/#{conference.abbr}/speaker_dashboard"))
+        expect(response).to(redirect_to(new_speaker_invitation_path(event: conference.abbr, talk_id: talk.id)))
       end
     end
   end

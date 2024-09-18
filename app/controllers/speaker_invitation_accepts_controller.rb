@@ -5,7 +5,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
   skip_before_action :logged_in_using_omniauth?, only: [:invite]
 
   def invite
-    return redirect_to(speaker_invitation_accepts_path) if from_auth0?(params)
+    return redirect_to(new_speaker_invitation_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = Conference.find_by(abbr: params[:event])
     @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
   end

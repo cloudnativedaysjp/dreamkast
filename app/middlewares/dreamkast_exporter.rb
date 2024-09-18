@@ -33,8 +33,13 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         labels: [:conference_id, :talk_difficulty_name]
       ),
       Prometheus::Client::Gauge.new(
+        :dreamkast_select_talks,
+        docstring: 'Select dreamkast talks',
+        labels: [:talk_id, :conference_id, :title, :talk_difficulty_name]
+      ),
+      Prometheus::Client::Gauge.new(
         :dreamkast_select_proposal_items,
-        docstring: 'select dreamkast proposal items',
+        docstring: 'Select dreamkast proposal items',
         labels: [:talk_id, :conference_id, :proposal_items_label, :proposal_items_params]
       )
     ]
@@ -102,6 +107,15 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       metrics.set(
         talk_difficulties_count.count,
         labels: { conference_id: talk_difficulties_count.conference_id, talk_difficulty_name: talk_difficulties_count.name }
+      )
+    end
+  end
+
+  def dreamkast_select_talks(metrics)
+    Talk.preload(:talk_difficulty).all.each do |talk|
+      metrics.set(
+        talk.id,
+        labels: { talk_id: talk.id, conference_id: talk.conference_id, title: talk.title, talk_difficulty_name: talk.talk_difficulty&.name }
       )
     end
   end

@@ -43,7 +43,8 @@ jobs:
           PREFIX: dk-
         shell: bash -xe {0}
         run: |
-          EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'$PREFIX'\1/g')"
+          EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'"$PREFIX"'\1/g')"
+          # shellcheck disable=SC2010,SC2086
           ACTUAL="$(ls | grep -E ^$PREFIX)"
 
           # If present only in ACTUAL, cleanup
@@ -52,9 +53,9 @@ jobs:
             for exp in $EXPECTED; do
               [ "$act" = "$exp" ] && EXIST=true
             done
-            [ $EXIST = true ] && continue
-            bash -x $act/cleanup.sh
-            rm -rf $act
+            [ "$EXIST" = "true" ] && continue
+            bash -x "$act/cleanup.sh"
+            rm -rf "$act"
           done
 
       - name: Commit files
@@ -73,7 +74,7 @@ jobs:
       - name: Set current unixtime as env variable
         env:
           TZ: 'Asia/Tokyo'
-        run: echo "UNIXTIME=$(date +'+%s')" >> $GITHUB_ENV
+        run: echo "UNIXTIME=$(date +'+%s')" >> "$GITHUB_ENV"
 
       - name: Push changes
         if: steps.commit_files.outcome == 'success'

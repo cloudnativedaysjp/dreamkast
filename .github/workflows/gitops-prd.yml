@@ -123,7 +123,7 @@ jobs:
 
       - name: get tag name
         id: get-tag-name
-        run: echo "tag-name=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: echo "tag-name=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
 
       - name: Update image-tags
         working-directory: dreamkast-infra/ecspresso/prod

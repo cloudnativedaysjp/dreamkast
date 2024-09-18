@@ -1,6 +1,9 @@
 <div class="container">
   <div class="row speaker-dashboard-form justify-content-center">
     <div class="col-12 col-lg-12 py-3 px-md-5">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
+      <% end %>
       <h1 class="text-center py-3 entry">共同スピーカーに招待メールを送信する</h1>
 
       <%= form_with(model: @speaker_invitation) do |form| %>

@@ -18,11 +18,12 @@ class SpeakerInvitationsController < ApplicationController
       @invitation.expires_at = 1.days.from_now  # 有効期限を1日後に設定
       if @invitation.save
         SpeakerInvitationMailer.invite(@conference, @speaker, @invitation.talk, @invitation).deliver_now
-        flash.now[:notice] = 'Invitation sent!'
+        flash[:notice] = 'Invitation sent!'
+        redirect_to("/#{@conference.abbr}/speaker_dashboard")
       else
-        flash.now[:alert] = 'Failed to send invitation.'
+        flash[:alert] = "#{@invitation.email} への招待メール送信に失敗しました: #{@invitation.errors.full_messages.join(', ')}"
+        redirect_to(new_speaker_invitation_path(event: @conference.abbr, talk_id: @invitation.talk_id))
       end
-      redirect_to("/#{@conference.abbr}/speaker_dashboard")
     end
   end
 

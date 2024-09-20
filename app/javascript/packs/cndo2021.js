@@ -17,7 +17,6 @@ Rails.start()
 // import '../stylesheets/cndo2021'
 import './bootstrap_custom.js'
 import './talks.js'
-import './cropbox.js'
 import './timetable.js'
 import "particles.js";
 import './speaker_form.js'

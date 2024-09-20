@@ -88,3 +88,5 @@ Rails.application.configure do
     Bullet.rails_logger = true # Railsログに出力
   end
 end
+
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'

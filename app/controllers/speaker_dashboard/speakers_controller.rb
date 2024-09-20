@@ -51,7 +51,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
-        format.html { redirect_to("/#{@conference.abbr}/speaker_dashboard", notice: 'Speaker was successfully created.') }
+        flash.now[:notice] = 'スピーカーもしくはプロポーザルの作成・更新に成功しました。'
+        format.html { redirect_to("/#{@conference.abbr}/speaker_dashboard") }
         format.json { render(:show, status: :created, location: @speaker) }
       else
         format.html { render(:new) }

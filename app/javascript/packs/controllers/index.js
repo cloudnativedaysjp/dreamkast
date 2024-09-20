@@ -19,3 +19,5 @@ application.register("remove-link-field", RemoveLinkFieldController)
 import CopyController from "./copy_controller.js"
 application.register("copy", CopyController)
 
+import CropUploadController from "./crop_upload_controller.js"
+application.register("crop-upload", CropUploadController)

@@ -11,12 +11,13 @@
   <% end %>
 
   <div class="form-row form-group">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" data-controller="crop-upload">
       <%= form.label :avatar, '参加者アイコン' %>
       <!-- will be replaced by Uppy -->
       <%= form.text_field :avatar,
                           type: :file,
                           id: "avatar_upload",
+                          "data-crop-upload-target": "fileInput",
                           class: "form-control" %>
 
       <!-- for storing uploaded file data -->

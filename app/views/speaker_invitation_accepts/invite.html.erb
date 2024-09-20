@@ -4,14 +4,17 @@
   <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
 
     <div class="col-12 my-4">
-      <h2 class="text-center">CloudNative Days Summer 2024で登壇してみませんか？</h2>
+      <h2 class="text-center">共同スピーカーとして招待された方へ</h2>
+      <p>本ページは共同スピーカーとしての招待メールを受け取った方向けのページです。</p>
+      <p>下記の概要・Q&Aを確認していただき、問題なければ「エントリーする！」ボタンをクリックしてください。</p>
+      <p>その後、登壇者情報の入力フォームに遷移しますので、入力することで共同スピーカーとして登録されます。</p>
     </div>
 
     <%= render 'speaker_dashboard/speakers/guidance_section_1' %>
 
     <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
       <% if logged_in? %>
-        <%= button_to 'エントリーする！', speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+        <%= button_to 'エントリーする！', new_speaker_invitation_accept_path, {params: {token: @speaker_invitation.token}, method: :get, class: "btn btn-secondary btn-xl inline" } %>
       <% else %>
         <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
       <% end %>
@@ -22,7 +25,7 @@
 
     <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
       <% if logged_in? %>
-        <%= button_to 'エントリーする！', speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
+        <%= button_to 'エントリーする！', new_speaker_invitation_accept_path, {params: {token: @speaker_invitation.token}, method: :get, class: "btn btn-secondary btn-xl inline" } %>
       <% else %>
         <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
       <% end %>

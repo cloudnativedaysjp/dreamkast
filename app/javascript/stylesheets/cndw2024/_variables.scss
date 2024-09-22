@@ -6,15 +6,16 @@ $dark-blue: #206A9B;
 $brown: hsl(25, 16%, 31%);
 $gray: #808080;
 // CNDW2024 Theme color
-$sapporo-orange: #FF7900;
-$hokkaido-sky: #00A6E1;
-$biei-yellow: #FFAD00;
-$furano-green: #028E9B;
 
-$text: #2F2524;
+$tokyo-navy: #001a3a;
+$ariake-blue: #008f9e;
+$cnd-red: #ae291b;
+$cnd-orange: #e26834;
+
+$text: #001a3a;
 //- Override primary color
-$primary: $sapporo-orange;
-$secondary: $hokkaido-sky;
+$primary: $ariake-blue;
+$secondary: $cnd-orange;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,

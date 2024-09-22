@@ -596,9 +596,9 @@ TalkCategory.seed(
   { id: 140, conference_id: 12, name: "Hybrid Cloud / Multi Cloud"},
   { id: 141, conference_id: 12, name: "NFV / Edge"},
   { id: 142, conference_id: 12, name: "組織論"},
-  { id: 143, conference_id: 12, name: "その他"},
-  { id: 144, conference_id: 12, name: "Keynote"},
-
+  { id: 143, conference_id: 12, name: "FinOps"},
+  { id: 144, conference_id: 12, name: "その他"},
+  { id: 145, conference_id: 12, name: "Keynote"},
 )
 
 TalkDifficulty.seed(

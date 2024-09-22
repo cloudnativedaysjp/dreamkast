@@ -1,9 +1,8 @@
 <h3>他のプロポーザルも要チェック！</h3>
-<div class="card-deck">
+<div class="d-flex gap-3">
   <% conference.proposals.select { |proposal| proposal.talk.present? }.shuffle[0..3].each do |proposal| %>
     <% talk = proposal.talk %>
-
-    <div class="card talk">
+    <div class="card talk gap-3">
       <a href="<%= url_for(controller: "proposals",action: "show", id: proposal.id) %>">
         <h3><%= talk.title %></h3>
         <p><%= talk.abstract[..40] if talk.abstract.present? %></p>

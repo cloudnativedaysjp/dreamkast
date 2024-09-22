@@ -74,7 +74,7 @@
         <div class="row justify-content-center">
           <div class="col-12 text-center">
             <h2 class="text-white mt-0">Sessions</h2>
-            <hr class="divider light my-4" />
+            <hr class="divider center-block light" />
           </div>
         </div>
         <% @conference.conference_days.each do |conference_day| %>
@@ -159,7 +159,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-12 text-center">
             <h2 class="text-black mt-0">Speakers</h2>
-            <hr class="divider  my-4" />
+            <hr class="divider center-block" />
             <ul class="">
               <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
@@ -184,7 +184,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center">
             <h2 class="text-black mt-0">About</h2>
-            <hr class="divider my-4 " />
+            <hr class="divider center-block" />
             <% @conference.about.split("\n").each do |line| %>
               <p class="text-black-75 mb-4 text-center"><%= line.html_safe %></p>
             <% end %>
@@ -198,17 +198,17 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center">
-            <h2 class="text-black mt-0">Access</h2>
-            <hr class="divider light my-4" />
+            <h2 class="text-white mt-0">Access</h2>
+            <hr class="divider center-block light" />
           </div>
           <div class="col-12 col-sm-6">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2915.244486259378!2d141.38649082709546!3d43.05732529076483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f0b2bdbce792761%3A0x3745a6389154ea61!2z5pyt5bmM44Kz44Oz44OZ44Oz44K344On44Oz44K744Oz44K_44O8!5e0!3m2!1sja!2sjp!4v1709780530608!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12971.28918811224!2d139.7937274!3d35.6321071!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeea9641b7480ced0!2z5pyJ5piO44K744Oz44OI44Op44Or44K_44Ov44O8IOODm-ODvOODqybjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e0!3m2!1sja!2sjp!4v1668349214585!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
           <div class="col-12 col-sm-6 align-self-top">
               <p class="text-white">
-                〒003-0006<br/>
-                札幌コンベンションセンター 2F<br/>
-                札幌市⽩⽯区東札幌6条1丁⽬1-1
+                〒135-0063<br/>
+                有明セントラルタワー ホール＆カンファレンス 3F<br/>
+                東京都江東区有明3-7-18
               </p>
           </div>
         </div>

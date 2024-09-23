@@ -241,6 +241,37 @@ EOS
 EOS
   },
   {
+    id: 12,
+    name: "CloudNative Days Winter 2024",
+    abbr: "cndw2024",
+    theme: "小さな一歩、大きな飛躍〜クラウドネイティブを継続する",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    capacity: 300,
+    about: <<'EOS'
+    クラウドネイティブをこれから始める人
+    今まさに取り組んでいる人
+    一定の成果を達成して、次のステップに迷っている人
+    CloudNative Daysには様々な人が集まります。
+
+    エンジニアも組織も、そしてシステムも
+    クラウドネイティブから実りを得るには
+    一度きりではなく、学びと改善を何度も繰り返す
+    継続的な取り組みが重要です。
+
+    小さな一歩を踏み出すのをためらわないでください。
+    小さくても歩みを止めないでください。
+    継続することをやめなければ、変化と経験の蓄積が
+    やがて大きな飛躍をもたらします。
+
+    そしてコミュニティが知見とモチベーションの交換を通して
+    あなたの一歩を後押しします。
+    CloudNative Daysは、クラウドネイティブへの小さな一歩を踏み出し、
+    大きな飛躍へと前進するエンジニアと共に歩んでいきます。
+EOS
+  },
+  {
     id: 110,
     name: "Test Event Winter 2020",
     conference_status: "archived",
@@ -308,6 +339,10 @@ ConferenceDay.seed(
   # CNDS2024
   {id: 30, date: "2024-06-14", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: true},
   {id: 31, date: "2024-06-15", start_time: "10:20", end_time: "18:00", conference_id: 11, internal: false}, 
+
+  # CNDW2024
+  {id: 32, date: "2024-11-28", start_time: "09:50", end_time: "18:00", conference_id: 12, internal: false},
+  {id: 33, date: "2024-11-29", start_time: "09:50", end_time: "18:00", conference_id: 12, internal: false},
 )
 
 FormItem.seed(
@@ -376,6 +411,11 @@ Track.seed(
   { id: 48, number: 1, name: "A", conference_id: 11, room_id: 21},
   { id: 49, number: 2, name: "B", conference_id: 11, room_id: 22},
   { id: 50, number: 3, name: "C", conference_id: 11, room_id: 23},
+
+  { id: 51, number: 1, name: "A", conference_id: 12, room_id: 24},
+  { id: 52, number: 2, name: "B", conference_id: 12, room_id: 25},
+  { id: 53, number: 3, name: "C", conference_id: 12, room_id: 26},
+  { id: 54, number: 3, name: "D", conference_id: 12, room_id: 27},
 )
 
 
@@ -539,6 +579,26 @@ TalkCategory.seed(
   { id: 124, conference_id: 11, name: "組織論"},
   { id: 125, conference_id: 11, name: "その他"},
   { id: 126, conference_id: 11, name: "Keynote"},
+
+  { id: 127, conference_id: 12, name: "CI / CD"},
+  { id: 128, conference_id: 12, name: "Customizing / Extending"},
+  { id: 129, conference_id: 12, name: "IoT / Edge"},
+  { id: 130, conference_id: 12, name: "Microservices / Services Mesh"},
+  { id: 131, conference_id: 12, name: "ML / HPC"},
+  { id: 132, conference_id: 12, name: "Networking"},
+  { id: 133, conference_id: 12, name: "Operation / Monitoring / Logging"},
+  { id: 134, conference_id: 12, name: "Application / Development"},
+  { id: 135, conference_id: 12, name: "Runtime"},
+  { id: 136, conference_id: 12, name: "Security"},
+  { id: 137, conference_id: 12, name: "Serverless / FaaS"},
+  { id: 138, conference_id: 12, name: "Storage / Database"},
+  { id: 139, conference_id: 12, name: "Architecture Design"},
+  { id: 140, conference_id: 12, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 141, conference_id: 12, name: "NFV / Edge"},
+  { id: 142, conference_id: 12, name: "組織論"},
+  { id: 143, conference_id: 12, name: "FinOps"},
+  { id: 144, conference_id: 12, name: "その他"},
+  { id: 145, conference_id: 12, name: "Keynote"},
 )
 
 TalkDifficulty.seed(
@@ -579,6 +639,9 @@ TalkDifficulty.seed(
   { id: 66, conference_id: 11, name: "初級者"},
   { id: 67, conference_id: 11, name: "中級者"},
   { id: 68, conference_id: 11, name: "上級者"},
+  { id: 69, conference_id: 12, name: "初級者"},
+  { id: 70, conference_id: 12, name: "中級者"},
+  { id: 71, conference_id: 12, name: "上級者"},
 )
 
 TalkTime.seed(
@@ -607,6 +670,7 @@ import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposa
 import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

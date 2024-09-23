@@ -21,22 +21,14 @@
     共同発表者
   </h5>
   <div class="card-text">
-    <% if talk.speakers.reject{|speaker| speaker.id == @speaker.id}.size > 0 %>
+    <% if talk.speaker_invitations.size > 0 %>
       <ul>
-        <% talk.speakers.reject{|speaker| speaker.id == @speaker.id}.each do |speaker| %>
-          <li><%= speaker.name %></li>
+        <% talk.speaker_invitations.each do |invitation| %>
+          <li><%= invitation.email %>(<%= invitation.speaker_invitation_accept.present? ? '共同登壇者として登録済み' : '共同登壇者として招待済み' %>)</li>
         <% end %>
       </ul>
     <% else %>
-      <p>共同スピーカーはいません。</p>
-    <% end %>
-    <% if talk.speaker_invitations.size > 0 %>
-      <p>招待状況</p>
-      <ul>
-        <% talk.speaker_invitations.each do |invitation| %>
-          <li><%= invitation.email %>(<%= invitation.speaker_invitation_accept.present? ? '登録済み' : '未登録' %>)</li>
-        <% end %>
-      </ul>
+      <p>共同発表者は登録されていません</p>
     <% end %>
     <p>追加するには、<%= link_to 'こちら', new_speaker_invitation_path(talk_id: talk.id) %> から招待を行ってください。</p>
   </div>

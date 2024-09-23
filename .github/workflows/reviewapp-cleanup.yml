@@ -57,6 +57,7 @@ jobs:
             bash -x "$act/cleanup.sh"
             rm -rf "$act"
           done
+          exit 0
 
       - name: Commit files
         id: commit_files

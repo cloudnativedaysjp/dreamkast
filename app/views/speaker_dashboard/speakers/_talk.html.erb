@@ -24,7 +24,7 @@
     <% if talk.speaker_invitations.size > 0 %>
       <ul>
         <% talk.speaker_invitations.each do |invitation| %>
-          <li><%= invitation.email %>(<%= invitation.speaker_invitation_accept.present? ? '共同登壇者として登録済み' : '共同登壇者として招待済み' %>)</li>
+          <li><%= invitation.email %>(<%= invitation.speaker_invitation_accept.present? ? '共同発表者として登録済み' : '共同発表者として招待済み' %>)</li>
         <% end %>
       </ul>
     <% else %>

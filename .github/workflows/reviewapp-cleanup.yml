@@ -45,7 +45,7 @@ jobs:
         run: |
           EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'"$PREFIX"'\1/g')"
           # shellcheck disable=SC2010,SC2086
-          ACTUAL="$(ls | grep -E ^$PREFIX)"
+          ACTUAL="$(ls | grep -E ^$PREFIX ||:)"
 
           # If present only in ACTUAL, cleanup
           for act in $ACTUAL; do
@@ -57,7 +57,6 @@ jobs:
             bash -x "$act/cleanup.sh"
             rm -rf "$act"
           done
-          exit 0
 
       - name: Commit files
         id: commit_files

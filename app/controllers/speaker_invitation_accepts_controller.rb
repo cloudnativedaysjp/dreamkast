@@ -7,7 +7,6 @@ class SpeakerInvitationAcceptsController < ApplicationController
   def invite
     return redirect_to(new_speaker_invitation_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = Conference.find_by(abbr: params[:event])
-    @speaker = Speaker.find_by(conference: @conference, email: current_user[:info][:email])
     @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
   end
 

@@ -11,7 +11,8 @@ class Api::V1::CheckInTalksController < ApplicationController
     talk = Talk.find(@params[:talkId])
     profile = Profile.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
-    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:)
+    scanner_profile_id = @params[:scannerProfileId]
+    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:, scanner_profile_id:)
 
     if @check_in.save
       render(json: @check_in, status: :created)
@@ -22,6 +23,6 @@ class Api::V1::CheckInTalksController < ApplicationController
 
   def check_in_talks_params(params)
     json_params = ActionController::Parameters.new(params)
-    json_params.permit(:eventAbbr, :profileId, :talkId, :checkInTimestamp)
+    json_params.permit(:eventAbbr, :profileId, :talkId, :checkInTimestamp, :scannerProfileId)
   end
 end

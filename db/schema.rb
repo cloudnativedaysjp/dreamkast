@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_26_095613) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
     t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scanner_profile_id"
     t.index ["conference_id"], name: "index_check_in_conferences_on_conference_id"
     t.index ["profile_id"], name: "index_check_in_conferences_on_profile_id"
   end
@@ -80,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
     t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scanner_profile_id"
     t.index ["profile_id"], name: "index_check_in_talks_on_profile_id"
     t.index ["talk_id"], name: "index_check_in_talks_on_talk_id"
   end

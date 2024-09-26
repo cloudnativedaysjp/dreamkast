@@ -991,10 +991,13 @@ components:
           type: string
         checkInTimestamp:
           type: number
+        scannerProfileId:
+          type: string
       required:
         - profileId
         - eventAbbr
         - checkInTimestamp
+        - scannerProfileId
     CheckInTalk:
       type: object
       properties:
@@ -1006,8 +1009,11 @@ components:
           type: string
         checkInTimestamp:
           type: number
+        scannerProfileId:
+          type: string
       required:
         - eventAbbr
         - profileId
         - talkId
         - checkInTimestamp
+        - scannerProfileId

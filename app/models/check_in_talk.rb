@@ -7,6 +7,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  profile_id         :bigint           not null
+#  scanner_profile_id :bigint
 #  talk_id            :bigint           not null
 #
 # Indexes
@@ -22,4 +23,5 @@
 class CheckInTalk < ApplicationRecord
   belongs_to :talk
   belongs_to :profile
+  belongs_to :scanner_profile, optional: true, class_name: 'Profile'
 end

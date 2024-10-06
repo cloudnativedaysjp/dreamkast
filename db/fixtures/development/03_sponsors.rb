@@ -64,19 +64,16 @@ Sponsor.seed(
 
 StampRallyDefBooth.seed(
   {
-    id: 1,
     conference_id: 12,
     sponsor_id: 1,
   },
   {
-    id: 2,
     conference_id: 12,
     sponsor_id: 2,
   }
 )
 StampRallyDefFinish.seed(
   {
-    id: 3,
     conference_id: 12
   },
 )

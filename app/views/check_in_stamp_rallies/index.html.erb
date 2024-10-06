@@ -3,22 +3,33 @@
 <div class="container white_background mt-3">
   <h1 class="my-3 text-center">スタンプラリーチェックイン記録</h1>
 
+  <% case @profile.stamp_rally_status %>
+  <% when :not %>
+    <p>スタンプラリーはまだ開始されていません。</p>
+  <% when :in_progress %>
+    <p>まだ回っていないブースがあります</p>
+  <% when :pre_finished %>
+    <p>全てのブースを回り終わりました！受付でスタンプラリーをフィニッシュしてください</p>
+  <% when :finished %>
+    <p>スタンプラリーフィニッシュ済み！！</p>
+  <% else raise "Invalid status" %>
+  <% end %>
+
   <table>
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-      <!-- 必要に応じて他の列を追加 -->
+      <th>Type</th>
+      <th>Sponsor</th>
+      <th>チェックイン</th>
     </tr>
     </thead>
     <tbody>
-    <% @check_in_stamp_rallies.each do |rally| %>
+    <%  %>
+    <% @stamp_rally_defs.each do |d| %>
       <tr>
-        <td><%= rally.id %></td>
-        <td><%= rally.check_in_timestamp %></td>
+        <td><%= d.type %></td>
+        <td><%= d.sponsor&.name %></td>
+        <td><%= @check_in_stamp_rallies.find_by(stamp_rally_def: d.id).present? ? "チェックイン済み" : "" %></td>
       </tr>
     <% end %>
     </tbody>

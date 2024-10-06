@@ -1,18 +1,32 @@
-<div class="container">
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
-      <%= message %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
+<% provide(:title, 'スタンプラリーチェックイン') %>
 
-  <% @stamp_rally_defs.each do |stamp_rally_def| %>
+<div class="container">
+  <div class="row">
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-12 my-4">
+      <h2 class="text-center">スタンプラリーチェックイン</h2>
+    </div>
+
+    <div class="col-12 my-4">
+      <% if @stamp_rally_def.kind_of?(StampRallyDefBooth) %>
+        <p><%= @stamp_rally_def.sponsor.name %> のブースにチェックインしますか？</p>
+      <% else %>
+        <p>スタンプラリーを全て回り終わりました。フィニッシュしますか？</p>
+      <% end %>
+    </div>
+
 
     <%= form_with(url: check_in_stamp_rallies_path, model: @check_in_stamp_rally, method: :post) do |form| %>
-      <%= form.hidden_field :stamp_rally_def_id, value: stamp_rally_def.id %>
-      <%= form.submit "id: #{stamp_rally_def.id}, type: #{stamp_rally_def.type}", class: "btn btn-primary" %>
+      <%= form.hidden_field :stamp_rally_def_id, value: @stamp_rally_def.id %>
+      <%= form.submit "Check In (id: #{@stamp_rally_def.id}, type: #{@stamp_rally_def.type}, sponsor: #{@stamp_rally_def.sponsor&.name})", class: "btn btn-primary" %>
     <% end %>
-
-
-  <% end %>
+  </div>
 </div>

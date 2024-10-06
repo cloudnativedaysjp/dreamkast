@@ -2,7 +2,7 @@
 #
 # Table name: stamp_rally_defs
 #
-#  id            :bigint           not null, primary key
+#  id            :string(26)       not null, primary key
 #  type          :string(255)      not null
 #  conference_id :bigint           not null
 #  sponsor_id    :bigint

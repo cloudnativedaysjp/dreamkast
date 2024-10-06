@@ -7,11 +7,12 @@ class CheckInStampRalliesController < ApplicationController
   end
 
   def index
+    @stamp_rally_defs = @conference.stamp_rally_defs
     @check_in_stamp_rallies = @profile.check_in_stamp_rallies
   end
 
   def new
-    @stamp_rally_defs = @conference.stamp_rally_defs
+    @stamp_rally_def = @conference.stamp_rally_defs.find(params[:stamp_rally_def_id])
     @check_in_stamp_rally = CheckInStampRally.new
   end
 
@@ -26,7 +27,6 @@ class CheckInStampRalliesController < ApplicationController
       end
     end
   end
-
 
   def check_in_stamp_rallies_params(params)
     params.require(:check_in_stamp_rally)

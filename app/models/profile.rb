@@ -182,4 +182,24 @@ class Profile < ApplicationRecord
   def attend_online?
     online?
   end
+
+  def stamp_rally_status
+    defs = conference.stamp_rally_defs
+    check_ins = check_in_stamp_rallies
+    if check_ins.empty?
+      :not
+    elsif check_ins(StampRallyDefBooth).size >= 1
+      :in_progress
+    elsif check_ins(StampRallyDefBooth).size == defs.where(type: StampRallyDefBooth).size && check_ins(StampRallyDefFinish).empty?
+      :pre_finished
+    elsif check_ins(StampRallyDefBooth).size == defs.where(type: StampRallyDefBooth).size && check_ins(StampRallyDefFinish).size >= 1
+      :finished
+    else
+      :error
+    end
+  end
+
+  def check_ins(klass)
+    check_in_stamp_rallies.select { |check_in| check_in.stamp_rally_def.type == klass.name }
+  end
 end

@@ -1,0 +1,10 @@
+<% if notice || alert %>
+  <%= turbo_stream.update 'flash_messages' do %>
+    <% if notice %>
+      <p><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p><%= alert %></p>
+    <% end %>
+  <% end %>
+<% end %>

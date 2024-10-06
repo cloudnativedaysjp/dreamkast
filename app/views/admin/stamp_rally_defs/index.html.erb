@@ -1,0 +1,24 @@
+<% provide(:title, 'スタンプラリーチェックポイント一覧') %>
+<%= render 'admin/layout' do %>
+    <div id="flash_messages">
+  </div>
+
+  <div class="row">
+    <h2>スタンプラリーチェックポイント記録</h2>
+  </div>
+
+  <div class="col-4 d-flex">
+    <%= link_to "登録",
+                new_admin_stamp_rally_def_path,
+                class: "btn btn-outline-primary",
+                data: { turbo_frame: dom_id(StampRallyDef.new) }
+    %>
+  </div>
+
+
+  <% @stamp_rally_defs.each do |stamp_rally_def| %>
+    <div>
+      <%= render 'admin/stamp_rally_defs/stamp_rally_def', conference: @conference, stamp_rally_def: stamp_rally_def %>
+    </div>
+  <% end %>
+<% end %>

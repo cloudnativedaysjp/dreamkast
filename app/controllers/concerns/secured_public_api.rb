@@ -48,4 +48,8 @@ module SecuredPublicApi
   def set_conference
     conference
   end
+
+  def profile
+    @profile ||= Profile.find_by(email: @current_user[:info][:email], conference_id: conference.id)
+  end
 end

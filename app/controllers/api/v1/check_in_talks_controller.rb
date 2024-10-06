@@ -11,7 +11,7 @@ class Api::V1::CheckInTalksController < ApplicationController
     talk = Talk.find(@params[:talkId])
     profile = Profile.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
-    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:)
+    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:, scanner_profile_id: profile.id)
 
     if @check_in.save
       render(json: @check_in, status: :created)

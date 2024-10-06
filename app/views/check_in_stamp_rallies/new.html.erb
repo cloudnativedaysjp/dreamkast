@@ -1,0 +1,18 @@
+<div class="container">
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
+      <%= message %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <% @stamp_rally_defs.each do |stamp_rally_def| %>
+
+    <%= form_with(url: check_in_stamp_rallies_path, model: @check_in_stamp_rally, method: :post) do |form| %>
+      <%= form.hidden_field :stamp_rally_def_id, value: stamp_rally_def.id %>
+      <%= form.submit "id: #{stamp_rally_def.id}, type: #{stamp_rally_def.type}", class: "btn btn-primary" %>
+    <% end %>
+
+
+  <% end %>
+</div>

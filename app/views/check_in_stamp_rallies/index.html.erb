@@ -1,0 +1,26 @@
+<% provide(:title, 'スタンプラリーチェックイン記録') %>
+
+<div class="container white_background mt-3">
+  <h1 class="my-3 text-center">スタンプラリーチェックイン記録</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <!-- 必要に応じて他の列を追加 -->
+    </tr>
+    </thead>
+    <tbody>
+    <% @check_in_stamp_rallies.each do |rally| %>
+      <tr>
+        <td><%= rally.id %></td>
+        <td><%= rally.check_in_timestamp %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

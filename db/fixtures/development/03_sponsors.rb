@@ -42,3 +42,41 @@ SponsorType.seed(
     order: 5,
   },
 )
+
+Sponsor.seed(
+  {
+    id: 1,
+    abbr: "booth1",
+    conference_id: 12,
+    name: "Booth Sponsor 1",
+    url: "https://example.com",
+    description: "Booth Sponsor 1",
+  },
+  {
+    id: 2,
+    abbr: "booth2",
+    conference_id: 12,
+    name: "Booth Sponsor 2",
+    url: "https://example.com",
+    description: "Booth Sponsor 2",
+  },
+)
+
+StampRallyDefBooth.seed(
+  {
+    id: 1,
+    conference_id: 12,
+    sponsor_id: 1,
+  },
+  {
+    id: 2,
+    conference_id: 12,
+    sponsor_id: 2,
+  }
+)
+StampRallyDefFinish.seed(
+  {
+    id: 3,
+    conference_id: 12
+  },
+)

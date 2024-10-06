@@ -1,0 +1,5 @@
+class StampRallyDef
+  private
+
+  def stamp_rally_def_booth?: -> bool
+end

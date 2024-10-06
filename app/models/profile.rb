@@ -75,6 +75,7 @@ class Profile < ApplicationRecord
   has_many :check_ins
   has_many :check_in_conferences
   has_many :check_in_talks
+  has_many :check_in_stamp_rallies
   has_one :public_profile, dependent: :destroy
 
   before_create do

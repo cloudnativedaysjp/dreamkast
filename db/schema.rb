@@ -41,13 +41,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
-  create_table "booth_stamp_rally_defs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "conference_id", null: false
-    t.bigint "sponsor_id", null: false
-    t.index ["conference_id"], name: "index_booth_stamp_rally_defs_on_conference_id"
-    t.index ["sponsor_id"], name: "index_booth_stamp_rally_defs_on_sponsor_id"
-  end
-
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
@@ -71,14 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
     t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
   end
 
-  create_table "check_in_booth_stamp_rallies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "booth_stamp_rally_defs_id", null: false
-    t.bigint "profile_id", null: false
-    t.datetime "check_in_timestamp", null: false
-    t.index ["booth_stamp_rally_defs_id"], name: "index_check_in_booth_stamp_rallies_on_booth_stamp_rally_defs_id"
-    t.index ["profile_id"], name: "index_check_in_booth_stamp_rallies_on_profile_id"
-  end
-
   create_table "check_in_conferences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id", null: false
@@ -88,6 +73,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
     t.bigint "scanner_profile_id"
     t.index ["conference_id"], name: "index_check_in_conferences_on_conference_id"
     t.index ["profile_id"], name: "index_check_in_conferences_on_profile_id"
+  end
+
+  create_table "check_in_stamp_rallies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "stamp_rally_def_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "check_in_timestamp", null: false
+    t.index ["profile_id"], name: "index_check_in_stamp_rallies_on_profile_id"
+    t.index ["stamp_rally_def_id"], name: "index_check_in_stamp_rallies_on_stamp_rally_def_id"
   end
 
   create_table "check_in_talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -465,6 +458,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stamp_rally_defs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id"
+    t.string "type", null: false
+    t.index ["conference_id"], name: "index_stamp_rally_defs_on_conference_id"
+    t.index ["sponsor_id"], name: "index_stamp_rally_defs_on_sponsor_id"
+  end
+
   create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
@@ -604,15 +605,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "announcements", "conferences"
-  add_foreign_key "booth_stamp_rally_defs", "conferences"
-  add_foreign_key "booth_stamp_rally_defs", "sponsors"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
-  add_foreign_key "check_in_booth_stamp_rallies", "booth_stamp_rally_defs", column: "booth_stamp_rally_defs_id"
-  add_foreign_key "check_in_booth_stamp_rallies", "profiles"
   add_foreign_key "check_in_conferences", "conferences"
   add_foreign_key "check_in_conferences", "profiles"
+  add_foreign_key "check_in_stamp_rallies", "profiles"
+  add_foreign_key "check_in_stamp_rallies", "stamp_rally_defs"
   add_foreign_key "check_in_talks", "profiles"
   add_foreign_key "check_in_talks", "talks"
   add_foreign_key "links", "conferences"
@@ -649,6 +648,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
+  add_foreign_key "stamp_rally_defs", "conferences"
   add_foreign_key "streamings", "conferences"
   add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"

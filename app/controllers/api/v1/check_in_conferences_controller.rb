@@ -10,7 +10,7 @@ class Api::V1::CheckInConferencesController < ApplicationController
     @params = check_in_conferences_params(JSON.parse(request.body.read, { symbolize_names: true }))
     profile = Profile.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
-    @check_in = CheckInConference.new(profile:, conference:, check_in_timestamp:, scanner_profile_id: @profile.id)
+    @check_in = CheckInConference.new(profile:, conference:, check_in_timestamp:, scanner_profile_id: profile.id)
 
     if @check_in.save
       render(json: @check_in, status: :created)

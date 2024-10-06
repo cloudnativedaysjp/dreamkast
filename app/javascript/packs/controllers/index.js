@@ -21,3 +21,6 @@ application.register("copy", CopyController)
 
 import CropUploadController from "./crop_upload_controller.js"
 application.register("crop-upload", CropUploadController)
+
+import ModalController from "./modal_controller";
+application.register("modal", ModalController);

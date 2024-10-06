@@ -1,1 +1,4 @@
-<%= render "form", stamp_rally_def: @stamp_rally_def, sponsors: @sponsors, type_options: @type_options%>
+<%= render "layouts/modal", title: "編集" do %>
+  <%= render "form", stamp_rally_def: @stamp_rally_def, sponsors: @sponsors, type_options: @type_options%>
+<% end %>
+

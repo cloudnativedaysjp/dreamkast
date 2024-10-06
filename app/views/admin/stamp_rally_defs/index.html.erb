@@ -1,24 +1,34 @@
 <% provide(:title, 'スタンプラリーチェックポイント一覧') %>
 <%= render 'admin/layout' do %>
-    <div id="flash_messages">
+  <div id="flash_messages">
   </div>
 
   <div class="row">
     <h2>スタンプラリーチェックポイント記録</h2>
   </div>
 
-  <div class="col-4 d-flex">
-    <%= link_to "登録",
-                new_admin_stamp_rally_def_path,
-                class: "btn btn-outline-primary",
-                data: { turbo_frame: dom_id(StampRallyDef.new) }
-    %>
-  </div>
+  <%= turbo_frame_tag "stamp_rally_def_list" do %>
+    <div class="col-4 d-flex">
+      <%= link_to "登録",
+                  new_admin_stamp_rally_def_path,
+                  class: "btn btn-outline-primary",
+                  data: { turbo_frame: "modal" }
+      %>
+    </div>
 
 
-  <% @stamp_rally_defs.each do |stamp_rally_def| %>
-    <div>
-      <%= render 'admin/stamp_rally_defs/stamp_rally_def', conference: @conference, stamp_rally_def: stamp_rally_def %>
+    <div id="stamp_rally_defs">
+      <div class="row py-2 border-top">
+        <div class="col-2 my-auto">ID</div>
+        <div class="col-2 my-auto">Type</div>
+        <div class="col-2 my-auto">Sponsor Name</div>
+        <div class="col-2"></div>
+      </div>
+      <% @stamp_rally_defs.each do |stamp_rally_def| %>
+        <%= render 'admin/stamp_rally_defs/stamp_rally_def', conference: @conference, stamp_rally_def: stamp_rally_def %>
+      <% end %>
     </div>
   <% end %>
+
+  <%= turbo_frame_tag "modal" %>
 <% end %>

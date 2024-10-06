@@ -1,13 +1,10 @@
 <%= turbo_frame_tag stamp_rally_def do %>
-  <%= form_with(model: stamp_rally_def, url: admin_stamp_rally_def_path, scope: :stamp_rally_def) do |form| %>
+  <%= form_with(model: [:admin, stamp_rally_def.becomes(StampRallyDef)],
+                url: @stamp_rally_def.new_record? ? admin_stamp_rally_defs_path(event: params[:event]) : admin_stamp_rally_def_path(@stamp_rally_def, event: params[:event]),
+                data: { action: "turbo:submit-end->modal#close" }) do |form| %>
     <div class="row py-2 border-top">
       <div class="col-4">
-        <% p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAa' %>
-        <% p type_options %>
-        <% p stamp_rally_def.type %>
         <%= form.label :type %>
-        <% p Hash[type_options.map { |element| [element, element] }] %>
-        <%#= form.text_field :type, options_for_select(Hash[type_options.map { |element| [element, element] }], selected: stamp_rally_def.type) %>
         <%= form.select :type, options_for_select(type_options, selected: stamp_rally_def.type) %>
       </div>
       <div class="col-4">
@@ -18,7 +15,7 @@
       <div class="col-4">
         <div class="d-flex justify-content-end">
           <%= form.submit class: "btn btn-primary btn-sm me-2" %>
-          <%= link_to "キャンセル", admin_stamp_rally_def_path, class: "btn btn-sm btn-outline-secondary" %>
+          <%#= link_to "キャンセル", admin_stamp_rally_defs_path, class: "btn btn-sm btn-outline-secondary" %>
         </div>
       </div>
     </div>

@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
     <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
+  <meta name="turbo-cache-control" content="no-cache">
 
-    <script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+  <script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
 
     <link href="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" rel="stylesheet" />
@@ -96,6 +97,7 @@
   <% end %>
 
 </div>
+
 </body>
 
 </html>

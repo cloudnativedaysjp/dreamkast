@@ -1,9 +1,9 @@
 class Admin::StampRallyDefsController < ApplicationController
   include SecuredAdmin
 
-  def show
-
-  end
+  # def show
+  #
+  # end
 
   def index
     @stamp_rally_defs = conference.stamp_rally_defs
@@ -15,8 +15,13 @@ class Admin::StampRallyDefsController < ApplicationController
     @type_options = StampRallyDef::Type::KLASSES.map(&:name)
   end
 
-  def get_or_create_admin_profile
-    super
+  def create
+    @stamp_rally_def = StampRallyDef.new(stamp_rally_def_params.merge(conference: conference))
+    if @stamp_rally_def.save
+      flash.now[:notice] = "スタンプラリー定義 #{@stamp_rally_def.id}を登録しました"
+    else
+      render(:new, status: :unprocessable_entity)
+    end
   end
   def edit
     @stamp_rally_def = StampRallyDef.find(params[:id])

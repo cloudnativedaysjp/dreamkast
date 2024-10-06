@@ -12,13 +12,14 @@ class Admin::StampRallyDefsController < ApplicationController
   end
 
   def create
-    @stamp_rally_def = StampRallyDef.new(stamp_rally_def_params.merge(conference: conference))
+    @stamp_rally_def = StampRallyDef.new(stamp_rally_def_params.merge(conference:))
     if @stamp_rally_def.save
       flash.now[:notice] = "スタンプラリー定義 #{@stamp_rally_def.id}を登録しました"
     else
       render(:new, status: :unprocessable_entity)
     end
   end
+
   def edit
     @stamp_rally_def = StampRallyDef.find(params[:id])
     @sponsors = conference.sponsors

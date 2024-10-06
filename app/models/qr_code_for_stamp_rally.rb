@@ -28,7 +28,7 @@ class QrCodeForStampRally
   def url
     Rails.application.routes.url_helpers.new_check_in_stamp_rally_url(
       event: event.abbr,
-      params: {stamp_rally_def: stamp_rally_def.id},
+      params: { stamp_rally_def: stamp_rally_def.id },
       host: Rails.application.default_url_options[:host]
     )
   end

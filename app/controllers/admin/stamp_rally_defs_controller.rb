@@ -1,10 +1,6 @@
 class Admin::StampRallyDefsController < ApplicationController
   include SecuredAdmin
 
-  # def show
-  #
-  # end
-
   def index
     @stamp_rally_defs = conference.stamp_rally_defs
   end
@@ -42,10 +38,6 @@ class Admin::StampRallyDefsController < ApplicationController
     @stamp_rally_def = StampRallyDef.find(params[:id])
     @stamp_rally_def.destroy
     flash.now[:notice] = 'スタンプラリー定義を削除しました'
-  end
-
-  def qr
-
   end
 
   private

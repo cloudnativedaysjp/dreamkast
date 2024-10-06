@@ -185,8 +185,7 @@ class Profile < ApplicationRecord
 
   def stamp_rally_status
     defs = conference.stamp_rally_defs
-    check_ins = check_in_stamp_rallies
-    if check_ins.empty?
+    if check_in_stamp_rallies.empty?
       :not
     elsif check_ins(StampRallyDefBooth).size >= 1
       :in_progress

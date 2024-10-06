@@ -7,6 +7,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  profile_id         :bigint           not null
+#  scanner_profile_id :bigint
 #  talk_id            :bigint           not null
 #
 # Indexes

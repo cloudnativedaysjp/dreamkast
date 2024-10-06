@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -41,6 +41,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
+  create_table "booth_stamp_rally_defs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.index ["conference_id"], name: "index_booth_stamp_rally_defs_on_conference_id"
+    t.index ["sponsor_id"], name: "index_booth_stamp_rally_defs_on_sponsor_id"
+  end
+
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id"
@@ -64,12 +71,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
     t.index ["speaker_id"], name: "index_chat_messages_on_speaker_id"
   end
 
+  create_table "check_in_booth_stamp_rallies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "booth_stamp_rally_defs_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "check_in_timestamp", null: false
+    t.index ["booth_stamp_rally_defs_id"], name: "index_check_in_booth_stamp_rallies_on_booth_stamp_rally_defs_id"
+    t.index ["profile_id"], name: "index_check_in_booth_stamp_rallies_on_profile_id"
+  end
+
   create_table "check_in_conferences", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.bigint "profile_id", null: false
     t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scanner_profile_id"
     t.index ["conference_id"], name: "index_check_in_conferences_on_conference_id"
     t.index ["profile_id"], name: "index_check_in_conferences_on_profile_id"
   end
@@ -80,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
     t.datetime "check_in_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scanner_profile_id"
     t.index ["profile_id"], name: "index_check_in_talks_on_profile_id"
     t.index ["talk_id"], name: "index_check_in_talks_on_talk_id"
   end
@@ -587,9 +604,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_140927) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "announcements", "conferences"
+  add_foreign_key "booth_stamp_rally_defs", "conferences"
+  add_foreign_key "booth_stamp_rally_defs", "sponsors"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
+  add_foreign_key "check_in_booth_stamp_rallies", "booth_stamp_rally_defs", column: "booth_stamp_rally_defs_id"
+  add_foreign_key "check_in_booth_stamp_rallies", "profiles"
   add_foreign_key "check_in_conferences", "conferences"
   add_foreign_key "check_in_conferences", "profiles"
   add_foreign_key "check_in_talks", "profiles"

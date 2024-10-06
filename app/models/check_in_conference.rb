@@ -8,6 +8,7 @@
 #  updated_at         :datetime         not null
 #  conference_id      :bigint           not null
 #  profile_id         :bigint           not null
+#  scanner_profile_id :bigint
 #
 # Indexes
 #

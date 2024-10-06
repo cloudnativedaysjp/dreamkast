@@ -3,16 +3,16 @@
                 url: @stamp_rally_def.new_record? ? admin_stamp_rally_defs_path(event: params[:event]) : admin_stamp_rally_def_path(@stamp_rally_def, event: params[:event]),
                 data: { action: "turbo:submit-end->modal#close" }) do |form| %>
     <div class="row py-2 border-top">
-      <div class="col-4">
-        <%= form.label :type %>
-        <%= form.select :type, options_for_select(type_options, selected: stamp_rally_def.type) %>
+      <div class="mb-3">
+        <%= form.label :type, class: "form-label" %>
+        <%= form.select :type, options_for_select(type_options, selected: stamp_rally_def.type), {}, {class: "form-select"} %>
       </div>
-      <div class="col-4">
-        <%= form.label :sponsor_id %>
-        <%= form.collection_select :sponsor_id, sponsors, :id, :name, prompt: "Select a sponsor" %>
+      <div class="mb-3">
+        <%= form.label :sponsor_id, class: "form-label"  %>
+        <%= form.collection_select :sponsor_id, sponsors, :id, :name, {}, class: "form-select"  %>
       </div>
 
-      <div class="col-4">
+      <div class="mb-3">
         <div class="d-flex justify-content-end">
           <%= form.submit class: "btn btn-primary btn-sm me-2" %>
         </div>

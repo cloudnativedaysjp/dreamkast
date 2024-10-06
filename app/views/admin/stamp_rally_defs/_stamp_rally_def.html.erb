@@ -9,6 +9,9 @@
     <div class="col-2 my-auto">
       <%= stamp_rally_def.sponsor&.name %>
     </div>
+    <div class="col-2 my-auto">
+      <%= link_to 'QRコード', admin_qr_code_for_stamp_rally_path(id: stamp_rally_def.id), data: { turbo: false } %>
+    </div>
     <div class="col-2">
       <div class="d-flex justify-content-end">
         <% p stamp_rally_def.conference %>

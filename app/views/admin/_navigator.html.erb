@@ -4,7 +4,7 @@
   </div>
 
   <ul class="list-unstyled components">
-    <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: controller_name == 'conference' ||  action_name == 'show' %>
     <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'announcements' %>
     <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
     <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'check_in_statuses' %>
@@ -20,7 +20,7 @@
     <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: action_name == 'media_package_harvest_job' %>
     <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
-    <%= render 'admin/nav_item', name: 'Stamp Rally Checkpoints', path: admin_stamp_rally_defs_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
+    <%= render 'admin/nav_item', name: 'Stamp Rally Checkpoints', path: admin_stamp_rally_defs_path, active: controller_name == 'stamp_rally_defs' || controller_name == 'qr_code_for_stamp_rallies' || action_name == 'show_sponsor' %>
     <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
     <%= render 'admin/nav_item', name: 'Edit Admin Profile', path: edit_admin_admin_profile_path(id: @admin_profile), active: action_name == 'administrators' %>
     <%= render 'admin/nav_item', name: 'Edit Team Page', path: admin_team_path, active: controller_name == 'teams' %>

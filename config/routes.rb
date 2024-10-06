@@ -71,6 +71,8 @@ Rails.application.routes.draw do
       resources :speaker_announcements
       resources :streamings
       resources :stamp_rally_defs
+      resources :qr_code_for_stamp_rallies, only: [:show]
+      get 'stamp_rally_defs/:id/qr' => 'stamp_rally_defs#qr'
       post 'create_aws_resources' => 'streamings#create_aws_resources'
       post 'delete_aws_resources' => 'streamings#delete_aws_resources'
       post 'start_media_live_channel' => 'media_live_channel#start_channel'

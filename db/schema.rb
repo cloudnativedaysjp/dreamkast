@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
     t.index ["profile_id"], name: "index_check_in_conferences_on_profile_id"
   end
 
-  create_table "check_in_stamp_rallies", id: { type: :string, limit: 26 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "check_in_rallies", id: { type: :string, limit: 26 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "stamp_rally_def_id", limit: 26, null: false
     t.bigint "profile_id", null: false
     t.datetime "check_in_timestamp", null: false

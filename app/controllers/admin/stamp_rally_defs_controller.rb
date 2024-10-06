@@ -44,6 +44,10 @@ class Admin::StampRallyDefsController < ApplicationController
     flash.now[:notice] = 'スタンプラリー定義を削除しました'
   end
 
+  def qr
+
+  end
+
   private
 
   def stamp_rally_def_params

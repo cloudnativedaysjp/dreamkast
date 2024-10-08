@@ -7,17 +7,17 @@
     <h2>スタンプラリーチェックポイント記録</h2>
   </div>
 
-  <%= turbo_frame_tag "stamp_rally_def_list" do %>
+  <%= turbo_frame_tag "stamp_rally_check_point_list" do %>
     <div class="col-4 d-flex">
       <%= link_to "登録",
-                  new_admin_stamp_rally_def_path,
+                  new_admin_stamp_rally_check_point_path,
                   class: "btn btn-outline-primary",
                   data: { turbo_frame: "modal" }
       %>
     </div>
 
 
-    <div id="stamp_rally_defs">
+    <div id="stamp_rally_check_points">
       <div class="row py-2 border-top">
         <div class="col-2 my-auto">ID</div>
         <div class="col-2 my-auto">Type</div>
@@ -25,8 +25,8 @@
         <div class="col-2 my-auto"></div>
         <div class="col-2"></div>
       </div>
-      <% @stamp_rally_defs.each do |stamp_rally_def| %>
-        <%= render 'admin/stamp_rally_defs/stamp_rally_def', conference: @conference, stamp_rally_def: stamp_rally_def %>
+      <% @stamp_rally_check_points.each do |stamp_rally_check_point| %>
+        <%= render 'admin/stamp_rally_check_points/stamp_rally_check_point', conference: @conference, stamp_rally_check_point: stamp_rally_check_point %>
       <% end %>
     </div>
   <% end %>

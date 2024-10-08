@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: stamp_rally_defs
+# Table name: stamp_rally_check_points
 #
 #  id            :string(26)       not null, primary key
 #  type          :string(255)      not null
@@ -9,8 +9,8 @@
 #
 # Indexes
 #
-#  index_stamp_rally_defs_on_conference_id  (conference_id)
-#  index_stamp_rally_defs_on_sponsor_id     (sponsor_id)
+#  index_stamp_rally_check_points_on_conference_id  (conference_id)
+#  index_stamp_rally_check_points_on_sponsor_id     (sponsor_id)
 #
 # Foreign Keys
 #
@@ -18,17 +18,17 @@
 #
 class QrCodeForStampRally
   include ActiveModel::Model
-  attr_accessor :stamp_rally_def, :event
+  attr_accessor :stamp_rally_check_point, :event
 
-  def initialize(stamp_rally_def, event)
-    @stamp_rally_def = stamp_rally_def
+  def initialize(stamp_rally_check_point, event)
+    @stamp_rally_check_point = stamp_rally_check_point
     @event = event
   end
 
   def url
-    Rails.application.routes.url_helpers.new_check_in_stamp_rally_url(
+    Rails.application.routes.url_helpers.new_stamp_rally_check_in_url(
       event: event.abbr,
-      params: { stamp_rally_def: stamp_rally_def.id },
+      params: { stamp_rally_check_point: stamp_rally_check_point.id },
       host: Rails.application.default_url_options[:host]
     )
   end

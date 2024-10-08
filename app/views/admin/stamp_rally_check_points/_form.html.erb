@@ -1,11 +1,11 @@
-<%= turbo_frame_tag stamp_rally_def do %>
-  <%= form_with(model: [:admin, stamp_rally_def.becomes(StampRallyDef)],
-                url: @stamp_rally_def.new_record? ? admin_stamp_rally_defs_path(event: params[:event]) : admin_stamp_rally_def_path(@stamp_rally_def, event: params[:event]),
+<%= turbo_frame_tag stamp_rally_check_point do %>
+  <%= form_with(model: [:admin, stamp_rally_check_point.becomes(StampRallyCheckPoint)],
+                url: @stamp_rally_check_point.new_record? ? admin_stamp_rally_check_points_path(event: params[:event]) : admin_stamp_rally_check_point_path(@stamp_rally_check_point, event: params[:event]),
                 data: { action: "turbo:submit-end->modal#close" }) do |form| %>
     <div class="row py-2 border-top">
       <div class="mb-3">
         <%= form.label :type, class: "form-label" %>
-        <%= form.select :type, options_for_select(type_options, selected: stamp_rally_def.type), {}, {class: "form-select"} %>
+        <%= form.select :type, options_for_select(type_options, selected: stamp_rally_check_point.type), {}, {class: "form-select"} %>
       </div>
       <div class="mb-3">
         <%= form.label :sponsor_id, class: "form-label"  %>

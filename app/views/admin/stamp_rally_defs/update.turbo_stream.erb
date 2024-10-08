@@ -1,5 +1,0 @@
-<%= turbo_stream.replace @stamp_rally_def do %>
-  <%= render partial: 'admin/stamp_rally_defs/stamp_rally_def', locals: { stamp_rally_def: @stamp_rally_def, conference: @conference } %>
-<% end %>
-<%= render 'layouts/turbo_stream_flash' %>
-<%= yield %>

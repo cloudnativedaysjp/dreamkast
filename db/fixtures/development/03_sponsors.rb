@@ -62,7 +62,7 @@ Sponsor.seed(
   },
 )
 
-StampRallyDefBooth.seed(
+StampRallyCheckPointBooth.seed(
   {
     id: '01J9G65KEWB1NW637VDPWAA88W',
     conference_id: 12,
@@ -74,7 +74,7 @@ StampRallyDefBooth.seed(
     sponsor_id: 2,
   }
 )
-StampRallyDefFinish.seed(
+StampRallyCheckPointFinish.seed(
   {
     id: '01J9G65KF4H9108RQ0ATRCT8H8',
     conference_id: 12

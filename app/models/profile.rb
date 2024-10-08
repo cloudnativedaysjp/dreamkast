@@ -75,7 +75,7 @@ class Profile < ApplicationRecord
   has_many :check_ins
   has_many :check_in_conferences
   has_many :check_in_talks
-  has_many :check_in_stamp_rallies
+  has_many :stamp_rally_check_ins
   has_one :public_profile, dependent: :destroy
 
   before_create do
@@ -184,14 +184,14 @@ class Profile < ApplicationRecord
   end
 
   def stamp_rally_status
-    defs = conference.stamp_rally_defs
-    if check_in_stamp_rallies.empty?
+    defs = conference.stamp_rally_check_points
+    if stamp_rally_check_ins.empty?
       :not
-    elsif check_ins(StampRallyDefBooth).size >= 1
+    elsif check_ins(StampRallyCheckPointBooth).size >= 1
       :in_progress
-    elsif check_ins(StampRallyDefBooth).size == defs.where(type: StampRallyDefBooth).size && check_ins(StampRallyDefFinish).empty?
+    elsif check_ins(StampRallyCheckPointBooth).size == defs.where(type: StampRallyCheckPointBooth).size && check_ins(StampRallyCheckPointFinish).empty?
       :pre_finished
-    elsif check_ins(StampRallyDefBooth).size == defs.where(type: StampRallyDefBooth).size && check_ins(StampRallyDefFinish).size >= 1
+    elsif check_ins(StampRallyCheckPointBooth).size == defs.where(type: StampRallyCheckPointBooth).size && check_ins(StampRallyCheckPointFinish).size >= 1
       :finished
     else
       :error
@@ -199,6 +199,6 @@ class Profile < ApplicationRecord
   end
 
   def check_ins(klass)
-    check_in_stamp_rallies.select { |check_in| check_in.stamp_rally_def.type == klass.name }
+    stamp_rally_check_ins.select { |check_in| check_in.stamp_rally_check_point.type == klass.name }
   end
 end

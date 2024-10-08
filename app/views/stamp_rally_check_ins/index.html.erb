@@ -25,11 +25,11 @@
     </thead>
     <tbody>
     <%  %>
-    <% @stamp_rally_defs.each do |d| %>
+    <% @stamp_rally_check_points.each do |d| %>
       <tr>
         <td><%= d.type %></td>
         <td><%= d.sponsor&.name %></td>
-        <td><%= @check_in_stamp_rallies.find_by(stamp_rally_def: d.id).present? ? "チェックイン済み" : "" %></td>
+        <td><%= @stamp_rally_check_ins.find_by(stamp_rally_check_point: d.id).present? ? "チェックイン済み" : "" %></td>
       </tr>
     <% end %>
     </tbody>

@@ -70,9 +70,9 @@ Rails.application.routes.draw do
       resources :announcements
       resources :speaker_announcements
       resources :streamings
-      resources :stamp_rally_defs
+      resources :stamp_rally_check_points
       resources :qr_code_for_stamp_rallies, only: [:show]
-      get 'stamp_rally_defs/:id/qr' => 'stamp_rally_defs#qr'
+      get 'stamp_rally_check_points/:id/qr' => 'stamp_rally_check_points#qr'
       post 'create_aws_resources' => 'streamings#create_aws_resources'
       post 'delete_aws_resources' => 'streamings#delete_aws_resources'
       post 'start_media_live_channel' => 'media_live_channel#start_channel'
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
     resources :speaker_invitations, only: [:index, :new, :create]
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
-    resources :check_in_stamp_rallies, only: [:index, :new, :create]
+    resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
     namespace :sponsor_dashboards do
       get '/login' => 'sponsor_dashboards#login'

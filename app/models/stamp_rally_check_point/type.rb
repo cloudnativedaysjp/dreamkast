@@ -1,5 +1,5 @@
 class StampRallyCheckPoint < ApplicationRecord
   class Type < ApplicationRecord
-    KLASSES = [StampRallyPointBooth, StampRallyPointFinish].freeze
+    KLASSES = [StampRallyCheckPoint, StampRallyCheckPointBooth, StampRallyCheckPointFinish].freeze
   end
 end

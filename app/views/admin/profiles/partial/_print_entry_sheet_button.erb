@@ -1,0 +1,6 @@
+<div id="profile_<%= profile.id %>">
+  <%= form_with(url: admin_print_entry_sheet_path, method: "post") do |f| %>
+    <%= f.hidden_field "print[profile_id]", value: profile.id %>
+    <%= f.submit '印刷', data: { turbo_confirm: "#{profile.last_name} #{profile.first_name} を印刷する"} %>
+  <% end %>
+</div>

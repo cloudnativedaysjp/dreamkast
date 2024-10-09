@@ -113,6 +113,9 @@ class ProfilesController < ApplicationController
   def entry_sheet
   end
 
+  def print_entry_sheet
+  end
+
   def view_qr
   end
 

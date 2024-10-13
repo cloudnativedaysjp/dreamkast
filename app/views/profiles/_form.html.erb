@@ -106,6 +106,11 @@
   </div>
 
   <div class="form-row form-group">
+    <%= form.label :number_of_employee_id, "従業員数" %><span class="required">*</span>
+    <%= form.collection_select :number_of_employee_id, ::FormModels::NumberOfEmployee.all, :id, :name, {prompt: ""}, {required: true,class: "form-control", autocomplete: "number-of-employee-id"} %>
+  </div>
+
+  <div class="form-row form-group">
     <%= form.label :occupation_id, "職種" %><span class="required">*</span>
     <%= form.collection_select :occupation_id, ::FormModels::Occupation.all, :id, :name, {prompt: "", disabled: ::FormModels::Occupation.all.map{|i| i.id if i.disabled}.compact}, {required: true, class: "form-control", autocomplete: "occupation_id"} %>
   </div>
@@ -125,11 +130,6 @@
   <div class="form-row form-group">
     <%= form.label :annual_sales_id, "年商規模" %>
     <%= form.collection_select :annual_sales_id, ::FormModels::AnnualSales.all, :id, :name, {prompt: ""}, {class: "form-control", autocomplete: "annual-sales-id"} %>
-  </div>
-
-  <div class="form-row form-group">
-    <%= form.label :number_of_employee_id, "従業員数" %>
-    <%= form.collection_select :number_of_employee_id, ::FormModels::NumberOfEmployee.all, :id, :name, {prompt: ""}, {class: "form-control", autocomplete: "number-of-employee-id"} %>
   </div>
 
   <div class="form-row form-group">

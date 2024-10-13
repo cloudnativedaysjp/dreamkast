@@ -443,6 +443,10 @@ Room.seed(
   {id: 21, conference_id: 11, name: 'A'},
   {id: 22, conference_id: 11, name: 'B'},
   {id: 23, conference_id: 11, name: 'C'},
+  {id: 24, conference_id: 12, name: 'A-Room1'},
+  {id: 25, conference_id: 12, name: 'B-Room2'},
+  {id: 26, conference_id: 12, name: 'C-Boardroom'},
+  {id: 27, conference_id: 12, name: 'D-Room6'},
 )
 
 

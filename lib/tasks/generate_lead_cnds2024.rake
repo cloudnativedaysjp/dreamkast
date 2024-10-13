@@ -60,7 +60,7 @@ namespace :util do
             line = [
               profile.offline? ? 1 : 0,
               profile.online? ? 1 : 0,
-              profile.audience_counts.where("min > #{threshold}").exists? || profile.check_ins.present? ? 1 : 0,
+              profile.audience_counts.where("min >= #{threshold}").exists? || profile.check_ins.present? ? 1 : 0,
               profile.check_in_conferences.present? ? 1 : 0,
               profile.registered_talks.where(talk_id:).exists? ? 1 : 0,
               checkin,

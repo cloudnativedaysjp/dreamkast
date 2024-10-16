@@ -13,7 +13,7 @@ import "./controllers/index.js"
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-import '../stylesheets/cnds2024'
+import '../stylesheets/cndw2024'
 import './bootstrap_custom.js'
 import './talks.js'
 import './timetable.js'

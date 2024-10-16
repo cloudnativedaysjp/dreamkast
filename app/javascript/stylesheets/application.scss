@@ -2,7 +2,7 @@
 @import "./_variables.scss";
 // Import Bootstrap
 //@import 'bootstrap-icons/font/bootstrap-icons';
-@import 'bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 // Import custom styles
 @import "./_global.scss";
 @import "./_navbar.scss";

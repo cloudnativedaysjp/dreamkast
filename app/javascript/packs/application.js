@@ -13,6 +13,7 @@ Turbo.session.drive = false
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 // import '../stylesheets/application'
+import '../stylesheets/application'
 import './bootstrap_custom.js'
 import './timetable.js'
 import './talks.js'

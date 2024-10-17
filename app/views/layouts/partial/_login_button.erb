@@ -20,11 +20,13 @@
 
         <!-- 現地参加の場合のみ有効 -->
         <% if @profile.attend_offline? %>
+          <!-- CNDW2024参加証できたら有効化
           <div class="dropdown-divider"></div>
           <%= link_to '参加証を印刷する', profiles_entry_sheet_path, class: "dropdown-item"  %>
 
           <div class="dropdown-divider"></div>
           <%= link_to '受付用二次元バーコードを表示する', profiles_view_qr_path, class: "dropdown-item"  %>
+          -->
         <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>

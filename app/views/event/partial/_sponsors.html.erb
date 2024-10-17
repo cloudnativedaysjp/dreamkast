@@ -2,11 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-12 text-center">
       <h2 class="text-black mt-0">Sponsors</h2>
-      <hr class="divider primary my-4" />
+      <hr class="divider mx-auto my-4 center-block" />
 
       <% conference.sponsor_types.where(visible: true).each do |sponsor_type| %>
         <h3 class="text-black mt-0"><%= sponsor_type.name %></h3>
-        <hr class="divider primary my-4" />
+        <hr class="divider mx-auto my-4 center-block" />
         <div class="row justify-content-md-center mb-5  align-items-center">
           <% sponsor_type.sponsors.each do |sponsor| %>
             <% if sponsor.sponsor_attachment_logo_image.present? %>

@@ -4,14 +4,14 @@
     <div class="grid" style="--rows: 13">
       <div class="all-track" style="">
         <div class="session">
-          <h6>09:50 - 10:00</h6>
+          <h6>9:50 - 10:00</h6>
           <h4>オープニング</h4>
         </div>
       </div>
     </div>
     <% # 1rowあたり1分で計算。ここのrowsで全体の分(=rowの数)を計算している。トータル時間-休憩時間 + ヘッダ分 %>
     <div class="grid"
-         style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 10 %>">
+         style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
       <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
           <div class="track <%= 'even' if n.zero? || n.even? %>"
                style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -30,7 +30,7 @@
 
           total_break = lunch_break + each_break
 
-          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 09:50")) / 60).to_i - total_break
+          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break
           row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
         %>
         <div class="talk"
@@ -55,7 +55,7 @@
                               false %>
           <% end %>
           <div class="content
-                      <%= 'checked' if current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
+                      <%= 'checked' if @current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
                       talk_id="<%= talk.id %>"
                       track_number="<%= talk.track.number %>"
                style="margin-top:0">
@@ -77,7 +77,7 @@
         </div>
       <% end %>
     </div>
-    <% if conference_day.id == 28%>
+    <% if conference_day.id == 33%>
     <div class="grid" style="--rows: 13">
       <div class="all-track" style="">
         <div class="session">
@@ -87,12 +87,12 @@
       </div>
     </div>
     <% end %>
-    <% if conference_day.id == 27 %>
+    <% if conference_day.id == 32 %>
     <div class="grid" style="--rows: 13">
       <div class="all-track" style="">
         <div class="session">
-          <h6>18:30 - 20:00</h6>
-          <h4>よるイベ(懇親会) ※<%= link_to '別途申込み要', 'https://eventregist.com/e/cndt2023_party', {target: '_blank', style: 'text-decoration: underline; font-weight: bold'} %></h4>
+          <h6>18:20 - 19:50</h6>
+          <h4>よるイベ(懇親会) ※<%= link_to '別途申込み要', 'https://eventregist.com/e/cndw2024_party', {target: '_blank', style: 'text-decoration: underline; font-weight: bold'} %></h4>
         </div>
       </div>
     </div>

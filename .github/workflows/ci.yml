@@ -19,7 +19,7 @@ on:
 
 jobs:
   run-test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       pull-requests: write
     if: github.event.pusher.name != 'dreamkast-cloudnativedays'

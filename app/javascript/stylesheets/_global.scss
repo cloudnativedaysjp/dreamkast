@@ -205,9 +205,10 @@ footer ul li {
         max-width: 300px;
         max-height: 80px;
     }
-    a:hover {
+    a {
         text-decoration: underline;
     }
+
 }
 
 .privacy_policy a,
@@ -250,4 +251,9 @@ footer ul li {
         padding: 1rem 1rem 1rem 3rem;
         border-radius: 0.5rem;
     }
+}
+
+.form-required:after {
+    content: "*";
+    color: $red;
 }

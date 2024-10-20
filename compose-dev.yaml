@@ -98,11 +98,12 @@ services:
     image: localstack/localstack:latest
     environment:
       - SERVICES=sqs
-      - DEFAULT_REGION=ap-northeast-1
       - DATA_DIR=/var/lib/localstack/data
     volumes:
       - ./localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d:ro
       - ./localstack:/var/lib/localstack
+      - "./localstack/init:/etc/localstack/init"
+      - "./init-localstack.sh:/etc/localstack/init/ready.d/init-localstack.sh"
     ports:
       - 4566:4566
     healthcheck:

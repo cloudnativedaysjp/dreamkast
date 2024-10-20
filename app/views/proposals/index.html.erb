@@ -9,7 +9,7 @@
     <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
         <% talk = proposal.talk %>
         <%= link_to proposal_path(id: proposal.id), class: "proposal", data: {"turbolinks" => false} do %>
-          <div class="category">
+          <div class="category text-primary">
             <%= talk.talk_category.name if talk.talk_category.present? %>
           </div>
           <%= image_tag talk.speakers[0].avatar_or_dummy_url(:medium) %>

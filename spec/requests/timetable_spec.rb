@@ -24,7 +24,7 @@ describe TimetableController, type: :request do
           get '/cndt2020/timetables'
           expect(response).to(be_successful)
           expect(response).to(have_http_status('200'))
-          expect(response.body).to_not(include('<form action="profiles/talks"'))
+          expect(response.body).to_not(include('<form action="/cndt2020/profiles/talks"'))
           expect(response.body).to(include(talk1.title))
           expect(response.body).to(include(talk2.title))
           expect(response.body).to_not(include(talk_rejekt.title))
@@ -65,7 +65,7 @@ describe TimetableController, type: :request do
           get '/cndt2020/timetables'
           expect(response).to(be_successful)
           expect(response).to(have_http_status('200'))
-          expect(response.body).to(include('<form action="profiles/talks"'))
+          expect(response.body).to(include('<form action="/cndt2020/profiles/talks"'))
           expect(response.body).to(include(talk1.title))
           expect(response.body).to(include(talk2.title))
           expect(response.body).to_not(include(talk_rejekt.title))
@@ -99,7 +99,7 @@ describe TimetableController, type: :request do
           get '/cndo2021/timetables'
           expect(response).to(be_successful)
           expect(response).to(have_http_status('200'))
-          expect(response.body).to_not(include('<form action="profiles/talks"'))
+          expect(response.body).to_not(include('<form action="/cndo2021/profiles/talks"'))
           expect(response.body).to(include(cndo_talk1.title))
           expect(response.body).to(include(cndo_talk2.title))
         end
@@ -141,7 +141,7 @@ describe TimetableController, type: :request do
           get '/cndo2021/timetables'
           expect(response).to(be_successful)
           expect(response).to(have_http_status('200'))
-          expect(response.body).to(include('<form action="profiles/talks"'))
+          expect(response.body).to(include('<form action="/cndo2021/profiles/talks"'))
           expect(response.body).to(include(cndo_talk1.title))
           expect(response.body).to(include(cndo_talk2.title))
         end

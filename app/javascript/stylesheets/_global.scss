@@ -252,3 +252,8 @@ footer ul li {
         border-radius: 0.5rem;
     }
 }
+
+.form-required:after {
+    content: "*";
+    color: $red;
+}

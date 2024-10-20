@@ -105,6 +105,7 @@ Rails.application.routes.draw do
     resources :speaker_invitations, only: [:index, :new, :create]
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
+    resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
     namespace :sponsor_dashboards do
       get '/login' => 'sponsor_dashboards#login'

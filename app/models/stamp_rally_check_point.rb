@@ -24,6 +24,8 @@ class StampRallyCheckPoint < ApplicationRecord
   belongs_to :conference
   belongs_to :sponsor, optional: true
 
+  has_many :stamp_rally_check_ins
+
   # typeが"StampRallyDefBooth"の場合にsponsor_idが必須であること
   validates :sponsor_id, presence: true, if: :stamp_rally_check_point_booth?
   # typeが"StampRallyCheckPointFinish"のレコードはカンファレンス内で1つしか作成できない

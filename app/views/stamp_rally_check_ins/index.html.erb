@@ -1,0 +1,37 @@
+<% provide(:title, 'スタンプラリーチェックイン記録') %>
+
+<div class="container white_background mt-3">
+  <h1 class="my-3 text-center">スタンプラリーチェックイン記録</h1>
+
+  <% case @profile.stamp_rally_status %>
+  <% when :not %>
+    <p>スタンプラリーはまだ開始されていません。</p>
+  <% when :in_progress %>
+    <p>まだ回っていないブースがあります</p>
+  <% when :pre_finished %>
+    <p>全てのブースを回り終わりました！受付でスタンプラリーをフィニッシュしてください</p>
+  <% when :finished %>
+    <p>スタンプラリーフィニッシュ済み！！</p>
+  <% else raise "Invalid status" %>
+  <% end %>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Type</th>
+      <th>Sponsor</th>
+      <th>チェックイン</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%  %>
+    <% @stamp_rally_check_points.each do |d| %>
+      <tr>
+        <td><%= d.type %></td>
+        <td><%= d.sponsor&.name %></td>
+        <td><%= @stamp_rally_check_ins.find_by(stamp_rally_check_point_id: d.id).present? ? "チェックイン済み" : "" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

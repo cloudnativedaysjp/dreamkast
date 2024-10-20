@@ -43,7 +43,7 @@ describe StampRallyCheckInsController, type: :request do
 
     context 'check in all booth' do
       let!(:stamp_rally_check_ins) do
-        stamp_rally_check_points.map do |check_point|
+        stamp_rally_check_point_booth.map do |check_point|
           create(:stamp_rally_check_in, profile:, stamp_rally_check_point: check_point, check_in_timestamp: DateTime.now)
         end
       end
@@ -61,7 +61,7 @@ describe StampRallyCheckInsController, type: :request do
 
     context 'check in all booth and finish' do
       let!(:stamp_rally_check_ins) do
-        stamp_rally_check_points.map do |check_point|
+        stamp_rally_check_point_booth.map do |check_point|
           create(:stamp_rally_check_in, profile:, stamp_rally_check_point: check_point, check_in_timestamp: DateTime.now)
         end
       end

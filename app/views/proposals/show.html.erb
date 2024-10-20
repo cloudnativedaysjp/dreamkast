@@ -8,13 +8,16 @@
   <% end %>
 <% end %>
 <% provide(:title, @talk.title) %>
-  <% if @conference.cfp_result_visible %>
-    <p>CFPは終了しました。採択結果は<%= link_to 'こちら', talks_path %></p>
-  <% end %>
+  
 <div class="container white_background talk-page">
   <div class="row my-3">
 
     <div class="col-12 col-lg-8 main-pane">
+      <div class="alert alert-info %> show">
+      <% if @conference.cfp_result_visible %>
+        <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
+      <% end %>
+      </div>
       <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
     </div>
 

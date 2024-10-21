@@ -385,7 +385,7 @@ Track.seed(
   { id: 51, number: 1, name: "A", conference_id: 12, room_id: 24},
   { id: 52, number: 2, name: "B", conference_id: 12, room_id: 25},
   { id: 53, number: 3, name: "C", conference_id: 12, room_id: 26},
-  { id: 54, number: 3, name: "D", conference_id: 12, room_id: 27},
+  { id: 54, number: 4, name: "D", conference_id: 12, room_id: 27},
 )
 
 Room.seed(

@@ -123,3 +123,4 @@ gem 'faraday-retry'
 
 # QRcode rendering
 gem "rqrcode", "~> 2.0"
+gem 'printnode'

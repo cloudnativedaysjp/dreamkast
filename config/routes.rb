@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       get 'users' => 'profiles#index'
       resources :profiles
       get 'entry_sheet' => 'profiles#entry_sheet'
+      post 'print_entry_sheet' => 'profiles#print_entry_sheet'
       resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
@@ -151,6 +152,7 @@ Rails.application.routes.draw do
     get 'profiles/edit', to: 'profiles#edit'
     get 'profiles/checkin', to: 'profiles#checkin'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'
+    post 'profiles/print_entry_sheet' => 'profiles#print_entry_sheet'
     get 'profiles/view_qr' => 'profiles#view_qr'
     resources :public_profiles
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_26_095613) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_06_001733) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -450,6 +450,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_095613) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stamp_rally_check_ins", id: { type: :string, limit: 26 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "stamp_rally_check_points_id", limit: 26, null: false
+    t.bigint "profile_id", null: false
+    t.datetime "check_in_timestamp", null: false
+    t.index ["profile_id"], name: "index_stamp_rally_check_ins_on_profile_id"
+    t.index ["stamp_rally_check_points_id"], name: "index_stamp_rally_check_ins_on_stamp_rally_check_points_id"
+  end
+
+  create_table "stamp_rally_check_points", id: { type: :string, limit: 26 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id"
+    t.string "type", null: false
+    t.index ["conference_id"], name: "index_stamp_rally_check_points_on_conference_id"
+    t.index ["sponsor_id"], name: "index_stamp_rally_check_points_on_sponsor_id"
+  end
+
   create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
@@ -630,6 +646,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_095613) do
   add_foreign_key "sponsor_profiles", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
+  add_foreign_key "stamp_rally_check_ins", "profiles"
+  add_foreign_key "stamp_rally_check_ins", "stamp_rally_check_points", column: "stamp_rally_check_points_id"
+  add_foreign_key "stamp_rally_check_points", "conferences"
   add_foreign_key "streamings", "conferences"
   add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"

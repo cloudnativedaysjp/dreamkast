@@ -1,0 +1,7 @@
+<%= render 'admin/layout' do %>
+  <div class="qr_view">
+    <!-- QRコード表示 -->
+    <img src=<%= "data:image/png;base64,#{@qr_code_for_stamp_rally.url_qrcode_image}" %> />
+    <p><%= @qr_code_for_stamp_rally.url %> </p>
+  </div>
+<% end %>

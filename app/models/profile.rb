@@ -75,6 +75,7 @@ class Profile < ApplicationRecord
   has_many :check_ins
   has_many :check_in_conferences
   has_many :check_in_talks
+  has_many :stamp_rally_check_ins
   has_one :public_profile, dependent: :destroy
 
   before_create do
@@ -180,5 +181,24 @@ class Profile < ApplicationRecord
 
   def attend_online?
     online?
+  end
+
+  def stamp_rally_status
+    defs = conference.stamp_rally_check_points
+    if stamp_rally_check_ins.empty?
+      :not
+    elsif check_ins(StampRallyCheckPointBooth).size >= 1
+      :in_progress
+    elsif check_ins(StampRallyCheckPointBooth).size == defs.where(type: StampRallyCheckPointBooth).size && check_ins(StampRallyCheckPointFinish).empty?
+      :pre_finished
+    elsif check_ins(StampRallyCheckPointBooth).size == defs.where(type: StampRallyCheckPointBooth).size && check_ins(StampRallyCheckPointFinish).size >= 1
+      :finished
+    else
+      :error
+    end
+  end
+
+  def check_ins(klass)
+    stamp_rally_check_ins.select { |check_in| check_in.stamp_rally_check_point.type == klass.name }
   end
 end

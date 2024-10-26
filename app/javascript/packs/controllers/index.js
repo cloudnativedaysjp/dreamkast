@@ -21,12 +21,3 @@ application.register("copy", CopyController)
 
 import CropUploadController from "./crop_upload_controller.js"
 application.register("crop-upload", CropUploadController)
-
-import ModalController from "./modal_controller";
-application.register("modal", ModalController);
-
-import ToastController from "./toast_controller.js"
-application.register("toast", ToastController)
-
-import SponsorController from "./sponsor_controller.js"
-application.register("sponsor", SponsorController)

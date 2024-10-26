@@ -1,5 +1,0 @@
-<%= turbo_stream.prepend "stamp_rally_check_points", @stamp_rally_check_point.becomes(StampRallyCheckPoint) do %>
-  <%= render partial: 'admin/stamp_rally_check_points/stamp_rally_check_point', locals: { stamp_rally_check_point: @stamp_rally_check_point, conference: @conference } %>
-<% end %>
-<%= turbo_stream_flash %>
-<%= yield %>

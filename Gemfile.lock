@@ -659,6 +659,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    ulid (1.4.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
     uppy-s3_multipart (1.2.0)
@@ -745,6 +746,7 @@ DEPENDENCIES
   steep
   turbo-rails (= 2.0.5)
   tzinfo-data
+  ulid
   uppy-s3_multipart (~> 1.0)
   web-console (>= 3.3.0)
 

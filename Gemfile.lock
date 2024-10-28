@@ -532,8 +532,7 @@ GEM
     redis-store (1.9.1)
       redis (>= 4, < 5)
     regexp_parser (2.9.2)
-    rexml (3.3.6)
-      strscan
+    rexml (3.3.9)
     roda (3.59.0)
       rack
     rqrcode (2.2.0)

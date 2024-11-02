@@ -16,6 +16,6 @@ class QrCodeForStampRally
   end
 
   def url_qrcode_image
-    Base64.strict_encode64(RQRCode::QRCode.new([{ data: url, mode: :byte_8bit }]).as_png.to_s)
+    Base64.strict_encode64(RQRCode::QRCode.new([{ data: url, mode: :byte_8bit }]).as_png(size: 300).to_s)
   end
 end

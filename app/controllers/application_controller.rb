@@ -37,6 +37,10 @@ class ApplicationController < ActionController::Base
     controller_name == 'home'
   end
 
+  def qr_code_for_stamp_rallies_controller?
+    controller_name == 'qr_code_for_stamp_rallies'
+  end
+
   def admin_controller?
     controller_name == 'admin'
   end
@@ -62,7 +66,7 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?,
+  helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?,
                 :display_timetable?, :display_contact_url?
 
   def render_403

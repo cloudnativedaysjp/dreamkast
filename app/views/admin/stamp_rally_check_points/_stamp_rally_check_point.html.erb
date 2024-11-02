@@ -9,6 +9,9 @@
     <div class="col-2 my-auto">
       <%= stamp_rally_check_point.sponsor&.name %>
     </div>
+    <div class="col-2 my-auto">
+      <%= new_stamp_rally_check_in_url(event: @conference.abbr, params: {stamp_rally_check_point_id: stamp_rally_check_point.id}) %>
+    </div>
     <div class="col-2">
       <div class="d-flex justify-content-end">
         <% p stamp_rally_check_point.conference %>

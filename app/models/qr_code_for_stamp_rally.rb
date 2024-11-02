@@ -18,4 +18,17 @@ class QrCodeForStampRally
   def url_qrcode_image
     Base64.strict_encode64(RQRCode::QRCode.new([{ data: url, mode: :byte_8bit }]).as_png(size: 300).to_s)
   end
+
+  def h1_text
+    case @stamp_rally_check_point.type
+    when StampRallyCheckPoint.name
+      'スタンプラリーチェックポイント'
+    when StampRallyCheckPointBooth.name
+      'スタンプラリーチェックポイント(ブース)'
+    when StampRallyCheckPointFinish.name
+      'スタンプラリーチェックポイント(ゴール)'
+    else
+      raise(NotImplementedError)
+    end
+  end
 end

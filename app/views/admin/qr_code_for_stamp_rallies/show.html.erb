@@ -8,8 +8,9 @@
   <button class="btn btn-secondary btn-xl" id="printButton" onclick="window.print();">印刷する</button>
   <p class="warning">印刷プレビューでレイアウトをご確認ください</p>
   <h1>スタンプラリー チェックポイント</h1>
+  <h2><%= @qr_code_for_stamp_rally.stamp_rally_check_point.name %></h2>
+  <p><%= @qr_code_for_stamp_rally.stamp_rally_check_point.description %></p>
   <img src=<%= "data:image/png;base64,#{@qr_code_for_stamp_rally.url_qrcode_image}" %> />
-  <p><%= @qr_code_for_stamp_rally.url %> </p>
 </div>
 </body>
 </html>

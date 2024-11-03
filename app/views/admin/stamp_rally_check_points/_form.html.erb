@@ -20,6 +20,7 @@
       </div>
       <div class="mb-3">
         <%= form.label :type, class: "form-label" %>
+        <% p type_options %>
         <%= form.select :type, options_for_select(type_options, selected: stamp_rally_check_point.type), {},
                         {
                           class: "form-select",

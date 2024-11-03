@@ -73,6 +73,8 @@ class Conference < ApplicationRecord
   has_many :media_package_harvest_jobs
   has_many :rooms
   has_many :check_in_conferences
+  has_many :stamp_rally_check_point_booths
+  has_many :stamp_rally_check_point_finishes
   has_many :stamp_rally_check_points
   has_many :stamp_rally_check_ins
 

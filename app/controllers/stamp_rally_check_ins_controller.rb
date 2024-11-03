@@ -7,7 +7,8 @@ class StampRallyCheckInsController < ApplicationController
   end
 
   def index
-    @stamp_rally_check_points = @conference.stamp_rally_check_points
+    @stamp_rally_check_points = @conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
+    @stamp_rally_check_point_finishes = @conference.stamp_rally_check_point_finishes
     @stamp_rally_check_ins = @profile.stamp_rally_check_ins
   end
 

@@ -1,6 +1,6 @@
 <% provide(:title, 'スタンプラリーチェックイン') %>
 
-<div class="container">
+<div class="container white_background mt-3">
   <div class="row">
     <% flash.each do |message_type, message| %>
       <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
@@ -12,21 +12,27 @@
 
   <div class="row">
     <div class="col-12 my-4">
-      <h2 class="text-center">スタンプラリーチェックイン</h2>
+      <h2 class="text-center">CP: <%= @stamp_rally_check_point.name %></h2>
     </div>
 
-    <div class="col-12 my-4">
+    <div class="col-12 my-4 text-center">
       <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) %>
-        <p><%= @stamp_rally_check_point.sponsor.name %> のブースにチェックインしますか？</p>
+        <p>チェックインしますか？</p>
       <% else %>
         <p>スタンプラリーを全て回り終わりました。フィニッシュしますか？</p>
       <% end %>
     </div>
+  </div>
 
 
-    <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
-      <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
-      <%= form.submit "Check In (id: #{@stamp_rally_check_point.id}, type: #{@stamp_rally_check_point.type}, sponsor: #{@stamp_rally_check_point.sponsor&.name})", class: "btn btn-primary" %>
-    <% end %>
+  <div class="row">
+    <div class="col-12 my-4 text-center">
+      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) %>
+        <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
+          <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
+          <%= form.submit "Check In", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

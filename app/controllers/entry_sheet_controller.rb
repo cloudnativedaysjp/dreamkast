@@ -4,9 +4,11 @@ class EntrySheetController < ApplicationController
     decrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).decrypt_and_verify(Base64.urlsafe_decode64(param))
     max_rows = 10
 
-    @profile = Profile.find(4)
-    @speaker = Speaker.find(1000)
-    @conference = Conference.find_by(abbr: 'cndt2023')
+    object = JSON.parse(decrypted)
+
+    @profile = Profile.find(object['profile_id'])
+    @speaker = Speaker.find(object['speaker_id'])
+    @conference = Conference.find_by(abbr: params[:event])
 
     # 全てのテーブルの行数を取得
     @total_rows = @conference.conference_days.externals.sum do |conference_day|

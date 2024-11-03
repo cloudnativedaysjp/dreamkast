@@ -3,17 +3,15 @@ class GenerateEntrysheetJob < ApplicationJob
   # self.queue_adapter = :amazon_sqs
 
   def perform(conference_id, profile_id, speaker_id = nil)
-    profile = Profile.find(profile_id)
-    speaker = Speaker.find(speaker_id) if speaker_id
     conference = Conference.find(conference_id)
-    obj = { profile:, speaker: }.to_json
+    obj = { profile_id:, speaker_id: }.to_json
 
     encrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).encrypt_and_sign(obj)
 
     page = Ferrum::Browser.new
     page.goto("http://#{Rails.application.routes.default_url_options[:host]}/#{conference.abbr}/entry_sheet?encrypted=#{Base64.urlsafe_encode64(encrypted)}")
-    pdf_file = Rails.root.join('tmp', "#{profile.id}_entry_sheet.pdf")
-    pdf_content = page.pdf(
+    pdf_file = Rails.root.join('tmp', "#{profile_id}_entry_sheet.pdf")
+    page.pdf(
       path: pdf_file,
       format: :A4,
       print_background: true,

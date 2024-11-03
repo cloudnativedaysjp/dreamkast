@@ -154,7 +154,6 @@ Rails.application.routes.draw do
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
     get 'profiles/checkin', to: 'profiles#checkin'
-    get 'profiles/entry_sheet' => 'profiles#entry_sheet'
     get 'profiles/view_qr' => 'profiles#view_qr'
     resources :public_profiles
 

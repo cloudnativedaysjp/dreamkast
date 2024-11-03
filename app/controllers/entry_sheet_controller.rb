@@ -8,9 +8,9 @@ class EntrySheetController < ApplicationController
     @speaker = Speaker.find(1000)
     @conference = Conference.find_by(abbr: 'cndt2023')
 
-     # 全てのテーブルの行数を取得
+    # 全てのテーブルの行数を取得
     @total_rows = @conference.conference_days.externals.sum do |conference_day|
-      @profile.talks.where(conference_day: conference_day).count
+      @profile.talks.where(conference_day:).count
     end
 
     # 縮小率を計算（最小0.5、最大1.0）
@@ -25,7 +25,7 @@ class EntrySheetController < ApplicationController
 
     render(
       'profiles/entry_sheet',
-      layout: 'no_headers',
+      layout: 'no_headers'
     )
   end
 end

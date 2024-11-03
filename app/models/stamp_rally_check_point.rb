@@ -40,7 +40,7 @@ class StampRallyCheckPoint < ApplicationRecord
   end
 
   def check_point_finish_is_unique_in_conference
-    if type == StampRallyCheckPointFinish.name && StampRallyCheckPoint.where(conference_id:, type: StampRallyCheckPointFinish.name).exists?
+    if type == StampRallyCheckPointFinish.name && StampRallyCheckPoint.where(conference_id:, type: StampRallyCheckPointFinish.name).where.not(id: id).exists?
       errors.add(:type, 'StampRallyCheckPointFinishは1つのカンファレンス内で複数作成できません')
     end
   end

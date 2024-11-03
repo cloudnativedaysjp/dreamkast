@@ -30,6 +30,8 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def update
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @sponsors = conference.sponsors
+    @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
     if @stamp_rally_check_point.update(stamp_rally_check_point_params)
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を更新しました"
     else

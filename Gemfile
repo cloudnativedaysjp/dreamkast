@@ -125,3 +125,6 @@ gem 'faraday-retry'
 gem "rqrcode", "~> 2.0"
 
 gem 'ulid'
+
+# PDF tool
+gem 'ferrum'

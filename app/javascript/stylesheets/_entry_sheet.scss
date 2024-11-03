@@ -13,7 +13,7 @@
   // viewport に対して50%のサイズ
   height: 50vh;
   width: 50vw;
-  
+
   border: 1px dotted #CCC;
   display: flex;
   justify-content: flex-start;
@@ -32,8 +32,8 @@
   }
   .qrcode{
     img{
-      width: 400px;
-      height: 400px;
+      width: 100%;
+      height: 100%;
     }
   }
   .detail{
@@ -54,8 +54,16 @@
     display: inline;
   }
 
+  .enty-timetable{
+    width: 100%;
+    transform: scale(var(--scale-factor));
+    transform-origin: top left;
+  }
+
   .table {
-    font-size: 17px;
+    font-size: calc(1em * var(--scale-factor));
+    width: 100%;
+    table-layout: fixed;
     tr {
       padding-top: 2px;
       padding-bottom: 2px;
@@ -63,15 +71,17 @@
       height: auto;
     }
     td {
-      padding: 0.5rem;
+      padding: calc(0.5rem * var(--scale-factor));
       padding-left: 0.2rem;
       padding-right: 0.2rem;
+      word-break: break-all;
     }
   }
 
   .timetable-list {
     display: flex;
     flex-direction: row;
+    // width: 80%;
   }
 
   h3 {
@@ -87,6 +97,8 @@
 
 .right {
   border-left: 0.3px dashed gray;
+  display: flex;
+  // align-items: flex-start;
 }
 
 .left{

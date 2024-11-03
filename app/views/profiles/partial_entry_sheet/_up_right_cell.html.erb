@@ -1,4 +1,4 @@
-<div class="a8 right">
+<div class="a8 right" style="--scale-factor: <%= @scale_factor %>;">
   <h3>登録セッション</h3>
 
   <div class="timetable-list">
@@ -16,8 +16,8 @@
           <tbody>
             <% @profile.talks.where(conference_day: conference_day).each do |talk| %>
               <tr>
-                <% if talk.title.length >= 19 %>
-                  <td><%= talk.title.slice(...17) + "..."  %></td>
+                <% if talk.title.length >= 17 %>
+                  <td><%= talk.title.slice(...15) + "..."  %></td>
                 <% else %>
                   <td><%= talk.title %></td>
                 <% end %>

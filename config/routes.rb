@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'auth/login' => 'auth0#login'
   get 'logout' => 'logout#logout'
 
-
   namespace 'api' do
     namespace 'v1' do
       get ':event/my_profile' => 'profiles#my_profile'
@@ -36,6 +35,9 @@ Rails.application.routes.draw do
 
   scope ':event' do
     post 'auth/auth0' => redirect('/auth/auth0')
+
+    # EntrySheetForPrint
+    get 'entry_sheet' => 'entry_sheet#get'
 
     # Admin
     get 'admin' => 'admin#show'

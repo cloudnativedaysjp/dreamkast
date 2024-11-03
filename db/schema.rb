@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_02_104024) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_03_051440) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -464,6 +464,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_02_104024) do
     t.string "type", null: false
     t.string "name", null: false
     t.string "description", null: false
+    t.integer "position"
     t.index ["conference_id"], name: "index_stamp_rally_check_points_on_conference_id"
     t.index ["sponsor_id"], name: "index_stamp_rally_check_points_on_sponsor_id"
   end

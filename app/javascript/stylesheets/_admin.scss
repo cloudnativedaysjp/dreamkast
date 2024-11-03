@@ -142,3 +142,26 @@ a:focus {
     right: 0;
     bottom: 0;
 }
+
+/* ドラッグアイコンのスタイル */
+.drag-handle {
+    cursor: grab;
+    color: #666;
+}
+
+.drag-handle i {
+    font-size: 1.2em;
+}
+
+/* 行のスタイル */
+.draggable-item {
+    transition: background-color 0.2s ease;
+}
+
+.draggable-item:hover .drag-handle {
+    color: #333;
+}
+
+.draggable-item:hover {
+    background-color: #f9f9f9;
+}

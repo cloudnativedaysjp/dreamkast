@@ -1,8 +1,14 @@
 class Admin::StampRallyCheckPointsController < ApplicationController
   include SecuredAdmin
 
+  def reorder
+    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point.insert_at(params[:position].to_i)
+    head(:ok)
+  end
+
   def index
-    @stamp_rally_check_points = conference.stamp_rally_check_points
+    @stamp_rally_check_points = conference.stamp_rally_check_points.order(:position)
   end
 
   def new

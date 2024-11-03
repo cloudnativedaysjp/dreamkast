@@ -30,3 +30,6 @@ application.register("toast", ToastController)
 
 import SponsorController from "./sponsor_controller.js"
 application.register("sponsor", SponsorController)
+
+import DragDropController from "./drag_drop_controller.js"
+application.register("drag-drop", DragDropController)

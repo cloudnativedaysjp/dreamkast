@@ -1,5 +1,5 @@
 class EntrySheetController < ApplicationController
-  def get
+  def show
     param = params[:encrypted]
     decrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).decrypt_and_verify(Base64.urlsafe_decode64(param))
     max_rows = 10

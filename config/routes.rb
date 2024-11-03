@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     post 'auth/auth0' => redirect('/auth/auth0')
 
     # EntrySheetForPrint
-    get 'entry_sheet' => 'entry_sheet#get'
+    get 'entry_sheet' => 'entry_sheet#show'
 
     # Admin
     get 'admin' => 'admin#show'

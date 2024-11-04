@@ -1,20 +1,22 @@
 <%= turbo_frame_tag stamp_rally_check_point do %>
   <div class="row py-2 border-top">
     <div class="col-2 my-auto">
-      <%= stamp_rally_check_point.id %>
+      <%= stamp_rally_check_point.type %>
     </div>
     <div class="col-2 my-auto">
-      <%= stamp_rally_check_point.type %>
+      <%= stamp_rally_check_point.name %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= stamp_rally_check_point.description %>
     </div>
     <div class="col-2 my-auto">
       <%= stamp_rally_check_point.sponsor&.name %>
     </div>
     <div class="col-2 my-auto">
-      <%= new_stamp_rally_check_in_url(event: @conference.abbr, params: {stamp_rally_check_point_id: stamp_rally_check_point.id}) %>
+      <%= link_to 'QRコードを印刷', admin_qr_code_for_stamp_rally_path(id: stamp_rally_check_point.id), data: { turbo: false } %>
     </div>
-    <div class="col-2">
+    <div class="col-2 my-auto">
       <div class="d-flex justify-content-end">
-        <% p stamp_rally_check_point.conference %>
         <%= link_to "編集", edit_admin_stamp_rally_check_point_path(event: stamp_rally_check_point.conference.abbr, id: stamp_rally_check_point.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_frame: "modal" } %>
         <%= link_to "削除", admin_stamp_rally_check_point_path(event: stamp_rally_check_point.conference.abbr, id: stamp_rally_check_point.id), class: "btn btn-sm btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
       </div>

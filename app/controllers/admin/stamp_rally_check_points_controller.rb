@@ -51,7 +51,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   private
 
   def stamp_rally_check_point_params
-    params.require(:stamp_rally_check_point).permit(:sponsor_id, :type)
+    params.require(:stamp_rally_check_point).permit(:sponsor_id, :type, :name, :description)
   end
 
   def turbo_stream_flash

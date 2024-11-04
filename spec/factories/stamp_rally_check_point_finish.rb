@@ -20,5 +20,7 @@
 
 FactoryBot.define do
   factory :stamp_rally_check_point_finish, class: StampRallyCheckPointFinish do
+    name { 'スタンプラリーのチェックポイント' }
+    description { 'スタンプラリーのチェックポイントの説明' }
   end
 end

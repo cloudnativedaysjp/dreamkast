@@ -23,7 +23,7 @@
             <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 
-          <% if @conference.opened? %>
+          <% if @conference&.opened? %>
             <li class="nav-item"><%= link_to "スタンプラリー", stamp_rally_check_ins_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 

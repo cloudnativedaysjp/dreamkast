@@ -67,16 +67,22 @@ StampRallyCheckPointBooth.seed(
     id: '01J9G65KEWB1NW637VDPWAA88W',
     conference_id: 12,
     sponsor_id: 1,
+    name: "",
+    description: "",
   },
   {
     id: '01J9G65KEZVCX8NKJXF3RB6PH5',
     conference_id: 12,
     sponsor_id: 2,
+    name: "",
+    description: "",
   }
 )
 StampRallyCheckPointFinish.seed(
   {
     id: '01J9G65KF4H9108RQ0ATRCT8H8',
-    conference_id: 12
+    conference_id: 12,
+    name: "",
+    description: "",
   },
 )

@@ -25,13 +25,15 @@ namespace :util do
       puts channel.name
     end
 
-    msg = <<~EOS
-      以下のMediaLive Channelが作成済みのままです:
+    unless channels.empty?
+      msg = <<~EOS
+        以下のMediaLive Channelが作成済みのままです:
 
-      #{channels.map { |c| "- #{c.name} (#{c.state})" }.join("\n")}
-    EOS
+        #{channels.map { |c| "- #{c.name} (#{c.state})" }.join("\n")}
+      EOS
 
-    client = Slack::Web::Client.new
-    client.chat_postMessage(channel: '#broadcast', text: msg, username: 'Dreamkast')
+      client = Slack::Web::Client.new
+      client.chat_postMessage(channel: '#broadcast', text: msg, username: 'Dreamkast')
+    end
   end
 end

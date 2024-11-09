@@ -57,3 +57,7 @@ Style/WordArray:
 
 Lint/Debugger:
   Enabled: false
+
+# channels.size.positive? を channels.size > 0 の代わりに強制されるのは困る
+Style/NumericPredicate:
+  Enabled: false

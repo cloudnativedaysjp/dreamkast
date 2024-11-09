@@ -18,17 +18,13 @@ class Admin::HarvestJobsController < ApplicationController
   end
 
   def create
+    @talk = Talk.find(harvest_job_params[:talk_id])
     @job = MediaPackageHarvestJob.new(harvest_job_params.merge(conference_id: @conference.id))
 
-    respond_to do |format|
-      if @job.save
-        @job.create_media_package_resources
-        format.html { redirect_to(admin_tracks_path, notice: 'HarvestJob was successfully updated.') }
-        format.json { render(:show, status: :ok, location: @job) }
-      else
-        format.html { redirect_to(admin_tracks_path, flash: { error: @job.errors.messages }) }
-        format.json { render(json: @job.errors, status: :unprocessable_entity) }
-      end
+    if @job.save && @job.create_media_package_resources
+      flash.now.notice = "#{@talk.title} のアーカイブ作成用HarvestJobの作成に成功しました"
+    else
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
@@ -38,5 +34,13 @@ class Admin::HarvestJobsController < ApplicationController
 
   def harvest_job_params
     params.require(:media_package_harvest_job).permit(:conference_id, :media_package_channel_id, :talk_id, :start_time, :end_time)
+  end
+
+  helper_method :turbo_stream_flash
+
+  private
+
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
   end
 end

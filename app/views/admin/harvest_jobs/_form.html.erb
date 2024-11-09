@@ -1,59 +1,39 @@
-<div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="card-title">アーカイブ動画を作成する</h5>
+<div id="preview_url"><%= @preview_url %></div>
 
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+<video
+  id="my-player"
+  class="video-js vjs-default-skin"
+  data-setup='{"fluid": true}'
+  controls
+  preload="auto"
+>
+  <source src="<%= @preview_url %>" type="application/x-mpegURL" />
+</video>
+
+<%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+  <section class="speaker-information py-3">
+    <%= form.hidden_field :media_package_channel_id, value: @media_package_channel.id %>
+    <%= form.hidden_field :talk_id, value: @talk.id %>
+
+    <div class="field">
+      <%= form.label :start_time,'切り出し開始時刻' %>*<br/>
+      <%= form.text_field :start_time, value: @initial_start_time, id: 'start-time-field', class: 'form-control' %>
     </div>
 
-    <div class="modal-body">
-      <div id="preview_url"><%= @preview_url %></div>
-
-      <video
-        id="my-player"
-        class="video-js vjs-default-skin"
-        data-setup='{"fluid": true}'
-        controls
-        preload="auto"
-      >
-        <source src="<%= @preview_url %>" type="application/x-mpegURL" />
-      </video>
-
-      <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post) do |form| %>
-        <section class="speaker-information py-3">
-          <%= form.hidden_field :media_package_channel_id, value: @media_package_channel.id %>
-          <%= form.hidden_field :talk_id, value: @talk.id %>
-
-          <div class="field">
-            <%= form.label :start_time,'切り出し開始時刻' %>*<br/>
-            <%= form.text_field :start_time, value: @initial_start_time, id: 'start-time-field', class: 'form-control' %>
-          </div>
-
-          <div class="field">
-            <%= form.label :end_time, '切り出し終了時刻' %>*<br/>
-            <%= form.text_field :end_time, value: @initial_end_time, id: 'end-time-field', class: 'form-control' %>
-          </div>
-
-          <div class="field">
-            <button type="button" id="update-start-and-end" class="btn btn-secondary">Update</button>
-          </div>
-
-          <div class="actions justify-content-center py-3">
-            <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
-          </div>
-        </section>
-      <% end %>
-
-
+    <div class="field">
+      <%= form.label :end_time, '切り出し終了時刻' %>*<br/>
+      <%= form.text_field :end_time, value: @initial_end_time, id: 'end-time-field', class: 'form-control' %>
     </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <div class="field">
+      <button type="button" id="update-start-and-end" class="btn btn-secondary">Update</button>
     </div>
-  </div>
-</div>
+
+    <div class="actions justify-content-center py-3">
+      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    </div>
+  </section>
+<% end %>
 
 <script>
   const player = videojs('my-player');

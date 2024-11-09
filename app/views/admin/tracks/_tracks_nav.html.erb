@@ -23,6 +23,8 @@
       <th scope="col">Speakers<br/>Title</th>
       <th scope="col">On Air</th>
       <th scope="col">Recording</th>
+      <th scope="col">Recording Status</th>
+
     </tr>
     </thead>
 
@@ -55,6 +57,18 @@
         <td>
           <%= turbo_frame_tag "record_button_#{talk.id}" do %>
             <%= render('admin/tracks/partial/record_button', conference: conference, talk: talk) %>
+          <% end %>
+        </td>
+        <td>
+          <% if talk.video && talk.abstract != 'intermission' %>
+            <% if already_recorded?(talk) %>
+              録画済み
+            <% else if MediaPackageHarvestJob.where(talk_id: talk.id).present? %>
+                録画中
+              <% else %>
+                未録画
+              <% end %>
+            <% end %>
           <% end %>
         </td>
       </tr>

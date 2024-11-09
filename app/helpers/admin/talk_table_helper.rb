@@ -35,6 +35,6 @@ module Admin::TalkTableHelper
   end
 
   def already_recorded?(talk)
-    talk.video.video_id.present?
+    talk&.video&.video_id.present?
   end
 end

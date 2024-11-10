@@ -1,7 +1,7 @@
 <div class="col">
   <div class="square-card border position-relative" style="padding-top: 100%;">
     <div class="content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-      <button type="button" class="btn btn-outline-primary w-100 h-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-<%= index %>">
+      <button type="button" class="btn btn-outline-primary w-100 h-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-<%= check_point.id %>">
         <% if stamp_rally_check_ins.find_by(stamp_rally_check_point_id: check_point.id).present? %>
           <%= image_tag "icons/check.svg", with: 40, height: 40 %>
         <% end %>
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="modal-<%= index %>" tabindex="-1" aria-labelledby="modalLabel-<%= index %>" aria-hidden="true">
+<div class="modal fade" id="modal-<%= check_point.id %>" tabindex="-1" aria-labelledby="modalLabel-<%= index %>" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -16,21 +16,29 @@
     </div>
 
     <div class="col-12 my-4 text-center">
-      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) || @stamp_rally_check_point.kind_of?(StampRallyCheckPoint) %>
-        <p>チェックインしますか？</p>
-      <% else %>
+      <% if @stamp_rally_check_ins.find_by(stamp_rally_check_point_id: @stamp_rally_check_point.id).present? %>
+        <p>すでにチェックイン済みです</p>
+      <% elsif @stamp_rally_check_point.kind_of?(StampRallyCheckPointFinish) %>
         <p>スタンプラリーを全て回り終わりました。フィニッシュしますか？</p>
+      <% else %>
+        <p>チェックインしますか？</p>
       <% end %>
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-12 my-4 text-center">
-      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) || @stamp_rally_check_point.kind_of?(StampRallyCheckPoint) %>
-        <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
-          <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
-          <%= form.submit "Check In", class: "btn btn-primary" %>
+      <% unless @stamp_rally_check_ins.find_by(stamp_rally_check_point_id: @stamp_rally_check_point.id).present? %>
+        <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointFinish) %>
+          <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
+            <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
+            <%= form.submit "Finish", class: "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
+            <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
+            <%= form.submit "Check In", class: "btn btn-primary" %>
+          <% end %>
         <% end %>
       <% end %>
     </div>

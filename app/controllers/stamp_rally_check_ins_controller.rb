@@ -11,6 +11,7 @@ class StampRallyCheckInsController < ApplicationController
   def new
     @stamp_rally_check_point = @conference.stamp_rally_check_points.find(params[:stamp_rally_check_point_id])
     @stamp_rally_check_in = StampRallyCheckIn.new
+    @stamp_rally_check_ins = @profile.stamp_rally_check_ins
   end
 
   def create

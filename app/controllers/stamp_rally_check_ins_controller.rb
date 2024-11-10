@@ -2,10 +2,6 @@ class StampRallyCheckInsController < ApplicationController
   include Secured
   before_action :set_conference, :set_profile, :set_speaker
 
-  def logged_in_using_omniauth?
-    current_user
-  end
-
   def index
     @stamp_rally_check_points = @conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
     @stamp_rally_check_point_finishes = @conference.stamp_rally_check_point_finishes

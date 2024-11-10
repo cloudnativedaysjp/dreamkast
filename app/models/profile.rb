@@ -184,7 +184,7 @@ class Profile < ApplicationRecord
   end
 
   def stamp_rally_status
-    check_points = conference.stamp_rally_check_points
+    check_points = conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
     check_ins = check_ins(StampRallyCheckPointBooth) + check_ins(StampRallyCheckPoint)
     finish_check_in = check_ins(StampRallyCheckPointFinish)
 

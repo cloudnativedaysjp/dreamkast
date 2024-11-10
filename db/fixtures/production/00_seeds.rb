@@ -237,7 +237,7 @@ EOS
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
-    capacity: 300,
+    capacity: 600,
     about: <<'EOS'
     クラウドネイティブをこれから始める人
     今まさに取り組んでいる人

@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-12 my-4 text-center">
-      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) %>
+      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) || @stamp_rally_check_point.kind_of?(StampRallyCheckPoint) %>
         <p>チェックインしますか？</p>
       <% else %>
         <p>スタンプラリーを全て回り終わりました。フィニッシュしますか？</p>
@@ -27,7 +27,7 @@
 
   <div class="row">
     <div class="col-12 my-4 text-center">
-      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) %>
+      <% if @stamp_rally_check_point.kind_of?(StampRallyCheckPointBooth) || @stamp_rally_check_point.kind_of?(StampRallyCheckPoint) %>
         <%= form_with(url: stamp_rally_check_ins_path, model: @stamp_rally_check_in, method: :post) do |form| %>
           <%= form.hidden_field :stamp_rally_check_point_id, value: @stamp_rally_check_point.id %>
           <%= form.submit "Check In", class: "btn btn-primary" %>

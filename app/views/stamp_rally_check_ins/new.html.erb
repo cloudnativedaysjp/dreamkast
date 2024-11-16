@@ -19,7 +19,7 @@
       <% if @stamp_rally_check_ins.find_by(stamp_rally_check_point_id: @stamp_rally_check_point.id).present? %>
         <p>すでにチェックイン済みです</p>
       <% elsif @stamp_rally_check_point.kind_of?(StampRallyCheckPointFinish) %>
-        <p>スタンプラリーを全て回り終わりました。フィニッシュしますか？</p>
+        <p>スタンプラリーをフィニッシュしますか？</p>
       <% else %>
         <p>チェックインしますか？</p>
       <% end %>

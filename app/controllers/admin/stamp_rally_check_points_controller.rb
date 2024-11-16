@@ -48,7 +48,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def destroy
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
-    if @stamp_rally_check_point.destroy
+    if @stamp_rally_check_point.stamp_rally_check_ins.destroy_all && @stamp_rally_check_point.destroy
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を削除しました"
     else
       flash.now.alert = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} の削除に失敗しました"

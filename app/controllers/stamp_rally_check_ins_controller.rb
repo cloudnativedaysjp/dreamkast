@@ -10,13 +10,17 @@ class StampRallyCheckInsController < ApplicationController
 
   def new
     @stamp_rally_check_point = @conference.stamp_rally_check_points.find(params[:stamp_rally_check_point_id])
-    @stamp_rally_check_in = StampRallyCheckIn.new({ stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile, check_in_timestamp: Time.zone.now })
-
-    if @stamp_rally_check_in.save
-      redirect_to(stamp_rally_check_ins_path, flash: { notice: @stamp_rally_check_point.name.to_s })
+    if StampRallyCheckIn.find_by(stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile).present?
+      redirect_to(stamp_rally_check_ins_path)
     else
-      respond_to do |format|
-        format.html { render(:new, flash: { error: @stamp_rally_check_in.errors.messages }) }
+      @stamp_rally_check_in = StampRallyCheckIn.new({ stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile, check_in_timestamp: Time.zone.now })
+
+      if @stamp_rally_check_in.save
+        redirect_to(stamp_rally_check_ins_path, flash: { notice: @stamp_rally_check_point.name.to_s })
+      else
+        respond_to do |format|
+          format.html { render(:new, flash: { error: @stamp_rally_check_in.errors.messages }) }
+        end
       end
     end
   end

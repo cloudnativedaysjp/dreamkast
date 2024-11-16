@@ -10,15 +10,10 @@ class StampRallyCheckInsController < ApplicationController
 
   def new
     @stamp_rally_check_point = @conference.stamp_rally_check_points.find(params[:stamp_rally_check_point_id])
-    @stamp_rally_check_in = StampRallyCheckIn.new
-    @stamp_rally_check_ins = @profile.stamp_rally_check_ins
-  end
-
-  def create
-    @stamp_rally_check_in = StampRallyCheckIn.new(stamp_rally_check_ins_params(params).merge(profile: @profile, check_in_timestamp: Time.zone.now))
+    @stamp_rally_check_in = StampRallyCheckIn.new({stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile, check_in_timestamp: Time.zone.now})
 
     if @stamp_rally_check_in.save
-      redirect_to(stamp_rally_check_ins_path)
+      redirect_to(stamp_rally_check_ins_path, flash: { notice: "#{@stamp_rally_check_point.name}" })
     else
       respond_to do |format|
         format.html { render(:new, flash: { error: @stamp_rally_check_in.errors.messages }) }

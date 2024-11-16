@@ -12,7 +12,14 @@ describe StampRallyCheckInsController, type: :request do
     let!(:stamp_rally_check_point_finish) { create(:stamp_rally_check_point_finish, conference:) }
 
     before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
+      ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+        if arg[1] == :userinfo
+          session[:userinfo]
+        else
+          arg[0].send(:original, arg[1])
+        end
+      end)
     end
 
     context 'does not check in yet' do

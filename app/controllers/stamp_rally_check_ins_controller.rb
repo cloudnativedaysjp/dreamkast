@@ -30,4 +30,35 @@ class StampRallyCheckInsController < ApplicationController
     params.require(:stamp_rally_check_in)
           .permit(:stamp_rally_check_point_id)
   end
+
+  helper_method :stamp_rally_status
+
+  def stamp_rally_status
+    check_points = conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
+    check_ins = check_ins(StampRallyCheckPointBooth) + check_ins(StampRallyCheckPoint)
+    finish_check_in = check_ins(StampRallyCheckPointFinish)
+    finish_threshold = if conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold >= 0
+                         conference.stamp_rally_configure.finish_threshold
+                       elsif conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold == -1
+                         check_points.size
+                       else
+                         0
+                       end
+
+    if @profile.stamp_rally_check_ins.empty?
+      :not
+    elsif finish_threshold > check_ins.size
+      :in_progress
+    elsif check_ins.size >= finish_threshold && finish_check_in.empty?
+      :pre_finished
+    elsif check_ins.size == check_points.size && finish_check_in.present?
+      :finished
+    else
+      :error
+    end
+  end
+
+  def check_ins(klass)
+    @profile.stamp_rally_check_ins.joins(:stamp_rally_check_point).where(stamp_rally_check_point: { type: klass.name })
+  end
 end

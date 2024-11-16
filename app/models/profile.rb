@@ -182,26 +182,4 @@ class Profile < ApplicationRecord
   def attend_online?
     online?
   end
-
-  def stamp_rally_status
-    check_points = conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
-    check_ins = check_ins(StampRallyCheckPointBooth) + check_ins(StampRallyCheckPoint)
-    finish_check_in = check_ins(StampRallyCheckPointFinish)
-
-    if stamp_rally_check_ins.empty?
-      :not
-    elsif check_points.size > check_ins.size
-      :in_progress
-    elsif check_ins.size == check_points.size && finish_check_in.empty?
-      :pre_finished
-    elsif check_ins.size == check_points.size && finish_check_in.present?
-      :finished
-    else
-      :error
-    end
-  end
-
-  def check_ins(klass)
-    stamp_rally_check_ins.joins(:stamp_rally_check_point).where(stamp_rally_check_point: { type: klass.name })
-  end
 end

@@ -3,13 +3,13 @@
 <div class="container white_background mt-3">
   <h1 class="my-3 text-center">スタンプラリーCP一覧</h1>
 
-  <% case @profile.stamp_rally_status %>
+  <% case stamp_rally_status %>
   <% when :not %>
     <p>スタンプラリーはまだ開始されていません。</p>
   <% when :in_progress %>
     <p>まだ回っていないCPがあります</p>
   <% when :pre_finished %>
-    <p>全てのCPを回り終わりました！受付でゴールしてください</p>
+    <p>ゴール条件を満たしました！受付でゴールしてください</p>
   <% when :finished %>
     <p>ゴール！！！</p>
   <% else raise "Invalid status" %>

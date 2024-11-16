@@ -1,8 +1,4 @@
 <%= render 'admin/layout' do %>
-  <div id="messages">
-    <%= render 'admin/tracks/partial/messages' %>
-  </div>
-
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <% @conference.conference_days.each do |day| %>
@@ -35,6 +31,9 @@
     <%= f.submit("Offsetを更新", {id: "submit-offset", class: "btn transit_button" }) %>
   <% end %>
 </div>
+
+<%= turbo_frame_tag "modal" %>
+<div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem; z-index: 101"></div>
 
 <%= javascript_include_tag 'admin/tracks/media_live.js' %>
 <%= javascript_include_tag 'admin/tracks/tracks_control.js' %>

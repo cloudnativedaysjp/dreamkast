@@ -62,10 +62,40 @@
           </td>
           <td>
             <% if track.streaming && track.streaming.status != 'deleted' && track.streaming&.media_live_channel&.idle? %>
-              <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
-            <% elsif track.streaming&.media_live_channel && track.streaming&.media_live_channel&.state != 'IDLE'  %>
-              <%= button_to("配信用リソースを一括削除", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, disabled: true, title: 'MediaLive ChannelがIDLEの時のみ削除可能です', class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmation-modal-<%= track.id %>">配信用リソースを一括削除</button>
             <% end %>
+
+            <div class="modal fade" id="confirmation-modal-<%= track.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5">Track <%= track.name %>の配信用リソースを全て削除しますか？</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <% if track.streaming&.media_live_channel && track.streaming&.media_live_channel&.state != 'IDLE'  %>
+                      <div class="alert alert-danger" role="alert">
+                        MediaLive ChannelがIDLE状態ではないため削除できません。まだ停止操作を行っていない場合は「Stop Channel」ボタンをクリックして停止してください。
+                      </div>
+                    <% end %>
+
+                    <% unarchived_talks = @conference.talks.where(track_id: track.id).select { |talk| talk.abstract != 'intermission' && talk.live? && talk.video&.video_id&.empty? } %>
+                    <% if unarchived_talks.present? %>
+                      <div class="alert alert-danger" role="alert">
+                        <p>アーカイブしていないセッションが残っています。配信リソースを削除する前にアーカイブ作業を行ってください。</p>
+                        <%= unarchived_talks.map { |t| "- #{t.title}" }.join("<br>") %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <% if track.streaming && track.streaming.status != 'deleted' && track.streaming&.media_live_channel&.idle? %>
+                      <%= button_to("削除する", admin_delete_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary"}) %>
+                  <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       <% end %>

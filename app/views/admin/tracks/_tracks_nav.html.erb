@@ -24,6 +24,7 @@
       <th scope="col">On Air</th>
       <th scope="col">Recording</th>
       <th scope="col">Recording Status</th>
+
     </tr>
     </thead>
 
@@ -54,16 +55,19 @@
           <% end %>
         </td>
         <td>
-          <% if talk.abstract != 'intermission' && talk.live? && talk.recordable? %>
-            <%= link_to "録画する", new_admin_harvest_job_path(talk_id: talk.id) %>
+          <%= turbo_frame_tag "record_button_#{talk.id}" do %>
+            <%= render('admin/tracks/partial/record_button', conference: conference, talk: talk) %>
           <% end %>
         </td>
         <td>
           <% if talk.video && talk.abstract != 'intermission' %>
             <% if already_recorded?(talk) %>
-              <div class="btn btn-primary">録画済み</div>
-            <% else %>
-              未録画
+              録画済み
+            <% else if MediaPackageHarvestJob.where(talk_id: talk.id).present? %>
+                録画中
+              <% else %>
+                未録画
+              <% end %>
             <% end %>
           <% end %>
         </td>
@@ -85,4 +89,3 @@
     </div>
   </div>
 </div>
-

@@ -11,6 +11,25 @@ namespace :util do
       config.token = ENV['SLACK_TOKEN']
     end
 
+    msg = ''
+
+
+    conferences = Conference.merge(Conference.where(conference_status: Conference::STATUS_OPENED)).or(Conference.where(conference_status: Conference::STATUS_CLOSED))
+    conferences.each do |conference|
+      unarchived_talks = conference.talks.select do |talk|
+        talk.abstract != 'intermission' && talk.live? && talk.video&.video_id&.empty?
+      end
+
+      unless unarchived_talks.empty?
+        msg += <<~EOS
+          [#{conference.abbr.upcase}] 以下のセッションがアーカイブされていません:
+
+          #{unarchived_talks.map { |t| "- #{t.title} (#{t.start_time})" }.join("\n")}
+
+        EOS
+      end
+    end
+
     channels = []
     next_token = nil
     loop do
@@ -26,12 +45,15 @@ namespace :util do
     end
 
     unless channels.empty?
-      msg = <<~EOS
+      msg += <<~EOS
         以下のMediaLive Channelが作成済みのままです:
 
         #{channels.map { |c| "- #{c.name} (#{c.state})" }.join("\n")}
       EOS
+    end
 
+    if msg != ''
+      puts msg
       client = Slack::Web::Client.new
       client.chat_postMessage(channel: '#broadcast', text: msg, username: 'Dreamkast')
     end

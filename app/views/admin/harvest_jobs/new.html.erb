@@ -1,9 +1,3 @@
-<%= render 'admin/layout' do %>
-  <h1>New HarvestJob</h1>
-
-  <div class="row speaker-dashboard-form justify-content-center">
-    <div class="col-12 col-lg-8">
-      <%= render 'admin/harvest_jobs/form' %>
-    </div>
-  </div>
+<%= render "layouts/modal", title: "アーカイブ動画を作成する" do %>
+  <%= render 'admin/harvest_jobs/form' %>
 <% end %>

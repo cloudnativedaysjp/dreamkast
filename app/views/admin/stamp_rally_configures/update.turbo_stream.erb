@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "stamp_rally_configure", @stamp_rally_configure do %>
+  <%= render 'admin/stamp_rally_configures/stamp_rally_configure', locals: { stamp_rally_configure: @stamp_rally_configure} %>
+<% end %>
+<%= turbo_stream_flash %>
+<%= yield %>

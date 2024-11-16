@@ -1,7 +1,20 @@
 <% provide(:title, 'スタンプラリーチェックポイント一覧') %>
 <%= render 'admin/layout' do %>
   <div class="row">
-    <h2>スタンプラリーチェックポイント一覧</h2>
+    <h2>スタンプラリー</h2>
+  </div>
+
+  <div class="row">
+    <h3>設定</h3>
+  </div>
+
+  <%= turbo_frame_tag @stamp_rally_configure do %>
+    <%= render 'admin/stamp_rally_configures/stamp_rally_configure', stamp_rally_configure: @stamp_rally_configure %>
+  <% end %>
+
+
+  <div class="row">
+    <h3>チェックポイント</h3>
   </div>
 
   <%= turbo_frame_tag "stamp_rally_check_point_list" do %>

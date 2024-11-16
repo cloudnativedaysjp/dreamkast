@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_03_051440) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -469,6 +469,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_051440) do
     t.index ["sponsor_id"], name: "index_stamp_rally_check_points_on_sponsor_id"
   end
 
+  create_table "stamp_rally_configures", id: { type: :string, limit: 26 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.decimal "finish_threshold", precision: 10, null: false
+    t.index ["conference_id"], name: "index_stamp_rally_configures_on_conference_id"
+  end
+
   create_table "stats_of_registrants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id"
     t.integer "number_of_registrants"
@@ -652,6 +658,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_051440) do
   add_foreign_key "stamp_rally_check_ins", "profiles"
   add_foreign_key "stamp_rally_check_ins", "stamp_rally_check_points"
   add_foreign_key "stamp_rally_check_points", "conferences"
+  add_foreign_key "stamp_rally_configures", "conferences"
   add_foreign_key "streamings", "conferences"
   add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"

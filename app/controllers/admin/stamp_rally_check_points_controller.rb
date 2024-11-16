@@ -9,6 +9,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def index
     @stamp_rally_check_points = conference.stamp_rally_check_points.order(:position)
+    @stamp_rally_configure = conference.stamp_rally_configure || StampRallyConfigure.new
   end
 
   def new

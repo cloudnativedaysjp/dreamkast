@@ -1,0 +1,14 @@
+<%= form_with(model: [:admin, stamp_rally_configure],
+              url: stamp_rally_configure.new_record? ? admin_stamp_rally_configures_path(event: params[:event]) : admin_stamp_rally_configure_path(stamp_rally_configure, event: params[:event]),
+              ) do |form| %>
+  <div class="mb-3">
+    <%= form.label :finish_threshold, class: "form-label" %> (チェックイン数が指定した数値以上になった場合、フィニッシュ可能。-1もしくは未設定の場合は全てチェックインするとフィニッシュ可能。)
+    <%= form.text_field :finish_threshold, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <div class="d-flex justify-content-end">
+      <%= form.submit class: "btn btn-primary btn-sm me-2" %>
+    </div>
+  </div>
+<% end %>

@@ -12,7 +12,14 @@ describe StampRallyCheckInsController, type: :request do
     let!(:stamp_rally_check_point_finish) { create(:stamp_rally_check_point_finish, conference:) }
 
     before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
+      ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+        if arg[1] == :userinfo
+          session[:userinfo]
+        else
+          arg[0].send(:original, arg[1])
+        end
+      end)
     end
 
     context 'does not check in yet' do
@@ -35,9 +42,9 @@ describe StampRallyCheckInsController, type: :request do
         expect(response).to(have_http_status(:ok))
       end
 
-      it 'include message: `まだ回っていないブースがあります' do
+      it 'include message: `まだ回っていないCPがあります' do
         get stamp_rally_check_ins_path(event: conference.abbr)
-        expect(response.body).to(include('まだ回っていないブースがあります'))
+        expect(response.body).to(include('まだ回っていないCPがあります'))
       end
     end
 
@@ -53,9 +60,9 @@ describe StampRallyCheckInsController, type: :request do
         expect(response).to(have_http_status(:ok))
       end
 
-      it 'include message: `全てのブースを回り終わりました！受付でスタンプラリーをフィニッシュしてください' do
+      it 'include message: `ゴール条件を満たしました！受付でゴールしてください' do
         get stamp_rally_check_ins_path(event: conference.abbr)
-        expect(response.body).to(include('全てのブースを回り終わりました！受付でスタンプラリーをフィニッシュしてください'))
+        expect(response.body).to(include('ゴール条件を満たしました！受付でゴールしてください'))
       end
     end
 
@@ -72,9 +79,9 @@ describe StampRallyCheckInsController, type: :request do
         expect(response).to(have_http_status(:ok))
       end
 
-      it 'include message: `スタンプラリーフィニッシュ済み！！' do
+      it 'include message: `ゴール！！' do
         get stamp_rally_check_ins_path(event: conference.abbr)
-        expect(response.body).to(include('スタンプラリーフィニッシュ済み！！'))
+        expect(response.body).to(include('ゴール！！'))
       end
     end
   end

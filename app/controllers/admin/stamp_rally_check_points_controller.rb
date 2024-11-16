@@ -1,8 +1,15 @@
 class Admin::StampRallyCheckPointsController < ApplicationController
   include SecuredAdmin
 
+  def reorder
+    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point.insert_at(params[:position].to_i)
+    head(:ok)
+  end
+
   def index
-    @stamp_rally_check_points = conference.stamp_rally_check_points
+    @stamp_rally_check_points = conference.stamp_rally_check_points.order(:position)
+    @stamp_rally_configure = conference.stamp_rally_configure || StampRallyConfigure.new
   end
 
   def new
@@ -30,6 +37,8 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def update
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @sponsors = conference.sponsors
+    @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
     if @stamp_rally_check_point.update(stamp_rally_check_point_params)
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を更新しました"
     else
@@ -39,7 +48,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def destroy
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
-    if @stamp_rally_check_point.destroy
+    if @stamp_rally_check_point.stamp_rally_check_ins.destroy_all && @stamp_rally_check_point.destroy
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を削除しました"
     else
       flash.now.alert = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} の削除に失敗しました"

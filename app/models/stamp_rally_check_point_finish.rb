@@ -5,6 +5,7 @@
 #  id            :string(26)       not null, primary key
 #  description   :string(255)      not null
 #  name          :string(255)      not null
+#  position      :integer
 #  type          :string(255)      not null
 #  conference_id :bigint           not null
 #  sponsor_id    :bigint

@@ -208,6 +208,9 @@
                 <% else %>
                   <li><%= link_to '公開プロフィールを登録する', new_public_profile_path %></li>
                 <% end %>
+                <% if @conference.opened? %>
+                  <li><%= link_to "スタンプラリー", stamp_rally_check_ins_path %></li>
+                <% end %>
                 <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %>
               </ul>
             </div>

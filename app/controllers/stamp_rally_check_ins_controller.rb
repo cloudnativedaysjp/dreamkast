@@ -44,7 +44,7 @@ class StampRallyCheckInsController < ApplicationController
       :in_progress
     elsif check_ins.size >= finish_threshold && finish_check_in.empty?
       :pre_finished
-    elsif check_ins.size == check_points.size && finish_check_in.present?
+    elsif check_ins.size >= finish_threshold && finish_check_in.present?
       :finished
     else
       :error

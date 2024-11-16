@@ -42,7 +42,7 @@ class StampRallyCheckInsController < ApplicationController
                        elsif conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold == -1
                          check_points.size
                        else
-                         0
+                         check_points.size
                        end
 
     if @profile.stamp_rally_check_ins.empty?

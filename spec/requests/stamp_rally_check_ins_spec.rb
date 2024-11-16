@@ -53,9 +53,9 @@ describe StampRallyCheckInsController, type: :request do
         expect(response).to(have_http_status(:ok))
       end
 
-      it 'include message: `全てのCPを回り終わりました！受付でゴールしてください' do
+      it 'include message: `ゴール条件を満たしました！受付でゴールしてください' do
         get stamp_rally_check_ins_path(event: conference.abbr)
-        expect(response.body).to(include('全てのCPを回り終わりました！受付でゴールしてください'))
+        expect(response.body).to(include('ゴール条件を満たしました！受付でゴールしてください'))
       end
     end
 

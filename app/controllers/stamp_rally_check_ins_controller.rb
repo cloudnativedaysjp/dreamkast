@@ -10,10 +10,10 @@ class StampRallyCheckInsController < ApplicationController
 
   def new
     @stamp_rally_check_point = @conference.stamp_rally_check_points.find(params[:stamp_rally_check_point_id])
-    @stamp_rally_check_in = StampRallyCheckIn.new({stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile, check_in_timestamp: Time.zone.now})
+    @stamp_rally_check_in = StampRallyCheckIn.new({ stamp_rally_check_point_id: params[:stamp_rally_check_point_id], profile: @profile, check_in_timestamp: Time.zone.now })
 
     if @stamp_rally_check_in.save
-      redirect_to(stamp_rally_check_ins_path, flash: { notice: "#{@stamp_rally_check_point.name}" })
+      redirect_to(stamp_rally_check_ins_path, flash: { notice: @stamp_rally_check_point.name.to_s })
     else
       respond_to do |format|
         format.html { render(:new, flash: { error: @stamp_rally_check_in.errors.messages }) }
@@ -34,8 +34,6 @@ class StampRallyCheckInsController < ApplicationController
     finish_check_in = check_ins(StampRallyCheckPointFinish)
     finish_threshold = if conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold >= 0
                          conference.stamp_rally_configure.finish_threshold
-                       elsif conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold == -1
-                         check_points.size
                        else
                          check_points.size
                        end

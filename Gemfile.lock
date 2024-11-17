@@ -183,6 +183,11 @@ GEM
     faraday-net_http (3.0.2)
     faraday-retry (2.0.0)
       faraday (~> 2.0)
+    ferrum (0.15)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (~> 0.7)
     ffi (1.17.0)
     fileutils (1.7.2)
     foreman (0.88.1)
@@ -675,6 +680,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webrick (1.9.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -705,6 +711,7 @@ DEPENDENCIES
   execjs
   factory_bot_rails
   faraday-retry
+  ferrum
   foreman
   icalendar
   image_processing (~> 1.12.2)

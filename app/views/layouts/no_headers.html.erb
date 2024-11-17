@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= full_title(yield(:title)) %></title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <% unless production? %><meta name="robots" content="noindex"><% end %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= favicon_link_tag('favicon.ico') %>
+    <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
+    <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
+  <meta name="turbo-cache-control" content="no-cache">
+
+    <script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+
+    <link href="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+
+    <meta property="og:site_name" content="<%= site_name %>" />
+
+    <% if yield(:ogp).size == 0 %>
+      <meta property="og:url" content="<%= request.original_url %>" />
+      <meta property="og:type" content="article" />
+      <meta property="og:title" content="<%= full_title(yield(:title)) %>" />
+      <meta property="og:image" content="<%= event_image_url %>" />
+      <meta property="og:description" content="CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。" />
+    <% else %>
+      <%= yield(:ogp) %>
+    <% end %>
+    <meta property="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@cloudnativedays" />
+
+
+  <%#= render partial: "layouts/karte" %>
+    <%= render partial: "layouts/analytics" %>
+    <%#= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%#= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+
+<body id="page-top">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MWQZPVN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0&appId=300575407747858&autoLogAppEvents=1" nonce="G1Hsaf0L"></script>
+<div id="wrapper">
+
+  <%= yield %>
+
+</div>
+</body>
+
+</html>

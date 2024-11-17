@@ -13,7 +13,7 @@ class Api::V1::CheckInConferencesController < ApplicationController
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
     @check_in = CheckInConference.new(profile: attendee, conference:, check_in_timestamp:, scanner_profile_id: @profile.id)
     conference = Conference.find_by(abbr: @params[:eventAbbr])
-    GenerateEntrysheetJob.perform_later(conference.id, attendee.id, speaker&.id)
+    GenerateEntrysheetJob.perform_later(conference.id, attendee.id, speaker&.id, @params[:printerId])
 
     if @check_in.save
       render(json: @check_in, status: :created)
@@ -24,6 +24,6 @@ class Api::V1::CheckInConferencesController < ApplicationController
 
   def check_in_conferences_params(params)
     json_params = ActionController::Parameters.new(params)
-    json_params.permit(:profileId, :eventAbbr, :checkInTimestamp)
+    json_params.permit(:profileId, :eventAbbr, :checkInTimestamp, :printerId)
   end
 end

@@ -2,7 +2,7 @@ class GenerateEntrysheetJob < ApplicationJob
   queue_as :default
   # self.queue_adapter = :amazon_sqs
 
-  def perform(conference_id, profile_id, speaker_id = nil)
+  def perform(conference_id, profile_id, speaker_id = nil, printer_id = nil)
     conference = Conference.find(conference_id)
     obj = { profile_id:, speaker_id: }.to_json
 
@@ -19,5 +19,30 @@ class GenerateEntrysheetJob < ApplicationJob
     )
 
     page.quit
+
+    auth = PrintNode::Auth.new(ENV['PRINTNODE_API_KEY'])
+    client = PrintNode::Client.new(auth)
+
+    unless printer_id
+      printers = client.printers
+      printer_id = printers[0].id
+    end
+
+    pdf_content = File.read(pdf_file)
+    pdf_base64 = Base64.strict_encode64(pdf_content)
+
+    profile = Profile.find(profile_id)
+
+    job = PrintNode::PrintJob.new(
+      printer_id,
+      "#{profile.email} エントリーシート",
+      'pdf_base64',
+      pdf_base64,
+      'Dreamkast'
+    )
+
+    response = client.create_printjob(job)
+
+    puts "印刷ジョブID: #{response.to_s}"
   end
 end

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :debug, only: [:index]
       resources :check_in_conferences, only: [:create], path: 'check_in_events'
       resources :check_in_talks, only: [:create]
+      resources :print_node_printers, only: [:index]
       namespace 'talks' do
         get ':id/video_registration' => 'video_registration#show'
         put ':id/video_registration' => 'video_registration#update'

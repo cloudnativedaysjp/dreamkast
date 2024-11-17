@@ -15,7 +15,7 @@ describe Api::V1::CheckInConferencesController, type: :request do
 
     context 'create' do
       before do
-        allow(JsonWebToken).to(receive(:verify).and_return(claim))
+        allow(JsonWebToken).to(receive(:verify).and_return(alice_claim))
       end
 
       it 'return ok' do

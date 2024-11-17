@@ -70,6 +70,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_list (1.2.3)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     annotate (3.2.0)
@@ -689,6 +692,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash
   activerecord-nulldb-adapter
+  acts_as_list
   annotate
   awesome_nested_set
   aws-sdk-cloudfront

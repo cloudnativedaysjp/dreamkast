@@ -43,23 +43,31 @@
             <b>企画一覧</b>
           </div>
           <div class="card-body" id="exhibition">
-          <!--
-            <%= link_to "https://eventregist.com/e/cnds2024_party" do %>
-              <div class="project">
-                <%= image_tag 'cnds2024/zenyasai.png' %>
+            <%= link_to 'https://eventregist.com/e/cndw2024_party?lang=ja_JP', target: '_blank' do %>
+              <div class='project'>
+                <%= image_tag 'cndw2024/networking.png' %>
               </div>
             <% end %>
             <%= link_to hands_on_path do %>
-              <div class="project">
-                <%= image_tag 'cnds2024/handson.png' %>
+              <div class='project'>
+                <%= image_tag 'cndw2024/handson.png' %>
               </div>
             <% end %>
-            <%= link_to "https://cloudnativedays.connpass.com/event/319587/" do %>
-              <div class="project">
-                <%= image_tag 'cnds2024/train-lt.png' %>
+            <%= link_to "https://cloudnativedays.connpass.com/event/334620/", target: '_blank' do %>
+              <div class='project'>
+                <%= image_tag 'cndw2024/cruiser-lt.png' %>
               </div>
             <% end %>
-          -->
+            <%= link_to "https://docs.google.com/forms/d/e/1FAIpQLSdfCSpowZDE5FTh0RD-bwnu_CUlLnBHKy942cDCkWSOIOZHsg/viewform", target: '_blank' do %>
+              <div class='project'>
+                <%= image_tag 'cndw2024/oss.png' %>
+              </div>
+            <% end %>
+            <%= link_to "https://pfem.notion.site/CNDW2024-Community-Beginner-LT-13821b0141e0800cb403c880cb4d2738", target: '_blank' do %>
+              <div class='project'>
+                <%= image_tag 'cndw2024/lt.png' %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -198,6 +206,9 @@
                   <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>
                 <% else %>
                   <li><%= link_to '公開プロフィールを登録する', new_public_profile_path %></li>
+                <% end %>
+                <% if @conference.opened? %>
+                  <li><%= link_to "スタンプラリー", stamp_rally_check_ins_path %></li>
                 <% end %>
                 <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %>
               </ul>

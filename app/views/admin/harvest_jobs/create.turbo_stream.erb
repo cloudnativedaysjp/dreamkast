@@ -1,0 +1,5 @@
+<%= turbo_stream.update "record_button_#{@talk.id}" do %>
+  <%= render partial: 'admin/tracks/partial/record_button', locals: { conference: @conference, talk: @talk } %>
+<% end %>
+<%= turbo_stream_flash %>
+<%= yield %>

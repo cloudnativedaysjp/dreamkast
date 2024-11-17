@@ -1,7 +1,20 @@
 <% provide(:title, 'スタンプラリーチェックポイント一覧') %>
 <%= render 'admin/layout' do %>
   <div class="row">
-    <h2>スタンプラリーチェックポイント一覧</h2>
+    <h2>スタンプラリー</h2>
+  </div>
+
+  <div class="row">
+    <h3>設定</h3>
+  </div>
+
+  <%= turbo_frame_tag @stamp_rally_configure do %>
+    <%= render 'admin/stamp_rally_configures/stamp_rally_configure', stamp_rally_configure: @stamp_rally_configure %>
+  <% end %>
+
+
+  <div class="row">
+    <h3>チェックポイント</h3>
   </div>
 
   <%= turbo_frame_tag "stamp_rally_check_point_list" do %>
@@ -15,13 +28,15 @@
 
 
     <div class="row py-2 border-top">
-      <div class="col-2 my-auto">ID</div>
+      <div class="col-1"></div>
       <div class="col-2 my-auto">Type</div>
+      <div class="col-2 my-auto">Name</div>
       <div class="col-2 my-auto">Sponsor Name</div>
-      <div class="col-2 my-auto">Check In Url</div>
-      <div class="col-2"></div>
+      <div class="col-2 my-auto"></div>
+      <div class="col-1 my-auto"></div>
+      <div class="col-1 my-auto"></div>
     </div>
-    <div id="stamp_rally_check_points">
+    <div id="stamp_rally_check_points" data-controller="drag-drop">
       <% @stamp_rally_check_points.each do |stamp_rally_check_point| %>
         <%= render 'admin/stamp_rally_check_points/stamp_rally_check_point', conference: @conference, stamp_rally_check_point: stamp_rally_check_point %>
       <% end %>

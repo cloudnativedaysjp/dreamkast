@@ -11,6 +11,14 @@
     <% end %>
     <div class="row py-2 border-top" data-controller="sponsor">
       <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, class: "form-control" %>
+      </div>
+      <div class="mb-3">
         <%= form.label :type, class: "form-label" %>
         <%= form.select :type, options_for_select(type_options, selected: stamp_rally_check_point.type), {},
                         {

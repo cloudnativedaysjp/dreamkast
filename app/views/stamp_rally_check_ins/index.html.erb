@@ -1,37 +1,45 @@
 <% provide(:title, 'スタンプラリーチェックイン記録') %>
+<% flash.each do |message_type, message| %>
+  <div class="modal" data-controller="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">チェックインしました🎉</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= message %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <div class="container white_background mt-3">
-  <h1 class="my-3 text-center">スタンプラリーチェックイン記録</h1>
+  <h1 class="my-3 text-center">スタンプラリーCP一覧</h1>
 
-  <% case @profile.stamp_rally_status %>
+  <% case stamp_rally_status %>
   <% when :not %>
     <p>スタンプラリーはまだ開始されていません。</p>
   <% when :in_progress %>
-    <p>まだ回っていないブースがあります</p>
+    <p>まだ回っていないCPがあります</p>
   <% when :pre_finished %>
-    <p>全てのブースを回り終わりました！受付でスタンプラリーをフィニッシュしてください</p>
+    <p>ゴール条件を満たしました！受付でゴールしてください</p>
   <% when :finished %>
-    <p>スタンプラリーフィニッシュ済み！！</p>
+    <p>ゴール！！！</p>
   <% else raise "Invalid status" %>
   <% end %>
+  <div class="row row-cols-5 g-2">
 
-  <table>
-    <thead>
-    <tr>
-      <th>Type</th>
-      <th>Sponsor</th>
-      <th>チェックイン</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%  %>
-    <% @stamp_rally_check_points.each do |d| %>
-      <tr>
-        <td><%= d.type %></td>
-        <td><%= d.sponsor&.name %></td>
-        <td><%= @stamp_rally_check_ins.find_by(stamp_rally_check_point_id: d.id).present? ? "チェックイン済み" : "" %></td>
-      </tr>
+    <% @stamp_rally_check_points.each_with_index do |check_point, index| %>
+      <%= render "check_point", index: index, stamp_rally_check_ins: @stamp_rally_check_ins, check_point: check_point %>
     <% end %>
-    </tbody>
-  </table>
+
+    <% @stamp_rally_check_point_finishes.each_with_index do |check_point, index| %>
+      <%= render "check_point", index: index, stamp_rally_check_ins: @stamp_rally_check_ins, check_point: check_point %>
+    <% end %>
+  </div>
 </div>

@@ -82,7 +82,7 @@ class MediaPackageOriginEndpoint < ApplicationRecord
       },
       manifest_name: 'index',
       origination: 'ALLOW',
-      startover_window_seconds: 86400,
+      startover_window_seconds: 604_800, # 1 week
       time_delay_seconds: 5
     }
   end

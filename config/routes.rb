@@ -72,7 +72,11 @@ Rails.application.routes.draw do
       resources :announcements
       resources :speaker_announcements
       resources :streamings
-      resources :stamp_rally_check_points
+      resources :stamp_rally_check_points do
+        patch :reorder, on: :member
+      end
+      resources :stamp_rally_configures
+      resources :qr_code_for_stamp_rallies, only: [:show]
       post 'create_aws_resources' => 'streamings#create_aws_resources'
       post 'delete_aws_resources' => 'streamings#delete_aws_resources'
       post 'start_media_live_channel' => 'media_live_channel#start_channel'

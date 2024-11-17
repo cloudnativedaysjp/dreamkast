@@ -8,11 +8,11 @@ class Api::V1::CheckInConferencesController < ApplicationController
 
   def create
     @params = check_in_conferences_params(JSON.parse(request.body.read, { symbolize_names: true }))
-    profile = Profile.find(@params[:profileId])
+    attendee = Profile.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
-    @check_in = CheckInConference.new(profile:, conference:, check_in_timestamp:, scanner_profile_id: profile.id)
+    @check_in = CheckInConference.new(profile: attendee, conference:, check_in_timestamp:, scanner_profile_id: @profile.id)
     conference = Conference.find_by(abbr: @params[:eventAbbr])
-    GenerateEntrysheetJob.perform_later(conference.id, @params[:profileId], nil)
+    GenerateEntrysheetJob.perform_later(conference.id, attendee.id, nil)
 
     if @check_in.save
       render(json: @check_in, status: :created)

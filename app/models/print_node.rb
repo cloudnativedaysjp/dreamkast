@@ -1,7 +1,7 @@
 class PrintNode
   include ActiveModel::Model
 
-  def initialize()
+  def initialize
     auth = PrintNode::Auth.new(ENV['PRINTNODE_API_KEY'])
     @client = PrintNode::Client.new(auth)
   end
@@ -24,8 +24,7 @@ class PrintNode
       'Dreamkast'
     )
 
-    response = client.create_printjob(job)
-
+    client.create_printjob(job)
   end
 
   def url_qrcode_image

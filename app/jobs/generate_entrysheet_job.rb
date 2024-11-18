@@ -43,6 +43,6 @@ class GenerateEntrysheetJob < ApplicationJob
 
     response = client.create_printjob(job)
 
-    puts "印刷ジョブID: #{response.to_s}"
+    puts("印刷ジョブID: #{response}")
   end
 end

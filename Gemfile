@@ -127,6 +127,3 @@ gem "rqrcode", "~> 2.0"
 gem 'ulid'
 
 gem 'acts_as_list'
-
-# PDF tool
-gem 'ferrum'

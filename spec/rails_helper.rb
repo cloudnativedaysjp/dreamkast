@@ -109,6 +109,7 @@ end
 def alice_claim
   [JSON.parse('{
     "https://cloudnativedays.jp/roles": [
+      "CNDT2020-Admin",
       "CNDT2022-Admin"
     ],
     "https://cloudnativedays.jp/userinfo": {

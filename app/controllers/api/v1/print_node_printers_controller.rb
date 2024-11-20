@@ -1,5 +1,5 @@
 class Api::V1::PrintNodePrintersController < ApplicationController
-  include SecuredPublicApi
+  include SecuredAdminApi
   before_action :set_conference, :set_profile
 
   skip_before_action :verify_authenticity_token

@@ -1,5 +1,5 @@
 class Api::V1::CheckInConferencesController < ApplicationController
-  include SecuredPublicApi
+  include SecuredAdminApi
   before_action :set_profile
 
   skip_before_action :verify_authenticity_token

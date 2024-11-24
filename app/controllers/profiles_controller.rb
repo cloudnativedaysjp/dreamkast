@@ -113,6 +113,9 @@ class ProfilesController < ApplicationController
   def view_qr
   end
 
+  def entry_sheet
+  end
+
   helper_method :profile_url
 
   private

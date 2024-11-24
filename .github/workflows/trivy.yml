@@ -16,11 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Run Trivy vulnerability scanner in fs mode
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        exit-code: '0'
-        ignore-unfixed: true
-        severity: 'CRITICAL,HIGH'
+#  vulnerability DBのダウンロードにしょっちゅう失敗するのでしばらく無効にする
+#    - name: Run Trivy vulnerability scanner in fs mode
+#      uses: aquasecurity/trivy-action@master
+#      with:
+#        scan-type: 'fs'
+#        scan-ref: '.'
+#        exit-code: '0'
+#        ignore-unfixed: true
+#        severity: 'CRITICAL,HIGH'

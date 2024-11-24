@@ -459,6 +459,7 @@ GEM
     pluginator (1.5.0)
     pre-commit (0.39.0)
       pluginator (~> 1.5)
+    printnode (1.0.7)
     prometheus-client (4.0.0)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -725,6 +726,7 @@ DEPENDENCIES
   opentelemetry-instrumentation-all
   opentelemetry-sdk
   pre-commit
+  printnode
   prometheus-client (~> 4.0.0)
   pry-rails
   psych (< 6)

@@ -7,7 +7,7 @@ class EntrySheetController < ApplicationController
     object = JSON.parse(decrypted)
 
     @profile = Profile.find(object['profile_id'])
-    @speaker = Speaker.find(object['speaker_id'])
+    @speaker = object['speaker_id'].present? ? Speaker.find(object['speaker_id']) : nil
     @conference = Conference.find_by(abbr: params[:event])
 
     # 全てのテーブルの行数を取得

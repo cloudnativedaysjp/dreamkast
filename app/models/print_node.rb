@@ -1,23 +1,30 @@
-class QrCodeForStampRally
+class PrintNode
   include ActiveModel::Model
-  attr_accessor :stamp_rally_check_point, :event
 
-  def initialize(stamp_rally_check_point, event)
-    @stamp_rally_check_point = stamp_rally_check_point
-    @event = event
+  def initialize
+    auth = PrintNode::Auth.new(ENV['PRINTNODE_API_KEY'])
+    @client = PrintNode::Client.new(auth)
   end
 
-  def url
-    Rails.application.routes.url_helpers.new_stamp_rally_check_in_url(
-      event: event.abbr,
-      params: { stamp_rally_check_point_id: stamp_rally_check_point.id },
-      protocol:,
-      host: Rails.application.default_url_options[:host]
+  def printers
+    @client.printers
+  end
+
+  def print(file)
+    pdf_content = File.read(file)
+    pdf_base64 = Base64.strict_encode64(pdf_content)
+
+    profile = Profile.find(profile_id)
+
+    job = PrintNode::PrintJob.new(
+      printer_id,
+      "#{profile.email} エントリーシート",
+      'pdf_base64',
+      pdf_base64,
+      'Dreamkast'
     )
-  end
 
-  def protocol
-    Rails.env.production? ? 'https' : 'http'
+    client.create_printjob(job)
   end
 
   def url_qrcode_image

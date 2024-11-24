@@ -67,40 +67,42 @@ jobs:
           echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
 
-      - name: Checkout dreamkast-infra
-        uses: actions/checkout@v4
-        with:
-          repository: cloudnativedaysjp/dreamkast-infra
-          path: dreamkast-infra
-          token: ${{ steps.generate_token.outputs.token }}
+      # TODO(kanata): deploy dreamkst-api-mock to ECS & automate to deploy it
+      #
+      #- name: Checkout dreamkast-infra
+      #  uses: actions/checkout@v4
+      #  with:
+      #    repository: cloudnativedaysjp/dreamkast-infra
+      #    path: dreamkast-infra
+      #    token: ${{ steps.generate_token.outputs.token }}
 
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v2
-        with:
-          kustomize-version: "3.6.1"
+      #- name: Setup Kustomize
+      #  uses: imranismail/setup-kustomize@v2
+      #  with:
+      #    kustomize-version: "3.6.1"
 
-      - name: Update Kubernetes resources
-        run: |
-          cd dreamkast-infra/manifests/app/dreamkast-api-mock/base
-          kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
-          cat kustomization.yaml
+      #- name: Update Kubernetes resources
+      #  run: |
+      #    cd dreamkast-infra/manifests/app/dreamkast-api-mock/base
+      #    kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+      #    cat kustomization.yaml
 
-      - name: Commit files
-        working-directory: dreamkast-infra/
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git status
-          git add -A
-          git commit -am "Bump docker tag"
+      #- name: Commit files
+      #  working-directory: dreamkast-infra/
+      #  run: |
+      #    git config --local user.email "action@github.com"
+      #    git config --local user.name "GitHub Action"
+      #    git status
+      #    git add -A
+      #    git commit -am "Bump docker tag"
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ steps.generate_token.outputs.token }}
-          repository: cloudnativedaysjp/dreamkast-infra
-          directory: dreamkast-infra
-          branch: main
+      #- name: Push changes
+      #  uses: ad-m/github-push-action@master
+      #  with:
+      #    github_token: ${{ steps.generate_token.outputs.token }}
+      #    repository: cloudnativedaysjp/dreamkast-infra
+      #    directory: dreamkast-infra
+      #    branch: main
 
       - name: Checkout dreamkast-ui
         uses: actions/checkout@v4

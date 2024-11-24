@@ -24,7 +24,9 @@ namespace :util do
       %w[08:00:00 09:50:00 開始までしばらくお待ちください intermission],
       %w[09:50:00 10:00:00 オープニング intermission],
       #  10:00:00 12:00:00 Keynote
-      %w[12:00:00 13:20:00 休憩 intermission],
+      %w[12:00:00 12:30:00 休憩 intermission],
+      %w[12:30:00 13:00:00 スポンサーの想いが詰まった26のブース、あなたはどれを見る？ intermission],
+      %w[13:00:00 13:20:00 休憩 intermission],
       #  13:20:00 14:00:00 CFP Session
       %w[14:00:00 14:20:00 休憩 intermission],
       #  14:20:00 15:00:00 Breakout Sponsor
@@ -42,7 +44,9 @@ namespace :util do
       %w[08:00:00 09:50:00 開始までしばらくお待ちください intermission],
       %w[09:50:00 10:00:00 トラックAでOP実施中！ intermission],
       %w[10:00:00 12:00:00 トラックAでキーノート配信中！ intermission],
-      %w[12:00:00 13:20:00 休憩 intermission],
+      %w[12:00:00 12:30:00 休憩 intermission],
+      %w[12:30:00 13:00:00 スポンサーの想いが詰まった26のブース、あなたはどれを見る？ intermission],
+      %w[13:00:00 13:20:00 休憩 intermission],
       #  13:20:00 14:00:00 CFP Session
       %w[14:00:00 14:20:00 休憩 intermission],
       #  14:20:00 15:00:00 Breakout Sponsor

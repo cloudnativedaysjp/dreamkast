@@ -14,9 +14,9 @@ module EnvHelper
   def review_app_number
     m = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-dk/)
     if m
-      m[1]
+      m[1].to_i
     else
-      raise('cannot get review app number')
+      0
     end
   end
 

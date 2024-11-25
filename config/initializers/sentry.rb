@@ -2,7 +2,8 @@ Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger, :http_logger, :redis_logger]
   config.dsn = ENV['SENTRY_DSN']
   config.environment = ENV['DREAMKAST_NAMESPACE']
-  config.enabled_environments = ['dreamkast', 'dreamkast-staging'] # Only staging and production send error logs to sentry
+  # NOTE: 'dreamkast-prod-dk' will be removed as soon as DREAMKAST_NAMESPACE is changed
+  config.enabled_environments = ['dreamkast-prod-dk', 'dreamkast', 'dreamkast-staging'] # Only staging and production send error logs to sentry
 
   # To activate performance monitoring, set one of these options.
   # We recommend adjusting the value in production:

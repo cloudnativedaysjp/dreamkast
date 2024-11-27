@@ -45,6 +45,6 @@ class GenerateEntrysheetJob < ApplicationJob
 
     puts("印刷ジョブID: #{response}")
   ensure
-    File.exists?(pdf_file) && File.delete(pdf_file)
+    File.exist?(pdf_file) && File.delete(pdf_file)
   end
 end

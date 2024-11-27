@@ -44,5 +44,7 @@ class GenerateEntrysheetJob < ApplicationJob
     response = client.create_printjob(job)
 
     puts("印刷ジョブID: #{response}")
+  ensure
+    File.exist?(pdf_file) && File.delete(pdf_file)
   end
 end

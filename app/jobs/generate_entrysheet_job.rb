@@ -1,6 +1,6 @@
 class GenerateEntrysheetJob < ApplicationJob
-  queue_as :default
-  # self.queue_adapter = :amazon_sqs
+  queue_as :fifo
+  self.queue_adapter = :amazon_sqs
 
   def perform(conference_id, profile_id, speaker_id = nil, printer_id = nil)
     conference = Conference.find(conference_id)

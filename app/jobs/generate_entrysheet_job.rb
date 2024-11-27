@@ -3,12 +3,13 @@ class GenerateEntrysheetJob < ApplicationJob
   self.queue_adapter = :amazon_sqs
 
   def perform(conference_id, profile_id, speaker_id = nil, printer_id = nil)
+    puts("printer_id: #{printer_id}")
     conference = Conference.find(conference_id)
-    obj = { profile_id:, speaker_id: }.to_json
+    obj = { profile_id:, speaker_id:}.to_json
 
     encrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).encrypt_and_sign(obj)
 
-    page = Ferrum::Browser.new({ browser_options: { 'no-sandbox': nil } })
+    page = Ferrum::Browser.new({ browser_options: { 'no-sandbox': nil }, process_timeout: 20 })
     page.goto("http://#{Rails.application.routes.default_url_options[:host]}/#{conference.abbr}/entry_sheet?encrypted=#{Base64.urlsafe_encode64(encrypted)}")
     pdf_file = Rails.root.join('tmp', "#{profile_id}_entry_sheet.pdf")
     page.pdf(
@@ -44,7 +45,9 @@ class GenerateEntrysheetJob < ApplicationJob
     response = client.create_printjob(job)
 
     puts("印刷ジョブID: #{response}")
+  rescue => e
+    raise(e)
   ensure
-    File.exist?(pdf_file) && File.delete(pdf_file)
+    pdf_file && File.exist?(pdf_file) && File.delete(pdf_file)
   end
 end

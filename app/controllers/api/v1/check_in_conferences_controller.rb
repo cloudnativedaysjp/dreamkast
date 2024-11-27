@@ -8,6 +8,7 @@ class Api::V1::CheckInConferencesController < ApplicationController
 
   def create
     @params = check_in_conferences_params(JSON.parse(request.body.read, { symbolize_names: true }))
+    puts("params: #{@params}")
     attendee = Profile.find(@params[:profileId])
     speaker = Speaker.find_by(email: attendee.email, conference_id: conference.id)
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])

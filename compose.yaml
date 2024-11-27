@@ -38,10 +38,12 @@ services:
       - db
       - localstack
   fifo-worker:
+    platform: linux/amd64
     build: .
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
     environment:
       <<: *dkenv
+      BROWSER_PATH: /usr/bin/google-chrome
     tty: true
     stdin_open: true
     tmpfs:

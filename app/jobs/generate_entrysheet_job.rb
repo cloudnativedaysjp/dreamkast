@@ -8,7 +8,7 @@ class GenerateEntrysheetJob < ApplicationJob
 
     encrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).encrypt_and_sign(obj)
 
-    page = Ferrum::Browser.new
+    page = Ferrum::Browser.new({ browser_options: { 'no-sandbox': nil } })
     page.goto("http://#{Rails.application.routes.default_url_options[:host]}/#{conference.abbr}/entry_sheet?encrypted=#{Base64.urlsafe_encode64(encrypted)}")
     pdf_file = Rails.root.join('tmp', "#{profile_id}_entry_sheet.pdf")
     page.pdf(

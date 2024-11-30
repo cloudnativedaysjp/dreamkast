@@ -58,15 +58,8 @@ namespace :util do
       json_obj = JSON.parse(json_builder)
       a = JSON.pretty_generate(json_obj)
 
-      template = <<~EOS
-        import type { Talk } from "../types/talk";
-
-        export const <%= abbr.upcase %>Talks: Talk[] = <%= a %>
-      EOS
-
-      erb = ERB.new(template)
-      File.open("#{abbr}_talks.ts", 'w') do |f|
-        f.write(erb.result(binding))
+      File.open("#{abbr}_talks.json", 'w') do |f|
+        f.write(a)
       end
 
       json_builder = Jbuilder.encode do |json|
@@ -85,15 +78,8 @@ namespace :util do
       json_obj = JSON.parse(json_builder)
       a = JSON.pretty_generate(json_obj)
 
-      template = <<~EOS
-        import type { Speaker } from "../types/speaker";
-
-        export const <%= abbr.upcase %>Speakers: Speaker[] = <%= a %>
-      EOS
-
-      erb = ERB.new(template)
-      File.open("#{abbr}_speakers.ts", 'w') do |f|
-        f.write(erb.result(binding))
+      File.open("#{abbr}_speakers.json", 'w') do |f|
+        f.write(a)
       end
     end
   end

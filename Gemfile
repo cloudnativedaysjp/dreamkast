@@ -130,5 +130,3 @@ gem 'acts_as_list'
 
 # PDF tool
 gem 'ferrum'
-
-gem 'printnode'

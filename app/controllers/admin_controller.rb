@@ -7,8 +7,8 @@ class AdminController < ApplicationController
     @current = Video.on_air(@conference)
   end
 
-  def destroy_user
-    @profile = Profile.find_by(sub: current_user[:extra][:raw_info][:sub])
+  def destroy_profile
+    @profile = Profile.joins(:user).find_by(user: { sub: current_user[:extra][:raw_info][:sub] })
     @profile.destroy
     redirect_to(logout_url)
   end

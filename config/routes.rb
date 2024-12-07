@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     get 'admin/chat' => 'admin#chat'
     get 'admin/statistics' => 'admin#statistics'
     get 'admin/export_statistics' => 'admin#export_statistics'
-    delete 'admin/destroy_user' => 'admin#destroy_user'
+    delete 'admin/destroy_profile' => 'admin#destroy_profile'
     namespace :admin do
       get 'users' => 'profiles#index'
       resources :profiles

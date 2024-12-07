@@ -5,7 +5,7 @@ class GenerateEntrysheetJob < ApplicationJob
   def perform(conference_id, profile_id, speaker_id = nil, printer_id = nil)
     puts("printer_id: #{printer_id}")
     conference = Conference.find(conference_id)
-    obj = { profile_id:, speaker_id:}.to_json
+    obj = { profile_id:, speaker_id: }.to_json
 
     encrypted = ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base.byteslice(0..31)).encrypt_and_sign(obj)
 

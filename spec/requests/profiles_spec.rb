@@ -63,6 +63,7 @@ describe ProfilesController, type: :request do
         create(:form_item2)
         create(:form_item3)
         create(:form_item4)
+        create(:user_alice, conference: cndt2020)
       end
 
       it 'is created 4 agreements when user select 4 checkbox' do

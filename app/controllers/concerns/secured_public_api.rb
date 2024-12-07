@@ -50,6 +50,6 @@ module SecuredPublicApi
   end
 
   def profile
-    @profile ||= Profile.find_by(email: @current_user[:info][:email], conference_id: conference.id)
+    @profile ||= Profile.joins(:user).find_by(user: { email: @current_user[:info][:email], conference_id: conference.id })
   end
 end

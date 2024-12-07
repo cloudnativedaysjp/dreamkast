@@ -46,7 +46,7 @@ class PublicProfilesController < ApplicationController
 
   def pundit_user
     if current_user
-      Profile.find_by(conference: @conference.id, email: current_user[:info][:email])
+      Profile.joins(:user).find_by(user: { conference: @conference.id, email: current_user[:info][:email] })
     end
   end
 

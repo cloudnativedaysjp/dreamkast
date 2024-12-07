@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_04_112332) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -240,8 +240,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "sub"
-    t.string "email"
     t.string "last_name"
     t.string "first_name"
     t.integer "industry_id"
@@ -271,6 +269,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
     t.string "calendar_unique_code"
     t.integer "occupation_id", default: 34
     t.string "participation"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -578,6 +578,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
     t.index ["conference_id"], name: "index_tracks_on_conference_id"
   end
 
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "sub"
+    t.string "email"
+    t.bigint "conference_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_users_on_conference_id"
+  end
+
   create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.string "url"
@@ -638,6 +647,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
   add_foreign_key "media_package_v2_channel_groups", "streamings"
   add_foreign_key "media_package_v2_channels", "streamings"
   add_foreign_key "media_package_v2_origin_endpoints", "streamings"
+  add_foreign_key "profiles", "users"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "public_profiles", "profiles"
@@ -663,5 +673,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
   add_foreign_key "streamings", "tracks"
   add_foreign_key "talk_times", "conferences"
   add_foreign_key "talks", "talk_types", column: "type"
+  add_foreign_key "users", "conferences"
   add_foreign_key "video_registrations", "talks"
 end

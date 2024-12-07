@@ -15,7 +15,6 @@
 #  company_postal_code           :string(255)
 #  company_tel                   :string(255)
 #  department                    :string(255)
-#  email                         :string(255)
 #  first_name                    :string(255)
 #  first_name_kana               :string(255)
 #  last_name                     :string(255)
@@ -23,7 +22,6 @@
 #  occupation                    :string(255)
 #  participation                 :string(255)
 #  position                      :string(255)
-#  sub                           :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)
@@ -34,6 +32,15 @@
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
 #  occupation_id                 :integer          default(34)
+#  user_id                       :bigint           not null
+#
+# Indexes
+#
+#  index_profiles_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 class EmailValidator < ActiveModel::EachValidator
@@ -67,6 +74,7 @@ class Profile < ApplicationRecord
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
   belongs_to :conference
+  belongs_to :user
   has_many :registered_talks
   has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
   has_many :agreements
@@ -83,8 +91,6 @@ class Profile < ApplicationRecord
   end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
-  validates :sub, presence: true, length: { maximum: 250 }
-  validates :email, presence: true, email: true
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :industry_id, length: { maximum: 10 }
@@ -109,7 +115,7 @@ class Profile < ApplicationRecord
   }
 
   def sub_and_email_must_be_unique_in_a_conference
-    if Profile.where(sub:, email:, conference_id:).exists?
+    if Profile.joins(:user).where(user: { sub: user.sub, email: user.email, conference_id: user.conference_id }).exists?
       errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
     end
   end
@@ -121,7 +127,7 @@ class Profile < ApplicationRecord
       Profile.where(conference_id: event_id).each do |profile|
         csv << [
           profile.id,
-          profile.email,
+          profile.user.email,
           profile.last_name,
           profile.first_name,
           profile.last_name_kana,
@@ -139,6 +145,10 @@ class Profile < ApplicationRecord
         ]
       end
     end
+  end
+
+  def email
+    user.email
   end
 
   def gen_calendar_unique_code

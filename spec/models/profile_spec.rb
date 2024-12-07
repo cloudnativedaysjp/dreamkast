@@ -15,7 +15,6 @@
 #  company_postal_code           :string(255)
 #  company_tel                   :string(255)
 #  department                    :string(255)
-#  email                         :string(255)
 #  first_name                    :string(255)
 #  first_name_kana               :string(255)
 #  last_name                     :string(255)
@@ -23,7 +22,6 @@
 #  occupation                    :string(255)
 #  participation                 :string(255)
 #  position                      :string(255)
-#  sub                           :string(255)
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  annual_sales_id               :integer          default(11)
@@ -34,30 +32,34 @@
 #  industry_id                   :integer
 #  number_of_employee_id         :integer          default(12)
 #  occupation_id                 :integer          default(34)
+#  user_id                       :bigint           not null
+#
+# Indexes
+#
+#  index_profiles_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 require 'rails_helper'
 
 RSpec.describe(Profile, type: :model) do
-  let(:cndt2020) { create(:cndt2020) }
-  let(:profile) { create(:alice, :on_cndt2020, conference: cndt2020) }
+  let!(:cndt2020) { create(:cndt2020) }
+  let!(:profile) { create(:alice, :on_cndt2020, conference: cndt2020) }
 
   it 'is valid with a all params' do
     expect(profile).to(be_valid)
   end
 
-  [:sub, :email, :first_name, :last_name, :company_name, :company_email,
+  [:first_name, :last_name, :company_name, :company_email,
    :company_postal_code, :company_address_level1, :company_address_level2, :company_address_line1,
    :company_tel, :department, :position].each do |param|
     it "is invalid without #{param}" do
       profile[param] = nil
       expect(profile).to(be_invalid)
     end
-  end
-
-  it 'is invalid if email is not a valid format' do
-    profile[:email] = 'foobar'
-    expect(profile).to(be_invalid)
   end
 
   it 'is invalid if company_email is not a valid format' do

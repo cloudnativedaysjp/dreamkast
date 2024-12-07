@@ -58,7 +58,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   def pundit_user
     if current_user
-      Profile.find_by(conference: @conference.id, email: current_user[:info][:email])
+      Profile.joins(:user).find_by(user: { conference_id: @conference.id, email: current_user[:info][:email] })
     end
   end
 end

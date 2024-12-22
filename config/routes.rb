@@ -118,7 +118,7 @@ Rails.application.routes.draw do
       get '/login' => 'sponsor_dashboards#login'
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
-        resources :sponsor_profiles, only: [:new, :edit, :create, :update]
+        resources :sponsor_contacts, only: [:new, :edit, :create, :update]
         resources :speakers, only: [:new, :edit, :create, :update]
       end
     end

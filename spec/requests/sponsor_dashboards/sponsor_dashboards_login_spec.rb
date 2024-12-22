@@ -47,11 +47,11 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
           allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
         end
 
-        it 'redirects to creating sponsor_profile page' do
+        it 'redirects to creating sponsor_contact page' do
           get '/cndt2020/sponsor_dashboards/login'
           expect(response).to_not(be_successful)
           expect(response).to(have_http_status('302'))
-          expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'))
+          expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'))
         end
       end
 

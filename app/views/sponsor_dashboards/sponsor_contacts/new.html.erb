@@ -1,7 +1,7 @@
 <div class="container speaker-dashboard-form">
 
   <% if logged_in? %>
-    <%= render 'form', sponsor: @sponsor_profile %>
+    <%= render 'form', sponsor: @sponsor_contact %>
   <% else %>
     <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
       <%= button_to 'スポンサーダッシュボードにログインする', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>

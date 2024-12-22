@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe SponsorDashboards::SponsorProfilesController, type: :request do
+describe SponsorDashboards::SponsorContactsController, type: :request do
   admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
-  describe 'GET speaker_dashboards/:sponsor_id/sponsor_profiles#new' do
+  describe 'GET speaker_dashboards/:sponsor_id/sponsor_contacts#new' do
     let!(:cndt2020) { create(:cndt2020, :registered) }
 
     describe "user isn't sponsor's speaker" do
@@ -11,7 +11,7 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
       describe "sponsor profile isn't created yet" do
         describe "sponsor doesn't logged in" do
           it 'returns a success response with sponsor login page' do
-            get '/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'
+            get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
             expect(response).to_not(be_successful)
             expect(response).to(have_http_status('302'))
             expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/login'))
@@ -30,8 +30,8 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
             end)
           end
 
-          it 'returns a success response with new sponsor_profiles page' do
-            get '/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'
+          it 'returns a success response with new sponsor_contacts page' do
+            get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
             expect(response).to_not(be_successful)
             expect(response).to(have_http_status('302'))
             expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/login'))
@@ -44,7 +44,7 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
 
         describe "sponsor doesn't logged in" do
           it 'returns a success response with sponsor login page' do
-            get '/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'
+            get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
             expect(response).to_not(be_successful)
             expect(response).to(have_http_status('302'))
             expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/login'))
@@ -56,8 +56,8 @@ describe SponsorDashboards::SponsorProfilesController, type: :request do
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo]))
           end
 
-          it 'returns a success response with new sponsor_profiles page' do
-            get '/cndt2020/sponsor_dashboards/1/sponsor_profiles/new'
+          it 'returns a success response with new sponsor_contacts page' do
+            get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
             expect(response).to(be_successful)
             expect(response).to(have_http_status('200'))
             expect(response.body).to(include('スポンサー担当者情報フォーム(スポンサー1株式会社)'))

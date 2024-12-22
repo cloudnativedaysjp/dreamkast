@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_22_094140) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -409,7 +409,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
-  create_table "sponsor_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sponsor_contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
     t.string "email"
@@ -417,8 +417,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
     t.bigint "sponsor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conference_id"], name: "index_sponsor_profiles_on_conference_id"
-    t.index ["sponsor_id"], name: "index_sponsor_profiles_on_sponsor_id"
+    t.index ["conference_id"], name: "index_sponsor_contacts_on_conference_id"
+    t.index ["sponsor_id"], name: "index_sponsor_contacts_on_sponsor_id"
   end
 
   create_table "sponsor_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -652,7 +652,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_042058) do
   add_foreign_key "speaker_invitations", "conferences"
   add_foreign_key "speaker_invitations", "talks"
   add_foreign_key "sponsor_attachments", "sponsors"
-  add_foreign_key "sponsor_profiles", "conferences"
+  add_foreign_key "sponsor_contacts", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "stamp_rally_check_ins", "profiles"

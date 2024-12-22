@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sponsor_profiles
+# Table name: sponsor_contacts
 #
 #  id            :bigint           not null, primary key
 #  email         :string(255)
@@ -13,15 +13,15 @@
 #
 # Indexes
 #
-#  index_sponsor_profiles_on_conference_id  (conference_id)
-#  index_sponsor_profiles_on_sponsor_id     (sponsor_id)
+#  index_sponsor_contacts_on_conference_id  (conference_id)
+#  index_sponsor_contacts_on_sponsor_id     (sponsor_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (conference_id => conferences.id)
 #
 
-class SponsorProfile < ApplicationRecord
+class SponsorContact < ApplicationRecord
   include ActionView::Helpers::UrlHelper
 
   belongs_to :conference

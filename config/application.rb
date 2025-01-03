@@ -15,10 +15,11 @@ module Cndtattend
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults(7.0)
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
     config.generators do |g|
       g.test_framework(:rspec,
                        fixtures: true,

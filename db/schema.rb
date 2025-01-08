@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_22_094140) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -409,6 +409,29 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_22_094140) do
     t.index ["sponsor_id"], name: "index_sponsor_attachments_on_sponsor_id"
   end
 
+  create_table "sponsor_contact_invite_accepts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "sponsor_contact_invite_id", null: false
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.bigint "sponsor_contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_sponsor_contact_invite_accepts_on_conference_id"
+    t.index ["sponsor_contact_id"], name: "index_sponsor_contact_invite_accepts_on_sponsor_contact_id"
+    t.index ["sponsor_contact_invite_id"], name: "index_sponsor_contact_invite_accepts_on_invitation_id"
+    t.index ["sponsor_id"], name: "index_sponsor_contact_invite_accepts_on_sponsor_id"
+  end
+
+  create_table "sponsor_contact_invites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.string "email", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", null: false
+    t.index ["conference_id"], name: "index_sponsor_contact_invites_on_conference_id"
+    t.index ["sponsor_id"], name: "index_sponsor_contact_invites_on_sponsor_id"
+  end
+
   create_table "sponsor_contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "sub"
@@ -439,7 +462,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_22_094140) do
     t.bigint "conference_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "speaker_emails"
     t.index ["conference_id"], name: "index_sponsors_on_conference_id"
   end
 
@@ -652,6 +674,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_22_094140) do
   add_foreign_key "speaker_invitations", "conferences"
   add_foreign_key "speaker_invitations", "talks"
   add_foreign_key "sponsor_attachments", "sponsors"
+  add_foreign_key "sponsor_contact_invite_accepts", "conferences"
+  add_foreign_key "sponsor_contact_invite_accepts", "sponsor_contact_invites"
+  add_foreign_key "sponsor_contact_invite_accepts", "sponsor_contacts"
+  add_foreign_key "sponsor_contact_invite_accepts", "sponsors"
+  add_foreign_key "sponsor_contact_invites", "conferences"
+  add_foreign_key "sponsor_contact_invites", "sponsors"
   add_foreign_key "sponsor_contacts", "conferences"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"

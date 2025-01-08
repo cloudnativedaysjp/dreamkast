@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row speaker-dashboard-form justify-content-center">
+    <div class="col-12 col-lg-12 py-3 px-md-5">
+      <h1 class="text-center py-3 entry">スポンサー担当者として登録する</h1>
+      <% flash.each do |type, message| %>
+        <div class="alert alert-warning" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+
+      <% if flash.keys.size == 0 %>
+        <p>スポンサー <%= @sponsor.name %> の担当者として登録します。</p>
+        <% if @sponsor_contact.new_record? %>
+          <p>登録する場合はフォームにスポンサー担当者情報を入力し、「登録する」ボタンをクリックしてください。</p>
+        <% else %>
+          <p>スポンサー担当者として既に登録済みのため、フォームに既存の情報が入力済みです。</p>
+          <p>問題なければ「登録する」ボタンをクリックしてください。</p>
+        <% end %>
+
+
+        <%= form_with(url: sponsor_contact_invite_accepts_url, model: @sponsor_contact, method: :post) do |form| %>
+          <%= form.hidden_field :sponsor_contact_invite_id, value: @sponsor_contact_invite.id %>
+
+          <section class="py-3">
+            <div class="field pb-3">
+              <%= form.label :name, '担当者氏名' %>*
+              <%= form.text_field :name, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+            </div>
+          </section>
+
+          <div class="field actions justify-content-center py-3">
+            <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

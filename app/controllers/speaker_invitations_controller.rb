@@ -12,17 +12,17 @@ class SpeakerInvitationsController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @conference = Conference.find_by(abbr: params[:event])
-      @invite = SpeakerInvitation.new(speaker_invitation_params)
-      @invite.conference_id = @conference.id
-      @invite.token = SecureRandom.hex(50)
-      @invite.expires_at = 1.days.from_now  # 有効期限を1日後に設定
-      if @invite.save
-        SpeakerInvitationMailer.invite(@conference, @speaker, @invite.talk, @invite).deliver_now
+      @invitation = SpeakerInvitation.new(speaker_invitation_params)
+      @invitation.conference_id = @conference.id
+      @invitation.token = SecureRandom.hex(50)
+      @invitation.expires_at = 1.days.from_now  # 有効期限を1日後に設定
+      if @invitation.save
+        SpeakerInvitationMailer.invite(@conference, @speaker, @invitation.talk, @invitation).deliver_now
         flash[:notice] = 'Invitation sent!'
         redirect_to("/#{@conference.abbr}/speaker_dashboard")
       else
-        flash[:alert] = "#{@invite.email} への招待メール送信に失敗しました: #{@invite.errors.full_messages.join(', ')}"
-        redirect_to(new_speaker_invitation_path(event: @conference.abbr, talk_id: @invite.talk_id))
+        flash[:alert] = "#{@invitation.email} への招待メール送信に失敗しました: #{@invitation.errors.full_messages.join(', ')}"
+        redirect_to(new_speaker_invitation_path(event: @conference.abbr, talk_id: @invitation.talk_id))
       end
     end
   end

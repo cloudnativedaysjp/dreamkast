@@ -29,6 +29,10 @@
         <div class="dropdown-divider"></div>
         <%= link_to '登壇者ダッシュボード', speakers_entry_path, class: "dropdown-item" %>
       <% end %>
+      <% if display_sponsor_dashboard_link? %>
+        <div class="dropdown-divider"></div>
+        <%= link_to 'スポンサーダッシュボード', sponsor_dashboards_path(sponsor_id: @sponsor_contact.sponsor_id), class: "dropdown-item" %>
+      <% end %>
       <% if admin? %>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="<%= admin_path %>">管理画面</a>

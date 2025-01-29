@@ -66,8 +66,8 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
-  helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty, :display_speaker_dashboard_link?, :display_dashboard_link?,
-                :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
+  helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty,
+                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
@@ -96,6 +96,13 @@ class ApplicationController < ActionController::Base
   # カンファレンス開催後、かつ自身が登壇者の場合（開催後に資料URLを追加することを想定）
   def display_speaker_dashboard_link?
     (@conference.registered? && @conference.speaker_entry_enabled?) || (@conference.registered? && @speaker.present?) || (@conference.opened? && @speaker.present?) || (@conference.closed? && @speaker.present?)
+  end
+
+  # カンファレンス開催前、かつ自身がスポンサー担当者の場合
+  # カンファレンス開催中、かつ自身がスポンサー担当者の場合
+  # カンファレンス開催後、かつ自身がスポンサー担当者の場合
+  def display_sponsor_dashboard_link?
+    @sponsor_contact&.persisted?
   end
 
   helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
@@ -149,6 +156,12 @@ class ApplicationController < ActionController::Base
   def set_speaker
     if current_user
       @speaker = Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    end
+  end
+
+  def set_sponsor_contact
+    if current_user
+      @sponsor_contact = SponsorContact.find_by(email: current_user[:info][:email], conference_id: conference.id)
     end
   end
 

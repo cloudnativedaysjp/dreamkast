@@ -21,13 +21,6 @@
     </div>
 
     <div class="mb-3">
-      <%= form.label :speaker_emails, "スポンサー担当者のメールアドレス", class: "form-label" %>
-      <p>スポンサーセッションに登壇する人のメールアドレスを入力してください（複数入力可、カンマ区切り）。Dreamkastにログインするのに使用するメールアドレスが必要です。</p>
-      <p>例: alice@example.com,bob@example.com</p>
-      <%= form.text_field :speaker_emails, class: "form-control" %>
-    </div>
-
-    <div class="mb-3">
       <%= form.label :sponsor_types, "スポンサー種別*", class: "form-label" %><br>
       <% @sponsor_types.each do |sponsor_type| %>
         <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>

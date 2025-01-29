@@ -7,7 +7,6 @@ class SponsorForm
   attr_accessor :abbr
   attr_accessor :url
   attr_accessor :description
-  attr_accessor :speaker_emails
   attr_accessor :sponsor_types
   attr_accessor :attachment_logo_image
 
@@ -27,7 +26,7 @@ class SponsorForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      params = { name:, abbr:, url:, description:, speaker_emails: }
+      params = { name:, abbr:, url:, description: }
       params[:sponsor_types] = sponsor_types.map { |id| SponsorType.find(id) } if sponsor_types.present?
       sponsor.update!(params)
       if attachment_logo_image
@@ -63,7 +62,6 @@ class SponsorForm
       abbr: sponsor.abbr,
       url: sponsor.url,
       description: sponsor.description,
-      speaker_emails: sponsor.speaker_emails,
       sponsor_types: sponsor.sponsor_types,
       attachment_logo_image: sponsor.sponsor_attachment_logo_image
     }

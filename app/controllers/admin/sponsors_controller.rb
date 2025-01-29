@@ -82,7 +82,6 @@ class Admin::SponsorsController < ApplicationController
                                     :abbr,
                                     :url,
                                     :description,
-                                    :speaker_emails,
                                     :attachment_logo_image,
                                     sponsor_types: [])
   end

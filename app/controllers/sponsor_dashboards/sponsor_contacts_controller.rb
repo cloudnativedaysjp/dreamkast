@@ -9,17 +9,11 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     if logged_in?
-      if current_user
-        if SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
-          redirect_to(sponsor_dashboards_path)
-        end
-
-        unless @sponsor.speaker_emails&.downcase&.include?(current_user[:info][:email].downcase)
-          redirect_to("/#{@conference.abbr}/sponsor_dashboards/login", notice: 'ログインが許可されていません')
-        end
+      if current_user && SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+        redirect_to(sponsor_dashboards_path)
       end
     else
-      redirect_to(sponsor_dashboards_login_path)
+      redirect_to(auth_login_path)
     end
 
     @sponsor_contact = SponsorContact.new

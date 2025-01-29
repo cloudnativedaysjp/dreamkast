@@ -5,7 +5,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
   def show
     @sponsor = Sponsor.find(params[:sponsor_id])
     unless logged_in? && @sponsor.present? && @sponsor_contact.present?
-      redirect_to(sponsor_dashboards_login_path)
+      redirect_to(auth_login_path)
     else
       @speaker = @conference.speakers.find_by(email: current_user[:info][:email])
       @talks = @speaker ? @speaker.talks.sponsor : []

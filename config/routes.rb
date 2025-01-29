@@ -121,7 +121,6 @@ Rails.application.routes.draw do
     get '/sponsor_contact_invite_accepts/invite' => 'sponsor_contact_invite_accepts#invite'
 
     namespace :sponsor_dashboards do
-      get '/login' => 'sponsor_dashboards#login'
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
         resources :sponsor_contacts, only: [:new, :edit, :create, :update]

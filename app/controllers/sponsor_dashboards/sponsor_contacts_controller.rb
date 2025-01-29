@@ -13,7 +13,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
         redirect_to(sponsor_dashboards_path)
       end
     else
-      redirect_to(auth_login_path)
+      redirect_to(auth_login_path(origin: request.fullpath))
     end
 
     @sponsor_contact = SponsorContact.new

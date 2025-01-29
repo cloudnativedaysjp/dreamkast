@@ -10,7 +10,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         get '/cndt2020/sponsor_dashboards/1'
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/auth/login'))
+        expect(response).to(redirect_to('/auth/login?origin=%2Fcndt2020%2Fsponsor_dashboards%2F1'))
       end
     end
 

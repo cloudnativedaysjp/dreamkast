@@ -3,6 +3,12 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
+  def index
+    @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor_contacts = @sponsor.sponsor_contacts
+  end
+
   # GET :event/sponsor_dashboard/sponsor_contacts/new
   def new
     @conference = Conference.find_by(abbr: params[:event])

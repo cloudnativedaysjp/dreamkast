@@ -1,0 +1,50 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <h1 class="text-center py-3 entry">スポンサー担当者(<%= @sponsor.name %>)</h1>
+    <div class="row mb-3">
+      <div class="col-12 col-mb-6">
+        <div class="d-flex justify-content-end">
+          <%= link_to "スポンサー担当者を招待する", new_admin_sponsor_contact_invite_path(sponsor_id: @sponsor.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_method: :get } %>
+        </div>
+      </div>
+    </div>
+
+    <% if @sponsor.sponsor_contacts.present? %>
+      <div class="row py-2 border-top">
+        <div class="col-2 my-auto">担当者名</div>
+        <div class="col-2 my-auto">メールアドレス</div>
+        <div class="col-1 my-auto"></div>
+      </div>
+
+      <div>
+        <% @sponsor.sponsor_contacts.each do |sponsor_contact| %>
+          <%= turbo_frame_tag sponsor_contact do %>
+            <div class="row py-2 border-top">
+              <div class="col-2 my-auto">
+                <%= sponsor_contact.name %>
+              </div>
+              <div class="col-2 my-auto">
+                <%= sponsor_contact.email %>
+              </div>
+              <div class="col-1 my-auto">
+                <div class="d-flex justify-content-end">
+                  <%= link_to "削除",
+                              admin_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
+                              class: "btn btn-sm btn-outline-danger",
+                              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }
+                  %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col-12 col-mb-6">
+        スポンサー担当者は未登録です。
+      </div>
+    <% end %>
+
+  </div>
+</div>

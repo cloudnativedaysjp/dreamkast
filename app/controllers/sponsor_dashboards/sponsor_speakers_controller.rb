@@ -1,7 +1,13 @@
-class SponsorDashboards::SpeakersController < ApplicationController
-  include SecuredSpeaker
+class SponsorDashboards::SponsorSpeakersController < ApplicationController
+  include SecuredSponsor
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
+
+  def index
+    @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor_speakers = @sponsor.talks.map(&:speakers).flatten.uniq
+  end
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new

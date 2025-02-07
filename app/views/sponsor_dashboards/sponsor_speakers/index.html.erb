@@ -1,0 +1,34 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <h1 class="text-center py-3 entry">スポンサー登壇者(<%= @sponsor.name %>)</h1>
+
+    <% if @sponsor_speakers.present? %>
+      <div class="row py-2 border-top">
+        <div class="col-2 my-auto">登壇者名</div>
+        <div class="col-2 my-auto">メールアドレス</div>
+        <div class="col-1 my-auto"></div>
+      </div>
+
+      <div>
+        <% @sponsor_speakers.each do |speaker| %>
+          <%= turbo_frame_tag speaker do %>
+            <div class="row py-2 border-top">
+              <div class="col-2 my-auto">
+                <%= speaker.name %>
+              </div>
+              <div class="col-2 my-auto">
+                <%= speaker.email %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col-12 col-mb-6">
+        スポンサー登壇者は未登録です。
+      </div>
+    <% end %>
+
+  </div>
+</div>

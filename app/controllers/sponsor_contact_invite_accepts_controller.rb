@@ -55,7 +55,7 @@ class SponsorContactInviteAcceptsController < ApplicationController
         )
         @sponsor_contact_invite_accept.save!
 
-        redirect_to(speaker_dashboard_path(event: @conference.abbr), notice: 'Speaker was successfully added.')
+        redirect_to(sponsor_dashboards_path(event: @conference.abbr, sponsor_id: @sponsor.id), notice: 'Speaker was successfully added.')
       end
     rescue ActiveRecord::RecordInvalid => e
       p(e)

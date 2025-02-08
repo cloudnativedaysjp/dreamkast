@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+      resources :sponsor_contacts, only: [:destroy]
+      resources :sponsor_contact_invites, only: [:index, :new, :create]
       resources :conferences, only: [:index, :show, :edit, :update] do
         post 'add_link' => 'conferences#add_link'
       end
@@ -114,11 +116,14 @@ Rails.application.routes.draw do
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
     resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
+    resources :sponsor_contact_invites, only: [:index, :new, :create]
+    resources :sponsor_contact_invite_accepts, only: [:index, :new, :create]
+    get '/sponsor_contact_invite_accepts/invite' => 'sponsor_contact_invite_accepts#invite'
+
     namespace :sponsor_dashboards do
-      get '/login' => 'sponsor_dashboards#login'
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
-        resources :sponsor_profiles, only: [:new, :edit, :create, :update]
+        resources :sponsor_contacts, only: [:new, :edit, :create, :update]
         resources :speakers, only: [:new, :edit, :create, :update]
       end
     end

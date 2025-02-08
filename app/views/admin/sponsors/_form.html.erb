@@ -1,46 +1,27 @@
 <%= form_with(url: sponsors_url, model: @sponsor_form) do |form| %>
-
-  <h4>Name *</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.text_area :name, class: "form-control", id: "descriptionInputForm", required: true %>
+  <div class="row py-2" data-controller="sponsor">
+    <div class="mb-3">
+      <%= form.label :name, "スポンサー名*", class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
     </div>
-  </div>
 
-  <h4>Abbr *</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.text_area :abbr, class: "form-control", id: "descriptionInputForm", required: true %>
+    <div class="mb-3">
+      <%= form.label :abbr, "スポンサー略称*", class: "form-label" %>
+      <%= form.text_field :abbr, class: "form-control" %>
     </div>
-  </div>
 
-  <h4>Sponsor's Description</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.text_area :description, class: "form-control", id: "descriptionInputForm", rows: "3" %>
+    <div class="mb-3">
+      <%= form.label :description, "スポンサー概要", class: "form-label" %>
+      <%= form.text_area :description, class: "form-control", rows: "3" %>
     </div>
-  </div>
 
-  <h4>URL</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.text_area :url, class: "form-control", id: "descriptionInputForm" %>
+    <div class="mb-3">
+      <%= form.label :url, "スポンサーUrl", class: "form-label" %>
+      <%= form.text_field :url, class: "form-control" %>
     </div>
-  </div>
 
-  <h4>Sponsor Speaker List</h4>
-  スポンサーセッションに登壇する人のメールアドレスを入力してください（複数入力可、カンマ区切り）。Dreamkastにログインするのに使用するメールアドレスが必要です。
-  例: alice@example.com,bob@example.com
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.text_field :speaker_emails, class: "form-control", id: "descriptionInputForm", rows: "3" %>
-    </div>
-  </div>
-
-  <h4>Sponsor Type</h4>
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.label :sponsor_types, "スポンサータイプ" %>*</br>
+    <div class="mb-3">
+      <%= form.label :sponsor_types, "スポンサー種別*", class: "form-label" %><br>
       <% @sponsor_types.each do |sponsor_type| %>
         <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>
         <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'form-check-label'} %><br>
@@ -48,19 +29,17 @@
     </div>
   </div>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-mb-6">
-      <%= form.label :attachment_logo_image, "スポンサーロゴ" %>
-      <%= form.file_field :attachment_logo_image %>
-      <% if @sponsor.sponsor_attachment_logo_image %>
-        <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
-      <% end %>
-    </div>
+  <div class="mb-3">
+    <%= form.label :attachment_logo_image, "スポンサーロゴ" %><br>
+    <%= form.file_field :attachment_logo_image %>
+    <% if @sponsor.sponsor_attachment_logo_image %>
+      <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
+    <% end %>
   </div>
 
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.submit %>
+  <div class="mb-3">
+    <div class="d-flex justify-content-end">
+      <%= form.submit class: "btn btn-primary btn-sm me-2" %>
     </div>
   </div>
 <% end %>

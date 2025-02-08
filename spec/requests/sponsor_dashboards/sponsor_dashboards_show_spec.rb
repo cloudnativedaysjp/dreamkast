@@ -10,7 +10,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         get '/cndt2020/sponsor_dashboards/1'
         expect(response).to_not(be_successful)
         expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020/sponsor_dashboards/login'))
+        expect(response).to(redirect_to('/auth/login?origin=%2Fcndt2020%2Fsponsor_dashboards%2F1'))
       end
     end
 
@@ -41,7 +41,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
     describe "user isn't sponsor's speaker" do
       let!(:sponsor) { create(:sponsor) }
 
-      describe "sponsor profile isn't created yet" do
+      describe "sponsor contact isn't created yet" do
         describe "sponsor doesn't logged in" do
           it_should_behave_like :redirect_to_login_page
         end
@@ -57,7 +57,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
     describe "user is sponsor's speaker" do
       let!(:sponsor) { create(:sponsor, conference: cndt2020) }
 
-      describe "sponsor profile isn't created yet" do
+      describe "sponsor contact isn't created yet" do
         describe "sponsor doesn't logged in" do
           it_should_behave_like :redirect_to_login_page
         end
@@ -69,7 +69,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         end
       end
 
-      describe 'sponsor profile is already created' do
+      describe 'sponsor contact is already created' do
         let!(:sponsor_alice) { create(:sponsor_alice) }
 
         describe "sponsor doesn't logged in" do

@@ -3,6 +3,7 @@ module Secured
   WEBSITE_BASE_URL = 'https://cloudnativedays.jp'.freeze
 
   included do
+    before_action :set_profile, :set_sponsor_contact
     before_action :redirect_to_website
     before_action :to_preparance, :redirect_to_registration, if: :should_redirect?
     before_action :logged_in_using_omniauth?, :to_preparance, if: :use_secured_before_action?

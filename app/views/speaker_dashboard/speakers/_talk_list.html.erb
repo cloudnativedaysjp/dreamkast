@@ -8,10 +8,10 @@
         <%= link_to (image_tag "icons/pencil-square.svg"), edit_speaker_dashboard_speaker_path(id: @speaker.id, anchor: 'sessions'), data: {"turbolinks" => false} %>
       <% end %>
     </div>
-    <% if sponsor? %>
-    <div class="alert alert-info alert-sponsor" role="alert">
-      スポンサーセッションを変更する場合は、<%= link_to 'スポンサーダッシュボード', sponsor_dashboards_login_path %>から変更をお願いします
-    </div>
+    <% if display_sponsor_dashboard_link? %>
+      <div class="alert alert-info alert-sponsor" role="alert">
+        スポンサーセッションを変更する場合は、<%= link_to 'スポンサーダッシュボード', sponsor_dashboards_path(sponsor_id: @sponsor_contact.sponsor_id) %>から変更をお願いします
+      </div>
     <% end %>
     <% @talks.each do |talk| %>
       <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>

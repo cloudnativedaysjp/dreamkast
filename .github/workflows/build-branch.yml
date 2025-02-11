@@ -95,6 +95,10 @@ jobs:
         run: |
           image_tag_sha="${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}"
           for tag in ${{ steps.meta.outputs.tags }}; do
+            echo "tag=${tag}"
+            echo docker buildx imagetools create \
+              --tag ${tag} \
+              ${image_tag_sha}-${{ steps.tags.outputs.tag }}
             docker buildx imagetools create \
               --tag ${tag} \
               ${image_tag_sha}-${{ steps.tags.outputs.tag }}

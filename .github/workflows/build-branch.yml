@@ -94,17 +94,6 @@ jobs:
       - name: Create a New Image
         run: |
           image_tag_sha="${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}"
-
-          # Create array of image tags from meta output
-          image_tags=()
-          for tag in ${{ steps.meta.outputs.tags }}; do
-            image_tags+=("${tag}-${{ steps.tags.outputs.tag }}")
-          done
-
-          # Join all tags with comma for buildx imagetools create command
-          joined_tags=$(IFS=,; echo "${image_tags[*]}")
-
-          # Create manifest lists for each tag from meta output
           for tag in ${{ steps.meta.outputs.tags }}; do
             docker buildx imagetools create \
               --tag ${tag} \

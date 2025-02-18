@@ -5,17 +5,18 @@ $purple: #BD4392;
 $dark-blue: #206A9B;
 $brown: hsl(25, 16%, 31%);
 $gray: #808080;
-// CNDW2024 Theme color
+// CNDS2025 Theme color
 
-$tokyo-navy: #001a3a;
-$ariake-blue: #008f9e;
-$cnd-red: #ae291b;
-$cnd-orange: #e26834;
+$passion-red: #c81621;
+$passion-blue: #459AC0;
+$passion-yellow: #EABA54;
+$passion-navy: #1D2A53;
+$okinawa-white: #EDF1F9;
 
 $text: #001a3a;
 //- Override primary color
-$primary: $ariake-blue;
-$secondary: $cnd-orange;
+$primary: $passion-red;
+$secondary: $passion-yellow;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,

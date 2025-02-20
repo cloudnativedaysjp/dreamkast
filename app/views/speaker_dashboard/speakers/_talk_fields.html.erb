@@ -13,13 +13,13 @@
 
   <div class="field pb-3">
     <%= f.label :title, '講演タイトル - Abstract Title（★★★）' %>*
-    <p class="field-description" style="font-size: 0.7em">（最大50文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 100 characters) Include concrete technology names as possible to attract attendees</p>
+    <p class="field-description" style="font-size: 0.7em">（最大60文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 60 characters) Include concrete technology names as possible to attract attendees</p>
     <%= f.text_field :title, class: "form-control", required: true %>
   </div>
 
   <div class="field pb-3">
     <%= f.label :abstract, '講演内容 - Abstract（★★★）' %>
-    <p class="field-description" style="font-size: 0.7em">（200文字程度）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (About 400 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
+    <p class="field-description" style="font-size: 0.7em">（最大500文字）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (Maximum 500 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
     <%= f.text_area :abstract, {class: "form-control abstract"}  %>
   </div>
 

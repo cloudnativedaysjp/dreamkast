@@ -14,10 +14,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    if current_user
-      if Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
-        redirect_to(speaker_dashboard_path)
-      end
+    if current_user && Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+      redirect_to(speaker_dashboard_path)
     end
 
     @speaker_form = SpeakerForm.new
@@ -45,7 +43,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @speaker_form.email = current_user[:info][:email]
 
     respond_to do |format|
-      if r = @speaker_form.save
+      if (r = @speaker_form.save)
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
@@ -72,7 +70,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     exists_talks = @speaker.talk_ids
 
     respond_to do |format|
-      if r = @speaker_form.save
+      if (r = @speaker_form.save)
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
         end
@@ -132,9 +130,9 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)
-      if conf.class.to_s == 'ProposalItemConfigCheckBox'
+      if conf.instance_of?(::ProposalItemConfigCheckBox)
         h[conf.label.pluralize.to_sym] = []
-      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
+      elsif conf.instance_of?(::ProposalItemConfigRadioButton)
         attr << conf.label.pluralize.to_sym
       end
     end

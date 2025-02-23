@@ -1,0 +1,10 @@
+<% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+<%= label_tag "sponsor_session[proposal_items_attributes][#{first_item.label}]",  first_item.item_name, {class: 'form-check-label'}%>*
+<div class="form-check">
+  <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
+    <% label = item.label.pluralize.to_sym %>
+    <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
+    <%= check_box_tag "sponsor_session[proposal_items_attributes][#{label}][]", item.id, checked, {id: "sponsor_session_proposal_items_attributes_#{label}", class: 'form-check-input', id: "#{label}_#{item.params}"} %>
+    <%= label label, item.params, {class: 'form-check-label'} %><br>
+  <% end %>
+</div>

@@ -1,0 +1,24 @@
+<%= turbo_frame_tag sponsor_session do %>
+  <div class="row py-2 border-top">
+    <div class="col-2 my-auto text-break">
+      <%= sponsor_session.title %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor_session.speakers.map(&:name).join(', ') %>
+    </div>
+    <div class="col-2 my-auto">
+      <div class="d-flex justify-content-end">
+        <%= link_to "削除",
+            sponsor_dashboards_sponsor_session_path(event: @sponsor.conference.abbr, id: sponsor_session.id),
+            class: "btn btn-sm btn-outline-danger",
+            data: { turbo_method: :delete, turbo_confirm: "本当にスポンサーセッションを削除しますか？" }
+        %>
+        <%= link_to "編集",
+            edit_sponsor_dashboards_sponsor_session_path(event: @sponsor.conference.abbr, id: sponsor_session.id),
+            class: "btn btn-sm btn-outline-primary me-2",
+            data: { turbo_frame: "modal" }
+        %>
+      </div>
+    </div>
+  </div>
+<% end %>

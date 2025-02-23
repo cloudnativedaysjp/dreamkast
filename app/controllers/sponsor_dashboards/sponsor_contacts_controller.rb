@@ -8,10 +8,10 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_contact_invites = @sponsor.sponsor_contact_invites
-      .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
-      .group_by(&:email)
-      .values
-      .map { |invites| invites.max_by(&:expires_at) }
+                                       .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
+                                       .group_by(&:email)
+                                       .values
+                                       .map { |invites| invites.max_by(&:expires_at) }
   end
 
   # GET :event/sponsor_dashboard/sponsor_contacts/new
@@ -106,9 +106,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
                                             :conference_id)
   end
 
-
-    def turbo_stream_flash
-      p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa'
-      turbo_stream.append('flashes', partial: 'flash')
-    end
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
+  end
 end

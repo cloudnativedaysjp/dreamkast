@@ -41,4 +41,5 @@
 #  fk_rails_...  (type => talk_types.id)
 #
 class SponsorSession < Talk
+  belongs_to :sponsor
 end

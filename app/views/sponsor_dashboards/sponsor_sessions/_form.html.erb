@@ -1,0 +1,59 @@
+<%= form_with(model: [:sponsor_dashboards, @sponsor_session],
+              url: @sponsor_session.new_record? ? sponsor_dashboards_sponsor_sessions_path(event: params[:event], sponsor_id: params[:sponsor_id]) : sponsor_dashboards_sponsor_session_path(@sponsor_session, event: params[:event], sponsor_id: params[:sponsor_id]),
+              data: { action: "turbo:submit-end->modal#close" }) do |f| %>
+  <% if f.object.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h5>入力内容にエラーがあります:</h5>
+      <ul>
+        <% f.object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="talk-field">
+    <div class="field pb-3">
+      <%= f.label :title, '講演タイトル - Abstract Title（★★★）' %>*
+      <p class="field-description" style="font-size: 0.7em">（最大50文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 100 characters) Include concrete technology names as possible to attract attendees</p>
+      <%= f.text_field :title, class: "form-control", required: true %>
+    </div>
+    <div class="field pb-3">
+      <%= f.label :abstract, '講演内容 - Abstract（★★★）' %>
+      <p class="field-description" style="font-size: 0.7em">（200文字程度）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (About 400 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
+      <%= f.text_area :abstract, {class: "form-control abstract"}  %>
+    </div>
+    <div class="field pb-3">
+      <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
+      <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
+      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
+    </div>
+    <div class="field pb-3">
+      <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
+      <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+    </div>
+    <% if @conference.speaker_entry_disabled? %>
+      <div class="field pb-3">
+        <%= f.label :document_url, "セッション資料公開URL" %>
+        <%= f.text_field :document_url, class: "form-control" %>
+      </div>
+    <% end %>
+    <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+      <div class="field pb-3">
+        <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
+        <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
+          <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_check_box', f: f, first_item: first_item, item_number: item_number %>
+        <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
+          <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_radio_button', f: f, first_item: first_item, item_number: item_number %>
+        <% else %>
+        <% end %>
+      </div>
+    <% end %>
+    <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
+    <%= f.hidden_field :type, value: 'SponsorSession' %>
+    <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
+    <%= f.hidden_field :conference_id, value: @conference.id %>
+  </div>
+  <div class="actions">
+    <%= f.submit "スポンサーセッションを登録する" %>
+  </div>
+<% end %>

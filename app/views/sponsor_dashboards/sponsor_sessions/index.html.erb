@@ -1,29 +1,30 @@
 <div class="container speaker-dashboard-form wrapper">
   <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
-  <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
-    <h1 class="text-center py-3 entry">スポンサーセッション(<%= @sponsor.name %>)</h1>
-    <%# unless @speaker %>
-<!--      <div class="col-12 mb-4">-->
-        <%= link_to 'スポンサーセッションを登録する', new_sponsor_dashboards_sponsor_speaker_path %>
-<!--      </div>-->
-    <%# else %>
-<!--      スポンサー担当者名: <%#= @sponsor_contact.name %> ( <%#= link_to 'Edit', edit_sponsor_dashboards_sponsor_contact_path(id: @sponsor_contact.id) %> )-->
-
-<!--      <h2 class="py-3 pl-2">登壇者プロフィール</h2>-->
-<!--      <div class="col-12 mb-4">-->
-        <%#= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
-<!--      </div>-->
-
-<!--      <h3 class="py-3 pl-2">スポンサーセッション一覧</h3>-->
-
-<!--      <div class="col-12 mb-4">-->
-        <%#= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
-        <%#= button_to 'edit', edit_sponsor_dashboards_speaker_path(id: @speaker.id, sponsor_id: @sponsor.id), method: "get", class: "btn btn-primary btn-lg" %>
-<!--      </div>-->
-
-      <% @sponsor_sessions.each do |talk| %>
-        <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
+  <div class="container-fluid right-pain">
+    <%= turbo_frame_tag "sponsor_session_page" do %>
+      <h1 class="text-center py-3 entry">スポンサーセッション(<%= @sponsor.name %>)</h1>
+      <div class="row mb-3">
+        <div class="col-12 col-mb-6">
+          <div class="d-flex justify-content-end">
+            <%= link_to 'スポンサーセッションを登録する',
+                new_sponsor_dashboards_sponsor_session_path(event: @sponsor.conference.abbr, sponsor_id: @sponsor.id),
+               class: "btn btn-sm btn-outline-primary me-2", 
+               data: { turbo_frame: "modal" } %>
+          </div>
+        </div>
+      </div>
+      <div class="row py-2 border-top">
+        <div class="col-2 my-auto">タイトル</div>
+        <div class="col-2 my-auto">登壇者</div>
+        <div class="col-2 my-auto"></div>
+      </div>
+      <%= turbo_frame_tag "sponsor_session_list" do %>
+        <% @sponsor_sessions.each do |sponsor_session| %>
+          <%= render "sponsor_session", sponsor_session: sponsor_session %>
+        <% end %>
       <% end %>
-    <%# end %>
+      <%= turbo_frame_tag "modal" %>
+      <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+    <% end %>
   </div>
 </div>

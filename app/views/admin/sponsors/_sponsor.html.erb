@@ -1,0 +1,35 @@
+<div class="col-12 col-mb-6">
+  <h4>スポンサー情報</h4>
+  <div class="d-flex justify-content-end">
+    <%= link_to "編集", edit_admin_sponsor_path(id: @sponsor.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_method: :get } %>
+    <%= link_to "削除", admin_sponsor_path(id: @sponsor.id), class: "btn btn-sm btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+  </div>
+</div>
+<div class="col-12 col-mb-6">
+  <h5>スポンサー名</h5>
+  <%= @sponsor.name %>
+</div>
+<div class="col-12 col-mb-6">
+  <h5>スポンサー略称</h5>
+  <%= @sponsor.abbr %>
+</div>
+<div class="col-12 col-mb-6">
+  <h5>スポンサー概要</h5>
+  <%= @sponsor.description %>
+</div>
+<div class="col-12 col-mb-6">
+  <h5>スポンサーURL</h5>
+  <%= @sponsor.url %>
+</div>
+<div class="col-12 col-mb-6">
+  <h5>ロゴ</h5>
+  <% if @sponsor.sponsor_attachment_logo_image.present? %>
+    <% if @sponsor.sponsor_attachment_logo_image.url.present? %>
+      <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
+    <% elsif @sponsor.sponsor_attachment_logo_image.file.present? %>
+      <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "sponsor-logo" %>
+    <% end %>
+  <% else %>
+    <p>ロゴは未登録です。</p>
+  <% end %>
+</div>

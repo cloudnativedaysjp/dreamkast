@@ -1,0 +1,5 @@
+<%= turbo_stream.append 'sponsor_contact_invite_list', 
+    partial: 'sponsor_dashboards/sponsor_contacts/sponsor_contact_invite',
+    locals: { sponsor_contact_invite: @sponsor_contact_invite } %>
+<%= turbo_stream_flash %>
+<%= yield %>

@@ -57,6 +57,9 @@ group :development do
   gem 'pre-commit', require: false
   gem 'execjs', require: false
   gem 'foreman'
+  gem 'ruby-lsp'
+  gem 'ruby-lsp-rails'
+  gem 'ruby-lsp-rspec'
 end
 
 group :test do

@@ -6,9 +6,10 @@
   <% end %>
 
   <div class="row">
-    <h2>Download TALKS to CSV</h2>
-    <div class="col-12 form-group">
-      <%= link_to 'download', admin_talks_path(format: :csv), class: "btn btn-primary" %>
+    <h2>エクスポート</h2>
+    <div class="col-12 form-group d-flex">
+      <%= button_to 'エクスポート(CSV)', admin_talks_path(format: :csv), {method: :get, class: 'me-2' } %>
+      <%= button_to 'エクスポート(JSON, for Website)', admin_export_talks_for_website_path, {method: :get } %>
     </div>
   </div>
 

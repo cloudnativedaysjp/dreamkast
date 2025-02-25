@@ -61,11 +61,13 @@ Rails.application.routes.draw do
       end
       resources :speakers, only: [:index, :edit, :update]
       get 'export_speakers' => 'speakers#export_speakers'
+      get 'export_speakers_for_website' => 'speakers#export_speakers_for_website', defaults: { format: 'json' }
       get 'export_profiles' => 'profiles#export_profiles'
       get 'speaker_check_in_statuses' => 'speakers#check_in_statuses'
       resources :check_in_events, only: [:create, :destroy]
       delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index]
+      get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]

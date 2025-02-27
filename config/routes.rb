@@ -55,7 +55,7 @@ Rails.application.routes.draw do
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
       resources :sponsor_contacts, only: [:destroy]
-      resources :sponsor_contact_invites, only: [:index, :new, :create]
+      resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
       resources :conferences, only: [:index, :show, :edit, :update] do
         post 'add_link' => 'conferences#add_link'
       end

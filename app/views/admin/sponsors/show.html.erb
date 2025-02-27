@@ -1,112 +1,16 @@
 <%= render 'admin/layout' do %>
   <div class="row mb-3">
-    <div class="col-12 col-mb-6">
-      <h4>スポンサー情報</h4>
-      <div class="d-flex justify-content-end">
-        <%= link_to "編集", edit_admin_sponsor_path(id: @sponsor.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_method: :get } %>
-        <%= link_to "削除", admin_sponsor_path(id: @sponsor.id), class: "btn btn-sm btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
-      </div>
-    </div>
-
-    <div class="col-12 col-mb-6">
-      <h5>スポンサー名</h5>
-      <%= @sponsor.name %>
-    </div>
-
-    <div class="col-12 col-mb-6">
-      <h5>スポンサー略称</h5>
-      <%= @sponsor.abbr %>
-    </div>
-
-    <div class="col-12 col-mb-6">
-      <h5>スポンサー概要</h5>
-      <%= @sponsor.description %>
-    </div>
-
-    <div class="col-12 col-mb-6">
-      <h5>スポンサーURL</h5>
-      <%= @sponsor.url %>
-    </div>
-
-    <div class="col-12 col-mb-6">
-      <h5>ロゴ</h5>
-      <% if @sponsor.sponsor_attachment_logo_image.present? %>
-        <% if @sponsor.sponsor_attachment_logo_image.url.present? %>
-          <%= image_tag @sponsor.sponsor_attachment_logo_image.url, class: "sponsor-logo" %>
-        <% elsif @sponsor.sponsor_attachment_logo_image.file.present? %>
-          <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "sponsor-logo" %>
-        <% end %>
-      <% else %>
-        <p>ロゴは未登録です。</p>
-      <% end %>
-    </div>
+    <%= render "sponsor", sponsor: @sponsor %>
   </div>
-
-  <hr>
-
+ 
   <div class="row mb-3">
-    <div class="col-12 col-mb-6">
-      <h4>スポンサー担当者</h4>
-      <div class="d-flex justify-content-end">
-        <%= link_to "スポンサー担当者を招待する", new_admin_sponsor_contact_invite_path(sponsor_id: @sponsor.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_method: :get } %>
-      </div>
-    </div>
-
-    <% if @sponsor.sponsor_contacts.present? %>
-      <div class="row py-2 border-top">
-        <div class="col-2 my-auto">担当者名</div>
-        <div class="col-2 my-auto">メールアドレス</div>
-        <div class="col-1 my-auto"></div>
-      </div>
-      <div>
-        <% @sponsor.sponsor_contacts.each do |sponsor_contact| %>
-          <%= turbo_frame_tag sponsor_contact do %>
-            <div class="row py-2 border-top">
-              <div class="col-2 my-auto">
-                <%= sponsor_contact.name %>
-              </div>
-              <div class="col-2 my-auto">
-                <%= sponsor_contact.email %>
-              </div>
-              <div class="col-1 my-auto">
-                <div class="d-flex justify-content-end">
-                  <%= link_to "削除",
-                              admin_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
-                              class: "btn btn-sm btn-outline-danger",
-                              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }
-                  %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="col-12 col-mb-6">
-        スポンサー担当者は未登録です。
-      </div>
-    <% end %>
-
-    <hr>
-
-    <div class="col-12 col-mb-6">
-      <h4>スポンサーセッション</h4>
-      <% if @sponsor.talks.present? %>
-        <div class="card-group">
-          <div class="card">
-            <% @sponsor.talks.each do |talk| %>
-              <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
-            <% end %>
-          </div>
-        </div>
-      <% else %>
-        <div class="col-12 col-mb-6">
-          スポンサーセッションは未登録です。
-        </div>
-      <% end %>
-    </div>
+    <%= render "sponsor_contacts", sponsor: @sponsor, sponsor_contacts: @sponsor_contacts, sponsor_contact_invites: @sponsor_contact_invites %>
+  </div>
+  
+  <div class="row mb-3">
+    <%= render "sponsor_sessions", sponsor: @sponsor %>
   </div>
 
-
+  <%= turbo_frame_tag "modal" %>
   <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
 <% end %>

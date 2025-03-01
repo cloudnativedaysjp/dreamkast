@@ -22,7 +22,6 @@
 # Indexes
 #
 #  index_speakers_on_conference_id_and_email  (conference_id,email)
-#  index_speakers_on_sponsor_id               (sponsor_id)
 #
 
 require 'rails_helper'

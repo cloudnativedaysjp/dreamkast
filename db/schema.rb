@@ -394,7 +394,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
     t.string "name_mother_tongue"
     t.bigint "sponsor_id"
     t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
-    t.index ["sponsor_id"], name: "index_speakers_on_sponsor_id"
   end
 
   create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

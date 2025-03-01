@@ -22,7 +22,6 @@
 # Indexes
 #
 #  index_speakers_on_conference_id_and_email  (conference_id,email)
-#  index_speakers_on_sponsor_id               (sponsor_id)
 #
 
 class Speaker < ApplicationRecord
@@ -30,7 +29,7 @@ class Speaker < ApplicationRecord
   include AvatarUploader::Attachment(:avatar)
 
   belongs_to :conference
-  belongs_to :sponsor
+  belongs_to :sponsor, optional: true
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers

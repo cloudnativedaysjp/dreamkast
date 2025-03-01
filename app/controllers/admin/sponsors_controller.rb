@@ -14,6 +14,12 @@ class Admin::SponsorsController < ApplicationController
 
   def show
     @sponsor = Sponsor.find(params[:id])
+    @sponsor_contacts = @sponsor.sponsor_contacts
+    @sponsor_contact_invites = @sponsor.sponsor_contact_invites
+                                       .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
+                                       .group_by(&:email)
+                                       .values
+                                       .map { |invites| invites.max_by(&:expires_at) }
   end
 
   def edit

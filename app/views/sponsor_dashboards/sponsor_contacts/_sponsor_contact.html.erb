@@ -1,0 +1,22 @@
+<%= turbo_frame_tag sponsor_contact do %>
+  <div class="row py-2 border-top">
+    <div class="col-2 my-auto">
+      <%= sponsor_contact.name %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor_contact.email %>
+    </div>
+    <div class="col-2 my-auto">
+      <span class="badge bg-success">登録済み</span>
+    </div>
+    <div class="col-2 my-auto">
+      <div class="d-flex justify-content-end">
+        <%= link_to "担当者を削除",
+                              admin_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
+                              class: "btn btn-sm btn-outline-danger",
+                              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }
+                    %>
+      </div>
+    </div>
+  </div>
+<% end %>

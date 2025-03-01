@@ -1,0 +1,19 @@
+<%= render "layouts/modal", title: "スポンサー登壇者を作成する" do %>
+  <div class="row speaker-dashboard-form justify-content-center">
+    <div class="col-12 col-lg-8">
+      <h1 class="text-center py-3 entry">エントリーフォーム(スポンサー用)</h1>
+      <div class="col-12 mb-4">
+        ※ ログインに使っているメールアドレスが同じ場合、スポンサーセッションと公募セッションの登壇者プロフィールは同一となります<br>
+        ※ スポンサーセッション、公募セッション両方が表示されます
+      </div>
+      <%= form_with(url: sponsor_dashboards_sponsor_speakers_path(sponsor_id: @sponsor.id),
+                    model: @speaker,
+                    data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+        <%= render 'speaker_dashboard/speakers/form_speaker', form: form %>
+        <div class="actions justify-content-center py-3">
+          <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

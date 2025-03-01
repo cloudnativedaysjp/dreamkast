@@ -1,0 +1,5 @@
+<%= turbo_stream.append 'sponsor_session_list', 
+    partial: 'sponsor_dashboards/sponsor_sessions/sponsor_session',
+    locals: { sponsor_session: @sponsor_session } %>
+<%= turbo_stream_flash %>
+<%= yield %>

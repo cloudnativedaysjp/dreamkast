@@ -10,6 +10,7 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
+      @sponsor = Sponsor.find(params[:sponsor_id])
       @conference = Conference.find_by(abbr: params[:event])
       @sponsor_speaker_invite = SponsorSpeakerInvite.new(sponsor_speaker_invite_params)
       @sponsor_speaker_invite.conference_id = @conference.id
@@ -26,6 +27,7 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
   end
 
   def destroy
+    @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_speaker_invite = SponsorSpeakerInvite.find(params[:id])
     @previous_sponsor_speaker_invites = SponsorSpeakerInvite.where(conference_id: @sponsor_speaker_invite.conference_id, email: @sponsor_speaker_invite.email)
     if @sponsor_speaker_invite.destroy && @previous_sponsor_speaker_invites.destroy_all

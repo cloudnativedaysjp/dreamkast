@@ -41,8 +41,8 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # POST :event/sponsor_dashboard/sponsor_contacts
   def create
     @conference = Conference.find_by(abbr: params[:event])
-    @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{current_user[:info][:email]}%").first
-    if @sponsor
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    if @sponsor.sponsor_contacts.any? { |contact| contact.email == current_user[:info][:email] }
       @sponsor_contact = SponsorContact.new(sponsor_contact_params.merge(conference_id: @conference.id))
       @sponsor_contact.sub = current_user[:extra][:raw_info][:sub]
 

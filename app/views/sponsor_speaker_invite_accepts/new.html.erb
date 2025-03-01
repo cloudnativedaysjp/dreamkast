@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row speaker-dashboard-form justify-content-center">
+    <div class="col-12 col-lg-12 py-3 px-md-5">
+      <h1 class="text-center py-3 entry">スポンサー登壇者として登録する</h1>
+      <% flash.each do |type, message| %>
+        <div class="alert alert-warning" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+
+      <% if flash.keys.size == 0 %>
+        <p>スポンサー <%= @sponsor.name %> の登壇者として登録します。</p>
+        <% if @sponsor_speaker.new_record? %>
+          <p>登録する場合はフォームにスポンサー登壇者情報を入力し、「登録する」ボタンをクリックしてください。</p>
+        <% else %>
+          <p>スポンサー登壇者として既に登録済みのため、フォームに既存の情報が入力済みです。</p>
+          <p>問題なければ「登録する」ボタンをクリックしてください。</p>
+        <% end %>
+
+
+        <%= form_with(url: sponsor_speaker_invite_accepts_url, model: @sponsor_speaker, method: :post) do |form| %>
+          <%= form.hidden_field :sponsor_speaker_invite_id, value: @sponsor_speaker_invite.id %>
+          
+          <%= render 'speaker_dashboard/speakers/form_speaker', form: form %>
+
+          <div class="field actions justify-content-center py-3">
+            <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

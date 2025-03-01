@@ -5,7 +5,7 @@ class CreateSponsorSpeakerInviteAccepts < ActiveRecord::Migration[7.0]
       t.references :conference, null: false, foreign_key: true
       t.references :sponsor, null: false, foreign_key: true
       t.references :sponsor_contact, null: false, foreign_key: true
-      t.references :talk, null: false, foreign_key: true
+      t.references :speaker, null: false, foreign_key: true
 
       t.timestamps
     end

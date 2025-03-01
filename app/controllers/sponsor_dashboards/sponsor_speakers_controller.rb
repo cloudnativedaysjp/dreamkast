@@ -7,6 +7,11 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     @sponsor_speakers = @sponsor.speakers
+    @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
+                                       .reject { |invite| invite.sponsor_speaker_invite_accepts.present? }
+                                       .group_by(&:email)
+                                       .values
+                                       .map { |invites| invites.max_by(&:expires_at) }
   end
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
@@ -18,7 +23,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
-    
+
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
     # authorize(@speaker)
   end
@@ -37,7 +42,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
       flash.now[:notice] = 'スポンサー登壇者を登録しました'
     else
       flash.now[:alert] = 'スポンサー登壇者の登録に失敗しました'
-      puts @speaker.errors.full_messages.join(', ')
+      puts(@speaker.errors.full_messages.join(', '))
       render(:new, status: :unprocessable_entity)
     end
   end
@@ -54,18 +59,18 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
       render(:edit, status: :unprocessable_entity)
     end
   end
-  
+
   # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
-    
+
     # スポンサーセッションと紐付いているかチェック
     if @speaker.talks.present?
       flash.now[:alert] = 'スポンサーセッションと紐付いているため削除できません'
       return
     end
-    
+
     if @speaker.destroy
       flash.now[:notice] = 'スポンサー登壇者を削除しました'
     else
@@ -114,8 +119,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
                                     :sponsor_id,
                                     :avatar,
                                     :conference_id,
-                                    :additional_documents
-                                    )
+                                    :additional_documents)
   end
 
   def turbo_stream_flash

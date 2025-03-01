@@ -119,6 +119,8 @@ Rails.application.routes.draw do
     # resources :sponsor_contact_invites, only: [:index, :new, :create]
     resources :sponsor_contact_invite_accepts, only: [:index, :new, :create]
     get '/sponsor_contact_invite_accepts/invite' => 'sponsor_contact_invite_accepts#invite'
+    resources :sponsor_speaker_invite_accepts, only: [:index, :new, :create]
+    get '/sponsor_speaker_invite_accepts/invite' => 'sponsor_speaker_invite_accepts#invite'
 
     namespace :sponsor_dashboards do
       get ':sponsor_id' => 'sponsor_dashboards#show'

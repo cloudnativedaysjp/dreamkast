@@ -15,7 +15,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def create
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.new(conference: conference, sponsor: @sponsor)
+    @sponsor_session = SponsorSession.new(conference:, sponsor: @sponsor)
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference:)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを登録しました'

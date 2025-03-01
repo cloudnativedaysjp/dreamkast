@@ -32,6 +32,7 @@ class Sponsor < ApplicationRecord
   has_many :talks
   has_many :speakers
   has_many :stamp_rally_check_point_booths
+  has_many :sponsor_speaker_invites, dependent: :delete_all
 
   def booth_sponsor?
     sponsor_types.each do |type|

@@ -1,5 +1,5 @@
-<%= form_with(model: [:sponsor_dashboards, @sponsor_session],
-              url: @sponsor_session.new_record? ? sponsor_dashboards_sponsor_sessions_path(event: params[:event], sponsor_id: params[:sponsor_id]) : sponsor_dashboards_sponsor_session_path(@sponsor_session, event: params[:event], sponsor_id: params[:sponsor_id]),
+<%= form_with(model: [:sponsor_dashboards, sponsor_session],
+              url: sponsor_session.new_record? ? sponsor_dashboards_sponsor_sessions_path(event: params[:event], sponsor_id: params[:sponsor_id]) : sponsor_dashboards_sponsor_session_path(sponsor_session, event: params[:event], sponsor_id: params[:sponsor_id]),
               data: { action: "turbo:submit-end->modal#close" }) do |f| %>
   <% if f.object.errors.any? %>
     <div id="error_explanation" class="alert alert-danger" role="alert">
@@ -25,26 +25,26 @@
     <div class="field pb-3">
       <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
       <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
-      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
+      <%= f.collection_select :talk_category_id, conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
     </div>
     <div class="field pb-3">
       <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
-      <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+      <%= f.collection_select :talk_difficulty_id, conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
     </div>
     <div class="field pb-3">
       <%= f.label :speaker_ids, "スポンサー登壇者" %>
       <p class="field-description" style="font-size: 0.7em">複数選択可能です。選択しなくても登録・更新できます。</p>
-      <%= f.collection_select :speaker_ids, @sponsor_speakers, :id, :name, {}, { multiple: true, class: "form-control" } %>
+      <%= f.collection_select :speaker_ids, sponsor_speakers, :id, :name, {}, { multiple: true, class: "form-control" } %>
     </div>
-    <% if @conference.speaker_entry_disabled? %>
+    <% if conference.speaker_entry_disabled? %>
       <div class="field pb-3">
         <%= f.label :document_url, "セッション資料公開URL" %>
         <%= f.text_field :document_url, class: "form-control" %>
       </div>
     <% end %>
-    <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+    <% conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
       <div class="field pb-3">
-        <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
+        <% first_item = conference.proposal_item_configs.find_by(item_number: item_number) %>
         <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
           <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_check_box', f: f, first_item: first_item, item_number: item_number %>
         <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
@@ -53,13 +53,13 @@
         <% end %>
       </div>
     <% end %>
-    <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
+    <%= f.hidden_field :sponsor_id, value: sponsor.id %>
     <%= f.hidden_field :type, value: 'SponsorSession' %>
-    <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
-    <%= f.hidden_field :conference_id, value: @conference.id %>
+    <%= f.hidden_field :sponsor_id, value: sponsor.id %>
+    <%= f.hidden_field :conference_id, value: conference.id %>
   </div>
   <div class="actions">
-    <% if @sponsor_session.new_record? %>
+    <% if sponsor_session.new_record? %>
       <%= f.submit "スポンサーセッションを登録する" %>
     <% else %>
       <%= f.submit "スポンサーセッションを更新する" %>

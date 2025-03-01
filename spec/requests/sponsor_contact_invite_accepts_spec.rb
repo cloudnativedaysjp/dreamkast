@@ -37,7 +37,10 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
     end
 
     it 'sets a flash alert if invitation is expired' do
-      sponsor_contact_invite.update(expires_at: 1.day.ago)
+      # sponsor_contact_invite.update!(expires_at: 1.day.ago)
+      allow_any_instance_of(SponsorContactInvite).to(receive(:expires_at).and_return(1.day.ago))
+
+
       get new_sponsor_contact_invite_accept_path(event: conference.abbr, token: sponsor_contact_invite.token)
       expect(flash.now[:alert]).to(eq('招待メールが期限切れです。再度招待メールを送ってもらってください。'))
     end

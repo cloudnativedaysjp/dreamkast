@@ -6,7 +6,15 @@
       <% end %>
       <h1 class="text-center py-3 entry">スポンサーセッションを登録する</h1>
         <div class="field pb-3">
-          <%= render "sponsor_dashboards/sponsor_sessions/form" %>
+          <%= turbo_frame_tag "sponsor_session_form" do %>
+            <%= render "sponsor_dashboards/sponsor_sessions/form",
+                       conference: @conference,
+                       sponsor: @sponsor,
+                       sponsor_session: @sponsor_session,
+                       sponsor_speakers: @sponsor_speakers,
+                       flash: flash
+            %>
+          <% end %>
         </div>
     </div>
   </div>

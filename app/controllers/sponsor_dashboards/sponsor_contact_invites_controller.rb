@@ -9,6 +9,7 @@ class SponsorDashboards::SponsorContactInvitesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
+      @sponsor = Sponsor.find(params[:sponsor_id])
       @conference = Conference.find_by(abbr: params[:event])
       @sponsor_contact_invite = SponsorContactInvite.new(sponsor_contact_invite_params)
       @sponsor_contact_invite.conference_id = @conference.id
@@ -18,13 +19,14 @@ class SponsorDashboards::SponsorContactInvitesController < ApplicationController
         SponsorContactInviteMailer.invite(@conference, @sponsor_contact_invite).deliver_now
         flash.now[:notice] = '招待メールを送信しました'
       else
-        flash.now[:alert] = "#{@invite.email} への招待メール送信に失敗しました"
+        flash.now[:alert] = "#{@sponsor_contact_invite.email} への招待メール送信に失敗しました"
         render(:new, status: :unprocessable_entity)
       end
     end
   end
 
   def destroy
+    @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_contact_invite = SponsorContactInvite.find(params[:id])
     @previous_sponsor_contact_invites = SponsorContactInvite.where(conference_id: @sponsor_contact_invite.conference_id, email: @sponsor_contact_invite.email)
     if @sponsor_contact_invite.destroy && @previous_sponsor_contact_invites.destroy_all

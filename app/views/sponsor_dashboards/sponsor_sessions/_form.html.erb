@@ -31,6 +31,11 @@
       <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
       <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
     </div>
+    <div class="field pb-3">
+      <%= f.label :speaker_ids, "スポンサー登壇者" %>
+      <p class="field-description" style="font-size: 0.7em">複数選択可能です。選択しなくても登録・更新できます。</p>
+      <%= f.collection_select :speaker_ids, @sponsor_speakers, :id, :name, {}, { multiple: true, class: "form-control" } %>
+    </div>
     <% if @conference.speaker_entry_disabled? %>
       <div class="field pb-3">
         <%= f.label :document_url, "セッション資料公開URL" %>
@@ -54,6 +59,10 @@
     <%= f.hidden_field :conference_id, value: @conference.id %>
   </div>
   <div class="actions">
-    <%= f.submit "スポンサーセッションを登録する" %>
+    <% if @sponsor_session.new_record? %>
+      <%= f.submit "スポンサーセッションを登録する" %>
+    <% else %>
+      <%= f.submit "スポンサーセッションを更新する" %>
+    <% end %>
   </div>
 <% end %>

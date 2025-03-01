@@ -452,16 +452,14 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
     t.bigint "sponsor_id", null: false
     t.bigint "sponsor_contact_id", null: false
     t.bigint "speaker_id", null: false
-    t.bigint "talk_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conference_id", "sponsor_id", "talk_id"], name: "idx_spk_inv_accepts_on_conf_spsr_talk", unique: true
+    t.index ["conference_id", "sponsor_id", "speaker_id", "sponsor_contact_id"], name: "idx_spk_inv_accepts_on_conf_spsr_speaker_contact", unique: true
     t.index ["conference_id"], name: "index_sponsor_speaker_invite_accepts_on_conference_id"
     t.index ["speaker_id"], name: "index_sponsor_speaker_invite_accepts_on_speaker_id"
     t.index ["sponsor_contact_id"], name: "index_sponsor_speaker_invite_accepts_on_sponsor_contact_id"
     t.index ["sponsor_id"], name: "index_sponsor_speaker_invite_accepts_on_sponsor_id"
     t.index ["sponsor_speaker_invite_id"], name: "idx_spk_inv_accepts_on_invite"
-    t.index ["talk_id"], name: "index_sponsor_speaker_invite_accepts_on_talk_id"
   end
 
   create_table "sponsor_speaker_invites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -705,7 +703,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
   add_foreign_key "speaker_invitation_accepts", "talks"
   add_foreign_key "speaker_invitations", "conferences"
   add_foreign_key "speaker_invitations", "talks"
-  add_foreign_key "speakers", "sponsors"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_contact_invite_accepts", "conferences"
   add_foreign_key "sponsor_contact_invite_accepts", "sponsor_contact_invites"
@@ -719,7 +716,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
   add_foreign_key "sponsor_speaker_invite_accepts", "sponsor_contacts"
   add_foreign_key "sponsor_speaker_invite_accepts", "sponsor_speaker_invites"
   add_foreign_key "sponsor_speaker_invite_accepts", "sponsors"
-  add_foreign_key "sponsor_speaker_invite_accepts", "talks"
   add_foreign_key "sponsor_speaker_invites", "conferences"
   add_foreign_key "sponsor_speaker_invites", "sponsors"
   add_foreign_key "sponsor_types", "conferences"

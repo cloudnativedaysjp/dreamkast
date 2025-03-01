@@ -10,17 +10,15 @@
 #  sponsor_contact_id        :bigint           not null
 #  sponsor_id                :bigint           not null
 #  sponsor_speaker_invite_id :bigint           not null
-#  talk_id                   :bigint           not null
 #
 # Indexes
 #
-#  idx_spk_inv_accepts_on_conf_spsr_talk                       (conference_id,sponsor_id,talk_id) UNIQUE
+#  idx_spk_inv_accepts_on_conf_spsr_speaker_contact            (conference_id,sponsor_id,speaker_id,sponsor_contact_id) UNIQUE
 #  idx_spk_inv_accepts_on_invite                               (sponsor_speaker_invite_id)
 #  index_sponsor_speaker_invite_accepts_on_conference_id       (conference_id)
 #  index_sponsor_speaker_invite_accepts_on_speaker_id          (speaker_id)
 #  index_sponsor_speaker_invite_accepts_on_sponsor_contact_id  (sponsor_contact_id)
 #  index_sponsor_speaker_invite_accepts_on_sponsor_id          (sponsor_id)
-#  index_sponsor_speaker_invite_accepts_on_talk_id             (talk_id)
 #
 # Foreign Keys
 #
@@ -29,7 +27,6 @@
 #  fk_rails_...  (sponsor_contact_id => sponsor_contacts.id)
 #  fk_rails_...  (sponsor_id => sponsors.id)
 #  fk_rails_...  (sponsor_speaker_invite_id => sponsor_speaker_invites.id)
-#  fk_rails_...  (talk_id => talks.id)
 #
 
 class SponsorSpeakerInviteAccept < ApplicationRecord

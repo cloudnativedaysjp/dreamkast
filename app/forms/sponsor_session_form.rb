@@ -12,6 +12,7 @@ class SponsorSessionForm
   attr_accessor :talk_difficulty_id
   attr_accessor :document_url
   attr_accessor :proposal_items
+  attr_accessor :speaker_ids
 
   delegate :persisted?, to: :sponsor_session
 
@@ -44,14 +45,24 @@ class SponsorSessionForm
 
     ActiveRecord::Base.transaction do
       params = { type:, sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url: }
+      sponsor_session.update!(params)
       if sponsor_session.new_record?
-        sponsor_session.update!(params)
         proposal = Proposal.new(conference_id:, talk_id: sponsor_session.id)
         proposal.save!
-      else
-        sponsor_session.update!(params)
+      end
+
+      # Update speakers
+      if speaker_ids.present?
+        # Remove existing speakers
+        TalksSpeaker.where(talk_id: sponsor_session.id).destroy_all
+
+        # Add selected speakers
+        speaker_ids.reject(&:blank?).each do |speaker_id|
+          TalksSpeaker.create!(talk_id: sponsor_session.id, speaker_id:)
+        end
       end
     end
+    true
   rescue => e
     puts(e)
     false
@@ -79,7 +90,8 @@ class SponsorSessionForm
       talk_category_id: sponsor_session.talk_category_id,
       talk_difficulty_id: sponsor_session.talk_difficulty_id,
       document_url: sponsor_session.document_url,
-      proposal_items:
+      proposal_items:,
+      speaker_ids: sponsor_session.talks_speakers.pluck(:speaker_id)
     }
   end
 end

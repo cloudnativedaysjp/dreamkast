@@ -24,10 +24,6 @@
 #  index_speakers_on_conference_id_and_email  (conference_id,email)
 #  index_speakers_on_sponsor_id               (sponsor_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (sponsor_id => sponsors.id)
-#
 
 class Speaker < ApplicationRecord
   include ActionView::Helpers::UrlHelper

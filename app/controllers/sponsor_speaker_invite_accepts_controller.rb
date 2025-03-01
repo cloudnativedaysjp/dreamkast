@@ -44,10 +44,12 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
                            else
                              SponsorContact.new(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
                            end
-        @sponsor_contact.update!(name: sponsor_speaker_invite_accept_params[:name])
-        @sponsor_contact.save!
+        if @sponsor_contact.new_record?
+          @sponsor_contact.update!(name: sponsor_speaker_invite_accept_params[:name])
+          @sponsor_contact.save!
+        end
 
-        @sponsor_speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
+        @sponsor_speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor).exists?
                              Speaker.find_by(conference: @conference, email: current_user[:info][:email])
                            else
                              Speaker.new(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
@@ -86,6 +88,7 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
       :avatar,
       :conference_id,
       :sponsor_speaker_invite_id,
+      :additional_documents,
       :sponsor_id
     )
   end

@@ -5,12 +5,14 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_sessions = @sponsor.talks
+    @sponsor_speakers = @sponsor.speakers
   end
 
   def new
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = SponsorSession.new
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
+    @sponsor_speakers = @sponsor.speakers
   end
 
   def create
@@ -30,6 +32,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
     @sponsor_session = SponsorSession.find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
     @sponsor_session_form.load
+    @sponsor_speakers = @sponsor.speakers
   end
 
   def update
@@ -69,6 +72,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
       :talk_category_id,
       :talk_difficulty_id,
       :document_url,
+      { speaker_ids: [] },
       { proposal_items_attributes: }
     ]
 

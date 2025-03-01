@@ -10,6 +10,6 @@ class CreateSponsorSpeakerInviteAccepts < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :sponsor_speaker_invite_accepts, [:conference_id, :sponsor_id, :talk_id], unique: true, name: 'idx_spk_inv_accepts_on_conf_spsr_talk'
+    add_index :sponsor_speaker_invite_accepts, [:conference_id, :sponsor_id, :speaker_id, :sponsor_contact_id], unique: true, name: 'idx_spk_inv_accepts_on_conf_spsr_speaker_contact'
   end
 end

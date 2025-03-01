@@ -11,15 +11,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new
-    @conference = Conference.find_by(abbr: params[:event])
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
-
-    if current_user && Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
-      redirect_to(speaker_dashboard_path)
-    end
-
-    @speaker_form = SpeakerForm.new
-    @speaker_form.load
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    @speaker = Speaker.new
   end
 
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
@@ -35,24 +28,22 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
-    @conference = Conference.find_by(abbr: params[:event])
+    p 'CREATE===================================================================='
     @sponsor = Sponsor.find(params[:sponsor_id])
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = current_user[:info][:email]
+    @speaker = Speaker.new(speaker_params)
+    @speaker.conference = conference
+    @speaker.sub = current_user[:extra][:raw_info][:sub]
+    @speaker.email = current_user[:info][:email]
 
-    respond_to do |format|
-      if (r = @speaker_form.save)
-        r.each do |talk|
-          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
-        end
-        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully created.') }
-        format.json { render(:show, status: :created, location: @speaker) }
-      else
-        format.html { render(:new) }
-        format.json { render(json: @speaker.errors, status: :unprocessable_entity) }
-      end
+    p @speaker
+
+    if @speaker.save
+      flash.now[:notice] = 'スポンサー登壇者を登録しました'
+    else
+      flash.now[:alert] = 'スポンサー登壇者の登録に失敗しました'
+      puts @speaker.errors.full_messages.join(', ')
+      render(:new, status: :unprocessable_entity)
     end
   end
 
@@ -83,7 +74,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   private
 
-  helper_method :speaker_url, :expected_participant_params, :execution_phases_params
+  helper_method :speaker_url, :expected_participant_params, :execution_phases_params, :turbo_stream_flash
 
   def speaker_url
     case action_name
@@ -119,23 +110,14 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
                                     :job_title,
                                     :twitter_id,
                                     :github_id,
+                                    :sponsor_id,
                                     :avatar,
                                     :conference_id,
-                                    :additional_documents,
-                                    talks_attributes:)
+                                    :additional_documents
+                                    )
   end
 
-  def talks_attributes
-    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
-    h = {}
-    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
-      conf = @conference.proposal_item_configs.find_by(label:)
-      if conf.instance_of?(::ProposalItemConfigCheckBox)
-        h[conf.label.pluralize.to_sym] = []
-      elsif conf.instance_of?(::ProposalItemConfigRadioButton)
-        attr << conf.label.pluralize.to_sym
-      end
-    end
-    attr.append(h)
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
   end
 end

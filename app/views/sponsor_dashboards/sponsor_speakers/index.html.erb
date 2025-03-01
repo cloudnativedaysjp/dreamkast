@@ -1,34 +1,45 @@
 <div class="container speaker-dashboard-form wrapper">
   <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
   <div class="container-fluid right-pain">
-    <h1 class="text-center py-3 entry">スポンサー登壇者(<%= @sponsor.name %>)</h1>
-
-    <% if @sponsor_speakers.present? %>
-      <div class="row py-2 border-top">
-        <div class="col-2 my-auto">登壇者名</div>
-        <div class="col-2 my-auto">メールアドレス</div>
-        <div class="col-1 my-auto"></div>
+    <%= turbo_frame_tag "sponsor_speakers_and_create" do %>
+      <h1 class="text-center py-3 entry">スポンサー登壇者(<%= @sponsor.name %>)</h1>
+      <div class="row mb-3">
+        <div class="col-12 col-mb-6">
+          <div class="d-flex justify-content-end">
+            <%= link_to "スポンサー登壇者を作成する",
+                        new_sponsor_dashboards_sponsor_speaker_path(sponsor_id: @sponsor.id),
+                        class: "btn btn-sm btn-outline-primary me-2",
+                        data: { turbo_frame: "modal" } %>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <% @sponsor_speakers.each do |speaker| %>
-          <%= turbo_frame_tag speaker do %>
-            <div class="row py-2 border-top">
-              <div class="col-2 my-auto">
-                <%= speaker.name %>
+      <% if @sponsor_speakers.present? %>
+        <div class="row py-2 border-top">
+          <div class="col-2 my-auto">登壇者名</div>
+          <div class="col-2 my-auto">メールアドレス</div>
+          <div class="col-1 my-auto"></div>
+        </div>
+        <% if !@sponsor_speakers.present? && !@sponsor_speaker_invites.present? %>
+          <div class="col-12 col-mb-6">
+            スポンサー登壇者は未登録です。
+          </div>
+        <% else %>
+          <% @sponsor_speakers.each do |speaker| %>
+            <%= turbo_frame_tag speaker do %>
+              <div class="row py-2 border-top">
+                <div class="col-2 my-auto">
+                  <%= speaker.name %>
+                </div>
+                <div class="col-2 my-auto">
+                  <%= speaker.email %>
+                </div>
               </div>
-              <div class="col-2 my-auto">
-                <%= speaker.email %>
-              </div>
-            </div>
+            <% end %>
           <% end %>
         <% end %>
-      </div>
-    <% else %>
-      <div class="col-12 col-mb-6">
-        スポンサー登壇者は未登録です。
-      </div>
+      <% end %>
+      <%= turbo_frame_tag "modal" %>
+      <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
     <% end %>
-
   </div>
 </div>

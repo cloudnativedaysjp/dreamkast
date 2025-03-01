@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -392,7 +392,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
     t.text "sub"
     t.text "additional_documents"
     t.string "name_mother_tongue"
+    t.bigint "sponsor_id"
     t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
+    t.index ["sponsor_id"], name: "index_speakers_on_sponsor_id"
   end
 
   create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -442,6 +444,36 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_sponsor_contacts_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_contacts_on_sponsor_id"
+  end
+
+  create_table "sponsor_speaker_invite_accepts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "sponsor_speaker_invite_id", null: false
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.bigint "sponsor_contact_id", null: false
+    t.bigint "talk_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id", "sponsor_id", "talk_id"], name: "idx_spk_inv_accepts_on_conf_spsr_talk", unique: true
+    t.index ["conference_id"], name: "index_sponsor_speaker_invite_accepts_on_conference_id"
+    t.index ["sponsor_contact_id"], name: "index_sponsor_speaker_invite_accepts_on_sponsor_contact_id"
+    t.index ["sponsor_id"], name: "index_sponsor_speaker_invite_accepts_on_sponsor_id"
+    t.index ["sponsor_speaker_invite_id"], name: "idx_spk_inv_accepts_on_invite"
+    t.index ["talk_id"], name: "index_sponsor_speaker_invite_accepts_on_talk_id"
+  end
+
+  create_table "sponsor_speaker_invites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.bigint "conference_id", null: false
+    t.bigint "sponsor_id", null: false
+    t.string "email", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_sponsor_speaker_invites_on_conference_id"
+    t.index ["sponsor_id"], name: "index_sponsor_speaker_invites_on_sponsor_id"
+    t.index ["talk_id"], name: "index_sponsor_speaker_invites_on_talk_id"
   end
 
   create_table "sponsor_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -673,6 +705,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
   add_foreign_key "speaker_invitation_accepts", "talks"
   add_foreign_key "speaker_invitations", "conferences"
   add_foreign_key "speaker_invitations", "talks"
+  add_foreign_key "speakers", "sponsors"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_contact_invite_accepts", "conferences"
   add_foreign_key "sponsor_contact_invite_accepts", "sponsor_contact_invites"
@@ -681,6 +714,14 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_08_132647) do
   add_foreign_key "sponsor_contact_invites", "conferences"
   add_foreign_key "sponsor_contact_invites", "sponsors"
   add_foreign_key "sponsor_contacts", "conferences"
+  add_foreign_key "sponsor_speaker_invite_accepts", "conferences"
+  add_foreign_key "sponsor_speaker_invite_accepts", "sponsor_contacts"
+  add_foreign_key "sponsor_speaker_invite_accepts", "sponsor_speaker_invites"
+  add_foreign_key "sponsor_speaker_invite_accepts", "sponsors"
+  add_foreign_key "sponsor_speaker_invite_accepts", "talks"
+  add_foreign_key "sponsor_speaker_invites", "conferences"
+  add_foreign_key "sponsor_speaker_invites", "sponsors"
+  add_foreign_key "sponsor_speaker_invites", "talks"
   add_foreign_key "sponsor_types", "conferences"
   add_foreign_key "sponsors", "conferences"
   add_foreign_key "stamp_rally_check_ins", "profiles"

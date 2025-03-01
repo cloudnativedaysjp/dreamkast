@@ -127,6 +127,7 @@ Rails.application.routes.draw do
         resources :sponsor_speakers, only: [:index, :new, :edit, :create, :update]
         resources :sponsor_sessions
         resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
+        resources :sponsor_speaker_invites, only: [:index, :new, :create, :destroy]
       end
     end
 

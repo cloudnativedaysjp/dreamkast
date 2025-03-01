@@ -6,7 +6,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def index
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
-    @sponsor_speakers = @sponsor.talks.map(&:speakers).flatten.uniq
+    @sponsor_speakers = @sponsor.speakers
   end
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
@@ -17,26 +17,21 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
-    @conference = Conference.find_by(abbr: params[:event])
-    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
-    authorize(@speaker)
-
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
-    @speaker_form.load
+    
+    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
+    # authorize(@speaker)
   end
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
-    p 'CREATE===================================================================='
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker = Speaker.new(speaker_params)
     @speaker.conference = conference
+    @speaker.sponsor = @sponsor
     @speaker.sub = current_user[:extra][:raw_info][:sub]
     @speaker.email = current_user[:info][:email]
-
-    p @speaker
 
     if @speaker.save
       flash.now[:notice] = 'スポンサー登壇者を登録しました'
@@ -49,26 +44,14 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def update
-    @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
-    authorize(@speaker)
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, sponsor: @sponsor, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
-    @speaker_form.email = current_user[:info][:email]
-    # @speaker_form.load
-    exists_talks = @speaker.talk_ids
-
-    respond_to do |format|
-      if (r = @speaker_form.save)
-        r.each do |talk|
-          SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later unless exists_talks.include?(talk.id)
-        end
-        format.html { redirect_to(sponsor_dashboards_path(sponsor_id: @sponsor.id), notice: 'Speaker was successfully updated.') }
-      else
-        format.html { render(:edit) }
-      end
+    if @speaker.update(speaker_params)
+      flash.now[:notice] = 'スポンサー登壇者を更新しました'
+    else
+      flash.now[:alert] = 'スポンサー登壇者の更新に失敗しました'
+      render(:edit, status: :unprocessable_entity)
     end
   end
 

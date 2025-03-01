@@ -17,6 +17,7 @@
         <div class="row py-2 border-top">
           <div class="col-2 my-auto">登壇者名</div>
           <div class="col-2 my-auto">メールアドレス</div>
+          <div class="col-2 my-auto">操作</div>
           <div class="col-1 my-auto"></div>
         </div>
         <% if !@sponsor_speakers.present? && !@sponsor_speaker_invites.present? %>
@@ -25,16 +26,7 @@
           </div>
         <% else %>
           <% @sponsor_speakers.each do |speaker| %>
-            <%= turbo_frame_tag speaker do %>
-              <div class="row py-2 border-top">
-                <div class="col-2 my-auto">
-                  <%= speaker.name %>
-                </div>
-                <div class="col-2 my-auto">
-                  <%= speaker.email %>
-                </div>
-              </div>
-            <% end %>
+            <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker", speaker: speaker%>
           <% end %>
         <% end %>
       <% end %>

@@ -34,6 +34,7 @@ class Speaker < ApplicationRecord
   include AvatarUploader::Attachment(:avatar)
 
   belongs_to :conference
+  belongs_to :sponsor
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers

@@ -1,5 +1,6 @@
 class SponsorDashboards::SponsorSessionsController < ApplicationController
   include SecuredSponsor
+  before_action :set_sponsor_contact
 
   def index
     @sponsor = Sponsor.find(params[:sponsor_id])
@@ -95,5 +96,12 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def turbo_stream_flash
     turbo_stream.append('flashes', partial: 'flash')
+  end
+
+  def set_sponsor_contact
+    @conference ||= Conference.find_by(abbr: params[:event])
+    if current_user
+      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    end
   end
 end

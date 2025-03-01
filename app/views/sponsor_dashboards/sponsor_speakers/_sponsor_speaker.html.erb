@@ -6,11 +6,18 @@
     <div class="col-2 my-auto">
       <%= speaker.email %>
     </div>
-    <div class="col-2 my-auto">
+    <div class="col-4 my-auto">
       <%= link_to "編集",
                   edit_sponsor_dashboards_sponsor_speaker_path(sponsor_id: @sponsor.id, id: speaker.id),
-                  class: "btn btn-sm btn-outline-primary",
+                  class: "btn btn-sm btn-outline-primary me-2",
                   data: { turbo_frame: "modal" } %>
+      <%= link_to "削除",
+                  sponsor_dashboards_sponsor_speaker_path(sponsor_id: @sponsor.id, id: speaker.id),
+                  class: "btn btn-sm btn-outline-danger",
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "スポンサー登壇者を削除してもよろしいですか？"
+                  } %>
     </div>
   </div>
 <% end %>

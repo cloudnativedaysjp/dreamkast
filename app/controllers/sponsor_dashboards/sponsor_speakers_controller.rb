@@ -54,6 +54,24 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
       render(:edit, status: :unprocessable_entity)
     end
   end
+  
+  # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
+  def destroy
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    @speaker = Speaker.find(params[:id])
+    
+    # スポンサーセッションと紐付いているかチェック
+    if @speaker.talks.present?
+      flash.now[:alert] = 'スポンサーセッションと紐付いているため削除できません'
+      return
+    end
+    
+    if @speaker.destroy
+      flash.now[:notice] = 'スポンサー登壇者を削除しました'
+    else
+      flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
+    end
+  end
 
   private
 

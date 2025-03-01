@@ -124,7 +124,7 @@ Rails.application.routes.draw do
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
         resources :sponsor_contacts, only: [:index, :new, :edit, :create, :update]
-        resources :sponsor_speakers, only: [:index, :new, :edit, :create, :update]
+        resources :sponsor_speakers, only: [:index, :new, :edit, :create, :update, :destroy]
         resources :sponsor_sessions
         resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
         resources :sponsor_speaker_invites, only: [:index, :new, :create, :destroy]

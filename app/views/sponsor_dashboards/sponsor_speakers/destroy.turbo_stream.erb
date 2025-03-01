@@ -1,0 +1,7 @@
+<% if flash[:alert].present? %>
+  <%= turbo_stream_flash %>
+<% else %>
+  <%= turbo_stream.remove @speaker %>
+  <%= turbo_stream_flash %>
+<% end %>
+<%= yield %>

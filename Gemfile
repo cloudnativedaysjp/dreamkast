@@ -120,7 +120,7 @@ gem "turbo-rails", "2.0.5"
 
 gem 'slack-ruby-client'
 
-gem 'nokogiri', '1.16.5'
+gem 'nokogiri', '1.18.3'
 
 gem 'faraday-retry'
 

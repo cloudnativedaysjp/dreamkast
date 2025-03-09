@@ -44,7 +44,7 @@ class SponsorSessionForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      params = { type:, sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url: }
+      params = { type:, sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url: , show_on_timetable: true}
       sponsor_session.update!(params)
       if sponsor_session.new_record?
         proposal = Proposal.new(conference_id:, talk_id: sponsor_session.id)

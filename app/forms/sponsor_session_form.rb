@@ -45,12 +45,11 @@ class SponsorSessionForm
 
     ActiveRecord::Base.transaction do
       params = { type:, sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url:, show_on_timetable: true }
-      if sponsor_session.new_record?
-        sponsor_session.update!(params)
-        proposal = Proposal.new(conference_id:, talk_id: sponsor_session.id)
-        proposal.save!
-      else
-        sponsor_session.update!(params)
+
+      was_new_record = sponsor_session.new_record?
+      sponsor_session.update!(params)
+      if was_new_record
+        Proposal.create!(conference_id:, talk_id: sponsor_session.id)
       end
 
       # Update speakers

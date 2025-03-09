@@ -1,0 +1,13 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h4>スポンサーダッシュボード</h4>
+    <h4><%= @sponsor.name %></h4>
+  </div>
+
+  <ul class="list-unstyled components">
+    <%= render 'admin/nav_item', name: 'トップ', path: sponsor_dashboards_path, active: controller_name == 'admin' &&  action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'スポンサー担当者', path: sponsor_dashboards_sponsor_contacts_path, active: controller_name == 'admin' &&  action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'スポンサー登壇者', path: sponsor_dashboards_sponsor_speakers_path, active: controller_name == 'admin' &&  action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'スポンサーセッション', path: sponsor_dashboards_sponsor_sessions_path, active: controller_name == 'admin' &&  action_name == 'show' %>
+  </ul>
+</nav>

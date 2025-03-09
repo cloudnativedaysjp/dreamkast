@@ -1,0 +1,45 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <%= turbo_frame_tag "sponsor_speakers_and_create" do %>
+      <h1 class="text-center py-3 entry">スポンサー登壇者(<%= @sponsor.name %>)</h1>
+      <div class="row mb-3">
+        <div class="col-12 col-mb-6">
+          <div class="d-flex justify-content-end">
+            <%= link_to "スポンサー登壇者を招待する",
+                        new_sponsor_dashboards_sponsor_speaker_invite_path(sponsor_id: @sponsor.id),
+                        class: "btn btn-sm btn-outline-primary me-2",
+                        data: { turbo_frame: "modal" } %>
+          </div>
+        </div>
+      </div>
+      <div class="row py-2 border-top">
+        <div class="col-2 my-auto">登壇者名</div>
+        <div class="col-2 my-auto">メールアドレス</div>
+        <div class="col-2 my-auto">ステータス</div>
+        <div class="col-2 my-auto">操作</div>
+        <div class="col-1 my-auto"></div>
+      </div>
+      <% if !@sponsor_speakers.present? && !@sponsor_speaker_invites.present? %>
+        <div class="col-12 col-mb-6">
+          スポンサー登壇者は未登録です。
+        </div>
+      <% else %>
+        <%= turbo_frame_tag "sponsor_speakers" do %>
+          <% @sponsor_speakers.each do |speaker| %>
+            <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker", speaker: speaker%>
+          <% end %>
+        <% end %>
+        <%= turbo_frame_tag "sponsor_speaker_invite_list" do %>
+          <% if @sponsor_speaker_invites.present? %>
+            <% @sponsor_speaker_invites.each do |sponsor_speaker_invite| %>
+              <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker_invite", sponsor_speaker_invite: sponsor_speaker_invite %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= turbo_frame_tag "modal" %>
+      <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+    <% end %>
+  </div>
+</div>

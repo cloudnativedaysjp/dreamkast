@@ -1,0 +1,26 @@
+  <%= turbo_frame_tag sponsor_contact_invite do %>
+  <div class="row py-2 border-top">
+    <div class="col-2 my-auto">
+      -
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor_contact_invite.email %>
+    </div>
+    <div class="col-2 my-auto">
+      <% if sponsor_contact_invite.expires_at > Time.current %>
+        <span class="badge bg-warning">招待中</span>
+      <% else %>
+        <span class="badge bg-secondary">期限切れ</span>
+      <% end %>
+    </div>
+    <div class="col-2 my-auto">
+      <div class="d-flex justify-content-end">
+        <%= link_to "招待をキャンセル",
+                              admin_sponsor_contact_invite_path(event: sponsor_contact_invite.conference.abbr, id: sponsor_contact_invite.id),
+                              class: "btn btn-sm btn-outline-danger",
+                              data: { turbo_method: :delete, turbo_confirm: "本当に招待をキャンセルしますか？" }
+                    %>
+      </div>
+    </div>
+    </div>
+<% end %>

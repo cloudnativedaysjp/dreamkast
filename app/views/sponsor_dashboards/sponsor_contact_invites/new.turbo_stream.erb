@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "sponsor_contact_invite_form",
+                         partial: "sponsor_dashboards/sponsor_contact_invites/form",
+                         locals: {
+                           sponsor: @sponsor,
+                           sponsor_contact_invite: @sponsor_contact_invite,
+                         }
+%>

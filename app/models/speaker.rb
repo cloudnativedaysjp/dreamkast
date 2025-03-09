@@ -16,6 +16,7 @@
 #  updated_at           :datetime         not null
 #  conference_id        :integer
 #  github_id            :string(255)
+#  sponsor_id           :bigint
 #  twitter_id           :string(255)
 #
 # Indexes
@@ -28,6 +29,7 @@ class Speaker < ApplicationRecord
   include AvatarUploader::Attachment(:avatar)
 
   belongs_to :conference
+  belongs_to :sponsor, optional: true
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers

@@ -69,7 +69,7 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
         redirect_to(sponsor_dashboards_path(event: @conference.abbr, sponsor_id: @sponsor.id), notice: 'Speaker was successfully added.')
       end
     rescue ActiveRecord::RecordInvalid => e
-      p(e)
+      Rails.logger.error(e)
       render(:new, alert: e.message)
     end
   end

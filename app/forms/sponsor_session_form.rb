@@ -64,7 +64,7 @@ class SponsorSessionForm
     end
     true
   rescue => e
-    puts(e)
+    Rails.logger.error(e)
     false
   end
 

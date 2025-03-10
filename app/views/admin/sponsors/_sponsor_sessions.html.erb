@@ -1,0 +1,16 @@
+<div class="col-12 col-mb-6">
+  <h4>スポンサーセッション</h4>
+  <% if @sponsor.talks.present? %>
+    <div class="card-group">
+      <div class="card">
+        <% @sponsor.talks.each do |talk| %>
+          <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="col-12 col-mb-6">
+      スポンサーセッションは未登録です。
+    </div>
+  <% end %>
+</div>

@@ -16,6 +16,7 @@
 #  updated_at           :datetime         not null
 #  conference_id        :integer
 #  github_id            :string(255)
+#  sponsor_id           :bigint
 #  twitter_id           :string(255)
 #
 # Indexes

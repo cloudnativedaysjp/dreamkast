@@ -1,7 +1,19 @@
 class SponsorDashboards::SponsorContactsController < ApplicationController
   include SecuredSponsor
+  before_action :set_sponsor_contact
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
+
+  def index
+    @conference = Conference.find_by(abbr: params[:event])
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor_contacts = @sponsor.sponsor_contacts
+    @sponsor_contact_invites = @sponsor.sponsor_contact_invites
+                                       .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
+                                       .group_by(&:email)
+                                       .values
+                                       .map { |invites| invites.max_by(&:expires_at) }
+  end
 
   # GET :event/sponsor_dashboard/sponsor_contacts/new
   def new
@@ -30,8 +42,8 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # POST :event/sponsor_dashboard/sponsor_contacts
   def create
     @conference = Conference.find_by(abbr: params[:event])
-    @sponsor = Sponsor.where(conference_id: @conference.id).where('speaker_emails like(?)', "%#{current_user[:info][:email]}%").first
-    if @sponsor
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    if @sponsor.sponsor_contacts.any? { |contact| contact.email == current_user[:info][:email] }
       @sponsor_contact = SponsorContact.new(sponsor_contact_params.merge(conference_id: @conference.id))
       @sponsor_contact.sub = current_user[:extra][:raw_info][:sub]
 
@@ -71,7 +83,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   private
 
-  helper_method :sponsor_url
+  helper_method :sponsor_url, :turbo_stream_flash
 
   def sponsor_url
     case action_name
@@ -93,5 +105,16 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
                                             :sub,
                                             :email,
                                             :conference_id)
+  end
+
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
+  end
+
+  def set_sponsor_contact
+    @conference ||= Conference.find_by(abbr: params[:event])
+    if current_user
+      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    end
   end
 end

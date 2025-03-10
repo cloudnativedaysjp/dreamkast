@@ -1,0 +1,14 @@
+<%= render "layouts/modal", title: "招待" do %>
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-12 py-3 px-md-5">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
+      <% end %>
+      <h1 class="text-center py-3 entry">スポンサー担当者に招待メールを送信する</h1>
+      <%= render "sponsor_dashboards/sponsor_contact_invites/form",
+          sponsor: @sponsor,
+          sponsor_contact_invite: @sponsor_contact_invite
+      %>
+    </div>
+  </div>
+<% end %>

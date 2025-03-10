@@ -1,4 +1,4 @@
-<div class="container">
+<%= render "layouts/modal", title: "招待" do %>
   <div class="row justify-content-center">
     <div class="col-12 col-lg-12 py-3 px-md-5">
       <% flash.each do |key, value| %>
@@ -6,8 +6,7 @@
       <% end %>
       <h1 class="text-center py-3 entry">スポンサー担当者に招待メールを送信する</h1>
 
-      <% p @sponsor_contact_invite %>
-      <%= form_with(model: @sponsor_contact_invite) do |form| %>
+      <%= form_with(model: [:admin, @sponsor_contact_invite], data: { action: "turbo:submit-end->modal#close" }) do |form| %>
         <div class="field pb-3">
           <%= form.label :email %>
           <%= form.email_field :email, class: "form-control", required: true %>
@@ -16,9 +15,9 @@
         <%= form.hidden_field :sponsor_id, value: @sponsor.id %>
 
         <div class="actions">
-          <%= form.submit "招待メールを送信する", data: { turbo_confirm: '本当に公開しますか？' }   %>
+          <%= form.submit "招待メールを送信する", data: { turbo_confirm: '本当に招待しますか？' }   %>
         </div>
       <% end %>
     </div>
   </div>
-</div>
+<% end %>

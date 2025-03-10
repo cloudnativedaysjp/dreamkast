@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "sponsor_session_form",
+                         partial: "sponsor_dashboards/sponsor_sessions/form",
+                         locals: {
+                           conference: @conference,
+                           sponsor: @sponsor,
+                           sponsor_session: @sponsor_session,
+                           sponsor_speakers: @sponsor_speakers,
+                         }
+%>

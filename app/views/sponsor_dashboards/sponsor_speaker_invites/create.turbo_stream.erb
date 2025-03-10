@@ -1,0 +1,5 @@
+<%= turbo_stream.append 'sponsor_speaker_invite_list', 
+    partial: 'sponsor_dashboards/sponsor_speakers/sponsor_speaker_invite',
+    locals: { sponsor_speaker_invite: @sponsor_speaker_invite } %>
+<%= turbo_stream_flash %>
+<%= yield %>

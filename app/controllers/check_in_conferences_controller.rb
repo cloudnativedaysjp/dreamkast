@@ -5,7 +5,7 @@ class CheckInConferencesController < ApplicationController
   skip_before_action :logged_in_using_omniauth?
 
   def new
-    if logged_in? && @profile.present?
+    if logged_in? && @profile.instance_of?(Profile)
       check_in = CheckInConference.new(
         conference_id: @conference.id,
         profile_id: @profile.id,
@@ -14,7 +14,7 @@ class CheckInConferencesController < ApplicationController
       check_in.save
     end
 
-    if logged_in? && @profile.nil?
+    if logged_in? && (@profile.nil? || @profile.instance_of?(GuestProfile))
       flash[:alert] = 'チェックインするためには参加登録が必要です。登録後、再度スキャンしてチェックインしてください。'
       redirect_to("/#{params[:event]}/registration")
       nil

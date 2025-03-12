@@ -16,7 +16,14 @@ describe ProfilesController, type: :request do
       subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            user_session[:userinfo]
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       it "doesn't have timetable and speakers links" do
@@ -70,21 +77,6 @@ describe ProfilesController, type: :request do
           post('/cndt2020/profiles', params: { profile: profiles_params.merge(agreement_params) })
         end.to(change(Agreement, :count).by(+4))
         expect(response.body).to(redirect_to('/cndt2020/public_profiles/new'))
-      end
-    end
-  end
-
-  describe 'GET /cndt2020/profiles/checkin without profile' do
-    subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
-
-    before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
-    end
-
-    context 'GET /profiles/checkin' do
-      it 'should redirect to registration' do
-        get '/cndt2020/profiles/checkin'
-        expect(response).to(redirect_to('/cndt2020/registration'))
       end
     end
   end

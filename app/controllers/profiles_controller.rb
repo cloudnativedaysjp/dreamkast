@@ -98,18 +98,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def checkin
-    if @profile.present?
-      c = CheckIn.new
-      c.profile_id = @profile.id
-      c.save
-    elsif @profile.nil?
-      redirect_to("/#{params[:event]}/registration")
-    else
-      redirect_to(dashboard_path)
-    end
-  end
-
   def view_qr
   end
 

@@ -159,6 +159,8 @@ Rails.application.routes.draw do
 
     resources :attachments, only: [:show]
 
+    get 'self_check_in' => 'check_in_conferences#new'
+
     # Profile
     resources :profiles, only: [:new, :edit, :update, :create]
     namespace :profiles do
@@ -170,7 +172,6 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
-    get 'profiles/checkin', to: 'profiles#checkin'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'
     get 'profiles/view_qr' => 'profiles#view_qr'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'

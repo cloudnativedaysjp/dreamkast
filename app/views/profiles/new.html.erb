@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row justify-content-lg-center">
     <div class="col-12 col-lg-6 registration-form py-3 my-3 px-md-5">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
       <h2><%= @conference.abbr.upcase %> 参加登録フォーム</h2>
       <div class="block"></div>
-
       <% if logged_in? %>
         <%= render 'form', profile: @profile, submit_button_label: "個人情報保護方針に同意して参加登録" %>
       <% else %>

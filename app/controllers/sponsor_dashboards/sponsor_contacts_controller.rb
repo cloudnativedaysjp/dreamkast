@@ -81,6 +81,17 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
     end
   end
 
+  def destroy
+    @sponsor_contact = SponsorContact.find(params[:id])
+
+    if @sponsor_contact.destroy
+      flash.now[:notice] = "スポンサー担当者 #{@sponsor_contact.email} を削除しました"
+    else
+      flash.now[:alert] = "スポンサー担当者 #{@sponsor_contact.email} の削除に失敗しました"
+      render(:index, status: :unprocessable_entity)
+    end
+  end
+
   private
 
   helper_method :sponsor_url, :turbo_stream_flash

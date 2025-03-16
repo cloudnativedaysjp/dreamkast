@@ -127,7 +127,7 @@ Rails.application.routes.draw do
     namespace :sponsor_dashboards do
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
-        resources :sponsor_contacts, only: [:index, :new, :edit, :create, :update]
+        resources :sponsor_contacts, only: [:index, :new, :edit, :create, :update, :destroy]
         resources :sponsor_speakers, only: [:index, :new, :edit, :create, :update, :destroy]
         resources :sponsor_sessions
         resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]

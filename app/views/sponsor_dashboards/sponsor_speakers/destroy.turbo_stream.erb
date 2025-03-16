@@ -1,7 +1,6 @@
-<% if flash[:alert].present? %>
-  <%= turbo_stream_flash %>
-<% else %>
-  <%= turbo_stream.remove @speaker %>
-  <%= turbo_stream_flash %>
-<% end %>
+<%= turbo_stream.remove @speaker %>
+<%= turbo_stream.update 'no_sponsor_speakers',
+  partial: 'sponsor_dashboards/sponsor_speakers/no_sponsor_speakers',
+  locals: { sponsor_speakers: @sponsor_speakers, sponsor_speaker_invites: @sponsor_speaker_invites } %>
+<%= turbo_stream_flash %>
 <%= yield %>

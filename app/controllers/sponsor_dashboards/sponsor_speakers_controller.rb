@@ -73,6 +73,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     end
 
     if @speaker.destroy
+      @sponsor_speakers = @sponsor.speakers
+      @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
       flash.now[:notice] = 'スポンサー登壇者を削除しました'
     else
       flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'

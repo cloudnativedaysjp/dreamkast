@@ -20,21 +20,18 @@
         <div class="col-2 my-auto">操作</div>
         <div class="col-1 my-auto"></div>
       </div>
-      <% if !@sponsor_speakers.present? && !@sponsor_speaker_invites.present? %>
-        <div class="col-12 col-mb-6">
-          スポンサー登壇者は未登録です。
-        </div>
-      <% else %>
-        <%= turbo_frame_tag "sponsor_speakers" do %>
-          <% @sponsor_speakers.each do |speaker| %>
-            <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker", speaker: speaker%>
-          <% end %>
+      <%= turbo_frame_tag "no_sponsor_speakers" do %>
+        <%= render "sponsor_dashboards/sponsor_speakers/no_sponsor_speakers", sponsor_speakers: @sponsor_speakers, sponsor_speaker_invites: @sponsor_speaker_invites %>
+      <% end %>
+      <%= turbo_frame_tag "sponsor_speakers" do %>
+        <% @sponsor_speakers.each do |speaker| %>
+          <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker", speaker: speaker%>
         <% end %>
-        <%= turbo_frame_tag "sponsor_speaker_invite_list" do %>
-          <% if @sponsor_speaker_invites.present? %>
-            <% @sponsor_speaker_invites.each do |sponsor_speaker_invite| %>
-              <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker_invite", sponsor_speaker_invite: sponsor_speaker_invite %>
-            <% end %>
+      <% end %>
+      <%= turbo_frame_tag "sponsor_speaker_invite_list" do %>
+        <% if @sponsor_speaker_invites.present? %>
+          <% @sponsor_speaker_invites.each do |sponsor_speaker_invite| %>
+            <%= render "sponsor_dashboards/sponsor_speakers/sponsor_speaker_invite", sponsor_speaker_invite: sponsor_speaker_invite %>
           <% end %>
         <% end %>
       <% end %>

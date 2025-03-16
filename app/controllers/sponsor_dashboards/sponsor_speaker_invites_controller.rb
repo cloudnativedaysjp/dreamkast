@@ -17,6 +17,8 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
       @sponsor_speaker_invite.token = SecureRandom.hex(50)
       @sponsor_speaker_invite.expires_at = 1.days.from_now  # 有効期限を1日後に設定
       if @sponsor_speaker_invite.save
+        @sponsor_speakers = @sponsor.speakers
+        @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
         SponsorSpeakerInviteMailer.invite(@conference, @sponsor_speaker_invite).deliver_now
         flash.now[:notice] = '招待メールを送信しました'
       else
@@ -31,6 +33,8 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
     @sponsor_speaker_invite = SponsorSpeakerInvite.find(params[:id])
     @previous_sponsor_speaker_invites = SponsorSpeakerInvite.where(conference_id: @sponsor_speaker_invite.conference_id, email: @sponsor_speaker_invite.email)
     if @sponsor_speaker_invite.destroy && @previous_sponsor_speaker_invites.destroy_all
+      @sponsor_speakers = @sponsor.speakers
+      @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
       flash.now[:notice] = '招待を削除しました'
     else
       flash.now[:alert] = '招待の削除に失敗しました'

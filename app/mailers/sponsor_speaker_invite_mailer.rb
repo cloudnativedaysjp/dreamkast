@@ -8,7 +8,7 @@ class SponsorSpeakerInviteMailer < ApplicationMailer
     @conference = conference
     @invitation = invitation
     @new_accept_url = sponsor_speaker_invite_accepts_invite_url(event: @conference.abbr, token: @invitation.token, protocol:)
-    mail(to: @invitation.email, subject: "#{@conference.name} スポンサー登壇者招待")
+    mail(to: @invitation.email, subject: "#{@conference.name} スポンサー登壇者招待 (#{@invitation.sponsor.name})")
   end
 
   private

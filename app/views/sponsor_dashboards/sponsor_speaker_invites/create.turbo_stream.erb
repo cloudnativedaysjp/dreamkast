@@ -1,5 +1,8 @@
-<%= turbo_stream.append 'sponsor_speaker_invite_list', 
+<%= turbo_stream.append 'sponsor_speaker_invite_list',
     partial: 'sponsor_dashboards/sponsor_speakers/sponsor_speaker_invite',
     locals: { sponsor_speaker_invite: @sponsor_speaker_invite } %>
+<%= turbo_stream.update 'no_sponsor_speakers',
+    partial: 'sponsor_dashboards/sponsor_speakers/no_sponsor_speakers',
+    locals: { sponsor_speakers: @sponsor_speakers, sponsor_speaker_invites: @sponsor_speaker_invites } %>
 <%= turbo_stream_flash %>
 <%= yield %>

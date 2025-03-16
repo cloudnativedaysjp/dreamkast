@@ -12,7 +12,7 @@
     <div class="col-2 my-auto">
       <div class="d-flex justify-content-end">
         <%= link_to "担当者を削除",
-                              admin_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
+                              sponsor_dashboards_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
                               class: "btn btn-sm btn-outline-danger",
                               data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }
                     %>

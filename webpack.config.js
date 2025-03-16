@@ -82,7 +82,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2|woff|ttf|svg)$/i,
-        use: 'file-loader',
+        generator: {
+          filename: 'images/[name][ext]',
+        },
+        type: 'asset/resource',
       },
     ],
   },

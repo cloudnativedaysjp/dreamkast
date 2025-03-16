@@ -4,10 +4,17 @@
     <div class="col-12 col-md-12 py-4 contents white_background checkin">
       <h2 class="text-center"><%= @conference.abbr.upcase %>へようこそ！</h2>
       <% unless logged_in? %>
-      <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
-        <%= label_tag 'entry', 'セルフチェックインにはログインが必要です' %>
-        <%= button_to 'ログイン', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
-      </div>
+        <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+          <%= label_tag 'entry', 'セルフチェックインにはログインが必要です' %>
+          <%= button_to 'ログイン', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
+        </div>
+      <% end %>
+      <% if @check_in.present? %>
+        <div class="checked text-center center-block">
+          &nbsp;
+        </div>
+        <p>チェックインが完了しました！</p>
+        <p>3秒後にイベントダッシュボードにリダイレクトします</p>
       <% end %>
     </div>
   </div>

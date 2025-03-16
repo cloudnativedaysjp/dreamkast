@@ -6,12 +6,12 @@ class CheckInConferencesController < ApplicationController
 
   def new
     if logged_in? && @profile.instance_of?(Profile)
-      check_in = CheckInConference.new(
+      @check_in = CheckInConference.new(
         conference_id: @conference.id,
         profile_id: @profile.id,
         check_in_timestamp: Time.current
       )
-      check_in.save
+      @check_in.save!
     end
 
     if logged_in? && (@profile.nil? || @profile.instance_of?(GuestProfile))

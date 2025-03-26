@@ -359,7 +359,7 @@ class Talk < ApplicationRecord
 
   def start_streaming
     ActiveRecord::Base.transaction do
-      other_talks_in_track = conference.tracks.find_by(name: track.name).talks
+      other_talks_in_track = conference.tracks.find_by(name: track.name).talks.includes([:video])
                                        .accepted_and_intermission
                                        .reject { |t| t.id == id }
       other_talks_in_track.each do |other_talk|

@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/build-image.yml@working
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/build-image.yml@main
     permissions:
       contents: read
     with:

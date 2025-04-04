@@ -3,5 +3,4 @@ files:
   - pattern: .github/workflows/*.ya?ml
 ignore_actions:
   - name: cloudnativedaysjp/reusable-workflows/.github/workflows/.*
-    #ref: main
-    ref: working
+    ref: main

@@ -8,130 +8,28 @@ on:
     types:
       - labeled
 
-# this workflow should not work with cleanup workflow
-concurrency: reviewapps
-
 jobs:
   reviewapp:
-    name: create reviewapp files to dreamkast-infra
+    if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/rw-update-ecs-reviewapp.yml@main
+    permissions:
+      contents: read
+      pull-requests: read
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  update-comment:
+    needs: [reviewapp]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: marocchino/sticky-pull-request-comment@52423e01640425a022ef5fd42c6fb5f633a02728 # v2.9.1
         with:
-          # checout branch even if triggered by PullRequest Label
-          ref: ${{ github.head_ref }}
-
-      - id: check_if_reviewapp
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          PR_NUMBER=$(gh pr view --json number -q .number)
-          gh pr view --json labels -q .labels | jq '.[] | select(.name == "reviewapps")' -e
-          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
-          # the following is needed because it cannot be retrieved
-          # from ${{ github.sha }} if triggered by PullRequest Label
-          echo "pr_commit=$(gh pr view --json commits | jq -r '.commits[-1].oid')" >> "$GITHUB_OUTPUT"
-
-      - name: Install Go
-        if: steps.check_if_reviewapp.outcome == 'success'
-        uses: actions/setup-go@v5
-
-      - name: Install jsonnet
-        if: steps.check_if_reviewapp.outcome == 'success'
-        run: |
-          go install github.com/google/go-jsonnet/cmd/jsonnet@latest
-          go install github.com/google/go-jsonnet/cmd/jsonnetfmt@latest
-
-      - name: Generate token
-        if: steps.check_if_reviewapp.outcome == 'success'
-        id: generate_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-
-      - name: Configure AWS Credentials
-        if: steps.check_if_reviewapp.outcome == 'success'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-
-      - name: Checkout dreamkast-infra
-        if: steps.check_if_reviewapp.outcome == 'success'
-        uses: actions/checkout@v4
-        with:
-          repository: cloudnativedaysjp/dreamkast-infra
-          path: dreamkast-infra
-          token: ${{ steps.generate_token.outputs.token }}
-
-      - name: Create reviewapps
-        if: steps.check_if_reviewapp.outcome == 'success'
-        working-directory: dreamkast-infra/
-        run: ecspresso/reviewapps/build-reviewapp.sh
-        env:
-          REPOSITORY_NAME: ${{ github.repository }}
-          PR_NUMBER: ${{ steps.check_if_reviewapp.outputs.pr_number }}
-          IMAGE_TAG: ${{ steps.check_if_reviewapp.outputs.pr_commit }}
-
-      - name: Commit files
-        id: commit_files
-        if: steps.check_if_reviewapp.outcome == 'success'
-        continue-on-error: true
-        working-directory: dreamkast-infra/
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git status
-          git add -A
-          git commit -a -F- <<EOM
-          Bump docker tag by ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/${{ steps.check_if_reviewapp.outputs.pr_number }}
-          commit: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${{ steps.check_if_reviewapp.outputs.pr_commit }}
-          EOM
-
-      - name: Set current unixtime as env variable
-        env:
-          TZ: 'Asia/Tokyo'
-        run: echo "UNIXTIME=$(date +'+%s')" >> $GITHUB_ENV
-
-      - name: Push changes
-        if: steps.commit_files.outcome == 'success'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ steps.generate_token.outputs.token }}
-          repository: cloudnativedaysjp/dreamkast-infra
-          directory: dreamkast-infra
-          branch: gitops/development/dk-main_${{ env.UNIXTIME }}
-
-      - name: Create and Merge Pull Request
-        if: steps.commit_files.outcome == 'success'
-        uses: "actions/github-script@v7"
-        with:
-          github-token: ${{ steps.generate_token.outputs.token }}
-          script: |
-            const pr = await github.rest.pulls.create({
-              owner: "cloudnativedaysjp",
-              repo: "dreamkast-infra",
-              title: "Automated PR (gitops/development/dk-main)",
-              body: "**this PR is automatically created & merged**",
-              head: "gitops/development/dk-main_${{ env.UNIXTIME }}",
-              base: "main"
-            });
-            await github.rest.pulls.merge({
-              owner: "cloudnativedaysjp",
-              repo: "dreamkast-infra",
-              pull_number: pr.data.number,
-              merge_method: "squash",
-            });
-
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          number: ${{ steps.check_if_reviewapp.outputs.pr_number }}
+          number: ${{ needs.reviewapp.outputs.pr_number }}
           message: |
             Review app
-            * https://dreamkast-dk-${{ steps.check_if_reviewapp.outputs.pr_number }}.dev.cloudnativedays.jp
+            * https://dreamkast-dk-${{ needs.reviewapp.outputs.pr_number }}.dev.cloudnativedays.jp

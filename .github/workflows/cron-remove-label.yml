@@ -1,49 +1,12 @@
 name: remove 'reviewapps' label from PR that no update during 3 days
 
-
 on:
   schedule:
     - cron: '0 0 * * *' # 09:00 JST
 
 jobs:
-  labeling:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            // MEMO: please comment out the follwoing if you execute this script in local
-            //import { Octokit } from "@octokit/rest";
-            //import fetch from "node-fetch";
-            //const github = new Octokit({
-            //  auth: "${YOUR_TOKEN}",
-            //  request: {
-            //    fetch: fetch,
-            //  },
-            //})
-            //const context = {
-            //  "repo": {
-            //    "owner": "cloudnativedaysjp",
-            //    "repo": "dreamkast",
-            //  }
-            //}
-
-            const targetLabel = 'reviewapps';
-            const now = new Date();
-            const borderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3);
-            const prs = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: "open",
-            });
-            prs.data.filter(d => {
-              const updatedAt = new Date(Date.parse(d.updated_at));
-              return updatedAt < borderDate && d.labels.some(label => label.name == targetLabel);
-            }).map(pr => {
-              github.rest.issues.removeLabel({
-                name: targetLabel,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: pr.number,
-              })
-            });
+  remove-label:
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/rw-remove-label.yml@main
+    permissions:
+      pull-requests: read
+      issues: write

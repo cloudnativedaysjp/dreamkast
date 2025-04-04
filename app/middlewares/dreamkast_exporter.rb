@@ -142,7 +142,6 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_stats_of_registrants_offline(metrics)
-    registrants_counts = StatsOfRegistrant.group(:conference_id).count
     StatsOfRegistrant.all.each do |stats|
       metrics.set(
         stats.offline_attendees,
@@ -152,7 +151,6 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_stats_of_registrants_online(metrics)
-    registrants_counts = StatsOfRegistrant.group(:conference_id).count
     StatsOfRegistrant.all.each do |stats|
       metrics.set(
         stats.online_attendees,

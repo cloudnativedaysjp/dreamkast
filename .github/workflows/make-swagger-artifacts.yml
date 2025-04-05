@@ -51,7 +51,9 @@ jobs:
           echo REF "$GITHUB_REF"
           echo HEAD REF "$GITHUB_HEAD_REF"
           echo SHA "$GITHUB_SHA"
+          # shellcheck disable=SC2001
           IMAGE_TAG=$(echo "$GITHUB_REF" | sed -e 's,.*/\(.*\),\1,')
+          # shellcheck disable=SC2001
           [[ "$GITHUB_REF" == "refs/tags/"* ]] && IMAGE_TAG=$(echo "$IMAGE_TAG" | sed -e 's/^v//')
 
           IMAGE_WITH_TAG="${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
@@ -64,8 +66,8 @@ jobs:
           docker tag "$IMAGE_WITH_TAG" "$IMAGE_WITH_SHA"
           docker push "$IMAGE_WITH_SHA"
 
-          echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
-          echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
+          echo "IMAGE_WITH_TAG=${IMAGE_WITH_TAG}" >> "$GITHUB_OUTPUT"
+          echo "IMAGE_WITH_SHA=${IMAGE_WITH_SHA}" >> "$GITHUB_OUTPUT"
 
       # TODO(kanata): deploy dreamkst-api-mock to ECS & automate to deploy it
       #

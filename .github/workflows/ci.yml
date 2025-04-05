@@ -22,9 +22,12 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       pull-requests: write
+    timeout-minutes: 30
     if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        persist-credentials: false
     - name: dependencies
       run: |
         sudo apt update

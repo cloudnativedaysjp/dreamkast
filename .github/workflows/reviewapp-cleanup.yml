@@ -7,6 +7,7 @@ on:
 jobs:
   cleanup:
     uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-cleanup-ecs-reviewapps.yml@main
+    permissions: {}
     with:
       prefix: dk-
     secrets:

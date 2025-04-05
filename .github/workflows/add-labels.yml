@@ -1,21 +1,12 @@
-name: add labels for some cases
+name: add labels based on .github/labeler.yml
 
 on: pull_request
 
 jobs:
   labeler:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
     if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
-    steps:
-      # to trigger other Actions caused by adding reviewapp Label
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-
-      - id: label-the-PR
-        uses: actions/labeler@v5
-        with:
-          repo-token: ${{ steps.generate_token.outputs.token }}
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-add-labels.yml@main
+    permissions: {}
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

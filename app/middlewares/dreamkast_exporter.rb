@@ -41,6 +41,16 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         :dreamkast_select_proposal_items,
         docstring: 'Select dreamkast proposal items',
         labels: [:talk_id, :conference_id, :proposal_items_label, :proposal_items_params]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_stats_of_registrants_offline,
+        docstring: 'Stats of Registrants(Offline)',
+        labels: [:conference_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_stats_of_registrants_online,
+        docstring: 'Stats of Registrants(Online)',
+        labels: [:conference_id]
       )
     ]
     metrics.each do |metric|
@@ -127,6 +137,24 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       metrics.set(
         proposal_items.talk_id,
         labels: { talk_id: proposal_items.talk_id, conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
+      )
+    end
+  end
+
+  def dreamkast_stats_of_registrants_offline(metrics)
+    StatsOfRegistrant.all.each do |stats|
+      metrics.set(
+        stats.offline_attendees,
+        labels: { conference_id: stats.conference_id }
+      )
+    end
+  end
+
+  def dreamkast_stats_of_registrants_online(metrics)
+    StatsOfRegistrant.all.each do |stats|
+      metrics.set(
+        stats.online_attendees,
+        labels: { conference_id: stats.conference_id }
       )
     end
   end

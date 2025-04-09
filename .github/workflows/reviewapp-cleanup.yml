@@ -4,104 +4,14 @@ on:
   schedule:
     - cron:  '*/30 * * * *'
 
-# this workflow should not work with cleanup workflow
-concurrency: reviewapps
-
 jobs:
   cleanup:
-    name: create reviewapp files to dreamkast-infra
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-
-      - name: Checkout dreamkast-infra
-        uses: actions/checkout@v4
-        with:
-          repository: cloudnativedaysjp/dreamkast-infra
-          path: dreamkast-infra
-          token: ${{ steps.generate_token.outputs.token }}
-
-      - name: Install ecspresso
-        uses: kayac/ecspresso@v2
-
-      - name: Cleanup
-        working-directory: dreamkast-infra/ecspresso/reviewapps
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PREFIX: dk-
-        shell: bash -xe {0}
-        run: |
-          EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'"$PREFIX"'\1/g')"
-          # shellcheck disable=SC2010,SC2086
-          ACTUAL="$(ls | grep -E ^$PREFIX ||:)"
-
-          # If present only in ACTUAL, cleanup
-          for act in $ACTUAL; do
-            EXIST=false
-            for exp in $EXPECTED; do
-              [ "$act" = "$exp" ] && EXIST=true
-            done
-            [ "$EXIST" = "true" ] && continue
-            bash -x "$act/cleanup.sh"
-            rm -rf "$act"
-          done
-
-      - name: Commit files
-        id: commit_files
-        continue-on-error: true
-        working-directory: dreamkast-infra/
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git status
-          git add -A
-          git commit -a -F- <<EOM
-          cleanup ReviewApps by GHA in ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
-          EOM
-
-      - name: Set current unixtime as env variable
-        env:
-          TZ: 'Asia/Tokyo'
-        run: echo "UNIXTIME=$(date +'+%s')" >> "$GITHUB_ENV"
-
-      - name: Push changes
-        if: steps.commit_files.outcome == 'success'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ steps.generate_token.outputs.token }}
-          repository: cloudnativedaysjp/dreamkast-infra
-          directory: dreamkast-infra
-          branch: gitops/development/dk-main_${{ env.UNIXTIME }}
-
-      - name: Create and Merge Pull Request
-        if: steps.commit_files.outcome == 'success'
-        uses: "actions/github-script@v7"
-        with:
-          github-token: ${{ steps.generate_token.outputs.token }}
-          script: |
-            const pr = await github.rest.pulls.create({
-              owner: "cloudnativedaysjp",
-              repo: "dreamkast-infra",
-              title: "Automated PR (gitops/development/dk-main)",
-              body: "**this PR is automatically created & merged**",
-              head: "gitops/development/dk-main_${{ env.UNIXTIME }}",
-              base: "main"
-            });
-            await github.rest.pulls.merge({
-              owner: "cloudnativedaysjp",
-              repo: "dreamkast-infra",
-              pull_number: pr.data.number,
-              merge_method: "squash",
-            });
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-cleanup-ecs-reviewapps.yml@main
+    permissions: {}
+    with:
+      prefix: dk-
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

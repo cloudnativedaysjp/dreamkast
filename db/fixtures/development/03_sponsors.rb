@@ -85,6 +85,12 @@ SponsorType.seed(
     name: "CM",
     order: 5,
   },
+  {
+    id: 85,
+    conference_id: 13,
+    name: "学生支援",
+    order: 8,
+  }
   )
 
 Sponsor.seed(

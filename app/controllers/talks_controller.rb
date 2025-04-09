@@ -43,7 +43,6 @@ class TalksController < ApplicationController
                @talks.where(show_on_timetable: true)
              elsif @conference.cfp_result_visible
                @talks.where(show_on_timetable: true,
-                            conference_day_id: @conference.conference_days.externals.map(&:id),
                             proposals: { status: :accepted })
              else
                # NOTE: Proposal 採択前は conference_days が nil

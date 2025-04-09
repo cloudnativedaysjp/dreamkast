@@ -357,30 +357,6 @@ class Talk < ApplicationRecord
     r
   end
 
-  def start_streaming
-    ActiveRecord::Base.transaction do
-      other_talks_in_track = conference.tracks.find_by(name: track.name).talks.includes([:video])
-                                       .accepted_and_intermission
-                                       .reject { |t| t.id == id }
-      other_talks_in_track.each do |other_talk|
-        other_talk.video.update!(on_air: false)
-      end
-
-      video.update!(on_air: true)
-    end
-
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-    )
-  end
-
-  def stop_streaming
-    video.update!(on_air: false)
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-    )
-  end
-
   def live?
     method = proposal_items.find_by(label: 'presentation_method')
     return false unless method

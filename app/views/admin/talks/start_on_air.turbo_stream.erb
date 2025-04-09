@@ -5,3 +5,11 @@
 <%= turbo_stream.replace "talk_#{@talk.id}" do %>
   <%= render partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk } %>
 <% end %>
+
+<% @current_on_air_videos&.each do |video| %>
+  <% if video.talk.present? && video.talk.id != @talk.id %>
+    <%= turbo_stream.replace "talk_#{video.talk.id}" do %>
+      <%= render partial: 'admin/tracks/partial/on_air_button', locals: { talk: video.talk } %>
+    <% end %>
+  <% end %>
+<% end %>

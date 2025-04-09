@@ -79,6 +79,7 @@ class Conference < ApplicationRecord
   has_many :stamp_rally_check_points
   has_many :stamp_rally_check_ins
   has_one :stamp_rally_configure
+  has_many :videos, through: :talks
 
   scope :upcoming, -> {
     merge(where(conference_status: Conference::STATUS_REGISTERED).or(where(conference_status: Conference::STATUS_OPENED)))

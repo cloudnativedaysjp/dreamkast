@@ -31,7 +31,20 @@ class Admin::TalksController < ApplicationController
           flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
         }
       else
-        @talk.start_streaming
+        @current_on_air_videos = Video.includes(talk: :conference).where(talks: { conference_id: conference.id }, on_air: true)
+        ActiveRecord::Base.transaction do
+          # Disable onair of all talks that are onair
+          @current_on_air_videos.each do |video|
+            video.update!(on_air: false)
+          end
+
+          # Update the current talk to onair
+          @talk.video.update!(on_air: true)
+        end
+
+        ActionCable.server.broadcast(
+          "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+        )
         format.turbo_stream {
           flash[:notice] = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
         }
@@ -41,7 +54,10 @@ class Admin::TalksController < ApplicationController
 
   def stop_on_air
     @talk = Talk.find(params[:talk][:id])
-    @talk.stop_streaming
+    @talk.video.update!(on_air: false)
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+    )
 
     respond_to do |format|
       format.turbo_stream {

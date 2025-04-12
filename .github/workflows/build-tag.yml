@@ -6,34 +6,34 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runs-on:
+          - "ubuntu-24.04"
+          - "ubuntu-24.04-arm"
+    runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
+      - uses: docker/setup-buildx-action@v3
         id: buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-
-      - name: Login to Amazon ECR
+      - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
-          tags: |
-            type=sha,prefix=,format=long
-            type=ref,event=tag
-
+      - name: Prepare-tag
+        id: tags
+        run: |
+          arch=""
+          # https://docs.github.com/en/actions/learn-github-actions/contexts#runner-context
+          case "${{ runner.arch }}" in
+            "X64" ) arch="amd64" ;;
+            "ARM64" ) arch="arm64" ;;
+          esac
+          echo "tag=${{ github.sha }}-${arch}" >> $GITHUB_OUTPUT
       - name: Build
         id: docker_build
         uses: docker/build-push-action@v6
@@ -42,7 +42,69 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ steps.tags.outputs.tag }}
+          provenance: false
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  merge-images:
+    strategy:
+      matrix:
+        runs-on:
+          - "ubuntu-24.04"
+          - "ubuntu-24.04-arm"
+    runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 10
+    needs: ["build"]
+    steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs
+          tags: |
+            type=sha,prefix=,format=long
+            type=ref,event=tag
+      - name: Prepare-tag
+        id: tags
+        run: |
+          arch=""
+          # https://docs.github.com/en/actions/learn-github-actions/contexts#runner-context
+          case "${{ runner.arch }}" in
+            "X64" ) arch="amd64" ;;
+            "ARM64" ) arch="arm64" ;;
+          esac
+          echo "tag=${arch}" >> $GITHUB_OUTPUT
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Create a New Image
+        run: |
+          image_tag_sha="${{ steps.login-ecr.outputs.registry }}/dreamkast-ecs:${{ github.sha }}"
+
+          # Create array of image tags from meta output
+          image_tags=()
+          for tag in ${{ steps.meta.outputs.tags }}; do
+            image_tags+=("${tag}-${{ steps.tags.outputs.tag }}")
+          done
+
+          # Join all tags with comma for buildx imagetools create command
+          joined_tags=$(IFS=,; echo "${image_tags[*]}")
+
+          # Create manifest lists for each tag from meta output
+          for tag in ${{ steps.meta.outputs.tags }}; do
+            docker buildx imagetools create \
+              --tag ${tag} \
+              ${image_tag_sha}-${{ steps.tags.outputs.tag }}

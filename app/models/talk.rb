@@ -60,6 +60,7 @@ class Talk < ApplicationRecord
   has_many :media_package_harvest_jobs
   has_many :check_in_talks
   has_many :speaker_invitations, dependent: :destroy
+  has_many :media_package_harvest_jobs, dependent: :destroy
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks

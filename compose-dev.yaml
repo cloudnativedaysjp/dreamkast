@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       args:
         - RAILS_ENV=development
+    platform: linux/amd64
     volumes:
       - .:/app
     entrypoint: /bin/sh -c "bundle install && docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --check-files && bundle exec rake assets:precompile && bundle exec rails db:migrate && bundle exec rails db:seed && foreman start -f Procfile.dev"
@@ -42,6 +43,7 @@ services:
       - localstack
   fifo-worker:
     build: .
+    platform: linux/amd64
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
     environment:
       <<: *dkenv

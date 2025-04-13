@@ -8,8 +8,15 @@
   <% end %>
 <% end %>
 <% provide(:title, @talk.title) %>
-
-<div class="container white_background talk-page">
+<div class="container white_background talk-page"
+  <% if current_user && @conference.opened? && @conference.closed? && @conference.archived? %>
+    data-controller="talk-logger"
+    data-talk-logger-talk-id-value="<%= @talk.id %>"
+    data-talk-logger-talk-name-value="<%= @talk.title %>"
+    data-talk-logger-profile-id-value="<%= @profile.id %>"
+    data-talk-logger-weaver-url-value="<%= vote_api_url %>"
+  <% end %>
+>
   <div class="row my-3">
 
     <div class="col-12 col-lg-8 main-pane">
@@ -28,12 +35,4 @@
   </div>
 </div>
 
-
-<% if current_user %>
-  <script>
-      window.talk_id = "<%= @talk.id %>";
-      window.talk_name = "<%= @talk.title %>";
-  </script>
-  <%= javascript_include_tag 'talks.js' %>
-<% end %>
 <%= javascript_include_tag 'vote_cfp.js' %>

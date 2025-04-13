@@ -69,10 +69,8 @@ class Profile < ApplicationRecord
   belongs_to :conference
   has_many :registered_talks
   has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
-  has_many :agreements
-  has_many :form_items, through: :agreements
   has_many :form_values
-  has_many :form_items_with_values, through: :form_values, source: :form_item
+  has_many :form_items, through: :form_values, source: :form_item
   has_many :chat_messages
   has_many :check_ins
   has_many :check_in_conferences, dependent: :destroy

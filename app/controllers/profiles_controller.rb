@@ -29,11 +29,6 @@ class ProfilesController < ApplicationController
     @profile.email = current_user[:info][:email]
 
     if @profile.save
-      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
-
       ProfileMailer.registered(@profile, @conference).deliver_later
       if @profile.public_profile.present?
         redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
@@ -150,21 +145,6 @@ class ProfilesController < ApplicationController
       :occupation_id
       :oss_name
       :oss_url
-    )
-  end
-
-  def agreement_params
-    params.require(:profile).permit(
-      :require_email,
-      :require_tel,
-      :require_posting,
-      :agree_ms,
-      :agree_ms_cndo2021,
-      # for CNDT2022
-      :ibm_require_email_cndt2022,
-      :ibm_require_tel_cndt2022,
-      :redhat_require_email_cndt2022,
-      :redhat_require_tel_cndt2022
     )
   end
 end

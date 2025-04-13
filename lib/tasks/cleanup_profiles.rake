@@ -15,7 +15,6 @@ namespace :util do
       end
       conference.profiles.each do |profile|
         RegisteredTalk.where(profile_id: profile.id).each(&:destroy!)
-        Agreement.where(profile_id: profile.id).each(&:destroy!)
         ChatMessage.where(profile_id: profile.id).each do |chat_message|
           chat_message.update!(profile_id: nil)
         end

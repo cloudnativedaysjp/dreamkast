@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_13_075508) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_13_083943) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -23,14 +23,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_13_075508) do
     t.datetime "updated_at", null: false
     t.boolean "show_on_team_page"
     t.index ["conference_id"], name: "index_admin_profiles_on_conference_id"
-  end
-
-  create_table "agreements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "profile_id"
-    t.integer "form_item_id"
-    t.integer "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -136,6 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_13_075508) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "attr"
   end
 
   create_table "form_values", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

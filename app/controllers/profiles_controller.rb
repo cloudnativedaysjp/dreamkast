@@ -148,6 +148,8 @@ class ProfilesController < ApplicationController
       :annual_sales_id,
       :company_fax,
       :occupation_id
+      :oss_name
+      :oss_url
     )
   end
 

@@ -13,4 +13,7 @@ class FormItem < ApplicationRecord
   belongs_to :conference
   has_many :agreements
   has_many :profiles, through: :agreements
+  
+  has_many :form_values
+  has_many :profiles_with_values, through: :form_values, source: :profile
 end

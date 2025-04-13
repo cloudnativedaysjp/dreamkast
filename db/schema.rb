@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_13_075508) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -136,6 +136,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "form_values", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "form_item_id", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_item_id"], name: "index_form_values_on_form_item_id"
+    t.index ["profile_id"], name: "index_form_values_on_profile_id"
   end
 
   create_table "links", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -672,6 +682,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_01_055049) do
   add_foreign_key "check_in_conferences", "profiles"
   add_foreign_key "check_in_talks", "profiles"
   add_foreign_key "check_in_talks", "talks"
+  add_foreign_key "form_values", "form_items"
+  add_foreign_key "form_values", "profiles"
   add_foreign_key "links", "conferences"
   add_foreign_key "media_live_channels", "media_live_inputs"
   add_foreign_key "media_live_channels", "streamings"

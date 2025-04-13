@@ -25,6 +25,7 @@ class Admin::TalksController < ApplicationController
     @talk = Talk.find(params[:talk][:id])
     on_air_talks_of_other_days = @talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == @talk.conference_day.id }.select { |t| t.video.on_air? }
     if on_air_talks_of_other_days.size.positive?
+      @talks = @conference.talks.accepted_and_intermission.order('conference_day_id ASC, start_time ASC, track_id ASC')
       flash.now.alert = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
       render(:index, status: :unprocessable_entity)
     else

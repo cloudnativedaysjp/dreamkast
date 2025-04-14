@@ -12,7 +12,7 @@
 
 class FormItem < ApplicationRecord
   belongs_to :conference
-  
+
   has_many :form_values
   has_many :profiles, through: :form_values, source: :profile
 

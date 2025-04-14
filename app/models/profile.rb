@@ -77,6 +77,7 @@ class Profile < ApplicationRecord
   has_many :check_in_talks
   has_many :stamp_rally_check_ins
   has_one :public_profile, dependent: :destroy
+  accepts_nested_attributes_for :form_items
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid

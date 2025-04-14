@@ -149,23 +149,17 @@
     </div>
   </div>
 
-  <div class="row my-4">
-    <div class="col-12 col-md-6" id="participation" >
-      <%= form.label :participation, "参加方法", class: "form-label" %></br>
-      <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online" } %>
-      <%= form.label :online, "リモート参加", { for: "participation_online" } %>
-      </br>
-      <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" , disabled: @conference.reach_capacity? } %>
-      <% if @conference.reach_capacity? %>
-        <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "reached_capacity"} %>
-        <span class="warning" >現地参加は定員に達したためお申込みいただけません</span>
-      <% else %>
-        <%= form.label :offline, "現地参加", { for: "participation_offline" } %>
-      <% end %>
+  <% FormItem.where(conference_id: @conference.id).each do |form_item| %>
+    <div class="row my-4">
+      <%= label_tag "form_item[#{form_item.attr}]", form_item.name, class: "form-label" %>
+      <% 
+        # 既存の回答があれば取得
+        form_value = @profile.form_values.find_by(form_item_id: form_item.id)
+        value = form_value ? form_value.value : nil
+      %>
+      <%= text_field_tag "form_item[#{form_item.attr}]", value, required: false, class: "form-control", placeholder: "" %>
     </div>
-  </div>
-
-  
+  <% end %>
 
   <% if action_name == "new" %>
   <div class="privacy_policy">

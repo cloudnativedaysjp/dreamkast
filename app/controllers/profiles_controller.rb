@@ -11,7 +11,7 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
-    
+
     # FormItemの数だけform_valuesを初期化
     FormItem.where(conference_id: @conference.id).each do |form_item|
       @profile.form_values.build(form_item_id: form_item.id)
@@ -38,9 +38,9 @@ class ProfilesController < ApplicationController
       # フォーム項目の値を保存
       if params[:form_item].present?
         params[:form_item].each do |attr, value|
-          form_item = FormItem.find_by(attr: attr, conference_id: @conference.id)
+          form_item = FormItem.find_by(attr:, conference_id: @conference.id)
           if form_item && value.present?
-            FormValue.create!(profile_id: @profile.id, form_item_id: form_item.id, value: value)
+            FormValue.create!(profile_id: @profile.id, form_item_id: form_item.id, value:)
           end
         end
       end
@@ -67,7 +67,7 @@ class ProfilesController < ApplicationController
         # フォーム項目の値を更新
         if params[:form_item].present?
           params[:form_item].each do |attr, value|
-            form_item = FormItem.find_by(attr: attr, conference_id: @conference.id)
+            form_item = FormItem.find_by(attr:, conference_id: @conference.id)
             if form_item && value.present?
               # 既存のフォーム値を探すか、新しく作成
               form_value = @profile.form_values.find_or_initialize_by(form_item_id: form_item.id)
@@ -76,7 +76,7 @@ class ProfilesController < ApplicationController
             end
           end
         end
-        
+
         format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
         format.json { render(:show, status: :ok, location: @profile) }
       else
@@ -177,6 +177,6 @@ class ProfilesController < ApplicationController
   end
 
   def form_items_params
-    FormItem.where(conference_id: @conference.id).map{|item| item.attr.to_sym}
+    FormItem.where(conference_id: @conference.id).map { |item| item.attr.to_sym }
   end
 end

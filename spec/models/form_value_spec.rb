@@ -22,9 +22,9 @@
 require 'rails_helper'
 
 RSpec.describe(FormValue, type: :model) do
-  let(:conference) { create(:conference) }
-  let(:profile) { create(:profile, conference:) }
-  let(:form_item) { create(:form_item, conference:) }
+  let(:cndt2020) { create(:cndt2020) }
+  let(:form_item) { create(:form_item, conference: cndt2020) }
+  let(:profile) { create(:alice, :on_cndt2020, conference: cndt2020) }
 
   describe 'バリデーション' do
     it 'profile、form_item、valueがあれば有効であること' do

@@ -39,7 +39,7 @@ export default class extends Controller {
 
       // If you need to send this data to the server via Turbo Streams
       // you could dispatch a custom event or make a fetch request here
-    }, 10 * 1000) // Log every 10 seconds
+    }, 60 * 1000) // Log every 1 minute
   }
   
   stopLogging() {

@@ -9,7 +9,7 @@
 <% end %>
 <% provide(:title, @talk.title) %>
 <div class="container white_background talk-page"
-  <% if current_user && @conference.opened? && @conference.closed? && @conference.archived? %>
+  <% if current_user && (@conference.opened? || @conference.closed? || @conference.archived?) %>
     data-controller="talk-logger"
     data-talk-logger-talk-id-value="<%= @talk.id %>"
     data-talk-logger-talk-name-value="<%= @talk.title %>"

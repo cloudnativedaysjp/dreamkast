@@ -352,7 +352,9 @@ FormItem.seed(
   { id: 6, conference_id: 7, name: "IBMからのメールを希望する"},
   { id: 7, conference_id: 7, name: "IBMからの電話を希望する"},
   { id: 8, conference_id: 7, name: "Red Hatからのメールを希望する"},
-  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"}
+  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"},
+  { id: 10, conference_id: 13, name: "推しのOSS名(あれば)", attr: "oss_name"},
+  { id: 11, conference_id: 13, name: "推しのOSSのURL", attr: "oss_url"},
 )
 
 Track.seed(

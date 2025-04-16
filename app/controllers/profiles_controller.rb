@@ -11,6 +11,12 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
+
+    # FormItemの数だけform_valuesを初期化
+    FormItem.where(conference_id: @conference.id).each do |form_item|
+      @profile.form_values.build(form_item_id: form_item.id)
+    end
+
     if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
       redirect_to(dashboard_path)
     end
@@ -29,10 +35,15 @@ class ProfilesController < ApplicationController
     @profile.email = current_user[:info][:email]
 
     if @profile.save
-      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
+      # フォーム項目の値を保存
+      if params[:form_item].present?
+        params[:form_item].each do |attr, value|
+          form_item = FormItem.find_by(attr:, conference_id: @conference.id)
+          if form_item
+            FormValue.create!(profile_id: @profile.id, form_item_id: form_item.id, value:)
+          end
+        end
+      end
 
       ProfileMailer.registered(@profile, @conference).deliver_later
       if @profile.public_profile.present?
@@ -53,6 +64,19 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
     respond_to do |format|
       if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
+        # フォーム項目の値を更新
+        if params[:form_item].present?
+          params[:form_item].each do |attr, value|
+            form_item = FormItem.find_by(attr:, conference_id: @conference.id)
+            if form_item
+              # 既存のフォーム値を探すか、新しく作成
+              form_value = @profile.form_values.find_or_initialize_by(form_item_id: form_item.id)
+              form_value.value = value
+              form_value.save!
+            end
+          end
+        end
+
         format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
         format.json { render(:show, status: :ok, location: @profile) }
       else
@@ -147,22 +171,12 @@ class ProfilesController < ApplicationController
       :number_of_employee_id,
       :annual_sales_id,
       :company_fax,
-      :occupation_id
+      :occupation_id,
+      form_items_attributes: form_items_params
     )
   end
 
-  def agreement_params
-    params.require(:profile).permit(
-      :require_email,
-      :require_tel,
-      :require_posting,
-      :agree_ms,
-      :agree_ms_cndo2021,
-      # for CNDT2022
-      :ibm_require_email_cndt2022,
-      :ibm_require_tel_cndt2022,
-      :redhat_require_email_cndt2022,
-      :redhat_require_tel_cndt2022
-    )
+  def form_items_params
+    FormItem.where(conference_id: @conference.id).map { |item| item.attr.to_sym }
   end
 end

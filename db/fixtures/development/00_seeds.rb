@@ -381,7 +381,9 @@ FormItem.seed(
   { id: 6, conference_id: 7, name: "IBMからのメールを希望する"},
   { id: 7, conference_id: 7, name: "IBMからの電話を希望する"},
   { id: 8, conference_id: 7, name: "Red Hatからのメールを希望する"},
-  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"}
+  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"},
+  { id: 10, conference_id: 13, name: "推しのOSS名(あれば)", attr: "oss_name"},
+  { id: 11, conference_id: 13, name: "推しのOSSのURL", attr: "oss_url"},
 )
 
 
@@ -726,19 +728,19 @@ Talk::Type::KLASSES.each do |klass|
   Talk::Type.seed({id: klass.name})
 end
 
-import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
-import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
-import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
-import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
-import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
-import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
-import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
-import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
-import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
-import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
-import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
+# import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
+# import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
+# import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
+# import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
+# import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cndf2023', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
+# import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
 import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))
-#import_dummy_data('cnds2025', %w(talks speakers talks_speakers))
+import_dummy_data('cnds2025', %w(talks speakers talks_speakers proposals proposal_items))
 
 # Mock profile
 Profile.seed(

@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
       if params[:form_item].present?
         params[:form_item].each do |attr, value|
           form_item = FormItem.find_by(attr:, conference_id: @conference.id)
-          if form_item && value.present?
+          if form_item
             FormValue.create!(profile_id: @profile.id, form_item_id: form_item.id, value:)
           end
         end
@@ -68,7 +68,7 @@ class ProfilesController < ApplicationController
         if params[:form_item].present?
           params[:form_item].each do |attr, value|
             form_item = FormItem.find_by(attr:, conference_id: @conference.id)
-            if form_item && value.present?
+            if form_item
               # 既存のフォーム値を探すか、新しく作成
               form_value = @profile.form_values.find_or_initialize_by(form_item_id: form_item.id)
               form_value.value = value

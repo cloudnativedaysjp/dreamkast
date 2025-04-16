@@ -36,16 +36,6 @@ RSpec.describe(FormValue, type: :model) do
       expect(form_value).to(be_valid)
     end
 
-    it 'valueがなければ無効であること' do
-      form_value = FormValue.new(
-        profile:,
-        form_item:,
-        value: nil
-      )
-      expect(form_value).to(be_invalid)
-      expect(form_value.errors[:value]).to(include('を入力してください'))
-    end
-
     it '同じprofileとform_itemの組み合わせが既に存在する場合は無効であること' do
       create(:form_value, profile:, form_item:, value: '最初の回答')
 

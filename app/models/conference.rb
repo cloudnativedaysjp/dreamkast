@@ -33,6 +33,17 @@
 #
 
 class Conference < ApplicationRecord
+  # - registered
+  #   - イベント開催前、もしくは2日間のイベントで1日目が終わって2日目が始まるまで
+  #   - TODO: 1日目と2日目の間を表現するステータスを追加する
+  # - opened
+  #   - イベント開催中
+  # - closed
+  #   - イベント開催後。この期間はアーカイブを見るためにはログインが必要
+  # - archived
+  #   - イベント開催後、ログインしなくてもアーカイブを見ることができる
+  # - migrated
+  #   - アーカイブをwebsiteに以降した後
   STATUS_REGISTERED = 'registered'.freeze
   STATUS_OPENED = 'opened'.freeze
   STATUS_CLOSED = 'closed'.freeze

@@ -2,12 +2,14 @@ class Admin::TracksController < ApplicationController
   include SecuredAdmin
 
   def index
+    @conference = Conference.includes(:conference_days, :tracks).find_by(abbr: event_name)
     @date = params[:date] || @conference.conference_days.first.date.strftime('%Y-%m-%d')
     @conference_day = @conference.conference_days.select { |day| day.date.strftime('%Y-%m-%d') == @date }.first
     @track_name = params[:track_name] || @conference.tracks.first.name
     @track = @conference.tracks.find_by(name: @track_name)
     @talks = @conference
              .talks
+             .includes(:speakers, :media_package_harvest_jobs)
              .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
              .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
 
@@ -38,7 +40,7 @@ class Admin::TracksController < ApplicationController
       )
     end
     ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+      "on_air_#{@conference.abbr}", Video.on_air_v2(@conference.id)
     )
     redirect_to(admin_tracks_path, flash: { success: 'Offset updated' })
   end

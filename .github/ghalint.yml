@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/ghalint/main/json-schema/ghalint.json
+excludes:
+  - policy_name: action_ref_should_be_full_length_commit_sha
+    action_name: cloudnativedaysjp/reusable-workflows/.github/workflows/*

@@ -8,7 +8,8 @@ jobs:
   tagging:
     if: ${{ contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-push-new-tag.yml@main
-    permissions: {}
+    permissions:
+      pull-requests: write
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

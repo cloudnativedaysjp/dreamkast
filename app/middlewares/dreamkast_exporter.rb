@@ -153,7 +153,7 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   def dreamkast_stats_of_registrants_online(metrics)
     StatsOfRegistrant.all.each do |stats|
       metrics.set(
-        stats.online_attendees,
+        stats.online_attendees.to_i,
         labels: { conference_id: stats.conference_id }
       )
     end

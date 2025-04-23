@@ -6,14 +6,12 @@ on:
 
 jobs:
   build:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/build-image.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-build-image.yml@main
     permissions:
       contents: read
+      id-token: write
     with:
       image_name: dreamkast-ecs
       platforms: amd64
       aws_region: ap-northeast-1
       run-trivy: false
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

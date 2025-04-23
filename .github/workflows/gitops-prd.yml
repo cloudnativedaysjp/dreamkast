@@ -8,7 +8,8 @@ on:
 jobs:
   gitops-ecs:
     uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-update-ecs-manifest.yml@main
-    permissions: {}
+    permissions:
+      id-token: write
     with:
       target-image: dreamkast_ecs
       environment: prod

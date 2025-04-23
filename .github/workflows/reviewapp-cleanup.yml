@@ -7,11 +7,10 @@ on:
 jobs:
   cleanup:
     uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-cleanup-ecs-reviewapps.yml@main
-    permissions: {}
+    permissions:
+      id-token: write
     with:
       prefix: dk-
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

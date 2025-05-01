@@ -340,7 +340,7 @@ ConferenceDay.seed(
   {id: 33, date: "2024-11-29", start_time: "09:50", end_time: "18:00", conference_id: 12, internal: false},
 
   # CNDS2025
-  {id: 34, date: "2025-05-23", start_time: "10:00", end_time: "18:00", conference_id: 13, internal: false}
+  {id: 34, date: "2025-05-23", start_time: "10:20", end_time: "18:00", conference_id: 13, internal: false}
 )
 
 FormItem.seed(

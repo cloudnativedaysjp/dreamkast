@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="grid"
-              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 150 + 0 %>">
+              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 150 + 10 %>">
             <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
                 <div class="track <%= 'even' if n.zero? || n.even? %>"
                     style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -111,7 +111,7 @@
 
                 total_break = lunch_break + each_break
 
-                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:20")) / 60).to_i - total_break
                 row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
               %>
               <div class="talk"
@@ -189,12 +189,10 @@
               <p class="text-black-75 mb-4 text-center"><%= line.html_safe %></p>
             <% end %>
           </div>
-          <!--
           <div class="col-lg-12 text-center mt-4 projects" id="project-list">
             <h2 class="text-black mt-0">企画一覧</h2>
-            <%= render(partial: "contents/cndw2024/projects") %>
+            <%= render(partial: "contents/cnds2025/projects") %>
           </div>
-          -->
         </div>
       </div>
     </section>

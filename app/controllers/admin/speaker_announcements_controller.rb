@@ -17,7 +17,20 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def create
-    @speaker_announcement = SpeakerAnnouncement.create(speaker_announcement_params.merge(conference_id: @conference.id))
+    params = speaker_announcement_params.merge(conference_id: @conference.id)
+
+    case params[:receiver]
+    when 'person'
+      params[:speaker_ids] = params[:speaker_ids]
+    when 'all_speaker'
+      params[:speaker_ids] = @conference.speakers.pluck(:id)
+    when 'only_accepted'
+      params[:speaker_ids] = @conference.talks.accepted.map(&:speakers).flatten.pluck(:id)
+    when 'only_rejected'
+      params[:speaker_ids] = @conference.talks.rejected.map(&:speakers).flatten.pluck(:id)
+    end
+
+    @speaker_announcement = SpeakerAnnouncement.create(params)
     respond_to do |format|
       if @speaker_announcement
         format.html { redirect_to(admin_speaker_announcements_path, notice: 'Speaker was successfully updated.') }
@@ -31,9 +44,21 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   def update
     @speaker_announcement = SpeakerAnnouncement.find_by(conference_id: @conference.id, id: params[:id])
+    params = speaker_announcement_params.merge(conference_id: @conference.id)
+
+    case params[:receiver]
+    when 'person'
+      params[:speaker_ids] = params[:speaker_ids]
+    when 'all_speaker'
+      params[:speaker_ids] = @conference.speakers.pluck(:id)
+    when 'only_accepted'
+      params[:speaker_ids] = @conference.talks.accepted.map(&:speakers).flatten.pluck(:id)
+    when 'only_rejected'
+      params[:speaker_ids] = @conference.talks.rejected.map(&:speakers).flatten.pluck(:id)
+    end
 
     respond_to do |format|
-      if @speaker_announcement.update(speaker_announcement_params)
+      if @speaker_announcement.update(params)
         format.html { redirect_to(admin_speaker_announcements_path, notice: 'Speaker was successfully updated.') }
         format.json { render(:show, status: :ok, location: @speaker_announcement) }
       else

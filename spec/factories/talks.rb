@@ -264,6 +264,12 @@ FactoryBot.define do
     video_published { true }
     document_url { 'http://' }
 
+    trait :registered do
+      after(:build) do |talk|
+        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
+      end
+    end
+
     trait :accepted do
       after(:build) do |talk|
         create(:proposal, talk:, status: 1, conference_id: talk.conference_id)

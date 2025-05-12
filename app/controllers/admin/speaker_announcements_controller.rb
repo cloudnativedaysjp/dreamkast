@@ -18,17 +18,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
   def create
     params = speaker_announcement_params.merge(conference_id: @conference.id)
-
-    case params[:receiver]
-    when 'person'
-      params[:speaker_ids] = params[:speaker_ids]
-    when 'all_speaker'
-      params[:speaker_ids] = @conference.speakers.pluck(:id)
-    when 'only_accepted'
-      params[:speaker_ids] = @conference.talks.accepted.map(&:speakers).flatten.pluck(:id)
-    when 'only_rejected'
-      params[:speaker_ids] = @conference.talks.rejected.map(&:speakers).flatten.pluck(:id)
-    end
+    params[:speaker_ids] = speaker_ids
 
     @speaker_announcement = SpeakerAnnouncement.create(params)
     respond_to do |format|
@@ -45,17 +35,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   def update
     @speaker_announcement = SpeakerAnnouncement.find_by(conference_id: @conference.id, id: params[:id])
     params = speaker_announcement_params.merge(conference_id: @conference.id)
-
-    case params[:receiver]
-    when 'person'
-      params[:speaker_ids] = params[:speaker_ids]
-    when 'all_speaker'
-      params[:speaker_ids] = @conference.speakers.pluck(:id)
-    when 'only_accepted'
-      params[:speaker_ids] = @conference.talks.accepted.map(&:speakers).flatten.pluck(:id)
-    when 'only_rejected'
-      params[:speaker_ids] = @conference.talks.rejected.map(&:speakers).flatten.pluck(:id)
-    end
+    params[:speaker_ids] = speaker_ids
 
     respond_to do |format|
       if @speaker_announcement.update(params)
@@ -81,6 +61,21 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   private
 
   helper_method :speaker_announcement_url, :is_to_all_announcements?
+
+  def speaker_ids
+    params = speaker_announcement_params
+
+    case params[:receiver]
+    when 'person'
+      params[:speaker_ids]
+    when 'all_speaker'
+      @conference.speakers.pluck(:id)
+    when 'only_accepted'
+      @conference.talks.accepted.map(&:speakers).flatten.pluck(:id)
+    when 'only_rejected'
+      @conference.talks.rejected.map(&:speakers).flatten.pluck(:id)
+    end
+  end
 
   def is_to_all_announcements?
     @speakers.blank? || @speakers.nil? || @speakers.length > 1

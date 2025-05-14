@@ -23,31 +23,38 @@ class Admin::TalksController < ApplicationController
 
   def start_on_air
     @talk = Talk.find(params[:talk][:id])
+    on_air_talks_of_other_days = @talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == @talk.conference_day.id }.select { |t| t.video.on_air? }
+    if on_air_talks_of_other_days.size.positive?
+      @talks = @conference.talks.accepted_and_intermission.order('conference_day_id ASC, start_time ASC, track_id ASC')
+      flash.now.alert = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
+      render(:index, status: :unprocessable_entity)
+    else
+      @current_on_air_videos = Video.includes(talk: :conference).where(talks: { conference_id: conference.id }, on_air: true)
+      ActiveRecord::Base.transaction do
+        # Disable onair of all talks that are onair
+        @current_on_air_videos.each do |video|
+          video.update!(on_air: false)
+        end
 
-    respond_to do |format|
-      on_air_talks_of_other_days = @talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == @talk.conference_day.id }.select { |t| t.video.on_air? }
-      if on_air_talks_of_other_days.size.positive?
-        format.turbo_stream {
-          flash[:alert] = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-        }
-      else
-        @talk.start_streaming
-        format.turbo_stream {
-          flash[:notice] = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
-        }
+        # Update the current talk to onair
+        @talk.video.update!(on_air: true)
       end
+
+      ActionCable.server.broadcast(
+        "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+      )
+      flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
     end
   end
 
   def stop_on_air
     @talk = Talk.find(params[:talk][:id])
-    @talk.stop_streaming
+    @talk.video.update!(on_air: false)
+    ActionCable.server.broadcast(
+      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+    )
 
-    respond_to do |format|
-      format.turbo_stream {
-        flash.now[:notice] = "Waitingに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
-      }
-    end
+    flash.now.notice = "Waitingに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
   end
 
   def export_talks_for_website
@@ -87,5 +94,13 @@ class Admin::TalksController < ApplicationController
         send_file(filename, filename: "#{@conference.abbr}_talks.json", length: stat.size)
       end
     end
+  end
+
+  helper_method :turbo_stream_flash
+
+  private
+
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
   end
 end

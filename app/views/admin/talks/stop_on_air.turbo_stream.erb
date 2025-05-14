@@ -5,3 +5,6 @@
 <%= turbo_stream.replace "talk_#{@talk.id}" do %>
   <%= render partial: 'admin/tracks/partial/on_air_button', locals: { talk: @talk } %>
 <% end %>
+
+<%= turbo_stream_flash %>
+<%= yield %>

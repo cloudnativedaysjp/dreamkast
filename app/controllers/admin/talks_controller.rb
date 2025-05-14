@@ -23,13 +23,18 @@ class Admin::TalksController < ApplicationController
 
   def start_on_air
     @talk = Talk.find(params[:talk][:id])
-    on_air_talks_of_other_days = @talk.track.talks.includes([:conference_day, :video]).accepted_and_intermission.reject { |t| t.conference_day.id == @talk.conference_day.id }.select { |t| t.video.on_air? }
+    on_air_talks_of_other_days = @talk.track.talks
+                                      .includes([:conference_day, :video])
+                                      .accepted_and_intermission
+                                      .where.not(conference_days: { id: @talk.conference_day.id })
+                                      .joins(:video)
+                                      .where(videos: { on_air: true })
+
+
     if on_air_talks_of_other_days.size.positive?
-      @talks = @conference.talks.accepted_and_intermission.order('conference_day_id ASC, start_time ASC, track_id ASC')
-      flash.now.alert = "Talk id=#{on_air_talks_of_other_days.map(&:id).join(',')} are already on_air."
-      render(:index, status: :unprocessable_entity)
+      flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
     else
-      @current_on_air_videos = Video.includes(talk: :conference).where(talks: { conference_id: conference.id }, on_air: true)
+      @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).map(&:video)
       ActiveRecord::Base.transaction do
         # Disable onair of all talks that are onair
         @current_on_air_videos.each do |video|

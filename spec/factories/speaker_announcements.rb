@@ -40,6 +40,11 @@ FactoryBot.define do
       receiver { :only_accepted }
       publish { true }
     end
+    trait :only_rejected do
+      body { 'test announcement for only rejected' }
+      receiver { :only_rejected }
+      publish { true }
+    end
     trait :speaker_mike do
       body { 'test announcement for mike' }
       publish { true }

@@ -39,38 +39,30 @@ FactoryBot.define do
 
     trait :with_talk1_registered do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :registered)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 0)
       end
     end
 
     trait :with_talk1_accepted do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :accepted)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 1)
       end
     end
 
     trait :with_talk1_rejected do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :rejected)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 2)
       end
     end
 
     trait :with_sponsor_session do
       after(:build) do |speaker|
         sponsor = create(:sponsor)
-        talk = create(:sponsor_session, sponsor:)
+        talk = create(:sponsor_session, :registered, sponsor:)
         speaker.talks << talk
-        create(:talks_speakers, { talk:, speaker: })
-        create(:proposal, :with_cndt2021, talk:, status: 0)
       end
     end
   end
@@ -86,6 +78,13 @@ FactoryBot.define do
     company { 'company' }
     job_title { 'job_title' }
     conference_id { 1 }
+
+    trait :with_talk2_rejected do
+      after(:build) do |speaker|
+        talk = FactoryBot.create(:talk2, :rejected)
+        speaker.talks << talk
+      end
+    end
   end
 
   factory :speaker_mike, class: Speaker do

@@ -3,10 +3,7 @@ require 'rails_helper'
 describe Admin::SpeakersController, type: :request do
   subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'alice' } }, extra: { raw_info: { sub: 'alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
-
-  before do
-    create(:cndt2020)
-  end
+  let!(:event) { create(:cndt2020) }
 
   describe 'GET :event/admin/talks#index' do
     context "user doesn't logged in" do
@@ -100,10 +97,10 @@ describe Admin::SpeakersController, type: :request do
 
         it 'can not to change to start on air' do
           post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('422'))
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(talk2.video.id).on_air).to(be_falsey)
-          expect(flash.now[:alert]).to(include("Talk id=#{talk1.id} are already on_air."))
+          expect(flash.now[:alert]).to(include("別日(#{event.conference_days[0].date})にオンエアのセッションが残っています: #{talk1.id}"))
         end
       end
     end
@@ -130,10 +127,10 @@ describe Admin::SpeakersController, type: :request do
 
         it 'can not to change to start on air' do
           post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: intermission2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
-          expect(response).to_not(be_successful)
-          expect(response).to(have_http_status('422'))
+          expect(response).to(be_successful)
+          expect(response).to(have_http_status('200'))
           expect(Video.find(intermission2.video.id).on_air).to(be_falsey)
-          expect(flash[:alert]).to(include("Talk id=#{intermission1.id} are already on_air."))
+          expect(flash.now[:alert]).to(include("別日(#{event.conference_days[0].date})にオンエアのセッションが残っています: #{intermission1.id}"))
         end
       end
     end

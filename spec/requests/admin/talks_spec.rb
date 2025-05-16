@@ -135,4 +135,41 @@ describe Admin::SpeakersController, type: :request do
       end
     end
   end
+
+  describe 'POST :event/admin/talks#start_on_air with different tracks' do
+    let(:roles) { ['CNDT2020-Admin'] }
+
+    before do
+      ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+        if arg[1] == :userinfo
+          session[:userinfo]
+        else
+          arg[0].send(:original, arg[1])
+        end
+      end)
+    end
+
+    describe 'when sessions exist in different tracks' do
+      let!(:talk_track1) { create(:talk1, :accepted, track_id: 1, conference_day_id: 1) }
+      let!(:talk_track2) { create(:talk2, :accepted, track_id: 2, conference_day_id: 1) }
+      let!(:video_track1) { create(:video, talk: talk_track1, on_air: true) }
+      let!(:video_track2) { create(:video, talk: talk_track2, on_air: false) }
+
+      it 'does not affect on_air status of sessions in other tracks' do
+        # Start on_air for talk in track 2
+        post admin_start_on_air_path(event: 'cndt2020'), params: { talk: { id: talk_track2.id } }.to_json, headers: { "Content-Type": 'application/json' }, as: :turbo_stream
+
+        # Verify response
+        expect(response).to(be_successful)
+        expect(response).to(have_http_status('200'))
+
+        # Verify that talk in track 1 is still on_air
+        expect(Video.find(talk_track1.video.id).on_air).to(be_truthy)
+
+        # Verify that talk in track 2 is now on_air
+        expect(Video.find(talk_track2.video.id).on_air).to(be_truthy)
+      end
+    end
+  end
 end

@@ -10,7 +10,7 @@ namespace :util do
       talk = Talk.new(param)
       talk.save!
       if talk.abstract != 'intermission'
-        proposal = Proposal.new(conference_id: conference.id, talk_id: talk.id, status: 1)
+        proposal = Proposal.new(conference_id: param[:conference_id], talk_id: talk.id, status: 1)
         proposal.save!
       end
       video = Video.new(talk_id: talk.id, on_air: false)

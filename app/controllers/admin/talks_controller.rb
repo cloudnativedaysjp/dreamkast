@@ -34,7 +34,7 @@ class Admin::TalksController < ApplicationController
     if on_air_talks_of_other_days.size.positive?
       flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
     else
-      @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).map(&:video)
+      @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).joins(:video).map(&:video)
       ActiveRecord::Base.transaction do
         # Disable onair of all talks that are onair
         @current_on_air_videos.each do |video|

@@ -42,4 +42,12 @@ class Sponsor < ApplicationRecord
     end
     false
   end
+
+  def logo_url
+    if sponsor_attachment_logo_image&.file_data&.present?
+      sponsor_attachment_logo_image&.file_url
+    else
+      sponsor_attachment_logo_image&.url
+    end
+  end
 end

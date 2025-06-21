@@ -126,6 +126,10 @@ class SpeakerForm
 
   def load
     @talks = @speaker.talks
+    # If no talks exist, create a default one for the form
+    if @talks.empty? && @conference
+      @talks = [Talk.new(conference: @conference)]
+    end
   end
 
   attr_reader :speaker

@@ -1,3 +1,5 @@
+require 'prometheus/middleware/exporter'
+
 class DreamkastExporter < Prometheus::Middleware::Exporter
   def initialize(app, options = {})
     super
@@ -54,7 +56,11 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       )
     ]
     metrics.each do |metric|
-      @registry.register(metric)
+      begin
+        @registry.register(metric)
+      rescue Prometheus::Client::Registry::AlreadyRegisteredError
+        # メトリクスが既に登録されている場合はスキップ
+      end
     end
   end
 

@@ -41,6 +41,8 @@
 #  fk_rails_...  (type => talk_types.id)
 #
 
+require 'csv'
+
 class Talk < ApplicationRecord
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true

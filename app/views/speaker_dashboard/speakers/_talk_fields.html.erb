@@ -1,4 +1,4 @@
-<% if f.object.errors.any? %>
+<% if f.object&.errors&.any? %>
   <div id="error_explanation" class="alert alert-danger" role="alert">
     <h5>入力内容にエラーがあります:</h5>
     <ul>
@@ -48,19 +48,19 @@
       <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
 
       <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
-        <% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+        <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
         <%= label_tag "speaker_talks_attributes_#{f.options[:child_index]}_#{first_item.label}",  first_item.item_name, {class: 'form-check-label'}%>*
         <div class="form-check">
           <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
             <% label = item.label.pluralize.to_sym %>
             <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
-            <%= check_box_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}][]", item.id, checked, {id: "speaker_talks_attributes_#{f.options[:child_index]}_#{label}", class: 'form-check-input', id: "#{label}_#{item.params}"} %>
+            <%= check_box_tag "speaker[talks_attributes][#{f.options[:child_index]}][#{label}][]", item.id, checked, {id: "#{label}_#{item.params}", class: 'form-check-input'} %>
             <%= label label, item.params, {class: 'form-check-label'} %><br>
           <% end %>
         </div>
 
       <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
-        <% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+        <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
         <%= label_tag "speaker_talks_attributes_#{f.options[:child_index]}_#{first_item.label}[]",  first_item.item_name, {class: 'form-check-label'}%>*<br>
         <p class="field-description" style="font-size: 0.7em"><%= first_item.description&.html_safe %></p>
         <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>

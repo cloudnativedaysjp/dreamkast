@@ -6,7 +6,7 @@ Rails.application.configure do
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  config.enable_reloading = true
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -33,15 +33,11 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  config.active_job.queue_adapter = :amazon_sqs
-
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.delivery_method = :ses
-
-  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
 
@@ -60,15 +56,8 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  config.hosts << 'host.docker.internal'
-  # config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
-  config.action_cable.allowed_request_origins = ['http://host.docker.internal:3000/*', 'http://localhost:8080', 'http://localhost:3001']
-
-
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
+  # Highlight code that enqueued background job in logs.
+  config.active_job.verbose_enqueue_logs = true
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
@@ -76,17 +65,22 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  config.web_console.whitelisted_ips = '0.0.0.0/0' # 追記
-  config.web_console.permissions = '0.0.0.0/0'
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
+  # Uncomment if you wish to allow Action Cable access from any origin.
+  # config.action_cable.disable_request_forgery_protection = true
+
+  # Raise error when a before_action's only/except options reference missing actions
+  config.action_controller.raise_on_missing_callback_actions = true
+
+  config.file_watcher = ActiveSupport::FileUpdateChecker
+  config.web_console.permissions = '0.0.0.0/0'
+
   config.after_initialize do
-    Bullet.enable = true # Bulletプラグインを有効
-    Bullet.alert = false # JavaScriptでの通知
-    Bullet.rails_logger = true # Railsログに出力
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
   end
 end
-
-Rails.application.routes.default_url_options[:host] = 'localhost:3000'

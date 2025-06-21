@@ -32,10 +32,17 @@
 ## Phase 2: 段階的Rails更新 (3-4週間)
 
 ### Step 1: Rails 7.0 → 7.1
-- [ ] Gemfileの更新: `gem 'rails', '~> 7.1.0'`
-- [ ] `bundle update rails` 実行
-- [ ] `rails app:update` でconfig更新
-- [ ] テスト実行・修正
+- [x] Gemfileの更新: `gem 'rails', '~> 7.1.0'`
+- [x] `bundle update rails` 実行
+- [x] `rails app:update` でconfig更新
+- [x] bullet gem を Rails 7.1対応版に更新
+- [x] autoload_paths設定をRails 7.1に対応
+- [x] ミドルウェアのrequire文を追加
+- [x] 残りの問題修正: EnvHelperとautoload関連エラー
+- [x] 日本語ロケール設定追加
+- [x] モデルテスト95例すべて通過確認
+- [x] CSVライブラリの修正
+- [x] Prometheusメトリクス重複登録の修正
 
 ### Step 2: Rails 7.1 → 7.2
 - [ ] Gemfileの更新: `gem 'rails', '~> 7.2.0'`

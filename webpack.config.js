@@ -32,10 +32,6 @@ module.exports = {
       "./app/javascript/packs/cnds2024.js",
       './app/javascript/stylesheets/cnds2024.scss',
     ],
-    cndo2021: [
-      "./app/javascript/packs/cndo2021.js",
-      './app/javascript/stylesheets/cndo2021.scss',
-    ],
     cndt2023: [
       "./app/javascript/packs/cndt2023.js",
       './app/javascript/stylesheets/cndt2023.scss',

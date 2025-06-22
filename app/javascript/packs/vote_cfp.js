@@ -44,7 +44,9 @@ document.getElementById('vote').addEventListener('click', function() {
               if (!r.ok) {
                   throw new Error();
               }
-              data = r.json();
+              return r.json();
+            })
+            .then(data => {
               if (data.hasOwnProperty('errors')) {
                   throw new Error();
               } else {

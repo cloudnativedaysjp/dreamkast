@@ -45,10 +45,14 @@
 - [x] Prometheusメトリクス重複登録の修正
 
 ### Step 2: Rails 7.1 → 7.2
-- [ ] Gemfileの更新: `gem 'rails', '~> 7.2.0'`
-- [ ] `bundle update rails` 実行
-- [ ] `rails app:update` でconfig更新
-- [ ] テスト実行・修正
+- [x] Gemfileの更新: `gem 'rails', '~> 7.2.0'`
+- [x] `bundle update rails` 実行
+- [x] `rails app:update` でconfig更新
+- [x] テスト実行・修正
+- [x] AWS rails gem設定修正
+- [x] MiddlewareのRequire追加
+- [x] ActiveJob queue adapter設定修正
+- [x] Rubocop実行・修正
 
 ### Step 3: Rails 7.2 → 8.0
 - [ ] Gemfileの更新: `gem 'rails', '~> 8.0.0'`

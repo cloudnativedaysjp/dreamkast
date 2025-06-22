@@ -1,16 +1,4 @@
-creds = Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-
-if ENV['AWS_ACCESS_KEY_ID']
-  Aws::Rails.add_action_mailer_delivery_method(
-    :ses,
-    credentials: creds,
-    region: 'ap-northeast-1'
-  )
-else
-  Aws::Rails.add_action_mailer_delivery_method(
-    :ses,
-    region: 'ap-northeast-1'
-  )
-end
+# Configure AWS SES for ActionMailer in the environment configuration files instead of here
+# This initializer is kept for AWS configuration constants only
 
 AWS_LIVE_STREAM_REGION = ENV.fetch('AWS_LIVE_STREAM_REGION', 'us-west-2')

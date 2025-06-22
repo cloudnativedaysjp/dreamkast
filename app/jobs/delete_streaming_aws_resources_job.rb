@@ -2,7 +2,7 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
   include EnvHelper
 
   # queue_as :default
-  self.queue_adapter = :async
+  self.queue_adapter = :async unless Rails.env.test?
 
   def perform(*args)
     # Rails.logger.level = Logger::DEBUG

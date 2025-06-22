@@ -13,18 +13,12 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  if ENV['REVIEW_APP']
-    config.consider_all_requests_local       = true
-  else
-    config.consider_all_requests_local       = false
-  end
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
-
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead.
   # config.public_file_server.enabled = false
@@ -55,7 +49,10 @@ Rails.application.configure do
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
+
+  # Skip http-to-https redirect for the default health check endpoint.
+  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -76,12 +73,10 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "cndtattend_production"
-  config.active_job.queue_adapter = :amazon_sqs
 
+  # Disable caching for Action Mailer templates even if Action Controller
+  # caching is enabled.
   config.action_mailer.perform_caching = false
-
-  config.action_mailer.delivery_method = :ses
-  config.action_mailer.default_url_options = { host: ENV.fetch('MAILER_HOST', 'event.cloudnativedays.jp'), protocol: 'https' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -97,6 +92,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [:id]
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
@@ -104,25 +102,4 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
-  OmniAuth.config.on_failure = Proc.new do |env|
-    message_key = env['omniauth.error.type']
-    error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)
-    new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}&error_description=#{error_description}"
-    Rack::Response.new(['302 Moved'], 302, 'Location' => new_path).finish
-  end
-end
-
-if ENV['REVIEW_APP'] == 'true'
-  match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/)
-  if match
-    pr_number = match[1]
-    Rails.application.routes.default_url_options[:host] = "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp"
-  else
-    raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
-  end
-elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
-  Rails.application.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
-elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
-  Rails.application.routes.default_url_options[:host] = 'event.cloudnativedays.jp'
 end

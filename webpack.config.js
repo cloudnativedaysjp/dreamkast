@@ -32,10 +32,6 @@ module.exports = {
       "./app/javascript/packs/cnds2024.js",
       './app/javascript/stylesheets/cnds2024.scss',
     ],
-    cicd2021: [
-      "./app/javascript/packs/cicd2021.js",
-      './app/javascript/stylesheets/cicd2021.scss',
-    ],
     talks: [
       "./app/javascript/packs/talks.js",
     ],

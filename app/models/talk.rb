@@ -282,8 +282,6 @@ class Talk < ApplicationRecord
   end
 
   def time
-    # CICD2021は全セッション40分固定で、talk_timeを持たせていないため
-    return 40 if conference.abbr == 'cicd2021'
 
     # CNDT2021移行はセッションの時間をProposalItemで管理するので、ProposalItemにsession_timeがあればそこからセッション時間を取得して返す
     session_time = proposal_items.find_by(label: 'session_time')

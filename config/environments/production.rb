@@ -70,8 +70,11 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "cndtattend_production"
+  config.active_job.queue_adapter = :amazon_sqs
 
   config.action_mailer.perform_caching = false
+
+  config.action_mailer.delivery_method = :ses
   config.action_mailer.default_url_options = { host: ENV.fetch('MAILER_HOST', 'event.cloudnativedays.jp'), protocol: 'https' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -95,4 +98,25 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  OmniAuth.config.on_failure = Proc.new do |env|
+    message_key = env['omniauth.error.type']
+    error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)
+    new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}&error_description=#{error_description}"
+    Rack::Response.new(['302 Moved'], 302, 'Location' => new_path).finish
+  end
+end
+
+if ENV['REVIEW_APP'] == 'true'
+  match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/)
+  if match
+    pr_number = match[1]
+    Rails.application.routes.default_url_options[:host] = "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp"
+  else
+    raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
+  end
+elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
+  Rails.application.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
+elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
+  Rails.application.routes.default_url_options[:host] = 'event.cloudnativedays.jp'
 end

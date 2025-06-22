@@ -32,16 +32,6 @@ module Cndtattend
       g.fixture_replacement(:factory_bot, dir: 'spec/factories')
     end
 
-    config.middleware.use(Rack::Cors) do
-      allow do
-        origins '*'
-
-        resource '*',
-                 headers: :any,
-                 methods: [:get, :post, :put, :patch, :delete, :options, :head]
-      end
-    end
-
     config.middleware.use(DreamkastExporter, path: '/metrics')
     config.middleware.use(RescueFromInvalidAuthenticityToken)
 
@@ -57,5 +47,8 @@ module Cndtattend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
+    config.active_model.i18n_customize_full_message = true
+    config.action_cable.mount_path = '/cable'
   end
 end

@@ -71,6 +71,9 @@ module.exports = {
     ],
     'tracks/track_channel': [
       "./app/javascript/packs/tracks/track_channel.js",
+    ],
+    video_player: [
+      "./app/javascript/packs/video_player.js",
     ]
   },
   module: {

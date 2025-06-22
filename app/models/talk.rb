@@ -282,7 +282,6 @@ class Talk < ApplicationRecord
   end
 
   def time
-
     # CNDT2021移行はセッションの時間をProposalItemで管理するので、ProposalItemにsession_timeがあればそこからセッション時間を取得して返す
     session_time = proposal_items.find_by(label: 'session_time')
     return ProposalItemConfig.find(session_time.params.to_i).value.to_i if session_time

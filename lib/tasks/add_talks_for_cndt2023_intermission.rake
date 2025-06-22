@@ -64,7 +64,7 @@ namespace :util do
         add_talk(param.merge(conference_id: conference.id, conference_day_id: day.id, track_id: tracks['A'], show_on_timetable: false))
       end
 
-      tracks.except('A').each do |_track_name, track_id|
+      tracks.except('A').each_value do |track_id|
         other_track_talks.each do |arr|
           param = { start_time: arr[0], end_time: arr[1], title: arr[2], abstract: arr[3] }
           add_talk(param.merge(conference_id: conference.id, conference_day_id: day.id, track_id:, show_on_timetable: false))

@@ -64,7 +64,7 @@ class Admin::SpeakersController < ApplicationController
           proposal_item.proposal_item_configs.map { |config| [VideoAndSlidePublished::ALL_OK, VideoAndSlidePublished::ONLY_VIDEO].include?(config.key.to_i) }.any? && talk.archived?
         end
       else
-        (talk.video_published && talk.video.present? && talk.archived?)
+        talk.video_published && talk.video.present? && talk.archived?
       end
     end
 

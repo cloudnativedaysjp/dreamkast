@@ -11,7 +11,7 @@ class ContentsController < ApplicationController
 
   def discussion
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_discussion".to_sym)
+    render(:"#{@conference.abbr}_discussion")
   end
 
   def kontest
@@ -20,12 +20,12 @@ class ContentsController < ApplicationController
 
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_hands_on".to_sym)
+    render(:"#{@conference.abbr}_hands_on")
   end
 
   def job_board
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_job_board".to_sym)
+    render(:"#{@conference.abbr}_job_board")
   end
 
   def o11y

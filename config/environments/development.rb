@@ -33,11 +33,15 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.active_job.queue_adapter = :amazon_sqs
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :ses
+
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
@@ -60,6 +64,16 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  config.hosts << 'host.docker.internal'
+  # config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
+  config.action_cable.allowed_request_origins = ['http://host.docker.internal:3000/*', 'http://localhost:8080', 'http://localhost:3001']
+
+
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  config.assets.debug = true
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
@@ -75,7 +89,8 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.file_watcher = ActiveSupport::FileUpdateChecker
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.web_console.whitelisted_ips = '0.0.0.0/0' # 追記
   config.web_console.permissions = '0.0.0.0/0'
 
   config.after_initialize do
@@ -85,3 +100,5 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
 end
+
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'

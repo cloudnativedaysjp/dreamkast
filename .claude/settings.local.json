@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "Bash(find:*)",
       "WebFetch(domain:github.com)",
       "Bash(grep:*)",
       "Bash(gh pr checkout:*)",

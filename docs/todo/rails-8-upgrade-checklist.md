@@ -4,9 +4,9 @@
 
 ### Ruby環境の更新
 - [x] Ruby 3.2.0以上への更新確認 - ✅ Ruby 3.3.6 使用中
-- [ ] 開発環境でのRuby更新
-- [ ] 本番環境でのRuby更新準備
-- [ ] CI/CDパイプラインの更新
+- [x] 開発環境でのRuby更新 - ✅ 完了（Ruby 3.3.6）
+- [x] 本番環境でのRuby更新準備 - ✅ 完了
+- [x] CI/CDパイプラインの更新 - ✅ 完了
 
 ### 現状の詳細調査
 - [x] 非推奨機能の使用状況確認 - ✅ 完了（主要な問題: web_console設定、Rails.application.secrets使用）
@@ -15,19 +15,19 @@
 
 ### Phase 1で発見された問題の修正（Rails更新前に実施）
 #### 高優先度
-- [ ] config.web_console.whitelisted_ips の非推奨設定を削除（development.rb:80）
-- [ ] Rails.application.secrets を credentials または環境変数に置換（json_web_token.rb:11）
-- [ ] config.load_defaults(6.1) を 7.0 に更新（application.rb:16）
-- [ ] new_framework_defaults_7_0.rb の設定を有効化・テスト
+- [x] config.web_console.whitelisted_ips の非推奨設定を削除（development.rb:80） - ✅ 完了
+- [x] Rails.application.secrets を credentials または環境変数に置換（json_web_token.rb:11） - ✅ 完了
+- [x] config.load_defaults(6.1) を 7.0 に更新（application.rb:16） - ✅ 完了
+- [x] new_framework_defaults_7_0.rb の設定を有効化・テスト - ✅ 完了
 
 #### 中優先度
-- [ ] 非推奨の ActiveSupport::EventedFileUpdateChecker 設定を更新
-- [ ] カスタムミドルウェア（DreamkastExporter、RescueFromInvalidAuthenticityToken）の互換性確認
-- [ ] Redis session store の Rails 8 互換性テスト
+- [x] 非推奨の ActiveSupport::EventedFileUpdateChecker 設定を更新 - ✅ 完了
+- [x] カスタムミドルウェア（DreamkastExporter、RescueFromInvalidAuthenticityToken）の互換性確認 - ✅ 完了
+- [x] Redis session store の Rails 8 互換性テスト - ✅ 完了
 
 #### 低優先度
-- [ ] speaker_announcement.rb の scope を lambda→proc 記法に更新
-- [ ] prometheus-client を最新版(4.2.4)に更新
+- [x] speaker_announcement.rb の scope を lambda→proc 記法に更新 - ✅ 完了
+- [x] prometheus-client を最新版(4.2.4)に更新 - ✅ 完了
 
 ## Phase 2: 段階的Rails更新 (3-4週間)
 

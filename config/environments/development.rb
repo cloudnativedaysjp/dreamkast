@@ -41,6 +41,27 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
+  # Configure mailer delivery method for development
+  # Use :letter_opener in development for easier email testing
+  # Use :aws_ses if you want to test with actual SES
+  if ENV['USE_SES_IN_DEVELOPMENT'] == 'true'
+    config.action_mailer.delivery_method = :aws_ses
+    config.action_mailer.aws_ses_configuration = {
+      region: 'ap-northeast-1'
+    }
+    
+    if ENV['AWS_ACCESS_KEY_ID'].present?
+      config.action_mailer.aws_ses_configuration[:credentials] = Aws::Credentials.new(
+        ENV['AWS_ACCESS_KEY_ID'],
+        ENV['AWS_SECRET_ACCESS_KEY']
+      )
+    end
+  else
+    # Default to file delivery in development
+    config.action_mailer.delivery_method = :file
+    config.action_mailer.file_settings = { location: Rails.root.join('tmp', 'mail') }
+  end
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Print deprecation notices to the Rails logger.

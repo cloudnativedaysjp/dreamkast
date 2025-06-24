@@ -71,6 +71,9 @@ module.exports = {
     ],
     'tracks/track_channel': [
       "./app/javascript/packs/tracks/track_channel.js",
+    ],
+    video_player: [
+      "./app/javascript/packs/video_player.js",
     ]
   },
   module: {
@@ -78,7 +81,19 @@ module.exports = {
       // ローダーを含むCSS/SASS/SCSSルールをここに追加する
       {
         test: /\.(?:sa|sc|c)ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              api: 'modern-compiler',
+              sassOptions: {
+                style: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded',
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2|woff|ttf|svg)$/i,

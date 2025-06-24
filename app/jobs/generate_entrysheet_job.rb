@@ -1,6 +1,6 @@
 class GenerateEntrysheetJob < ApplicationJob
   queue_as :fifo
-  self.queue_adapter = :amazon_sqs unless Rails.env.test?
+  self.queue_adapter = :sqs unless Rails.env.test?
 
   def perform(conference_id, profile_id, speaker_id = nil, printer_id = nil)
     puts("printer_id: #{printer_id}")

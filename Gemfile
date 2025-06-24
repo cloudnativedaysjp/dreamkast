@@ -101,6 +101,7 @@ gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
+gem 'aws-activejob-sqs'
 
 gem 'activerecord-nulldb-adapter'
 

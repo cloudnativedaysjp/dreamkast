@@ -1,5 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 import Cropper from "cropperjs"
+import { Uppy } from '@uppy/core'
+import FileInput from '@uppy/file-input'
+import Informer from '@uppy/informer'
+import ProgressBar from '@uppy/progress-bar'
+import ThumbnailGenerator from '@uppy/thumbnail-generator'
+import XHRUpload from '@uppy/xhr-upload'
 
 export default class extends Controller {
     static targets = [ "fileInput" ]
@@ -22,23 +28,23 @@ export default class extends Controller {
 
         formGroup.removeChild(fileInput)
 
-        let uppy = Uppy.Core({
+        let uppy = new Uppy({
             autoProceed: true,
         })
-            .use(Uppy.FileInput, {
+            .use(FileInput, {
                 target: formGroup,
                 locale: { strings: { chooseFiles: 'Choose file' } },
             })
-            .use(Uppy.Informer, {
+            .use(Informer, {
                 target: formGroup,
             })
-            .use(Uppy.ProgressBar, {
+            .use(ProgressBar, {
                 target: imagePreview.parentNode,
             })
-            .use(Uppy.ThumbnailGenerator, {
+            .use(ThumbnailGenerator, {
                 thumbnailWidth: 600,
             })
-            .use(Uppy.XHRUpload, {
+            .use(XHRUpload, {
                 endpoint: '/upload/avatar',
             })
 

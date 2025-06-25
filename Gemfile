@@ -125,7 +125,7 @@ gem 'nokogiri', '1.18.8'
 gem 'faraday-retry'
 
 # QRcode rendering
-gem "rqrcode", "~> 2.0"
+gem "rqrcode", "~> 3.0"
 
 gem 'ulid'
 

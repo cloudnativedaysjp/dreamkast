@@ -30,6 +30,6 @@ namespace :aws_sqs do
     ARGV.clear
     ARGV << '--queue'
     ARGV << 'fifo'
-    Aws::Rails::SqsActiveJob::Poller.new.run
+    Aws::ActiveJob::SQS::Poller.new.run
   end
 end

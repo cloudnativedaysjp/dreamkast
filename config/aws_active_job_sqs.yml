@@ -1,0 +1,3 @@
+queues:
+  fifo:
+   url: <%= sqs_queue_url %>

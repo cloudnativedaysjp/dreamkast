@@ -15,7 +15,7 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
       @sponsor_speaker_invite = SponsorSpeakerInvite.new(sponsor_speaker_invite_params)
       @sponsor_speaker_invite.conference_id = @conference.id
       @sponsor_speaker_invite.token = SecureRandom.hex(50)
-      @sponsor_speaker_invite.expires_at = 1.days.from_now  # 有効期限を1日後に設定
+      @sponsor_speaker_invite.expires_at = 1.days.from_now # 有効期限を1日後に設定
       if @sponsor_speaker_invite.save
         @sponsor_speakers = @sponsor.speakers
         @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites

@@ -11,7 +11,7 @@ namespace :db do
         keynotes.each do |keynote|
           talk = Talk.find(keynote)
           item = talk.proposal_items.find_by(label: 'session_time')
-          item.params = '119'  # 40min = 116, 20min = 119
+          item.params = '119' # 40min = 116, 20min = 119
 
           if ENV['DRY_RUN'] == 'false'
             item.save!

@@ -31,7 +31,7 @@ class SpeakerForm
       proposal_item_config_labels = @conference.proposal_item_configs.map(&:label).uniq
       @talks ||= []
       @destroy_talks ||= []
-      attributes.each do |_i, params|
+      attributes.each_value do |params|
         if params.key?(:id)
           # talk is already exists
           if params[:_destroy] == '1'

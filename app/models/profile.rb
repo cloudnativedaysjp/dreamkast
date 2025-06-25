@@ -39,7 +39,7 @@
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-      record.errors.add(attribute, (options[:message] || 'はメールアドレスではありません'))
+      record.errors.add(attribute, options[:message] || 'はメールアドレスではありません')
     end
   end
 end
@@ -47,7 +47,7 @@ end
 class TelValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A[+0-9]*\z/i
-      record.errors.add(attribute, (options[:message] || 'は正しい電話番号ではありません'))
+      record.errors.add(attribute, options[:message] || 'は正しい電話番号ではありません')
     end
   end
 end
@@ -55,7 +55,7 @@ end
 class PostalCodeValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A\d*\z/i
-      record.errors.add(attribute, (options[:message] || 'は入力可能な郵便番号ではありません。ハイフンで区切らずに入力してください。'))
+      record.errors.add(attribute, options[:message] || 'は入力可能な郵便番号ではありません。ハイフンで区切らずに入力してください。')
     end
   end
 end

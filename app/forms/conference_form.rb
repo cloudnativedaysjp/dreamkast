@@ -28,7 +28,7 @@ class ConferenceForm
 
     def links_attributes=(attributes)
       @links ||= []
-      attributes.each do |_i, params|
+      attributes.each_value do |params|
         params.transform_keys!(&:to_sym)
 
         if params.key?(:id)
@@ -62,7 +62,7 @@ class ConferenceForm
 
     def conference_days_attributes=(attributes)
       @conference_days ||= []
-      attributes.each do |_i, params|
+      attributes.each_value do |params|
         params.transform_keys!(&:to_sym)
 
         if params.key?(:id)

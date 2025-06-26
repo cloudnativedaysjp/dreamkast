@@ -25,7 +25,7 @@ namespace :aws_sqs do
   end
 
   task fifo_job: :environment do
-    require 'aws/rails/sqs_active_job/poller'
+    require 'aws/active_job/sqs/poller'
     include JobHelper
     ARGV.clear
     ARGV << '--queue'

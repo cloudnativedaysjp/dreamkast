@@ -86,18 +86,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Configure AWS SES for email delivery
-  config.action_mailer.delivery_method = :aws_ses
-  config.action_mailer.aws_ses_configuration = {
-    region: 'ap-northeast-1'
-  }
-
-  # Set credentials if provided via environment variables
-  if ENV['AWS_ACCESS_KEY_ID'].present?
-    config.action_mailer.aws_ses_configuration[:credentials] = Aws::Credentials.new(
-      ENV['AWS_ACCESS_KEY_ID'],
-      ENV['AWS_SECRET_ACCESS_KEY']
-    )
-  end
+  config.action_mailer.delivery_method = :ses
 
   config.action_mailer.default_url_options = { host: ENV.fetch('MAILER_HOST', 'event.cloudnativedays.jp'), protocol: 'https' }
 

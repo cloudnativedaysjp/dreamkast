@@ -3,11 +3,5 @@
 
 AWS_LIVE_STREAM_REGION = ENV.fetch('AWS_LIVE_STREAM_REGION', 'us-west-2')
 
-# Register SES delivery method for ActionMailer
-if defined?(ActionMailer)
-  require 'aws-sdk-ses'
-
-  ActionMailer::Base.add_delivery_method(:ses,
-                                         Aws::SES::Client,
-                                         region: ENV.fetch('AWS_SES_REGION', 'us-east-1'))
-end
+# SES delivery method is provided by aws-actionmailer-ses gem
+# Configuration is done in environment files using config.action_mailer.delivery_method = :ses

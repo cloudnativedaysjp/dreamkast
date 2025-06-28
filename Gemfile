@@ -101,7 +101,7 @@ gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
-gem 'aws-sdk-ses'
+gem 'aws-actionmailer-ses', '~> 1.0'
 gem 'aws-activejob-sqs'
 
 gem 'activerecord-nulldb-adapter'

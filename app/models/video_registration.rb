@@ -21,7 +21,7 @@
 
 class VideoRegistration < ApplicationRecord
   belongs_to :talk
-  enum status: { unsubmitted: 0, submitted: 1, confirmed: 2, invalid_format: 3 }
+  enum :status, { unsubmitted: 0, submitted: 1, confirmed: 2, invalid_format: 3 }
   STATUS_MESSAGE = {
     'submitted' => '提出されたビデオファイルの確認中です。',
     'unsubmitted' =>  '未確認 ※アップロードからステータス反映まで30分程度かかることがあります',

@@ -27,6 +27,10 @@
         <%= form.radio_button :receiver, :all_speaker %>
         <%= form.label :receiver, 'CFP採択に関わらず通知', value: @speaker_announcement.receiver %>
       </div>
+    <% else %>
+    <div class="field">
+        <%= form.hidden_field :receiver, value: :person %>
+      </div>
     <% end %>
 
     <div class="field">

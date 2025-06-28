@@ -42,7 +42,7 @@ class ChatMessage < ApplicationRecord
 
   belongs_to :profile, optional: true
 
-  enum message_type: { chat: 0, qa: 1 }
+  enum :message_type, { chat: 0, qa: 1 }
 
   validates :body, presence: true, length: { maximum: 512 }
 

@@ -21,7 +21,7 @@
 #
 
 class SpeakerAnnouncement < ApplicationRecord
-  enum receiver: { person: 0, all_speaker: 1, only_accepted: 2, only_rejected: 3 }
+  enum :receiver, { person: 0, all_speaker: 1, only_accepted: 2, only_rejected: 3 }
   JA_RECEIVER = { person: '個人', all_speaker: '全員', only_accepted: 'CFP採択者', only_rejected: 'CFP非採択者' }.freeze
 
   after_create -> { inform('create') }

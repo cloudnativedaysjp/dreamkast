@@ -11,7 +11,7 @@
 #
 
 class Proposal < ApplicationRecord
-  enum status: { registered: 0, accepted: 1, rejected: 2 }
+  enum :status, { registered: 0, accepted: 1, rejected: 2 }
   STATUS_MESSAGE = {
     'registered' => 'エントリー済み',
     'accepted' => '採択',

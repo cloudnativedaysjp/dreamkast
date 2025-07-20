@@ -42,6 +42,7 @@ jobs:
           
           # Direct prompt for automated review (no @claude mention needed)
           direct_prompt: |
+            あなたはRuby on Railsを利用したアプリケーション開発の専門家です。
             このPull Requestをレビューしてフィードバックを行ってください。
             - Code quality and best practices
             - Potential bugs or issues

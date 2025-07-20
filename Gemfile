@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.0'
+gem 'rails', '~> 7.2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
@@ -101,6 +101,8 @@ gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
+gem 'aws-actionmailer-ses', '~> 1.0'
+gem 'aws-activejob-sqs'
 
 gem 'activerecord-nulldb-adapter'
 

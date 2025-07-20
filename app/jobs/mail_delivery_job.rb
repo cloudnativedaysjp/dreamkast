@@ -1,6 +1,6 @@
 class MailDeliveryJob < ApplicationJob
   queue_as :fifo
-  self.queue_adapter = :amazon_sqs
+  self.queue_adapter = :sqs unless Rails.env.test?
 
   discard_on ActiveRecord::ActiveRecordError
 

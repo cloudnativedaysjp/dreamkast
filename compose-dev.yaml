@@ -44,7 +44,7 @@ services:
   fifo-worker:
     build: .
     platform: linux/amd64
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_active_job_sqs --queue fifo"
     environment:
       <<: *dkenv
     tty: true

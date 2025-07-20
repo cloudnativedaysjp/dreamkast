@@ -14,7 +14,7 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # Enable server timing
+  # Enable server timing.
   config.server_timing = true
 
   # Enable/disable caching. By default caching is disabled.
@@ -24,26 +24,28 @@ Rails.application.configure do
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
-    }
+    config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
 
     config.cache_store = :null_store
   end
 
-  config.active_job.queue_adapter = :amazon_sqs
+  config.active_job.queue_adapter = :sqs
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.delivery_method = :ses
+  config.action_mailer.delivery_method = :ses_v2
+  config.action_mailer.ses_v2_settings = { region: 'ap-northeast-1' }
 
   config.action_mailer.raise_delivery_errors = true
 
+  # Disable caching for Action Mailer templates even if Action Controller
+  # caching is enabled.
   config.action_mailer.perform_caching = false
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Print deprecation notices to the Rails logger.
@@ -68,7 +70,6 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
   config.action_cable.allowed_request_origins = ['http://host.docker.internal:3000/*', 'http://localhost:8080', 'http://localhost:3001']
 
-
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
@@ -81,12 +82,12 @@ Rails.application.configure do
   # config.i18n.raise_on_missing_translations = true
 
   # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_view.annotate_rendered_view_with_filenames = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  # Raise error when a before_action's only/except options reference missing actions
+  # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker

@@ -26,11 +26,11 @@ Rails.application.configure do
   end
 
   # Change to :null_store to avoid any caching.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
-    config.cache_store = :memory_store
-  else
-    config.cache_store = :null_store
-  end
+  config.cache_store = if Rails.root.join('tmp/caching-dev.txt').exist?
+                         :memory_store
+                       else
+                         :null_store
+                       end
 
   config.active_job.queue_adapter = :sqs
 

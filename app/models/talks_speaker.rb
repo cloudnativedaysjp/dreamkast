@@ -2,11 +2,11 @@
 #
 # Table name: talks_speakers
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
+#  talk_id    :integer
+#  speaker_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  speaker_id :integer
-#  talk_id    :integer
 #
 # Indexes
 #

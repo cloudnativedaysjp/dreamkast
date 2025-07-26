@@ -2,13 +2,13 @@
 #
 # Table name: speaker_invitation_accepts
 #
-#  id                    :bigint           not null, primary key
+#  id                    :integer          not null, primary key
+#  speaker_invitation_id :integer          not null
+#  conference_id         :integer          not null
+#  speaker_id            :integer          not null
+#  talk_id               :integer          not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  conference_id         :bigint           not null
-#  speaker_id            :bigint           not null
-#  speaker_invitation_id :bigint           not null
-#  talk_id               :bigint           not null
 #
 # Indexes
 #
@@ -18,13 +18,7 @@
 #  index_speaker_invitation_accepts_on_speaker_invitation_id    (speaker_invitation_id)
 #  index_speaker_invitation_accepts_on_talk_id                  (talk_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (conference_id => conferences.id)
-#  fk_rails_...  (speaker_id => speakers.id)
-#  fk_rails_...  (speaker_invitation_id => speaker_invitations.id)
-#  fk_rails_...  (talk_id => talks.id)
-#
+
 FactoryBot.define do
   factory :speaker_invitation_accept do
     speaker_invitation { nil }

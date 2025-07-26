@@ -2,12 +2,12 @@
 #
 # Table name: form_items
 #
-#  id            :bigint           not null, primary key
-#  attr          :string(255)
+#  id            :integer          not null, primary key
+#  conference_id :integer
 #  name          :string(255)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  conference_id :integer
+#  attr          :string(255)
 #
 
 FactoryBot.define do

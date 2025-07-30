@@ -1,29 +1,3 @@
-# == Schema Information
-#
-# Table name: speakers
-#
-#  id                   :bigint           not null, primary key
-#  additional_documents :text(65535)
-#  avatar_data          :text(65535)
-#  company              :string(255)
-#  email                :text(65535)
-#  job_title            :string(255)
-#  name                 :string(255)
-#  name_mother_tongue   :string(255)
-#  profile              :text(65535)
-#  sub                  :text(65535)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  conference_id        :integer
-#  github_id            :string(255)
-#  sponsor_id           :bigint
-#  twitter_id           :string(255)
-#
-# Indexes
-#
-#  index_speakers_on_conference_id_and_email  (conference_id,email)
-#
-
 FactoryBot.define do
   factory :speaker
 

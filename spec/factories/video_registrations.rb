@@ -1,24 +1,3 @@
-# == Schema Information
-#
-# Table name: video_registrations
-#
-#  id         :bigint           not null, primary key
-#  statistics :json             not null
-#  status     :integer          default("unsubmitted"), not null
-#  url        :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  talk_id    :bigint           not null
-#
-# Indexes
-#
-#  index_video_registrations_on_talk_id  (talk_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (talk_id => talks.id)
-#
-
 FactoryBot.define do
   factory :video_registration do
     id { 1 }

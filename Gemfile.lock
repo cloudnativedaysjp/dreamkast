@@ -81,9 +81,6 @@ GEM
       activesupport (>= 6.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    annotate (3.2.0)
-      activerecord (>= 3.2, < 8.0)
-      rake (>= 10.4, < 14.0)
     ast (2.4.3)
     awesome_nested_set (3.8.0)
       activerecord (>= 4.0.0, < 8.1)
@@ -791,7 +788,6 @@ DEPENDENCIES
   active_hash
   activerecord-nulldb-adapter
   acts_as_list
-  annotate
   awesome_nested_set
   aws-actionmailer-ses (~> 1.0)
   aws-activejob-sqs

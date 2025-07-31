@@ -81,9 +81,6 @@ GEM
       activesupport (>= 6.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     ast (2.4.3)
     awesome_nested_set (3.8.0)
       activerecord (>= 4.0.0, < 8.1)
@@ -272,7 +269,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.18.8)
+    nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.12)
@@ -778,7 +775,6 @@ DEPENDENCIES
   active_hash
   activerecord-nulldb-adapter
   acts_as_list
-  annotate
   awesome_nested_set
   aws-actionmailer-ses (~> 1.0)
   aws-activejob-sqs
@@ -806,7 +802,7 @@ DEPENDENCIES
   jsbundling-rails
   listen (~> 3.2)
   mysql2 (~> 0.5.6)
-  nokogiri (= 1.18.8)
+  nokogiri (= 1.18.9)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)
   opentelemetry-instrumentation-all

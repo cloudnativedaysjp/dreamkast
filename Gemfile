@@ -42,7 +42,6 @@ group :development, :test do
   gem 'rubocop', '~> 1.56.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'annotate', require: false
 end
 
 group :development do
@@ -123,7 +122,7 @@ gem "turbo-rails", "2.0.5"
 
 gem 'slack-ruby-client'
 
-gem 'nokogiri', '1.18.8'
+gem 'nokogiri', '1.18.9'
 
 gem 'faraday-retry'
 

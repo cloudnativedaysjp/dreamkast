@@ -1,21 +1,3 @@
-# == Schema Information
-#
-# Table name: sponsors
-#
-#  id            :integer          not null, primary key
-#  name          :string(255)
-#  abbr          :string(255)
-#  description   :text(65535)
-#  url           :string(255)
-#  conference_id :integer          not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#
-# Indexes
-#
-#  index_sponsors_on_conference_id  (conference_id)
-#
-
 FactoryBot.define do
   factory :sponsor do
     id { 1 }

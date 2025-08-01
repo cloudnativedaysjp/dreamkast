@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.0'
 # Use SCSS for stylesheets
@@ -78,7 +78,8 @@ gem "sentry-opentelemetry"
 gem "opentelemetry-sdk"
 gem "opentelemetry-instrumentation-all"
 
-gem "redis-rails"
+gem "redis"
+gem "redis-session-store"
 
 gem "shrine", "~> 3.3"
 

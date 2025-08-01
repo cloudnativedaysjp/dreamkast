@@ -55,10 +55,12 @@
 - [x] Rubocop実行・修正
 
 ### Step 3: Rails 7.2 → 8.0
-- [ ] Gemfileの更新: `gem 'rails', '~> 8.0.0'`
-- [ ] `bundle update rails` 実行
-- [ ] `rails app:update` でconfig更新
-- [ ] 非推奨警告の解消
+- [x] Gemfileの更新: `gem 'rails', '~> 8.0.0'` - ✅ 完了
+- [x] `bundle update rails` 実行 - ✅ 完了
+- [x] `rails app:update` でconfig更新 - ✅ 完了（redis-session-store対応含む）
+- [x] 非推奨警告の解消 - ✅ 完了（to_time_preserves_timezone、Regexp.timeout設定）
+- [x] テスト実行・修正 - ✅ 完了（バリデーションメッセージ、ロケール設定修正）
+- [x] Rubocop実行・修正 - ✅ 完了
 
 ## Phase 3: Rails 8新機能の採用検討 (2-3週間)
 

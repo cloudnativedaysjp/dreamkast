@@ -228,55 +228,55 @@
   resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.2.tgz#ed279a64fa438bb69f2480eda44937912bb7480a"
   integrity sha512-XISRgDJ2Tc5q4TRqvgJtzsRkFYNJzZrhTdtMoGVBttwzzQJkPnS3WWTFc7kuDRoPtPakl+T+OfdEUjYJj7Jbow==
 
-"@uppy/aws-s3-multipart@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@uppy/aws-s3-multipart/-/aws-s3-multipart-4.1.1.tgz#9ca9c692529e79667762c295d537fbcf95635f1d"
-  integrity sha512-zEdbRtTTwQKhHgyS5q4d3jEiP10Wx5DmAQm0LZd1yyLcJGRlV4ht+3QL87/1RaSlo7SiK+LRXcYz9i2OHtXiCw==
+"@uppy/aws-s3-multipart@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@uppy/aws-s3-multipart/-/aws-s3-multipart-4.1.2.tgz#fb8b10cdbab90dcf968a6602b052d0ff965a0bcb"
+  integrity sha512-kPuzLe7X3GTWewqLf7PG0du17fPvQdte5M3CfxjY7IuvaJ9Za9vH4AiDnH1x6x8idvDkeu53IP8oFAEFjex0Zw==
   dependencies:
-    "@uppy/aws-s3" "^4.3.1"
+    "@uppy/aws-s3" "^4.3.2"
 
-"@uppy/aws-s3@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@uppy/aws-s3/-/aws-s3-4.3.1.tgz#e27769bb48071fc268e6ce19f0fe4299d85b2c4e"
-  integrity sha512-u46AWbR0Ui/qlFvzaO4m50Si2XRY6JRE0u+ucAuN/EKEoPYeHEW+DR9wa+AGVPARUKv36rg4MpIrFK8btOg8vg==
+"@uppy/aws-s3@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@uppy/aws-s3/-/aws-s3-4.3.2.tgz#e1b8514a4b9269b21cd7711d243d38946f2b977b"
+  integrity sha512-w3LrMUEI9pXVcn5LZ5oNL92hyocMu8mxfDSVVQIAQKxR+TPi57FfusDBqBB5T33UvxJH8EUGt9a04tuU/LpKqw==
   dependencies:
-    "@uppy/companion-client" "^4.5.1"
-    "@uppy/utils" "^6.2.1"
+    "@uppy/companion-client" "^4.5.2"
+    "@uppy/utils" "^6.2.2"
 
-"@uppy/companion-client@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-4.5.1.tgz#35118b4a8d865ffe766dd921f44ba927fbf98a6c"
-  integrity sha512-gHgC/CajV4rxgFI3stttr2xHZbJxeldMUrNdcEqvtPwu9g7fvn7ejP5dmQSJRJqxOq1+NWNaOttihEcYHjd8BA==
+"@uppy/companion-client@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-4.5.2.tgz#f29d00e426a7eb500070d699d4ced67d169504e7"
+  integrity sha512-hfUsReHM5COhn+5d7CdZgZaG8BtDvtwj7vjXzg8qmgKI901mYUm/Zh420iOKT7eHiofKVTNoa7oijeGrqUEnyg==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     namespace-emitter "^2.0.1"
     p-retry "^6.1.0"
 
-"@uppy/core@4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-4.5.1.tgz#30fb60bfe6e49c5f607e041a96ba112692841728"
-  integrity sha512-QIySR1EstRBHgH6YnomvxgxZbZkBr6CLoR7wC54Ex44HoY/I5YcK6SM/mAuFQaR0yAHI2SYW5W5ey7dPn+wDAw==
+"@uppy/core@4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-4.5.2.tgz#81a7f573ca338004aece544876a07f9f6e1af32c"
+  integrity sha512-5XoPJNcqEXtxtw+vg8EyqUFe11JSbG3/aln83Y7+CLbs7WOovYdfwwKEt1aTbfg1+ijsxudLchya5yh72jaLqw==
   dependencies:
     "@transloadit/prettier-bytes" "^0.3.4"
-    "@uppy/store-default" "^4.3.1"
-    "@uppy/utils" "^6.2.1"
+    "@uppy/store-default" "^4.3.2"
+    "@uppy/utils" "^6.2.2"
     lodash "^4.17.21"
     mime-match "^1.0.2"
     namespace-emitter "^2.0.1"
     nanoid "^5.0.9"
     preact "^10.5.13"
 
-"@uppy/dashboard@4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@uppy/dashboard/-/dashboard-4.4.1.tgz#2a238240246cd83d14f29c555d3a7801a7f7ac3a"
-  integrity sha512-0kd+2ZFPlkz/udFLk/LlPqcTjqc68A4OWhF1ftSsV+Bogi4kL2P0gjHHSdgKV5/uPeqfuLs8dvtCuFahSwsV/Q==
+"@uppy/dashboard@4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@uppy/dashboard/-/dashboard-4.4.2.tgz#794d4d71ae6e47dc3f599d70e632ecc5c807b78c"
+  integrity sha512-bMp4pQFiL1v9BnQBunD3l2mUA05pVJ3PwxlbJNPGpvytGoUXk+fhiiGZsx/kXyU/QTRjI+6EQbn4EMJtC62UEA==
   dependencies:
     "@transloadit/prettier-bytes" "^0.3.4"
-    "@uppy/informer" "^4.3.1"
-    "@uppy/provider-views" "^4.5.1"
-    "@uppy/status-bar" "^4.2.1"
-    "@uppy/thumbnail-generator" "^4.2.1"
-    "@uppy/utils" "^6.2.1"
+    "@uppy/informer" "^4.3.2"
+    "@uppy/provider-views" "^4.5.2"
+    "@uppy/status-bar" "^4.2.2"
+    "@uppy/thumbnail-generator" "^4.2.2"
+    "@uppy/utils" "^6.2.2"
     classnames "^2.2.6"
     lodash "^4.17.21"
     nanoid "^5.0.9"
@@ -284,78 +284,78 @@
     shallow-equal "^3.0.0"
 
 "@uppy/file-input@^4.1.3":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@uppy/file-input/-/file-input-4.2.1.tgz#cf7b14ac4db86eb4aa9af94c6f505802213d6092"
-  integrity sha512-uGh3Fs2makAFF8KLr51Qs9A4/K+V2RsAq1NN5aoOE7oytiWW9c2R+fxTPV7vhzomI0XrolSvE5J3Z6GbdcF2CQ==
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@uppy/file-input/-/file-input-4.2.2.tgz#4660c395127e7c3b2383bca565e1a678f2b25b58"
+  integrity sha512-tQklK5C1slZWQlMQYQPBJuhfs0e5w1sRb0VwYMt8P297rB1BUcyOjkVH79DAYHkkgXo9aQKUiZSuVoN89tlLjQ==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     preact "^10.5.13"
 
-"@uppy/informer@^4.2.1", "@uppy/informer@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@uppy/informer/-/informer-4.3.1.tgz#4309b065f78f11090027713af6a3d7aa5d9f557e"
-  integrity sha512-gaZyutRFw0NZShrBNIaxAAnvNsI7ksoMiXMGAofr91JLxcTwL6gfvLnJw1+qNLICqq6T8vqOFhVpn//G/38huw==
+"@uppy/informer@^4.2.1", "@uppy/informer@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@uppy/informer/-/informer-4.3.2.tgz#d604511b7bc0daa3ae1e0fb8098eb99dd6d51503"
+  integrity sha512-7A9X8BfxR/GPtG0MGbQlmj1+G1o9fqeF3qtRh37ZvmZpapnEGtbstQ6Ao2vFm0uxYxOolLOMzFs/xCD27NKAvg==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     preact "^10.5.13"
 
 "@uppy/progress-bar@^4.2.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@uppy/progress-bar/-/progress-bar-4.3.1.tgz#bd7e96e31187ff06da86fcb172a1cb957619d8de"
-  integrity sha512-ppKqCChmYp79yjN5cYODV/Cy1+gUBimVV6+MOc7VOmHBzFvHVXL0XRu7hHt6C+hs4W7cpj31yT9/V3gyd2s4dw==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@uppy/progress-bar/-/progress-bar-4.3.2.tgz#52696d0990b33cd572f0f52b95e1f494a84eb9b1"
+  integrity sha512-5BOhq49xPpBTlEVsEIRLkV+Hgb0qTuey8XKyrmrSetcgtolKLwtlDjrOWmUcxGYI3bkMbdeJulF9aiR8sSqQ6A==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     preact "^10.5.13"
 
-"@uppy/provider-views@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@uppy/provider-views/-/provider-views-4.5.1.tgz#94bed44f4e2b4ecdbc9cfbb1b9a4ab6c8fc40696"
-  integrity sha512-Qz/vAoiszRParpjpZGG/ZrMiaz6auzsesLo1/UNgY6PiSklwUXmAXq/Zxagxk+Vc13U4/helgFp9IeRBMYD//A==
+"@uppy/provider-views@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@uppy/provider-views/-/provider-views-4.5.2.tgz#f893e5cd9ea1c0f59afbd1353ba86cfce2ff3676"
+  integrity sha512-ik54ZHwZNE8czcoWiH0WLzFc/5zHIWAesiqsjZ/MjDpK/6Oun/BhQpUXpXe6629IeIXY+gDo5Uktf6vXtXfosg==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     classnames "^2.2.6"
     nanoid "^5.0.9"
     p-queue "^8.0.0"
     preact "^10.5.13"
 
-"@uppy/status-bar@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@uppy/status-bar/-/status-bar-4.2.1.tgz#94e4ada6a7144404838b35d88ff913a579bebc95"
-  integrity sha512-4mFDEmWcj8NsOBrBqc7s52Ybhg2T7XaIFQvCRzv93OpTmWAwppV6QxiUa7pVqCqR56SULiFFqPc3OZwbgnmq8w==
+"@uppy/status-bar@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@uppy/status-bar/-/status-bar-4.2.2.tgz#c051653786d4004dddade6ced9dabedfdc51a8af"
+  integrity sha512-NOk2OVNS4lpJgjkxlD+shVPb2hmPF5beDnZb90a3qb8OiyEsYrDfC5Sx625f2IW3EUwPx6XCvAKBlgKh382X7g==
   dependencies:
     "@transloadit/prettier-bytes" "^0.3.4"
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     classnames "^2.2.6"
     preact "^10.5.13"
 
-"@uppy/store-default@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@uppy/store-default/-/store-default-4.3.1.tgz#710a5473b10bb87fb795c9cb5f9f166decdcd896"
-  integrity sha512-7/FIJXxGrF2QQ+X9MpSzXIZPbU9GXTtEZ9l8FWvxJ5fR9pjVFqfJ0MiLBGQsZlua9Kx/LhW51urFYeHAmbIN1w==
+"@uppy/store-default@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@uppy/store-default/-/store-default-4.3.2.tgz#dd200b21e7c564729be5a1d688882f54709835cf"
+  integrity sha512-dnY9R2o8fwmO1bF89D0b5jijD7DGED2qVST5hI/j18JreLWzLKH7u6HuNmOvzok8msrQ/qWzQd5Gx4LDQKhBbw==
 
-"@uppy/thumbnail-generator@^4.1.1", "@uppy/thumbnail-generator@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@uppy/thumbnail-generator/-/thumbnail-generator-4.2.1.tgz#ed0643fa3ae2ec6bf68b863a46a4230b2ef00161"
-  integrity sha512-+rjC8vGIegQs86+m43BbrAIK6iNJ9jiVvno50UxAvrxnQZqpsjisXIVFaH7FWrFPSVkMJvCzPwQdPIIQbN32Dg==
+"@uppy/thumbnail-generator@^4.1.1", "@uppy/thumbnail-generator@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@uppy/thumbnail-generator/-/thumbnail-generator-4.2.2.tgz#f9f7dc9c174c41e38e02f42559d101c3a7d0c4fc"
+  integrity sha512-cHVhrtqqy4j++UxtkwguKSSA/h9PR9UXSar0gr/uGHWsQbXNDzoT23EAFOsVr9ZFkIhtLU7M0x+iCq2hUlX5Tw==
   dependencies:
-    "@uppy/utils" "^6.2.1"
+    "@uppy/utils" "^6.2.2"
     exifr "^7.0.0"
 
-"@uppy/utils@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@uppy/utils/-/utils-6.2.1.tgz#69a9579bd1864ffcbc179042e553e34930503eeb"
-  integrity sha512-snvbsepFXw1o9fOl8vnRtlBkT9/B0taZwo9rbKKCLjc1tWvBwJV4y8INOmn/+iYr+bEmYb5Cm6a1djHBChpsbg==
+"@uppy/utils@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@uppy/utils/-/utils-6.2.2.tgz#78bf41a38b6a64e8823063a34a8150412e386df4"
+  integrity sha512-9mYJtbcngv2HOJIECkyfmdXTI5dW/ObCyvWP1Iti3E5bKtsa4sMmbx5Yh/tGCj8k/lBNhfvWyZuYnvnjmzNLSQ==
   dependencies:
     lodash "^4.17.21"
     preact "^10.5.13"
 
-"@uppy/xhr-upload@4.4.1":
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-4.4.1.tgz#0131371659a8c06451553ada89ce12bd06a5866f"
-  integrity sha512-2b7ZL3bVZNMCnbM67t1TTTSFIRWZ1mTFXg2abI66X2e7F98Nu2pA8ZqBWQjYq4dGLFBkTl6zoZsuYUnZRDUifw==
+"@uppy/xhr-upload@4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-4.4.2.tgz#c6354eebfc2b9ad4f5495d35dff9e67acd0192f1"
+  integrity sha512-CU66aVn4yghGklEkepCqFPulc6uygznApy2DpD+jCMLNB5q6yT1RPSrQUgRgXsYhpW1YhutZJWsrEnHEDS+Tcw==
   dependencies:
-    "@uppy/companion-client" "^4.5.1"
-    "@uppy/utils" "^6.2.1"
+    "@uppy/companion-client" "^4.5.2"
+    "@uppy/utils" "^6.2.2"
 
 "@videojs/http-streaming@^3.17.0":
   version "3.17.0"

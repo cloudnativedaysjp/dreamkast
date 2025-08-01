@@ -607,10 +607,10 @@ GEM
     rexml (3.4.1)
     roda (3.93.0)
       rack
-    rqrcode (2.2.0)
+    rqrcode (3.1.0)
       chunky_png (~> 1.0)
-      rqrcode_core (~> 1.0)
-    rqrcode_core (1.2.0)
+      rqrcode_core (~> 2.0)
+    rqrcode_core (2.0.0)
     rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -824,7 +824,7 @@ DEPENDENCIES
   redis
   redis-session-store
   rexml (~> 3.2, >= 3.2.4)
-  rqrcode (~> 2.0)
+  rqrcode (~> 3.0)
   rspec-rails
   rubocop (~> 1.56.0)
   rubocop-rails

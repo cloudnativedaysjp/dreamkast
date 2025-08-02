@@ -69,7 +69,7 @@ Rails 8のSolid Cache、Solid Cableを活用し、Redis依存を完全に削除�
 #### ドキュメント更新
 - [x] `README.md`のDocker起動コマンド更新
 - [x] `CLAUDE.md`の開発用起動コマンド更新
-- [ ] `.github/workflows/ci.yml`のCI設定更新
+- [x] `.github/workflows/ci.yml`のCI設定更新
 
 ### フェーズ5: テスト・検証
 

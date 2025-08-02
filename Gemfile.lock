@@ -601,13 +601,6 @@ GEM
       erb
       psych (>= 4.0.0)
     redcarpet (3.6.1)
-    redis (5.4.1)
-      redis-client (>= 0.22.0)
-    redis-client (0.25.1)
-      connection_pool
-    redis-session-store (0.11.6)
-      actionpack (>= 5.2.4.1, < 9)
-      redis (>= 3, < 6)
     regexp_parser (2.10.0)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -838,8 +831,6 @@ DEPENDENCIES
   rbs
   rbs_rails
   redcarpet
-  redis
-  redis-session-store
   rexml (~> 3.2, >= 3.2.4)
   rqrcode (~> 3.0)
   rspec-rails

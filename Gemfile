@@ -78,8 +78,6 @@ gem "sentry-opentelemetry"
 gem "opentelemetry-sdk"
 gem "opentelemetry-instrumentation-all"
 
-gem "redis"
-gem "redis-session-store"
 
 gem "solid_cache"
 gem "solid_cable"

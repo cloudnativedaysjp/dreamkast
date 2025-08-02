@@ -82,6 +82,7 @@ gem "redis"
 gem "redis-session-store"
 
 gem "solid_cache"
+gem "solid_cable"
 
 gem "shrine", "~> 3.3"
 

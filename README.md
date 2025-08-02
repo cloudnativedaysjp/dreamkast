@@ -43,7 +43,6 @@ MYSQL_HOST=db
 MYSQL_USER=root
 MYSQL_PASSWORD=root
 MYSQL_DATABASE=dreamkast
-REDIS_URL=redis://redis:6379
 RAILS_MASTER_KEY=
 SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/default
 EOF
@@ -100,7 +99,6 @@ export MYSQL_HOST=db
 export MYSQL_USER=user
 export MYSQL_PASSWORD=password
 export MYSQL_DATABASE=dreamkast
-export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
 export SQS_FIFO_QUEUE_URL=http://localhost:9324/queue/default
 ```
@@ -116,7 +114,7 @@ Then, setup databases, ui and load balancer by running Docker Compose
 
 ```
 $ docker compose pull ui
-$ docker compose up -d fifo-worker db redis nginx localstack ui
+$ docker compose up -d fifo-worker db nginx localstack ui
 ```
 
 Run the application and builder js and css

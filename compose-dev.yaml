@@ -26,7 +26,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: dreamkast
-      REDIS_URL: redis://redis:6379
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
       REVIEW_APP: "true"
@@ -72,12 +71,6 @@ services:
     - ./db/docker-entrypoint-initdb.d/1_allow-host-ip.sql:/docker-entrypoint-initdb.d/1_allow-host-ip.sql
     ports:
     - "3306:3306"
-  redis:
-    image: "redis:8"
-    volumes:
-      - redis-data:/data
-    ports:
-      - "6379:6379"
   nginx:
     image: nginx
     volumes:
@@ -116,4 +109,3 @@ services:
       start_period: 1s
 volumes:
   mysql-data:
-  redis-data:

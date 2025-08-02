@@ -78,8 +78,10 @@ gem "sentry-opentelemetry"
 gem "opentelemetry-sdk"
 gem "opentelemetry-instrumentation-all"
 
-gem "redis"
-gem "redis-session-store"
+
+gem "solid_cache"
+gem "solid_cable"
+gem "activerecord-session_store"
 
 gem "shrine", "~> 3.3"
 

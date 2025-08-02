@@ -9,7 +9,11 @@
       "Bash(npm run build:*)",
       "Bash(npm install:*)",
       "Bash(bundle exec:*)",
-      "Bash(DOCKER_BUILDKIT=1 docker compose up db redis nginx localstack -d)"
+      "Bash(DOCKER_BUILDKIT=1 docker compose up db redis nginx localstack -d)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(bundle install)",
+      "Bash(bin/rails:*)"
     ],
     "deny": []
   }

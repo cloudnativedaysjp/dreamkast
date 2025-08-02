@@ -81,6 +81,8 @@ gem "opentelemetry-instrumentation-all"
 gem "redis"
 gem "redis-session-store"
 
+gem "solid_cache"
+
 gem "shrine", "~> 3.3"
 
 gem "aws-sdk-s3", "~> 1.14"

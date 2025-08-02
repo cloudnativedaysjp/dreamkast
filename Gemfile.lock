@@ -706,6 +706,10 @@ GEM
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
+    solid_cache (1.0.7)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     sorbet-runtime (0.5.12196)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
@@ -841,6 +845,7 @@ DEPENDENCIES
   simplecov
   slack-incoming-webhooks
   slack-ruby-client
+  solid_cache
   stackprof
   steep
   turbo-rails (= 2.0.5)

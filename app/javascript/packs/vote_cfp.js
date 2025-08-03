@@ -31,7 +31,7 @@ document.getElementById('vote').addEventListener('click', function() {
     const method = 'POST'
     const query = `mutation {
           vote(input: {
-            confName: ${eventAbbr}
+            confName: "${eventAbbr}"
             talkId: ${talkId}
         })
     }`;

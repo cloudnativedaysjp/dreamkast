@@ -54,8 +54,6 @@ class SponsorForm
 
   private
 
-  attr_reader :sponsor
-
   def default_attributes
     {
       name: sponsor.name,

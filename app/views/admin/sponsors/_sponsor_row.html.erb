@@ -1,0 +1,25 @@
+<%= turbo_frame_tag sponsor do %>
+  <div class="row py-2 border-top">
+    <div class="col-2 my-auto">
+      <%= sponsor.abbr %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor.sponsor_types.map(&:name).join(', ') %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor.talks.size %>
+    </div>
+    <div class="col-2 my-auto">
+      <%= sponsor.url %>
+    </div>
+    <div class="col-2 my-auto">
+      <div class="d-flex justify-content-end">
+        <%= link_to "編集", edit_admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_frame: "modal" } %>
+        <%= link_to "削除", admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: "btn btn-sm btn-outline-danger", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+      </div>
+    </div>
+  </div>
+<% end %>

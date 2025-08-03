@@ -1,34 +1,35 @@
+<% provide(:title, 'スポンサー一覧') %>
 <%= render 'admin/layout' do %>
   <div class="row">
-    <h2>Sponsors</h2>
+    <h2>スポンサー</h2>
   </div>
 
-  <div class="row mb-2">
-    <%= link_to 'Add Sponsor', new_admin_sponsor_url, class: "btn btn-primary" %>
-  </div>
+  <%= turbo_frame_tag "sponsor_list" do %>
+    <div class="col-4 d-flex">
+      <%= link_to "登録",
+                  new_admin_sponsor_path,
+                  class: "btn btn-outline-primary",
+                  data: { turbo_frame: "modal" }
+      %>
+    </div>
 
-  <div class="row">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Abbr</th>
-        <th scope="col">Name</th>
-        <th scope="col">Type</th>
-        <th scope="col">登録済みセッション数</th>
-        <th scope="col">Url</th>
-      </tr>
-      </thead>
-      <tbody>
+    <div class="row py-2 border-top">
+      <div class="col-2 my-auto">Abbr</div>
+      <div class="col-2 my-auto">Name</div>
+      <div class="col-2 my-auto">Type</div>
+      <div class="col-2 my-auto">登録済みセッション数</div>
+      <div class="col-2 my-auto">Url</div>
+      <div class="col-2 my-auto"></div>
+    </div>
+    
+    <div id="sponsors">
       <% @sponsors.each do |sponsor| %>
-        <tr>
-          <td><%= sponsor.abbr %></td>
-          <td><%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %></td>
-          <td><%= sponsor.sponsor_types.map(&:name).join(', ') %></td>
-          <td><%= sponsor.talks.size %></td>
-          <td><%= sponsor.url %></td>
-        </tr>
+        <%= render 'admin/sponsors/sponsor_row', sponsor: sponsor %>
       <% end %>
-      </tbody>
-    </table>
-  </div>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "modal" %>
+  <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+
 <% end %>

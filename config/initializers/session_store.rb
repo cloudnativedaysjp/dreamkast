@@ -1,4 +1,1 @@
-Rails.application.config.session_store(:redis_session_store, **{
-                                         redis_server: ENV['REDIS_URL'],
-    expire_after: 1.weeks
-                                       })
+Rails.application.config.session_store(:active_record_store, key: '_dreamkast_session', expire_after: 1.week)

@@ -11,7 +11,7 @@ docs/todo以下にタスク毎のチェックリストを作成氏、それに�
 依存ミドルウェアの起動
 
 ```
-DOCKER_BUILDKIT=1 docker compose up db redis nginx localstack
+DOCKER_BUILDKIT=1 docker compose up db nginx localstack
 ```
 
 テスト

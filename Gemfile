@@ -79,7 +79,6 @@ gem "opentelemetry-sdk"
 gem "opentelemetry-instrumentation-all"
 
 
-gem "solid_cache"
 gem "solid_cable"
 gem "activerecord-session_store"
 

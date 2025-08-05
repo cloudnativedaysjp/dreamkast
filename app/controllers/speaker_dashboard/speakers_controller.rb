@@ -32,7 +32,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
 
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
 

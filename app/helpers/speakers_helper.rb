@@ -3,7 +3,7 @@ module SpeakersHelper
     new_object = f.object.to_model.class.reflect_on_association(association).klass.new
     id = new_object.object_id
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
-      render("speaker_dashboard/speakers/#{association.to_s.singularize}_fields", f: builder)
+      render("speaker_dashboard/speakers/#{association.to_s.singularize}_fields", f: builder, form_index: id)
     end
     link_to(name, '#', class: 'add_talk_fields ' + args[:class], data: { id:, fields: fields.gsub("\n", '') }, style: args[:style])
   end

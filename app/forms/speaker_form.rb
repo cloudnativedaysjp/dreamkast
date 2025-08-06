@@ -32,6 +32,7 @@ class SpeakerForm
       @talks ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
+        next if params.nil?
         if params.key?(:id)
           # talk is already exists
           if params[:_destroy] == '1'

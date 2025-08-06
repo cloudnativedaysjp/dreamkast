@@ -117,9 +117,9 @@ class Admin::SpeakersController < ApplicationController
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)
-      if conf.class.to_s == 'ProposalItemConfigCheckBox'
+      if conf.instance_of?(::ProposalItemConfigCheckBox)
         h[conf.label.pluralize.to_sym] = []
-      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
+      elsif conf.instance_of?(::ProposalItemConfigRadioButton)
         attr << conf.label.pluralize.to_sym
       end
     end

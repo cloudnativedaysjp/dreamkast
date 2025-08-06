@@ -11,38 +11,38 @@
 
 <div class="talk-field">
   <% if f.object.persisted? %>
-    <%= f.hidden_field :id %>
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][id]", f.object.id %>
   <% end %>
 
   <div class="field pb-3">
-    <%= f.label :title, '講演タイトル - Abstract Title（★★★）' %>*
+    <%= label_tag "speaker_talks_attributes_#{form_index}_title", '講演タイトル - Abstract Title（★★★）', class: 'form-label' %>*
     <p class="field-description" style="font-size: 0.7em">（最大60文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 60 characters) Include concrete technology names as possible to attract attendees</p>
-    <%= f.text_field :title, class: "form-control", required: true %>
+    <%= text_field_tag "speaker[talks_attributes][#{form_index}][title]", f.object.title, class: "form-control", required: true %>
   </div>
 
   <div class="field pb-3">
-    <%= f.label :abstract, '講演内容 - Abstract（★★★）' %>
+    <%= label_tag "speaker_talks_attributes_#{form_index}_abstract", '講演内容 - Abstract（★★★）', class: 'form-label' %>
     <p class="field-description" style="font-size: 0.7em">（最大500文字）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (Maximum 500 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
-    <%= f.text_area :abstract, {class: "form-control abstract"}  %>
+    <%= text_area_tag "speaker[talks_attributes][#{form_index}][abstract]", f.object.abstract, class: "form-control abstract" %>
   </div>
 
   <% unless ['cicd2021', 'o11y2022', 'cnsec2022', 'cicd2023'].include?(@conference.abbr) %>
     <div class="field pb-3">
-      <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
+      <%= label_tag "speaker_talks_attributes_#{form_index}_talk_category_id", "主なカテゴリ - Main Category（★★）", class: 'form-label' %>*
       <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
-      <%= f.collection_select :talk_category_id, @conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
+      <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_category_id]", @conference.talk_categories, :id, :name, {prompt: "", selected: f.object.talk_category_id}, class: "form-control talk-categories", required: true %>
     </div>
   <% end %>
 
   <div class="field pb-3">
-    <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
-    <%= f.collection_select :talk_difficulty_id, @conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
+    <%= label_tag "speaker_talks_attributes_#{form_index}_talk_difficulty_id", "受講者レベル - Audience Experience Level（★★）", class: 'form-label' %>*
+    <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_difficulty_id]", @conference.talk_difficulties, :id, :name, {prompt: "", selected: f.object.talk_difficulty_id}, class: "form-control", required: true %>
   </div>
 
   <% if @conference.speaker_entry_disabled? %>
   <div class="field pb-3">
-    <%= f.label :document_url, "セッション資料公開URL" %>
-    <%= f.text_field :document_url, class: "form-control" %>
+    <%= label_tag "speaker_talks_attributes_#{form_index}_document_url", "セッション資料公開URL", class: 'form-label' %>
+    <%= text_field_tag "speaker[talks_attributes][#{form_index}][document_url]", f.object.document_url, class: "form-control" %>
   </div>
   <% end %>
 
@@ -86,14 +86,14 @@
   <% end %>
 
   <% if @sponsor %>
-    <%= f.hidden_field :sponsor_id, value: @sponsor.id %>
-    <%= f.hidden_field :type, value: 'SponsorSession' %>
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][sponsor_id]", @sponsor.id %>
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][type]", 'SponsorSession' %>
   <% else %>
-    <%= f.hidden_field :type, value: 'Session' %>
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][type]", 'Session' %>
   <% end %>
 
-  <%= f.hidden_field :_destroy, class: "destroy_flag_field" %>
-  <%= f.hidden_field :conference_id, value: @conference.id %>
+  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][_destroy]", "false", class: "destroy_flag_field" %>
+  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][conference_id]", @conference.id %>
 
   <% if @conference.speaker_entry_enabled? || admin? %>
     <%= link_to 'Delete Talk', '#', class: 'remove_talk_field btn btn-danger' %>

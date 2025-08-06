@@ -14,8 +14,10 @@
 
 
     <div class="talk-fields">
-      <%= form.fields_for :talks do |talk| %>
-        <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference %>
+      <% @speaker_form.talks.each_with_index do |talk_obj, index| %>
+        <%= form.fields_for "talks_attributes[#{index}]", talk_obj do |talk| %>
+          <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference %>
+        <% end %>
       <% end %>
     </div>
 

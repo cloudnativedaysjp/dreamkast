@@ -9,7 +9,7 @@ class Admin::SpeakersController < ApplicationController
 
   def edit
     @speaker = Speaker.find_by_id(params[:id])
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
 
@@ -18,7 +18,7 @@ class Admin::SpeakersController < ApplicationController
   def update
     @speaker = Speaker.find(params[:id])
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
     @speaker_form.sub = @speaker.sub
     @speaker_form.email = @speaker.email
 
@@ -108,7 +108,22 @@ class Admin::SpeakersController < ApplicationController
                                     :github_id,
                                     :avatar,
                                     :conference_id,
-                                    talks_attributes: [:id, :title, :abstract, :conference_id, :_destroy, :talk_category_id, :talk_time_id])
+                                    :additional_documents,
+                                    talks_attributes:)
+  end
+
+  def talks_attributes
+    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
+    h = {}
+    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+      conf = @conference.proposal_item_configs.find_by(label:)
+      if conf.class.to_s == 'ProposalItemConfigCheckBox'
+        h[conf.label.pluralize.to_sym] = []
+      elsif conf.class.to_s == 'ProposalItemConfigRadioButton'
+        attr << conf.label.pluralize.to_sym
+      end
+    end
+    attr.append(h)
   end
 
   helper_method :speaker_url, :session_type_name, :speaker_check_in_status
@@ -116,8 +131,8 @@ class Admin::SpeakersController < ApplicationController
   def speaker_url
     case action_name
     when 'new'
-      "/#{params[:event]}/admin/speaker"
-    when 'edit'
+      "/#{params[:event]}/admin/speakers"
+    when 'edit', 'update'
       "/#{params[:event]}/admin/speakers/#{params[:id]}"
     end
   end

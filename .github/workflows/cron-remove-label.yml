@@ -9,5 +9,5 @@ jobs:
   remove-label:
     uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-remove-label.yml@main
     permissions:
-      pull-requests: write
+      pull-requests: read
       issues: write

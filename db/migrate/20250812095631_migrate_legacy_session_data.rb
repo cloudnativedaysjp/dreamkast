@@ -25,10 +25,14 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       migrated_count = 0
       
       # Migrate KeynoteSession talks (if using STI)
+      # Use raw SQL to avoid STI class loading issues
       if temp_talk.column_names.include?('type')
-        temp_talk.where(type: 'KeynoteSession').find_each do |talk|
+        keynote_talks = temp_talk.connection.execute(
+          "SELECT id FROM talks WHERE type = 'KeynoteSession'"
+        )
+        keynote_talks.each do |row|
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: talk.id,
+            talk_id: row['id'] || row[0], # Handle both hash and array results
             session_attribute_id: keynote_attr.id
           )
           migrated_count += 1
@@ -37,9 +41,12 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       
       # Migrate SponsorSession talks (if using STI)
       if temp_talk.column_names.include?('type')
-        temp_talk.where(type: 'SponsorSession').find_each do |talk|
+        sponsor_talks = temp_talk.connection.execute(
+          "SELECT id FROM talks WHERE type = 'SponsorSession'"
+        )
+        sponsor_talks.each do |row|
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: talk.id,
+            talk_id: row['id'] || row[0], # Handle both hash and array results
             session_attribute_id: sponsor_attr.id
           )
           migrated_count += 1
@@ -63,9 +70,12 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       
       # Migrate Intermission talks (if using STI)
       if temp_talk.column_names.include?('type')
-        temp_talk.where(type: 'Intermission').find_each do |talk|
+        intermission_talks = temp_talk.connection.execute(
+          "SELECT id FROM talks WHERE type = 'Intermission'"
+        )
+        intermission_talks.each do |row|
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: talk.id,
+            talk_id: row['id'] || row[0], # Handle both hash and array results
             session_attribute_id: intermission_attr.id
           )
           migrated_count += 1

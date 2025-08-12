@@ -31,8 +31,9 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
           "SELECT id FROM talks WHERE type = 'KeynoteSession'"
         )
         keynote_talks.each do |row|
+          talk_id = row.is_a?(Array) ? row[0] : row['id']
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: row['id'] || row[0], # Handle both hash and array results
+            talk_id: talk_id,
             session_attribute_id: keynote_attr.id
           )
           migrated_count += 1
@@ -45,8 +46,9 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
           "SELECT id FROM talks WHERE type = 'SponsorSession'"
         )
         sponsor_talks.each do |row|
+          talk_id = row.is_a?(Array) ? row[0] : row['id']
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: row['id'] || row[0], # Handle both hash and array results
+            talk_id: talk_id,
             session_attribute_id: sponsor_attr.id
           )
           migrated_count += 1
@@ -54,15 +56,20 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       end
       
       # Migrate talks with sponsor_id
-      temp_talk.where.not(sponsor_id: nil).find_each do |talk|
+      # Use raw SQL to avoid STI issues
+      sponsor_id_talks = temp_talk.connection.execute(
+        "SELECT id FROM talks WHERE sponsor_id IS NOT NULL"
+      )
+      sponsor_id_talks.each do |row|
+        talk_id = row.is_a?(Array) ? row[0] : row['id']
         # Skip if already migrated from STI
         next if temp_talk_session_attribute.exists?(
-          talk_id: talk.id,
+          talk_id: talk_id,
           session_attribute_id: sponsor_attr.id
         )
         
         temp_talk_session_attribute.find_or_create_by!(
-          talk_id: talk.id,
+          talk_id: talk_id,
           session_attribute_id: sponsor_attr.id
         )
         migrated_count += 1
@@ -74,8 +81,9 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
           "SELECT id FROM talks WHERE type = 'Intermission'"
         )
         intermission_talks.each do |row|
+          talk_id = row.is_a?(Array) ? row[0] : row['id']
           temp_talk_session_attribute.find_or_create_by!(
-            talk_id: row['id'] || row[0], # Handle both hash and array results
+            talk_id: talk_id,
             session_attribute_id: intermission_attr.id
           )
           migrated_count += 1
@@ -83,15 +91,20 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       end
       
       # Migrate talks with abstract = 'intermission'
-      temp_talk.where(abstract: 'intermission').find_each do |talk|
+      # Use raw SQL to avoid STI issues
+      abstract_intermission_talks = temp_talk.connection.execute(
+        "SELECT id FROM talks WHERE abstract = 'intermission'"
+      )
+      abstract_intermission_talks.each do |row|
+        talk_id = row.is_a?(Array) ? row[0] : row['id']
         # Skip if already migrated from STI
         next if temp_talk_session_attribute.exists?(
-          talk_id: talk.id,
+          talk_id: talk_id,
           session_attribute_id: intermission_attr.id
         )
         
         temp_talk_session_attribute.find_or_create_by!(
-          talk_id: talk.id,
+          talk_id: talk_id,
           session_attribute_id: intermission_attr.id
         )
         migrated_count += 1

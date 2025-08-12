@@ -23,6 +23,10 @@ class Talk < ApplicationRecord
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
+  
+  # Session attributes associations
+  has_many :talk_session_attributes, dependent: :destroy
+  has_many :session_attributes, through: :talk_session_attributes
 
   validates :conference_id, presence: true
   validates :title, presence: true
@@ -67,6 +71,22 @@ class Talk < ApplicationRecord
 
   scope :sponsor, -> {
     where.not(sponsor_id: nil)
+  }
+  
+  # New scopes for session attributes
+  scope :with_session_attribute, ->(attribute_name) {
+    joins(:session_attributes).where(session_attributes: { name: attribute_name })
+  }
+  
+  scope :keynotes, -> { with_session_attribute('keynote') }
+  scope :sponsors_new, -> { with_session_attribute('sponsor') }
+  scope :intermissions_new, -> { with_session_attribute('intermission') }
+  
+  scope :sponsor_keynotes, -> {
+    joins(:session_attributes)
+      .where(session_attributes: { name: ['keynote', 'sponsor'] })
+      .group('talks.id')
+      .having('COUNT(DISTINCT session_attributes.name) = 2')
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -273,7 +293,48 @@ class Talk < ApplicationRecord
   end
 
   def sponsor_session?
-    sponsor.present?
+    session_attributes.exists?(name: 'sponsor') || sponsor.present?
+  end
+  
+  # Session attribute helper methods
+  def keynote?
+    session_attributes.exists?(name: 'keynote')
+  end
+  
+  def intermission?
+    session_attributes.exists?(name: 'intermission') || abstract == 'intermission'
+  end
+  
+  def sponsor_keynote?
+    keynote? && sponsor_session?
+  end
+  
+  # Session attribute management methods
+  def set_session_attributes(attribute_names = [])
+    transaction do
+      talk_session_attributes.destroy_all
+      
+      attribute_names.each do |name|
+        attribute = SessionAttribute.find_by!(name: name.to_s)
+        talk_session_attributes.create!(session_attribute: attribute)
+      end
+    end
+  end
+  
+  def add_session_attribute(name)
+    attribute = SessionAttribute.find_by!(name: name.to_s)
+    talk_session_attributes.find_or_create_by!(session_attribute: attribute)
+  end
+  
+  def remove_session_attribute(name)
+    talk_session_attributes
+      .joins(:session_attribute)
+      .where(session_attributes: { name: name.to_s })
+      .destroy_all
+  end
+  
+  def session_attribute_names
+    session_attributes.pluck(:name)
   end
 
   def create_or_update_proposal_item(label, params)

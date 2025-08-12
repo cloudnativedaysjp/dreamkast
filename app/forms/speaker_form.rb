@@ -32,6 +32,11 @@ class SpeakerForm
       @talks ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
+        next if params.nil?
+
+        # Normalize parameter keys to symbols
+        params = params.symbolize_keys
+
         if params.key?(:id)
           # talk is already exists
           if params[:_destroy] == '1'
@@ -42,7 +47,9 @@ class SpeakerForm
 
             proposal_item_params = {}
             proposal_item_config_labels.each do |label|
-              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
+              pluralized_label = label.pluralize
+              symbol_key = pluralized_label.to_sym
+              proposal_item_params[pluralized_label] = params.delete(symbol_key)
             end
             proposal_item_config_labels.each do |label|
               talk.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
@@ -59,9 +66,12 @@ class SpeakerForm
             params[:video_published] = true
             proposal_item_params = {}
             proposal_item_config_labels.each do |label|
-              proposal_item_params[label.pluralize] = params.delete(label.pluralize)
+              pluralized_label = label.pluralize
+              symbol_key = pluralized_label.to_sym
+              proposal_item_params[pluralized_label] = params.delete(symbol_key)
             end
             t = Talk.new(params)
+            t.conference = @conference if @conference
             proposal_item_config_labels.each do |label|
               t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
             end

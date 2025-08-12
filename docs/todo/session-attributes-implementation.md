@@ -123,13 +123,22 @@ talk_session_attributes方式によるセッション属性管理システムの
 - [x] パフォーマンステスト
 - [x] データ整合性テスト
 
-## Phase 4: Future Enhancements (Optional)
+## Phase 4: Future Enhancements (Optional) ✅ COMPLETED
 
-### 4.1 Legacy Code Cleanup
-- [ ] 古いSTIコードの段階的削除
-- [ ] 不要なメソッド削除
-- [ ] テストケース整理
-- [ ] ドキュメント整理
+### 4.1 Legacy Code Cleanup ✅
+- [x] 古いSTIコードの段階的削除
+  - [x] KeynoteSession, Intermissionクラス削除
+  - [x] Talk::Type::KLASSES更新（不要なクラス参照削除）
+  - [x] RBS定義ファイル削除
+- [x] 不要なメソッド削除
+  - [x] LegacySessionSupportモジュール削除
+  - [x] 重複スコープの整理
+- [x] テストケース整理
+  - [x] 古いファクトリー削除（:keynote_session, :intermission）
+  - [x] 全75テストのパス確認
+- [x] ドキュメント整理
+  - [x] TODOリスト更新
+  - [x] コメント追加
 
 ## Implementation Complete ✅
 

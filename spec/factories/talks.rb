@@ -256,39 +256,4 @@ FactoryBot.define do
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
   end
-
-  factory :intermission, class: Talk do
-    title { '開始までしばらくお待ちください' }
-    type { 'Intermission' }
-    start_time { '10:00' }
-    end_time { '11:00' }
-    conference_id { 1 }
-    conference_day_id { 3 }
-    abstract { 'intermission' }
-    talk_difficulty_id { 1 }
-    talk_category_id { 1 }
-    track_id { 1 }
-    show_on_timetable { false }
-    video_published { true }
-  end
-
-  factory :keynote_session, class: Talk do
-    title { 'keynote_session' }
-    type { 'KeynoteSession' }
-    start_time { '12:30' }
-    end_time { '12:40' }
-    conference_id { 1 }
-    conference_day_id { 1 }
-    talk_difficulty_id { 1 }
-    track_id { 1 }
-    show_on_timetable { true }
-    video_published { true }
-    document_url { 'http://' }
-
-    trait :accepted do
-      after(:build) do |talk|
-        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
-      end
-    end
-  end
 end

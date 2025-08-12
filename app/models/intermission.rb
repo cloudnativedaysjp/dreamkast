@@ -1,2 +1,0 @@
-class Intermission < Talk
-end

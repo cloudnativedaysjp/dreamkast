@@ -1,5 +1,7 @@
 class Talk < ApplicationRecord
   class Type < ApplicationRecord
-    KLASSES = [Session, KeynoteSession, SponsorSession, Intermission].freeze
+    # NOTE: KeynoteSession and Intermission have been migrated to session attributes system
+    # Only Session and SponsorSession remain as they are still actively used
+    KLASSES = [Session, SponsorSession].freeze
   end
 end

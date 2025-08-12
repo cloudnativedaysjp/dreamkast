@@ -1,7 +1,6 @@
 require 'csv'
 
 class Talk < ApplicationRecord
-  include LegacySessionSupport
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference
@@ -80,8 +79,8 @@ class Talk < ApplicationRecord
   }
 
   scope :keynotes, -> { with_session_attribute('keynote') }
-  scope :sponsors_new, -> { with_session_attribute('sponsor') }
-  scope :intermissions_new, -> { with_session_attribute('intermission') }
+  scope :sponsors_by_attribute, -> { with_session_attribute('sponsor') }
+  scope :intermissions, -> { with_session_attribute('intermission') }
 
   scope :sponsor_keynotes, -> {
     joins(:session_attributes)

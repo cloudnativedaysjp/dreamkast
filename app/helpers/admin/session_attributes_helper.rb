@@ -1,45 +1,45 @@
 module Admin::SessionAttributesHelper
   def session_attribute_checkboxes(talk)
-    content_tag :div, class: 'session-attributes-wrapper', data: { talk_id: talk.id } do
+    content_tag(:div, class: 'session-attributes-wrapper', data: { talk_id: talk.id }) do
       SessionAttribute.ordered.map do |attribute|
         session_attribute_checkbox(talk, attribute)
       end.join.html_safe
     end
   end
-  
+
   def session_attribute_checkbox(talk, attribute)
     is_checked = talk.session_attributes.include?(attribute)
     checkbox_id = "talk_#{talk.id}_attr_#{attribute.id}"
-    
-    content_tag :div, class: 'form-check form-check-inline' do
-      concat check_box_tag("session_attributes[#{talk.id}][attribute_ids][]",
-                          attribute.id,
-                          is_checked,
-                          {
-                            id: checkbox_id,
-                            class: 'form-check-input session-attribute-checkbox',
-                            data: {
-                              exclusive: attribute.is_exclusive?,
-                              talk_id: talk.id,
-                              attr_id: attribute.id
-                            }
-                          })
-      
-      concat label_tag(checkbox_id, attribute.display_name, class: 'form-check-label text-sm')
+
+    content_tag(:div, class: 'form-check form-check-inline') do
+      concat(check_box_tag("session_attributes[#{talk.id}][attribute_ids][]",
+                           attribute.id,
+                           is_checked,
+                           {
+                             id: checkbox_id,
+                             class: 'form-check-input session-attribute-checkbox',
+                             data: {
+                               exclusive: attribute.is_exclusive?,
+                               talk_id: talk.id,
+                               attr_id: attribute.id
+                             }
+                           }))
+
+      concat(label_tag(checkbox_id, attribute.display_name, class: 'form-check-label text-sm'))
     end
   end
-  
+
   def session_attribute_display_tags(talk)
     if talk.session_attributes.any?
       talk.session_attributes.map do |attr|
-        content_tag :span, attr.display_name, 
-                   class: "badge #{attribute_badge_class(attr)} me-1"
+        content_tag(:span, attr.display_name,
+                    class: "badge #{attribute_badge_class(attr)} me-1")
       end.join.html_safe
     else
-      content_tag :span, '通常セッション', class: 'text-muted'
+      content_tag(:span, '通常セッション', class: 'text-muted')
     end
   end
-  
+
   def session_attribute_summary(talk)
     attributes = talk.session_attributes.pluck(:display_name)
     if attributes.any?
@@ -48,9 +48,9 @@ module Admin::SessionAttributesHelper
       '通常セッション'
     end
   end
-  
+
   private
-  
+
   def attribute_badge_class(attribute)
     case attribute.name
     when 'keynote'

@@ -1,5 +1,14 @@
 FactoryBot.define do
-  factory :talk
+  factory :talk do
+    type { 'Session' }
+    title { 'Test Talk' }
+    abstract { 'Test abstract' }
+    start_time { '12:00' }
+    end_time { '12:40' }
+    association :conference
+    show_on_timetable { true }
+    video_published { false }
+  end
 
   factory :talk1, class: Talk do
     id { 1 }

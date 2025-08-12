@@ -34,18 +34,15 @@ class Admin::TalksController < ApplicationController
   def update_session_attributes
     params[:session_attributes].each do |talk_id, attributes_data|
       talk = @conference.talks.find(talk_id)
+      attribute_ids = attributes_data[:attribute_ids]
       
-      # Clear existing attributes
-      talk.talk_session_attributes.destroy_all
-      
-      # Add new attributes
-      if attributes_data[:attribute_ids].present?
-        attribute_ids = attributes_data[:attribute_ids].reject(&:blank?)
-        attribute_ids.each do |attr_id|
-          attribute = SessionAttribute.find(attr_id)
-          talk.talk_session_attributes.create!(session_attribute: attribute)
-        end
-      end
+      SessionAttributeService.assign_attributes(talk, attribute_ids)
+    rescue ActiveRecord::RecordNotFound => e
+      flash.now[:alert] = "セッションが見つかりません (ID: #{talk_id})"
+      Rails.logger.error "Talk not found: #{talk_id}"
+    rescue SessionAttributeService::ValidationError => e
+      flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
+      Rails.logger.error "Validation error for talk #{talk_id}: #{e.message}"
     rescue ActiveRecord::RecordInvalid => e
       flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
       Rails.logger.error "Failed to update session attributes for talk #{talk_id}: #{e.message}"

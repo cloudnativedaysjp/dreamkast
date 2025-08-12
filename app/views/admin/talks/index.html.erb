@@ -36,28 +36,8 @@
           <tr>
             <td><%= talk.id %></td>
             <td>
-              <div class="session-attributes-wrapper" data-talk-id="<%= talk.id %>">
-                <% SessionAttribute.ordered.each do |attr| %>
-                  <div class="form-check form-check-inline">
-                    <%= check_box_tag "session_attributes[#{talk.id}][attribute_ids][]", 
-                                      attr.id,
-                                      talk.session_attributes.include?(attr),
-                                      {
-                                        id: "talk_#{talk.id}_attr_#{attr.id}",
-                                        class: "form-check-input session-attribute-checkbox",
-                                        data: { 
-                                          exclusive: attr.is_exclusive?,
-                                          talk_id: talk.id,
-                                          attr_id: attr.id
-                                        }
-                                      } %>
-                    <%= label_tag "talk_#{talk.id}_attr_#{attr.id}", 
-                                  attr.display_name,
-                                  class: "form-check-label text-sm" %>
-                  </div>
-                <% end %>
-                <%= hidden_field_tag "session_attributes[#{talk.id}][attribute_ids][]", "" %>
-              </div>
+              <%= session_attribute_checkboxes(talk) %>
+              <%= hidden_field_tag "session_attributes[#{talk.id}][attribute_ids][]", "" %>
             </td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>

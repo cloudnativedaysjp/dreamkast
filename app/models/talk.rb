@@ -1,6 +1,7 @@
 require 'csv'
 
 class Talk < ApplicationRecord
+  include LegacySessionSupport
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference

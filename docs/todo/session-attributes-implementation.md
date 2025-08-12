@@ -123,35 +123,9 @@ talk_session_attributes方式によるセッション属性管理システムの
 - [x] パフォーマンステスト
 - [x] データ整合性テスト
 
-## Phase 4: Migration & Cleanup (1 week)
+## Phase 4: Future Enhancements (Optional)
 
-### 4.1 Production Readiness
-- [ ] マイグレーション検証スクリプト作成
-- [ ] データ整合性チェックrakeタスク
-- [ ] レポート生成rakeタスク
-- [ ] パフォーマンス監視設定
-
-### 4.2 Deployment Preparation
-- [ ] 本番環境用migration確認
-- [ ] Rollback手順文書化
-- [ ] 緊急時対応手順作成
-- [ ] 監視・アラート設定
-
-### 4.3 Documentation Updates
-- [ ] README更新
-- [ ] API仕様書更新
-- [ ] 管理者向け操作マニュアル作成
-- [ ] 開発者向けドキュメント更新
-
-### 4.4 Monitoring & Validation
-- [ ] 本番デプロイ実行
-- [ ] データ移行検証
-- [ ] パフォーマンス監視
-- [ ] エラー監視設定
-
-## Phase 5: Future Enhancements (Optional)
-
-### 5.1 Legacy Code Cleanup
+### 4.1 Legacy Code Cleanup
 - [ ] 古いSTIコードの段階的削除
 - [ ] 不要なメソッド削除
 - [ ] テストケース整理
@@ -203,9 +177,8 @@ talk_session_attributes方式によるセッション属性管理システムの
 | Phase 1 | 1 week | DB設計、モデル実装、データ移行 |
 | Phase 2 | 1 week | UI実装、機能実装 |
 | Phase 3 | 1 week | テスト、統合確認 |
-| Phase 4 | 3 days | 本番デプロイ、監視 |
 
-**Total: 3-4 weeks**（シンプル化により大幅短縮）
+**Total: 3 weeks**（シンプル化により大幅短縮）
 
 ## Notes
 - 各フェーズ開始前に前フェーズの成果物レビューを実施

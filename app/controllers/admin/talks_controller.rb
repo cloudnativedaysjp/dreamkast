@@ -16,9 +16,43 @@ class Admin::TalksController < ApplicationController
   end
 
   def update_talks
-    TalksHelper.update_talks(@conference, params[:video])
+    # Update video settings (existing functionality)
+    if params[:video].present?
+      TalksHelper.update_talks(@conference, params[:video])
+    end
+    
+    # Update session attributes (new functionality)
+    if params[:session_attributes].present?
+      update_session_attributes
+    end
 
-    redirect_to(admin_talks_url, notice: '配信設定を更新しました')
+    redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
+  end
+  
+  private
+  
+  def update_session_attributes
+    params[:session_attributes].each do |talk_id, attributes_data|
+      talk = @conference.talks.find(talk_id)
+      
+      # Clear existing attributes
+      talk.talk_session_attributes.destroy_all
+      
+      # Add new attributes
+      if attributes_data[:attribute_ids].present?
+        attribute_ids = attributes_data[:attribute_ids].reject(&:blank?)
+        attribute_ids.each do |attr_id|
+          attribute = SessionAttribute.find(attr_id)
+          talk.talk_session_attributes.create!(session_attribute: attribute)
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
+      Rails.logger.error "Failed to update session attributes for talk #{talk_id}: #{e.message}"
+    end
+  rescue => e
+    flash.now[:alert] = "セッション属性の更新中にエラーが発生しました"
+    Rails.logger.error "Unexpected error updating session attributes: #{e.message}"
   end
 
   def start_on_air

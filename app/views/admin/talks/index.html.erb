@@ -19,6 +19,7 @@
       <thead>
       <tr>
         <th scope="col">ID</th>
+        <th scope="col">セッション属性</th>
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Track</th>
@@ -34,6 +35,30 @@
         <% @talks.each do |talk| %>
           <tr>
             <td><%= talk.id %></td>
+            <td>
+              <div class="session-attributes-wrapper" data-talk-id="<%= talk.id %>">
+                <% SessionAttribute.ordered.each do |attr| %>
+                  <div class="form-check form-check-inline">
+                    <%= check_box_tag "session_attributes[#{talk.id}][attribute_ids][]", 
+                                      attr.id,
+                                      talk.session_attributes.include?(attr),
+                                      {
+                                        id: "talk_#{talk.id}_attr_#{attr.id}",
+                                        class: "form-check-input session-attribute-checkbox",
+                                        data: { 
+                                          exclusive: attr.is_exclusive?,
+                                          talk_id: talk.id,
+                                          attr_id: attr.id
+                                        }
+                                      } %>
+                    <%= label_tag "talk_#{talk.id}_attr_#{attr.id}", 
+                                  attr.display_name,
+                                  class: "form-check-label text-sm" %>
+                  </div>
+                <% end %>
+                <%= hidden_field_tag "session_attributes[#{talk.id}][attribute_ids][]", "" %>
+              </div>
+            </td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>
               <h5><%= talk.title %></h5>
@@ -75,3 +100,55 @@
   <%= submit_tag "保存", form: "talk_list",class: "btn btn-danger transit_button" %>
   <br/><span class="text-white"> ※視聴者にも設定が配信されます</span>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Session attribute exclusive control
+  const sessionAttributeCheckboxes = document.querySelectorAll('.session-attribute-checkbox');
+  
+  sessionAttributeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const talkId = this.dataset.talkId;
+      const attrId = this.dataset.attrId;
+      const isExclusive = this.dataset.exclusive === 'true';
+      const isChecked = this.checked;
+      
+      if (isExclusive && isChecked) {
+        // If exclusive attribute is checked, uncheck all other attributes for this talk
+        const otherCheckboxes = document.querySelectorAll(
+          `.session-attribute-checkbox[data-talk-id="${talkId}"]:not([data-attr-id="${attrId}"])`
+        );
+        otherCheckboxes.forEach(cb => cb.checked = false);
+      } else if (isChecked) {
+        // If non-exclusive attribute is checked, uncheck exclusive attributes for this talk
+        const exclusiveCheckboxes = document.querySelectorAll(
+          `.session-attribute-checkbox[data-talk-id="${talkId}"][data-exclusive="true"]`
+        );
+        exclusiveCheckboxes.forEach(cb => cb.checked = false);
+      }
+    });
+  });
+  
+  // Bulk operations
+  function selectAttributeForAll(attributeName) {
+    const checkboxes = document.querySelectorAll(
+      `.session-attribute-checkbox[data-attr-name="${attributeName}"]`
+    );
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = true;
+      checkbox.dispatchEvent(new Event('change'));
+    });
+  }
+  
+  function clearAllAttributes() {
+    const checkboxes = document.querySelectorAll('.session-attribute-checkbox');
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+  }
+  
+  // Make functions available globally if needed
+  window.selectAttributeForAll = selectAttributeForAll;
+  window.clearAllAttributes = clearAllAttributes;
+});
+</script>

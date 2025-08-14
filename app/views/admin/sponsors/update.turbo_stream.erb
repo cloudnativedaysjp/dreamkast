@@ -1,0 +1,2 @@
+<%= turbo_stream.replace @sponsor, partial: "admin/sponsors/sponsor_row", locals: { sponsor: @sponsor } %>
+<%= turbo_stream.append 'flashes', partial: 'application/flash' %>

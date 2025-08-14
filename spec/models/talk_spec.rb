@@ -1,6 +1,122 @@
 require 'rails_helper'
 
 describe Talk, type: :model do
+  describe 'session attributes' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let(:talk) { create(:talk1) }
+    let(:keynote_attr) { create(:session_attribute, name: 'keynote', is_exclusive: false) }
+    let(:sponsor_attr) { create(:session_attribute, name: 'sponsor', is_exclusive: false) }
+    let(:intermission_attr) { create(:session_attribute, name: 'intermission', is_exclusive: true) }
+
+    describe 'associations' do
+      it 'has many talk_session_attributes' do
+        association = Talk.reflect_on_association(:talk_session_attributes)
+        expect(association.macro).to(eq(:has_many))
+        expect(association.options[:dependent]).to(eq(:destroy))
+      end
+
+      it 'has many session_attributes through talk_session_attributes' do
+        association = Talk.reflect_on_association(:session_attributes)
+        expect(association.macro).to(eq(:has_many))
+        expect(association.options[:through]).to(eq(:talk_session_attributes))
+      end
+    end
+
+    describe '#keynote?' do
+      it 'returns true when keynote attribute is assigned' do
+        talk.session_attributes << keynote_attr
+        expect(talk.keynote?).to(be(true))
+      end
+
+      it 'returns false when keynote attribute is not assigned' do
+        expect(talk.keynote?).to(be(false))
+      end
+    end
+
+    describe '#sponsor_session?' do
+      it 'returns true when sponsor attribute is assigned' do
+        talk.session_attributes << sponsor_attr
+        expect(talk.sponsor_session?).to(be(true))
+      end
+
+      it 'returns true when sponsor is present (backward compatibility)' do
+        sponsor = create(:sponsor)
+        talk.update!(sponsor:)
+        expect(talk.sponsor_session?).to(be(true))
+      end
+
+      it 'returns false when neither sponsor attribute nor sponsor is present' do
+        expect(talk.sponsor_session?).to(be(false))
+      end
+    end
+
+    describe '#intermission?' do
+      it 'returns true when intermission attribute is assigned' do
+        talk.session_attributes << intermission_attr
+        expect(talk.intermission?).to(be(true))
+      end
+
+      it 'returns true when abstract is intermission (backward compatibility)' do
+        talk.update!(abstract: 'intermission')
+        expect(talk.intermission?).to(be(true))
+      end
+
+      it 'returns false when neither intermission attribute nor abstract=intermission' do
+        expect(talk.intermission?).to(be(false))
+      end
+    end
+
+    describe '#sponsor_keynote?' do
+      it 'returns true when both sponsor and keynote attributes are assigned' do
+        talk.session_attributes << [sponsor_attr, keynote_attr]
+        expect(talk.sponsor_keynote?).to(be(true))
+      end
+
+      it 'returns false when only one attribute is present' do
+        talk.session_attributes << keynote_attr
+        expect(talk.sponsor_keynote?).to(be(false))
+      end
+    end
+
+    describe '#set_session_attributes' do
+      it 'sets session attributes from array of names' do
+        # Ensure the attributes exist
+        keynote_attr
+        sponsor_attr
+
+        talk.set_session_attributes(['keynote', 'sponsor'])
+
+        expect(talk.keynote?).to(be(true))
+        expect(talk.sponsor_session?).to(be(true))
+      end
+
+      it 'replaces existing attributes' do
+        # Ensure the attributes exist
+        keynote_attr
+        sponsor_attr
+
+        talk.session_attributes << keynote_attr
+        expect(talk.keynote?).to(be(true))
+
+        talk.set_session_attributes(['sponsor'])
+
+        expect(talk.keynote?).to(be(false))
+        expect(talk.sponsor_session?).to(be(true))
+      end
+    end
+
+    describe '#session_attribute_names' do
+      it 'returns array of assigned attribute names' do
+        talk.session_attributes << [keynote_attr, sponsor_attr]
+
+        expect(talk.session_attribute_names).to(match_array(['keynote', 'sponsor']))
+      end
+
+      it 'returns empty array when no attributes assigned' do
+        expect(talk.session_attribute_names).to(eq([]))
+      end
+    end
+  end
   context 'live?' do
     let!(:cndt2020) { create(:cndt2020) }
     let!(:talk) { create(:talk1) }

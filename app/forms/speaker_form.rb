@@ -24,7 +24,7 @@ class SpeakerForm
     attr_accessor :talks
 
     def talks
-      @talks ||= []
+      @talks || []
     end
 
     def talks_attributes=(attributes)
@@ -135,7 +135,7 @@ class SpeakerForm
   end
 
   def load
-    @talks = @speaker.talks
+    @talks = @speaker.talks.to_a
     # If no talks exist, create a default one for the form
     if @talks.empty? && @conference
       @talks = [Talk.new(conference: @conference)]
@@ -158,8 +158,7 @@ class SpeakerForm
       twitter_id: speaker.twitter_id,
       github_id: speaker.github_id,
       avatar: speaker.avatar_data,
-      additional_documents: speaker.additional_documents,
-      talks:
+      additional_documents: speaker.additional_documents
     }
   end
 end

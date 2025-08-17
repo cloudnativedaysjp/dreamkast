@@ -63,6 +63,7 @@ class Profile < ApplicationRecord
   validates :company_fax, presence: false, length: { maximum: 128 }
   validates :department, presence: true, length: { maximum: 128 }
   validates :position, presence: true, length: { maximum: 128 }
+  validates :participation, presence: true
   validates :number_of_employee_id, length: { maximum: 128 }
   validates :annual_sales_id, length: { maximum: 128 }
 

@@ -22,7 +22,6 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
           TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: intermission_attr.id)
         end
       end
-      say "Migrated #{migrated_count} session attributes"
     end
   end
   

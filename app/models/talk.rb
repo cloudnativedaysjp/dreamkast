@@ -1,6 +1,8 @@
 require 'csv'
 
 class Talk < ApplicationRecord
+  # Disable STI since we're not using type column for inheritance
+  self.inheritance_column = nil
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference

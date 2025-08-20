@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_20_132351) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -334,17 +334,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
     t.index ["conference_id"], name: "index_rooms_on_conference_id"
   end
 
-  create_table "session_attributes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", limit: 50, null: false
-    t.string "display_name", limit: 100, null: false
-    t.text "description"
-    t.boolean "is_exclusive", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["is_exclusive"], name: "index_session_attributes_on_is_exclusive"
-    t.index ["name"], name: "index_session_attributes_on_name", unique: true
-  end
-
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
@@ -562,6 +551,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
     t.index ["track_id"], name: "index_streamings_on_track_id"
   end
 
+  create_table "talk_attribute_associations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.bigint "talk_attribute_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["talk_attribute_id"], name: "index_talk_attribute_associations_on_talk_attribute_id"
+    t.index ["talk_id", "talk_attribute_id"], name: "idx_talk_attrs_unique", unique: true
+    t.index ["talk_id"], name: "index_talk_attribute_associations_on_talk_id"
+  end
+
+  create_table "talk_attributes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", limit: 50, null: false
+    t.string "display_name", limit: 100, null: false
+    t.text "description"
+    t.boolean "is_exclusive", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["is_exclusive"], name: "index_talk_attributes_on_is_exclusive"
+    t.index ["name"], name: "index_talk_attributes_on_name", unique: true
+  end
+
   create_table "talk_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -578,16 +588,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
     t.index ["conference_id"], name: "index_talk_difficulties_on_conference_id"
   end
 
-  create_table "talk_session_attributes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "talk_id", null: false
-    t.bigint "session_attribute_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["session_attribute_id"], name: "index_talk_session_attributes_on_session_attribute_id"
-    t.index ["talk_id", "session_attribute_id"], name: "idx_talk_session_attrs_unique", unique: true
-    t.index ["talk_id"], name: "index_talk_session_attributes_on_talk_id"
-  end
-
   create_table "talk_times", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.integer "time_minutes"
@@ -602,7 +602,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
   end
 
   create_table "talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type", null: false
     t.string "title"
     t.text "abstract"
     t.string "movie_url"
@@ -630,7 +629,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"
     t.index ["track_id"], name: "index_talks_on_track_id"
-    t.index ["type"], name: "fk_rails_9c6f538eea"
   end
 
   create_table "talks_speakers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -751,9 +749,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_103333) do
   add_foreign_key "stamp_rally_configures", "conferences"
   add_foreign_key "streamings", "conferences"
   add_foreign_key "streamings", "tracks"
-  add_foreign_key "talk_session_attributes", "session_attributes"
-  add_foreign_key "talk_session_attributes", "talks"
+  add_foreign_key "talk_attribute_associations", "talk_attributes"
+  add_foreign_key "talk_attribute_associations", "talks"
   add_foreign_key "talk_times", "conferences"
-  add_foreign_key "talks", "talk_types", column: "type"
   add_foreign_key "video_registrations", "talks"
 end

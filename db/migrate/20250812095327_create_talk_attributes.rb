@@ -1,6 +1,6 @@
-class CreateSessionAttributes < ActiveRecord::Migration[8.0]
+class CreateTalkAttributes < ActiveRecord::Migration[8.0]
   def change
-    create_table :session_attributes do |t|
+    create_table :talk_attributes do |t|
       t.string :name, null: false, limit: 50
       t.string :display_name, null: false, limit: 100
       t.text :description

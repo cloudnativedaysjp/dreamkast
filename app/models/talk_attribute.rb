@@ -1,7 +1,7 @@
-class SessionAttribute < ApplicationRecord
+class TalkAttribute < ApplicationRecord
   # Associations
-  has_many :talk_session_attributes, dependent: :destroy
-  has_many :talks, through: :talk_session_attributes
+  has_many :talk_attribute_associations, dependent: :destroy
+  has_many :talks, through: :talk_attribute_associations
 
   # Validations
   validates :name, presence: true, uniqueness: true, format: { with: /\A[a-z_]+\z/ }

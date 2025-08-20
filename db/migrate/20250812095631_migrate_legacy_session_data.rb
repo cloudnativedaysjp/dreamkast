@@ -5,12 +5,12 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
     
     say_with_time "Migrating legacy session data to new session attributes system" do
       # Create temporary models for migration
-      temp_session_attribute = Class.new(ActiveRecord::Base) do
-        self.table_name = 'session_attributes'
+      temp_talk_attribute = Class.new(ActiveRecord::Base) do
+        self.table_name = 'talk_attributes'
       end
       
-      temp_talk_session_attribute = Class.new(ActiveRecord::Base) do
-        self.table_name = 'talk_session_attributes'
+      temp_talk_attribute_association = Class.new(ActiveRecord::Base) do
+        self.table_name = 'talk_attribute_associations'
       end
       
       temp_talk = Class.new(ActiveRecord::Base) do
@@ -18,9 +18,9 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       end
       
       # Find attribute IDs
-      keynote_attr = temp_session_attribute.find_by(name: 'keynote')
-      sponsor_attr = temp_session_attribute.find_by(name: 'sponsor')
-      intermission_attr = temp_session_attribute.find_by(name: 'intermission')
+      keynote_attr = temp_talk_attribute.find_by(name: 'keynote')
+      sponsor_attr = temp_talk_attribute.find_by(name: 'sponsor')
+      intermission_attr = temp_talk_attribute.find_by(name: 'intermission')
       
       migrated_count = 0
       
@@ -32,7 +32,7 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
         )
         keynote_talks.each do |row|
           talk_id = row.is_a?(Array) ? row[0] : row['id']
-          temp_talk_session_attribute.find_or_create_by!(
+          temp_talk_attribute_association.find_or_create_by!(
             talk_id: talk_id,
             session_attribute_id: keynote_attr.id
           )
@@ -47,7 +47,7 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
         )
         sponsor_talks.each do |row|
           talk_id = row.is_a?(Array) ? row[0] : row['id']
-          temp_talk_session_attribute.find_or_create_by!(
+          temp_talk_attribute_association.find_or_create_by!(
             talk_id: talk_id,
             session_attribute_id: sponsor_attr.id
           )
@@ -63,12 +63,12 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       sponsor_id_talks.each do |row|
         talk_id = row.is_a?(Array) ? row[0] : row['id']
         # Skip if already migrated from STI
-        next if temp_talk_session_attribute.exists?(
+        next if temp_talk_attribute_association.exists?(
           talk_id: talk_id,
           session_attribute_id: sponsor_attr.id
         )
         
-        temp_talk_session_attribute.find_or_create_by!(
+        temp_talk_attribute_association.find_or_create_by!(
           talk_id: talk_id,
           session_attribute_id: sponsor_attr.id
         )
@@ -82,7 +82,7 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
         )
         intermission_talks.each do |row|
           talk_id = row.is_a?(Array) ? row[0] : row['id']
-          temp_talk_session_attribute.find_or_create_by!(
+          temp_talk_attribute_association.find_or_create_by!(
             talk_id: talk_id,
             session_attribute_id: intermission_attr.id
           )
@@ -98,12 +98,12 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       abstract_intermission_talks.each do |row|
         talk_id = row.is_a?(Array) ? row[0] : row['id']
         # Skip if already migrated from STI
-        next if temp_talk_session_attribute.exists?(
+        next if temp_talk_attribute_association.exists?(
           talk_id: talk_id,
           session_attribute_id: intermission_attr.id
         )
         
-        temp_talk_session_attribute.find_or_create_by!(
+        temp_talk_attribute_association.find_or_create_by!(
           talk_id: talk_id,
           session_attribute_id: intermission_attr.id
         )
@@ -118,10 +118,10 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
     # Skip if running in test environment
     return if Rails.env.test?
     
-    temp_talk_session_attribute = Class.new(ActiveRecord::Base) do
-      self.table_name = 'talk_session_attributes'
+    temp_talk_attribute_association = Class.new(ActiveRecord::Base) do
+      self.table_name = 'talk_talk_attributes'
     end
     
-    temp_talk_session_attribute.delete_all
+    temp_talk_attribute_association.delete_all
   end
 end

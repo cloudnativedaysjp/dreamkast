@@ -37,7 +37,7 @@
             <td><%= talk.id %></td>
             <td>
               <%= session_attribute_checkboxes(talk) %>
-              <%= hidden_field_tag "session_attributes[#{talk.id}][attribute_ids][]", "" %>
+              <%= hidden_field_tag "talk_attributes[#{talk.id}][attribute_ids][]", "" %>
             </td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>

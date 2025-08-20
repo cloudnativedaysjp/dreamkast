@@ -1,23 +1,23 @@
-module Admin::SessionAttributesHelper
-  def session_attribute_checkboxes(talk)
-    content_tag(:div, class: 'session-attributes-wrapper', data: { talk_id: talk.id }) do
-      SessionAttribute.ordered.map do |attribute|
-        session_attribute_checkbox(talk, attribute)
+module Admin::TalkAttributesHelper
+  def talk_attribute_checkboxes(talk)
+    content_tag(:div, class: 'talk-attributes-wrapper', data: { talk_id: talk.id }) do
+      TalkAttribute.ordered.map do |attribute|
+        talk_attribute_checkbox(talk, attribute)
       end.join.html_safe
     end
   end
 
-  def session_attribute_checkbox(talk, attribute)
-    is_checked = talk.session_attributes.include?(attribute)
+  def talk_attribute_checkbox(talk, attribute)
+    is_checked = talk.talk_attributes.include?(attribute)
     checkbox_id = "talk_#{talk.id}_attr_#{attribute.id}"
 
     content_tag(:div, class: 'form-check form-check-inline') do
-      concat(check_box_tag("session_attributes[#{talk.id}][attribute_ids][]",
+      concat(check_box_tag("talk_attributes[#{talk.id}][attribute_ids][]",
                            attribute.id,
                            is_checked,
                            {
                              id: checkbox_id,
-                             class: 'form-check-input session-attribute-checkbox',
+                             class: 'form-check-input talk-attribute-checkbox',
                              data: {
                                exclusive: attribute.is_exclusive?,
                                talk_id: talk.id,
@@ -29,9 +29,9 @@ module Admin::SessionAttributesHelper
     end
   end
 
-  def session_attribute_display_tags(talk)
-    if talk.session_attributes.any?
-      talk.session_attributes.map do |attr|
+  def talk_attribute_display_tags(talk)
+    if talk.talk_attributes.any?
+      talk.talk_attributes.map do |attr|
         content_tag(:span, attr.display_name,
                     class: "badge #{attribute_badge_class(attr)} me-1")
       end.join.html_safe
@@ -40,8 +40,8 @@ module Admin::SessionAttributesHelper
     end
   end
 
-  def session_attribute_summary(talk)
-    attributes = talk.session_attributes.pluck(:display_name)
+  def talk_attribute_summary(talk)
+    attributes = talk.talk_attributes.pluck(:display_name)
     if attributes.any?
       attributes.join(' + ')
     else

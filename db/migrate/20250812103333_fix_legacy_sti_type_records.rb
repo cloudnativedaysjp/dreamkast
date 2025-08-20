@@ -1,8 +1,8 @@
 class FixLegacyStiTypeRecords < ActiveRecord::Migration[8.0]
   def up
     # Find session attributes
-    keynote_attr = execute("SELECT id FROM session_attributes WHERE name = 'keynote'").first
-    intermission_attr = execute("SELECT id FROM session_attributes WHERE name = 'intermission'").first
+    keynote_attr = execute("SELECT id FROM talk_attributes WHERE name = 'keynote'").first
+    intermission_attr = execute("SELECT id FROM talk_attributes WHERE name = 'intermission'").first
 
     unless keynote_attr
       raise "Keynote session attribute not found. Please ensure session attributes have been created."
@@ -24,11 +24,11 @@ class FixLegacyStiTypeRecords < ActiveRecord::Migration[8.0]
       execute("UPDATE talks SET type = 'Session' WHERE id = #{talk_id}")
       
       # Ensure keynote attribute exists (avoid duplicates)
-      existing = execute("SELECT COUNT(*) as count FROM talk_session_attributes WHERE talk_id = #{talk_id} AND session_attribute_id = #{keynote_attr_id}")
+      existing = execute("SELECT COUNT(*) as count FROM talk_attribute_associations WHERE talk_id = #{talk_id} AND talk_attribute_id = #{keynote_attr_id}")
       count = existing.first.is_a?(Array) ? existing.first[0] : existing.first['count']
       
       if count.to_i == 0
-        execute("INSERT INTO talk_session_attributes (talk_id, session_attribute_id, created_at, updated_at) VALUES (#{talk_id}, #{keynote_attr_id}, NOW(), NOW())")
+        execute("INSERT INTO talk_attribute_associations (talk_id, talk_attribute_id, created_at, updated_at) VALUES (#{talk_id}, #{keynote_attr_id}, NOW(), NOW())")
       end
     end
 
@@ -41,11 +41,11 @@ class FixLegacyStiTypeRecords < ActiveRecord::Migration[8.0]
       execute("UPDATE talks SET type = 'Session' WHERE id = #{talk_id}")
       
       # Ensure intermission attribute exists (avoid duplicates)
-      existing = execute("SELECT COUNT(*) as count FROM talk_session_attributes WHERE talk_id = #{talk_id} AND session_attribute_id = #{intermission_attr_id}")
+      existing = execute("SELECT COUNT(*) as count FROM talk_attribute_associations WHERE talk_id = #{talk_id} AND talk_attribute_id = #{intermission_attr_id}")
       count = existing.first.is_a?(Array) ? existing.first[0] : existing.first['count']
       
       if count.to_i == 0
-        execute("INSERT INTO talk_session_attributes (talk_id, session_attribute_id, created_at, updated_at) VALUES (#{talk_id}, #{intermission_attr_id}, NOW(), NOW())")
+        execute("INSERT INTO talk_attribute_associations (talk_id, talk_attribute_id, created_at, updated_at) VALUES (#{talk_id}, #{intermission_attr_id}, NOW(), NOW())")
       end
     end
 

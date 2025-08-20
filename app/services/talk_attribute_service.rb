@@ -1,4 +1,4 @@
-class SessionAttributeService
+class TalkAttributeService
   class ValidationError < StandardError; end
 
   def self.assign_attributes(talk, attribute_ids)
@@ -15,12 +15,12 @@ class SessionAttributeService
 
     ActiveRecord::Base.transaction do
       # Clear existing attributes
-      @talk.talk_session_attributes.destroy_all
+      @talk.talk_attribute_associations.destroy_all
 
       # Add new attributes (using uniq to avoid duplicates)
       attribute_ids.uniq.each do |attr_id|
-        attribute = SessionAttribute.find(attr_id)
-        @talk.talk_session_attributes.create!(session_attribute: attribute)
+        attribute = TalkAttribute.find(attr_id)
+        @talk.talk_attribute_associations.create!(talk_attribute: attribute)
       end
     end
 
@@ -33,7 +33,7 @@ class SessionAttributeService
     return if attribute_ids.empty?
 
     # Check if attributes exist
-    existing_ids = SessionAttribute.where(id: attribute_ids).pluck(:id)
+    existing_ids = TalkAttribute.where(id: attribute_ids).pluck(:id)
     missing_ids = attribute_ids.map(&:to_i) - existing_ids
 
     if missing_ids.any?
@@ -41,7 +41,7 @@ class SessionAttributeService
     end
 
     # Check exclusive attribute constraints
-    attributes = SessionAttribute.where(id: attribute_ids)
+    attributes = TalkAttribute.where(id: attribute_ids)
     exclusive_attributes = attributes.select(&:is_exclusive?)
 
     if exclusive_attributes.count > 1

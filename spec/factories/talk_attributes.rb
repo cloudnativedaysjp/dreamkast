@@ -1,8 +1,8 @@
 FactoryBot.define do
-  factory :session_attribute do
+  factory :talk_attribute do
     sequence(:name) { |n| "attribute_#{n}" }
     sequence(:display_name) { |n| "Attribute #{n}" }
-    description { 'Test session attribute' }
+    description { 'Test talk attribute' }
     is_exclusive { false }
 
     trait :keynote do
@@ -31,8 +31,8 @@ FactoryBot.define do
     end
   end
 
-  factory :talk_session_attribute do
+  factory :talk_attribute_association do
     association :talk
-    association :session_attribute
+    association :talk_attribute
   end
 end

@@ -21,9 +21,9 @@ class Admin::TalksController < ApplicationController
       TalksHelper.update_talks(@conference, params[:video])
     end
 
-    # Update session attributes (new functionality)
-    if params[:session_attributes].present?
-      update_session_attributes
+    # Update talk attributes (new functionality)
+    if params[:talk_attributes].present?
+      update_talk_attributes
     end
 
     redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
@@ -31,25 +31,25 @@ class Admin::TalksController < ApplicationController
 
   private
 
-  def update_session_attributes
-    params[:session_attributes].each do |talk_id, attributes_data|
+  def update_talk_attributes
+    params[:talk_attributes].each do |talk_id, attributes_data|
       talk = @conference.talks.find(talk_id)
       attribute_ids = attributes_data[:attribute_ids]
 
-      SessionAttributeService.assign_attributes(talk, attribute_ids)
+      TalkAttributeService.assign_attributes(talk, attribute_ids)
     rescue ActiveRecord::RecordNotFound
       flash.now[:alert] = "セッションが見つかりません (ID: #{talk_id})"
       Rails.logger.error("Talk not found: #{talk_id}")
-    rescue SessionAttributeService::ValidationError => e
+    rescue TalkAttributeService::ValidationError => e
       flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
       Rails.logger.error("Validation error for talk #{talk_id}: #{e.message}")
     rescue ActiveRecord::RecordInvalid => e
       flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
-      Rails.logger.error("Failed to update session attributes for talk #{talk_id}: #{e.message}")
+      Rails.logger.error("Failed to update talk attributes for talk #{talk_id}: #{e.message}")
     end
   rescue => e
     flash.now[:alert] = 'セッション属性の更新中にエラーが発生しました'
-    Rails.logger.error("Unexpected error updating session attributes: #{e.message}")
+    Rails.logger.error("Unexpected error updating talk attributes: #{e.message}")
   end
 
   def start_on_air

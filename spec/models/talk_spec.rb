@@ -9,22 +9,22 @@ describe Talk, type: :model do
     let(:intermission_attr) { create(:session_attribute, name: 'intermission', is_exclusive: true) }
 
     describe 'associations' do
-      it 'has many talk_session_attributes' do
-        association = Talk.reflect_on_association(:talk_session_attributes)
+      it 'has many talk_talk_attributes' do
+        association = Talk.reflect_on_association(:talk_talk_attributes)
         expect(association.macro).to(eq(:has_many))
         expect(association.options[:dependent]).to(eq(:destroy))
       end
 
-      it 'has many session_attributes through talk_session_attributes' do
-        association = Talk.reflect_on_association(:session_attributes)
+      it 'has many talk_attributes through talk_talk_attributes' do
+        association = Talk.reflect_on_association(:talk_attributes)
         expect(association.macro).to(eq(:has_many))
-        expect(association.options[:through]).to(eq(:talk_session_attributes))
+        expect(association.options[:through]).to(eq(:talk_talk_attributes))
       end
     end
 
     describe '#keynote?' do
       it 'returns true when keynote attribute is assigned' do
-        talk.session_attributes << keynote_attr
+        talk.talk_attributes << keynote_attr
         expect(talk.keynote?).to(be(true))
       end
 
@@ -35,7 +35,7 @@ describe Talk, type: :model do
 
     describe '#sponsor_session?' do
       it 'returns true when sponsor attribute is assigned' do
-        talk.session_attributes << sponsor_attr
+        talk.talk_attributes << sponsor_attr
         expect(talk.sponsor_session?).to(be(true))
       end
 
@@ -52,7 +52,7 @@ describe Talk, type: :model do
 
     describe '#intermission?' do
       it 'returns true when intermission attribute is assigned' do
-        talk.session_attributes << intermission_attr
+        talk.talk_attributes << intermission_attr
         expect(talk.intermission?).to(be(true))
       end
 
@@ -68,23 +68,23 @@ describe Talk, type: :model do
 
     describe '#sponsor_keynote?' do
       it 'returns true when both sponsor and keynote attributes are assigned' do
-        talk.session_attributes << [sponsor_attr, keynote_attr]
+        talk.talk_attributes << [sponsor_attr, keynote_attr]
         expect(talk.sponsor_keynote?).to(be(true))
       end
 
       it 'returns false when only one attribute is present' do
-        talk.session_attributes << keynote_attr
+        talk.talk_attributes << keynote_attr
         expect(talk.sponsor_keynote?).to(be(false))
       end
     end
 
-    describe '#set_session_attributes' do
+    describe '#set_talk_attributes' do
       it 'sets session attributes from array of names' do
         # Ensure the attributes exist
         keynote_attr
         sponsor_attr
 
-        talk.set_session_attributes(['keynote', 'sponsor'])
+        talk.set_talk_attributes(['keynote', 'sponsor'])
 
         expect(talk.keynote?).to(be(true))
         expect(talk.sponsor_session?).to(be(true))
@@ -95,10 +95,10 @@ describe Talk, type: :model do
         keynote_attr
         sponsor_attr
 
-        talk.session_attributes << keynote_attr
+        talk.talk_attributes << keynote_attr
         expect(talk.keynote?).to(be(true))
 
-        talk.set_session_attributes(['sponsor'])
+        talk.set_talk_attributes(['sponsor'])
 
         expect(talk.keynote?).to(be(false))
         expect(talk.sponsor_session?).to(be(true))
@@ -107,7 +107,7 @@ describe Talk, type: :model do
 
     describe '#session_attribute_names' do
       it 'returns array of assigned attribute names' do
-        talk.session_attributes << [keynote_attr, sponsor_attr]
+        talk.talk_attributes << [keynote_attr, sponsor_attr]
 
         expect(talk.session_attribute_names).to(match_array(['keynote', 'sponsor']))
       end

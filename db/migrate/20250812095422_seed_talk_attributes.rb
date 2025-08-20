@@ -1,15 +1,15 @@
-class SeedSessionAttributes < ActiveRecord::Migration[8.0]
+class SeedTalkAttributes < ActiveRecord::Migration[8.0]
   def up
     # Skip if running in test environment
     return if Rails.env.test?
     
-    # Create SessionAttribute model temporarily for migration
-    temp_session_attribute = Class.new(ActiveRecord::Base) do
-      self.table_name = 'session_attributes'
+    # Create TalkAttribute model temporarily for migration
+    temp_talk_attribute = Class.new(ActiveRecord::Base) do
+      self.table_name = 'talk_attributes'
     end
     
     # Insert master data
-    temp_session_attribute.create!([
+    temp_talk_attribute.create!([
       {
         name: 'keynote',
         display_name: 'キーノート',
@@ -35,10 +35,10 @@ class SeedSessionAttributes < ActiveRecord::Migration[8.0]
     # Skip if running in test environment
     return if Rails.env.test?
     
-    temp_session_attribute = Class.new(ActiveRecord::Base) do
-      self.table_name = 'session_attributes'
+    temp_talk_attribute = Class.new(ActiveRecord::Base) do
+      self.table_name = 'talk_attributes'
     end
     
-    temp_session_attribute.where(name: ['keynote', 'sponsor', 'intermission']).destroy_all
+    temp_talk_attribute.where(name: ['keynote', 'sponsor', 'intermission']).destroy_all
   end
 end

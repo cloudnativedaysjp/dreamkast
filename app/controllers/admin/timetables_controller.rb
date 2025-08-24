@@ -64,10 +64,6 @@ class Admin::TimetablesController < ApplicationController
   end
 
   def timetable_partial_name
-    if params[:event] == 'cndo2021'
-      'timetable_cndo2021'
-    else
-      'timetable'
-    end
+    'timetable'
   end
 end

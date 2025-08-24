@@ -13,7 +13,7 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       Talk.all.each do |talk|
         case talk.type
         when 'Session'
-          TalkAttributeAssociation.create!(talk_id:  talk.id, attribute_id: regular_attr.id)
+          TalkAttributeAssociation.create!(talk_id:  talk.id, talk_attribute_id: regular_attr.id)
         when "KeynoteSession"
           TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: keynote_attr.id)
           if talk.sponsor_session?

@@ -5,12 +5,15 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
     
     say_with_time "Migrating legacy session data to new session attributes system" do
       # Find attribute IDs
+      regular_attr = TalkAttribute.find_by(name: 'regular')
       keynote_attr = TalkAttribute.find_by(name: 'keynote')
       sponsor_attr = TalkAttribute.find_by(name: 'sponsor')
       intermission_attr = TalkAttribute.find_by(name: 'intermission')
 
       Talk.all.each do |talk|
         case talk.type
+        when 'Session'
+          TalkAttributeAssociation.create!(talk_id:  talk.id, attribute_id: regular_attr.id)
         when "KeynoteSession"
           TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: keynote_attr.id)
           if talk.sponsor_session?

@@ -11,6 +11,12 @@ class SeedTalkAttributes < ActiveRecord::Migration[8.0]
     # Insert master data
     temp_talk_attribute.create!([
       {
+        name: 'regular',
+        display_name: '公募セッション',
+        description: '公募セッション',
+        is_exclusive: false
+      },
+      {
         name: 'keynote',
         display_name: 'キーノート',
         description: 'メインの基調講演',

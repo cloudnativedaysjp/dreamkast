@@ -37,16 +37,16 @@ RSpec.describe(TalkAttribute, type: :model) do
   end
 
   describe 'associations' do
-    it 'has many talk_talk_attributes' do
-      association = TalkAttribute.reflect_on_association(:talk_talk_attributes)
+    it 'has many talk_attribute_associations' do
+      association = TalkAttribute.reflect_on_association(:talk_attribute_associations)
       expect(association.macro).to(eq(:has_many))
       expect(association.options[:dependent]).to(eq(:destroy))
     end
 
-    it 'has many talks through talk_talk_attributes' do
+    it 'has many talks through talk_attribute_associations' do
       association = TalkAttribute.reflect_on_association(:talks)
       expect(association.macro).to(eq(:has_many))
-      expect(association.options[:through]).to(eq(:talk_talk_attributes))
+      expect(association.options[:through]).to(eq(:talk_attribute_associations))
     end
   end
 

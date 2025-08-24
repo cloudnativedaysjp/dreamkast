@@ -21,6 +21,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
         let(:assumed_visitor) { create(:proposal_item_configs_assumed_visitor, conference:) }
         let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
         let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
+        let!(:regular_talk_attribute) { create(:talk_attribute, :regular) }
 
         it 'talk\'s session time should be 40 minutes (default value)' do
           params = {
@@ -38,9 +39,9 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
               '1644323265675' =>
                 {
                   'title' => 'すごいセッション',
-                  'type' => 'Session',
                   'abstract' => 'すごいぞ！',
                   'talk_difficulty_id' => '41',
+                  'talk_attributes' => ['regular'],
                   'assumed_visitors' => [assumed_visitor.id],
                   'execution_phases' => [execution_phase.id],
                   'presentation_methods' => presentation_method.id,
@@ -62,7 +63,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
 
           talk = speaker.talks.first
           expect(talk.time).to(eq(40))
-          expect(talk.type).to(eq('Session'))
+          expect(talk.talk_attributes.pluck(:name)).to(include('regular'))
         end
       end
     end

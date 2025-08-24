@@ -50,9 +50,15 @@ class Admin::SpeakersController < ApplicationController
 
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
-               @talks.where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.left_joins(:talk_attributes)
+                     .where.not(talk_attributes: { name: 'intermission' })
+                     .where.not(abstract: '-')
              else
-               @talks.where(proposals: { status: :accepted }).where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.joins(:proposal)
+                     .left_joins(:talk_attributes)
+                     .where(proposals: { status: :accepted })
+                     .where.not(talk_attributes: { name: 'intermission' })
+                     .where.not(abstract: '-')
              end
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))
     @talks = @talks.select do |talk|

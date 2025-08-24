@@ -28,60 +28,86 @@ class SpeakerForm
     end
 
     def talks_attributes=(attributes)
-      proposal_item_config_labels = @conference.proposal_item_configs.map(&:label).uniq
       @talks ||= []
       @destroy_talks ||= []
       attributes.each do |_i, params|
         next if params.nil?
 
-        # Normalize parameter keys to symbols
         params = params.symbolize_keys
+        talk_attributes = params.delete(:talk_attributes) || []
 
         if params.key?(:id)
-          # talk is already exists
-          if params[:_destroy] == '1'
-            @destroy_talks << @speaker.talks.find(params[:id])
-          else
-            params.delete(:_destroy)
-            talk = @speaker.talks.find(params[:id])
-
-            proposal_item_params = {}
-            proposal_item_config_labels.each do |label|
-              pluralized_label = label.pluralize
-              symbol_key = pluralized_label.to_sym
-              proposal_item_params[pluralized_label] = params.delete(symbol_key)
-            end
-            proposal_item_config_labels.each do |label|
-              talk.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
-            end
-
-            talk.update(params)
-            @talks << talk
-          end
+          process_existing_talk(params, talk_attributes)
         else
-          # talk doesn't exists
-          unless params[:_destroy] == '1'
-            params.delete(:_destroy)
-            params[:show_on_timetable] = true
-            params[:video_published] = true
-            proposal_item_params = {}
-            proposal_item_config_labels.each do |label|
-              pluralized_label = label.pluralize
-              symbol_key = pluralized_label.to_sym
-              proposal_item_params[pluralized_label] = params.delete(symbol_key)
-            end
-            t = Talk.new(params)
-            t.conference = @conference if @conference
-            proposal_item_config_labels.each do |label|
-              t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
-            end
-            @talks << t
-          end
+          process_new_talk(params, talk_attributes)
         end
       end
     rescue => e
       puts(e)
       false
+    end
+
+    private
+
+    def process_existing_talk(params, talk_attributes)
+      if params[:_destroy] == '1'
+        @destroy_talks << @speaker.talks.find(params[:id])
+      else
+        update_existing_talk(params, talk_attributes)
+      end
+    end
+
+    def process_new_talk(params, talk_attributes)
+      return if params[:_destroy] == '1'
+
+      params.delete(:_destroy)
+      params[:show_on_timetable] = true
+      params[:video_published] = true
+
+      proposal_item_params = extract_proposal_items(params)
+
+      t = Talk.new(params)
+      t.conference = @conference if @conference
+
+      set_proposal_items(t, proposal_item_params)
+
+      # Store talk_attributes to be set after talk is saved
+      # (Unlike proposal_items which use build, talk_attributes require the talk to be persisted first)
+      t.instance_variable_set(:@pending_talk_attributes, talk_attributes) if talk_attributes.present?
+      @talks << t
+    end
+
+    def update_existing_talk(params, talk_attributes)
+      params.delete(:_destroy)
+      talk = @speaker.talks.find(params[:id])
+
+      proposal_item_params = extract_proposal_items(params)
+      set_proposal_items(talk, proposal_item_params)
+
+      talk.create_or_update_talk_attributes(talk_attributes) if talk_attributes.present?
+      talk.update(params)
+      @talks << talk
+    end
+
+    def extract_proposal_items(params)
+      proposal_item_params = {}
+      proposal_item_config_labels.each do |label|
+        pluralized_label = label.pluralize
+        symbol_key = pluralized_label.to_sym
+        proposal_item_params[pluralized_label] = params.delete(symbol_key)
+      end
+      proposal_item_params
+    end
+
+    def set_proposal_items(talk, proposal_item_params)
+      proposal_item_config_labels.each do |label|
+        value = proposal_item_params[label.pluralize]
+        talk.create_or_update_proposal_item(label, value) if value.present?
+      end
+    end
+
+    def proposal_item_config_labels
+      @proposal_item_config_labels ||= @conference.proposal_item_configs.map(&:label).uniq
     end
   end
 
@@ -117,6 +143,10 @@ class SpeakerForm
           talk.save!(context: :entry_form)
         else
           talk.save!(context: :entry_form)
+
+          # Set talk attributes for new talks (same pattern as proposal_items)
+          pending_attributes = talk.instance_variable_get(:@pending_talk_attributes)
+          talk.create_or_update_talk_attributes(pending_attributes) if pending_attributes.present?
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
 
@@ -144,7 +174,6 @@ class SpeakerForm
 
   attr_reader :speaker
 
-  private
 
   def default_attributes
     {

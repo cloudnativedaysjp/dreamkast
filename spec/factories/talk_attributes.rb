@@ -5,6 +5,13 @@ FactoryBot.define do
     description { 'Test talk attribute' }
     is_exclusive { false }
 
+    trait :regular do
+      name { 'regular' }
+      display_name { '公募セッション' }
+      description { '公募セッション' }
+      is_exclusive { false }
+    end
+
     trait :keynote do
       name { 'keynote' }
       display_name { 'キーノート' }

@@ -29,7 +29,7 @@ class Admin::TalksController < ApplicationController
     redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
   end
 
-  private
+  # private
 
   def update_talk_attributes
     params[:talk_attributes].each do |talk_id, attributes_data|
@@ -53,33 +53,41 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
-    @talk = Talk.find(params[:talk][:id])
-    on_air_talks_of_other_days = @talk.track.talks
-                                      .includes([:conference_day, :video])
-                                      .accepted_and_intermission
-                                      .where.not(conference_days: { id: @talk.conference_day.id })
-                                      .joins(:video)
-                                      .where(videos: { on_air: true })
+    begin
+      @talk = Talk.find(params[:talk][:id])
+      Rails.logger.info("Talk found: #{@talk.id}, Track: #{@talk.track_id}, Conference day: #{@talk.conference_day_id}")
+
+      on_air_talks_of_other_days = @talk.track.talks
+                                        .includes([:conference_day, :video])
+                                        .accepted_and_intermission
+                                        .where.not(conference_days: { id: @talk.conference_day.id })
+                                        .joins(:video)
+                                        .where(videos: { on_air: true })
 
 
-    if on_air_talks_of_other_days.size.positive?
-      flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
-    else
-      @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).joins(:video).map(&:video)
-      ActiveRecord::Base.transaction do
-        # Disable onair of all talks that are onair
-        @current_on_air_videos.each do |video|
-          video.update!(on_air: false)
+      if on_air_talks_of_other_days.size.positive?
+        flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
+      else
+        @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).joins(:video).map(&:video)
+        ActiveRecord::Base.transaction do
+          # Disable onair of all talks that are onair
+          @current_on_air_videos.each do |video|
+            video.update!(on_air: false)
+          end
+
+          # Update the current talk to onair
+          @talk.video.update!(on_air: true)
         end
 
-        # Update the current talk to onair
-        @talk.video.update!(on_air: true)
+        ActionCable.server.broadcast(
+          "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+        )
+        flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
       end
-
-      ActionCable.server.broadcast(
-        "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-      )
-      flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
+    rescue => e
+      Rails.logger.error("Error in start_on_air: #{e.message}")
+      Rails.logger.error(e.backtrace.join("\n"))
+      raise
     end
   end
 
@@ -97,9 +105,17 @@ class Admin::TalksController < ApplicationController
     query = { show_on_timetable: true, conference_id: conference.id }
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
-               @talks.where.not(abstract: 'intermission').where.not(abstract: '-')
+               # Exclude intermission talks for older conferences using join
+               @talks.left_joins(:talk_attributes)
+                     .where.not(talk_attributes: { name: 'intermission' })
+                     .where.not(abstract: '-')
              else
-               @talks.where(proposals: { status: :accepted }).where.not(abstract: 'intermission').where.not(abstract: '-')
+               # For newer conferences, check both acceptance and intermission exclusion
+               @talks.joins(:proposal)
+                     .left_joins(:talk_attributes)
+                     .where(proposals: { status: :accepted })
+                     .where.not(talk_attributes: { name: 'intermission' })
+                     .where.not(abstract: '-')
              end
     conference_days = conference.conference_days.filter { |day| !day.internal }.map(&:id)
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))
@@ -134,6 +150,7 @@ class Admin::TalksController < ApplicationController
 
   helper_method :turbo_stream_flash
 
+  private
 
   def turbo_stream_flash
     turbo_stream.append('flashes', partial: 'flash')

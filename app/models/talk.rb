@@ -64,7 +64,21 @@ class Talk < ApplicationRecord
   }
 
   scope :accepted_and_intermission, -> {
-    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
+    left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
+      .where(proposals: { status: :accepted })
+      .or(
+        left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
+          .where(talk_attributes: { name: 'intermission' })
+      )
+      .distinct
+  }
+
+  scope :intermissions, -> {
+    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'intermission' })
+  }
+
+  scope :regular_sessions, -> {
+    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'regular' })
   }
 
   scope :not_sponsor, -> {
@@ -89,6 +103,16 @@ class Talk < ApplicationRecord
       .where(talk_attributes: { name: ['keynote', 'sponsor'] })
       .group('talks.id')
       .having('COUNT(DISTINCT talk_attributes.name) = 2')
+  }
+
+  scope :regular_sessions, -> {
+    left_joins(:talk_attributes)
+      .where(talk_attributes: { id: nil })
+      .or(
+        left_joins(:talk_attributes)
+          .where.not(talk_attributes: { name: %w[intermission sponsor keynote] })
+      )
+      .distinct
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -317,7 +341,9 @@ class Talk < ApplicationRecord
       talk_attribute_associations.destroy_all
 
       attribute_names.each do |name|
-        attribute = TalkAttribute.find_by!(name: name.to_s)
+        attribute = TalkAttribute.find_by(name: name.to_s)
+        next unless attribute
+
         talk_attribute_associations.create!(talk_attribute: attribute)
       end
     end
@@ -346,6 +372,13 @@ class Talk < ApplicationRecord
     else
       proposal_items.build(conference_id:, label:, params:)
     end
+  end
+
+  def create_or_update_talk_attributes(attribute_names)
+    return if attribute_names.blank?
+
+    # Always update - clear existing and set new ones
+    set_talk_attributes(attribute_names)
   end
 
   def proposal_item_value(label)

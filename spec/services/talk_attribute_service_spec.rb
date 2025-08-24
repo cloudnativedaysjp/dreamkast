@@ -107,7 +107,7 @@ RSpec.describe(TalkAttributeService, type: :service) do
       it 'rolls back all changes when validation fails' do
         # Add an existing attribute
         talk.talk_attributes << keynote_attr
-        original_count = talk.talk_talk_attributes.count
+        original_count = talk.talk_attribute_associations.count
 
         # Try to add invalid combination (should fail)
         invalid_id = 99999
@@ -117,7 +117,7 @@ RSpec.describe(TalkAttributeService, type: :service) do
 
         # Verify no changes were made
         talk.reload
-        expect(talk.talk_talk_attributes.count).to(eq(original_count))
+        expect(talk.talk_attribute_associations.count).to(eq(original_count))
         expect(talk.keynote?).to(be(true))
         expect(talk.sponsor_session?).to(be(false))
       end
@@ -149,7 +149,7 @@ RSpec.describe(TalkAttributeService, type: :service) do
 
         talk.reload
         expect(talk.keynote?).to(be(true))
-        expect(talk.talk_talk_attributes.count).to(eq(1)) # Should not create duplicates
+        expect(talk.talk_attribute_associations.count).to(eq(1)) # Should not create duplicates
       end
     end
   end

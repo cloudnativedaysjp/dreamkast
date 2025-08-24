@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :talk do
-    type { 'Session' }
     title { 'Test Talk' }
     abstract { 'Test abstract' }
     start_time { '12:00' }
@@ -12,7 +11,6 @@ FactoryBot.define do
 
   factory :talk1, class: Talk do
     id { 1 }
-    type { 'Session' }
     title { 'talk1' }
     start_time { '12:00' }
     end_time { '12:40' }
@@ -60,7 +58,6 @@ FactoryBot.define do
 
   factory :talk2, class: Talk do
     id { 2 }
-    type { 'Session' }
     title { 'talk2' }
     start_time { '12:00' }
     end_time { '12:40' }
@@ -98,7 +95,6 @@ FactoryBot.define do
 
   factory :talk3, class: Talk do
     id { 3 }
-    type { 'Session' }
     title { 'talk3' }
     start_time { '13:00' }
     end_time { '13:40' }
@@ -137,7 +133,6 @@ FactoryBot.define do
 
   factory :talk_rejekt, class: Talk do
     id { 5 }
-    type { 'Session' }
     title { 'Rejected Talk' }
     start_time { '19:00' }
     end_time { '21:00' }
@@ -152,7 +147,6 @@ FactoryBot.define do
 
   factory :talk_cm, class: Talk do
     id { 4 }
-    type { 'Session' }
     title { 'CM' }
     start_time { '10:00' }
     end_time { '11:00' }
@@ -168,7 +162,6 @@ FactoryBot.define do
 
   factory :cndo_talk1, class: Talk do
     id { 10 }
-    type { 'Session' }
     title { 'talk1' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -185,7 +178,6 @@ FactoryBot.define do
 
   factory :cndo_talk2, class: Talk do
     id { 11 }
-    type { 'Session' }
     title { 'talk2' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -201,7 +193,6 @@ FactoryBot.define do
 
   factory :cndt2021_talk1, class: Talk do
     id { 12 }
-    type { 'Session' }
     title { 'talk1' }
     start_time { '12:30' }
     end_time { '12:40' }
@@ -218,7 +209,6 @@ FactoryBot.define do
 
   factory :sponsor_session, class: Talk do
     title { 'sponsor_session' }
-    type { 'SponsorSession' }
     start_time { '12:30' }
     end_time { '12:40' }
     abstract { 'あいうえおかきくけこさしすせそ' }
@@ -229,6 +219,48 @@ FactoryBot.define do
     show_on_timetable { true }
     video_published { true }
     document_url { 'http://' }
+
+    after(:create) do |talk|
+      sponsor_attr = TalkAttribute.find_or_create_by!(name: 'sponsor') do |attr|
+        attr.display_name = 'スポンサーセッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << sponsor_attr unless talk.talk_attributes.include?(sponsor_attr)
+    end
+
+    trait :registered do
+      after(:build) do |talk|
+        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
+      end
+    end
+
+    trait :accepted do
+      after(:build) do |talk|
+        create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
+      end
+    end
+  end
+
+  factory :keynote_session, class: Talk do
+    title { 'keynote_session' }
+    start_time { '10:00' }
+    end_time { '10:40' }
+    abstract { 'キーノートセッション' }
+    conference_id { 1 }
+    conference_day_id { 1 }
+    talk_difficulty_id { 1 }
+    track_id { 1 }
+    show_on_timetable { true }
+    video_published { true }
+    document_url { 'http://' }
+
+    after(:create) do |talk|
+      keynote_attr = TalkAttribute.find_or_create_by!(name: 'keynote') do |attr|
+        attr.display_name = 'キーノート'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << keynote_attr unless talk.talk_attributes.include?(keynote_attr)
+    end
 
     trait :registered do
       after(:build) do |talk|
@@ -245,7 +277,6 @@ FactoryBot.define do
 
   factory :has_no_conference_days, class: Talk do
     id { 100 }
-    type { 'Session' }
     title { 'not accepted talk' }
     abstract { 'あいうえおかきくけこさしすせそ' }
     conference_id { 1 }
@@ -255,5 +286,23 @@ FactoryBot.define do
     video_published { false }
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
+  end
+
+  factory :intermission, class: Talk do
+    title { 'Intermission' }
+    abstract { 'intermission' }
+    start_time { '12:00' }
+    end_time { '12:10' }
+    conference_id { 1 }
+    show_on_timetable { true }
+    video_published { false }
+
+    after(:create) do |talk|
+      intermission_attr = TalkAttribute.find_or_create_by!(name: 'intermission') do |attr|
+        attr.display_name = '休憩'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << intermission_attr unless talk.talk_attributes.include?(intermission_attr)
+    end
   end
 end

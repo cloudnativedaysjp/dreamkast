@@ -7,10 +7,15 @@ class Api::V1::ProposalsController < ApplicationController
   def index
     @conference = Conference.find_by(abbr: params[:eventAbbr])
     query = { conference_id: @conference.id }
+    # Get all proposals and filter out special session types
     @proposals = Proposal
-                 .includes(:talk)
+                 .includes(talk: :talk_attributes)
                  .where(query)
-                 .where(talk: { type: 'Session' })
+                 .select do |proposal|
+                   # Include talks that have no attributes or only have regular session attributes
+                   talk_attrs = proposal.talk.talk_attributes.pluck(:name)
+                   talk_attrs.empty? || talk_attrs.none? { |name| %w[intermission sponsor keynote].include?(name) }
+                 end
     render(:index, formats: :json, type: :jbuilder)
   end
 end

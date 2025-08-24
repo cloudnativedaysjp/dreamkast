@@ -4,21 +4,21 @@ describe Talk, type: :model do
   describe 'session attributes' do
     let!(:cndt2020) { create(:cndt2020) }
     let(:talk) { create(:talk1) }
-    let(:keynote_attr) { create(:session_attribute, name: 'keynote', is_exclusive: false) }
-    let(:sponsor_attr) { create(:session_attribute, name: 'sponsor', is_exclusive: false) }
-    let(:intermission_attr) { create(:session_attribute, name: 'intermission', is_exclusive: true) }
+    let(:keynote_attr) { create(:talk_attribute, name: 'keynote', is_exclusive: false) }
+    let(:sponsor_attr) { create(:talk_attribute, name: 'sponsor', is_exclusive: false) }
+    let(:intermission_attr) { create(:talk_attribute, name: 'intermission', is_exclusive: true) }
 
     describe 'associations' do
-      it 'has many talk_talk_attributes' do
-        association = Talk.reflect_on_association(:talk_talk_attributes)
+      it 'has many talk_attribute_associations' do
+        association = Talk.reflect_on_association(:talk_attribute_associations)
         expect(association.macro).to(eq(:has_many))
         expect(association.options[:dependent]).to(eq(:destroy))
       end
 
-      it 'has many talk_attributes through talk_talk_attributes' do
+      it 'has many talk_attributes through talk_attribute_associations' do
         association = Talk.reflect_on_association(:talk_attributes)
         expect(association.macro).to(eq(:has_many))
-        expect(association.options[:through]).to(eq(:talk_talk_attributes))
+        expect(association.options[:through]).to(eq(:talk_attribute_associations))
       end
     end
 

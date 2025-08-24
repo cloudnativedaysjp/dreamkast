@@ -69,7 +69,6 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def sponsor_session_params
     attr = [
-      :type,
       :sponsor_id,
       :conference_id,
       :title,
@@ -78,6 +77,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
       :talk_difficulty_id,
       :document_url,
       { speaker_ids: [] },
+      { talk_attributes: [] },
       { proposal_items_attributes: }
     ]
 

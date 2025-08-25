@@ -1,6 +1,6 @@
 module SpeakersHelper
   def link_to_add_talk_fields(name, f, association, **args)
-    new_object = Talk.new(conference: @conference, type: 'Session')
+    new_object = Talk.new(conference: @conference)
     id = new_object.object_id
     fields = f.fields_for(:talks_attributes, new_object, child_index: id) do |builder|
       render("speaker_dashboard/speakers/#{association.to_s.singularize}_fields", f: builder, form_index: id)

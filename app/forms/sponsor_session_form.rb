@@ -3,7 +3,6 @@ class SponsorSessionForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attr_accessor :type
   attr_accessor :sponsor_id
   attr_accessor :conference_id
   attr_accessor :title
@@ -13,6 +12,7 @@ class SponsorSessionForm
   attr_accessor :document_url
   attr_accessor :proposal_items
   attr_accessor :speaker_ids
+  attr_accessor :talk_attributes
 
   delegate :persisted?, to: :sponsor_session
 
@@ -33,7 +33,7 @@ class SponsorSessionForm
     end
   end
 
-  def initialize(attributes = nil, sponsor_session: SponsorSession.new, conference: nil)
+  def initialize(attributes = nil, sponsor_session: Talk.new, conference: nil)
     @sponsor_session = sponsor_session
     @conference = conference
     attributes ||= default_attributes
@@ -44,10 +44,16 @@ class SponsorSessionForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      params = { type:, sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url:, show_on_timetable: true }
+      params = { sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url:, show_on_timetable: true }
 
       was_new_record = sponsor_session.new_record?
       sponsor_session.update!(params)
+
+      # Set talk attributes - always include sponsor attribute for sponsor sessions
+      attributes_to_set = talk_attributes || []
+      attributes_to_set << 'sponsor' unless attributes_to_set.include?('sponsor')
+      sponsor_session.create_or_update_talk_attributes(attributes_to_set)
+
       if was_new_record
         Proposal.create!(conference_id:, talk_id: sponsor_session.id)
       end
@@ -83,7 +89,6 @@ class SponsorSessionForm
 
   def default_attributes
     {
-      type: sponsor_session.type,
       sponsor_id: sponsor_session.sponsor_id,
       conference_id: sponsor_session.conference_id,
       title: sponsor_session.title,
@@ -92,7 +97,8 @@ class SponsorSessionForm
       talk_difficulty_id: sponsor_session.talk_difficulty_id,
       document_url: sponsor_session.document_url,
       proposal_items:,
-      speaker_ids: sponsor_session.talks_speakers.pluck(:speaker_id)
+      speaker_ids: sponsor_session.talks_speakers.pluck(:speaker_id),
+      talk_attributes: sponsor_session.talk_attributes.pluck(:name)
     }
   end
 end

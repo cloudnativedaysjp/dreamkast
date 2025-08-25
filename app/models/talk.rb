@@ -1,6 +1,8 @@
 require 'csv'
 
 class Talk < ApplicationRecord
+  # Disable STI since we're not using type column for inheritance
+  self.inheritance_column = nil
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference
@@ -23,6 +25,10 @@ class Talk < ApplicationRecord
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
+
+  # Talk attributes associations
+  has_many :talk_attribute_associations, dependent: :destroy
+  has_many :talk_attributes, through: :talk_attribute_associations
 
   validates :conference_id, presence: true
   validates :title, presence: true
@@ -58,7 +64,21 @@ class Talk < ApplicationRecord
   }
 
   scope :accepted_and_intermission, -> {
-    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
+    left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
+      .where(proposals: { status: :accepted })
+      .or(
+        left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
+          .where(talk_attributes: { name: 'intermission' })
+      )
+      .distinct
+  }
+
+  scope :intermissions, -> {
+    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'intermission' })
+  }
+
+  scope :regular_sessions, -> {
+    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'regular' })
   }
 
   scope :not_sponsor, -> {
@@ -67,6 +87,32 @@ class Talk < ApplicationRecord
 
   scope :sponsor, -> {
     where.not(sponsor_id: nil)
+  }
+
+  # New scopes for talk attributes
+  scope :with_talk_attribute, ->(attribute_name) {
+    joins(:talk_attributes).where(talk_attributes: { name: attribute_name })
+  }
+
+  scope :keynotes, -> { with_talk_attribute('keynote') }
+  scope :sponsors_by_attribute, -> { with_talk_attribute('sponsor') }
+  scope :intermissions, -> { with_talk_attribute('intermission') }
+
+  scope :sponsor_keynotes, -> {
+    joins(:talk_attributes)
+      .where(talk_attributes: { name: ['keynote', 'sponsor'] })
+      .group('talks.id')
+      .having('COUNT(DISTINCT talk_attributes.name) = 2')
+  }
+
+  scope :regular_sessions, -> {
+    left_joins(:talk_attributes)
+      .where(talk_attributes: { id: nil })
+      .or(
+        left_joins(:talk_attributes)
+          .where.not(talk_attributes: { name: %w[intermission sponsor keynote] })
+      )
+      .distinct
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -273,7 +319,50 @@ class Talk < ApplicationRecord
   end
 
   def sponsor_session?
-    sponsor.present?
+    talk_attributes.exists?(name: 'sponsor') || sponsor.present?
+  end
+
+  # Talk attribute helper methods
+  def keynote?
+    talk_attributes.exists?(name: 'keynote')
+  end
+
+  def intermission?
+    talk_attributes.exists?(name: 'intermission') || abstract == 'intermission'
+  end
+
+  def sponsor_keynote?
+    keynote? && sponsor_session?
+  end
+
+  # Talk attribute management methods
+  def set_talk_attributes(attribute_names = [])
+    transaction do
+      talk_attribute_associations.destroy_all
+
+      attribute_names.each do |name|
+        attribute = TalkAttribute.find_by(name: name.to_s)
+        next unless attribute
+
+        talk_attribute_associations.create!(talk_attribute: attribute)
+      end
+    end
+  end
+
+  def add_talk_attribute(name)
+    attribute = TalkAttribute.find_by!(name: name.to_s)
+    talk_attribute_associations.find_or_create_by!(talk_attribute: attribute)
+  end
+
+  def remove_talk_attribute(name)
+    talk_attribute_associations
+      .joins(:talk_attribute)
+      .where(talk_attributes: { name: name.to_s })
+      .destroy_all
+  end
+
+  def session_attribute_names
+    talk_attributes.pluck(:name)
   end
 
   def create_or_update_proposal_item(label, params)
@@ -283,6 +372,13 @@ class Talk < ApplicationRecord
     else
       proposal_items.build(conference_id:, label:, params:)
     end
+  end
+
+  def create_or_update_talk_attributes(attribute_names)
+    return if attribute_names.blank?
+
+    # Always update - clear existing and set new ones
+    set_talk_attributes(attribute_names)
   end
 
   def proposal_item_value(label)

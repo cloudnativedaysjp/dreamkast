@@ -4,7 +4,18 @@ class DummyDataImporter
   end
 
   def import_dummy_talks
-    Talk.seed(csv('talks').map(&:to_hash))
+    Talk.seed(csv('talks').map(&:to_hash).map{|h| h.except("type")})
+    csv('talks').map(&:to_hash).each do |h|
+      type = h["type"]
+      case type
+      when "KeynoteSession"
+        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "keynote").id)
+      when "SponsorSession"
+        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "sponsor").id)
+      when "Intermission"
+        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "intermission").id)
+      end
+    end
   end
 
   def import_dummy_speakers

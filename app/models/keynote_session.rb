@@ -1,2 +1,0 @@
-class KeynoteSession < Talk
-end

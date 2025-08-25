@@ -167,6 +167,9 @@ GEM
       railties (>= 6.0.0)
     csv (3.3.5)
     date (3.4.1)
+    debug (1.11.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     diff-lcs (1.6.2)
     docile (1.4.1)
     down (5.4.2)
@@ -791,6 +794,7 @@ DEPENDENCIES
   committee
   committee-rails
   cssbundling-rails
+  debug
   execjs
   factory_bot_rails
   faraday-retry
@@ -850,4 +854,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   2.5.11
+   2.5.22

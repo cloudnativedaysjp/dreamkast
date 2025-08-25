@@ -119,7 +119,7 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def talks_attributes
-    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
+    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)
@@ -144,15 +144,12 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def session_type_name(talk)
-    case talk.type
-    when 'Session'
-      'CFP'
-    when 'Keynote'
+    if talk.keynote?
       'Keynote'
-    when 'SponsorSession'
+    elsif talk.sponsor_session?
       'スポンサー'
     else
-      ''
+      'CFP'
     end
   end
 

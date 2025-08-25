@@ -33,7 +33,7 @@ class SponsorSessionForm
     end
   end
 
-  def initialize(attributes = nil, sponsor_session: SponsorSession.new, conference: nil)
+  def initialize(attributes = nil, sponsor_session: Talk.new, conference: nil)
     @sponsor_session = sponsor_session
     @conference = conference
     attributes ||= default_attributes
@@ -49,10 +49,10 @@ class SponsorSessionForm
       was_new_record = sponsor_session.new_record?
       sponsor_session.update!(params)
 
-      # Set talk attributes
-      if talk_attributes.present?
-        sponsor_session.create_or_update_talk_attributes(talk_attributes)
-      end
+      # Set talk attributes - always include sponsor attribute for sponsor sessions
+      attributes_to_set = talk_attributes || []
+      attributes_to_set << 'sponsor' unless attributes_to_set.include?('sponsor')
+      sponsor_session.create_or_update_talk_attributes(attributes_to_set)
 
       if was_new_record
         Proposal.create!(conference_id:, talk_id: sponsor_session.id)

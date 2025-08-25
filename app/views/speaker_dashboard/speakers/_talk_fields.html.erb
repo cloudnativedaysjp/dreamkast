@@ -87,9 +87,6 @@
 
   <% if @sponsor %>
     <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][sponsor_id]", @sponsor.id %>
-    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][type]", 'SponsorSession' %>
-  <% else %>
-    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][type]", 'Session' %>
   <% end %>
 
   <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][_destroy]", "false", class: "destroy_flag_field" %>

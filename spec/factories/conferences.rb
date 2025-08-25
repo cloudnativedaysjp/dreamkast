@@ -95,9 +95,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 4, number: 4, name: 'D', conference_id: conference.id, video_id: 'video_4')
       create(:track, id: 5, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_5')
       create(:track, id: 6, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_6')
-      Talk::Type::KLASSES.each do |klass|
-        create(:talk_type, id: klass)
-      end
     end
   end
 
@@ -133,9 +130,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:track, id: 14, number: 5, name: 'E', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 15, number: 6, name: 'F', conference_id: conference.id, video_id: 'video_7')
       create(:track, id: 16, number: 7, name: 'G', conference_id: conference.id, video_id: 'video_7')
-      Talk::Type::KLASSES.each do |klass|
-        create(:talk_type, id: klass)
-      end
     end
   end
 
@@ -150,9 +144,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     after(:create) do |conference|
       create(:one_day1, conference:)
       create(:internal, conference:)
-      Talk::Type::KLASSES.each do |klass|
-        create(:talk_type, id: klass)
-      end
     end
   end
 
@@ -168,9 +159,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:two_day1, conference:)
       create(:two_day2, conference:)
       create(:internal, conference:)
-      Talk::Type::KLASSES.each do |klass|
-        create(:talk_type, id: klass)
-      end
     end
   end
 
@@ -197,9 +185,6 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     after(:build) do |conference|
       create(:cndt2021_day1, conference:)
       create(:cndt2021_day2, conference:)
-      Talk::Type::KLASSES.each do |klass|
-        create(:talk_type, id: klass)
-      end
     end
   end
 end

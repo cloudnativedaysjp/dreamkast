@@ -63,7 +63,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
       it 'creates a new sponsor session' do
         expect {
           post(sponsor_dashboards_sponsor_sessions_path(event: conference.abbr, sponsor_id: sponsor.id), params: valid_attributes)
-        }.to(change(SponsorSession, :count).by(1))
+        }.to(change { Talk.where(sponsor_id: sponsor.id).count }.by(1))
 
         expect(flash.now[:notice]).to(eq('スポンサーセッションを登録しました'))
       end
@@ -93,7 +93,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
       it 'does not create a new sponsor session' do
         expect {
           post(sponsor_dashboards_sponsor_sessions_path(event: conference.abbr, sponsor_id: sponsor.id), params: invalid_attributes)
-        }.not_to(change(SponsorSession, :count))
+        }.not_to(change { Talk.where(sponsor_id: sponsor.id).count })
 
         expect(response).to(have_http_status(:unprocessable_entity))
         expect(flash.now[:alert]).to(eq('スポンサーセッションの登録に失敗しました'))
@@ -177,14 +177,14 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
       expect {
         delete(sponsor_dashboards_sponsor_session_path(event: conference.abbr, sponsor_id: sponsor.id, id: sponsor_session.id),
                xhr: true, headers: { Accept: 'text/vnd.turbo-stream.html' })
-      }.to(change(SponsorSession, :count).by(-1))
+      }.to(change { Talk.where(sponsor_id: sponsor.id).count }.by(-1))
 
       expect(flash.now[:notice]).to(eq('スポンサーセッションを削除しました'))
     end
 
     context 'when deletion fails' do
       before do
-        allow_any_instance_of(SponsorSession).to(receive(:destroy).and_return(false))
+        allow_any_instance_of(Talk).to(receive(:destroy).and_return(false))
       end
 
       it 'returns an error message' do

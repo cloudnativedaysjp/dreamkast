@@ -11,14 +11,14 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def new
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.new
+    @sponsor_session = Talk.new
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
     @sponsor_speakers = @sponsor.speakers
   end
 
   def create
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.new(conference:, sponsor: @sponsor)
+    @sponsor_session = Talk.new(conference:, sponsor: @sponsor)
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference:)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを登録しました'
@@ -31,7 +31,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.find(params[:id])
+    @sponsor_session = Talk.find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
     @sponsor_session_form.load
     @sponsor_speakers = @sponsor.speakers
@@ -39,7 +39,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def update
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.find(params[:id])
+    @sponsor_session = Talk.find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference:)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを更新しました'
@@ -52,7 +52,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = SponsorSession.find(params[:id])
+    @sponsor_session = Talk.find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
     if @sponsor_session.destroy
       flash.now[:notice] = 'スポンサーセッションを削除しました'

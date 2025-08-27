@@ -44,6 +44,8 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
+  validate :validate_talk_attributes_presence, unless: :skip_talk_attributes_validation
+  attr_accessor :skip_talk_attributes_validation
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -513,5 +515,11 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
+  end
+
+  def validate_talk_attributes_presence
+    if talk_attributes.empty?
+      errors.add(:talk_attributes, '少なくとも1つのTalkAttributeが必要です')
+    end
   end
 end

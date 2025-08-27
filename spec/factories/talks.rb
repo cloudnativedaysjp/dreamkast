@@ -6,7 +6,18 @@ FactoryBot.define do
     end_time { '12:40' }
     association :conference
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { false }
+
+    trait :with_regular_attribute do
+      after(:create) do |talk|
+        regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+          attr.display_name = '公募セッション'
+          attr.is_exclusive = false
+        end
+        talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      end
+    end
   end
 
   factory :talk1, class: Talk do
@@ -21,6 +32,7 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
@@ -68,7 +80,16 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { false }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
 
     trait :conference_day_id_1 do
       conference_day_id { 1 }
@@ -105,7 +126,16 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 3 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { false }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
 
     trait :conference_day_id_1 do
       conference_day_id { 1 }
@@ -143,6 +173,15 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
   end
 
   factory :talk_cm, class: Talk do
@@ -158,6 +197,14 @@ FactoryBot.define do
     track_id { 1 }
     show_on_timetable { false }
     video_published { true }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
   end
 
   factory :cndo_talk1, class: Talk do
@@ -172,8 +219,17 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 10 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
   end
 
   factory :cndo_talk2, class: Talk do
@@ -188,7 +244,16 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 10 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { false }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
   end
 
   factory :cndt2021_talk1, class: Talk do
@@ -203,8 +268,17 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 11 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
+
+    after(:create) do |talk|
+      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        attr.display_name = '公募セッション'
+        attr.is_exclusive = false
+      end
+      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+    end
   end
 
   factory :sponsor_session, class: Talk do
@@ -217,6 +291,7 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
@@ -251,6 +326,7 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
@@ -286,6 +362,7 @@ FactoryBot.define do
     video_published { false }
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
+    skip_talk_attributes_validation { true }
   end
 
   factory :intermission, class: Talk do
@@ -295,6 +372,7 @@ FactoryBot.define do
     end_time { '12:10' }
     conference_id { 1 }
     show_on_timetable { true }
+    skip_talk_attributes_validation { true }
     video_published { false }
 
     after(:create) do |talk|

@@ -1,0 +1,2 @@
+class KeynoteSession < Talk
+end

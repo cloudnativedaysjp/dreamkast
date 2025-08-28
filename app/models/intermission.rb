@@ -1,0 +1,2 @@
+class Intermission < Talk
+end

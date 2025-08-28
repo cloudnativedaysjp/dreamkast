@@ -19,7 +19,6 @@
       <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">セッションタイプ</th>
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Track</th>
@@ -35,10 +34,6 @@
         <% @talks.each do |talk| %>
           <tr>
             <td><%= talk.id %></td>
-            <td>
-              <%= session_type_checkboxes(talk) %>
-              <%= hidden_field_tag "talk_types[#{talk.id}][type_ids][]", "" %>
-            </td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>
               <h5><%= talk.title %></h5>
@@ -80,55 +75,3 @@
   <%= submit_tag "保存", form: "talk_list",class: "btn btn-danger transit_button" %>
   <br/><span class="text-white"> ※視聴者にも設定が配信されます</span>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Session type exclusive control
-  const sessionTypeCheckboxes = document.querySelectorAll('.session-type-checkbox');
-  
-  sessionTypeCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-      const talkId = this.dataset.talkId;
-      const typeId = this.dataset.typeId;
-      const isExclusive = this.dataset.exclusive === 'true';
-      const isChecked = this.checked;
-      
-      if (isExclusive && isChecked) {
-        // If exclusive type is checked, uncheck all other types for this talk
-        const otherCheckboxes = document.querySelectorAll(
-          `.session-type-checkbox[data-talk-id="${talkId}"]:not([data-type-id="${typeId}"])`
-        );
-        otherCheckboxes.forEach(cb => cb.checked = false);
-      } else if (isChecked) {
-        // If non-exclusive type is checked, uncheck exclusive types for this talk
-        const exclusiveCheckboxes = document.querySelectorAll(
-          `.session-type-checkbox[data-talk-id="${talkId}"][data-exclusive="true"]`
-        );
-        exclusiveCheckboxes.forEach(cb => cb.checked = false);
-      }
-    });
-  });
-  
-  // Bulk operations
-  function selectTypeForAll(typeName) {
-    const checkboxes = document.querySelectorAll(
-      `.session-type-checkbox[data-type-name="${typeName}"]`
-    );
-    checkboxes.forEach(checkbox => {
-      checkbox.checked = true;
-      checkbox.dispatchEvent(new Event('change'));
-    });
-  }
-  
-  function clearAllTypes() {
-    const checkboxes = document.querySelectorAll('.session-type-checkbox');
-    checkboxes.forEach(checkbox => {
-      checkbox.checked = false;
-    });
-  }
-  
-  // Make functions available globally if needed
-  window.selectTypeForAll = selectTypeForAll;
-  window.clearAllTypes = clearAllTypes;
-});
-</script>

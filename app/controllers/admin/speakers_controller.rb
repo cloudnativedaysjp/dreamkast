@@ -51,13 +51,13 @@ class Admin::SpeakersController < ApplicationController
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
                @talks.left_joins(:talk_types)
-                     .where.not(talk_types: { name: 'intermission' })
+                     .where.not(talk_types: { id: 'Intermission' })
                      .where.not(abstract: '-')
              else
                @talks.joins(:proposal)
                      .left_joins(:talk_types)
                      .where(proposals: { status: :accepted })
-                     .where.not(talk_types: { name: 'intermission' })
+                     .where.not(talk_types: { id: 'Intermission' })
                      .where.not(abstract: '-')
              end
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))

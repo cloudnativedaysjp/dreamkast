@@ -69,26 +69,24 @@ class SpeakerForm
     end
 
     def process_new_talk(params, talk_types)
-      return if params[:_destroy] == '1'
-
-      params.delete(:_destroy)
-      params[:show_on_timetable] = true
-      params[:video_published] = true
-
-      proposal_item_params = extract_proposal_items(params)
-
-      t = Talk.new(params)
-      t.conference = @conference if @conference
-
-      proposal_item_config_labels.each do |label|
-        value = proposal_item_params[label.pluralize]
-        talk.create_or_update_proposal_item(label, value) if value.present?
+      unless params[:_destroy] == '1'
+        params.delete(:_destroy)
+        params[:show_on_timetable] = true
+        params[:video_published] = true
+        proposal_item_params = {}
+        proposal_item_config_labels.each do |label|
+          pluralized_label = label.pluralize
+          symbol_key = pluralized_label.to_sym
+          proposal_item_params[pluralized_label] = params.delete(symbol_key)
+        end
+        t = Talk.new(params)
+        t.conference = @conference if @conference
+        proposal_item_config_labels.each do |label|
+          t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
+        end
+        t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
+        @talks << t
       end
-
-      # Store talk_types to be set after talk is saved
-      # (Unlike proposal_items which use build, talk_types require the talk to be persisted first)
-      t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
-      @talks << t
     end
 
     def extract_proposal_items(params)
@@ -151,7 +149,6 @@ class SpeakerForm
       end
     end
   rescue => e
-
     puts("failed to save: #{e}")
     false
   end

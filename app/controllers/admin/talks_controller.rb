@@ -18,7 +18,7 @@ class Admin::TalksController < ApplicationController
   def update_talks
     TalksHelper.update_talks(@conference, params[:video])
 
-    redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
+    redirect_to(admin_talks_url, notice: '配信設定を更新しました')
   end
 
   def start_on_air
@@ -68,14 +68,14 @@ class Admin::TalksController < ApplicationController
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
                # Exclude intermission talks for older conferences using join
                @talks.left_joins(:talk_types)
-                     .where.not(talk_types: { name: 'intermission' })
+                     .where.not(talk_types: { id: 'Intermission' })
                      .where.not(abstract: '-')
              else
                # For newer conferences, check both acceptance and intermission exclusion
                @talks.joins(:proposal)
                      .left_joins(:talk_types)
                      .where(proposals: { status: :accepted })
-                     .where.not(talk_types: { name: 'intermission' })
+                     .where.not(talk_types: { id: 'Intermission' })
                      .where.not(abstract: '-')
              end
     conference_days = conference.conference_days.filter { |day| !day.internal }.map(&:id)

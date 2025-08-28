@@ -53,7 +53,18 @@ class SpeakerForm
       if params[:_destroy] == '1'
         @destroy_talks << @speaker.talks.find(params[:id])
       else
-        update_existing_talk(params, talk_types)
+        params.delete(:_destroy)
+        talk = @speaker.talks.find(params[:id])
+
+        proposal_item_params = extract_proposal_items(params)
+        proposal_item_config_labels.each do |label|
+          value = proposal_item_params[label.pluralize]
+          talk.create_or_update_proposal_item(label, value) if value.present?
+        end
+
+        talk.create_or_update_talk_types(talk_types) if talk_types.present?
+        talk.update(params)
+        @talks << talk
       end
     end
 
@@ -69,24 +80,15 @@ class SpeakerForm
       t = Talk.new(params)
       t.conference = @conference if @conference
 
-      set_proposal_items(t, proposal_item_params)
+      proposal_item_config_labels.each do |label|
+        value = proposal_item_params[label.pluralize]
+        talk.create_or_update_proposal_item(label, value) if value.present?
+      end
 
       # Store talk_types to be set after talk is saved
       # (Unlike proposal_items which use build, talk_types require the talk to be persisted first)
       t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
       @talks << t
-    end
-
-    def update_existing_talk(params, talk_types)
-      params.delete(:_destroy)
-      talk = @speaker.talks.find(params[:id])
-
-      proposal_item_params = extract_proposal_items(params)
-      set_proposal_items(talk, proposal_item_params)
-
-      talk.create_or_update_talk_types(talk_types) if talk_types.present?
-      talk.update(params)
-      @talks << talk
     end
 
     def extract_proposal_items(params)
@@ -97,13 +99,6 @@ class SpeakerForm
         proposal_item_params[pluralized_label] = params.delete(symbol_key)
       end
       proposal_item_params
-    end
-
-    def set_proposal_items(talk, proposal_item_params)
-      proposal_item_config_labels.each do |label|
-        value = proposal_item_params[label.pluralize]
-        talk.create_or_update_proposal_item(label, value) if value.present?
-      end
     end
 
     def proposal_item_config_labels
@@ -156,6 +151,7 @@ class SpeakerForm
       end
     end
   rescue => e
+
     puts("failed to save: #{e}")
     false
   end

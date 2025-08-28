@@ -1,12 +1,5 @@
 FactoryBot.define do
-  factory :conference do
-    name { 'Test Conference' }
-    abbr { 'testconf' }
-    conference_status { Conference::STATUS_REGISTERED }
-    speaker_entry { 1 }
-    attendee_entry { 1 }
-    show_timetable { 1 }
-  end
+  factory :conference
 
   factory :cndt2020, class: Conference do
     id { 1 }

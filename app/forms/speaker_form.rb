@@ -56,7 +56,12 @@ class SpeakerForm
         params.delete(:_destroy)
         talk = @speaker.talks.find(params[:id])
 
-        proposal_item_params = extract_proposal_items(params)
+        proposal_item_params = {}
+        proposal_item_config_labels.each do |label|
+          pluralized_label = label.pluralize
+          symbol_key = pluralized_label.to_sym
+          proposal_item_params[pluralized_label] = params.delete(symbol_key)
+        end
         proposal_item_config_labels.each do |label|
           value = proposal_item_params[label.pluralize]
           talk.create_or_update_proposal_item(label, value) if value.present?
@@ -87,16 +92,6 @@ class SpeakerForm
         t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
         @talks << t
       end
-    end
-
-    def extract_proposal_items(params)
-      proposal_item_params = {}
-      proposal_item_config_labels.each do |label|
-        pluralized_label = label.pluralize
-        symbol_key = pluralized_label.to_sym
-        proposal_item_params[pluralized_label] = params.delete(symbol_key)
-      end
-      proposal_item_params
     end
 
     def proposal_item_config_labels

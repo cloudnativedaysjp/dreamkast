@@ -27,7 +27,6 @@ class Talk < ApplicationRecord
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
 
-
   validates :conference_id, presence: true
   validates :title, presence: true
 
@@ -64,7 +63,6 @@ class Talk < ApplicationRecord
   scope :accepted_and_intermission, -> {
     includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
   }
-
 
   scope :not_sponsor, -> {
     where(sponsor_id: nil)

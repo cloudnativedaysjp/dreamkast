@@ -4,7 +4,6 @@ class TalkType < ApplicationRecord
   has_many :talks, through: :talk_type_associations
 
   # Validations
-  # validates :name, presence: true, uniqueness: true, format: { with: /\A[a-z_]+\z/ }
   validates :display_name, presence: true
 
   # Scopes
@@ -14,14 +13,14 @@ class TalkType < ApplicationRecord
 
   # Class methods
   def self.keynote
-    find_by!(name: 'keynote')
+    find_by!(id: 'KeynoteSession')
   end
 
   def self.sponsor
-    find_by!(name: 'sponsor')
+    find_by!(id: 'SponsorSession')
   end
 
   def self.intermission
-    find_by!(name: 'intermission')
+    find_by!(id: 'Intermission')
   end
 end

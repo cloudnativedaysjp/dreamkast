@@ -118,9 +118,9 @@ class SponsorSessionForm
     @proposal_items = sponsor_session.proposal_items
   end
 
-  attr_reader :sponsor_session
-
   private
+
+  attr_reader :sponsor_session
 
   def default_attributes
     {

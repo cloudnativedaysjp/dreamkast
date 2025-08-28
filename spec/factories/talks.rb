@@ -311,7 +311,6 @@ FactoryBot.define do
     title { 'keynote_session' }
     start_time { '10:00' }
     end_time { '10:40' }
-    abstract { 'キーノートセッション' }
     conference_id { 1 }
     conference_day_id { 1 }
     talk_difficulty_id { 1 }
@@ -355,13 +354,17 @@ FactoryBot.define do
   end
 
   factory :intermission, class: Talk do
-    title { 'Intermission' }
-    abstract { 'intermission' }
-    start_time { '12:00' }
-    end_time { '12:10' }
+    title { '開始までしばらくお待ちください' }
+    start_time { '10:00' }
+    end_time { '11:00' }
     conference_id { 1 }
-    show_on_timetable { true }
-    video_published { false }
+    conference_day_id { 3 }
+    abstract { 'intermission' }
+    talk_difficulty_id { 1 }
+    talk_category_id { 1 }
+    track_id { 1 }
+    show_on_timetable { false }
+    video_published { true }
 
     after(:create) do |talk|
       intermission_attr = TalkType.find_or_create_by!(id: 'Intermission') do |attr|

@@ -78,14 +78,6 @@ FactoryBot.define do
       talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
 
-    after(:create) do |talk|
-      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
-        attr.display_name = '公募セッション'
-        attr.is_exclusive = false
-      end
-      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
-    end
-
     trait :conference_day_id_1 do
       conference_day_id { 1 }
     end
@@ -305,7 +297,6 @@ FactoryBot.define do
     end
   end
 
-
   factory :has_no_conference_days, class: Talk do
     id { 100 }
     title { 'not accepted talk' }
@@ -343,8 +334,8 @@ FactoryBot.define do
 
   factory :keynote_session, class: Talk do
     title { 'keynote_session' }
-    start_time { '10:00' }
-    end_time { '10:40' }
+    start_time { '12:30' }
+    end_time { '12:40' }
     conference_id { 1 }
     conference_day_id { 1 }
     talk_difficulty_id { 1 }
@@ -361,17 +352,10 @@ FactoryBot.define do
       talk.talk_types << keynote_attr unless talk.talk_types.include?(keynote_attr)
     end
 
-    trait :registered do
-      after(:build) do |talk|
-        create(:proposal, :registered, talk:, conference_id: talk.conference_id)
-      end
-    end
-
     trait :accepted do
       after(:build) do |talk|
         create(:proposal, talk:, status: 1, conference_id: talk.conference_id)
       end
     end
   end
-
 end

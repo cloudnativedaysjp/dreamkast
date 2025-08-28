@@ -299,12 +299,12 @@ class Talk < ApplicationRecord
   end
 
   # Talk type management methods
-  def set_talk_types(type_names)
+  def talk_types=(type_names)
     return if type_names.nil?
 
     type_names = Array(type_names).reject(&:blank?)
     types = TalkType.where(id: type_names)
-    self.talk_types = types
+    super(types)
   end
 
   def session_type_names

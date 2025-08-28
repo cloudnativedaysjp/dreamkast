@@ -49,7 +49,7 @@
   - [ ] スコープ内の `talk_attribute_associations` を `talk_type_associations` に変更
   - [ ] `with_talk_attribute` スコープを `with_talk_type` に変更
   - [ ] メソッド名の更新:
-    - [ ] `set_talk_attributes` → `set_talk_types`
+    - [x] `set_talk_attributes` → `set_talk_types`
     - [ ] `add_talk_attribute` → `add_talk_type`
     - [ ] `remove_talk_attribute` → `remove_talk_type`
     - [ ] `session_attribute_names` → `session_type_names`

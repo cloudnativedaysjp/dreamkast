@@ -321,16 +321,16 @@ class Talk < ApplicationRecord
   end
 
   def sponsor_session?
-    talk_types.exists?(name: 'sponsor') || sponsor.present?
+    talk_types.exists?(id: 'SponsorSession') || sponsor.present?
   end
 
   # Talk type helper methods
   def keynote?
-    talk_types.exists?(name: 'keynote')
+    talk_types.exists?(id: 'KeynoteSession')
   end
 
   def intermission?
-    talk_types.exists?(name: 'intermission') || abstract == 'intermission'
+    talk_types.exists?(id: 'Intermission') || abstract == 'intermission'
   end
 
   def sponsor_keynote?

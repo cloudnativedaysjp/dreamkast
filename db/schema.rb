@@ -590,7 +590,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_132351) do
     t.datetime "updated_at", null: false
     t.string "display_name", limit: 100, null: false
     t.text "description"
-    t.boolean "is_exclusive", default: false, null: false
+    t.boolean "is_exclusive", default: false
   end
 
   create_table "talks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

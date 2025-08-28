@@ -1,8 +1,6 @@
 require 'csv'
 
 class Talk < ApplicationRecord
-  # Disable STI since we're not using type column for inheritance
-  self.inheritance_column = nil
   belongs_to :talk_category, optional: true
   belongs_to :talk_difficulty, optional: true
   belongs_to :conference
@@ -23,12 +21,12 @@ class Talk < ApplicationRecord
   has_many :speaker_invitations, dependent: :destroy
   has_many :media_package_harvest_jobs, dependent: :destroy
 
+  has_many :talk_type_associations, dependent: :destroy
+  has_many :talk_types, through: :talk_type_associations
+
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
 
-  # Talk types associations
-  has_many :talk_type_associations, dependent: :destroy
-  has_many :talk_types, through: :talk_type_associations
 
   validates :conference_id, presence: true
   validates :title, presence: true
@@ -44,8 +42,6 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
-  validate :validate_talk_types_presence, unless: :skip_talk_types_validation
-  attr_accessor :skip_talk_types_validation
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -66,22 +62,9 @@ class Talk < ApplicationRecord
   }
 
   scope :accepted_and_intermission, -> {
-    left_joins(:proposal, :talk_type_associations, :talk_types)
-      .where(proposals: { status: :accepted })
-      .or(
-        left_joins(:proposal, :talk_type_associations, :talk_types)
-          .where(talk_types: { name: 'intermission' })
-      )
-      .distinct
+    includes(:proposal).merge(where(proposals: { status: :accepted }).or(where(abstract: 'intermission')))
   }
 
-  scope :intermissions, -> {
-    left_joins(:talk_type_associations, :talk_types).where(talk_types: { name: 'intermission' })
-  }
-
-  scope :regular_sessions, -> {
-    left_joins(:talk_type_associations, :talk_types).where(talk_types: { name: 'regular' })
-  }
 
   scope :not_sponsor, -> {
     where(sponsor_id: nil)
@@ -89,32 +72,6 @@ class Talk < ApplicationRecord
 
   scope :sponsor, -> {
     where.not(sponsor_id: nil)
-  }
-
-  # New scopes for talk types
-  scope :with_talk_type, ->(type_name) {
-    joins(:talk_types).where(talk_types: { name: type_name })
-  }
-
-  scope :keynotes, -> { with_talk_type('keynote') }
-  scope :sponsors_by_type, -> { with_talk_type('sponsor') }
-  scope :intermissions, -> { with_talk_type('intermission') }
-
-  scope :sponsor_keynotes, -> {
-    joins(:talk_types)
-      .where(talk_types: { name: ['keynote', 'sponsor'] })
-      .group('talks.id')
-      .having('COUNT(DISTINCT talk_types.name) = 2')
-  }
-
-  scope :regular_sessions, -> {
-    left_joins(:talk_types)
-      .where(talk_types: { id: nil })
-      .or(
-        left_joins(:talk_types)
-          .where.not(talk_types: { name: %w[intermission sponsor keynote] })
-      )
-      .distinct
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -320,13 +277,14 @@ class Talk < ApplicationRecord
     (now.to_i - etime.to_i) >= 600
   end
 
-  def sponsor_session?
-    talk_types.exists?(id: 'SponsorSession') || sponsor.present?
-  end
 
-  # Talk type helper methods
+  # Talk type checking methods
   def keynote?
     talk_types.exists?(id: 'KeynoteSession')
+  end
+
+  def sponsor_session?
+    talk_types.exists?(id: 'SponsorSession') || sponsor.present?
   end
 
   def intermission?
@@ -334,37 +292,20 @@ class Talk < ApplicationRecord
   end
 
   def sponsor_keynote?
-    keynote? && sponsor_session?
+    talk_types.exists?(id: 'SponsorSession') && talk_types.exists?(id: 'KeynoteSession')
   end
 
   # Talk type management methods
-  def set_talk_types(type_names = [])
-    transaction do
-      talk_type_associations.destroy_all
-
-      type_names.each do |name|
-        type = TalkType.find_by(name: name.to_s)
-        next unless type
-
-        talk_type_associations.create!(talk_type: type)
-      end
-    end
-  end
-
-  def add_talk_type(name)
-    type = TalkType.find_by!(name: name.to_s)
-    talk_type_associations.find_or_create_by!(talk_type: type)
-  end
-
-  def remove_talk_type(name)
-    talk_type_associations
-      .joins(:talk_type)
-      .where(talk_types: { name: name.to_s })
-      .destroy_all
+  def set_talk_types(type_names)
+    return if type_names.nil?
+    
+    type_names = Array(type_names).reject(&:blank?)
+    types = TalkType.where(id: type_names)
+    self.talk_types = types
   end
 
   def session_type_names
-    talk_types.pluck(:name)
+    talk_types.pluck(:id)
   end
 
   def create_or_update_proposal_item(label, params)
@@ -374,13 +315,6 @@ class Talk < ApplicationRecord
     else
       proposal_items.build(conference_id:, label:, params:)
     end
-  end
-
-  def create_or_update_talk_types(type_names)
-    return if type_names.blank?
-
-    # Always update - clear existing and set new ones
-    set_talk_types(type_names)
   end
 
   def proposal_item_value(label)
@@ -515,11 +449,5 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
-  end
-
-  def validate_talk_types_presence
-    if talk_types.empty?
-      errors.add(:talk_types, '少なくとも1つのTalkTypeが必要です')
-    end
   end
 end

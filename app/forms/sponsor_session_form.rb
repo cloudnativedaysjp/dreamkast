@@ -98,7 +98,7 @@ class SponsorSessionForm
       document_url: sponsor_session.document_url,
       proposal_items:,
       speaker_ids: sponsor_session.talks_speakers.pluck(:speaker_id),
-      talk_types: sponsor_session.talk_types.pluck(:name)
+      talk_types: sponsor_session.talk_types.pluck(:id)
     }
   end
 end

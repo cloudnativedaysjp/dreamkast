@@ -6,16 +6,15 @@ FactoryBot.define do
     end_time { '12:40' }
     association :conference
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { false }
 
     trait :with_regular_attribute do
       after(:create) do |talk|
-        regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+        regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
           attr.display_name = '公募セッション'
           attr.is_exclusive = false
         end
-        talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+        talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
       end
     end
   end
@@ -32,7 +31,6 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
@@ -80,15 +78,14 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { false }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
 
     trait :conference_day_id_1 do
@@ -126,15 +123,14 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 3 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { false }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
 
     trait :conference_day_id_1 do
@@ -173,14 +169,13 @@ FactoryBot.define do
     talk_category_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
   end
 
@@ -199,11 +194,11 @@ FactoryBot.define do
     video_published { true }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
   end
 
@@ -219,16 +214,15 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 10 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
   end
 
@@ -244,15 +238,14 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 10 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { false }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
   end
 
@@ -268,16 +261,15 @@ FactoryBot.define do
     talk_category_id { 10 }
     track_id { 11 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
     after(:create) do |talk|
-      regular_attr = TalkAttribute.find_or_create_by!(name: 'regular') do |attr|
+      regular_attr = TalkType.find_or_create_by!(id: 'Session') do |attr|
         attr.display_name = '公募セッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << regular_attr unless talk.talk_attributes.include?(regular_attr)
+      talk.talk_types << regular_attr unless talk.talk_types.include?(regular_attr)
     end
   end
 
@@ -291,16 +283,15 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
     after(:create) do |talk|
-      sponsor_attr = TalkAttribute.find_or_create_by!(name: 'sponsor') do |attr|
+      sponsor_attr = TalkType.find_or_create_by!(id: 'SponsorSession') do |attr|
         attr.display_name = 'スポンサーセッション'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << sponsor_attr unless talk.talk_attributes.include?(sponsor_attr)
+      talk.talk_types << sponsor_attr unless talk.talk_types.include?(sponsor_attr)
     end
 
     trait :registered do
@@ -326,16 +317,15 @@ FactoryBot.define do
     talk_difficulty_id { 1 }
     track_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { true }
     document_url { 'http://' }
 
     after(:create) do |talk|
-      keynote_attr = TalkAttribute.find_or_create_by!(name: 'keynote') do |attr|
+      keynote_attr = TalkType.find_or_create_by!(id: 'KeynoteSession') do |attr|
         attr.display_name = 'キーノート'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << keynote_attr unless talk.talk_attributes.include?(keynote_attr)
+      talk.talk_types << keynote_attr unless talk.talk_types.include?(keynote_attr)
     end
 
     trait :registered do
@@ -362,7 +352,6 @@ FactoryBot.define do
     video_published { false }
     document_url { 'http://' }
     created_at { Time.new(2022, 9, 1, 10) }
-    skip_talk_attributes_validation { true }
   end
 
   factory :intermission, class: Talk do
@@ -372,15 +361,14 @@ FactoryBot.define do
     end_time { '12:10' }
     conference_id { 1 }
     show_on_timetable { true }
-    skip_talk_attributes_validation { true }
     video_published { false }
 
     after(:create) do |talk|
-      intermission_attr = TalkAttribute.find_or_create_by!(name: 'intermission') do |attr|
+      intermission_attr = TalkType.find_or_create_by!(id: 'Intermission') do |attr|
         attr.display_name = '休憩'
         attr.is_exclusive = false
       end
-      talk.talk_attributes << intermission_attr unless talk.talk_attributes.include?(intermission_attr)
+      talk.talk_types << intermission_attr unless talk.talk_types.include?(intermission_attr)
     end
   end
 end

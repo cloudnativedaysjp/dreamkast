@@ -91,7 +91,7 @@
 
   <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][_destroy]", "false", class: "destroy_flag_field" %>
   <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][conference_id]", @conference.id %>
-  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][talk_attributes]", @conference.id %>
+  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][talk_types]", @conference.id %>
 
   <% if @conference.speaker_entry_enabled? || admin? %>
     <%= link_to 'Delete Talk', '#', class: 'remove_talk_field btn btn-danger' %>

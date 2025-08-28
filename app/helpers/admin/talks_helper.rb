@@ -1,19 +1,19 @@
 module Admin::TalksHelper
-  def session_attribute_checkboxes(talk)
-    TalkAttribute.all.map do |attribute|
-      checked = talk.talk_attributes.include?(attribute)
+  def session_type_checkboxes(talk)
+    TalkType.all.map do |type|
+      checked = talk.talk_types.include?(type)
       check_box_tag(
-        "talk_attributes[#{talk.id}][attribute_ids][]",
-        attribute.id,
+        "talk_types[#{talk.id}][type_ids][]",
+        type.id,
         checked,
-        id: "talk_#{talk.id}_attribute_#{attribute.id}",
-        class: 'session-attribute-checkbox',
+        id: "talk_#{talk.id}_type_#{type.id}",
+        class: 'session-type-checkbox',
         data: {
           talk_id: talk.id,
-          attribute_name: attribute.name,
-          exclusive: attribute.is_exclusive
+          type_name: type.name,
+          exclusive: type.is_exclusive
         }
-      ) + label_tag("talk_#{talk.id}_attribute_#{attribute.id}", attribute.display_name)
+      ) + label_tag("talk_#{talk.id}_type_#{type.id}", type.display_name)
     end.join(' ').html_safe
   end
 end

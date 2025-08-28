@@ -9,11 +9,11 @@ class DummyDataImporter
       type = h["type"]
       case type
       when "KeynoteSession"
-        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "keynote").id)
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: "KeynoteSession").id)
       when "SponsorSession"
-        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "sponsor").id)
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: "SponsorSession").id)
       when "Intermission"
-        TalkAttributeAssociation.seed(talk_id: h["id"], talk_attribute_id: TalkAttribute.find_by(name: "intermission").id)
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: "Intermission").id)
       end
     end
   end

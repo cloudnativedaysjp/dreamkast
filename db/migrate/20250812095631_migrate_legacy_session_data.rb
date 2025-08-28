@@ -3,26 +3,26 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
     # Skip if running in test environment
     return if Rails.env.test?
     
-    say_with_time "Migrating legacy session data to new session attributes system" do
-      # Find attribute IDs
-      regular_attr = TalkAttribute.find_by(name: 'regular')
-      keynote_attr = TalkAttribute.find_by(name: 'keynote')
-      sponsor_attr = TalkAttribute.find_by(name: 'sponsor')
-      intermission_attr = TalkAttribute.find_by(name: 'intermission')
+    say_with_time "Migrating legacy session data to new session types system" do
+      # Find type IDs
+      regular_type = TalkType.find_by(id: 'Session')
+      keynote_type = TalkType.find_by(id: 'KeynoteSession')
+      sponsor_type = TalkType.find_by(id: 'SponsorSession')
+      intermission_type = TalkType.find_by(id: 'Intermission')
 
       Talk.all.each do |talk|
         case talk.type
         when 'Session'
-          TalkAttributeAssociation.create!(talk_id:  talk.id, talk_attribute_id: regular_attr.id)
+          TalkTypeAssociation.create!(talk_id:  talk.id, talk_type_id: regular_type.id)
         when "KeynoteSession"
-          TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: keynote_attr.id)
+          TalkTypeAssociation.create!(talk_id: talk.id, talk_type_id: keynote_type.id)
           if talk.sponsor_session?
-            TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: sponsor_attr.id)
+            TalkTypeAssociation.create!(talk_id: talk.id, talk_type_id: sponsor_type.id)
           end
         when "SponsorSession"
-          TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: sponsor_attr.id)
+          TalkTypeAssociation.create!(talk_id: talk.id, talk_type_id: sponsor_type.id)
         when "Intermission"
-          TalkAttributeAssociation.create!(talk_id: talk.id, talk_attribute_id: intermission_attr.id)
+          TalkTypeAssociation.create!(talk_id: talk.id, talk_type_id: intermission_type.id)
         end
       end
     end
@@ -32,6 +32,6 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
     # Skip if running in test environment
     return if Rails.env.test?
     
-    TalkAttributeAssociation.delete_all
+    TalkTypeAssociation.delete_all
   end
 end

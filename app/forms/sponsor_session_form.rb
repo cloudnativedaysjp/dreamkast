@@ -12,7 +12,7 @@ class SponsorSessionForm
   attr_accessor :document_url
   attr_accessor :proposal_items
   attr_accessor :speaker_ids
-  attr_accessor :talk_attributes
+  attr_accessor :talk_types
 
   delegate :persisted?, to: :sponsor_session
 
@@ -49,10 +49,10 @@ class SponsorSessionForm
       was_new_record = sponsor_session.new_record?
       sponsor_session.update!(params)
 
-      # Set talk attributes - always include sponsor attribute for sponsor sessions
-      attributes_to_set = talk_attributes || []
-      attributes_to_set << 'sponsor' unless attributes_to_set.include?('sponsor')
-      sponsor_session.create_or_update_talk_attributes(attributes_to_set)
+      # Set talk types - always include sponsor type for sponsor sessions
+      types_to_set = talk_types || []
+      types_to_set << 'sponsor' unless types_to_set.include?('sponsor')
+      sponsor_session.create_or_update_talk_types(types_to_set)
 
       if was_new_record
         Proposal.create!(conference_id:, talk_id: sponsor_session.id)
@@ -98,7 +98,7 @@ class SponsorSessionForm
       document_url: sponsor_session.document_url,
       proposal_items:,
       speaker_ids: sponsor_session.talks_speakers.pluck(:speaker_id),
-      talk_attributes: sponsor_session.talk_attributes.pluck(:name)
+      talk_types: sponsor_session.talk_types.pluck(:name)
     }
   end
 end

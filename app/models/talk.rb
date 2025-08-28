@@ -26,9 +26,9 @@ class Talk < ApplicationRecord
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
 
-  # Talk attributes associations
-  has_many :talk_attribute_associations, dependent: :destroy
-  has_many :talk_attributes, through: :talk_attribute_associations
+  # Talk types associations
+  has_many :talk_type_associations, dependent: :destroy
+  has_many :talk_types, through: :talk_type_associations
 
   validates :conference_id, presence: true
   validates :title, presence: true
@@ -44,8 +44,8 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
-  validate :validate_talk_attributes_presence, unless: :skip_talk_attributes_validation
-  attr_accessor :skip_talk_attributes_validation
+  validate :validate_talk_types_presence, unless: :skip_talk_types_validation
+  attr_accessor :skip_talk_types_validation
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -66,21 +66,21 @@ class Talk < ApplicationRecord
   }
 
   scope :accepted_and_intermission, -> {
-    left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
+    left_joins(:proposal, :talk_type_associations, :talk_types)
       .where(proposals: { status: :accepted })
       .or(
-        left_joins(:proposal, :talk_attribute_associations, :talk_attributes)
-          .where(talk_attributes: { name: 'intermission' })
+        left_joins(:proposal, :talk_type_associations, :talk_types)
+          .where(talk_types: { name: 'intermission' })
       )
       .distinct
   }
 
   scope :intermissions, -> {
-    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'intermission' })
+    left_joins(:talk_type_associations, :talk_types).where(talk_types: { name: 'intermission' })
   }
 
   scope :regular_sessions, -> {
-    left_joins(:talk_attribute_associations, :talk_attributes).where(talk_attributes: { name: 'regular' })
+    left_joins(:talk_type_associations, :talk_types).where(talk_types: { name: 'regular' })
   }
 
   scope :not_sponsor, -> {
@@ -91,28 +91,28 @@ class Talk < ApplicationRecord
     where.not(sponsor_id: nil)
   }
 
-  # New scopes for talk attributes
-  scope :with_talk_attribute, ->(attribute_name) {
-    joins(:talk_attributes).where(talk_attributes: { name: attribute_name })
+  # New scopes for talk types
+  scope :with_talk_type, ->(type_name) {
+    joins(:talk_types).where(talk_types: { name: type_name })
   }
 
-  scope :keynotes, -> { with_talk_attribute('keynote') }
-  scope :sponsors_by_attribute, -> { with_talk_attribute('sponsor') }
-  scope :intermissions, -> { with_talk_attribute('intermission') }
+  scope :keynotes, -> { with_talk_type('keynote') }
+  scope :sponsors_by_type, -> { with_talk_type('sponsor') }
+  scope :intermissions, -> { with_talk_type('intermission') }
 
   scope :sponsor_keynotes, -> {
-    joins(:talk_attributes)
-      .where(talk_attributes: { name: ['keynote', 'sponsor'] })
+    joins(:talk_types)
+      .where(talk_types: { name: ['keynote', 'sponsor'] })
       .group('talks.id')
-      .having('COUNT(DISTINCT talk_attributes.name) = 2')
+      .having('COUNT(DISTINCT talk_types.name) = 2')
   }
 
   scope :regular_sessions, -> {
-    left_joins(:talk_attributes)
-      .where(talk_attributes: { id: nil })
+    left_joins(:talk_types)
+      .where(talk_types: { id: nil })
       .or(
-        left_joins(:talk_attributes)
-          .where.not(talk_attributes: { name: %w[intermission sponsor keynote] })
+        left_joins(:talk_types)
+          .where.not(talk_types: { name: %w[intermission sponsor keynote] })
       )
       .distinct
   }
@@ -321,50 +321,50 @@ class Talk < ApplicationRecord
   end
 
   def sponsor_session?
-    talk_attributes.exists?(name: 'sponsor') || sponsor.present?
+    talk_types.exists?(name: 'sponsor') || sponsor.present?
   end
 
-  # Talk attribute helper methods
+  # Talk type helper methods
   def keynote?
-    talk_attributes.exists?(name: 'keynote')
+    talk_types.exists?(name: 'keynote')
   end
 
   def intermission?
-    talk_attributes.exists?(name: 'intermission') || abstract == 'intermission'
+    talk_types.exists?(name: 'intermission') || abstract == 'intermission'
   end
 
   def sponsor_keynote?
     keynote? && sponsor_session?
   end
 
-  # Talk attribute management methods
-  def set_talk_attributes(attribute_names = [])
+  # Talk type management methods
+  def set_talk_types(type_names = [])
     transaction do
-      talk_attribute_associations.destroy_all
+      talk_type_associations.destroy_all
 
-      attribute_names.each do |name|
-        attribute = TalkAttribute.find_by(name: name.to_s)
-        next unless attribute
+      type_names.each do |name|
+        type = TalkType.find_by(name: name.to_s)
+        next unless type
 
-        talk_attribute_associations.create!(talk_attribute: attribute)
+        talk_type_associations.create!(talk_type: type)
       end
     end
   end
 
-  def add_talk_attribute(name)
-    attribute = TalkAttribute.find_by!(name: name.to_s)
-    talk_attribute_associations.find_or_create_by!(talk_attribute: attribute)
+  def add_talk_type(name)
+    type = TalkType.find_by!(name: name.to_s)
+    talk_type_associations.find_or_create_by!(talk_type: type)
   end
 
-  def remove_talk_attribute(name)
-    talk_attribute_associations
-      .joins(:talk_attribute)
-      .where(talk_attributes: { name: name.to_s })
+  def remove_talk_type(name)
+    talk_type_associations
+      .joins(:talk_type)
+      .where(talk_types: { name: name.to_s })
       .destroy_all
   end
 
-  def session_attribute_names
-    talk_attributes.pluck(:name)
+  def session_type_names
+    talk_types.pluck(:name)
   end
 
   def create_or_update_proposal_item(label, params)
@@ -376,11 +376,11 @@ class Talk < ApplicationRecord
     end
   end
 
-  def create_or_update_talk_attributes(attribute_names)
-    return if attribute_names.blank?
+  def create_or_update_talk_types(type_names)
+    return if type_names.blank?
 
     # Always update - clear existing and set new ones
-    set_talk_attributes(attribute_names)
+    set_talk_types(type_names)
   end
 
   def proposal_item_value(label)
@@ -517,9 +517,9 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     }
   end
 
-  def validate_talk_attributes_presence
-    if talk_attributes.empty?
-      errors.add(:talk_attributes, '少なくとも1つのTalkAttributeが必要です')
+  def validate_talk_types_presence
+    if talk_types.empty?
+      errors.add(:talk_types, '少なくとも1つのTalkTypeが必要です')
     end
   end
 end

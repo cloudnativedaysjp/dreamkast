@@ -17,7 +17,7 @@ class ProposalsController < ApplicationController
   def index
     @conference = Conference.find_by(abbr: event_name)
     @proposals = Proposal
-                 .includes(talk: [:speakers, :talk_category, :talks_speakers, :talk_attributes])
+                 .includes(talk: [:speakers, :talk_category, :talks_speakers, :talk_types])
                  .joins(:talk)
                  .merge(Talk.regular_sessions)
                  .where(conference_id: @conference.id)

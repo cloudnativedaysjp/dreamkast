@@ -34,12 +34,12 @@ class SpeakerForm
         next if params.nil?
 
         params = params.symbolize_keys
-        talk_attributes = params.delete(:talk_attributes) || []
+        talk_types = params.delete(:talk_types) || []
 
         if params.key?(:id)
-          process_existing_talk(params, talk_attributes)
+          process_existing_talk(params, talk_types)
         else
-          process_new_talk(params, talk_attributes)
+          process_new_talk(params, talk_types)
         end
       end
     rescue => e
@@ -49,15 +49,15 @@ class SpeakerForm
 
     private
 
-    def process_existing_talk(params, talk_attributes)
+    def process_existing_talk(params, talk_types)
       if params[:_destroy] == '1'
         @destroy_talks << @speaker.talks.find(params[:id])
       else
-        update_existing_talk(params, talk_attributes)
+        update_existing_talk(params, talk_types)
       end
     end
 
-    def process_new_talk(params, talk_attributes)
+    def process_new_talk(params, talk_types)
       return if params[:_destroy] == '1'
 
       params.delete(:_destroy)
@@ -71,20 +71,20 @@ class SpeakerForm
 
       set_proposal_items(t, proposal_item_params)
 
-      # Store talk_attributes to be set after talk is saved
-      # (Unlike proposal_items which use build, talk_attributes require the talk to be persisted first)
-      t.instance_variable_set(:@pending_talk_attributes, talk_attributes) if talk_attributes.present?
+      # Store talk_types to be set after talk is saved
+      # (Unlike proposal_items which use build, talk_types require the talk to be persisted first)
+      t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
       @talks << t
     end
 
-    def update_existing_talk(params, talk_attributes)
+    def update_existing_talk(params, talk_types)
       params.delete(:_destroy)
       talk = @speaker.talks.find(params[:id])
 
       proposal_item_params = extract_proposal_items(params)
       set_proposal_items(talk, proposal_item_params)
 
-      talk.create_or_update_talk_attributes(talk_attributes) if talk_attributes.present?
+      talk.create_or_update_talk_types(talk_types) if talk_types.present?
       talk.update(params)
       @talks << talk
     end
@@ -144,9 +144,9 @@ class SpeakerForm
         else
           talk.save!(context: :entry_form)
 
-          # Set talk attributes for new talks (same pattern as proposal_items)
-          pending_attributes = talk.instance_variable_get(:@pending_talk_attributes)
-          talk.create_or_update_talk_attributes(pending_attributes) if pending_attributes.present?
+          # Set talk types for new talks (same pattern as proposal_items)
+          pending_types = talk.instance_variable_get(:@pending_talk_types)
+          talk.create_or_update_talk_types(pending_types) if pending_types.present?
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
 

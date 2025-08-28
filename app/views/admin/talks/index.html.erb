@@ -19,7 +19,7 @@
       <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">セッション属性</th>
+        <th scope="col">セッションタイプ</th>
         <th scope="col">Speakers</th>
         <th scope="col">Title / Abstract</th>
         <th scope="col">Track</th>
@@ -36,8 +36,8 @@
           <tr>
             <td><%= talk.id %></td>
             <td>
-              <%= session_attribute_checkboxes(talk) %>
-              <%= hidden_field_tag "talk_attributes[#{talk.id}][attribute_ids][]", "" %>
+              <%= session_type_checkboxes(talk) %>
+              <%= hidden_field_tag "talk_types[#{talk.id}][type_ids][]", "" %>
             </td>
             <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
             <td>
@@ -83,26 +83,26 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Session attribute exclusive control
-  const sessionAttributeCheckboxes = document.querySelectorAll('.session-attribute-checkbox');
+  // Session type exclusive control
+  const sessionTypeCheckboxes = document.querySelectorAll('.session-type-checkbox');
   
-  sessionAttributeCheckboxes.forEach(checkbox => {
+  sessionTypeCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function() {
       const talkId = this.dataset.talkId;
-      const attrId = this.dataset.attrId;
+      const typeId = this.dataset.typeId;
       const isExclusive = this.dataset.exclusive === 'true';
       const isChecked = this.checked;
       
       if (isExclusive && isChecked) {
-        // If exclusive attribute is checked, uncheck all other attributes for this talk
+        // If exclusive type is checked, uncheck all other types for this talk
         const otherCheckboxes = document.querySelectorAll(
-          `.session-attribute-checkbox[data-talk-id="${talkId}"]:not([data-attr-id="${attrId}"])`
+          `.session-type-checkbox[data-talk-id="${talkId}"]:not([data-type-id="${typeId}"])`
         );
         otherCheckboxes.forEach(cb => cb.checked = false);
       } else if (isChecked) {
-        // If non-exclusive attribute is checked, uncheck exclusive attributes for this talk
+        // If non-exclusive type is checked, uncheck exclusive types for this talk
         const exclusiveCheckboxes = document.querySelectorAll(
-          `.session-attribute-checkbox[data-talk-id="${talkId}"][data-exclusive="true"]`
+          `.session-type-checkbox[data-talk-id="${talkId}"][data-exclusive="true"]`
         );
         exclusiveCheckboxes.forEach(cb => cb.checked = false);
       }
@@ -110,9 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // Bulk operations
-  function selectAttributeForAll(attributeName) {
+  function selectTypeForAll(typeName) {
     const checkboxes = document.querySelectorAll(
-      `.session-attribute-checkbox[data-attr-name="${attributeName}"]`
+      `.session-type-checkbox[data-type-name="${typeName}"]`
     );
     checkboxes.forEach(checkbox => {
       checkbox.checked = true;
@@ -120,15 +120,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  function clearAllAttributes() {
-    const checkboxes = document.querySelectorAll('.session-attribute-checkbox');
+  function clearAllTypes() {
+    const checkboxes = document.querySelectorAll('.session-type-checkbox');
     checkboxes.forEach(checkbox => {
       checkbox.checked = false;
     });
   }
   
   // Make functions available globally if needed
-  window.selectAttributeForAll = selectAttributeForAll;
-  window.clearAllAttributes = clearAllAttributes;
+  window.selectTypeForAll = selectTypeForAll;
+  window.clearAllTypes = clearAllTypes;
 });
 </script>

@@ -77,7 +77,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
       :talk_difficulty_id,
       :document_url,
       { speaker_ids: [] },
-      { talk_attributes: [] },
+      { talk_types: [] },
       { proposal_items_attributes: }
     ]
 

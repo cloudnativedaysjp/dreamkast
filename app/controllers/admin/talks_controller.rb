@@ -21,9 +21,9 @@ class Admin::TalksController < ApplicationController
       TalksHelper.update_talks(@conference, params[:video])
     end
 
-    # Update talk attributes (new functionality)
-    if params[:talk_attributes].present?
-      update_talk_attributes
+    # Update talk types (new functionality)
+    if params[:talk_types].present?
+      update_talk_types
     end
 
     redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
@@ -31,25 +31,25 @@ class Admin::TalksController < ApplicationController
 
   # private
 
-  def update_talk_attributes
-    params[:talk_attributes].each do |talk_id, attributes_data|
+  def update_talk_types
+    params[:talk_types].each do |talk_id, types_data|
       talk = @conference.talks.find(talk_id)
-      attribute_ids = attributes_data[:attribute_ids]
+      type_ids = types_data[:type_ids]
 
-      TalkAttributeService.assign_attributes(talk, attribute_ids)
+      TalkTypeService.assign_types(talk, type_ids)
     rescue ActiveRecord::RecordNotFound
       flash.now[:alert] = "セッションが見つかりません (ID: #{talk_id})"
       Rails.logger.error("Talk not found: #{talk_id}")
-    rescue TalkAttributeService::ValidationError => e
-      flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
+    rescue TalkTypeService::ValidationError => e
+      flash.now[:alert] = "セッションタイプの更新に失敗しました: #{e.message}"
       Rails.logger.error("Validation error for talk #{talk_id}: #{e.message}")
     rescue ActiveRecord::RecordInvalid => e
-      flash.now[:alert] = "セッション属性の更新に失敗しました: #{e.message}"
-      Rails.logger.error("Failed to update talk attributes for talk #{talk_id}: #{e.message}")
+      flash.now[:alert] = "セッションタイプの更新に失敗しました: #{e.message}"
+      Rails.logger.error("Failed to update talk types for talk #{talk_id}: #{e.message}")
     end
   rescue => e
-    flash.now[:alert] = 'セッション属性の更新中にエラーが発生しました'
-    Rails.logger.error("Unexpected error updating talk attributes: #{e.message}")
+    flash.now[:alert] = 'セッションタイプの更新中にエラーが発生しました'
+    Rails.logger.error("Unexpected error updating talk types: #{e.message}")
   end
 
   def start_on_air
@@ -106,15 +106,15 @@ class Admin::TalksController < ApplicationController
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
                # Exclude intermission talks for older conferences using join
-               @talks.left_joins(:talk_attributes)
-                     .where.not(talk_attributes: { name: 'intermission' })
+               @talks.left_joins(:talk_types)
+                     .where.not(talk_types: { name: 'intermission' })
                      .where.not(abstract: '-')
              else
                # For newer conferences, check both acceptance and intermission exclusion
                @talks.joins(:proposal)
-                     .left_joins(:talk_attributes)
+                     .left_joins(:talk_types)
                      .where(proposals: { status: :accepted })
-                     .where.not(talk_attributes: { name: 'intermission' })
+                     .where.not(talk_types: { name: 'intermission' })
                      .where.not(abstract: '-')
              end
     conference_days = conference.conference_days.filter { |day| !day.internal }.map(&:id)

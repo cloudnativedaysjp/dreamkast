@@ -44,35 +44,70 @@ class SponsorSessionForm
     return if invalid?
 
     ActiveRecord::Base.transaction do
-      params = { sponsor_id:, conference_id:, title:, abstract:, talk_category_id:, talk_difficulty_id:, document_url:, show_on_timetable: true }
-
-      was_new_record = sponsor_session.new_record?
-      sponsor_session.update!(params)
-
-      # Set talk types - always include sponsor type for sponsor sessions
-      types_to_set = talk_types || []
-      types_to_set << 'sponsor' unless types_to_set.include?('sponsor')
-      sponsor_session.create_or_update_talk_types(types_to_set)
-
-      if was_new_record
-        Proposal.create!(conference_id:, talk_id: sponsor_session.id)
+      if sponsor_session.new_record?
+        process_new_talk
+      else
+        process_existing_talk
       end
 
-      # Update speakers
-      if speaker_ids.present?
-        # Remove existing speakers
-        TalksSpeaker.where(talk_id: sponsor_session.id).destroy_all
-
-        # Add selected speakers
-        speaker_ids.reject(&:blank?).each do |speaker_id|
-          TalksSpeaker.create!(talk_id: sponsor_session.id, speaker_id:)
-        end
-      end
+      update_speakers
     end
     true
   rescue => e
     Rails.logger.error(e)
     false
+  end
+
+  def process_existing_talk
+    params = build_talk_params
+    sponsor_session.update!(params)
+
+    # Update talk types for existing talks
+    update_talk_types
+  end
+
+  def process_new_talk
+    params = build_talk_params
+
+    # Save the talk first
+    sponsor_session.update!(params)
+
+    # Set talk types after the talk is persisted
+    update_talk_types
+
+    # Create proposal for new talk
+    Proposal.create!(conference_id:, talk_id: sponsor_session.id)
+  end
+
+  def build_talk_params
+    {
+      sponsor_id:,
+      conference_id:,
+      title:,
+      abstract:,
+      talk_category_id:,
+      talk_difficulty_id:,
+      document_url:,
+      show_on_timetable: true
+    }
+  end
+
+  def update_talk_types
+    types_to_set = talk_types || []
+    types_to_set << 'SponsorSession' unless types_to_set.include?('SponsorSession')
+    sponsor_session.set_talk_types(types_to_set)
+  end
+
+  def update_speakers
+    return unless speaker_ids.present?
+
+    # Remove existing speakers
+    TalksSpeaker.where(talk_id: sponsor_session.id).destroy_all
+
+    # Add selected speakers
+    speaker_ids.reject(&:blank?).each do |speaker_id|
+      TalksSpeaker.create!(talk_id: sponsor_session.id, speaker_id:)
+    end
   end
 
   def to_model
@@ -83,9 +118,9 @@ class SponsorSessionForm
     @proposal_items = sponsor_session.proposal_items
   end
 
-  private
-
   attr_reader :sponsor_session
+
+  private
 
   def default_attributes
     {

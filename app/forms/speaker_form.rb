@@ -146,7 +146,7 @@ class SpeakerForm
 
           # Set talk types for new talks (same pattern as proposal_items)
           pending_types = talk.instance_variable_get(:@pending_talk_types)
-          talk.create_or_update_talk_types(pending_types) if pending_types.present?
+          talk.set_talk_types(pending_types) if pending_types.present?
           talk_speaker = TalksSpeaker.new(talk_id: talk.id, speaker_id: speaker.id)
           talk_speaker.save!
 

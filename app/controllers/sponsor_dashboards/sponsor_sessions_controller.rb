@@ -33,8 +33,12 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = Talk.find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
-    @sponsor_session_form.load
-    @sponsor_speakers = @sponsor.speakers
+    begin
+      @sponsor_session_form.load
+      @sponsor_speakers = @sponsor.speakers
+    rescue => e
+      puts(e)
+    end
   end
 
   def update

@@ -74,6 +74,10 @@ class Talk < ApplicationRecord
     where.not(sponsor_id: nil)
   }
 
+  scope :regular_sessions, -> {
+    joins(:talk_types).where(talk_types: { id: 'Session' })
+  }
+
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
     filename = "#{conference.abbr}_#{date}_#{track_name}.csv"
     columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
@@ -277,7 +281,6 @@ class Talk < ApplicationRecord
     (now.to_i - etime.to_i) >= 600
   end
 
-
   # Talk type checking methods
   def keynote?
     talk_types.exists?(id: 'KeynoteSession')
@@ -298,7 +301,7 @@ class Talk < ApplicationRecord
   # Talk type management methods
   def set_talk_types(type_names)
     return if type_names.nil?
-    
+
     type_names = Array(type_names).reject(&:blank?)
     types = TalkType.where(id: type_names)
     self.talk_types = types

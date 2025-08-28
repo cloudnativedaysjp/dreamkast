@@ -43,7 +43,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
                     'sponsor_id' => sponsor.id,
                     'title' => 'すごいセッション',
                     'abstract' => 'すごいぞ！',
-                    'talk_types' => ['sponsor'],
+                    'talk_types' => ['SponsorSession'],
                     'talk_difficulty_id' => '41',
                     'assumed_visitors' => [assumed_visitor.id],
                     'execution_phases' => [execution_phase.id],
@@ -66,7 +66,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
 
             talk = speaker.talks.first
             expect(talk.time).to(eq(40))
-            expect(talk.talk_types.pluck(:name)).to(include('sponsor'))
+            expect(talk.talk_types.pluck(:id)).to(include('SponsorSession'))
           end
         end
       end

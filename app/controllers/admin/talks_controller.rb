@@ -16,78 +16,39 @@ class Admin::TalksController < ApplicationController
   end
 
   def update_talks
-    # Update video settings (existing functionality)
-    if params[:video].present?
-      TalksHelper.update_talks(@conference, params[:video])
-    end
-
-    # Update talk types (new functionality)
-    if params[:talk_types].present?
-      update_talk_types
-    end
+    TalksHelper.update_talks(@conference, params[:video])
 
     redirect_to(admin_talks_url, notice: 'セッション設定を更新しました')
   end
 
-  # private
-
-  def update_talk_types
-    params[:talk_types].each do |talk_id, types_data|
-      talk = @conference.talks.find(talk_id)
-      type_ids = types_data[:type_ids]
-
-      TalkTypeService.assign_types(talk, type_ids)
-    rescue ActiveRecord::RecordNotFound
-      flash.now[:alert] = "セッションが見つかりません (ID: #{talk_id})"
-      Rails.logger.error("Talk not found: #{talk_id}")
-    rescue TalkTypeService::ValidationError => e
-      flash.now[:alert] = "セッションタイプの更新に失敗しました: #{e.message}"
-      Rails.logger.error("Validation error for talk #{talk_id}: #{e.message}")
-    rescue ActiveRecord::RecordInvalid => e
-      flash.now[:alert] = "セッションタイプの更新に失敗しました: #{e.message}"
-      Rails.logger.error("Failed to update talk types for talk #{talk_id}: #{e.message}")
-    end
-  rescue => e
-    flash.now[:alert] = 'セッションタイプの更新中にエラーが発生しました'
-    Rails.logger.error("Unexpected error updating talk types: #{e.message}")
-  end
-
   def start_on_air
-    begin
-      @talk = Talk.find(params[:talk][:id])
-      Rails.logger.info("Talk found: #{@talk.id}, Track: #{@talk.track_id}, Conference day: #{@talk.conference_day_id}")
-
-      on_air_talks_of_other_days = @talk.track.talks
-                                        .includes([:conference_day, :video])
-                                        .accepted_and_intermission
-                                        .where.not(conference_days: { id: @talk.conference_day.id })
-                                        .joins(:video)
-                                        .where(videos: { on_air: true })
+    @talk = Talk.find(params[:talk][:id])
+    on_air_talks_of_other_days = @talk.track.talks
+                                      .includes([:conference_day, :video])
+                                      .accepted_and_intermission
+                                      .where.not(conference_days: { id: @talk.conference_day.id })
+                                      .joins(:video)
+                                      .where(videos: { on_air: true })
 
 
-      if on_air_talks_of_other_days.size.positive?
-        flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
-      else
-        @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).joins(:video).map(&:video)
-        ActiveRecord::Base.transaction do
-          # Disable onair of all talks that are onair
-          @current_on_air_videos.each do |video|
-            video.update!(on_air: false)
-          end
-
-          # Update the current talk to onair
-          @talk.video.update!(on_air: true)
+    if on_air_talks_of_other_days.size.positive?
+      flash.now.alert = "別日(#{on_air_talks_of_other_days.map(&:conference_day).map(&:date).join(',')})にオンエアのセッションが残っています: #{on_air_talks_of_other_days.map(&:id).join(',')}"
+    else
+      @current_on_air_videos = @talk.track.talks.includes([:track, :video, :speakers, :conference_day]).where.not(id: @talk.id).joins(:video).map(&:video)
+      ActiveRecord::Base.transaction do
+        # Disable onair of all talks that are onair
+        @current_on_air_videos.each do |video|
+          video.update!(on_air: false)
         end
 
-        ActionCable.server.broadcast(
-          "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-        )
-        flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
+        # Update the current talk to onair
+        @talk.video.update!(on_air: true)
       end
-    rescue => e
-      Rails.logger.error("Error in start_on_air: #{e.message}")
-      Rails.logger.error(e.backtrace.join("\n"))
-      raise
+
+      ActionCable.server.broadcast(
+        "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+      )
+      flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
     end
   end
 

@@ -306,7 +306,7 @@ class Talk < ApplicationRecord
   end
 
   def session_type_names
-    talk_types.pluck(:id)
+    talk_types.map(&:id)
   end
 
   def create_or_update_proposal_item(label, params)

@@ -49,7 +49,7 @@ class Admin::SpeakersController < ApplicationController
     query = { show_on_timetable: true, conference_id: @conference.id }
 
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
-    @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
+    @talks = if %w[cndt2020].include?(conference.abbr)
                @talks.where.not(abstract: 'intermission').where.not(abstract: '-')
              else
                @talks.where(proposals: { status: :accepted }).where.not(abstract: 'intermission').where.not(abstract: '-')

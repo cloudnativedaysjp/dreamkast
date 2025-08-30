@@ -28,6 +28,10 @@ module.exports = {
       "./app/javascript/packs/cndw2024.js",
       './app/javascript/stylesheets/cndw2024.scss',
     ],
+    cndw2025: [
+      "./app/javascript/packs/cndw2025.js",
+      './app/javascript/stylesheets/cndw2025.scss',
+    ],
     cnds2024: [
       "./app/javascript/packs/cnds2024.js",
       './app/javascript/stylesheets/cnds2024.scss',

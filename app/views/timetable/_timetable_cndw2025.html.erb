@@ -1,0 +1,91 @@
+<% @conference.conference_days.externals.each do |conference_day| %>
+  <section class="timetable">
+    <h2 class="date"><%= conference_day.date.to_s %></h2>
+    <div class="grid" style="--rows: 13">
+      <div class="all-track" style="">
+        <div class="session">
+          <h6>9:50 - 10:00</h6>
+          <h4>オープニング</h4>
+        </div>
+      </div>
+    </div>
+    <% # 1rowあたり1分で計算。ここのrowsで全体の分(=rowの数)を計算している。トータル時間-休憩時間 + ヘッダ分 %>
+    <div class="grid"
+         style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
+      <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
+          <div class="track <%= 'even' if n.zero? || n.even? %>"
+               style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
+      <% end %>
+
+      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+        <%
+          if talk.start_time.in_time_zone('Asia/Tokyo').hour < 13
+            lunch_break = 0
+            each_break = 0
+          else
+            # 14時以降のセッションについてはお昼休みとセッション間休憩を除外
+            lunch_break = 80
+            each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
+          end
+
+          total_break = lunch_break + each_break
+
+          row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break
+          row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
+        %>
+        <div class="talk"
+          slot="<%= talk.slot_number %>"
+          style="--track: <%= talk.track.number - 1 %>;
+                  --row-start: <%= row_start %>;
+                  --row-end: <%= row_end  %>;">
+          <% if form %>
+          <label for="<%= "talks[#{talk.id}]" %>" class="checkbox-label">
+          <% form_status = talk.sold_out? if @profile.attend_offline? %>
+          <%= form.check_box "talks[#{talk.id}]",
+                              {
+                                talk_id: talk.id,
+                                day_slot: talk.day_slot,
+                                talk_number: talk.talk_number,
+                                checked: talks_checked?(talk.id),
+                                style: "display: none",
+                                disabled: form_status
+                              },
+                              talks_checked?(talk.id),
+                              nil %>
+          <% end %>
+          <div class="content <%= talk.sold_out? && @profile.attend_offline? ? 'disabled' : '' %>"
+               track_number="<%= talk.track.number %>"
+               talk_number="<%= talk.talk_number %>">
+            <% if talk.sold_out? && @profile.attend_offline? %>
+                <div class="content_caption">
+                  <span>満席</span>
+                </div>
+            <% elsif form %>
+                <div class="content_caption"></div>
+            <% end %>
+            <h6><%= conference_day.date.strftime("%m/%d") %> <%= talk.start_time.strftime("%R") %>-<%= talk.end_time.strftime("%R") %> <span class="track_name">Track <%= talk.track.name %></span></h6>
+            <% if talk.presenters.present? %>
+              <h5><a href="<%= talk_path(id: talk.id) %>" target="_blank" rel="noopener"><%= talk.title %></a></h5>
+              <% talk.speakers.each do |speaker| %>
+                <h6><%= speaker.name %></h6>
+              <% end %>
+            <% else %>
+              <h4><%= talk.title %></h4>
+            <% end %>
+            <div class="category_difficulty">
+              <% if talk.talk_category_id %>
+                <span class="difficulty category_<%= talk.talk_category_id %>"><%= talk.category %></span>
+              <% end %>
+              <% if talk.talk_difficulty_id %>
+                <span class="difficulty difficulty_<%= talk.talk_difficulty_id %>"><%= talk.difficulty %></span>
+              <% end %>
+            </div>
+          </div>
+          <% if form %>
+          </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>

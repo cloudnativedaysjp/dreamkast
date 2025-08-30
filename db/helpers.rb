@@ -4,7 +4,7 @@ class DummyDataImporter
   end
 
   def import_dummy_talks
-    Talk.seed(csv('talks').map(&:to_hash).map{|h| h.except("type")})
+    Talk.seed(csv('talks').map(&:to_hash))
     csv('talks').map(&:to_hash).each do |h|
       type = h["type"]
       case type

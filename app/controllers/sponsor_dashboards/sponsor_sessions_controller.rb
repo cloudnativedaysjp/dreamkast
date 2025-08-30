@@ -68,7 +68,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   private
 
   def sponsor_session_params
-    attr = [
+    talk_params = params.require(:talk).permit(
       :sponsor_id,
       :conference_id,
       :title,
@@ -76,12 +76,17 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
       :talk_category_id,
       :talk_difficulty_id,
       :document_url,
-      { speaker_ids: [] },
-      { talk_types: [] },
-      { proposal_items_attributes: }
-    ]
+      speaker_ids: []
+    )
 
-    params.require(:sponsor_session).permit(attr)
+    sponsor_session_params = params[:sponsor_session]&.permit(proposal_items_attributes:)
+
+    merged_params = talk_params.to_h
+    if sponsor_session_params && sponsor_session_params[:proposal_items_attributes]
+      merged_params[:proposal_items_attributes] = sponsor_session_params[:proposal_items_attributes]
+    end
+
+    merged_params
   end
 
   def proposal_items_attributes

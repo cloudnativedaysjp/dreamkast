@@ -41,7 +41,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
   describe 'POST /sponsor_dashboards/:sponsor_id/sponsor_sessions' do
     let(:valid_attributes) do
       {
-        sponsor_session: {
+        talk: {
           sponsor_id: sponsor.id,
           conference_id: conference.id,
           title: 'New Sponsor Session',
@@ -50,7 +50,9 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
           talk_difficulty_id: talk_difficulty.id,
           document_url: 'https://example.com/document',
           speaker_ids: [speaker.id],
-          talk_types: ['sponsor'],
+          talk_types: ['sponsor']
+        },
+        sponsor_session: {
           proposal_items_attributes: {
             assumed_visitors: [check_box_config.id.to_s],
             presentation_methods: radio_button_config.id.to_s
@@ -72,7 +74,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
     context 'with invalid parameters' do
       let(:invalid_attributes) do
         {
-          sponsor_session: {
+          talk: {
             sponsor_id: sponsor.id,
             conference_id: conference.id,
             title: '', # Invalid: title is required
@@ -81,7 +83,9 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
             talk_difficulty_id: talk_difficulty.id,
             document_url: 'https://example.com/document',
             speaker_ids: [speaker.id],
-            talk_types: ['sponsor'],
+            talk_types: ['sponsor']
+          },
+          sponsor_session: {
             proposal_items_attributes: {
               assumed_visitors: [check_box_config.id.to_s],
               presentation_methods: radio_button_config.id.to_s
@@ -112,7 +116,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
   describe 'PUT /sponsor_dashboards/:sponsor_id/sponsor_sessions/:id' do
     let(:valid_attributes) do
       {
-        sponsor_session: {
+        talk: {
           sponsor_id: sponsor.id,
           conference_id: conference.id,
           title: 'Updated Sponsor Session',
@@ -121,7 +125,9 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
           talk_difficulty_id: talk_difficulty.id,
           document_url: 'https://example.com/updated-document',
           speaker_ids: [speaker.id],
-          talk_types: ['sponsor'],
+          talk_types: ['sponsor']
+        },
+        sponsor_session: {
           proposal_items_attributes: {
             assumed_visitors: [check_box_config.id.to_s],
             presentation_methods: radio_button_config.id.to_s
@@ -145,7 +151,7 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
     context 'with invalid parameters' do
       let(:invalid_attributes) do
         {
-          sponsor_session: {
+          talk: {
             sponsor_id: sponsor.id,
             conference_id: conference.id,
             title: '', # Invalid: title is required
@@ -154,7 +160,9 @@ RSpec.describe(SponsorDashboards::SponsorSessionsController, type: :request) do
             talk_difficulty_id: talk_difficulty.id,
             document_url: 'https://example.com/updated-document',
             speaker_ids: [speaker.id],
-            talk_types: ['sponsor'],
+            talk_types: ['sponsor']
+          },
+          sponsor_session: {
             proposal_items_attributes: {
               assumed_visitors: [check_box_config.id.to_s],
               presentation_methods: radio_button_config.id.to_s

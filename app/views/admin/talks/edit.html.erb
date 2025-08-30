@@ -1,0 +1,140 @@
+<%= render 'admin/layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <h2>セッション編集</h2>
+
+  <%= form_with(model: @talk, scope: :talk, url: admin_talk_path(event: params[:event], id: @talk.id), local: true, method: :patch) do |form| %>
+    <% if @talk.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h5>入力内容にエラーがあります:</h5>
+        <ul>
+          <% @talk.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group mb-3">
+      <%= form.label :title, '講演タイトル', class: 'form-label' %>
+      <%= form.text_field :title, class: 'form-control', required: true %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :abstract, '講演内容', class: 'form-label' %>
+      <%= form.text_area :abstract, class: 'form-control', rows: 6 %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :talk_category_id, 'カテゴリー', class: 'form-label' %>
+      <%= form.collection_select :talk_category_id, @talk_categories, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :talk_difficulty_id, '受講者レベル', class: 'form-label' %>
+      <%= form.collection_select :talk_difficulty_id, @talk_difficulties, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :track_id, 'トラック', class: 'form-label' %>
+      <%= form.collection_select :track_id, @tracks, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :conference_day_id, '開催日', class: 'form-label' %>
+      <%= form.collection_select :conference_day_id, @conference_days, :id, :date, { prompt: '選択してください' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= form.label :start_time, '開始時間', class: 'form-label' %>
+          <%= form.time_field :start_time, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <%= form.label :end_time, '終了時間', class: 'form-label' %>
+          <%= form.time_field :end_time, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= form.label :document_url, 'セッション資料公開URL', class: 'form-label' %>
+      <%= form.url_field :document_url, class: 'form-control' %>
+    </div>
+
+    <div class="form-check mb-3">
+      <%= form.check_box :show_on_timetable, class: 'form-check-input' %>
+      <%= form.label :show_on_timetable, 'タイムテーブルに表示', class: 'form-check-label' %>
+    </div>
+
+    <div class="form-check mb-3">
+      <%= form.check_box :video_published, class: 'form-check-input' %>
+      <%= form.label :video_published, '動画公開', class: 'form-check-label' %>
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label">セッションタイプ</label>
+      <% @talk_types.each do |talk_type| %>
+        <div class="form-check">
+          <%= check_box_tag 'talk[talk_type_ids][]', talk_type.id, @talk.talk_types.include?(talk_type), 
+                { id: "talk_talk_type_ids_#{talk_type.id}", class: 'form-check-input' } %>
+          <%= label_tag "talk_talk_type_ids_#{talk_type.id}", talk_type.display_name, 
+                { class: 'form-check-label' } %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Proposal Items -->
+    <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+      <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
+      <div class="form-group mb-3">
+        <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
+          <% existing_proposal_item = @talk.proposal_items.find_by(label: first_item.label) %>
+          <% existing_items = existing_proposal_item&.params || [] %>
+          <% existing_items = existing_items.is_a?(Array) ? existing_items : [existing_items].compact %>
+          
+          <label class="form-label"><%= first_item.item_name %></label>
+          <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
+            <div class="form-check">
+              <% checked = existing_items.include?(item.id.to_s) %>
+              <%= check_box_tag "talk[#{first_item.label}][]", item.id, checked, 
+                    { id: "talk_#{first_item.label}_#{item.id}", class: 'form-check-input' } %>
+              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params, 
+                    { class: 'form-check-label' } %>
+            </div>
+          <% end %>
+
+        <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
+          <% existing_proposal_item = @talk.proposal_items.find_by(label: first_item.label) %>
+          <% existing_item = existing_proposal_item&.params %>
+          
+          <label class="form-label"><%= first_item.item_name %></label>
+          <% if first_item.description.present? %>
+            <p class="text-muted small"><%= first_item.description.html_safe %></p>
+          <% end %>
+          <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
+            <div class="form-check">
+              <% checked = existing_item.to_s == item.id.to_s %>
+              <%= radio_button_tag "talk[#{first_item.label}]", item.id, checked, 
+                    { id: "talk_#{first_item.label}_#{item.id}", class: 'form-check-input' } %>
+              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params, 
+                    { class: 'form-check-label' } %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="actions mt-3">
+      <%= form.submit '更新', class: 'btn btn-primary' %>
+      <%= link_to '戻る', admin_talks_path(event: params[:event]), class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+<% end %>

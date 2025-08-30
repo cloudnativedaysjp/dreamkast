@@ -15,6 +15,32 @@ class Admin::TalksController < ApplicationController
     end
   end
 
+  def edit
+    @talk = Talk.includes(:proposal_items, :talk_types).find(params[:id])
+    @talk_categories = TalkCategory.where(conference_id: @conference.id)
+    @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
+    @tracks = Track.where(conference_id: @conference.id)
+    @conference_days = ConferenceDay.where(conference_id: @conference.id)
+    @talk_types = TalkType.ordered
+    # ProposalItemsを強制的にリロード
+    @talk.proposal_items.reload
+  end
+
+  def update
+    @talk = Talk.includes(:proposal_items, :talk_types).find(params[:id])
+
+    if update_talk_with_proposal_items
+      redirect_to(admin_talks_path(event: params[:event]), notice: 'セッションを更新しました')
+    else
+      @talk_categories = TalkCategory.where(conference_id: @conference.id)
+      @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
+      @tracks = Track.where(conference_id: @conference.id)
+      @conference_days = ConferenceDay.where(conference_id: @conference.id)
+      @talk_types = TalkType.ordered
+      render(:edit)
+    end
+  end
+
   def update_talks
     TalksHelper.update_talks(@conference, params[:video])
 
@@ -112,6 +138,54 @@ class Admin::TalksController < ApplicationController
   helper_method :turbo_stream_flash
 
   private
+
+  def talk_params
+    params.require(:talk).permit(
+      :title, :abstract, :talk_category_id, :talk_difficulty_id,
+      :track_id, :conference_day_id, :start_time, :end_time,
+      :show_on_timetable, :video_published, :document_url,
+      talk_type_ids: []
+    )
+  end
+
+  def update_talk_with_proposal_items
+    ActiveRecord::Base.transaction do
+      # Talkの基本情報を更新
+      @talk.update!(talk_params)
+
+      # Proposal itemsを処理
+      process_proposal_items
+
+      # buildされたProposalItemsを保存
+      @talk.save!
+
+      true
+    end
+  rescue => e
+    Rails.logger.error("Failed to update talk: #{e}")
+    @talk.errors.add(:base, "更新に失敗しました: #{e.message}")
+    false
+  end
+
+  def process_proposal_items
+    proposal_item_config_labels.each do |label|
+      value = params[:talk][label.to_sym]
+      next unless value.present?
+
+      # チェックボックス（配列）の場合とラジオボタン（単一値）の場合を処理
+      processed_value = if value.is_a?(Array)
+                          value.reject(&:blank?)
+                        else
+                          value
+                        end
+
+      @talk.create_or_update_proposal_item(label, processed_value) if processed_value.present?
+    end
+  end
+
+  def proposal_item_config_labels
+    @proposal_item_config_labels ||= @conference.proposal_item_configs.map(&:label).uniq
+  end
 
   def turbo_stream_flash
     turbo_stream.append('flashes', partial: 'flash')

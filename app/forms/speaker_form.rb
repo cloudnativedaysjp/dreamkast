@@ -67,7 +67,7 @@ class SpeakerForm
           talk.create_or_update_proposal_item(label, value) if value.present?
         end
 
-        talk.create_or_update_talk_types(talk_types) if talk_types.present?
+        talk.talk_types = talk_types if talk_types.present?
         talk.update(params)
         @talks << talk
       end
@@ -89,7 +89,12 @@ class SpeakerForm
         proposal_item_config_labels.each do |label|
           t.create_or_update_proposal_item(label, proposal_item_params[label.pluralize]) if proposal_item_params[label.pluralize].present?
         end
-        t.instance_variable_set(:@pending_talk_types, talk_types) if talk_types.present?
+        # デフォルトでSessionのTalkTypeを設定
+        if talk_types.present?
+          t.instance_variable_set(:@pending_talk_types, talk_types)
+        else
+          t.instance_variable_set(:@pending_talk_types, [TalkType::SESSION_ID])
+        end
         @talks << t
       end
     end

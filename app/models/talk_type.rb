@@ -1,4 +1,10 @@
 class TalkType < ApplicationRecord
+  # Constants
+  SESSION_ID = 'Session'.freeze
+  KEYNOTE_SESSION_ID = 'KeynoteSession'.freeze
+  SPONSOR_SESSION_ID = 'SponsorSession'.freeze
+  INTERMISSION_ID = 'Intermission'.freeze
+
   # Associations
   has_many :talk_type_associations, dependent: :destroy
   has_many :talks, through: :talk_type_associations
@@ -13,14 +19,14 @@ class TalkType < ApplicationRecord
 
   # Class methods
   def self.keynote
-    find_by!(id: 'KeynoteSession')
+    find_by!(id: KEYNOTE_SESSION_ID)
   end
 
   def self.sponsor
-    find_by!(id: 'SponsorSession')
+    find_by!(id: SPONSOR_SESSION_ID)
   end
 
   def self.intermission
-    find_by!(id: 'Intermission')
+    find_by!(id: INTERMISSION_ID)
   end
 end

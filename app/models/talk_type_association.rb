@@ -47,7 +47,7 @@ class TalkTypeAssociation < ApplicationRecord
 
   def sync_legacy_fields
     # Sync with existing abstract field for intermission (for backward compatibility)
-    if talk_type.id == 'Intermission'
+    if talk_type.id == TalkType::INTERMISSION_ID
       if destroyed?
         talk.update_column(:abstract, nil) if talk.abstract == 'intermission'
       else

@@ -73,7 +73,7 @@ class Talk < ApplicationRecord
   }
 
   scope :regular_sessions, -> {
-    joins(:talk_types).where(talk_types: { id: 'Session' })
+    joins(:talk_types).where(talk_types: { id: TalkType::SESSION_ID })
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -281,19 +281,19 @@ class Talk < ApplicationRecord
 
   # Talk type checking methods
   def keynote?
-    talk_types.exists?(id: 'KeynoteSession')
+    talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
   end
 
   def sponsor_session?
-    talk_types.exists?(id: 'SponsorSession') || sponsor.present?
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) || sponsor.present?
   end
 
   def intermission?
-    talk_types.exists?(id: 'Intermission') || abstract == 'intermission'
+    talk_types.exists?(id: TalkType::INTERMISSION_ID) || abstract == 'intermission'
   end
 
   def sponsor_keynote?
-    talk_types.exists?(id: 'SponsorSession') && talk_types.exists?(id: 'KeynoteSession')
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) && talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
   end
 
   # Talk type management methods

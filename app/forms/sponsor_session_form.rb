@@ -94,7 +94,7 @@ class SponsorSessionForm
 
   def update_talk_types
     types_to_set = talk_types || []
-    types_to_set << 'SponsorSession' unless types_to_set.include?('SponsorSession')
+    types_to_set << TalkType::SPONSOR_SESSION_ID unless types_to_set.include?(TalkType::SPONSOR_SESSION_ID)
     sponsor_session.talk_types = types_to_set
   end
 

@@ -14,7 +14,7 @@ class Api::V1::ProposalsController < ApplicationController
                  .select do |proposal|
                    # Include talks that have no attributes or only have regular session attributes
                    talk_types = proposal.talk.talk_types.map(&:id)
-                   talk_types.empty? || talk_types.none? { |id| %w[Intermission SponsorSession KeynoteSession].include?(id) }
+                   talk_types.empty? || talk_types.none? { |id| [TalkType::INTERMISSION_ID, TalkType::SPONSOR_SESSION_ID, TalkType::KEYNOTE_SESSION_ID].include?(id) }
                  end
     render(:index, formats: :json, type: :jbuilder)
   end

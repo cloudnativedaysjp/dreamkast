@@ -1,6 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 import Cropper from "cropperjs"
 import { Uppy } from '@uppy/core'
+// Import Uppy CSS
+import '@uppy/core/dist/style.css'
+import '@uppy/progress-bar/dist/style.css'
+import '@uppy/informer/dist/style.css'
+import '@uppy/file-input/dist/style.css'
 import FileInput from '@uppy/file-input'
 import Informer from '@uppy/informer'
 import ProgressBar from '@uppy/progress-bar'

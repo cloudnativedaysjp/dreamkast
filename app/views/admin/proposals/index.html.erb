@@ -39,9 +39,6 @@
               <%= f.select "proposal[#{proposal.id}][status]", proposal.class.statuses.to_a, {selected: proposal.class.statuses[proposal.status]} %>
             </td>
 
-            <td>
-              <%= proposal.talk.type %>
-            </td>
           </tr>
         <% end %>
       <% end %>

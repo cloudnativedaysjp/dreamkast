@@ -689,9 +689,32 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
-Talk::Type::KLASSES.each do |klass|
-  Talk::Type.seed({id: klass.name})
-end
+Talk::Type.seed(
+  {
+    id: 'Session',
+    display_name: '公募セッション',
+    description: '公募セッション',
+    is_exclusive: false
+  },
+  {
+    id: 'KeynoteSession',
+    display_name: 'キーノート',
+    description: 'メインの基調講演',
+    is_exclusive: false
+  },
+  {
+    id: 'SponsorSession',
+    display_name: 'スポンサーセッション',
+    description: 'スポンサー企業によるセッション',
+    is_exclusive: false
+  },
+  {
+    id: 'Intermission',
+    display_name: '休憩',
+    description: '休憩時間',
+    is_exclusive: true
+  }
+)
 
 if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndt2020', %w(talks speakers talks_speakers))

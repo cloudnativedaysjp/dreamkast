@@ -21,6 +21,9 @@ class Talk < ApplicationRecord
   has_many :speaker_invitations, dependent: :destroy
   has_many :media_package_harvest_jobs, dependent: :destroy
 
+  has_many :talk_type_associations, dependent: :destroy
+  has_many :talk_types, through: :talk_type_associations
+
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
 
@@ -67,6 +70,10 @@ class Talk < ApplicationRecord
 
   scope :sponsor, -> {
     where.not(sponsor_id: nil)
+  }
+
+  scope :regular_sessions, -> {
+    joins(:talk_types).where(talk_types: { id: TalkType::SESSION_ID })
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -272,8 +279,34 @@ class Talk < ApplicationRecord
     (now.to_i - etime.to_i) >= 600
   end
 
+  # Talk type checking methods
+  def keynote?
+    talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
+  end
+
   def sponsor_session?
-    sponsor.present?
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) || sponsor.present?
+  end
+
+  def intermission?
+    talk_types.exists?(id: TalkType::INTERMISSION_ID) || abstract == 'intermission'
+  end
+
+  def sponsor_keynote?
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) && talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
+  end
+
+  # Talk type management methods
+  def talk_types=(type_names)
+    return if type_names.nil?
+
+    type_names = Array(type_names).reject(&:blank?)
+    types = TalkType.where(id: type_names)
+    super(types)
+  end
+
+  def session_type_names
+    talk_types.map(&:id)
   end
 
   def create_or_update_proposal_item(label, params)

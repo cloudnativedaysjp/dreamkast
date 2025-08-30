@@ -27,6 +27,7 @@
         <th scope="col">公開可否</th>
         <th scope="col">Video File</th>
         <th scope="col">Video URL</th>
+        <th scope="col">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -63,6 +64,9 @@
             <td>
               <% video_id = talk.video ? talk.video.video_id : nil %>
               <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "video url", size: "9" %>
+            </td>
+            <td>
+              <%= link_to '編集', edit_admin_talk_path(event: params[:event], id: talk.id), class: 'btn btn-sm btn-primary' %>
             </td>
           </tr>
         <% end %>

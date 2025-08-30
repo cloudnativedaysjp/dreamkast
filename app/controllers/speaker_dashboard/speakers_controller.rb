@@ -32,7 +32,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
 
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
 
@@ -137,7 +137,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   def talks_attributes
-    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
+    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)

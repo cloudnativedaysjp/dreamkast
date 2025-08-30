@@ -11,14 +11,29 @@ class MigrateLegacySessionData < ActiveRecord::Migration[8.0]
       intermission_type = TalkType.find_by(id: 'Intermission')
 
       Talk.all.each do |talk|
+        break_flag = false
+        if talk.sponsor_session?
+          TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: sponsor_type.id)
+          break_flag = true
+        end
+
+        if talk.talk_category&.name == 'Keynote'
+          TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: keynote_type.id)
+          break_flag = true
+        end
+
+        if talk.abstract == 'intermission'
+          TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: intermission_type.id)
+          break_flag = true
+        end
+
+        break if break_flag
+
         case talk.type
         when 'Session'
           TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: regular_type.id)
         when "KeynoteSession"
           TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: keynote_type.id)
-          if talk.sponsor_session?
-            TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: sponsor_type.id)
-          end
         when "SponsorSession"
           TalkTypeAssociation.find_or_create_by(talk_id: talk.id, talk_type_id: sponsor_type.id)
         when "Intermission"

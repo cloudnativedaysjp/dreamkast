@@ -1,29 +1,39 @@
-<%= form_with(url: sponsors_url, model: @sponsor_form) do |form| %>
+<%= turbo_frame_tag @sponsor_form.sponsor do %>
+  <%= form_with(model: [:admin, @sponsor_form.sponsor],
+                url: @sponsor_form.sponsor.new_record? ? admin_sponsors_path(event: params[:event]) : admin_sponsor_path(@sponsor_form.sponsor, event: params[:event]),
+                data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+    <% if @sponsor_form.sponsor.errors.any? %>
+      <ul>
+        <% @sponsor_form.sponsor.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
   <div class="row py-2" data-controller="sponsor">
     <div class="mb-3">
       <%= form.label :name, "スポンサー名*", class: "form-label" %>
-      <%= form.text_field :name, class: "form-control" %>
+      <%= form.text_field :name, class: "form-control", value: @sponsor_form.name %>
     </div>
 
     <div class="mb-3">
       <%= form.label :abbr, "スポンサー略称*", class: "form-label" %>
-      <%= form.text_field :abbr, class: "form-control" %>
+      <%= form.text_field :abbr, class: "form-control", value: @sponsor_form.abbr %>
     </div>
 
     <div class="mb-3">
       <%= form.label :description, "スポンサー概要", class: "form-label" %>
-      <%= form.text_area :description, class: "form-control", rows: "3" %>
+      <%= form.text_area :description, class: "form-control", rows: "3", value: @sponsor_form.description %>
     </div>
 
     <div class="mb-3">
       <%= form.label :url, "スポンサーUrl", class: "form-label" %>
-      <%= form.text_field :url, class: "form-control" %>
+      <%= form.text_field :url, class: "form-control", value: @sponsor_form.url %>
     </div>
 
     <div class="mb-3">
       <%= form.label :sponsor_types, "スポンサー種別*", class: "form-label" %><br>
       <% @sponsor_types.each do |sponsor_type| %>
-        <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>
+        <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor_form.sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>
         <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'form-check-label'} %><br>
       <% end %>
     </div>
@@ -32,8 +42,8 @@
   <div class="mb-3">
     <%= form.label :attachment_logo_image, "スポンサーロゴ" %><br>
     <%= form.file_field :attachment_logo_image %>
-    <% if @sponsor.sponsor_attachment_logo_image %>
-      <%= image_tag @sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor.sponsor_attachment_logo_image.file.present? %>
+    <% if @sponsor_form.sponsor.sponsor_attachment_logo_image %>
+      <%= image_tag @sponsor_form.sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor_form.sponsor.sponsor_attachment_logo_image.file.present? %>
     <% end %>
   </div>
 
@@ -42,4 +52,5 @@
       <%= form.submit class: "btn btn-primary btn-sm me-2" %>
     </div>
   </div>
+  <% end %>
 <% end %>

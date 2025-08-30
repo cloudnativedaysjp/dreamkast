@@ -11,8 +11,8 @@ class SeedTalkTypes < ActiveRecord::Migration[8.0]
     # Skip if already seeded
     return if temp_talk_type.exists?(id: 'KeynoteSession')
     
-    # Insert master data
-    temp_talk_type.create!([
+    # Insert master data using find_or_create_by to handle duplicates
+    talk_types = [
       {
         id: 'Session',
         display_name: '公募セッション',
@@ -37,7 +37,13 @@ class SeedTalkTypes < ActiveRecord::Migration[8.0]
         description: '休憩時間',
         is_exclusive: true
       }
-    ])
+    ]
+    
+    talk_types.each do |attrs|
+      temp_talk_type.find_or_create_by(id: attrs[:id]) do |talk_type|
+        talk_type.assign_attributes(attrs)
+      end
+    end
   end
   
   def down

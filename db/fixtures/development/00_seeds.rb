@@ -316,7 +316,7 @@ EOS
     id: 14,
     name: "CloudNative Days Winter 2025",
     abbr: "cndw2025",
-    theme: "Scaling Togerther",
+    theme: "Scaling Together",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
@@ -400,8 +400,8 @@ ConferenceDay.seed(
   {id: 34, date: "2025-05-23", start_time: "10:20", end_time: "18:00", conference_id: 13, internal: false},
 
   # CNDW2025
-  {id: 35, date: "2025-12-01", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
-  {id: 36, date: "2025-12-02", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false}
+  {id: 35, date: "2025-11-18", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
+  {id: 36, date: "2025-11-19", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false}
 )
 
 FormItem.seed(

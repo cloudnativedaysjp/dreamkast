@@ -288,19 +288,28 @@ EOS
     id: 14,
     name: "CloudNative Days Winter 2025",
     abbr: "cndw2025",
-    theme: "小さな一歩、大きな飛躍 〜クラウドネイティブを継続する〜",
+    theme: "Scaling Together",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 300,
     about: <<'EOS'
-CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。
+    クラウドネイティブという波は、単なる技術革新にとどまらず、組織や社会、そして技術に関わるすべての人の在り方も変えていきます。
+    私たちはこれまで、知識や熱意を分かち合うことで、クラウドネイティブに取り組むエンジニアを後押ししてきました。
+    そして今、私たちは次のステージに向かって、日本のクラウドネイティブを「ともにスケールする」フェーズを迎えています。
 
-最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。
+    "Scaling Together" には、個人の技術力、組織の開発力、プロダクトの品質、そしてコミュニティの可能性——あらゆる「成長」への思いを込めています。
 
-皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。
+    生成AIによる開発の爆発的な加速、組織文化の変革、そして日々の運用課題。
+    クラウドネイティブの真価を発揮するには、今後もこれらすべてに向き合う必要があります。
+    でも、その壁を一人で越える必要はありません。
 
-クラウドネイティブで、未来を共に創造しましょう。
+    日本中のエンジニアが集い、現場の知見を分かち合う。
+    成功も失敗も、すべてが学びとなり、明日への糧となる。
+    これらすべてが交差し、相乗効果を生み出す場所がCloudNative Daysです。
+
+    垣根を越えて、世代を超えて、地域を超えて。
+    ともに成長し、ともに未来へ。
 EOS
   },
 )
@@ -362,8 +371,8 @@ ConferenceDay.seed(
   {id: 34, date: "2025-05-23", start_time: "10:20", end_time: "18:00", conference_id: 13, internal: false},
 
   # CNDW2025
-  {id: 35, date: "2025-12-01", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
-  {id: 36, date: "2025-12-02", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false}
+  {id: 35, date: "2025-11-18", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
+  {id: 36, date: "2025-11-19", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false}
 )
 
 FormItem.seed(

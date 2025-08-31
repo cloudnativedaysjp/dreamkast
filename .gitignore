@@ -57,3 +57,5 @@ localstack
 !/app/assets/builds/.keep
 .aider*
 .claude/settings.local.json
+
+.serena

@@ -13,11 +13,11 @@
   <div class="row my-3">
 
     <div class="col-12 col-lg-8 main-pane">
-      <div class="alert alert-info %> show">
       <% if @conference.cfp_result_visible %>
-        <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
+        <div class="alert alert-info">
+          <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
+        </div>
       <% end %>
-      </div>
       <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
     </div>
 

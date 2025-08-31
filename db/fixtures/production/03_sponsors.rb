@@ -113,13 +113,19 @@ SponsorType.seed(
   {
     id: 89,
     conference_id: 14,
-    name: "Mini Session",
+    name: "Silver",
     order: 4,
   },
   {
     id: 90,
     conference_id: 14,
-    name: "CM",
+    name: "Booth",
+    order: 5,
+  },
+  {
+    id: 91,
+    conference_id: 14,
+    name: "Other",
     order: 5,
   }
 )

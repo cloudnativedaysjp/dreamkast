@@ -50,9 +50,15 @@ class Admin::SpeakersController < ApplicationController
 
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
-               @talks.where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.left_joins(:talk_types)
+                     .where.not(talk_types: { id: 'Intermission' })
+                     .where.not(abstract: '-')
              else
-               @talks.where(proposals: { status: :accepted }).where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.joins(:proposal)
+                     .left_joins(:talk_types)
+                     .where(proposals: { status: :accepted })
+                     .where.not(talk_types: { id: 'Intermission' })
+                     .where.not(abstract: '-')
              end
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))
     @talks = @talks.select do |talk|
@@ -113,7 +119,7 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def talks_attributes
-    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
+    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)
@@ -138,15 +144,12 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def session_type_name(talk)
-    case talk.type
-    when 'Session'
-      'CFP'
-    when 'Keynote'
+    if talk.keynote?
       'Keynote'
-    when 'SponsorSession'
+    elsif talk.sponsor_session?
       'スポンサー'
     else
-      ''
+      'CFP'
     end
   end
 

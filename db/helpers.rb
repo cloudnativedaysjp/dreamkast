@@ -5,6 +5,17 @@ class DummyDataImporter
 
   def import_dummy_talks
     Talk.seed(csv('talks').map(&:to_hash))
+    csv('talks').map(&:to_hash).each do |h|
+      type = h["type"]
+      case type
+      when TalkType::KEYNOTE_SESSION_ID
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: TalkType::KEYNOTE_SESSION_ID).id)
+      when TalkType::SPONSOR_SESSION_ID
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: TalkType::SPONSOR_SESSION_ID).id)
+      when TalkType::INTERMISSION_ID
+        TalkTypeAssociation.seed(talk_id: h["id"], talk_type_id: TalkType.find_by(id: TalkType::INTERMISSION_ID).id)
+      end
+    end
   end
 
   def import_dummy_speakers

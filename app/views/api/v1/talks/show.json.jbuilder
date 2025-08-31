@@ -1,5 +1,4 @@
 json.id(@talk.id)
-json.type(@talk.type)
 json.trackId(@talk.track_id)
 json.videoPlatform(@talk.video_platform)
 json.videoId(@talk.video_id)

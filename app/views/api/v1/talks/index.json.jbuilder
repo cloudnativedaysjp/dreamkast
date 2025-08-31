@@ -1,6 +1,5 @@
 json.array!(@talks) do |talk|
   json.id(talk.id)
-  json.type(talk.type)
   json.conferenceId(talk.conference.id)
   json.trackId(talk.track_id)
   json.videoPlatform(talk.video_platform)

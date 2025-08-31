@@ -1,3 +1,7 @@
+# Language
+
+Use Japanese standard language.
+
 # Ruby
 
 rbenvを使ってRubyのバージョンを管理しています。

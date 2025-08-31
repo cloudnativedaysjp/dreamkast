@@ -21,8 +21,11 @@
       <% end %>
     <% end %>
     &nbsp;
-    <% if talk.sponsor.present? %>
+    <% if talk.sponsor_session? %>
       <span class="difficulty">スポンサーセッション</span>
+    <% end %>
+    <% if talk.talk_category&.name != 'Keynote' && talk.keynote? %>
+      <span class="difficulty">Keynote</span>
     <% end %>
   </div>
 </div>

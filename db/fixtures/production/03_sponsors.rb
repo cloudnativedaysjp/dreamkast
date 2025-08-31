@@ -90,5 +90,36 @@ SponsorType.seed(
     conference_id: 13,
     name: "学生支援",
     order: 8,
+  },
+  # CNDW2025
+  {
+    id: 86,
+    conference_id: 14,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 87,
+    conference_id: 14,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 88,
+    conference_id: 14,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 89,
+    conference_id: 14,
+    name: "Mini Session",
+    order: 4,
+  },
+  {
+    id: 90,
+    conference_id: 14,
+    name: "CM",
+    order: 5,
   }
 )

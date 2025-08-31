@@ -696,7 +696,6 @@ TalkCategory.seed(
   { id: 180, conference_id: 14, name: "組織論"},
   { id: 181, conference_id: 14, name: "FinOps"},
   { id: 182, conference_id: 14, name: "その他"},
-  { id: 183, conference_id: 14, name: "Keynote"}
 )
 
 TalkDifficulty.seed(

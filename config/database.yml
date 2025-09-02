@@ -13,6 +13,15 @@ default: &default
   encoding: utf8mb4
   pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
 
+dkui: &dkui
+  adapter: mysql2
+  database: 'dkui'
+  username: 'root'
+  password: 'root'
+  host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
+  encoding: utf8mb4
+  pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
+
 development:
   <<: *default
 
@@ -29,3 +38,4 @@ test:
 
 production:
   <<: *default
+  <<: *dkui

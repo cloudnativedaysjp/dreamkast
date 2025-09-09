@@ -1,0 +1,68 @@
+<%= render 'admin/layout' do %>
+  <h2>キーノートスピーカー招待管理</h2>
+
+  <div class="mb-3">
+    <%= link_to '新規招待', new_admin_keynote_speaker_invitation_path(event: @conference.abbr), class: 'btn btn-primary' %>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>メールアドレス</th>
+        <th>名前</th>
+        <th>スピーカー</th>
+        <th>セッション</th>
+        <th>招待日時</th>
+        <th>有効期限</th>
+        <th>ステータス</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @keynote_speaker_invitations.each do |invitation| %>
+        <tr>
+          <td><%= invitation.email %></td>
+          <td><%= invitation.name || '-' %></td>
+          <td>
+            <% if invitation.speaker %>
+              <%= link_to invitation.speaker.name, edit_admin_speaker_path(event: @conference.abbr, id: invitation.speaker.id) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td>
+            <% if invitation.talk %>
+              <%= link_to invitation.talk.title, edit_admin_talk_path(event: @conference.abbr, id: invitation.talk.id) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td><%= l(invitation.invited_at, format: :short) if invitation.invited_at %></td>
+          <td><%= l(invitation.expires_at, format: :short) if invitation.expires_at %></td>
+          <td>
+            <% if invitation.accepted? %>
+              <span class="badge bg-success">承諾済み</span>
+            <% elsif invitation.expired? %>
+              <span class="badge bg-secondary">期限切れ</span>
+            <% else %>
+              <span class="badge bg-warning">承諾待ち</span>
+            <% end %>
+          </td>
+          <td>
+            <% unless invitation.accepted? %>
+              <%= button_to '再送信', resend_admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
+                            method: :post, class: 'btn btn-sm btn-outline-primary mb-1' %>
+              <%= button_to '削除', admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
+                            method: :delete, class: 'btn btn-sm btn-outline-danger',
+                            data: { confirm: '本当に削除しますか？関連するスピーカーとセッション情報も削除されます。' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @keynote_speaker_invitations.empty? %>
+    <p class="text-muted">まだ招待がありません。</p>
+  <% end %>
+<% end %>

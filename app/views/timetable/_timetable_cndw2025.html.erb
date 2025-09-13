@@ -64,7 +64,7 @@
                 <div class="content_caption"></div>
             <% end %>
             <h6><%= conference_day.date.strftime("%m/%d") %> <%= talk.start_time.strftime("%R") %>-<%= talk.end_time.strftime("%R") %> <span class="track_name">Track <%= talk.track.name %></span></h6>
-            <% if talk.presenters.present? %>
+            <% if talk.speakers.present? %>
               <h5><a href="<%= talk_path(id: talk.id) %>" target="_blank" rel="noopener"><%= talk.title %></a></h5>
               <% talk.speakers.each do |speaker| %>
                 <h6><%= speaker.name %></h6>

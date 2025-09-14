@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">キーノートスピーカー招待</h3>
+        </div>
+        <div class="card-body">
+          <h4><%= @conference.name %>へのキーノートスピーカーとしてご招待いたします</h4>
+          
+          <div class="mt-4">
+            <h5>招待内容</h5>
+            <ul>
+              <li>カンファレンス: <%= @conference.name %></li>
+              <li>招待日: <%= l(@keynote_speaker_invitation.invited_at, format: :long) %></li>
+              <li>有効期限: <%= l(@keynote_speaker_invitation.expires_at, format: :long) %></li>
+            </ul>
+          </div>
+
+          <div class="alert alert-warning mt-4">
+            <h5>承諾後の流れ</h5>
+            <ol>
+              <li>承諾ボタンをクリックすると、スピーカーダッシュボードへ移動します</li>
+              <li>スピーカーダッシュボードで、ご自身のプロフィール情報を入力してください</li>
+              <li>セッション情報（タイトル、概要など）も編集可能です</li>
+              <li>管理者側でも情報の編集が可能です</li>
+            </ol>
+          </div>
+
+          <%= form_with(url: keynote_speaker_accept_path(token: params[:token]), method: :post, local: true) do |form| %>
+            <div class="d-grid gap-2 mt-4">
+              <%= form.submit '招待を承諾する', class: 'btn btn-primary btn-lg' %>
+            </div>
+          <% end %>
+
+          <div class="text-center mt-3">
+            <small class="text-muted">
+              この招待は <%= l(@keynote_speaker_invitation.expires_at, format: :long) %> まで有効です。
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

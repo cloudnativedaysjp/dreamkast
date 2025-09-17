@@ -77,6 +77,7 @@ gem "sentry-rails"
 gem "sentry-opentelemetry"
 
 gem "opentelemetry-sdk"
+gem "opentelemetry-exporter-otlp"
 gem "opentelemetry-instrumentation-all"
 
 gem "redis"

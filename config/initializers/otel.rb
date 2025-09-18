@@ -12,16 +12,15 @@ OpenTelemetry::SDK.configure do |c|
     OpenTelemetry::SemanticConventions::Resource::HOST_NAME => Socket.gethostname
   )
 
-  if ENV['MACKEREL_APIKEY'].present?
+  if ENV['OTEL_ENDPOINT'].present?
     exporter = OpenTelemetry::Exporter::OTLP::Exporter.new(
-      endpoint: 'https://otlp-vaxila.mackerelio.com/v1/traces',
+      endpoint: ENV['OTEL_ENDPOINT'],
       headers: {
         'Accept' => '*/*',
-        'Mackerel-Api-Key' => ENV['MACKEREL_APIKEY']
       }
     )
   else
-    Rails.logger.warn 'MACKEREL_APIKEY not set - using console exporter for OpenTelemetry'
+    Rails.logger.warn 'OTELCOL_ENDPOINT not set - using console exporter for OpenTelemetry'
     exporter = OpenTelemetry::SDK::Trace::Export::ConsoleSpanExporter.new
   end
   c.add_span_processor(

@@ -1,4 +1,14 @@
 FROM public.ecr.aws/docker/library/ruby:3.3.6-slim
 WORKDIR /app
-RUN apt-get update && apt-get -y install libmariadb3 libvips42 shared-mime-info git vim curl wget
+RUN apt-get update \
+    && apt-get -y install \
+    build-essential \
+    curl \
+    default-libmysqlclient-dev \
+    git \
+    libmariadb3 \
+    libvips42 \
+    shared-mime-info \
+    vim \
+    wget
 ENV RUBY_YJIT_ENABLE=1

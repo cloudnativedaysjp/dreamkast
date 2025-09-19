@@ -32,6 +32,7 @@ services:
       REVIEW_APP: "true"
       DREAMKAST_NAMESPACE: "localhost"
       DREAMKAST_WEAVER_ADDR: "localhost:8080"
+      OTEL_ENDPOINT: "http://host.docker.internal:4318/v1/traces"
     tty: true
     stdin_open: true
     tmpfs:

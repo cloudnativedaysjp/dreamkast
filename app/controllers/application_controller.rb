@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
   before_action :set_sentry_context, :event_exists?
 
   unless Rails.env.development?
-    rescue_from Exception, with: :render_500
+    rescue_from Exception do |e|
+      # Record exception in OpenTelemetry span before re-raising
+      OpenTelemetry::Trace.current_span.record_exception(e)
+
+      render_500(e)
+    end
     rescue_from ActiveRecord::RecordNotFound, NotFound, with: :render_404
     rescue_from Forbidden, with: :render_403
   end
@@ -81,6 +86,9 @@ class ApplicationController < ActionController::Base
     if e
       logger.error("Rendering 500 with exception: #{e.message}")
       logger.error(e.backtrace.join("\n"))
+
+      # Record exception in OpenTelemetry span
+      OpenTelemetry::Trace.current_span.record_exception(e)
     end
 
     render(template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html')

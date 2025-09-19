@@ -208,6 +208,11 @@ GEM
       ostruct
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.32.1)
+      bigdecimal
+      rake (>= 13)
+    googleapis-common-protos-types (1.21.0)
+      google-protobuf (~> 4.26)
     hashie (5.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -300,6 +305,13 @@ GEM
     opentelemetry-api (1.5.0)
     opentelemetry-common (0.22.0)
       opentelemetry-api (~> 1.0)
+    opentelemetry-exporter-otlp (0.30.0)
+      google-protobuf (>= 3.18)
+      googleapis-common-protos-types (~> 1.3)
+      opentelemetry-api (~> 1.1)
+      opentelemetry-common (~> 0.20)
+      opentelemetry-sdk (~> 1.2)
+      opentelemetry-semantic_conventions
     opentelemetry-helpers-mysql (0.2.0)
       opentelemetry-api (~> 1.0)
       opentelemetry-common (~> 0.21)
@@ -809,6 +821,7 @@ DEPENDENCIES
   nokogiri (= 1.18.9)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 1.0)
+  opentelemetry-exporter-otlp
   opentelemetry-instrumentation-all
   opentelemetry-sdk
   pre-commit

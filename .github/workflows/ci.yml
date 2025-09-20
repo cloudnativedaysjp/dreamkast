@@ -46,7 +46,7 @@ jobs:
       run: |
         yarn
     - name: Set up Ruby
-      uses: ruby/setup-ruby@2a7b30092b0caf9c046252510f9273b4875f3db9 # v1.254.0
+      uses: ruby/setup-ruby@866b91cc020931c510d42e43e498a7f07d335f60 # v1.259.0
       with:
         ruby-version: '.ruby-version'
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically

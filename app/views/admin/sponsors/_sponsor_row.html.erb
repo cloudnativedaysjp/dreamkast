@@ -4,7 +4,7 @@
       <%= sponsor.abbr %>
     </div>
     <div class="col-2 my-auto">
-      <%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id) %>
+      <%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id), data: {turbo: false} %>
     </div>
     <div class="col-2 my-auto">
       <%= sponsor.sponsor_types.map(&:name).join(', ') %>

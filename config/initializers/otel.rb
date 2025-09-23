@@ -20,7 +20,7 @@ OpenTelemetry::SDK.configure do |c|
       }
     )
   else
-    Rails.logger.warn('OTELCOL_ENDPOINT not set - using console exporter for OpenTelemetry')
+    Rails.logger.warn('OTEL_ENDPOINT not set - using console exporter for OpenTelemetry')
     exporter = OpenTelemetry::SDK::Trace::Export::ConsoleSpanExporter.new
   end
   c.add_span_processor(

@@ -93,9 +93,9 @@ Rails.application.configure do
     else
       raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
     end
-  elsif ENV['DREAMKAST_NAMESPACE'] == '"dreamkast-staging'
+  elsif ENV['DREAMKAST_NAMESPACE'] == 'dreamkast-staging'
     config.action_mailer.default_url_options = { host: 'staging.dev.cloudnativedays.jp', protocol: 'https' }
-  elsif ENV['DREAMKAST_NAMESPACE'] == '"dreamkast'
+  elsif ENV['DREAMKAST_NAMESPACE'] == 'dreamkast'
     config.action_mailer.default_url_options = { host: 'event.cloudnativedays.jp', protocol: 'https' }
   else
     raise "Invalid DREAMKAST_NAMESPACE: #{ENV['DREAMKAST_NAMESPACE']}. Please confirm environment variable."

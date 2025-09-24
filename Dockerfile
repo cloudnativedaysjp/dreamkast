@@ -32,6 +32,7 @@ COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
+ENV DREAMKAST_NAMESPACE=dreamkast
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DB_ADAPTER=nulldb bin/rails assets:precompile
 
@@ -44,7 +45,6 @@ RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 ARG RAILS_ENV='production'
 ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabled
-ENV DREAMKAST_NAMESPACE=dreamkast
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle

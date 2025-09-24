@@ -32,9 +32,8 @@ COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
-ENV DREAMKAST_NAMESPACE=dreamkast
 ARG RAILS_ENV='production'
-RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=${DREAMKAST_NAMESPACE} DB_ADAPTER=nulldb bin/rails assets:precompile
+RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
 
 FROM public.ecr.aws/docker/library/ruby:3.3.6-slim
 

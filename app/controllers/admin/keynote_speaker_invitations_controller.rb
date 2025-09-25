@@ -3,6 +3,7 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
 
   before_action :set_conference
   before_action :set_keynote_speaker_invitation, only: [:destroy, :resend]
+  helper_method :turbo_stream_flash
 
   def index
     @keynote_speaker_invitations = @conference.keynote_speaker_invitations.includes(:speaker, :talk, :keynote_speaker_accept)
@@ -18,7 +19,9 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
 
     if @keynote_speaker_invitation.save
       KeynoteSpeakerInvitationMailer.invite(@keynote_speaker_invitation).deliver_now
-      redirect_to(admin_keynote_speaker_invitations_path(event: @conference.abbr), notice: '招待メールを送信しました。')
+
+      @keynote_speaker_invitations = @conference.keynote_speaker_invitations.includes(:speaker, :talk, :keynote_speaker_accept)
+      flash.now[:notice] = '招待メールを送信しました。'
     else
       render(:new, status: :unprocessable_entity)
     end
@@ -26,7 +29,7 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
 
   def destroy
     if @keynote_speaker_invitation.accepted?
-      redirect_to(admin_keynote_speaker_invitations_path(event: @conference.abbr), alert: '承諾済みの招待は削除できません。')
+      flash.now[:alert] = '承諾済みの招待は削除できません。'
     else
       # 関連するSpeakerとTalkも削除
       ActiveRecord::Base.transaction do
@@ -38,18 +41,21 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
         speaker&.destroy!
       end
 
-      redirect_to(admin_keynote_speaker_invitations_path(event: @conference.abbr), notice: '招待を削除しました。')
+      flash.now[:notice] = '招待を削除しました。'
+      @keynote_speaker_invitations = @conference.keynote_speaker_invitations.includes(:speaker, :talk, :keynote_speaker_accept)
     end
   end
 
   def resend
     if @keynote_speaker_invitation.accepted?
-      redirect_to(admin_keynote_speaker_invitations_path(event: @conference.abbr), alert: '承諾済みの招待は再送信できません。')
+      flash.now[:alert] = '承諾済みの招待は再送信できません。'
     else
       # 有効期限を更新して再送信
       @keynote_speaker_invitation.update!(expires_at: 7.days.from_now)
       KeynoteSpeakerInvitationMailer.invite(@keynote_speaker_invitation).deliver_now
-      redirect_to(admin_keynote_speaker_invitations_path(event: @conference.abbr), notice: '招待メールを再送信しました。')
+
+      flash.now[:notice] = '招待メールを再送信しました。'
+      @keynote_speaker_invitations = @conference.keynote_speaker_invitations.includes(:speaker, :talk, :keynote_speaker_accept)
     end
   end
 
@@ -65,5 +71,9 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
 
   def keynote_speaker_invitation_params
     params.require(:keynote_speaker_invitation).permit(:email, :name)
+  end
+
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'flash')
   end
 end

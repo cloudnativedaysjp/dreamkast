@@ -1,0 +1,76 @@
+<%= turbo_frame_tag 'invitations-list' do %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">招待一覧</h5>
+    </div>
+    <div class="card-body p-0">
+      <% if keynote_speaker_invitations.any? %>
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>メールアドレス</th>
+                <th>名前</th>
+                <th>スピーカー</th>
+                <th>セッション</th>
+                <th>招待日時</th>
+                <th>有効期限</th>
+                <th>ステータス</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% keynote_speaker_invitations.each do |invitation| %>
+                <tr>
+                  <td><%= invitation.email %></td>
+                  <td><%= invitation.name || '-' %></td>
+                  <td>
+                    <% if invitation.speaker %>
+                      <%= link_to invitation.speaker.name, edit_admin_speaker_path(event: @conference.abbr, id: invitation.speaker.id) %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if invitation.talk %>
+                      <%= link_to invitation.talk.title, edit_admin_talk_path(event: @conference.abbr, id: invitation.talk.id) %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                  <td><%= l(invitation.invited_at, format: :short) if invitation.invited_at %></td>
+                  <td><%= l(invitation.expires_at, format: :short) if invitation.expires_at %></td>
+                  <td>
+                    <% if invitation.accepted? %>
+                      <span class="badge bg-success">承諾済み</span>
+                    <% elsif invitation.expired? %>
+                      <span class="badge bg-secondary">期限切れ</span>
+                    <% else %>
+                      <span class="badge bg-warning">承諾待ち</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% unless invitation.accepted? %>
+                      <div class="btn-group-vertical btn-group-sm">
+                        <%= button_to '再送信', resend_admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
+                                      method: :post, class: 'btn btn-outline-primary',
+                                      data: { turbo_method: :post, turbo_confirm: '招待メールを再送信しますか？' } %>
+                        <%= button_to '削除', admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
+                                      method: :delete, class: 'btn btn-outline-danger',
+                                      data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？関連するスピーカーとセッション情報も削除されます。' } %>
+                      </div>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="p-4 text-center text-muted">
+          <p class="mb-0">まだ招待がありません。</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

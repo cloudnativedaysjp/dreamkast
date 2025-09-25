@@ -8,18 +8,21 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
       name: 'キーノートスピーカー'
     }
   end
+  subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  let(:roles) { ['CNDT2020-Admin'] }
 
   before do
-    allow_any_instance_of(Admin::KeynoteSpeakerInvitationsController).to(receive(:logged_in_using_omniauth?).and_return(true))
-    allow_any_instance_of(Admin::KeynoteSpeakerInvitationsController).to(receive(:current_user).and_return({
-                                                                                                             id: 1,
-      info: { email: 'admin@example.com' },
-      extra: { raw_info: { 'https://cloudnativedays.jp/roles' => ["#{conference.abbr.upcase}-Admin"] } }
-                                                                                                           }))
+    ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+    allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+      if arg[1] == :userinfo
+        session[:userinfo]
+      else
+        arg[0].send(:original, arg[1])
+      end
+    end)
     allow_any_instance_of(Admin::KeynoteSpeakerInvitationsController).to(receive(:admin?).and_return(true))
-    allow(KeynoteSpeakerInvitationMailer).to(receive_message_chain(:invite, :deliver_now))
-    allow(KeynoteSpeakerInvitationMailer).to(receive_message_chain(:invite, :deliver_now))
-    allow(KeynoteSpeakerInvitationMailer).to(receive_message_chain(:accepted, :deliver_now))
+    allow(KeynoteSpeakerInvitationMailer).to(receive(:invite).and_return(double(deliver_now: true)))
+    allow(KeynoteSpeakerInvitationMailer).to(receive(:accepted).and_return(double(deliver_now: true)))
     create(:talk_type, :keynote)
     create(:proposal_item_configs_session_time_40_min, conference:)
     create(:proposal_item_configs_session_time_20_min, conference:)
@@ -45,29 +48,34 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
       it '招待が作成される' do
         expect do
           post(admin_keynote_speaker_invitations_path(event: conference.abbr),
-               params: { keynote_speaker_invitation: valid_attributes })
+               params: { keynote_speaker_invitation: valid_attributes },
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' })
         end.to(change(KeynoteSpeakerInvitation, :count).by(1))
       end
 
       it '関連するSpeaker、Talk、Proposalが作成される' do
         expect do
           post(admin_keynote_speaker_invitations_path(event: conference.abbr),
-               params: { keynote_speaker_invitation: valid_attributes })
+               params: { keynote_speaker_invitation: valid_attributes },
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' })
         end.to(change(Speaker, :count).by(1)
                                       .and(change(Talk, :count).by(1)
           .and(change(Proposal, :count).by(1))))
       end
 
       it '招待メールが送信される' do
-        expect(KeynoteSpeakerInvitationMailer).to(receive(:invite).and_call_original)
+        expect(KeynoteSpeakerInvitationMailer).to(receive(:invite).with(kind_of(KeynoteSpeakerInvitation)).and_return(double(deliver_now: true)))
         post admin_keynote_speaker_invitations_path(event: conference.abbr),
-             params: { keynote_speaker_invitation: valid_attributes }
+             params: { keynote_speaker_invitation: valid_attributes },
+             headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
       end
 
-      it 'リダイレクトされる' do
+      it '成功で200が返る(redirectではない)' do
         post admin_keynote_speaker_invitations_path(event: conference.abbr),
-             params: { keynote_speaker_invitation: valid_attributes }
-        expect(response).to(redirect_to(admin_keynote_speaker_invitations_path(event: conference.abbr)))
+             params: { keynote_speaker_invitation: valid_attributes },
+             headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
+        expect(response).to(have_http_status(:ok))
+        expect(flash.now[:notice]).to(eq('招待メールを送信しました。'))
       end
     end
 
@@ -92,19 +100,22 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
 
     context 'まだ承諾されていない招待の場合' do
       it '招待メールが再送信される' do
-        expect(KeynoteSpeakerInvitationMailer).to(receive(:invite).and_call_original)
-        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
+        expect(KeynoteSpeakerInvitationMailer).to(receive(:invite).with(kind_of(KeynoteSpeakerInvitation)).and_return(double(deliver_now: true)))
+        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+             headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
       end
 
       it '有効期限が更新される' do
         old_expires_at = invitation.expires_at
-        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
+        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+             headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
         expect(invitation.reload.expires_at).to(be > old_expires_at)
       end
 
-      it 'リダイレクトされる' do
-        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
-        expect(response).to(redirect_to(admin_keynote_speaker_invitations_path(event: conference.abbr)))
+      it '成功で200が返る(redirectではない)' do
+        post resend_admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+             headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
+        expect(response).to(have_http_status(:ok))
       end
     end
 
@@ -127,16 +138,18 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
         speaker = invitation.speaker
         talk = invitation.talk
 
-        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation_id)
+        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation_id),
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
 
         expect(KeynoteSpeakerInvitation.find_by(id: invitation_id)).to(be_nil)
         expect(Speaker.find_by(id: speaker.id)).to(be_nil)
         expect(Talk.find_by(id: talk.id)).to(be_nil)
       end
 
-      it 'リダイレクトされる' do
-        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
-        expect(response).to(redirect_to(admin_keynote_speaker_invitations_path(event: conference.abbr)))
+      it '成功で200が返る(redirectではない)' do
+        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
+        expect(response).to(have_http_status(:ok))
       end
     end
 
@@ -144,12 +157,14 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
       let(:invitation) { create(:keynote_speaker_invitation, :accepted, conference:) }
 
       it '削除されない' do
-        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
+        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
         expect(invitation.reload).to(be_present)
       end
 
       it 'エラーメッセージが表示される' do
-        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id)
+        delete admin_keynote_speaker_invitation_path(event: conference.abbr, id: invitation.id),
+               headers: { 'ACCEPT' => 'text/vnd.turbo-stream.html' }
         expect(flash[:alert]).to(include('承諾済みの招待は削除できません'))
       end
     end

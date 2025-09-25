@@ -7,7 +7,7 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
     create(:talk_type, :keynote)
     create(:proposal_item_configs_session_time_40_min, conference:)
     create(:proposal_item_configs_session_time_20_min, conference:)
-    allow(KeynoteSpeakerInvitationMailer).to(receive_message_chain(:accepted, :deliver_later))
+    allow(KeynoteSpeakerInvitationMailer).to(receive(:accepted).and_return(double(deliver_now: true)))
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_call_original)
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
                                                                  {
@@ -17,23 +17,21 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
                                                                ))
   end
 
-  describe 'GET /keynote_speaker_accepts/:token' do
+  describe 'GET /keynote_speaker_accepts/new?token=...' do
     context '有効なトークンの場合' do
       let(:invitation) { create(:keynote_speaker_invitation, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it '承諾画面が表示される' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        get new_keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
         expect(response).to(have_http_status(:success))
       end
     end
 
     context '無効なトークンの場合' do
       let(:invitation) { create(:keynote_speaker_invitation, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it '404エラーが返される' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: 'invalid_token')
+        get new_keynote_speaker_accept_path(event: conference.abbr, token: 'invalid_token')
         expect(response).to(have_http_status(:not_found))
       end
     end
@@ -44,89 +42,81 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
           inv.update!(expires_at: 1.day.ago, invited_at: 8.days.ago)
         end
       end
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it '期限切れ画面が表示される' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        get new_keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
         expect(response).to(have_http_status(:ok))
       end
     end
 
     context '既に承諾済みの招待の場合' do
       let(:invitation) { create(:keynote_speaker_invitation, :accepted, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it 'speaker_dashboardにリダイレクトされる' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        get new_keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
         expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
-      end
-    end
-
-    context 'ログインしていない場合' do
-      let(:invitation) { create(:keynote_speaker_invitation, conference:) }
-
-      before do
-        allow_any_instance_of(KeynoteSpeakerAcceptsController).to(receive(:logged_in?).and_return(false))
-      end
-
-      it 'Auth0ログインにリダイレクトされる' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
-        expect(response).to(redirect_to("/#{conference.abbr}/auth/auth0"))
-      end
-
-      it 'return_toがセッションに保存される' do
-        get keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
-        expect(session[:return_to]).to(eq(request.url))
       end
     end
   end
 
-  describe 'POST /keynote_speaker_accepts/:token' do
+  describe 'POST /keynote_speaker_accepts' do
     context '有効な招待の場合' do
       let(:invitation) { create(:keynote_speaker_invitation, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
+
+      let(:valid_params) do
+        {
+          speaker: {
+            keynote_speaker_invitation_id: invitation.id,
+            name: 'Invited Speaker',
+            profile: 'Test profile',
+            company: 'Test Company',
+            job_title: 'Developer',
+            twitter_id: 'twitter_handle',
+            github_id: 'github_handle'
+          }
+        }
+      end
 
       it '招待が承諾される' do
         expect do
-          post(keynote_speaker_accept_path(event: conference.abbr, token: invitation.token))
+          post(keynote_speaker_accepts_path(event: conference.abbr), params: valid_params)
         end.to(change { invitation.reload.accepted_at }.from(nil))
       end
 
       it 'KeynoteSpeakerAcceptが作成される' do
         expect do
-          post(keynote_speaker_accept_path(event: conference.abbr, token: invitation.token))
+          post(keynote_speaker_accepts_path(event: conference.abbr), params: valid_params)
         end.to(change(KeynoteSpeakerAccept, :count).by(1))
       end
 
       it 'SpeakerにAuth0のsubが設定される' do
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        post keynote_speaker_accepts_path(event: conference.abbr), params: valid_params
         expect(invitation.speaker.reload.sub).to(eq('auth0|123'))
       end
 
       it '承諾確認メールが送信される' do
-        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).and_call_original)
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).with(invitation).and_return(double(deliver_now: true)))
+        post keynote_speaker_accepts_path(event: conference.abbr), params: valid_params
       end
 
       it 'speaker_dashboardにリダイレクトされる' do
-        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).and_call_original)
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).with(invitation).and_return(double(deliver_now: true)))
+        post keynote_speaker_accepts_path(event: conference.abbr), params: valid_params
         expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
       end
 
       it '成功メッセージが表示される' do
-        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).and_call_original)
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        expect(KeynoteSpeakerInvitationMailer).to(receive(:accepted).with(invitation).and_return(double(deliver_now: true)))
+        post keynote_speaker_accepts_path(event: conference.abbr), params: valid_params
         expect(flash[:notice]).to(include('キーノートスピーカーとしての招待を承諾しました'))
       end
     end
 
-    context '無効なトークンの場合' do
+    context '存在しない招待IDの場合' do
       let(:invitation) { create(:keynote_speaker_invitation, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it '404エラーが返される' do
-        post keynote_speaker_accept_path(event: conference.abbr, token: 'invalid_token')
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: 9_999_999 } }
         expect(response).to(have_http_status(:not_found))
       end
     end
@@ -137,36 +127,24 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
           inv.update!(expires_at: 1.day.ago, invited_at: 8.days.ago)
         end
       end
-      let(:current_user) do
-        {
-          info: { email: invitation.email, name: 'Test User' },
-          extra: { raw_info: { sub: 'auth0|test123', 'https://cloudnativedays.jp/roles' => [] } }
-        }
-      end
-
-      before do
-        allow_any_instance_of(KeynoteSpeakerAcceptsController).to(receive(:logged_in?).and_return(true))
-        allow_any_instance_of(KeynoteSpeakerAcceptsController).to(receive(:current_user).and_return(current_user))
-      end
 
       it '期限切れ画面が表示される' do
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(response).to(have_http_status(:ok))
-        expect(response.body).to(include('招待の有効期限'))
+        expect(response.body).to(include('有効期限が切れています'))
       end
     end
 
     context '既に承諾済みの招待の場合' do
       let(:invitation) { create(:keynote_speaker_invitation, :accepted, conference:) }
-      let(:current_user) { { sub: 'auth0|test123', info: { email: invitation.email } } }
 
       it 'speaker_dashboardにリダイレクトされる' do
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
       end
 
       it 'エラーメッセージが表示される' do
-        post keynote_speaker_accept_path(event: conference.abbr, token: invitation.token)
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(flash[:alert]).to(include('この招待は既に承諾済みです'))
       end
     end

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row speaker-dashboard-form justify-content-center">
+    <div class="col-12 col-lg-12 py-3 px-md-5">
+      <h1 class="text-center py-3 entry">キーノートスピーカーとして登録する</h1>
+      <% flash.each do |type, message| %>
+        <div class="alert alert-warning" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+
+      <% if flash.keys.size == 0 %>
+        <p>キーノートセッション 「<%= @talk.title %>」にキーノートスピーカーとして登録します。</p>
+        <% if @speaker.new_record? %>
+          <p>登録する場合はフォームに登壇者情報を入力し、「登録する」ボタンをクリックしてください。</p>
+        <% else %>
+          <p>スピーカーとして既に登録済みのため、フォームに既存の情報が入力済みです。</p>
+          <p>問題なければ「登録する」ボタンをクリックしてください。後から編集することも可能です。</p>
+        <% end %>
+
+
+        <%= form_with(url: keynote_speaker_accepts_path, model: @speaker, method: :post) do |form| %>
+          <%= form.hidden_field :keynote_speaker_invitation_id, value: @keynote_speaker_invitation.id %>
+
+          <section class="speaker-information py-3">
+            <%= render('speaker_dashboard/speakers/form_speaker', form: form) %>
+          </section>
+
+          <div class="field actions justify-content-center py-3">
+            <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

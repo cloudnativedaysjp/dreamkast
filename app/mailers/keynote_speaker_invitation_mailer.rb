@@ -7,7 +7,7 @@ class KeynoteSpeakerInvitationMailer < ApplicationMailer
   def invite(keynote_speaker_invitation)
     @invitation = keynote_speaker_invitation
     @conference = @invitation.conference
-    @accept_url = keynote_speaker_accept_url(event: @conference.abbr, token: @invitation.token)
+    @accept_url = keynote_speaker_accepts_invite_url(event: @conference.abbr, token: @invitation.token)
 
     mail(
       to: @invitation.email,

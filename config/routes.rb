@@ -122,8 +122,8 @@ Rails.application.routes.draw do
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
 
-    get '/keynote_speaker_accepts/:token' => 'keynote_speaker_accepts#show', as: :keynote_speaker_accept
-    post '/keynote_speaker_accepts/:token' => 'keynote_speaker_accepts#create'
+    resources :keynote_speaker_accepts, only: [:index, :new, :create]
+    get '/keynote_speaker_accepts/invite' => 'keynote_speaker_accepts#invite'
     resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
     # resources :sponsor_contact_invites, only: [:index, :new, :create]

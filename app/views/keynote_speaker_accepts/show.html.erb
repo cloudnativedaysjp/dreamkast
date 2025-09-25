@@ -1,45 +1,35 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header bg-primary text-white">
-          <h3 class="mb-0">キーノートスピーカー招待</h3>
-        </div>
-        <div class="card-body">
-          <h4><%= @conference.name %>へのキーノートスピーカーとしてご招待いたします</h4>
-          
-          <div class="mt-4">
-            <h5>招待内容</h5>
-            <ul>
-              <li>カンファレンス: <%= @conference.name %></li>
-              <li>招待日: <%= l(@keynote_speaker_invitation.invited_at, format: :long) %></li>
-              <li>有効期限: <%= l(@keynote_speaker_invitation.expires_at, format: :long) %></li>
-            </ul>
-          </div>
+<% provide(:title, 'キーノートスピーカー招待') %>
 
-          <div class="alert alert-warning mt-4">
-            <h5>承諾後の流れ</h5>
-            <ol>
-              <li>承諾ボタンをクリックすると、スピーカーダッシュボードへ移動します</li>
-              <li>スピーカーダッシュボードで、ご自身のプロフィール情報を入力してください</li>
-              <li>セッション情報（タイトル、概要など）も編集可能です</li>
-              <li>管理者側でも情報の編集が可能です</li>
-            </ol>
-          </div>
+<div class="container">
+  <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
 
-          <%= form_with(url: keynote_speaker_accept_path(token: params[:token]), method: :post, local: true) do |form| %>
-            <div class="d-grid gap-2 mt-4">
-              <%= form.submit '招待を承諾する', class: 'btn btn-primary btn-lg' %>
-            </div>
-          <% end %>
+    <div class="col-12 my-4">
+      <h2 class="text-center">キーノートスピーカーとして招待された方へ</h2>
+      <p>本ページはキーノートスピーカーとしての招待メールを受け取った方向けのページです。</p>
+      <p>下記の概要・Q&Aを確認していただき、問題なければ「エントリーする！」ボタンをクリックしてください。</p>
+      <p>その後、登壇者情報の入力フォームに遷移しますので、入力することでキーノートスピーカーとして登録されます。</p>
+    </div>
 
-          <div class="text-center mt-3">
-            <small class="text-muted">
-              この招待は <%= l(@keynote_speaker_invitation.expires_at, format: :long) %> まで有効です。
-            </small>
-          </div>
-        </div>
-      </div>
+    <%= render 'speaker_dashboard/speakers/guidance_section_1' %>
+
+    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+      <% if logged_in? %>
+        <%= button_to 'エントリーする！', new_keynote_speaker_accept_path, {params: {token: @keynote_speaker_invitation.token}, method: :get, class: "btn btn-secondary btn-xl inline" } %>
+      <% else %>
+        <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
+      <% end %>
+      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+    </div>
+
+    <%= render 'speaker_dashboard/speakers/guidance_section_2' %>
+
+    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
+      <% if logged_in? %>
+        <%= button_to 'エントリーする！', new_keynote_speaker_accept_path, {params: {token: @keynote_speaker_invitation.token}, method: :get, class: "btn btn-secondary btn-xl inline" } %>
+      <% else %>
+        <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
+      <% end %>
+      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
     </div>
   </div>
 </div>

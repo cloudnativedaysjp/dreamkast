@@ -128,6 +128,24 @@ SponsorType.seed(
     conference_id: 14,
     name: "Other",
     order: 5,
+  },
+  {
+    id: 92,
+    conference_id: 14,
+    name: "Tool",
+    order: 5,
+  },
+  {
+    id: 93,
+    conference_id: 14,
+    name: "Support",
+    order: 5,
+  },
+  {
+    id: 94,
+    conference_id: 14,
+    name: "CM",
+    order: 5,
   }
   )
 

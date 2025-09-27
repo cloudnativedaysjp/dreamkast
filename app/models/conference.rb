@@ -48,6 +48,7 @@ class Conference < ApplicationRecord
   has_many :profiles
   has_many :stats_of_registrants
   has_many :admin_profiles
+  has_many :keynote_speaker_invitations
   has_many :media_package_harvest_jobs
   has_many :rooms
   has_many :check_in_conferences

@@ -1,0 +1,41 @@
+  <%= form_with(model: [:admin, keynote_speaker_invitation], url: admin_keynote_speaker_invitations_path(event: @conference.abbr), data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+    <% if keynote_speaker_invitation.errors.any? %>
+      <div class="alert alert-danger">
+        <h6>エラーがあります:</h6>
+        <ul class="mb-0">
+          <% keynote_speaker_invitation.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :email, 'メールアドレス', class: 'form-label' %>
+      <%= form.email_field :email, class: 'form-control', required: true %>
+      <div class="form-text">招待メールを送信するメールアドレスを入力してください。</div>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :name, '名前（オプション）', class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+      <div class="form-text">事前に名前がわかっている場合は入力してください。</div>
+    </div>
+
+    <div class="alert alert-info">
+      <h6>招待を送信すると以下が自動的に作成されます：</h6>
+      <ul class="mb-0">
+        <li>暫定スピーカー情報（後で編集可能）</li>
+        <li>暫定キーノートセッション（後で編集可能）</li>
+        <li>プロポーザル（採択済みステータス）</li>
+      </ul>
+      <p class="mb-0 mt-2">スピーカーが承諾すると、speaker_dashboardから自身の情報を編集できるようになります。</p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= form.submit '招待メールを送信', class: 'btn btn-primary' %>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        キャンセル
+      </button>
+    </div>
+  <% end %>

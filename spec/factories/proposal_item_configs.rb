@@ -73,12 +73,24 @@ FactoryBot.define do
     end
   end
 
-  factory :proposal_item_configs_session_time, class: ProposalItemConfig do
+  factory :proposal_item_configs_session_time_40_min, class: ProposalItemConfig do
     type { 'ProposalItemConfigRadioButton' }
+    key { SessionTime::FOURTY_MINUTES }
     label { 'session_time' }
     item_number { 1 }
     item_name { '必要とする講演時間 - Session time you need（★）' }
-    params { '40min (full session)' }
+    params { '_40min (full session)' }
+    value { '40' }
+  end
+
+  factory :proposal_item_configs_session_time_20_min, class: ProposalItemConfig do
+    type { 'ProposalItemConfigRadioButton' }
+    label { 'session_time' }
+    key { SessionTime::TWENTY_MINUTES }
+    item_number { 2 }
+    item_name { '必要とする講演時間 - Session time you need（★）' }
+    params { '_20min (for keynote)' }
+    value { '20' }
   end
 
   factory :proposal_item_configs_whether_it_can_be_published, class: ProposalItemConfig do

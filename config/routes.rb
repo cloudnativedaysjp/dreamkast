@@ -76,6 +76,11 @@ Rails.application.routes.draw do
       resource :timetable, only: [:update]
       resources :announcements
       resources :speaker_announcements
+      resources :keynote_speaker_invitations do
+        member do
+          post :resend
+        end
+      end
       resources :streamings
       resources :stamp_rally_check_points do
         patch :reorder, on: :member
@@ -116,6 +121,9 @@ Rails.application.routes.draw do
     resources :speaker_invitations, only: [:index, :new, :create]
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
+
+    resources :keynote_speaker_accepts, only: [:index, :new, :create]
+    get '/keynote_speaker_accepts/invite' => 'keynote_speaker_accepts#invite'
     resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
     # resources :sponsor_contact_invites, only: [:index, :new, :create]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_30_024220) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_08_093801) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -139,6 +139,37 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_30_024220) do
     t.datetime "updated_at", null: false
     t.index ["form_item_id"], name: "index_form_values_on_form_item_id"
     t.index ["profile_id"], name: "index_form_values_on_profile_id"
+  end
+
+  create_table "keynote_speaker_accepts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "keynote_speaker_invitation_id", null: false
+    t.bigint "speaker_id", null: false
+    t.bigint "talk_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keynote_speaker_invitation_id"], name: "index_keynote_speaker_accepts_on_keynote_speaker_invitation_id"
+    t.index ["speaker_id"], name: "index_keynote_speaker_accepts_on_speaker_id"
+    t.index ["talk_id"], name: "index_keynote_speaker_accepts_on_talk_id"
+  end
+
+  create_table "keynote_speaker_invitations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "speaker_id"
+    t.bigint "talk_id"
+    t.string "email", null: false
+    t.string "name"
+    t.string "token", null: false
+    t.datetime "invited_at", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "accepted_at"
+    t.integer "created_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id", "email"], name: "index_keynote_speaker_invitations_on_conference_id_and_email"
+    t.index ["conference_id"], name: "index_keynote_speaker_invitations_on_conference_id"
+    t.index ["speaker_id"], name: "index_keynote_speaker_invitations_on_speaker_id"
+    t.index ["talk_id"], name: "index_keynote_speaker_invitations_on_talk_id"
+    t.index ["token"], name: "index_keynote_speaker_invitations_on_token", unique: true
   end
 
   create_table "links", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -693,6 +724,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_30_024220) do
   add_foreign_key "check_in_talks", "talks"
   add_foreign_key "form_values", "form_items"
   add_foreign_key "form_values", "profiles"
+  add_foreign_key "keynote_speaker_accepts", "keynote_speaker_invitations"
+  add_foreign_key "keynote_speaker_accepts", "speakers"
+  add_foreign_key "keynote_speaker_accepts", "talks"
+  add_foreign_key "keynote_speaker_invitations", "conferences"
+  add_foreign_key "keynote_speaker_invitations", "speakers"
+  add_foreign_key "keynote_speaker_invitations", "talks"
   add_foreign_key "links", "conferences"
   add_foreign_key "media_live_channels", "media_live_inputs"
   add_foreign_key "media_live_channels", "streamings"

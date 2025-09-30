@@ -12,7 +12,7 @@ class Admin::SponsorContactInvitesController < ApplicationController
       @sponsor_contact_invite = SponsorContactInvite.new(sponsor_contact_invite_params)
       @sponsor_contact_invite.conference_id = @conference.id
       @sponsor_contact_invite.token = SecureRandom.hex(50)
-      @sponsor_contact_invite.expires_at = 1.days.from_now  # 有効期限を1日後に設定
+      @sponsor_contact_invite.expires_at = 7.days.from_now  # 有効期限を7日後に設定
       if @sponsor_contact_invite.save
         SponsorContactInviteMailer.invite(@conference, @sponsor_contact_invite).deliver_now
         flash.now[:notice] = '招待メールを送信しました'

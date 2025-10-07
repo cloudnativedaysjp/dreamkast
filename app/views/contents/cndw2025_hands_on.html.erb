@@ -1,48 +1,142 @@
-<div id="<%= @conference.abbr %>" >
-  <div class="contents">
-    <section class="page-section bg-primary" id="masthead">
-      <div class="container">
-        <div id="particles-js"></div>
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 col-sm-8">
-              <h2 class="font-weight-bold text-white">
-                <span class="font-weight-light">小さな一歩、大きな飛躍</span><br />
-                〜クラウドネイティブを継続する〜<br />
-              </h2>
-              <h1 class="font-weight-bold text-white"><%= @conference.name %></h1>
-          </div>
-          <div class="col-12 col-sm-4 align-self-end text-white">
-              <p class="date">
-                TBD
-              </p>
-              <p class="font-weight-bold">
-              ハイブリッド開催！
-              </p>
-              <p class="text-white">
-              有明セントラルタワーホール&カンファレンス<br/>
-              +オンライン<br/>
-              参加費無料
-              </p>
-              <p class="">
-              #CNDW2025
-              </p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="container">
+  <div class="row p-md-4" id="contents">
+    <div class="col-12 col-md-12 py-3" id="handson">
+      <%= image_tag 'cndw2025/hands-on-full.png', style: 'width: 100%'%>
+      <h2 class="text-center mt-4" id="">
+        CNDW2025 Hands-on
+      </h2>
+      <h4 class="text-center mb-3">
+        開催日時：2025/11/14 (金) 10:00 - 16:30 （途中お昼休憩あり）
+      </h4>
+      <p>
+        CloudNative Days Winter 2025では、以前のCloudNative Daysで好評だった Co-located ハンズオンを開催することになりました。
+      </p>
+      <p>
+        Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDW2025で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
+      </p>
+      <h3 class="mt-4">申込方法・参加方法</h3>
+      <p>
+        申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+      </p>
+      <p>
+        イベントはオフラインまたはオンラインで実施され、各ハンズオンが提供するZoom・Google Meets・Microsoft Teamsなどを利用します。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+      </p>
 
-    <section class="page-section" id="about">
-      <div class="container">
-        <div class="row align-items-start justify-content-center text-center">
-          <div class="col-lg-12 text-center">
-            <h2 class="text-black mt-0">ハンズオン</h2>
-            <hr class="divider my-4" />
-            <p class="text-black text-left mb-4">
-              詳細は後日公開予定です
-            </p>
-          </div>
-        </div>
+      <h3 class="mt-4">開催予定ハンズオン</h3>
+      <div class="session">
+        <h5 class="time">2025/11/14 (金) 10:00 - 16:30 （途中お昼休憩あり）</h5>
+        <h4 class="title"><a href="#hc6">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Winter 2025 実行委員会</a></h4>
       </div>
-    </section>
+      <div class="session">
+        <h5 class="time">2025/11/14 (金) 17:00 - 20:30 </h5>
+        <h4 class="title"><a href="#hc1">『Kubernetes Upstream Training in Japan at CNDW2025』by Cloud Native Community Japan</a></h4>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc6">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Winter 2025 実行委員会</h3>
+        <ul>
+          <li>
+            <% if @current_user %>
+              申し込みURL：<a href="https://docs.google.com/forms/d/e/1FAIpQLScw2tMt3dmysqzWqiNrrx8Lo0-ii63QhAL7LqwScZBDa81vYw/viewform">https://docs.google.com/forms/d/e/1FAIpQLScw2tMt3dmysqzWqiNrrx8Lo0-ii63QhAL7LqwScZBDa81vYw/viewform</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDW2025 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2025/11/14 (金) 10:00 - 16:30 （途中お昼休憩あり）
+          </li>
+        </ul>
+        <p>
+          このハンズオンは、Kubernetesやクラウドネイティブ技術に精通したメンバーが、2025年現在でデファクトとなっている（デファクトになりそうな）新しい技術について一気に学べるように設計したハンズオンです。
+          下記のような様々なトピックを、手を動かしながら1日で学ぶことができます。<br>
+          2023年に開催した際には、申し込みわずか半日で定員の4倍の申し込みがあり、急遽増枠した大人気イベントです。<br>
+        </p>
+
+        <h5>【学べるOSS】</h5>
+        <ul>
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>Prometheus</li>
+          <li>Grafana</li>
+          <li>Pyroscope</li>
+          <li>Loki</li>
+          <li>Tempo</li>
+          <li>Open Telemetry</li>
+          <li>Cilium</li>
+          <li>Argo CD</li>
+          <li>Argo Rollouts</li>
+          <li>Istio</li>
+          <li>Hubble</li>
+        </ul>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：オフライン25名（先着）</li>
+          <li>オフライン会場：株式会社スリーシェイク（〒104-0061 東京都中央区銀座8丁目21番1号 住友不動産汐留浜離宮ビル 7F）</li>
+          <li>定員：オンライン15名（先着）</li>
+          <li>オンライン会場：Zoom</li>
+        </ul>
+        <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>CloudNative Days Winter 2025 実行委員会有志</li>
+        </ul>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc1">『Kubernetes Upstream Training in Japan at CNDW2025』by Cloud Native Community Japan</h3>
+        <ul>
+          <li>
+            <% if @current_user %>
+              申し込みURL：<a href="https://community.cncf.io/events/details/cncf-cloud-native-community-japan-presents-joint-meetup-kubernetes-upstream-training-in-japan-at-cndw2025/">https://community.cncf.io/events/details/cncf-cloud-native-community-japan-presents-joint-meetup-kubernetes-upstream-training-in-japan-at-cndw2025/</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDW2025 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2025/11/14 (金) 17:00 - 20:30
+          </li>
+        </ul>
+        <p>
+          Kubernetes Upstream Training in Japan は Kubernetes コミュニティでコントリビューションを始めたい方のためのコミュニティ参加入門講座です。Kubernetes コミュニティの説明、参加のための心構え、様々なコントリビューション方法、Kubernetes コミュニティ公式の Slack や練習用リポジトリを用いたコントリビューションの練習を日本語で紹介しています。<br>
+          講師陣は、現役のメンテナーやコントリビューターが担当しています。お気軽にご参加ください！<br>
+          Kubernetes Upstream Training in Japan は、Cloud Native Community Japan (CNCJ) の SIG の一つである Kubernetes Upstream Training Japan (KUTJ) が、Kubernetes コミュニティと連携しながら運営しています。<br>
+
+          Kubernetes Upstream Training in Japan を CloudNative Days Winter 2025 (CNDW2025) にてハイブリッドで開催します！<br>
+          参加応募締切は、11/12(木)13:00 です。現地参加とリモート参加でそれぞれ枠に限りがございますので超えた時点で早期に締め切ります。<br>
+          簡単な事前課題があります。実施の上、ご参加ください。<br>
+          また、CNCF コミュニティ行動規範、およびCloudNative Days の行動規範に準拠します。申し込みページからご一読ください。
+        </p>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：オフライン25名（先着）、オンライン50名（先着）</li>
+          <li>株式会社スリーシェイク（〒104-0061 東京都中央区銀座8丁目21番1号 住友不動産汐留浜離宮ビル 7F）</li>
+          <ul>
+            <li>アクセス・入館方法は後日メールにてご連絡いたします。</li>
+          </ul>
+          <li>オンライン会場：Zoom</li>
+        </ul>
+        <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>武藤 周（NECソリューションイノベータ株式会社）</li>
+          <li>解 紫圯（NECソリューションイノベータ株式会社）</li>
+          <li>稲生 章人（NECソリューションイノベータ株式会社）</li>
+          <li>望月 敬太</li>
+        </ul>
+      </div>
+      <%
+=begin %>
+      <div class="col-12 my-4">
+        <h2 class="text-center mt-4">企画一覧</h2>
+        <section class="projects">
+          <%= render(partial: "contents/cnds2024/projects") %>
+        </section>
+      </div>
+      <%
+=end %>
+
+    </div>
   </div>
 </div>

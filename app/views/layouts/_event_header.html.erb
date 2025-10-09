@@ -18,6 +18,8 @@
           <% if display_sponsor_guideline_url? %>
             <li class="nav-item"><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
           <% end %>
+            
+          <li class="nav-item"><%= link_to "早期申し込み特典あり！", "https://cloudnativedays.jp/posts/cndw2025-early-benefits", class: "nav-link js-scroll-trigger", target: '_blank' %></li>
 
           <% if display_dashboard_link? %>
             <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>

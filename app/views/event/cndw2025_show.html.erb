@@ -85,13 +85,13 @@
           <div class="grid" style="--rows: 13">
             <div class="all-track" style="">
               <div class="session">
-                <h6>10:20 - 10:30</h6>
+                <h6>9:50 - 10:00</h6>
                 <h4>オープニング</h4>
               </div>
             </div>
           </div>
           <div class="grid"
-              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 150 + 10 %>">
+              style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
             <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
                 <div class="track <%= 'even' if n.zero? || n.even? %>"
                     style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
@@ -104,13 +104,13 @@
                   each_break = 0
                 else
                   # 14時以降のセッションについてはお昼休みとセッション間休憩を除外
-                  lunch_break = 50
+                  lunch_break = 80
                   each_break = (talk.start_time.in_time_zone('Asia/Tokyo').hour - 13) * 20
                 end
 
                 total_break = lunch_break + each_break
 
-                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:20")) / 60).to_i - total_break
+                row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break
                 row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
               %>
               <div class="talk"
@@ -140,7 +140,7 @@
         <div class="grid" style="--rows: 13">
           <div class="all-track" style="">
             <div class="session">
-              <h6>18:10 - 18:20</h6>
+              <h6>18:10 - 18:30</h6>
               <h4>クロージング</h4>
             </div>
           </div>

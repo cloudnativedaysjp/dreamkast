@@ -48,44 +48,50 @@
                                 talk_number: talk.talk_number,
                                 checked: talks_checked?(talk.id),
                                 style: "display: none",
+                                class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}",
                                 disabled: form_status
                               },
-                              talks_checked?(talk.id),
-                              nil %>
+                              true,
+                              false %>
           <% end %>
-          <div class="content <%= talk.sold_out? && @profile.attend_offline? ? 'disabled' : '' %>"
-               track_number="<%= talk.track.number %>"
-               talk_number="<%= talk.talk_number %>">
-            <% if talk.sold_out? && @profile.attend_offline? %>
-                <div class="content_caption">
-                  <span>満席</span>
-                </div>
-            <% elsif form %>
-                <div class="content_caption"></div>
-            <% end %>
-            <h6><%= conference_day.date.strftime("%m/%d") %> <%= talk.start_time.strftime("%R") %>-<%= talk.end_time.strftime("%R") %> <span class="track_name">Track <%= talk.track.name %></span></h6>
-            <% if talk.speakers.present? %>
-              <h5><a href="<%= talk_path(id: talk.id) %>" target="_blank" rel="noopener"><%= talk.title %></a></h5>
-              <% talk.speakers.each do |speaker| %>
-                <h6><%= speaker.name %></h6>
-              <% end %>
-            <% else %>
-              <h4><%= talk.title %></h4>
-            <% end %>
-            <div class="category_difficulty">
-              <% if talk.talk_category_id %>
-                <span class="difficulty category_<%= talk.talk_category_id %>"><%= talk.category %></span>
-              <% end %>
-              <% if talk.talk_difficulty_id %>
-                <span class="difficulty difficulty_<%= talk.talk_difficulty_id %>"><%= talk.difficulty %></span>
-              <% end %>
-            </div>
+          <div class="content
+                      <%= 'checked' if @current_user && talks_checked?(talk.id) %> <%= 'disabled' if form_status %>"
+                      talk_id="<%= talk.id %>"
+                      track_number="<%= talk.track.number %>"
+               style="margin-top:0">
+            <h6>
+                <span class="track_name">Track <%= talk.track.name %>&nbsp;</span>
+                <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
+                <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
+                <%= talk.seats_status if @profile.attend_offline? %>
+            </h6>
+            <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+            <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
+            <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
           </div>
+
           <% if form %>
           </label>
           <% end %>
         </div>
       <% end %>
     </div>
+    <% if conference_day.id == 36%>
+    <div class="grid" style="--rows: 13">
+      <div class="all-track" style="">
+        <div class="session">
+          <h6>18:10 - 18:30</h6>
+          <h4>クロージング</h4>
+        </div>
+      </div>
+    </div>
+    <% end %>
   </section>
 <% end %>
+<% if form %>
+  <%= render 'timetable_footer',
+      form: form,
+      information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
+<% end %>
+<%= hidden_field_tag('is_offline', @profile.attend_offline?) %>

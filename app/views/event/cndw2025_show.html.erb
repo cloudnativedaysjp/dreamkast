@@ -213,5 +213,17 @@
         </div>
       </div>
     </section>
+
+
+    <% if @conference.show_sponsors %>
+      <section class="page-section" id="sponsors">
+        <%= render 'event/partial/sponsors', conference: @conference %>
+      </section>
+    <% end %>
+
+    <section class="page-section bg-secondary" id="information">
+      <%= render 'event/partial/information', conference: @conference %>
+    </section>
   </div>
 </div>
+<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>

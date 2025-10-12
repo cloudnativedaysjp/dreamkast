@@ -218,4 +218,38 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
     end
   end
+
+
+  describe '#ogp_image' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+
+    context 'when ogp_image_url is present' do
+      before do
+        talk.update(ogp_image_url: 'https://example.com/custom-ogp.png')
+      end
+
+      it 'returns the custom ogp_image_url' do
+        expect(talk.ogp_image).to eq('https://example.com/custom-ogp.png')
+      end
+    end
+
+    context 'when ogp_image_url is blank and has speakers' do
+      let!(:speaker) { create(:speaker_alice) }
+
+      before do
+        talk.speakers << speaker
+      end
+
+      it 'returns the first speaker avatar' do
+        expect(talk.ogp_image).to eq(speaker.avatar_or_dummy_url)
+      end
+    end
+
+    context 'when ogp_image_url is blank and has no speakers' do
+      it 'returns dummy.png' do
+        expect(talk.ogp_image).to eq('dummy.png')
+      end
+    end
+  end
 end

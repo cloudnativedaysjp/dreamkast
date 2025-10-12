@@ -230,7 +230,7 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
 
       it 'returns the custom ogp_image_url' do
-        expect(talk.ogp_image).to eq('https://example.com/custom-ogp.png')
+        expect(talk.ogp_image).to(eq('https://example.com/custom-ogp.png'))
       end
     end
 
@@ -242,13 +242,13 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
 
       it 'returns the first speaker avatar' do
-        expect(talk.ogp_image).to eq(speaker.avatar_or_dummy_url)
+        expect(talk.ogp_image).to(eq(speaker.avatar_or_dummy_url))
       end
     end
 
     context 'when ogp_image_url is blank and has no speakers' do
       it 'returns dummy.png' do
-        expect(talk.ogp_image).to eq('dummy.png')
+        expect(talk.ogp_image).to(eq('dummy.png'))
       end
     end
   end

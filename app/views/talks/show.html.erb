@@ -3,9 +3,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:title" content="<%= full_title(@talk.title) %>" />
   <meta property="og:description" content="<%= @talk.abstract[0, 100] %>" />
-  <% if @talk.speakers.length != 0 %>
-    <meta property="og:image" content="<%= image_url @talk.speakers[0].avatar_or_dummy_url %>" />
-  <% end %>
+  <meta property="og:image" content="<%= image_url @talk.ogp_image %>" />
 <% end %>
 <% provide(:title, @talk.title) %>
 <div class="container white_background talk-page"

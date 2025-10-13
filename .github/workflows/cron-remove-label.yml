@@ -9,7 +9,7 @@ jobs:
   remove-label:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write
       issues: write
     timeout-minutes: 3
     steps:

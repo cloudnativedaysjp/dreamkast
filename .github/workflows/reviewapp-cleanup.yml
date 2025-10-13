@@ -3,6 +3,7 @@ name: cleanup reviewapps
 on:
   schedule:
     - cron:  '*/30 * * * *'
+  workflow_dispatch:
 
 jobs:
   cleanup:

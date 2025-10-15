@@ -34,7 +34,7 @@
         "sortablejs": "^1.15.3",
         "video.js": "8.23.4",
         "webpack": "^5.92.1",
-        "webpack-cli": "^5.1.4",
+        "webpack-cli": "^6.0.0",
         "webpack-remove-empty-scripts": "^1.0.4"
     },
     "version": "0.1.0",

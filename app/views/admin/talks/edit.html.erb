@@ -69,6 +69,14 @@
       <%= form.url_field :document_url, class: 'form-control' %>
     </div>
 
+    <div class="form-group mb-3">
+      <%= form.label :ogp_image_url, 'OGP画像URL', class: 'form-label' %>
+      <%= form.url_field :ogp_image_url, class: 'form-control', placeholder: 'https://example.com/og-image.png' %>
+      <small class="form-text text-muted">
+        SNSでシェアされた際に表示される画像のURLを指定できます。未指定の場合は登壇者のアバター画像が使用されます。
+      </small>
+    </div>
+
     <div class="form-check mb-3">
       <%= form.check_box :show_on_timetable, class: 'form-check-input' %>
       <%= form.label :show_on_timetable, 'タイムテーブルに表示', class: 'form-check-label' %>

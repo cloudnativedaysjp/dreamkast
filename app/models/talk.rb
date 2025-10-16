@@ -441,6 +441,16 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     registered_talks.select { |rt| rt.profile.participation == 'offline' }.size
   end
 
+  def ogp_image
+    if ogp_image_url.present?
+      ogp_image_url
+    elsif !speakers.empty?
+      speakers[0].avatar_or_dummy_url
+    else
+      'dummy.png'
+    end
+  end
+
   private
 
   def validate_proposal_item_configs

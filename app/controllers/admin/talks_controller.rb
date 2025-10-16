@@ -143,7 +143,7 @@ class Admin::TalksController < ApplicationController
     params.require(:talk).permit(
       :title, :abstract, :talk_category_id, :talk_difficulty_id,
       :track_id, :conference_day_id, :start_time, :end_time,
-      :show_on_timetable, :video_published, :document_url,
+      :show_on_timetable, :video_published, :document_url, :ogp_image_url,
       talk_type_ids: []
     )
   end

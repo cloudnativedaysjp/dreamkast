@@ -541,7 +541,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    puma (6.6.0)
+    puma (7.1.0)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -829,7 +829,7 @@ DEPENDENCIES
   prometheus-client (~> 4.0.0)
   pry-rails
   psych (< 6)
-  puma (~> 6.0)
+  puma (~> 7.0)
   pundit
   rack-cors
   rack-timeout

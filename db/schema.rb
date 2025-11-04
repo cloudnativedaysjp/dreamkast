@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_08_093801) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "sub"
@@ -650,6 +650,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_093801) do
     t.integer "end_offset", default: 0, null: false
     t.integer "number_of_seats", default: 0, null: false
     t.integer "acquired_seats", default: 0, null: false
+    t.string "ogp_image_url"
     t.index ["conference_id"], name: "index_talks_on_conference_id"
     t.index ["talk_category_id"], name: "index_talks_on_talk_category_id"
     t.index ["talk_difficulty_id"], name: "index_talks_on_talk_difficulty_id"

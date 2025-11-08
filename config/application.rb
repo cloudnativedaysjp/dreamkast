@@ -26,5 +26,7 @@ module Cndtattend
 
     # Set default locale to Japanese
     config.i18n.default_locale = :ja
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: -> { Rails.logger } do
+    end
   end
 end

@@ -10,7 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'https://*.emtec.tv'
 
     resource '*',
-      headers: :any,
-      methods: %i[get options]
+             headers: :any,
+             methods: [:get, :options]
   end
 end

@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before(0, Rack::Cors) do
   allow do
-    origins(%r{/https:\/\/.*\.emtec\.tv$/}, %r{/https:\/\/.*\emtec-intermission\.pages\.dev$/})
+    origins(%r{https://.*\.emtec\.tv$}, %r{https://.*\.emtec-intermission\.pages\.dev$})
 
     resource '*',
              headers: :any,

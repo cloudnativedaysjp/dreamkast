@@ -292,7 +292,7 @@ EOS
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
-    capacity: 300,
+    capacity: 600,
     about: <<'EOS'
     クラウドネイティブという波は、単なる技術革新にとどまらず、組織や社会、そして技術に関わるすべての人の在り方も変えていきます。
     私たちはこれまで、知識や熱意を分かち合うことで、クラウドネイティブに取り組むエンジニアを後押ししてきました。

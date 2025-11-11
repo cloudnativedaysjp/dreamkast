@@ -3,10 +3,18 @@
     <h2 class="date"><%= conference_day.date.to_s %></h2>
     <div class="grid" style="--rows: 13">
       <div class="all-track" style="">
+    
+        <% if conference_day.id == 35%>
         <div class="session">
           <h6>9:50 - 10:00</h6>
           <h4>オープニング</h4>
         </div>
+        <% elsif conference_day.id == 36%>
+        <div class="session">
+          <h6>10:20 - 10:30</h6>
+          <h4>オープニング</h4>
+        </div>
+        <% end %>
       </div>
     </div>
     <% # 1rowあたり1分で計算。ここのrowsで全体の分(=rowの数)を計算している。トータル時間-休憩時間 + ヘッダ分 %>

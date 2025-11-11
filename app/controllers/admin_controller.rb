@@ -14,12 +14,12 @@ class AdminController < ApplicationController
   end
 
   def statistics
-    @talks = @conference.talks.includes(:registered_talks).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.includes(registered_talks: :profile).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
   end
 
   def export_statistics
     f = Tempfile.create('statistics.csv')
-    @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: params[:event])
+    @conference = Conference.includes(talks: [registered_talks: :profile]).find_by(abbr: params[:event])
     CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
       @conference.talks.accepted.each do |talk|

@@ -1,19 +1,19 @@
-# syntax = docker/dockerfile:1.12
+# syntax = docker/dockerfile:1.20
 
-FROM node:22.16.0-slim AS node
+FROM node:22.21.1-slim AS node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
     yarn install --modules-folder .cache/node_modules && \
     cp -ar .cache/node_modules node_modules
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6 AS fetch-lib
+FROM public.ecr.aws/docker/library/ruby:3.4.7 AS fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
 RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
 RUN bundle install
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6 AS asset-compile
+FROM public.ecr.aws/docker/library/ruby:3.4.7 AS asset-compile
 ENV YARN_VERSION=1.22.22
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
@@ -35,7 +35,7 @@ ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6-slim
+FROM public.ecr.aws/docker/library/ruby:3.4.7-slim
 
 ENV YARN_VERSION=1.22.22
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn

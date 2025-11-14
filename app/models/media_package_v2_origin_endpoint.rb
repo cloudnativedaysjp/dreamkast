@@ -106,9 +106,8 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
     distr.distribution_config.origins.items = new_origins
 
     return unless distr.distribution_config.cache_behaviors.items.any? { |behavior| behavior.target_origin_id == origin_endpoint_name }
-    original_cache_behaviors = distr.distribution_config.cache_behaviors.items
     new_cache_behaviors = distr.distribution_config.cache_behaviors.items.reject { |behavior| behavior.target_origin_id == origin_endpoint_name }
-    distr.distribution_config.cache_behaviors.quantity -= original_cache_behaviors.size - new_cache_behaviors.size
+    distr.distribution_config.cache_behaviors.quantity -= 1
     distr.distribution_config.cache_behaviors.items = new_cache_behaviors
 
 
@@ -144,76 +143,44 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
       }
     }
 
-    new_cache_behaviors = [
-      {
-        path_pattern: "/out/v1/#{origin_endpoint_name}/*.m3u8",
-        target_origin_id: origin_endpoint_name.to_s,
-        trusted_signers: {
-          enabled: false,
-          quantity: 0
-        },
-        trusted_key_groups: {
-          enabled: false,
-          quantity: 0
-        },
-        viewer_protocol_policy: 'https-only',
-        allowed_methods: {
-          quantity: 2,
-          items: %w[HEAD GET],
-          cached_methods: {
-            quantity: 2,
-            items: %w[HEAD GET]
-          }
-        },
-        smooth_streaming: false,
-        compress: true,
-        lambda_function_associations: {
-          quantity: 0
-        },
-        function_associations: {
-          quantity: 0
-        },
-        field_level_encryption_id: '',
-        cache_policy_id: cache_policy('manifest').id
+    new_cache_behavior = {
+      path_pattern: "/out/v1/#{origin_endpoint_name}/*",
+      target_origin_id: origin_endpoint_name.to_s,
+      trusted_signers: {
+        enabled: false,
+        quantity: 0
       },
-      {
-        path_pattern: "/out/v1/#{origin_endpoint_name}/*",
-        target_origin_id: origin_endpoint_name.to_s,
-        trusted_signers: {
-          enabled: false,
-          quantity: 0
-        },
-        trusted_key_groups: {
-          enabled: false,
-          quantity: 0
-        },
-        viewer_protocol_policy: 'https-only',
-        allowed_methods: {
+      trusted_key_groups: {
+        enabled: false,
+        quantity: 0
+      },
+      viewer_protocol_policy: 'https-only',
+      allowed_methods: {
+        quantity: 2,
+        items: %w[HEAD GET],
+        cached_methods: {
           quantity: 2,
-          items: %w[HEAD GET],
-          cached_methods: {
-            quantity: 2,
-            items: %w[HEAD GET]
-          }
-        },
-        smooth_streaming: false,
-        compress: true,
-        lambda_function_associations: {
-          quantity: 0
-        },
-        function_associations: {
-          quantity: 0
-        },
-        field_level_encryption_id: '',
-        cache_policy_id: cache_policy('segment').id
-      }
-    ]
+          items: %w[HEAD GET]
+        }
+      },
+      smooth_streaming: false,
+      compress: true,
+      lambda_function_associations: {
+        quantity: 0
+      },
+      function_associations: {
+        quantity: 0
+      },
+      field_level_encryption_id: '',
+      cache_policy_id: cache_policy.id
+    }
+
     new_origins = distr.distribution_config.origins.items << new_origin
     distr.distribution_config.origins.quantity += 1
     distr.distribution_config.origins.items = new_origins
 
-    new_cache_behaviors = distr.distribution_config.cache_behaviors.items.concat(new_cache_behaviors)
-    distr.distribution_config.cache_behaviors.quantity += new_cache_behaviors.size
+    new_cache_behaviors = distr.distribution_config.cache_behaviors.items << new_cache_behavior
+    distr.distribution_config.cache_behaviors.quantity += 1
     distr.distribution_config.cache_behaviors.items = new_cache_behaviors
 
     cloudfront_client.update_distribution({
@@ -223,7 +190,7 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
                                           })
   end
 
-  def cache_policy(type)
+  def cache_policy
     marker = nil
     cache_policies = []
     loop do
@@ -233,15 +200,15 @@ class MediaPackageV2OriginEndpoint < ApplicationRecord
       marker = resp.cache_policy_list.next_marker
     end
 
-    cache_policies.find { |policy| policy.cache_policy.cache_policy_config.name == cache_policy_name(type) }.cache_policy
+    cache_policies.find { |policy| policy.cache_policy.cache_policy_config.name == cache_policy_name }.cache_policy
   end
 
-  def cache_policy_name(type)
+  def cache_policy_name
     case env_name
     when 'production'
-      "MediaPackageV2_#{type}_prd"
+      'MediaPackageV2_prd'
     else
-      "MediaPackageV2_#{type}_stg"
+      'MediaPackageV2_stg'
     end
   end
 end

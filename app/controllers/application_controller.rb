@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base
 
   def set_profile
     @profile = if current_user && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
-                 Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+                 Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id) || GuestProfile.new
                else
                  GuestProfile.new
                end

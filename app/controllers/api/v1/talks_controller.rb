@@ -8,7 +8,19 @@ class Api::V1::TalksController < ApplicationController
     conference = Conference.find_by(abbr: params[:eventAbbr])
     query = { conference_id: conference.id }
     query[:track_id] = params[:trackId] if params[:trackId]
-    @talks = Talk.includes(:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, registered_talks: :profile)
+    @talks = Talk.includes(
+      :conference,
+      :conference_day,
+      :talk_time,
+      :talk_difficulty,
+      :talk_category,
+      :talks_speakers,
+      :video,
+      :speakers,
+      :sponsor,
+      proposal_items: :proposal_item_configs,
+      registered_talks: :profile
+    )
                  .accepted_and_intermission
                  .where(query)
     if params[:conferenceDayIds]

@@ -175,6 +175,7 @@ EOS
     name: "CloudNative Days Fukuoka 2023",
     abbr: "cndf2023",
     theme: "“Unlearning” 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
+    conference_status: "migrated",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
@@ -192,6 +193,7 @@ EOS
     name: "CloudNative Days Tokyo 2023",
     abbr: "cndt2023",
     theme: "+Native ともに飛び出せ！",
+    conference_status: "migrated",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
@@ -211,6 +213,7 @@ EOS
     name: "CloudNative Days Summer 2024",
     abbr: "cnds2024",
     theme: "Synergy 〜その先の、道へ。出会いと変化を紡ぐ場所〜",
+    conference_status: "migrated",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
@@ -234,6 +237,7 @@ EOS
     name: "CloudNative Days Winter 2024",
     abbr: "cndw2024",
     theme: "小さな一歩、大きな飛躍〜クラウドネイティブを継続する",
+    conference_status: "migrated",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
@@ -312,6 +316,23 @@ EOS
     ともに成長し、ともに未来へ。
 EOS
   },
+  {
+    id: 15,
+    name: "クラウドネイティブ会議",
+    abbr: "cnk",
+    theme: "-",
+    copyright: '© Cloud Native Kaigi (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "Cloud Native Kaigi Committee",
+    capacity: 1000,
+    about: <<'EOS'
+    クラウドネイティブの時代、私たちは常に進化し続けています。 紙に染み渡る墨のように、技術は適応し、私たちの世界を形作ります。
+
+    クラウドネイティブ会議は、CloudNative Days、Platform Engineering Kaigi、SRE Kaigiの 3つの主要なコミュニティを結集します。
+
+    名古屋で知識を共有し、文化を体験し、共に技術の未来を描きましょう。
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -372,7 +393,11 @@ ConferenceDay.seed(
 
   # CNDW2025
   {id: 35, date: "2025-11-18", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
-  {id: 36, date: "2025-11-19", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false}
+  {id: 36, date: "2025-11-19", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
+
+  # CNK
+  {id: 37, date: "2026-05-14", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false},
+  {id: 38, date: "2026-05-15", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false}
 )
 
 FormItem.seed(
@@ -458,7 +483,12 @@ Track.seed(
   { id: 58, number: 1, name: "A", conference_id: 14, room_id: 31},
   { id: 59, number: 2, name: "B", conference_id: 14, room_id: 32},
   { id: 60, number: 3, name: "C", conference_id: 14, room_id: 33},
-  { id: 61, number: 4, name: "D", conference_id: 14, room_id: 34}
+  { id: 61, number: 4, name: "D", conference_id: 14, room_id: 34},
+
+  # CNK
+  { id: 62, number: 1, name: "A", conference_id: 15, room_id: 35},
+  { id: 63, number: 2, name: "B", conference_id: 15, room_id: 36},
+  { id: 64, number: 3, name: "C", conference_id: 15, room_id: 37}
 )
 
 Room.seed(
@@ -499,7 +529,12 @@ Room.seed(
   {id: 31, conference_id: 14, name: 'A-Room1'},
   {id: 32, conference_id: 14, name: 'B-Room2'},
   {id: 33, conference_id: 14, name: 'C-Boardroom'},
-  {id: 34, conference_id: 14, name: 'D-Room6'}
+  {id: 34, conference_id: 14, name: 'D-Room6'},
+
+  # CNK
+  {id: 35, conference_id: 15, name: 'A'},
+  {id: 36, conference_id: 15, name: 'B'},
+  {id: 37, conference_id: 15, name: 'C'},
 )
 
 TalkCategory.seed(
@@ -696,6 +731,26 @@ TalkCategory.seed(
   { id: 180, conference_id: 14, name: "組織論"},
   { id: 181, conference_id: 14, name: "FinOps"},
   { id: 182, conference_id: 14, name: "その他"},
+
+  # CNK
+  { id: 183, conference_id: 15, name: "CI / CD"},
+  { id: 184, conference_id: 15, name: "Customizing / Extending"},
+  { id: 185, conference_id: 15, name: "IoT / Edge"},
+  { id: 186, conference_id: 15, name: "Microservices / Services Mesh"},
+  { id: 187, conference_id: 15, name: "ML / HPC"},
+  { id: 188, conference_id: 15, name: "Networking"},
+  { id: 189, conference_id: 15, name: "Operation / Monitoring / Logging"},
+  { id: 190, conference_id: 15, name: "Application / Development"},
+  { id: 191, conference_id: 15, name: "Runtime"},
+  { id: 192, conference_id: 15, name: "Security"},
+  { id: 193, conference_id: 15, name: "Serverless / FaaS"},
+  { id: 194, conference_id: 15, name: "Storage / Database"},
+  { id: 195, conference_id: 15, name: "Architecture Design"},
+  { id: 196, conference_id: 15, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 197, conference_id: 15, name: "NFV / Edge"},
+  { id: 198, conference_id: 15, name: "組織論"},
+  { id: 199, conference_id: 15, name: "FinOps"},
+  { id: 200, conference_id: 15, name: "その他"},
 )
 
 TalkDifficulty.seed(
@@ -745,7 +800,12 @@ TalkDifficulty.seed(
   # CNDW2025
   { id: 75, conference_id: 14, name: "初級者"},
   { id: 76, conference_id: 14, name: "中級者"},
-  { id: 77, conference_id: 14, name: "上級者"}
+  { id: 77, conference_id: 14, name: "上級者"},
+
+  # CNK
+  { id: 78, conference_id: 15, name: "初級者"},
+  { id: 79, conference_id: 15, name: "中級者"},
+  { id: 80, conference_id: 15, name: "上級者"},
 )
 
 TalkTime.seed(

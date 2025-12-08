@@ -29,6 +29,7 @@ class Profile < ApplicationRecord
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
   belongs_to :conference
+  belongs_to :user
   has_many :registered_talks
   has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
   has_many :form_values
@@ -40,6 +41,8 @@ class Profile < ApplicationRecord
   has_many :stamp_rally_check_ins
   has_one :public_profile, dependent: :destroy
   accepts_nested_attributes_for :form_items
+
+  before_validation :ensure_user_id, on: :create
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid
@@ -145,5 +148,28 @@ class Profile < ApplicationRecord
 
   def attend_online?
     online?
+  end
+
+  private
+
+  def ensure_user_id
+    return if user_id.present?
+
+    if sub.present?
+      user = User.find_or_create_by!(sub:) do |u|
+        u.email = email || "#{sub}@example.com"
+      end
+    elsif email.present?
+      temp_sub = "temp_#{SecureRandom.hex(8)}"
+      user = User.find_or_create_by!(email:) do |u|
+        u.sub = temp_sub
+      end
+    else
+      # subもemailもnilの場合は、一時的なUserを作成
+      temp_sub = "temp_#{SecureRandom.hex(8)}"
+      temp_email = "temp_#{SecureRandom.hex(8)}@temp.local"
+      user = User.create!(sub: temp_sub, email: temp_email)
+    end
+    self.user_id = user.id
   end
 end

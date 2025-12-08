@@ -1,6 +1,4 @@
 FactoryBot.define do
-  factory :profile
-
   factory :alice, class: Profile do
     sub { 'alice' }
     email { 'alice@example.com' }
@@ -32,6 +30,20 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    after(:build) do |profile|
+      user = User.find_or_create_by!(sub: profile.sub) do |u|
+        u.email = profile.email
+      end
+      profile.user_id = user.id
+    end
+
+    before(:create) do |profile|
+      user = User.find_or_create_by!(sub: profile.sub) do |u|
+        u.email = profile.email
+      end
+      profile.user_id = user.id
     end
   end
 
@@ -67,6 +79,20 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    after(:build) do |profile|
+      user = User.find_or_create_by!(sub: profile.sub) do |u|
+        u.email = profile.email
+      end
+      profile.user_id = user.id
+    end
+
+    before(:create) do |profile|
+      user = User.find_or_create_by!(sub: profile.sub) do |u|
+        u.email = profile.email
+      end
+      profile.user_id = user.id
     end
   end
 end

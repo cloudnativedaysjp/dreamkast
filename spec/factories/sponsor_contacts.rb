@@ -1,5 +1,41 @@
 FactoryBot.define do
-  factory :sponsor_contact
+  factory :sponsor_contact do
+    after(:build) do |sponsor_contact|
+      next if sponsor_contact.user_id.present?
+      next unless sponsor_contact.sub.present? || sponsor_contact.email.present?
+
+      if sponsor_contact.sub.present?
+        user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+          u.email = sponsor_contact.email || "#{sponsor_contact.sub}@example.com"
+        end
+        sponsor_contact.user_id = user.id
+      elsif sponsor_contact.email.present?
+        temp_sub = "temp_#{SecureRandom.hex(8)}"
+        user = User.find_or_create_by!(email: sponsor_contact.email) do |u|
+          u.sub = temp_sub
+        end
+        sponsor_contact.user_id = user.id
+      end
+    end
+
+    before(:create) do |sponsor_contact|
+      next if sponsor_contact.user_id.present?
+      next unless sponsor_contact.sub.present? || sponsor_contact.email.present?
+
+      if sponsor_contact.sub.present?
+        user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+          u.email = sponsor_contact.email || "#{sponsor_contact.sub}@example.com"
+        end
+        sponsor_contact.user_id = user.id
+      elsif sponsor_contact.email.present?
+        temp_sub = "temp_#{SecureRandom.hex(8)}"
+        user = User.find_or_create_by!(email: sponsor_contact.email) do |u|
+          u.sub = temp_sub
+        end
+        sponsor_contact.user_id = user.id
+      end
+    end
+  end
 
   factory :sponsor_alice, class: SponsorContact do
     sub { 'alice' }
@@ -14,6 +50,20 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    after(:build) do |sponsor_contact|
+      user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+        u.email = sponsor_contact.email
+      end
+      sponsor_contact.user_id = user.id
+    end
+
+    before(:create) do |sponsor_contact|
+      user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+        u.email = sponsor_contact.email
+      end
+      sponsor_contact.user_id = user.id
     end
   end
 
@@ -30,6 +80,20 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    after(:build) do |sponsor_contact|
+      user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+        u.email = sponsor_contact.email
+      end
+      sponsor_contact.user_id = user.id
+    end
+
+    before(:create) do |sponsor_contact|
+      user = User.find_or_create_by!(sub: sponsor_contact.sub) do |u|
+        u.email = sponsor_contact.email
+      end
+      sponsor_contact.user_id = user.id
     end
   end
 end

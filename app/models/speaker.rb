@@ -4,12 +4,15 @@ class Speaker < ApplicationRecord
 
   belongs_to :conference
   belongs_to :sponsor, optional: true
+  belongs_to :user
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
   has_many :speaker_announcement_middles
   has_many :speaker_announcements, through: :speaker_announcement_middles
   has_many :sponsor_speaker_invite_accepts, dependent: :destroy
+
+  before_validation :ensure_user_id, on: :create
 
   validates :name, presence: true
   validates :profile, presence: true
@@ -69,6 +72,29 @@ class Speaker < ApplicationRecord
   end
 
   def attendee_profile
-    conference.profiles.where(sub:).first
+    conference.profiles.where(user_id:).first
+  end
+
+  private
+
+  def ensure_user_id
+    return if user_id.present?
+
+    if sub.present?
+      user = User.find_or_create_by!(sub:) do |u|
+        u.email = email || "#{sub}@example.com"
+      end
+    elsif email.present?
+      temp_sub = "temp_#{SecureRandom.hex(8)}"
+      user = User.find_or_create_by!(email:) do |u|
+        u.sub = temp_sub
+      end
+    else
+      # subもemailもnilの場合は、一時的なUserを作成
+      temp_sub = "temp_#{SecureRandom.hex(8)}"
+      temp_email = "temp_#{SecureRandom.hex(8)}@temp.local"
+      user = User.create!(sub: temp_sub, email: temp_email)
+    end
+    self.user_id = user.id
   end
 end

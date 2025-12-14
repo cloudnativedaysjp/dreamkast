@@ -113,14 +113,14 @@ admin_profiles
 - [x] `app/models/speaker.rb`: `belongs_to :user`を追加
 - [x] `app/models/sponsor_contact.rb`: `belongs_to :user`を追加
 - [x] `app/models/admin_profile.rb`: `belongs_to :user`を追加
-- [ ] `sub`と`email`へのアクセスを`user.sub`と`user.email`に変更するメソッドを追加（後方互換性のため）
-- [ ] `app/models/profile.rb`: `sub_and_email_must_be_unique_in_a_conference`を`user_id` + `conference_id`ベースに変更
+- [x] `sub`と`email`へのアクセスを`user.sub`と`user.email`に変更するメソッドを追加（後方互換性のため）
+- [x] `app/models/profile.rb`: `sub_and_email_must_be_unique_in_a_conference`を`user_id` + `conference_id`ベースに変更
   - `validates :user_id, uniqueness: { scope: :conference_id }`を追加
   - 既存の`sub_and_email_must_be_unique_in_a_conference`バリデーションは段階的に削除
-- [ ] `app/models/speaker.rb`: 必要に応じて同様のバリデーションを追加
-- [ ] `app/models/sponsor_contact.rb`: 必要に応じて同様のバリデーションを追加
-- [ ] `app/models/admin_profile.rb`: 必要に応じて同様のバリデーションを追加
-- [ ] `app/models/speaker.rb`: `conference.profiles.where(sub:)`を`conference.profiles.where(user_id: user.id)`に変更
+- [x] `app/models/speaker.rb`: 必要に応じて同様のバリデーションを追加
+- [x] `app/models/sponsor_contact.rb`: 必要に応じて同様のバリデーションを追加
+- [x] `app/models/admin_profile.rb`: 必要に応じて同様のバリデーションを追加
+- [x] `app/models/speaker.rb`: `conference.profiles.where(sub:)`を`conference.profiles.where(user_id: user.id)`に変更（`app/controllers/admin/profiles_controller.rb`で対応済み）
 - [x] `app/models/user.rb`に`find_or_create_by_auth0_info(sub:, email:)`メソッドを追加
   - Auth0の情報からUserを取得または作成
 

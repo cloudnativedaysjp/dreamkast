@@ -43,10 +43,11 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   def create
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id])
-    if @sponsor.sponsor_contacts.any? { |contact| contact.email == current_user[:info][:email] }
+    # 既にsponsor_contactが存在しない場合のみ作成を許可
+    if @sponsor.sponsor_contacts.none? { |contact| contact.user&.email == current_user[:info][:email] }
       @sponsor_contact = SponsorContact.new(sponsor_contact_params.merge(conference_id: @conference.id))
+      # ensure_user_idが動作するように、subとemailカラムに値を設定
       @sponsor_contact.sub = current_user[:extra][:raw_info][:sub]
-
       @sponsor_contact.email = current_user[:info][:email]
       @sponsor_contact.sponsor_id = @sponsor.id
 

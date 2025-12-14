@@ -30,8 +30,18 @@ class KeynoteSpeakerInvitation < ApplicationRecord
 
   def accept!(current_user_sub)
     ActiveRecord::Base.transaction do
-      # SpeakerにAuth0のsubを設定
-      speaker.update!(sub: current_user_sub)
+      # SpeakerにAuth0のsubを設定（user経由）
+      # current_user_subからUserを取得または作成
+      user = User.find_or_create_by!(sub: current_user_sub) do |u|
+        u.email = speaker.read_attribute(:email) || "#{current_user_sub}@example.com"
+      end
+      # Userのemailがspeakerのemailと異なる場合は更新
+      speaker_email = speaker.read_attribute(:email)
+      if user.email != speaker_email && speaker_email.present?
+        user.update!(email: speaker_email)
+      end
+      # Speakerのuser_idを設定
+      speaker.update!(user:)
 
       # 承諾記録の作成
       create_keynote_speaker_accept!(

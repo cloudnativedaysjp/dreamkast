@@ -125,7 +125,7 @@ admin_profiles
   - Auth0の情報からUserを取得または作成
 
 #### コントローラー層の更新とテスト
-- [ ] `app/controllers/application_controller.rb`
+- [x] `app/controllers/application_controller.rb`
   - `current_user_model`メソッドを追加（Userモデルを返す）
   - `set_profile`, `set_speaker`, `set_sponsor_contact`を`user_id` + `conference_id`ベースに変更
     - `Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)`

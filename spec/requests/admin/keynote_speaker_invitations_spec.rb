@@ -8,7 +8,7 @@ RSpec.describe('Admin::KeynoteSpeakerInvitations', type: :request) do
       name: 'キーノートスピーカー'
     }
   end
-  subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { ['CNDT2020-Admin'] }
 
   before do

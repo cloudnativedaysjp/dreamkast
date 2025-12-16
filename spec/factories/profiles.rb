@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :alice, class: Profile do
-    sub { 'alice' }
+    sub { 'google-oauth2|alice' }
     email { 'alice@example.com' }
     last_name { 'alice' }
     first_name { 'Alice' }

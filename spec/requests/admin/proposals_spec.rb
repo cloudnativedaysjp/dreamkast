@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe(Admin::ProposalsController, type: :request) do
-  let!(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'alice' } }, extra: { raw_info: { sub: 'alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  let!(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { ['CNDT2020-Admin'] }
   let!(:conference) { create(:cndt2020, :registered) }
   let!(:admin) { create(:alice, conference:) }

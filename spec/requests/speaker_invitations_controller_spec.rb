@@ -17,7 +17,7 @@ describe(SpeakerInvitationsController, type: :request) do
   end
 
   describe 'GET /new' do
-    subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+    subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
     let(:roles) { [] }
 
     it 'returns a successful response' do
@@ -34,7 +34,7 @@ describe(SpeakerInvitationsController, type: :request) do
   end
 
   describe 'POST /create' do
-    subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+    subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
     let(:roles) { [] }
     let(:valid_attributes) { { email: 'co-speaker@example.com', talk_id: talk.id } }
 

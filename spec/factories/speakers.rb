@@ -1,45 +1,24 @@
 FactoryBot.define do
   factory :speaker do
+    sub { SecureRandom.hex(8) }
     after(:build) do |speaker|
-      next if speaker.user_id.present?
-      next unless speaker.sub.present? || speaker.email.present?
-
-      if speaker.sub.present?
-        user = User.find_or_create_by!(sub: speaker.sub) do |u|
-          u.email = speaker.email || "#{speaker.sub}@example.com"
-        end
-        speaker.user_id = user.id
-      elsif speaker.email.present?
-        temp_sub = "temp_#{SecureRandom.hex(8)}"
-        user = User.find_or_create_by!(email: speaker.email) do |u|
-          u.sub = temp_sub
-        end
-        speaker.user_id = user.id
+      user = User.find_or_create_by!(sub: speaker.sub) do |u|
+        u.email = speaker.email
       end
+      speaker.user_id = user.id
     end
 
     before(:create) do |speaker|
-      next if speaker.user_id.present?
-      next unless speaker.sub.present? || speaker.email.present?
-
-      if speaker.sub.present?
-        user = User.find_or_create_by!(sub: speaker.sub) do |u|
-          u.email = speaker.email || "#{speaker.sub}@example.com"
-        end
-        speaker.user_id = user.id
-      elsif speaker.email.present?
-        temp_sub = "temp_#{SecureRandom.hex(8)}"
-        user = User.find_or_create_by!(email: speaker.email) do |u|
-          u.sub = temp_sub
-        end
-        speaker.user_id = user.id
+      user = User.find_or_create_by!(sub: speaker.sub) do |u|
+        u.email = speaker.email
       end
+      speaker.user_id = user.id
     end
   end
 
   factory :speaker_alice, class: Speaker do
     id { 1 }
-    sub { 'aaa' }
+    sub { 'google-oauth2|alice' }
     email { 'alice@example.com' }
     name { 'Alice' }
     profile { 'This is profile' }
@@ -76,19 +55,19 @@ FactoryBot.define do
       end
     end
 
-    after(:build) do |speaker|
-      user = User.find_or_create_by!(sub: speaker.sub) do |u|
-        u.email = speaker.email
-      end
-      speaker.user_id = user.id
-    end
+    # after(:build) do |speaker|
+    #   user = User.find_or_create_by!(sub: speaker.sub) do |u|
+    #     u.email = speaker.email
+    #   end
+    #   speaker.user_id = user.id
+    # end
 
-    before(:create) do |speaker|
-      user = User.find_or_create_by!(sub: speaker.sub) do |u|
-        u.email = speaker.email
-      end
-      speaker.user_id = user.id
-    end
+    # before(:create) do |speaker|
+    #   user = User.find_or_create_by!(sub: speaker.sub) do |u|
+    #     u.email = speaker.email
+    #   end
+    #   speaker.user_id = user.id
+    # end
   end
 
   factory :talks_speakers, class: TalksSpeaker
@@ -144,18 +123,18 @@ FactoryBot.define do
       end
     end
 
-    after(:build) do |speaker|
-      user = User.find_or_create_by!(sub: speaker.sub) do |u|
-        u.email = speaker.email
-      end
-      speaker.user_id = user.id
-    end
+    # after(:build) do |speaker|
+    #   user = User.find_or_create_by!(sub: speaker.sub) do |u|
+    #     u.email = speaker.email
+    #   end
+    #   speaker.user_id = user.id
+    # end
 
-    before(:create) do |speaker|
-      user = User.find_or_create_by!(sub: speaker.sub) do |u|
-        u.email = speaker.email
-      end
-      speaker.user_id = user.id
-    end
+    # before(:create) do |speaker|
+    #   user = User.find_or_create_by!(sub: speaker.sub) do |u|
+    #     u.email = speaker.email
+    #   end
+    #   speaker.user_id = user.id
+    # end
   end
 end

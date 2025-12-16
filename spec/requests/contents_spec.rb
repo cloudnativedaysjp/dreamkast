@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ContentsController, type: :request do
   describe 'GET #kontest' do
     describe 'logged in and registered' do
-      subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'alice' } }, extra: { raw_info: { sub: 'alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
+      subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
       let(:roles) { [] }
 
       before do
@@ -50,7 +50,7 @@ describe ContentsController, type: :request do
 
   describe 'GET #discussion' do
     describe 'logged in and registered' do
-      subject(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'alice' } }, extra: { raw_info: { sub: 'alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
+      subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
       let(:roles) { [] }
 
       before do

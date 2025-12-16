@@ -47,7 +47,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
     if @sponsor.sponsor_contacts.none? { |contact| contact.user&.email == current_user[:info][:email] }
       @sponsor_contact = SponsorContact.new(sponsor_contact_params.merge(conference_id: @conference.id))
       # ensure_user_idが動作するように、subとemailカラムに値を設定
-      @sponsor_contact.sub = current_user[:extra][:raw_info][:sub]
+      @sponsor_contact.sub = current_user_model&.sub
       @sponsor_contact.email = current_user[:info][:email]
       @sponsor_contact.sponsor_id = @sponsor.id
 

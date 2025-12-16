@@ -35,7 +35,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
 
     respond_to do |format|
@@ -60,7 +60,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, sponsor: @sponsor, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
     # @speaker_form.load
     exists_talks = @speaker.talk_ids

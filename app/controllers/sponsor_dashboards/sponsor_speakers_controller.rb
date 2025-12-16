@@ -36,7 +36,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @speaker = Speaker.new(speaker_params)
     @speaker.conference = conference
     @speaker.sponsor = @sponsor
-    @speaker.sub = current_user[:extra][:raw_info][:sub]
+    @speaker.sub = current_user_model&.sub
     @speaker.email = current_user[:info][:email]
 
     if @speaker.save

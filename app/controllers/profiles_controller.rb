@@ -31,7 +31,7 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-    @profile.sub = current_user[:extra][:raw_info][:sub]
+    @profile.sub = current_user_model&.sub
     @profile.email = current_user[:info][:email]
 
     if @profile.save

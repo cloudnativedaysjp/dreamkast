@@ -78,7 +78,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
         @speaker.save!
 
         # 承諾処理
-        @keynote_speaker_invitation.accept!(current_user[:extra][:raw_info][:sub])
+        @keynote_speaker_invitation.accept!(current_user_model&.sub)
 
         # 承諾確認メール送信
         KeynoteSpeakerInvitationMailer.accepted(@keynote_speaker_invitation).deliver_now

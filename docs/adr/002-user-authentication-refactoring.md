@@ -131,7 +131,7 @@ admin_profiles
     - `Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)`
     - `Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id)`
     - `SponsorContact.find_by(user_id: current_user_model.id, conference_id: conference.id)`
-- [ ] 以下のコントローラーで`current_user[:extra][:raw_info][:sub]`の使用箇所を`UserService`経由に変更：
+- [x] 以下のコントローラーで`current_user[:extra][:raw_info][:sub]`の使用箇所を`current_user_model`経由に変更：
   - `app/controllers/profiles_controller.rb`
   - `app/controllers/speaker_dashboard/speakers_controller.rb`
   - `app/controllers/sponsor_dashboards/sponsor_contacts_controller.rb`

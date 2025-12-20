@@ -44,7 +44,8 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
 
       it 'redirects to sponsor_dashboards_path if user is already a sponsor contact' do
         # Create a sponsor contact with the same email as the current user
-        create(:sponsor_contact, conference:, email: 'new_user@example.com', sponsor: sponsor_contact.sponsor)
+        new_user = User.find_or_create_by!(sub: 'new_user_sub') { |u| u.email = 'new_user@example.com' }
+        create(:sponsor_contact, conference:, sponsor: sponsor_contact.sponsor, user_id: new_user.id)
 
         get new_sponsor_dashboards_sponsor_contact_path(event: conference.abbr, sponsor_id: sponsor.id)
         expect(response).to(redirect_to(sponsor_dashboards_path))

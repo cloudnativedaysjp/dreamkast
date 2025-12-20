@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe TimetableController, type: :request do
   subject(:alice_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
-  subject(:bob_session) { { userinfo: { info: { email: 'bob@example.com' }, extra: { raw_info: { sub: 'bob', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  subject(:bob_session) { { userinfo: { info: { email: 'bob@example.com' }, extra: { raw_info: { sub: 'google-oauth2|bob', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
 
   describe 'GET #index' do

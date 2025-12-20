@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :alice, class: Profile do
-    sub { 'google-oauth2|alice' }
-    email { 'alice@example.com' }
     last_name { 'alice' }
     first_name { 'Alice' }
     industry_id { '1' }
@@ -33,24 +31,22 @@ FactoryBot.define do
     end
 
     after(:build) do |profile|
-      user = User.find_or_create_by!(sub: profile.sub) do |u|
-        u.email = profile.email
-      end
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
       profile.user_id = user.id
     end
 
     before(:create) do |profile|
-      user = User.find_or_create_by!(sub: profile.sub) do |u|
-        u.email = profile.email
-      end
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
       profile.user_id = user.id
     end
   end
 
   factory :bob, class: Profile do
     id { 3 }
-    sub { 'bob' }
-    email { 'bob@example.com' }
     last_name { 'bob' }
     first_name { 'Bob' }
     industry_id { '1' }
@@ -82,16 +78,16 @@ FactoryBot.define do
     end
 
     after(:build) do |profile|
-      user = User.find_or_create_by!(sub: profile.sub) do |u|
-        u.email = profile.email
-      end
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_bob)
       profile.user_id = user.id
     end
 
     before(:create) do |profile|
-      user = User.find_or_create_by!(sub: profile.sub) do |u|
-        u.email = profile.email
-      end
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_bob)
       profile.user_id = user.id
     end
   end

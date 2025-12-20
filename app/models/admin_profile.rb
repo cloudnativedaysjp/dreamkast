@@ -3,20 +3,33 @@ class AdminProfile < ApplicationRecord
   include AvatarUploader::Attachment(:avatar)
 
   belongs_to :conference
-  belongs_to :user
+  belongs_to :user, required: true
 
-  before_validation :ensure_user_id, on: :create
+  before_validation :ensure_user, on: :create
 
   validates :user_id, uniqueness: { scope: :conference_id }
 
-  # 利便性のため、subとemailへのアクセスをuser経由で提供
-  # userが存在する場合はuserの値を優先し、存在しない場合は既存のカラムの値を返す
-  def sub
-    user&.sub || read_attribute(:sub)
+  # userのsubとemailを委譲（userは必須なのでallow_nilは不要）
+  delegate :sub, :email, to: :user
+
+  # 一時的な属性（before_validationでuserを作成するために使用）
+  attr_accessor :pending_sub, :pending_email
+
+  # 既存コードとの互換性のため、セッターを提供
+  def sub=(value)
+    if user_id.present?
+      user.update!(sub: value)
+    else
+      self.pending_sub = value
+    end
   end
 
-  def email
-    user&.email || read_attribute(:email)
+  def email=(value)
+    if user_id.present?
+      user.update!(email: value)
+    else
+      self.pending_email = value
+    end
   end
 
   def has_avatar?
@@ -41,28 +54,22 @@ class AdminProfile < ApplicationRecord
 
   private
 
-  def ensure_user_id
+  def ensure_user
     return if user_id.present?
 
-    # 既存のカラムの値を直接読み取る
-    sub_value = read_attribute(:sub)
-    email_value = read_attribute(:email)
+    sub_value = pending_sub
+    email_value = pending_email
 
-    if sub_value.present?
-      user = User.find_or_create_by!(sub: sub_value) do |u|
-        u.email = email_value || "#{sub_value}@example.com"
+    if sub_value.present? && email_value.present?
+      self.user = User.find_or_create_by!(sub: sub_value) do |u|
+        u.email = email_value
       end
-    elsif email_value.present?
-      temp_sub = "temp_#{SecureRandom.hex(8)}"
-      user = User.find_or_create_by!(email: email_value) do |u|
-        u.sub = temp_sub
+      # emailが指定されていて、Userのemailが異なる場合は更新
+      if user.email != email_value
+        user.update!(email: email_value)
       end
     else
-      # subもemailもnilの場合は、一時的なUserを作成
-      temp_sub = "temp_#{SecureRandom.hex(8)}"
-      temp_email = "temp_#{SecureRandom.hex(8)}@temp.local"
-      user = User.create!(sub: temp_sub, email: temp_email)
+      errors.add(:base, 'subとemailの両方が必要です')
     end
-    self.user_id = user.id
   end
 end

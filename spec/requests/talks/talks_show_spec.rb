@@ -188,7 +188,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, conference: cndt2020, sub: 'google-oauth2|alice')
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -278,7 +278,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, conference: cndt2020, sub: 'google-oauth2|alice')
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -368,7 +368,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, conference: cndt2020, sub: 'google-oauth2|alice')
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -459,7 +459,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, conference: cndt2020, sub: 'google-oauth2|alice')
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 
@@ -549,7 +549,7 @@ describe TalksController, type: :request do
 
         context 'user already registered' do
           before do
-            create(:alice, conference: cndt2020, sub: 'google-oauth2|alice')
+            create(:alice, conference: cndt2020)
             allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
           end
 

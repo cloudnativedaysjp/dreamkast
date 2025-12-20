@@ -835,35 +835,15 @@ TalkTime.seed(
 # import_dummy_data('cnds2025', %w(talks speakers talks_speakers proposals proposal_items))
 # import_dummy_data('cndw2025', %w(talks speakers talks_speakers proposals proposal_items))
 
-# Mock profile
-Profile.seed(
-  {
-    id: 1,
-    first_name: "夢見",
-    last_name: "太郎",
-    industry_id: 1,
-    sub: "a",
-    occupation: "a",
-    department: "a",
-    email: "xxx@example.com",
-    company_name: "aaa",
-    company_address: "xxx",
-    company_email: "yyy@example.com",
-    company_tel: "123-456-7890",
-    position: "president",
-    calendar_unique_code: SecureRandom.uuid
-  }
-)
-
-RegisteredTalk.seed(
-  { id: 1, talk_id: 1, profile_id: 1},
-  { id: 2, talk_id: 7, profile_id: 1},
-  { id: 3, talk_id: 14, profile_id: 1},
-  { id: 4, talk_id: 21, profile_id: 1},
-  { id: 5, talk_id: 28, profile_id: 1},
-  { id: 6, talk_id: 35, profile_id: 1},
-  { id: 7, talk_id: 42, profile_id: 1}
-)
+# RegisteredTalk.seed(
+#   { id: 1, talk_id: 1, profile_id: 1},
+#   { id: 2, talk_id: 7, profile_id: 1},
+#   { id: 3, talk_id: 14, profile_id: 1},
+#   { id: 4, talk_id: 21, profile_id: 1},
+#   { id: 5, talk_id: 28, profile_id: 1},
+#   { id: 6, talk_id: 35, profile_id: 1},
+#   { id: 7, talk_id: 42, profile_id: 1}
+# )
 
 Video.seed(
   { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true},

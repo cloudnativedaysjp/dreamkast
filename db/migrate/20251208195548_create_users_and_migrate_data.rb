@@ -20,10 +20,8 @@ class CreateUsersAndMigrateData < ActiveRecord::Migration[8.0]
       # 3. データ移行を実行
       migrate_data
 
-      # 4. user_idにnot null制約を追加
+      # 4. user_idにnot null制約を追加。speakerとsponsor_contactは招待機能をサポートするためnull許可にしておく
       change_column_null :profiles, :user_id, false
-      change_column_null :speakers, :user_id, false
-      change_column_null :sponsor_contacts, :user_id, false
       change_column_null :admin_profiles, :user_id, false
 
       # 5. 外部キー制約を追加
@@ -34,6 +32,16 @@ class CreateUsersAndMigrateData < ActiveRecord::Migration[8.0]
 
       # 6. インデックスを追加
       add_index :profiles, [:user_id, :conference_id], unique: true
+
+      # 7. 不要なカラムを削除
+      remove_column :profiles, :sub
+      remove_column :profiles, :email
+      remove_column :speakers, :sub
+      remove_column :speakers, :email
+      remove_column :admin_profiles, :sub
+      remove_column :admin_profiles, :email
+      remove_column :sponsor_contacts, :sub
+      remove_column :sponsor_contacts, :email
     end
   end
 

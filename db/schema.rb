@@ -10,11 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_20_072211) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.string "sub"
-    t.string "email"
     t.string "name"
     t.string "twitter_id"
     t.string "github_id"
@@ -276,8 +274,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "sub", collation: "utf8mb4_0900_ai_ci"
-    t.string "email", collation: "utf8mb4_0900_ai_ci"
     t.string "last_name", collation: "utf8mb4_0900_ai_ci"
     t.string "first_name", collation: "utf8mb4_0900_ai_ci"
     t.integer "industry_id"
@@ -426,13 +422,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.datetime "updated_at", precision: nil, null: false
     t.text "avatar_data", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.integer "conference_id"
-    t.text "email", size: :medium, collation: "utf8mb4_0900_ai_ci"
-    t.text "sub", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.text "additional_documents"
     t.string "name_mother_tongue"
     t.bigint "sponsor_id"
-    t.bigint "user_id", null: false
-    t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
+    t.bigint "user_id"
+    t.index ["conference_id"], name: "index_speakers_on_conference_id_and_email"
     t.index ["user_id"], name: "fk_rails_13b87ec825"
   end
 
@@ -475,13 +469,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
 
   create_table "sponsor_contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.string "sub"
-    t.string "email"
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["conference_id"], name: "index_sponsor_contacts_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_contacts_on_sponsor_id"
     t.index ["user_id"], name: "fk_rails_514d95a3b1"

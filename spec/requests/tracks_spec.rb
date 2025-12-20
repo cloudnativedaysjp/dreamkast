@@ -28,7 +28,10 @@ RSpec.describe(TracksController, type: :request) do
         end
 
         context 'user is speaker' do
-          let!(:alice) { create(:speaker_alice) }
+          let!(:alice) do
+            user = User.find_by(sub: 'google-oauth2|alice') || create(:user_alice)
+            create(:speaker_alice, user:)
+          end
           it 'show speaker' do
             subject
             expect(response).to(be_successful)

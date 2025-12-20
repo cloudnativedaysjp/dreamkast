@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe(SpeakerInvitationsController, type: :request) do
   let!(:conference) { create(:cndt2020, :registered) }
-  let!(:speaker) { create(:speaker_alice, :with_talk1_registered, conference:) }
+  let!(:user) { create(:user_alice) }
+  let!(:speaker) { create(:speaker_alice, :with_talk1_registered, conference:, user:) }
   let!(:talk) { speaker.talks.first }
 
   before do

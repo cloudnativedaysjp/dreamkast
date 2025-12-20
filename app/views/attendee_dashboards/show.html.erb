@@ -1,3 +1,7 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+
 <div id="countdown" class='d-flex align-items-center justify-content-center hidden'>
     <div id="countdown-number"></div>
     <svg>
@@ -5,11 +9,12 @@
     </svg>
 </div>
 
+<div class="japanese-modern-theme">
 <div class="container tracks">
   <% if @speaker.present? %>
-  <div class="row h-100 align-items-center justify-content-center text-center mt-3">
+  <div class="row h-100 align-items-center justify-content-center text-center mb-5">
     <div class="col-12 align-self-center">
-      <%= button_to '登壇者の方へ : 登壇者プロフィール、セッション情報の確認・更新はこちら', speaker_dashboard_path, {method: :get, class: "btn btn-primary btn-xl inline" } %>
+      <%= button_to '登壇者の方へ : 登壇者プロフィール、セッション情報の確認・更新はこちら', speaker_dashboard_path, {method: :get, class: "btn btn-primary btn-lg w-100" } %>
     </div>
   </div>
   <% end %>
@@ -17,17 +22,17 @@
   <div class="row">
     <section id="main-pane card-group" class="col-12 col-md-8">
       <% if @conference.opened? %>
-        <div class="mt-3">
+        <div class="mb-5">
           <div class="card">
-            <div class="card-header">
-              <b><%= @conference.abbr.upcase %> 開催中！</b>
+            <div class="card-header pt-4 px-4 pb-0">
+              <h5 class="mb-0 text-center"><%= @conference.abbr.upcase %> 開催中！</h5>
             </div>
 
-            <div class="card-body">
+            <div class="card-body px-4 pb-4">
               <div class="card-text">
-                <div class="py-3 text-center">
+                <div class="text-center">
                   <div>
-                    <%= button_to '配信はこちらから！', "/#{@conference.abbr}/ui/", {method: :get, class: "btn btn-primary btn-xl" } %>
+                    <%= button_to '配信はこちらから！', "/#{@conference.abbr}/ui/", {method: :get, class: "btn btn-primary btn-lg btn-block" } %>
                   </div>
                 </div>
               </div>
@@ -37,29 +42,34 @@
       <% end %>
 
       <% if @profile.instance_of?(Profile) %>
-        <div class="mt-3">
-          <div class="card">
-            <div class="card-header">
-              <b>参加方法</b>
-            </div>
-            <div class="card-body">
-              <div class="card-text">
-                あなたは <%= @profile.participation_before_type_cast %> です</div>
-              <div class="card-text">参加方法の変更は <%= link_to 'こちら', edit_profile_path(id: @profile.id) %> から</div>
-              </br>
+        <div class="mb-5">
+          <h3 class="section-header">参加方法</h3>
+          
+          <div class="px-2">
+              <!--
+              <div class="mb-4">
+                 <span class="d-inline-block border-bottom border-dark pb-1 text-muted small">現在のステータス</span>
+                 <div class="h4 mt-2"><%= @profile.participation_before_type_cast %></div>
+              </div>
+              <div class="text-muted small mb-5">
+                参加方法の変更は <%= link_to 'こちら', edit_profile_path(id: @profile.id), class: "text-decoration-underline text-dark" %> から
+              </div>
+              -->
+
               <% if @profile.attend_offline? %>
-                <div class="card-text">当日の参加受付には参加証の印刷が必要となっております</div>
-                <div class="card-text">参加証は <%= link_to 'こちら', profiles_entry_sheet_path %> から印刷してお持ちください</div>
-                <div class="card-text">スマートフォンで受け付け用の二次元バーコードを表示する場合は <%= link_to 'こちら', profiles_view_qr_path %></div>
+                <div class="alert alert-warning mb-5">
+                  <h6 class="alert-heading font-weight-bold mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>オフライン参加の方へ</h6>
+                  <ul class="mb-0 pl-3">
+                    <li class="mb-2">当日の参加受付には参加証の印刷が必要です。参加証は <%= link_to 'こちら', profiles_entry_sheet_path, class: 'alert-link' %> から印刷してお持ちください。</li>
+                    <li>スマートフォンで受け付け用の二次元バーコードを表示する場合は <%= link_to 'こちら', profiles_view_qr_path, class: 'alert-link' %>。</li>
+                  </ul>
+                </div>
               <% end %>
-              </br>
-              <div class="card-text">
-                <div class="card" data-controller="share-registration">
-                  <div class="card-body">
-                    <div class="card-text">
-                      X(Twitter)でシェアしよう！
-                    </div>
-                    <div class="card-text">
+
+              <div class="mb-5">
+                <div class="p-4" style="background-color: #f8f9fa; border: 1px solid rgba(0,0,0,0.05);" data-controller="share-registration">
+                    <label for="tweet_content" class="form-label font-weight-bold mb-3">X(Twitter)でシェアしよう！</label>
+                    <div class="mb-3">
                       <%
                         post = ""
                         if @conference.abbr == 'cnk'
@@ -68,32 +78,31 @@
                           post = "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}"
                         end
                       %>
-                      <input type="text" data-share-registration-target="tweet_content"  id="tweet_content" class="form-control" value="<%= post %>" />
+                      <textarea data-share-registration-target="tweet_content" id="tweet_content" class="form-control rounded-0" rows="3"><%= post %></textarea>
                     </div>
-                  </div>
-                  <div class="card-text text-center mb-3">
-                    <button type="button" data-action="click->share-registration#windowOpen" id="twitter_share" class="btn btn-dark">X(Twitter)でシェア</button>
-                  </div>
+                    <div class="text-right">
+                      <button type="button" data-action="click->share-registration#windowOpen" id="twitter_share" class="btn btn-dark btn-sm rounded-0 px-4">
+                        <i class="bi bi-twitter me-1"></i> X(Twitter)でシェア
+                      </button>
+                    </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       <% end %>
-
       <% unless @conference.abbr == 'cnk' %>
-      <div class="mt-3">
-        <div class="card">
-        <div class="card-header">
-            <b>配信スケジュール</b>
-          </div>
-          <div class="card-body">
+      <div class="mb-5">
+        <h3 class="section-header">配信スケジュール</h3>
+        <div class="px-2">
             <% @conference.conference_days.externals.each do |day| %>
-            <div class="card-text"><%= day.date %>:
-              <%= day.start_time.strftime("%H:%M") + "-" + day.end_time.strftime("%H:%M") %></div>
-            <div class="card-text">配信は本ページで行います。開始時刻になると自動的に切り替わりますのでそのままお待ちください。</div>
+            <div class="mb-2">
+                <span class="font-weight-bold mr-2"><%= day.date %></span>
+                <span><%= day.start_time.strftime("%H:%M") %> - <%= day.end_time.strftime("%H:%M") %></span>
+            </div>
             <% end %>
-          </div>
+            <div class="text-muted small mt-2">
+                <i class="bi bi-info-circle me-1"></i> 配信は本ページで行います。開始時刻になると自動的に切り替わります。
+            </div>
         </div>
       </div>
       <% end %>
@@ -104,97 +113,92 @@
       </div>
       <% end %>
 
-      <div class="mt-3">
-        <div class="card notification">
-          <div class="card-header">
-            <b>運営からのお知らせ</b>
-          </div>
-          <div class="card-body">
+      <div class="mb-5">
+          <h3 class="section-header">運営からのお知らせ</h3>
+          <div class="px-2">
             <% @announcements.order(publish_time: 'DESC').each do |announcement| %>
-            <h5 class="card-title"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></h5>
-            <div class="card-text"><%= simple_format announcement.body %></div>
+            <div class="mb-4 pb-3 border-bottom last-no-border">
+              <h6 class="text-muted small mb-2 font-family-sans-serif"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></h6>
+              <div><%= simple_format announcement.body %></div>
+            </div>
             <% end %>
           </div>
-        </div>
       </div>
 
       <% if @conference.show_timetable_enabled? %>
-      <div id="registered-talk" class="talk accordion mt-3">
-        <h4 class="">
-          聴講予定セッション
-        </h4>
+      <div id="registered-talk" class="talk accordion mb-5">
+        <h3 class="section-header">聴講予定セッション</h3>
         <div id="registered-talk-list">
           <% @profile.talks.each do |talk| %>
-            <div>
-              <div class="category_difficulty">
-                <%= talk.conference_day.date.strftime("%m/%d") %> Track <%= talk.track.name %>
-                <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-                <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-                  <span class="difficulty difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
-                <% end %>
-                <% if talk.talk_category_id.present? %>
-                  <span class="difficulty category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
-                <% end %>
+            <div class="card mb-3">
+              <div class="card-body p-3">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                   <div class="text-muted small">
+                      <%= talk.conference_day.date.strftime("%m/%d") %> <span class="mx-1">|</span> Track <%= talk.track.name %> <span class="mx-1">|</span> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                   </div>
+                   <div class="d-flex">
+                    <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+                      <span class="badge badge-light border mr-1 text-dark difficulty_<%= talk_difficulty(talk).id %>"><%= talk_difficulty(talk).name %></span>
+                    <% end %>
+                    <% if talk.talk_category_id.present? %>
+                      <span class="badge badge-light border text-dark category_<%= talk_category(talk).id %>"><%= talk_category(talk).name %></span>
+                    <% end %>
+                   </div>
+                </div>
+                <h5 class="mb-0" style="line-height: 1.6;"><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark stretched-link text-decoration-none" %></h5>
               </div>
-              <h5><%= link_to talk.title, talk_path(id: talk.id), class: "text-dark" %></h5>
             </div>
           <% end %>
-          <div class="py-3 text-center">
-            <div>
-              <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-xl" } %>
+          <div class="py-4 text-center">
+            <div class="mb-3">
+              <%= button_to '聴講予定セッションを変更する', timetables_path, {method: :get, class: "btn btn-primary btn-lg px-5 shadow-none" } %>
             </div>
             <div>
-              <%= link_to "カレンダーに登録", profiles_calendar_path(format: :ics, code: @profile.calendar_unique_code), class: "" %>
+              <%= link_to profiles_calendar_path(format: :ics, code: @profile.calendar_unique_code), class: "btn btn-outline-dark btn-sm rounded-0" do %>
+                 <i class="bi bi-calendar-check me-1"></i> カレンダーに登録
+              <% end %>
             </div>
           </div>
         </div>
       </div>
       <% end %>
 
-      <div class="talk accordion my-3">
-        <h4 class="">
-          現地会場 アクセス
-        </h4>
-        <div>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5410.401695467206!2d136.90701557723335!3d35.16835227275744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60037166d7205711%3A0x22bd3ac7bbcc0305!2z5Lit5pel44Ob44O844OrIO-8hiDjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e1!3m2!1sja!2sjp!4v1766231356712!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <div>
-          〒460-0008 <br/>
-          中日ビル<br/>
-          愛知県名古屋市中区栄４丁目１−１ 6F
+      <div class="talk accordion mb-5">
+        <h3 class="section-header">現地会場 アクセス</h3>
+        <div class="card overflow-hidden">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5410.401695467206!2d136.90701557723335!3d35.16835227275744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60037166d7205711%3A0x22bd3ac7bbcc0305!2z5Lit5pel44Ob44O844OrIO-8hiDjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e1!3m2!1sja!2sjp!4v1766231356712!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="card-body">
+             <p class="card-text mb-0 font-family-sans-serif">
+               <strong>〒460-0008</strong><br/>
+               愛知県名古屋市中区栄４丁目１−１ 6F 中日ビル
+             </p>
+          </div>
         </div>
       </div>
     </section>
     <section id="sub-pane" class="col-12 col-md-4 ">
-      <div class="mt-3">
-        <div class="card">
-          <div class="card-header">
-            <b>リンク</b>
-          </div>
-          <div class="card-body">
-            <div class="card-text">
-              <ul>
+      <div class="mb-5">
+        <h3 class="section-header">リンク</h3>
+        <div class="px-2">
+              <ul class="list-unstyled mb-0">
                 <!-- TODO: CNDW2024参加証できたら有効化
-                <li><%= link_to '参加用二次元バーコードを表示する', profiles_view_qr_path %></li>
+                <li class="mb-2"><%= link_to profiles_view_qr_path, class: "text-decoration-none text-dark" do %><i class="bi bi-qr-code me-2"></i>参加用二次元バーコードを表示する<% end %></li>
                 -->
-                <li><%= link_to '参加方法変更', edit_profile_path(id: @profile.id, anchor: "participation") %></li>
+                <li class="mb-3"><%= link_to edit_profile_path(id: @profile.id, anchor: "participation"), class: "text-decoration-none text-dark" do %><i class="bi bi-pencil-square me-2"></i>参加方法変更<% end %></li>
                 <% if @profile.public_profile.present? %>
-                  <li><%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id) %></li>
+                  <li class="mb-3"><%= link_to edit_public_profile_path(id: @profile.public_profile&.id), class: "text-decoration-none text-dark" do %><i class="bi bi-person-lines-fill me-2"></i>公開プロフィールを変更する<% end %></li>
                 <% else %>
-                  <li><%= link_to '公開プロフィールを登録する', new_public_profile_path %></li>
+                  <li class="mb-3"><%= link_to new_public_profile_path, class: "text-decoration-none text-dark" do %><i class="bi bi-person-plus-fill me-2"></i>公開プロフィールを登録する<% end %></li>
                 <% end %>
                 <% if @conference.opened? %>
-                  <li><%= link_to "スタンプラリー", stamp_rally_check_ins_path %></li>
+                  <li class="mb-3"><%= link_to stamp_rally_check_ins_path, class: "text-decoration-none text-dark" do %><i class="bi bi-check-circle-fill me-2"></i>スタンプラリー<% end %></li>
                 <% end %>
                 <% if @conference.abbr == 'cnk' %>
-                  <li><%= link_to "Blog記事一覧", "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer" %></li>
+                  <li class="mb-3"><%= link_to "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer", class: "text-decoration-none text-dark" do %><i class="bi bi-journal-text me-2"></i>Blog記事一覧<% end %></li>
                 <% else %>
-                  <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %></li>
+                  <li class="mb-3"><%= link_to "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer", class: "text-decoration-none text-dark" do %><i class="bi bi-journal-text me-2"></i>Blog記事一覧<% end %></li>
                 <% end %>
-                
               </ul>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -206,7 +210,6 @@
   <% end %>
 
 </div>
-<script>
-</script>
+</div>
 
 <%= javascript_include_tag 'tracks/waiting_channel.js' %>

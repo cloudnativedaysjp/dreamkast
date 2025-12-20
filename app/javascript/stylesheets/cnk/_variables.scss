@@ -8,14 +8,18 @@ $gray: #808080;
 
 // CNDW2025 Theme color
 $tokyo-navy: #216a9c;
-$new-magenta: #be4493;
-$cnd-cream: #fdffe6;
-$cnd-orange: #e99411;
+
+// Japanese Modern Theme Colors
+$washi: #F5F5F0;
+$sumi: #1A1A1A;
+$beni: #B93A32;
+$washi-shadow: rgba($sumi, 0.08);
+
 
 $text: #001a3a;
 //- Override primary color
 $primary: $tokyo-navy;
-$secondary: $new-magenta;
+$secondary: $beni;
 //- Override font system
 $font-family-sans-serif: "din-2014",
 -apple-system,
@@ -31,7 +35,9 @@ sans-serif,
 "Segoe UI Symbol",
 "Noto Color Emoji";
 $font-family-serif: "Noto Serif JP", serif;
+$font-family-header: "Zen Old Mincho", serif;
 $font-family-base: $font-family-serif;
 $headings-font-family: $font-family-serif;
 //- Add custom variables
 $navbar-height: 4.5rem;
+

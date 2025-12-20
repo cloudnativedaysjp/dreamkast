@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   include Secured
+  layout :event_layout
 
   before_action :set_conference
   before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin, :entry_sheet, :view_qr]

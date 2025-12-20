@@ -85,21 +85,20 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :ses_v2
   config.action_mailer.ses_v2_settings = { region: 'ap-northeast-1' }
 
-  if ENV['REVIEW_APP'] == 'true'
-    match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/) || ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-fifo-worker/)
-    if match
-      pr_number = match[1]
-      config.action_mailer.default_url_options = { host: "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp", protocol: 'https' }
-    else
-      raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
-    end
-  elsif ENV['DREAMKAST_NAMESPACE'] == 'dreamkast-staging'
-    config.action_mailer.default_url_options = { host: 'staging.dev.cloudnativedays.jp', protocol: 'https' }
-  elsif ENV['DREAMKAST_NAMESPACE'] == 'dreamkast'
-    config.action_mailer.default_url_options = { host: 'event.cloudnativedays.jp', protocol: 'https' }
+if ENV['REVIEW_APP'] == 'true'
+  match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/) || ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-fifo-worker/)
+  if match
+    pr_number = match[1]
+    Rails.application.routes.default_url_options[:host] = "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp"
   else
-    raise "Invalid DREAMKAST_NAMESPACE: #{ENV['DREAMKAST_NAMESPACE']}. Please confirm environment variable."
+    raise "DREAMKAST_NAMESPACE is not set correctly (#{ENV['DREAMKAST_NAMESPACE']}). Please set it to dreamkast-dev-dk-<PR_NUMBER>-dk"
   end
+elsif ENV['S3_BUCKET'] == 'dreamkast-stg-bucket'
+  Rails.application.routes.default_url_options[:host] = 'staging.dev.cloudnativedays.jp'
+elsif ENV['S3_BUCKET'] == 'dreamkast-prod-bucket'
+  Rails.application.routes.default_url_options[:host] = 'event.cloudnativedays.jp'
+end
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

@@ -208,4 +208,12 @@ class ApplicationController < ActionController::Base
   def admin?
     false
   end
+
+  def event_layout
+    if FileTest.exist?("#{Rails.root}/app/views/layouts/#{event_name}.html.erb")
+      event_name
+    else
+      "application"
+    end
+  end
 end

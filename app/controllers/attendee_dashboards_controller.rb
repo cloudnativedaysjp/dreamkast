@@ -1,6 +1,7 @@
 class AttendeeDashboardsController < ApplicationController
   include Secured
   include SponsorHelper
+  layout :event_layout
   before_action :set_profile, :set_speaker
 
   def show

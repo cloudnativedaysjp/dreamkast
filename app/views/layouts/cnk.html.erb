@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= full_title(yield(:title)) %></title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <% unless production? %><meta name="robots" content="noindex"><% end %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= favicon_link_tag('favicon.ico') %>
+    <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
+    <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'video_player', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'video_player', 'data-turbolinks-track': 'reload' %>
+    <meta name="turbo-cache-control" content="no-cache">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" rel="stylesheet" />
+
+    <meta property="og:site_name" content="<%= site_name %>" />
+
+    <% if yield(:ogp).size == 0 %>
+      <meta property="og:url" content="<%= request.original_url %>" />
+      <meta property="og:type" content="article" />
+      <meta property="og:title" content="<%= full_title(yield(:title)) %>" />
+      <meta property="og:image" content="<%= event_image_url %>" />
+      <meta property="og:description" content="CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。" />
+    <% else %>
+      <%= yield(:ogp) %>
+    <% end %>
+    <meta property="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@cloudnativedays" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+
+    <%= render partial: "layouts/analytics" %>
+</head>
+
+<body id="page-top">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MWQZPVN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0&appId=300575407747858&autoLogAppEvents=1" nonce="G1Hsaf0L"></script>
+<div id="wrapper">
+  <% unless home_controller? || qr_code_for_stamp_rallies_controller? %>
+    <%= render partial: "layouts/cnk_header" %>
+  <% end %>
+  <%= yield %>
+
+  <% if event_name %>
+    <footer class="bg-light py-4">
+    <div class="container">
+      <% upcoming = Conference.upcoming.merge(Conference.where.not(abbr: event_name)) %>
+      <% if upcoming.size > 0 %>
+        <div class="row justify-content-center">
+          <h3 class="col-12 text-center my-4">Upcoming Events</h3>
+          <% Conference.upcoming.merge(Conference.where.not(abbr: event_name)).each do |conference| %>
+            <div class="col-12 col-md-6 footer-logo">
+              <%= link_to("/#{conference.abbr}") do %>
+                <%= image_tag "#{conference.abbr}/header_logo.png", class: "d-block mx-auto" %>
+              <% end %>
+              <p class="text-center mt-1"><%= conference.brief if conference.brief.present? %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <ul class="justify-content-md-center">
+            <li class="text-center"><%= link_to "プライバシーポリシー", "/#{event_name}/privacy", class: "text-muted" %></li>
+            <li class="text-center"><%= link_to "行動規範", "/#{event_name}/coc", class: "text-muted" %></li>
+          </ul>
+        </div>
+
+      </div>
+      <% if @conference %>
+        <div class="row">
+          <div class="col-12">
+            <div class="small text-center text-muted"><%= @conference.copyright %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </footer>
+  <% end %>
+
+</div>
+</body>
+
+</html>

@@ -2,6 +2,7 @@ class EventController < ApplicationController
   include Secured
   include SponsorHelper
   include ActionView::Helpers::UrlHelper
+  layout :event_layout
 
   before_action :set_profile, :set_speaker
 
@@ -11,7 +12,9 @@ class EventController < ApplicationController
                   .order('sponsor_types.order ASC')
                   .find_by(abbr: event_name)
     @talks = @conference.talks.accepted.includes(:talks_speakers, :speakers)
-    if !@conference.speaker_entry_enabled? and logged_in?
+    if @conference.abbr == 'cnk'
+      redirect_to("https://kaigi.cloudnativedays.jp", allow_other_host: true) && return
+    elsif !@conference.speaker_entry_enabled? and logged_in?
       redirect_to("/#{@conference.abbr}/dashboard") && return if @conference.registered?
       redirect_to("/#{@conference.abbr}/ui") && return if @conference.opened?
     end

@@ -6,7 +6,6 @@
 </div>
 
 <div class="container tracks">
-
   <% if @speaker.present? %>
   <div class="row h-100 align-items-center justify-content-center text-center mt-3">
     <div class="col-12 align-self-center">
@@ -37,35 +36,6 @@
         </div>
       <% end %>
 
-      <div class="mt-3" id="project-list">
-        <div class="card">
-          <div class="card-header">
-            <b>企画一覧</b>
-          </div>
-          <div class="card-body" id="exhibition">
-            <%= link_to 'https://eventregist.com/e/cndw2025_party', target: '_blank' do %>
-              <div class='project'>
-                <%= image_tag 'cndw2025/networking.png' %>
-              </div>
-            <% end %>
-            <%= link_to hands_on_path do %>
-              <div class='project'>
-                <%= image_tag 'cndw2025/handson.png' %>
-              </div>
-            <% end %>
-            <%= link_to "https://pfem.notion.site/LT-CNDW2025-LT-28021b0141e080c290a6c83edc564e9d", target: '_blank' do %>
-              <div class='project'>
-                <%= image_tag 'cndw2025/lt.png' %>
-              </div>
-            <% end %>
-            <%= link_to "https://www.notion.so/pfem/CNDW2025-27d21b0141e08044b5a8f2dc0213a6db", target: '_blank' do %>
-              <div class='project'>
-                <%= image_tag 'cndw2025/benefits.png' %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
       <% if @profile.instance_of?(Profile) %>
         <div class="mt-3">
           <div class="card">
@@ -90,7 +60,15 @@
                       X(Twitter)でシェアしよう！
                     </div>
                     <div class="card-text">
-                      <input type="text" data-share-registration-target="tweet_content"  id="tweet_content" class="form-control" value="<%= "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}" %>" />
+                      <%
+                        post = ""
+                        if @conference.abbr == 'cnk'
+                          post = "#cloudnativekaigi に参加申し込みしました！ https://kaigi.cloudnativedays.jp"
+                        else
+                          post = "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}"
+                        end
+                      %>
+                      <input type="text" data-share-registration-target="tweet_content"  id="tweet_content" class="form-control" value="<%= post %>" />
                     </div>
                   </div>
                   <div class="card-text text-center mb-3">
@@ -103,6 +81,7 @@
         </div>
       <% end %>
 
+      <% unless @conference.abbr == 'cnk' %>
       <div class="mt-3">
         <div class="card">
         <div class="card-header">
@@ -117,6 +96,7 @@
           </div>
         </div>
       </div>
+      <% end %>
 
       <% unless @speaker.nil? %>
       <div class="mt-3">
@@ -138,6 +118,7 @@
         </div>
       </div>
 
+      <% if @conference.show_timetable_enabled? %>
       <div id="registered-talk" class="talk accordion mt-3">
         <h4 class="">
           聴講予定セッション
@@ -168,17 +149,19 @@
           </div>
         </div>
       </div>
+      <% end %>
+
       <div class="talk accordion my-3">
         <h4 class="">
           現地会場 アクセス
         </h4>
         <div>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.82229702806!2d139.7937274!3d35.6321071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601889e2a2e5f20d%3A0xeea9641b7480ced0!2z5pyJ5piO44K744Oz44OI44Op44Or44K_44Ov44O8IOODm-ODvOODqybjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e0!3m2!1sja!2sjp!4v1759932510188!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5410.401695467206!2d136.90701557723335!3d35.16835227275744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60037166d7205711%3A0x22bd3ac7bbcc0305!2z5Lit5pel44Ob44O844OrIO-8hiDjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e1!3m2!1sja!2sjp!4v1766231356712!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div>
-          〒135-0063<br/>
-          有明セントラルタワー ホール＆カンファレンス 3F・4F<br/>
-          東京都江東区有明３丁目７−１８
+          〒460-0008 <br/>
+          中日ビル<br/>
+          愛知県名古屋市中区栄４丁目１−１ 6F
         </div>
       </div>
     </section>
@@ -203,16 +186,16 @@
                 <% if @conference.opened? %>
                   <li><%= link_to "スタンプラリー", stamp_rally_check_ins_path %></li>
                 <% end %>
-                <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %>
+                <% if @conference.abbr == 'cnk' %>
+                  <li><%= link_to "Blog記事一覧", "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer" %></li>
+                <% else %>
+                  <li><%= link_to "Blog記事一覧", "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" %></li>
+                <% end %>
+                
               </ul>
             </div>
           </div>
         </div>
-      </div>
-      <div class="social mt-3">
-        <a class="twitter-timeline" data-height="600"
-          href="https://twitter.com/cloudnativedays?ref_src=twsrc%5Etfw">Posts by cloudnativedays</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
     </section>
   </div>

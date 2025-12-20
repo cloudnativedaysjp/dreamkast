@@ -130,9 +130,8 @@
   <div class="row my-4">
     <div class="col-12 col-md-6" id="participation" >
       <%= form.label :participation, "参加方法", class: "form-label form-required" %></br>
-      <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online", required: true } %>
-      <%= form.label :online, "リモート参加", { for: "participation_online" } %>
-      </br>
+      <%# <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online", required: true } %>
+      <%# <%= form.label :online, "リモート参加", { for: "participation_online" } %>
       <%= form.radio_button :participation, :offline, { class: "radio_button_participation", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true } %>
       <% if @conference.reach_capacity? %>
         <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "reached_capacity"} %>

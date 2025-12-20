@@ -87,6 +87,12 @@ module.exports = {
             options: {
               api: "modern-compiler",
               sassOptions: {
+                silenceDeprecations: [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin",
+                  "import",
+                ],
                 style:
                   process.env.NODE_ENV === "production"
                     ? "compressed"

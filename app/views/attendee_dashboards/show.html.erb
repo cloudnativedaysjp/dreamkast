@@ -21,6 +21,20 @@
 
   <div class="row">
     <section id="main-pane card-group" class="col-12 col-md-8">
+      <div class="mb-5">
+        <h2 class="pb-2">🎉先行申し込みありがとうございます!</h2>
+        <div class="px-2">
+           <p>こんなにも早く参加申し込みいただいた皆様に向けて、<span style="border-bottom: 2px dotted #333;">特別なプレゼントをご用意しております</span>。お楽しみに！</p>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <h3 class="pb-2">遠隔地の方は、宿泊場所の確保を忘れずに！</h3>
+        <div class="px-2">
+           <p>関東圏など遠隔地から参加される方は、<span style="border-bottom: 2px dotted #333;">値段が上がってしまう前に宿泊場所の確保をお願いします！</span></p>
+        </div>
+      </div>
+
       <% if @conference.opened? %>
         <div class="mb-5">
           <div class="card">
@@ -41,12 +55,12 @@
         </div>
       <% end %>
 
+      <!--
       <% if @profile.instance_of?(Profile) %>
         <div class="mb-5">
           <h3 class="section-header">参加方法</h3>
           
           <div class="px-2">
-              <!--
               <div class="mb-4">
                  <span class="d-inline-block border-bottom border-dark pb-1 text-muted small">現在のステータス</span>
                  <div class="h4 mt-2"><%= @profile.participation_before_type_cast %></div>
@@ -54,7 +68,6 @@
               <div class="text-muted small mb-5">
                 参加方法の変更は <%= link_to 'こちら', edit_profile_path(id: @profile.id), class: "text-decoration-underline text-dark" %> から
               </div>
-              -->
 
               <% if @profile.attend_offline? %>
                 <div class="alert alert-warning mb-5">
@@ -90,6 +103,8 @@
           </div>
         </div>
       <% end %>
+      -->
+
       <% unless @conference.abbr == 'cnk' %>
       <div class="mb-5">
         <h3 class="section-header">配信スケジュール</h3>
@@ -163,7 +178,7 @@
       </div>
       <% end %>
 
-      <div class="talk accordion mb-5">
+      <div class="talk accordion mb-56">
         <h3 class="section-header">現地会場 アクセス</h3>
         <div class="card overflow-hidden">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5410.401695467206!2d136.90701557723335!3d35.16835227275744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60037166d7205711%3A0x22bd3ac7bbcc0305!2z5Lit5pel44Ob44O844OrIO-8hiDjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e1!3m2!1sja!2sjp!4v1766231356712!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

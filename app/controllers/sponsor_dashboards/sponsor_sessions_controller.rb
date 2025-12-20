@@ -109,8 +109,8 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def set_sponsor_contact
     @conference ||= Conference.find_by(abbr: params[:event])
-    if current_user
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 end

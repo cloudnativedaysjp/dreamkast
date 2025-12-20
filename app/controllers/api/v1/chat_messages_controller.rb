@@ -29,7 +29,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
     attr = { profile_id: @profile.id, body:, conference_id: conference.id, room_id:, room_type:, message_type: }
 
-    speaker = Speaker.find_by(conference: conference.id, email: current_user[:info][:email])
+    speaker = Speaker.find_by(conference_id: conference.id, user_id: current_user_model&.id)
     attr[:speaker_id] = speaker.id if speaker.present?
 
     if reply_to

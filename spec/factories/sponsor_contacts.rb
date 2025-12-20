@@ -38,7 +38,7 @@ FactoryBot.define do
   end
 
   factory :sponsor_alice, class: SponsorContact do
-    sub { 'alice' }
+    sub { 'google-oauth2|alice' }
     email { 'alice@example.com' }
     name { 'alice' }
     conference_id { 1 }

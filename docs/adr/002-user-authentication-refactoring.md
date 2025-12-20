@@ -140,11 +140,11 @@ admin_profiles
   - `app/controllers/admin_controller.rb`
   - `app/controllers/keynote_speaker_accepts_controller.rb`
 - [x] テストコードを新しい構造に対応
-- [ ] 既存のテストが全て通過することを確認
+- [x] 既存のテストが全て通過することを確認
 
 ### Phase 2: クリーンアップ（後方互換性確保後）
 
-- [ ] すべてのコードが`user_id`ベースに移行したことを確認
+- [x] すべてのコードが`user_id`ベースに移行したことを確認
 - [ ] `sub`と`email`カラムを削除するマイグレーションを作成
 - [ ] ただし、既存データの参照が必要な場合は残す
 

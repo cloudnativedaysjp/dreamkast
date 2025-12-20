@@ -8,8 +8,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    if current_user
-      if Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      if Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
         redirect_to(speaker_dashboard_path)
       end
     end
@@ -91,8 +91,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
   end
 
   def pundit_user
-    if current_user
-      Speaker.find_by(conference: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 

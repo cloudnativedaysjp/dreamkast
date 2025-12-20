@@ -17,7 +17,7 @@ class ProfilesController < ApplicationController
       @profile.form_values.build(form_item_id: form_item.id)
     end
 
-    if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model && Profile.find_by(conference_id: @conference.id, user_id: current_user_model.id)
       redirect_to(dashboard_path)
     end
     @event = params[:event]
@@ -140,7 +140,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model&.id, conference_id: set_conference.id)
   end
 
   def profile_params

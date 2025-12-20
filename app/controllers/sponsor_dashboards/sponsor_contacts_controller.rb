@@ -21,8 +21,10 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     if logged_in?
-      if current_user && SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+      # Check by email instead of user_id (consistent with create action)
+      if current_user && current_user[:info] && current_user[:info][:email] && @sponsor.sponsor_contacts.any? { |contact| contact.user&.email == current_user[:info][:email] }
         redirect_to(sponsor_dashboards_path)
+        return
       end
     else
       redirect_to(auth_login_path(origin: request.fullpath))
@@ -107,8 +109,8 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   end
 
   def pundit_user
-    if current_user
-      SponsorContact.find_by(conference: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 
@@ -125,8 +127,8 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   def set_sponsor_contact
     @conference ||= Conference.find_by(abbr: params[:event])
-    if current_user
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 end

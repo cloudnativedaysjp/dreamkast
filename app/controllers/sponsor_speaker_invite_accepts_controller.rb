@@ -22,10 +22,11 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
       flash.now[:alert] = '招待メールが期限切れです。再度招待メールを送ってもらってください。'
     end
     @sponsor = @sponsor_speaker_invite.sponsor
-    @sponsor_speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor).exists?
-                         Speaker.find_by(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
+    user_id = current_user_model&.id
+    @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
+                         Speaker.find_by(user_id:, conference: @conference, sponsor: @sponsor)
                        else
-                         Speaker.new(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
+                         Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                        end
   end
 
@@ -39,20 +40,22 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
         speaker_param = sponsor_speaker_invite_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:sponsor_speaker_invite_id)
 
-        @sponsor_contact = if SponsorContact.where(email: current_user[:info][:email], conference: @conference).exists?
-                             SponsorContact.find_by(conference: @conference, email: current_user[:info][:email])
+        user_id = current_user_model&.id
+        @sponsor_contact = if user_id && SponsorContact.where(user_id:, conference: @conference).exists?
+                             SponsorContact.find_by(conference: @conference, user_id:)
                            else
-                             SponsorContact.new(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
+                             SponsorContact.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end
         if @sponsor_contact.new_record?
           @sponsor_contact.update!(name: sponsor_speaker_invite_accept_params[:name])
           @sponsor_contact.save!
         end
 
-        @sponsor_speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor).exists?
-                             Speaker.find_by(conference: @conference, email: current_user[:info][:email])
+        user_id = current_user_model&.id
+        @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
+                             Speaker.find_by(conference: @conference, user_id:, sponsor: @sponsor)
                            else
-                             Speaker.new(email: current_user[:info][:email], conference: @conference, sponsor: @sponsor)
+                             Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end
         @sponsor_speaker.update!(speaker_param)
         @sponsor_speaker.save!

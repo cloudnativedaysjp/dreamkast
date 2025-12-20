@@ -22,7 +22,7 @@ class SponsorContactInviteAcceptsController < ApplicationController
       flash.now[:alert] = '招待メールが期限切れです。再度招待メールを送ってもらってください。'
     end
     @sponsor = @sponsor_contact_invite.sponsor
-    user_id = current_user_model&.id
+    user_id = current_user_model.id
     # Check by email instead of user_id (consistent with create action)
     @sponsor_contact = if current_user && current_user[:info] && current_user[:info][:email] && @sponsor.sponsor_contacts.any? { |contact| contact.user&.email == current_user[:info][:email] }
                          @sponsor.sponsor_contacts.find { |contact| contact.user&.email == current_user[:info][:email] }
@@ -41,7 +41,7 @@ class SponsorContactInviteAcceptsController < ApplicationController
         speaker_param = sponsor_contact_invite_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:sponsor_contact_invite_id)
 
-        user_id = current_user_model&.id
+        user_id = current_user_model.id
         # Check by email instead of user_id (consistent with other controllers)
         @sponsor_contact = if current_user && current_user[:info] && current_user[:info][:email] && @sponsor.sponsor_contacts.any? { |contact| contact.user&.email == current_user[:info][:email] }
                              @sponsor.sponsor_contacts.find { |contact| contact.user&.email == current_user[:info][:email] }

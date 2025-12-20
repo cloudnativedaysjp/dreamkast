@@ -7,7 +7,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
     if logged_in? && @sponsor.present? && @sponsor_contact.present?
       if @sponsor.id == @sponsor_contact.sponsor_id
-        @speaker = @conference.speakers.find_by(user_id: current_user_model&.id)
+        @speaker = @conference.speakers.find_by(user_id: current_user_model.id)
         @talks = @speaker ? @speaker.talks.sponsor : []
       else
         render_404

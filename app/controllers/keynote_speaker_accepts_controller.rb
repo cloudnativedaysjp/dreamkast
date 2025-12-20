@@ -45,7 +45,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
     end
 
     @talk = @keynote_speaker_invitation.talk
-    user_id = current_user_model&.id
+    user_id = current_user_model.id
     @speaker = Speaker.find_by(conference: @conference, user_id:) ||
                Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
   end
@@ -70,7 +70,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
         speaker_param.delete(:keynote_speaker_invitation_id)
 
         # 既存の招待に紐づく暫定スピーカーを優先して更新し、重複作成による User 一意制約違反を防ぐ
-        user_id = current_user_model&.id
+        user_id = current_user_model.id
         @speaker = Speaker.find_by(conference: @conference, user_id:) ||
                    @keynote_speaker_invitation.speaker ||
                    Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)

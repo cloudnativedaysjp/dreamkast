@@ -140,7 +140,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(user_id: current_user_model&.id, conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
   end
 
   def profile_params

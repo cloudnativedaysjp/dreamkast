@@ -24,7 +24,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
     end
     @talk = @speaker_invitation.talk
     @proposal = @talk.proposal
-    user_id = current_user_model&.id
+    user_id = current_user_model.id
     @speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
                  Speaker.find_by(conference: @conference, user_id:)
                else
@@ -41,7 +41,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
         speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:speaker_invitation_id)
 
-        user_id = current_user_model&.id
+        user_id = current_user_model.id
         @speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
                      Speaker.find_by(conference: @conference, user_id:)
                    else

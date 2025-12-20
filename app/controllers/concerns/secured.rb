@@ -40,19 +40,28 @@ module Secured
   end
 
   def new_user?
-    logged_in? && !Profile.find_by(user_id: current_user_model&.id, conference_id: set_conference.id)
+    return false unless logged_in?
+    # If current_user_model is nil (incomplete session), treat as new user
+    return true unless current_user_model
+    !Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
   end
 
   def admin?
-    conference && current_user && current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    return false unless conference && current_user
+    roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
+    roles&.include?("#{conference.abbr.upcase}-Admin") || false
   end
 
   def speaker?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Speaker")
+    return false unless current_user && conference
+    roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
+    roles&.include?("#{conference.abbr.upcase}-Speaker") || false
   end
 
   def beta_user?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Beta")
+    return false unless current_user && conference
+    roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
+    roles&.include?("#{conference.abbr.upcase}-Beta") || false
   end
 
   def conference

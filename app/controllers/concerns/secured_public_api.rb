@@ -60,6 +60,6 @@ module SecuredPublicApi
   end
 
   def profile
-    @profile ||= Profile.find_by(user_id: current_user_model&.id, conference_id: conference.id)
+    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: conference.id)
   end
 end

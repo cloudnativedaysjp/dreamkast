@@ -158,7 +158,7 @@
           <%# <%= form.radio_button :participation, :online, { class: "radio_button_participation", id: "participation_online", required: true } %>
           <%# <%= form.label :online, "リモート参加", { for: "participation_online" } %>
           <div class="custom-control custom-radio">
-              <%= form.radio_button :participation, :offline, { class: "custom-control-input", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true } %>
+              <%= form.radio_button :participation, :offline, { class: "custom-control-input", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: @profile.participation.blank? || @profile.participation == 'offline' } %>
               <% if @conference.reach_capacity? %>
                 <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "custom-control-label reached_capacity"} %>
                 <span class="warning" >現地参加は定員に達したためお申込みいただけません</span>

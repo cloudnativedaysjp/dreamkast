@@ -86,7 +86,7 @@ Rails.application.configure do
   config.action_mailer.ses_v2_settings = { region: 'ap-northeast-1' }
 
   if ENV['REVIEW_APP'] == 'true'
-    match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/)
+    match = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(\d+)-dk/) || ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-fifo-worker/)
     if match
       pr_number = match[1]
       config.action_mailer.default_url_options = { host: "dreamkast-dk-#{pr_number}.dev.cloudnativedays.jp", protocol: 'https' }

@@ -213,7 +213,7 @@ class ApplicationController < ActionController::Base
     if FileTest.exist?("#{Rails.root}/app/views/layouts/#{event_name}.html.erb")
       event_name
     else
-      "application"
+      'application'
     end
   end
 end

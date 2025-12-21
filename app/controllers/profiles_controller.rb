@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   include Secured
+  layout :event_layout
 
   before_action :set_conference
   before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin, :entry_sheet, :view_qr]
@@ -77,7 +78,7 @@ class ProfilesController < ApplicationController
           end
         end
 
-        format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
+        format.html { redirect_to(dashboard_path, notice: '登録情報の変更が完了しました') }
         format.json { render(:show, status: :ok, location: @profile) }
       else
         format.html { render(:edit, notice: '登録情報の変更時にエラーが発生しました') }

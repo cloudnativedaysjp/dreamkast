@@ -1,5 +1,7 @@
 class PublicProfilesController < ApplicationController
   include Secured
+  layout :event_layout
+
   before_action :set_conference, :set_profile
 
   def new
@@ -17,7 +19,9 @@ class PublicProfilesController < ApplicationController
     authorize(@public_profile)
 
     if @public_profile.save
-      redirect_to("/#{event_name}/timetables")
+      # CNK暫定処置
+      # redirect_to("/#{event_name}/timetables")
+      redirect_to("/#{event_name}/dashboard")
     else
       respond_to do |format|
         format.html { render(:new, notice: 'プロフィールの登録時にエラーが発生しました') }

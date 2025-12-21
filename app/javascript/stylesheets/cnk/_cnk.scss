@@ -1,0 +1,313 @@
+#cnk {
+    position: relative;
+    #about {
+        background-color: $white;
+        .projects {
+            div.project {
+                a{
+                    display: block;
+                    img{
+                        display: block;
+                        margin: 0px auto;
+                        width: 400px;
+                        max-width: 100%;
+                    }
+                    img:hover{
+                        box-shadow: 0px 0px 5px #CCC;
+                    }
+                }
+            }
+        }
+    }
+    #access {
+        background-color: $primary;
+        color: white;
+    }
+    #entry {
+        background-color: $white
+    }
+    .contents {
+        position: relative;
+        z-index: 2;
+    }
+    .btn-entry {
+        background-color: $primary;
+        color: white;
+        font-size: medium;
+        font-weight: lighter;
+        padding: 1em 2em;
+        @media (min-width: 576px) {
+            font-size: medium;
+        }
+        @media (min-width: 768px) {
+            font-size: large;
+        }
+        @media (min-width: 992px) {
+            font-size: x-large;
+        }
+        &:hover {
+            background-color: $secondary;
+        }
+    }
+    #speakers {
+        background-color: $white;
+        @media (max-width: 576px) {
+            display: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+        li {
+            list-style: none;
+            img {}
+        }
+    }
+    section.timetable {
+        width: 100%;
+    }
+}
+
+#exhibition{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+#exhibition a {
+    border: 1px solid #999;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    @media (min-width: 576px) {
+        width: 45%;
+    }
+}
+#exhibition a:hover {
+    box-shadow: 0px 0px 5px #CCC;
+}
+#exhibition a .project img {
+    max-height: 80px;
+    display: block;
+    margin: 0px auto;
+}
+
+.speaker-dashboard-form {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#speaker-landing {
+    line-height: 200%;
+    a {
+        color: $primary;
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 992px) {
+    #speaker-landing {
+        line-height: 130%;
+    }
+}
+
+.speaker-dashboard-form h2 {
+    font-weight: bold;
+}
+
+.speaker-dashboard-form h3 {
+    font-weight: bold;
+}
+
+.speaker-dashboard-form h4 {
+    font-weight: bold;
+    font-size: large;
+}
+
+.speaker-dashboard-form p {
+    font-size: large;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form ol {
+    font-size: larger;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form ul {
+    font-size: larger;
+    margin: 1em 0;
+}
+
+.speaker-dashboard-form .privacy p {
+    font-size: small;
+}
+
+.speaker-dashboard-form:before h1 {
+    font-size: small;
+}
+
+.entry {
+    font-size: xx-large;
+}
+
+.speaker-dashboard-form .centered-image {
+    margin: 0 auto;
+}
+
+.information {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 300px;
+    a {
+        color: $primary;
+        border-bottom: 2px solid;
+    }
+}
+
+.information.mt-4 {
+    height: 200px
+}
+
+.handson-session {
+    margin: 50px 0 50px 0;
+    padding: 50px 0 0 0;
+    border-top: 1px solid #222222;
+}
+
+.alert-url {
+    color: #ff0000;
+}
+
+.white_background {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.talk-page {
+    margin-top: 80px;
+}
+
+#community-lt div.community{
+    border-bottom: 1px dotted #CCC;
+    a {
+        text-decoration: underline dotted #CCC 1px;
+        text-underline-offset: 0.2em;
+    }
+    &:hover{
+        background-color: #EEE;
+    }
+    .description{
+        white-space: pre-wrap;
+    }
+    .time {
+        font-weight: bold;
+    }
+}
+
+// Japanese Modern Theme Implementation
+.japanese-modern-theme {
+    background-color: $washi;
+    color: $sumi;
+    font-family: $font-family-serif;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "Zen Old Mincho", $font-family-serif;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+    }
+
+    .container {
+        // Ensure content doesn't touch edges too awkwardly on mobile
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+
+    // Card styling "Paper" aesthetic
+    .card {
+        background-color: #ffffff; // Crisp white paper on off-white background
+        border: 1px solid rgba($sumi, 0.08);
+        border-radius: 2px; // Classic paper cut feel, minimal rounding
+        box-shadow: 0 2px 8px $washi-shadow;
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba($sumi, 0.12);
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid rgba($sumi, 0.05);
+            padding: 1.5rem 2rem;
+
+            h5, b {
+                font-family: "Zen Old Mincho", serif;
+                font-size: 1.25rem;
+                color: $sumi;
+                margin: 0;
+            }
+        }
+
+        .card-body {
+            padding: 2rem;
+            color: lighten($sumi, 10%);
+        }
+    }
+
+    // Buttons "Hanko" style or clean rects
+    .btn-primary {
+        background-color: $beni;
+        border-color: $beni;
+        color: white;
+        border-radius: 2px;
+        padding: 0.8rem 2rem;
+        font-family: "Zen Old Mincho", serif;
+        font-weight: bold;
+        transition: all 0.3s ease;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($beni, 10%) !important;
+            border-color: darken($beni, 10%) !important;
+            box-shadow: 0 2px 8px rgba($beni, 0.4);
+        }
+    }
+
+    .alert {
+        border: none;
+        border-left: 4px solid $tokyo-navy; // Keeping conference branding but cleaner
+        border-radius: 2px;
+        background-color: white;
+        
+        &.alert-warning {
+             border-left-color: $beni;
+        }
+        &.alert-info {
+             border-left-color: $tokyo-navy;
+        }
+    }
+
+    // Modernize list groups within cards
+    .list-group-item {
+        border-bottom: 1px dotted rgba($sumi, 0.2);
+        padding: 1rem 0;
+        
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    // Open Section Header
+    .section-header {
+        font-family: "Zen Old Mincho", $font-family-serif;
+        font-weight: 700;
+        border-bottom: 1px solid $sumi;
+        padding-bottom: 0.5rem;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+}

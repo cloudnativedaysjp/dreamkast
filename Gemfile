@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.0'
 # Use Puma as the app server
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 7.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -29,7 +29,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # OmniAuth Auth0 strategy and CSRF protection
 gem 'omniauth-auth0', '~> 3.0'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
+gem 'omniauth-rails_csrf_protection', '~> 2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

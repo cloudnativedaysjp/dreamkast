@@ -12,7 +12,7 @@ module EnvHelper
   end
 
   def review_app_number
-    m = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-dk/)
+    m = ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-dk/) || ENV['DREAMKAST_NAMESPACE'].match(/dreamkast-dev-dk-(.*)-fifo-worker/)
     if m
       m[1].to_i
     else

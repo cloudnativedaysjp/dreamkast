@@ -27,14 +27,14 @@ jobs:
       actions: read # Required for Claude to read CI results on PRs
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 1
           persist-credentials: false
 
       - name: Run Claude Code
         id: claude
-        uses: anthropics/claude-code-action@0a6d62601b57f5465881a83376b4b1eef74e7074
+        uses: anthropics/claude-code-action@b89827f8d12d3e27016e9bf5fc1e7d4a8bbf179a
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 

@@ -47,7 +47,6 @@ class CreateUsersAndMigrateData < ActiveRecord::Migration[8.0]
       remove_column :sponsor_contacts, :sub
       remove_column :sponsor_contacts, :email
 
-      # raise "test"
     rescue StandardError => e
       # エラー発生時は、作成されたusersテーブルをクリーンアップ
       # 外部キー制約を削除（存在する場合）

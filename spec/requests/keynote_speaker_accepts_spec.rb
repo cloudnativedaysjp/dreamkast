@@ -61,7 +61,7 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
 
   describe 'POST /keynote_speaker_accepts' do
     context '有効な招待の場合' do
-      let(:invitation) { create(:keynote_speaker_invitation, conference:) }
+      let(:invitation) { create(:keynote_speaker_invitation, conference:, email: 'invited@example.com') }
 
       let(:valid_params) do
         {

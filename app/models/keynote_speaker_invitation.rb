@@ -28,18 +28,31 @@ class KeynoteSpeakerInvitation < ApplicationRecord
     !accepted? && !expired?
   end
 
-  def accept!(current_user_sub)
+  def accept!(current_user_sub, current_user_email: nil)
     ActiveRecord::Base.transaction do
-      # SpeakerにAuth0のsubを設定（user経由）
+      # 招待モデルのemailを使用（speakerのemailは削除予定のため使用しない）
+      invitation_email = self.email
+      
+      # invitation_emailが空の場合はエラー
+      if invitation_email.blank?
+        raise ActiveRecord::RecordInvalid.new(self), '招待のemailが設定されていません'
+      end
+      
+      # invitation_emailとcurrent_user_emailが異なる場合もエラー
+      if current_user_email.present? && invitation_email != current_user_email
+        raise ActiveRecord::RecordInvalid.new(self), '招待されたemailとログイン中のemailが一致しません'
+      end
+
       # current_user_subからUserを取得または作成
       user = User.find_or_create_by!(sub: current_user_sub) do |u|
-        u.email = speaker.read_attribute(:email) || "#{current_user_sub}@example.com"
+        u.email = invitation_email
       end
-      # Userのemailがspeakerのemailと異なる場合は更新
-      speaker_email = speaker.read_attribute(:email)
-      if user.email != speaker_email && speaker_email.present?
-        user.update!(email: speaker_email)
+      
+      # Userのemailを招待のemailに更新
+      if user.email != invitation_email
+        user.update!(email: invitation_email)
       end
+      
       # Speakerのuser_idを設定
       speaker.update!(user:)
 

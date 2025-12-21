@@ -78,7 +78,10 @@ class KeynoteSpeakerAcceptsController < ApplicationController
         @speaker.save!
 
         # 承諾処理
-        @keynote_speaker_invitation.accept!(current_user_model&.sub)
+        @keynote_speaker_invitation.accept!(
+          current_user_model&.sub,
+          current_user_email: current_user[:info][:email]
+        )
 
         # 承諾確認メール送信
         KeynoteSpeakerInvitationMailer.accepted(@keynote_speaker_invitation).deliver_now
@@ -87,7 +90,15 @@ class KeynoteSpeakerAcceptsController < ApplicationController
       end
     rescue ActiveRecord::RecordInvalid => e
       logger.error("Failed to accept keynote speaker invitation: #{e.message}")
+      # Set up instance variables needed for rendering :new
+      @keynote_speaker_accept = KeynoteSpeakerAccept.new
+      @talk = @keynote_speaker_invitation.talk
+      user_id = current_user_model&.id
+      @speaker = Speaker.find_by(conference: @conference, user_id:) ||
+                 Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
       render(:new, alert: '承諾処理に失敗しました。もう一度お試しください。')
+    rescue => e
+      raise
     end
   end
 

@@ -23,9 +23,10 @@ class SponsorContactInviteAcceptsController < ApplicationController
     end
     @sponsor = @sponsor_contact_invite.sponsor
     user_id = current_user_model.id
-    # Check by email instead of user_id (consistent with create action)
-    @sponsor_contact = if current_user && current_user[:info] && current_user[:info][:email] && @sponsor.sponsor_contacts.any? { |contact| contact.user&.email == current_user[:info][:email] }
-                         @sponsor.sponsor_contacts.find { |contact| contact.user&.email == current_user[:info][:email] }
+    # Check by user_id to avoid N+1 queries and ensure consistency with database uniqueness constraint
+    # SponsorContact validates uniqueness of user_id scoped to [:conference_id, :sponsor_id]
+    @sponsor_contact = if user_id && SponsorContact.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
+                         SponsorContact.find_by(conference: @conference, sponsor: @sponsor, user_id:)
                        else
                          SponsorContact.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                        end
@@ -42,9 +43,10 @@ class SponsorContactInviteAcceptsController < ApplicationController
         speaker_param.delete(:sponsor_contact_invite_id)
 
         user_id = current_user_model.id
-        # Check by email instead of user_id (consistent with other controllers)
-        @sponsor_contact = if current_user && current_user[:info] && current_user[:info][:email] && @sponsor.sponsor_contacts.any? { |contact| contact.user&.email == current_user[:info][:email] }
-                             @sponsor.sponsor_contacts.find { |contact| contact.user&.email == current_user[:info][:email] }
+        # Check by user_id to avoid N+1 queries and ensure consistency with database uniqueness constraint
+        # SponsorContact validates uniqueness of user_id scoped to [:conference_id, :sponsor_id]
+        @sponsor_contact = if user_id && SponsorContact.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
+                             SponsorContact.find_by(conference: @conference, sponsor: @sponsor, user_id:)
                            else
                              SponsorContact.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end

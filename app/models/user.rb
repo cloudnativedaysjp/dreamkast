@@ -1,8 +1,8 @@
 class User < ApplicationRecord
-  has_one :profile, dependent: :destroy
+  has_many :profiles
   has_many :speakers, dependent: :destroy
-  has_one :sponsor_contact, dependent: :destroy
-  has_one :admin_profile, dependent: :destroy
+  has_many :sponsor_contacts
+  has_many :admin_profiles
 
   validates :sub, presence: true, uniqueness: true
   validates :email, presence: true

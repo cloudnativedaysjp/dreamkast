@@ -97,7 +97,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
       @speaker = Speaker.find_by(conference: @conference, user_id:) ||
                  Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
       render(:new, alert: '承諾処理に失敗しました。もう一度お試しください。')
-    rescue => e
+    rescue
       raise
     end
   end

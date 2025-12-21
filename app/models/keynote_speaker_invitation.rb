@@ -31,28 +31,28 @@ class KeynoteSpeakerInvitation < ApplicationRecord
   def accept!(current_user_sub, current_user_email: nil)
     ActiveRecord::Base.transaction do
       # 招待モデルのemailを使用（speakerのemailは削除予定のため使用しない）
-      invitation_email = self.email
-      
+      invitation_email = email
+
       # invitation_emailが空の場合はエラー
       if invitation_email.blank?
-        raise ActiveRecord::RecordInvalid.new(self), '招待のemailが設定されていません'
+        raise(ActiveRecord::RecordInvalid.new(self), '招待のemailが設定されていません')
       end
-      
+
       # invitation_emailとcurrent_user_emailが異なる場合もエラー
       if current_user_email.present? && invitation_email != current_user_email
-        raise ActiveRecord::RecordInvalid.new(self), '招待されたemailとログイン中のemailが一致しません'
+        raise(ActiveRecord::RecordInvalid.new(self), '招待されたemailとログイン中のemailが一致しません')
       end
 
       # current_user_subからUserを取得または作成
       user = User.find_or_create_by!(sub: current_user_sub) do |u|
         u.email = invitation_email
       end
-      
+
       # Userのemailを招待のemailに更新
       if user.email != invitation_email
         user.update!(email: invitation_email)
       end
-      
+
       # Speakerのuser_idを設定
       speaker.update!(user:)
 

@@ -21,10 +21,6 @@
       <%= render 'talks/partial_show/col_main_pane', talk: @talk, conference: @conference %>
     </div>
 
-    <div class="col-12 col-lg-4 sub-pane mt-3 mt-lg-0">
-      <%= render 'talks/partial_show/col_sub_pane', talk: @talk %>
-    </div>
-
     <% if @conference.attendee_entry_enabled? %>
       <div class="col-12 p-3 other-talks">
         <%= render 'talks/partial_show/col_other_talks', conference: @conference %>

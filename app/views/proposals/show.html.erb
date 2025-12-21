@@ -21,10 +21,6 @@
       <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
     </div>
 
-    <div class="col-12 col-lg-4 sub-pane mt-3 mt-lg-0">
-      <%= render 'proposals/partial_show/col_sub_pane', talk: @talk %>
-    </div>
-
     <% unless @conference.cfp_result_visible %>
       <div class="col-12 p-3 other-talks">
         <%= render 'proposals/partial_show/col_other_proposals', conference: @conference %>

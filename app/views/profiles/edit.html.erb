@@ -1,3 +1,4 @@
+<div class="japanese-modern-theme">
 <div class="container">
   <div class="row justify-content-lg-center">
     <div class="col-12 col-lg-6 registration-form py-3 my-3 px-md-5">
@@ -5,8 +6,9 @@
         <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
       <% end %>
 
-      <h2>登録情報変更</h2>
+      <h2 class="text-center section-header w-100 text-center border-bottom-0 mb-5" style="border-bottom: none !important;"><%= @conference.name %><br/>登録情報変更</h2>
       <%= render 'form', profile: @profile, submit_button_label: "更新する" %>
     </div>
   </div>
+</div>
 </div>

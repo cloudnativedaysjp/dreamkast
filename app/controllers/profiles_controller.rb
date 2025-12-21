@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
       @profile.form_values.build(form_item_id: form_item.id)
     end
 
-    if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model && Profile.find_by(conference_id: @conference.id, user_id: current_user_model.id)
       redirect_to(dashboard_path)
     end
     @event = params[:event]
@@ -32,7 +32,7 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-    @profile.sub = current_user[:extra][:raw_info][:sub]
+    @profile.sub = current_user_model&.sub
     @profile.email = current_user[:info][:email]
 
     if @profile.save
@@ -141,7 +141,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
   end
 
   def profile_params

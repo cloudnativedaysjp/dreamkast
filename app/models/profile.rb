@@ -29,6 +29,7 @@ class Profile < ApplicationRecord
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
   belongs_to :conference
+  belongs_to :user
   has_many :registered_talks
   has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
   has_many :form_values
@@ -41,13 +42,14 @@ class Profile < ApplicationRecord
   has_one :public_profile, dependent: :destroy
   accepts_nested_attributes_for :form_items
 
+  before_validation :ensure_user, on: :create
+
   before_create do
     self.calendar_unique_code = SecureRandom.uuid
   end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
-  validates :sub, presence: true, length: { maximum: 250 }
-  validates :email, presence: true, email: true
+  validates :user_id, uniqueness: { scope: :conference_id }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :industry_id, length: { maximum: 10 }
@@ -72,9 +74,32 @@ class Profile < ApplicationRecord
     offline: '現地参加'
   }
 
+  # userのsubとemailを委譲（userがnilの可能性がある場合はallow_nil: true）
+  delegate :sub, :email, to: :user, allow_nil: true
+
+  # 一時的な属性（before_validationでuserを作成するために使用）
+  attr_accessor :pending_sub, :pending_email
+
   def sub_and_email_must_be_unique_in_a_conference
-    if Profile.where(sub:, email:, conference_id:).exists?
+    if Profile.where(user_id:, conference_id:).exists?
       errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
+    end
+  end
+
+  # 既存コードとの互換性のため、セッターを提供
+  def sub=(value)
+    if user_id.present?
+      user.update!(sub: value)
+    else
+      self.pending_sub = value
+    end
+  end
+
+  def email=(value)
+    if user_id.present?
+      user.update!(email: value)
+    else
+      self.pending_email = value
     end
   end
 
@@ -145,5 +170,26 @@ class Profile < ApplicationRecord
 
   def attend_online?
     online?
+  end
+
+  private
+
+  def ensure_user
+    return if user_id.present?
+
+    sub_value = pending_sub
+    email_value = pending_email
+
+    if sub_value.present? && email_value.present?
+      self.user = User.find_or_create_by!(sub: sub_value) do |u|
+        u.email = email_value
+      end
+      # emailが指定されていて、Userのemailが異なる場合は更新
+      if user.email != email_value
+        user.update!(email: email_value)
+      end
+    else
+      errors.add(:base, 'subとemailの両方が必要です')
+    end
   end
 end

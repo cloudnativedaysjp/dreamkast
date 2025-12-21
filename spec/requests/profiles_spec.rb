@@ -35,7 +35,7 @@ describe ProfilesController, type: :request do
     end
 
     describe 'logged in and already registered' do
-      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
+      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
         create(:alice, :on_cndt2020)
@@ -51,7 +51,7 @@ describe ProfilesController, type: :request do
     end
 
     describe 'register' do
-      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => '' } } } } }
+      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => '' } } } } }
       subject(:profiles_params)  do
         attributes_for(:alice)
       end

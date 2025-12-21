@@ -1,10 +1,22 @@
 FactoryBot.define do
-  factory :speaker
+  factory :speaker do
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+  end
 
   factory :speaker_alice, class: Speaker do
     id { 1 }
-    sub { 'aaa' }
-    email { 'alice@example.com' }
     name { 'Alice' }
     profile { 'This is profile' }
     company { 'company' }
@@ -39,14 +51,26 @@ FactoryBot.define do
         speaker.talks << talk
       end
     end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      speaker.user_id = user.id
+    end
   end
 
   factory :talks_speakers, class: TalksSpeaker
 
   factory :speaker_bob, class: Speaker do
     id { 2 }
-    sub { 'bbb' }
-    email { 'bar@example.com' }
     name { 'Bob' }
     profile { 'This is profile' }
     company { 'company' }
@@ -59,12 +83,24 @@ FactoryBot.define do
         speaker.talks << talk
       end
     end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
   end
 
   factory :speaker_mike, class: Speaker do
     id { 3 }
-    sub { 'github' }
-    email { 'mike@example.com' }
     name { 'Mike' }
     profile { 'This is profile' }
     company { 'company' }
@@ -78,6 +114,20 @@ FactoryBot.define do
         speaker.speaker_announcements << speaker_announcement
         FactoryBot.create(:speaker_announcement_middle, { speaker:, speaker_announcement: })
       end
+    end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
     end
   end
 end

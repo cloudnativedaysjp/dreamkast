@@ -73,7 +73,8 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
     end
 
     context 'when sponsor contact already exists' do
-      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, email: 'invited@example.com') }
+      let!(:existing_user) { User.find_or_create_by!(sub: 'auth0|123') { |u| u.email = 'invited@example.com' } }
+      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, user_id: existing_user.id) }
 
       it 'updates the existing contact and creates an accept record' do
         expect {

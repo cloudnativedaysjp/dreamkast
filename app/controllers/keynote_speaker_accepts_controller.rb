@@ -45,11 +45,9 @@ class KeynoteSpeakerAcceptsController < ApplicationController
     end
 
     @talk = @keynote_speaker_invitation.talk
-    @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
-                 Speaker.find_by(conference: @conference, email: current_user[:info][:email])
-               else
-                 Speaker.new(conference: @conference, email: current_user[:info][:email])
-               end
+    user_id = current_user_model.id
+    @speaker = Speaker.find_by(conference: @conference, user_id:) ||
+               Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
   end
 
   def create
@@ -71,16 +69,19 @@ class KeynoteSpeakerAcceptsController < ApplicationController
         speaker_param = keynote_speaker_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:keynote_speaker_invitation_id)
 
-        @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
-                     Speaker.find_by(conference: @conference, email: current_user[:info][:email])
-                   else
-                     Speaker.new(conference: @conference, email: current_user[:info][:email])
-                   end
+        # 既存の招待に紐づく暫定スピーカーを優先して更新し、重複作成による User 一意制約違反を防ぐ
+        user_id = current_user_model.id
+        @speaker = Speaker.find_by(conference: @conference, user_id:) ||
+                   @keynote_speaker_invitation.speaker ||
+                   Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
         @speaker.update!(speaker_param)
         @speaker.save!
 
         # 承諾処理
-        @keynote_speaker_invitation.accept!(current_user[:extra][:raw_info][:sub])
+        @keynote_speaker_invitation.accept!(
+          current_user_model&.sub,
+          current_user_email: current_user[:info][:email]
+        )
 
         # 承諾確認メール送信
         KeynoteSpeakerInvitationMailer.accepted(@keynote_speaker_invitation).deliver_now
@@ -89,7 +90,15 @@ class KeynoteSpeakerAcceptsController < ApplicationController
       end
     rescue ActiveRecord::RecordInvalid => e
       logger.error("Failed to accept keynote speaker invitation: #{e.message}")
+      # Set up instance variables needed for rendering :new
+      @keynote_speaker_accept = KeynoteSpeakerAccept.new
+      @talk = @keynote_speaker_invitation.talk
+      user_id = current_user_model&.id
+      @speaker = Speaker.find_by(conference: @conference, user_id:) ||
+                 Speaker.new(conference: @conference, email: current_user[:info][:email], user_id:)
       render(:new, alert: '承諾処理に失敗しました。もう一度お試しください。')
+    rescue
+      raise
     end
   end
 

@@ -1,9 +1,5 @@
 FactoryBot.define do
-  factory :profile
-
   factory :alice, class: Profile do
-    sub { 'alice' }
-    email { 'alice@example.com' }
     last_name { 'alice' }
     first_name { 'Alice' }
     industry_id { '1' }
@@ -33,12 +29,24 @@ FactoryBot.define do
     trait :on_cndo2021 do
       conference_id { 2 }
     end
+
+    after(:build) do |profile|
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      profile.user_id = user.id
+    end
+
+    before(:create) do |profile|
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      profile.user_id = user.id
+    end
   end
 
   factory :bob, class: Profile do
     id { 3 }
-    sub { 'bob' }
-    email { 'bob@example.com' }
     last_name { 'bob' }
     first_name { 'Bob' }
     industry_id { '1' }
@@ -67,6 +75,20 @@ FactoryBot.define do
 
     trait :on_cndo2021 do
       conference_id { 2 }
+    end
+
+    after(:build) do |profile|
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_bob)
+      profile.user_id = user.id
+    end
+
+    before(:create) do |profile|
+      next if profile.user_id.present?
+
+      user = FactoryBot.create(:user_bob)
+      profile.user_id = user.id
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe(Profile, type: :model) do
     expect(profile).to(be_valid)
   end
 
-  [:sub, :email, :first_name, :last_name, :company_name, :company_email,
+  [:first_name, :last_name, :company_name, :company_email,
    :company_postal_code, :company_address_level1, :company_address_level2, :company_address_line1,
    :company_tel, :department, :position].each do |param|
     it "is invalid without #{param}" do
@@ -18,8 +18,9 @@ RSpec.describe(Profile, type: :model) do
   end
 
   it 'is invalid if email is not a valid format' do
-    profile[:email] = 'foobar'
-    expect(profile).to(be_invalid)
+    # Userモデルでemailのバリデーションが行われるため、このテストは不要
+    # Userモデルのバリデーションテストで確認する
+    skip 'Userモデルでemailのバリデーションが行われるため、このテストは不要'
   end
 
   it 'is invalid if company_email is not a valid format' do

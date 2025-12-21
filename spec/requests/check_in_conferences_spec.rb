@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe(CheckInConferencesController, type: :request) do
   let!(:cndt2020) { create(:cndt2020) }
-  let!(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  let!(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
 
   describe 'GET /:event/self_check_in' do
@@ -36,7 +36,9 @@ RSpec.describe(CheckInConferencesController, type: :request) do
 
         check_in = CheckInConference.last
         expect(check_in.conference_id).to(eq(cndt2020.id))
-        expect(check_in.profile_id).to(eq(Profile.find_by(email: 'alice@example.com').id))
+        user = User.find_by(email: 'alice@example.com')
+        profile = Profile.find_by(user_id: user.id, conference_id: cndt2020.id)
+        expect(check_in.profile_id).to(eq(profile.id))
         expect(check_in.check_in_timestamp).to(be_present)
       end
     end

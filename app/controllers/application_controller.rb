@@ -34,6 +34,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :logged_in?
 
+  def current_user_model
+    return nil unless current_user
+    symbolized_current_user = current_user.deep_symbolize_keys
+    return nil unless symbolized_current_user[:extra] && symbolized_current_user[:extra][:raw_info] && symbolized_current_user[:extra][:raw_info][:sub]
+    @current_user_model ||= User.find_or_create_by_auth0_info(
+      sub: symbolized_current_user[:extra][:raw_info][:sub],
+      email: symbolized_current_user[:info][:email]
+    )
+  end
+
   def user_not_authorized
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
   end
@@ -154,22 +164,22 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile
-    @profile = if current_user && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
-                 Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @profile = if current_user_model && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
+                 Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
                else
                  GuestProfile.new
                end
   end
 
   def set_speaker
-    if current_user
-      @speaker = Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    if current_user_model
+      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
     end
   end
 
   def set_sponsor_contact
-    if current_user
-      @sponsor_contact = SponsorContact.find_by(email: current_user[:info][:email], conference_id: conference.id)
+    if current_user_model
+      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
     end
   end
 

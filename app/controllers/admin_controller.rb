@@ -8,7 +8,7 @@ class AdminController < ApplicationController
   end
 
   def destroy_user
-    @profile = Profile.find_by(sub: current_user[:extra][:raw_info][:sub])
+    @profile = Profile.find_by(user_id: current_user_model.id)
     @profile.destroy
     redirect_to(logout_url)
   end

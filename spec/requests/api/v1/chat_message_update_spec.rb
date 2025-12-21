@@ -6,11 +6,11 @@ describe Api::V1::ChatMessagesController, type: :request do
       userinfo: {
         info: {
           email: 'alice@example.com',
-          extra: { sub: 'alice' }
+          extra: { sub: 'google-oauth2|alice' }
         },
         extra: {
           raw_info: {
-            sub: 'alice',
+            sub: 'google-oauth2|alice',
             'https://cloudnativedays.jp/roles' => roles
           }
         }

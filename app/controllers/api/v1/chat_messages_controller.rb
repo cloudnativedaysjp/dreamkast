@@ -29,7 +29,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
     attr = { profile_id: @profile.id, body:, conference_id: conference.id, room_id:, room_type:, message_type: }
 
-    speaker = Speaker.find_by(conference: conference.id, email: current_user[:info][:email])
+    speaker = Speaker.find_by(conference_id: conference.id, user_id: current_user_model.id)
     attr[:speaker_id] = speaker.id if speaker.present?
 
     if reply_to
@@ -42,10 +42,9 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   def update
     chat_msg = ChatMessage.find(params[:id])
-    body = params[:body]
     authorize(chat_msg)
 
-    chat_msg.update!({ body: })
+    chat_msg.update!({ body: params[:body] })
   end
 
   def not_authorized
@@ -57,8 +56,6 @@ class Api::V1::ChatMessagesController < ApplicationController
   end
 
   def pundit_user
-    if current_user
-      Profile.find_by(conference: @conference.id, email: current_user[:info][:email])
-    end
+    Profile.find_by(user_id: current_user_model.id, conference_id: conference&.id)
   end
 end

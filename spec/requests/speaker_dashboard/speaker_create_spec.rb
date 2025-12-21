@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
-  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
+  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
   context 'user already logged in' do
     context "user doesn't registered" do
       before do

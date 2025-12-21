@@ -5,14 +5,11 @@ describe TalksController, type: :request do
     {
       userinfo: {
         info: {
-          email: 'alice@example.com',
-          extra: {
-            sub: 'aaa'
-          }
+          email: 'alice@example.com'
         },
         extra: {
           raw_info: {
-            sub: 'aaa',
+            sub: 'google-oauth2|alice',
             'https://cloudnativedays.jp/roles' => roles
           }
         }
@@ -164,7 +161,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -344,7 +341,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -434,7 +431,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => [] } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do

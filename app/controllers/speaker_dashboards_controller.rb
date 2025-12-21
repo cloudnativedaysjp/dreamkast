@@ -12,7 +12,7 @@ class SpeakerDashboardsController < ApplicationController
   helper_method :sponsor?
 
   def sponsor?
-    @conference.sponsor_contacts.where(email: current_user[:info][:email]).present?
+    @conference.sponsor_contacts.where(user_id: current_user_model.id).present?
   end
 
   def logged_in_using_omniauth?

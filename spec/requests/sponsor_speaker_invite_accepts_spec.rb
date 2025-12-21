@@ -74,7 +74,8 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
     end
 
     context 'when sponsor contact already exists' do
-      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, email: 'invited@example.com') }
+      let!(:existing_user) { User.find_or_create_by!(sub: 'auth0|123') { |u| u.email = 'invited@example.com' } }
+      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, user_id: existing_user.id) }
 
       it 'uses the existing contact and creates speaker and accept records' do
         expect {
@@ -90,12 +91,15 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
     end
 
     context 'when speaker already exists' do
-      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, email: 'invited@example.com') }
+      let!(:existing_user) { User.find_or_create_by!(sub: 'auth0|123') { |u| u.email = 'invited@example.com' } }
+      let!(:existing_contact) { create(:sponsor_contact, conference:, sponsor:, user_id: existing_user.id) }
       let!(:existing_speaker) {
         create(:speaker,
                conference:,
                      sponsor:,
                      email: 'invited@example.com',
+                     sub: 'auth0|123',
+                     user_id: existing_user.id,
                      name: 'Existing Speaker',
                      profile: 'Existing profile',
                      company: 'Existing Company',

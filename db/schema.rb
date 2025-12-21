@@ -10,11 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
-    t.string "sub"
-    t.string "email"
     t.string "name"
     t.string "twitter_id"
     t.string "github_id"
@@ -22,7 +20,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "show_on_team_page"
+    t.bigint "user_id", null: false
     t.index ["conference_id"], name: "index_admin_profiles_on_conference_id"
+    t.index ["user_id"], name: "fk_rails_bdfe0f01ea"
   end
 
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -274,8 +274,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "sub", collation: "utf8mb4_0900_ai_ci"
-    t.string "email", collation: "utf8mb4_0900_ai_ci"
     t.string "last_name", collation: "utf8mb4_0900_ai_ci"
     t.string "first_name", collation: "utf8mb4_0900_ai_ci"
     t.integer "industry_id"
@@ -305,6 +303,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
     t.string "calendar_unique_code"
     t.integer "occupation_id", default: 34
     t.string "participation"
+    t.bigint "user_id", null: false
+    t.index ["user_id", "conference_id"], name: "index_profiles_on_user_id_and_conference_id", unique: true
   end
 
   create_table "proposal_item_configs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -422,12 +422,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
     t.datetime "updated_at", precision: nil, null: false
     t.text "avatar_data", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.integer "conference_id"
-    t.text "email", size: :medium, collation: "utf8mb4_0900_ai_ci"
-    t.text "sub", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.text "additional_documents"
     t.string "name_mother_tongue"
     t.bigint "sponsor_id"
-    t.index ["conference_id", "email"], name: "index_speakers_on_conference_id_and_email", length: { email: 255 }
+    t.bigint "user_id"
+    t.index ["conference_id"], name: "index_speakers_on_conference_id_and_email"
+    t.index ["user_id"], name: "fk_rails_13b87ec825"
   end
 
   create_table "sponsor_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -469,14 +469,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
 
   create_table "sponsor_contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.string "sub"
-    t.string "email"
     t.bigint "conference_id", null: false
     t.bigint "sponsor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["conference_id"], name: "index_sponsor_contacts_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_contacts_on_sponsor_id"
+    t.index ["user_id"], name: "fk_rails_514d95a3b1"
   end
 
   create_table "sponsor_speaker_invite_accepts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -680,6 +680,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
     t.index ["conference_id"], name: "index_tracks_on_conference_id"
   end
 
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "sub", limit: 250, null: false
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sub"], name: "index_users_on_sub", unique: true
+  end
+
   create_table "video_registrations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "talk_id", null: false
     t.string "url"
@@ -715,6 +723,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   end
 
   add_foreign_key "admin_profiles", "conferences"
+  add_foreign_key "admin_profiles", "users"
   add_foreign_key "announcements", "conferences"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
@@ -748,6 +757,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   add_foreign_key "media_package_v2_channel_groups", "streamings"
   add_foreign_key "media_package_v2_channels", "streamings"
   add_foreign_key "media_package_v2_origin_endpoints", "streamings"
+  add_foreign_key "profiles", "users"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "public_profiles", "profiles"
@@ -761,6 +771,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   add_foreign_key "speaker_invitation_accepts", "talks"
   add_foreign_key "speaker_invitations", "conferences"
   add_foreign_key "speaker_invitations", "talks"
+  add_foreign_key "speakers", "users"
   add_foreign_key "sponsor_attachments", "sponsors"
   add_foreign_key "sponsor_contact_invite_accepts", "conferences"
   add_foreign_key "sponsor_contact_invite_accepts", "sponsor_contact_invites"
@@ -769,6 +780,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_085516) do
   add_foreign_key "sponsor_contact_invites", "conferences"
   add_foreign_key "sponsor_contact_invites", "sponsors"
   add_foreign_key "sponsor_contacts", "conferences"
+  add_foreign_key "sponsor_contacts", "users"
   add_foreign_key "sponsor_speaker_invite_accepts", "conferences"
   add_foreign_key "sponsor_speaker_invite_accepts", "speakers"
   add_foreign_key "sponsor_speaker_invite_accepts", "sponsor_contacts"

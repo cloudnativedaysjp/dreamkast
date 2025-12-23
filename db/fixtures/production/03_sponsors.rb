@@ -145,5 +145,60 @@ SponsorType.seed(
     conference_id: 14,
     name: "CM",
     order: 5,
+  },
+    # CNK
+  {
+    id: 95,
+    conference_id: 15,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 96,
+    conference_id: 15,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 97,
+    conference_id: 15,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 98,
+    conference_id: 15,
+    name: "Booth",
+    order: 4,
+  },
+  {
+    id: 99,
+    conference_id: 15,
+    name: "Logo",
+    order: 5,
+  },
+  {
+    id: 100,
+    conference_id: 15,
+    name: "Party",
+    order: 5,
+  },
+  {
+    id: 101,
+    conference_id: 15,
+    name: "CM",
+    order: 5,
+  },
+  {
+    id: 102,
+    conference_id: 15,
+    name: "Support",
+    order: 5,
+  },
+  {
+    id: 103,
+    conference_id: 15,
+    name: "Media",
+    order: 5,
   }
 )

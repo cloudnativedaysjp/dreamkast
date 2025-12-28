@@ -26,7 +26,7 @@
     <%= text_area_tag "speaker[talks_attributes][#{form_index}][abstract]", f.object.abstract, class: "form-control abstract" %>
   </div>
 
-  <% unless ['cicd2021', 'o11y2022', 'cnsec2022', 'cicd2023'].include?(@conference.abbr) %>
+  <% unless ['cicd2021'].include?(@conference.abbr) %>
     <div class="field pb-3">
       <%= label_tag "speaker_talks_attributes_#{form_index}_talk_category_id", "主なカテゴリ - Main Category（★★）", class: 'form-label' %>*
       <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>

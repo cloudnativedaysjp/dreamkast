@@ -66,30 +66,80 @@
       </div>
     </div>
 
-    <div class="row mb-4">
-      <div class="col-12 col-md-4">
-        <%= form.label :company_postal_code, "勤務先住所: 郵便番号", class: "form-label form-required font-weight-bold" %>
-        <%= form.text_field :company_postal_code, required: true, class: "form-control rounded-0", minlength: "7", maxlength: "8", pattern: "(\\d{7}|\\d{3}-\\d{4})", placeholder: "1000001", autocomplete: "postal-code" %>
+    <!-- 郵便番号と住所のセクションをStimulus Controllerでラップ -->
+    <div data-controller="postal-code">
+      <div class="row mb-4">
+        <div class="col-12 col-md-4">
+          <%= form.label :company_postal_code, "勤務先住所: 郵便番号", class: "form-label form-required font-weight-bold" %>
+          <%= form.text_field :company_postal_code,
+              required: true,
+              class: "form-control rounded-0",
+              minlength: "7",
+              maxlength: "8",
+              pattern: "(\\d{7}|\\d{3}-\\d{4})",
+              placeholder: "1000001",
+              autocomplete: "postal-code",
+              data: {
+                postal_code_target: "postalCode",
+                action: "input->postal-code#search"
+              } %>
+
+          <!-- ローディング表示 -->
+          <div class="d-none mt-2" data-postal-code-target="loading">
+            <small class="text-muted">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              住所を検索中...
+            </small>
+          </div>
+
+          <!-- エラー表示 -->
+          <div class="d-none mt-2 text-danger" data-postal-code-target="error" role="alert"></div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <%= form.label :company_address_level1, "都道府県", class: "form-label form-required font-weight-bold" %>
+          <%= form.collection_select :company_address_level1,
+              CompanyAddressLevel1.all,
+              :name,
+              :name,
+              {prompt: ""},
+              {
+                required: true,
+                class: "form-control rounded-0",
+                autocomplete: "address-level1",
+                data: { postal_code_target: "prefecture" }
+              } %>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <%= form.label :company_address_level2, "市区町村", class: "form-label form-required font-weight-bold" %>
+          <%= form.text_field :company_address_level2,
+              required: true,
+              class: "form-control rounded-0",
+              placeholder: "港区",
+              autocomplete: "address-level2",
+              data: { postal_code_target: "city" } %>
+        </div>
       </div>
-      <div class="col-12 col-md-4">
-        <%= form.label :company_address_level1, "都道府県", class: "form-label form-required font-weight-bold" %>
-        <%= form.collection_select :company_address_level1, CompanyAddressLevel1.all, :name, :name, {prompt: ""}, {required: true, class: "form-control rounded-0", autocomplete: "address-level1"} %>
-      </div>
-      <div class="col-12 col-md-4">
-         <%= form.label :company_address_level2, "市区町村", class: "form-label form-required font-weight-bold" %>
-         <%= form.text_field :company_address_level2, required: true, class: "form-control rounded-0", placeholder: "港区", autocomplete: "address-level2" %>
-      </div>
-    </div>
-    
-    <div class="row mb-4">
+
+      <div class="row mb-4">
         <div class="col-12 col-md-6">
-            <%= form.label :company_address_line1, "町名・番地", class: "form-label form-required font-weight-bold"  %>
-            <%= form.text_field :company_address_line1, required: true, class: "form-control rounded-0", placeholder: "赤坂1−2−3", autocomplete: "address-line1" %>
+          <%= form.label :company_address_line1, "町名・番地", class: "form-label form-required font-weight-bold"  %>
+          <%= form.text_field :company_address_line1,
+              required: true,
+              class: "form-control rounded-0",
+              placeholder: "赤坂1−2−3",
+              autocomplete: "address-line1",
+              data: { postal_code_target: "addressLine1" } %>
         </div>
         <div class="col-12 col-md-6">
-            <%= form.label :company_address_line2, "建物名など", class: "form-label font-weight-bold" %>
-            <%= form.text_field :company_address_line2, required: false, class: "form-control rounded-0", autocomplete: "address-line2"%>
+          <%= form.label :company_address_line2, "建物名など", class: "form-label font-weight-bold" %>
+          <%= form.text_field :company_address_line2,
+              required: false,
+              class: "form-control rounded-0",
+              autocomplete: "address-line2" %>
         </div>
+      </div>
     </div>
 
     <div class="row mb-4">

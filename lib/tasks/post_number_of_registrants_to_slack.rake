@@ -52,7 +52,6 @@ namespace :util do
         else
           client.chat_postMessage(channel: "##{conference.abbr}", text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
         end
-        p resp
       end
     end
   end

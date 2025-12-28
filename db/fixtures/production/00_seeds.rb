@@ -850,7 +850,6 @@ if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
   import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
   import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
   #import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))

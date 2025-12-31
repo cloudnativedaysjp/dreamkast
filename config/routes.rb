@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index, :edit, :update]
       get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
+      resources :session_questions, only: [:index, :show]
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]

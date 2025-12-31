@@ -1,0 +1,75 @@
+<%= render 'admin/layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-12">
+      <%= link_to '← 一覧に戻る', admin_session_questions_path(event: params[:event]), class: 'btn btn-secondary mb-3' %>
+      
+      <h2>質問詳細</h2>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4>質問 #<%= @session_question.id %></h4>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= simple_format(@session_question.body) %></p>
+          
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <strong>質問者:</strong> <%= profile_name(@session_question.profile) %><br>
+              <strong>セッション:</strong> <%= @session_question.talk.title %><br>
+              <strong>トラック:</strong> <%= @session_question.talk.track&.name || '未設定' %><br>
+              <strong>作成日時:</strong> <%= @session_question.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+            </div>
+            <div class="col-md-6">
+              <strong>投票数:</strong> <%= @session_question.votes_count %><br>
+              <strong>回答数:</strong> <%= @session_question.session_question_answers.count %><br>
+              <strong>カンファレンス:</strong> <%= @session_question.conference.name %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>回答一覧</h3>
+      <% if @session_question.session_question_answers.any? %>
+        <% @session_question.session_question_answers.order_by_time.each do |answer| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <p class="card-text"><%= simple_format(answer.body) %></p>
+              <div class="text-muted">
+                <strong>回答者:</strong> <%= answer.speaker.name %><br>
+                <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info">
+          まだ回答がありません
+        </div>
+      <% end %>
+
+      <h3 class="mt-4">投票者一覧</h3>
+      <% if @session_question.session_question_votes.any? %>
+        <ul class="list-group">
+          <% @session_question.session_question_votes.includes(:profile).each do |vote| %>
+            <li class="list-group-item">
+              <%= profile_name(vote.profile) %>
+              <small class="text-muted">
+                (<%= vote.created_at.strftime('%Y/%m/%d %H:%M:%S') %>)
+              </small>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="alert alert-info">
+          まだ投票がありません
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

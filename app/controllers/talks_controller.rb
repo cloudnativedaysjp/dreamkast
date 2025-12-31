@@ -25,6 +25,11 @@ class TalksController < ApplicationController
     end
 
     raise(ActiveRecord::RecordNotFound) unless @talk
+
+    # QA一覧を取得（投票数順でソート）
+    @session_questions = @talk.session_questions
+      .includes(:profile, :session_question_answers, :session_question_votes)
+      .order_by_votes
   end
 
   def index

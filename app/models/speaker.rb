@@ -11,6 +11,7 @@ class Speaker < ApplicationRecord
   has_many :speaker_announcement_middles
   has_many :speaker_announcements, through: :speaker_announcement_middles
   has_many :sponsor_speaker_invite_accepts, dependent: :destroy
+  has_many :session_question_answers, dependent: :destroy
 
   before_validation :ensure_user, on: :create
 

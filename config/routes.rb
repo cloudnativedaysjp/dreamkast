@@ -15,7 +15,14 @@ Rails.application.routes.draw do
     namespace 'v1' do
       get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:index, :show], path: 'events'
-      resources :talks, only: [:index, :show, :update]
+      resources :talks, only: [:index, :show, :update] do
+        resources :session_questions, only: [:index, :create] do
+          member do
+            post :vote
+          end
+          resources :session_question_answers, only: [:index, :create]
+        end
+      end
       resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]

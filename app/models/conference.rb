@@ -47,6 +47,8 @@ class Conference < ApplicationRecord
   has_many :proposal_items
   has_many :profiles
   has_many :stats_of_registrants
+  has_many :session_questions, dependent: :destroy
+  has_many :session_question_answers, dependent: :destroy
   has_many :admin_profiles
   has_many :keynote_speaker_invitations
   has_many :media_package_harvest_jobs

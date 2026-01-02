@@ -1,5 +1,6 @@
 class SpeakerDashboardsController < ApplicationController
   include SecuredSpeaker
+  include Admin::TalkTableHelper
   before_action :set_speaker
   before_action :set_conference
 
@@ -54,19 +55,18 @@ class SpeakerDashboardsController < ApplicationController
     if answer.save
       # ActionCableでブロードキャスト
       broadcast_answer_created(answer)
-      flash[:notice] = '回答を投稿しました'
+      flash.now[:notice] = '回答を投稿しました'
+      @question.reload # 回答を再読み込み
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
+      end
     else
-      flash[:alert] = answer.errors.full_messages.join(', ')
-    end
-
-    # リダイレクト先を判定（refererから判断、デフォルトはトップ）
-    referer = request.referer
-    if referer&.include?('questions')
-      redirect_to speaker_dashboard_questions_path(event: @conference.abbr)
-    elsif referer&.include?('talks')
-      redirect_to speaker_dashboard_talks_path(event: @conference.abbr)
-    else
-      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      flash.now[:alert] = answer.errors.full_messages.join(', ')
+      respond_to do |format|
+        format.turbo_stream { render :create_answer_error, status: :unprocessable_entity }
+        format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
+      end
     end
   end
 
@@ -111,7 +111,7 @@ class SpeakerDashboardsController < ApplicationController
 
   private
 
-  helper_method :sponsor?
+  helper_method :sponsor?, :turbo_stream_flash
 
   def sponsor?
     @conference.sponsor_contacts.where(user_id: current_user_model.id).present?
@@ -119,6 +119,10 @@ class SpeakerDashboardsController < ApplicationController
 
   def logged_in_using_omniauth?
     current_user
+  end
+
+  def turbo_stream_flash
+    turbo_stream.append('flashes', partial: 'application/flash')
   end
 
   def broadcast_answer_created(answer)

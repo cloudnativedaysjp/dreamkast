@@ -2,14 +2,8 @@
   <%= render 'speaker_dashboards/navigator' %>
   <div class="container-fluid right-pain">
     <h1 class="text-center py-3 entry">質問一覧</h1>
+    <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem; z-index: 9999;"></div>
     <div class="row speaker-dashboard-form">
-      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
-          <%= message %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <% end %>
-
       <% if @speaker.present? %>
         <div class="col-12 my-4">
           <div class="card">
@@ -45,58 +39,14 @@
               </div>
               
               <hr>
-              <% if @all_questions.present? && @all_questions.any? %>
-                <% @all_questions.each do |question| %>
-                  <div class="mb-4 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
-                    <div class="mb-2">
-                      <strong>セッション:</strong> 
-                      <%= link_to question.talk.title, talk_path(id: question.talk.id, event: @conference&.abbr || event_name), target: '_blank' %>
-                    </div>
-                    
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                      <div class="flex-grow-1">
-                        <strong>Q:</strong> <%= simple_format(question.body) %>
-                        <div class="text-muted small mt-1">
-                          <% profile = question.profile %>
-                          <% profile_name = if profile.public_profile&.nickname.present?
-                                              profile.public_profile.nickname
-                                            elsif profile.last_name.present? || profile.first_name.present?
-                                              "#{profile.last_name} #{profile.first_name}".strip
-                                            else
-                                              '匿名ユーザー'
-                                            end %>
-                          質問者: <%= profile_name %>
-                          <span class="ms-2">投票数: <%= question.votes_count %></span>
-                          <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <% if question.session_question_answers.any? %>
-                      <div class="mt-2 ms-3">
-                        <% question.session_question_answers.order_by_time.each do |answer| %>
-                          <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
-                            <strong>A:</strong> <%= simple_format(answer.body) %>
-                            <div class="text-muted small mt-1">
-                              回答者: <%= answer.speaker.name %>
-                              <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                            </div>
-                          </div>
-                        <% end %>
-                      </div>
-                    <% end %>
-
-                    <!-- 回答フォーム -->
-                    <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: question.talk.id, session_question_id: question.id, event: @conference&.abbr || event_name), method: :post, local: true, class: 'mt-2' do |f| %>
-                      <div class="mb-2">
-                        <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください（最大512文字）', maxlength: 512, required: true %>
-                      </div>
-                      <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
-                    <% end %>
-                  </div>
+              <%= turbo_frame_tag "questions_list" do %>
+                <% if @all_questions.present? && @all_questions.any? %>
+                  <% @all_questions.each do |question| %>
+                    <%= render 'speaker_dashboards/question_item', question: question %>
+                  <% end %>
+                <% else %>
+                  <p class="text-muted">まだ質問がありません</p>
                 <% end %>
-              <% else %>
-                <p class="text-muted">まだ質問がありません</p>
               <% end %>
             </div>
           </div>

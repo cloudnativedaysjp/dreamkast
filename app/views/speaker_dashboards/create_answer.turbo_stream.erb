@@ -1,0 +1,22 @@
+<%= turbo_stream.append "answers_#{@question.id}" do %>
+  <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+    <strong>A:</strong> <%= simple_format(@question.session_question_answers.last.body) %>
+    <div class="text-muted small mt-1">
+      回答者: <%= @speaker.name %>
+      <span class="ms-2"><%= @question.session_question_answers.last.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+    </div>
+  </div>
+<% end %>
+
+<%= turbo_stream.replace "answer_form_#{@question.id}" do %>
+  <%= turbo_frame_tag "answer_form_#{@question.id}" do %>
+    <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: @talk.id, session_question_id: @question.id, event: @conference.abbr), method: :post, data: { turbo_frame: "_top" }, class: 'mt-2' do |f| %>
+      <div class="mb-2">
+        <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください（最大512文字）', maxlength: 512, required: true %>
+      </div>
+      <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream_flash %>

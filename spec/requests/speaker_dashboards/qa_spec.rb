@@ -38,12 +38,14 @@ describe SpeakerDashboardsController, type: :request do
 
       it 'excludes hidden questions' do
         get "/cndt2020/speaker_dashboard"
-        expect(response.body).not_to include(hidden_question.body)
+        # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+        expect(response.body).not_to include("question_#{hidden_question.id}")
       end
 
       it 'excludes answered questions' do
         get "/cndt2020/speaker_dashboard"
-        expect(response.body).not_to include(answered_question.body)
+        # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+        expect(response.body).not_to include("question_#{answered_question.id}")
       end
     end
   end
@@ -62,7 +64,8 @@ describe SpeakerDashboardsController, type: :request do
 
     it 'excludes hidden questions' do
       get "/cndt2020/speaker_dashboard/questions"
-      expect(response.body).not_to include(hidden_question.body)
+      # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+      expect(response.body).not_to include("question_#{hidden_question.id}")
     end
 
     context 'with unanswered filter' do

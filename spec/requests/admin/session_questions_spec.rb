@@ -63,8 +63,8 @@ describe Admin::SessionQuestionsController, type: :request do
 
       it 'sorts by votes_count desc' do
         get "/cndt2020/admin/session_questions?sort=votes"
-        # HTMLレスポンスなので、bodyの順序を確認
-        expect(response.body.index(question2.body)).to be < response.body.index(question1.body)
+        # HTMLレスポンスなので、IDの順序を確認（votes_countが多いquestion2が先に表示される）
+        expect(response.body.index(">#{question2.id}</td>")).to be < response.body.index(">#{question1.id}</td>")
       end
     end
   end

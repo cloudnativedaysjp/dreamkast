@@ -47,7 +47,7 @@ describe TalksController, type: :request do
 
           expect(response).to redirect_to("/cndt2020/talks/#{talk.id}")
           follow_redirect!
-          expect(response.body).to include("can't be blank")
+          expect(response.body).to include("Bodyを入力してください")
         end
       end
     end

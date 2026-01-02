@@ -134,7 +134,13 @@ class SpeakerDashboardsController < ApplicationController
 
       if talk_ids.any?
         # セッションでフィルタ
-        filtered_talk_ids = params[:talk_id].present? ? [params[:talk_id].to_i] : talk_ids
+        # params[:talk_id]が存在し、かつスピーカーのtalk_idsに含まれている場合のみ使用
+        requested_talk_id = params[:talk_id].present? ? params[:talk_id].to_i : nil
+        filtered_talk_ids = if requested_talk_id && talk_ids.include?(requested_talk_id)
+                              [requested_talk_id]
+                            else
+                              talk_ids
+                            end
 
         @all_questions = @conference.session_questions
                                     .visible

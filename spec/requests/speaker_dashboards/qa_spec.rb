@@ -158,7 +158,8 @@ describe SpeakerDashboardsController, type: :request do
     context 'when deleting own answer' do
       it 'deletes the answer successfully' do
         expect {
-          delete "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/answers/#{answer.id}"
+          delete "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/answers/#{answer.id}",
+                 headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
         }.to change { SessionQuestionAnswer.count }.by(-1)
 
         expect(response).to have_http_status(:ok)
@@ -179,9 +180,10 @@ describe SpeakerDashboardsController, type: :request do
       it 'returns error' do
         delete "/cndt2020/speaker_dashboard/talks/#{other_answer.session_question.talk.id}/session_questions/#{other_answer.session_question.id}/answers/#{other_answer.id}"
 
-        expect(response).to redirect_to("/cndt2020/speaker_dashboard/questions")
+        # other_talkは@speakerに関連付けられていないため、speaker_dashboard_pathにリダイレクトされる
+        expect(response).to redirect_to("/cndt2020/speaker_dashboard")
         follow_redirect!
-        expect(response.body).to include('この回答を削除する権限がありません')
+        expect(response.body).to include('このセッションの登壇者ではありません')
       end
     end
   end

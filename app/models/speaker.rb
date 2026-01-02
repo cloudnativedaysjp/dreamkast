@@ -76,7 +76,7 @@ class Speaker < ApplicationRecord
   end
 
   def has_accepted_proposal?
-    talks.find { |e| e.proposal.status == 'accepted' }.present?
+    talks.find { |e| e.proposal&.status == 'accepted' }.present?
   end
 
   def attendee_profile

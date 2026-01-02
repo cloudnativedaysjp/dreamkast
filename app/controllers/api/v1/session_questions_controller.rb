@@ -64,7 +64,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:body)
+    params.fetch(:body, '')
   end
 
   def set_talk

@@ -33,7 +33,7 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:body)
+    params.fetch(:body, '')
   end
 
   def set_talk

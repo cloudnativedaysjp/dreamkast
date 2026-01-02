@@ -27,9 +27,41 @@ class TalksController < ApplicationController
     raise(ActiveRecord::RecordNotFound) unless @talk
 
     # QA一覧を取得（投票数順でソート）
+    # 常に取得（質問がない場合も空配列を返す）
     @session_questions = @talk.session_questions
       .includes(:profile, :session_question_answers, :session_question_votes)
       .order_by_votes
+  end
+
+  def create_question
+    @conference = Conference.find_by(abbr: event_name)
+    @talk = Talk.find_by(id: params[:talk_id], conference_id: conference.id)
+    
+    unless @talk
+      flash[:alert] = 'セッションが見つかりません'
+      redirect_to talk_path(id: params[:talk_id], event: event_name)
+      return
+    end
+
+    unless @profile
+      flash[:alert] = 'ログインが必要です'
+      redirect_to talk_path(id: params[:talk_id], event: event_name)
+      return
+    end
+
+    question = @talk.session_questions.build(
+      conference_id: @talk.conference_id,
+      profile_id: @profile.id,
+      body: params[:body]
+    )
+
+    if question.save
+      flash[:notice] = '質問を投稿しました'
+    else
+      flash[:alert] = question.errors.full_messages.join(', ')
+    end
+
+    redirect_to talk_path(id: params[:talk_id], event: event_name)
   end
 
   def index

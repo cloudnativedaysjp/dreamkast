@@ -87,23 +87,59 @@
 
   <% if @conference.opened? || @conference.closed? || @conference.archived? %>
     <h5 class="card-title">
-      このセッションへのQA
+      このセッションへの質問
     </h5>
 
     <div class="card-text qa">
-      <ul>
-        <% talk.qa_messages.each do |q| %>
-          <li><%= q.created_at.strftime('%H:%M:%S') %> <%= q.body %></li>
-          <% child_messages = q.child_messages %>
-          <% if child_messages.length > 0 %>
-            <ul>
-              <% q.child_messages.each do |child| %>
-                <li><%= child.created_at.strftime('%H:%M:%S') %> <%= child.body %></li>
-              <% end %>
-            </ul>
-          <% end %>
+      <% questions = talk.session_questions.includes(:profile, :session_question_answers, :session_question_votes).order_by_votes %>
+      <% if questions.any? %>
+        <% questions.each do |question| %>
+          <div class="mb-3 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="flex-grow-1">
+                <strong>Q:</strong> <%= simple_format(question.body) %>
+                <div class="text-muted small mt-1">
+                  <% profile = question.profile %>
+                  <% profile_name = if profile.public_profile&.nickname.present?
+                                      profile.public_profile.nickname
+                                    elsif profile.last_name.present? || profile.first_name.present?
+                                      "#{profile.last_name} #{profile.first_name}".strip
+                                    else
+                                      '匿名ユーザー'
+                                    end %>
+                  質問者: <%= profile_name %>
+                  <span class="ms-2">投票数: <%= question.votes_count %></span>
+                  <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                </div>
+              </div>
+            </div>
+
+            <% if question.session_question_answers.any? %>
+              <div class="mt-2 ms-3">
+                <% question.session_question_answers.order_by_time.each do |answer| %>
+                  <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+                    <strong>A:</strong> <%= simple_format(answer.body) %>
+                    <div class="text-muted small mt-1">
+                      回答者: <%= answer.speaker.name %>
+                      <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+
+            <!-- 回答フォーム -->
+            <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: talk.id, session_question_id: question.id, event: @conference.abbr), method: :post, local: true, class: 'mt-2' do |f| %>
+              <div class="mb-2">
+                <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください（最大512文字）', maxlength: 512, required: true %>
+              </div>
+              <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
+            <% end %>
+          </div>
         <% end %>
-      </ul>
+      <% else %>
+        <p class="text-muted">まだ質問がありません</p>
+      <% end %>
     </div>
   <% end %>
 </div>

@@ -1,8 +1,23 @@
-<% if @session_questions.present? %>
-  <div class="col-12 my-4 pt-4" style="border-top: 2px solid #CCC">
-    <h4>Q&A</h4>
-    <p class="text-muted">このセッションに関する質問と回答</p>
-    
+<div class="col-12 my-4 pt-4" style="border-top: 2px solid #CCC">
+  <h4>Q&A</h4>
+  <p class="text-muted">このセッションに関する質問と回答</p>
+  
+  <% if logged_in? && @profile.present? %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">質問を投稿</h5>
+        <%= form_with url: create_question_talk_path(@talk, event: event_name), method: :post, local: true do |f| %>
+          <div class="mb-3">
+            <%= f.text_area :body, class: 'form-control', rows: 3, placeholder: '質問を入力してください（最大512文字）', maxlength: 512, required: true %>
+            <small class="form-text text-muted">最大512文字まで入力できます</small>
+          </div>
+          <%= f.submit '質問を投稿', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @session_questions.present? %>
     <% @session_questions.each do |question| %>
       <div class="card mb-3">
         <div class="card-body">
@@ -55,5 +70,9 @@
         </div>
       </div>
     <% end %>
-  </div>
-<% end %>
+  <% else %>
+    <div class="alert alert-info">
+      まだ質問がありません。最初の質問を投稿してみましょう！
+    </div>
+  <% end %>
+</div>

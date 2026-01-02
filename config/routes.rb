@@ -122,6 +122,7 @@ Rails.application.routes.draw do
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
     get '/speakers/guidance' => 'speaker_dashboard/speakers#guidance'
     get '/speaker_dashboard' => 'speaker_dashboards#show'
+    post '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers' => 'speaker_dashboards#create_answer', as: 'speaker_dashboard_talk_session_question_answer'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
       resources :video_registrations, only: [:new, :create, :edit, :update]
@@ -151,7 +152,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :talks, only: [:show, :index]
+    resources :talks, only: [:show, :index] do
+      member do
+        post :create_question
+      end
+    end
     resources :proposals, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'

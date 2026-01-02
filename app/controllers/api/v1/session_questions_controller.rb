@@ -16,13 +16,10 @@ class Api::V1::SessionQuestionsController < ApplicationController
   end
 
   def create
-    @params ||= JSON.parse(request.body.read, { symbolize_names: true })
-    body = @params[:body]
-
     question = @talk.session_questions.build(
       conference_id: @talk.conference_id,
       profile_id: @profile.id,
-      body:
+      body: question_params
     )
 
     if question.save
@@ -65,6 +62,10 @@ class Api::V1::SessionQuestionsController < ApplicationController
   end
 
   private
+
+  def question_params
+    params.require(:body)
+  end
 
   def set_talk
     @talk = Talk.find(params[:talk_id])

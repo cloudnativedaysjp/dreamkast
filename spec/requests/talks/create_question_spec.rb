@@ -73,7 +73,7 @@ describe TalksController, type: :request do
       let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
 
       before do
-        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        # original method is already defined in top-level before block
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
           if arg[1] == :userinfo
             { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }

@@ -91,7 +91,7 @@
     </h5>
 
     <div class="card-text qa">
-      <% questions = talk.session_questions.includes(:profile, :session_question_answers, :session_question_votes).order_by_votes %>
+      <% questions = talk.session_questions.includes(:profile, :session_question_answers, :session_question_votes).order_by_time %>
       <% if questions.any? %>
         <% questions.each do |question| %>
           <div class="mb-3 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">

@@ -26,26 +26,26 @@ class TalksController < ApplicationController
 
     raise(ActiveRecord::RecordNotFound) unless @talk
 
-    # QA一覧を取得（投票数順でソート）
+    # QA一覧を取得（新しい順でソート）
     # 常に取得（質問がない場合も空配列を返す）
     @session_questions = @talk.session_questions
       .includes(:profile, :session_question_answers, :session_question_votes)
-      .order_by_votes
+      .order_by_time
   end
 
   def create_question
     @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:talk_id], conference_id: conference.id)
+    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
     
     unless @talk
       flash[:alert] = 'セッションが見つかりません'
-      redirect_to talk_path(id: params[:talk_id], event: event_name)
+      redirect_to talk_path(id: params[:id], event: event_name)
       return
     end
 
     unless @profile
       flash[:alert] = 'ログインが必要です'
-      redirect_to talk_path(id: params[:talk_id], event: event_name)
+      redirect_to talk_path(id: params[:id], event: event_name)
       return
     end
 
@@ -56,12 +56,51 @@ class TalksController < ApplicationController
     )
 
     if question.save
+      # ActionCableでブロードキャスト
+      broadcast_question_created(question)
       flash[:notice] = '質問を投稿しました'
     else
       flash[:alert] = question.errors.full_messages.join(', ')
     end
 
-    redirect_to talk_path(id: params[:talk_id], event: event_name)
+    redirect_to talk_path(id: params[:id], event: event_name)
+  end
+
+  def broadcast_question_created(question)
+    begin
+      profile = question.profile
+      profile_name = if profile.public_profile&.nickname.present?
+                       profile.public_profile.nickname
+                     elsif profile.last_name.present? || profile.first_name.present?
+                       "#{profile.last_name} #{profile.first_name}".strip
+                     else
+                       '匿名ユーザー'
+                     end
+
+      question_data = {
+        id: question.id,
+        body: question.body,
+        profile: {
+          id: profile.id,
+          name: profile_name
+        },
+        votes_count: question.votes_count,
+        has_voted: false,
+        created_at: question.created_at.iso8601,
+        answers: []
+      }
+
+      ActionCable.server.broadcast(
+        "qa_talk_#{@talk.id}",
+        {
+          type: 'question_created',
+          question: question_data
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_created: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
   end
 
   def index

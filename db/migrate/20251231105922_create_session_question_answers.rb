@@ -4,7 +4,7 @@ class CreateSessionQuestionAnswers < ActiveRecord::Migration[8.0]
       t.bigint :session_question_id, null: false
       t.bigint :speaker_id, null: false
       t.bigint :conference_id, null: false
-      t.text :body, null: false, collation: 'utf8mb4_0900_ai_ci'
+      t.text :body, null: false
       t.timestamps null: false
     end
 

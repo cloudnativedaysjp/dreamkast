@@ -28,7 +28,9 @@ class TalksController < ApplicationController
 
     # QA一覧を取得（新しい順でソート）
     # 常に取得（質問がない場合も空配列を返す）
+    # 非表示の質問は除外
     @session_questions = @talk.session_questions
+      .visible
       .includes(:profile, :session_question_answers, :session_question_votes)
       .order_by_time
   end

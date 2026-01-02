@@ -1,11 +1,39 @@
-<%= turbo_stream.append "answers_#{@question.id}" do %>
-  <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
-    <strong>A:</strong> <%= simple_format(@question.session_question_answers.last.body) %>
-    <div class="text-muted small mt-1">
-      回答者: <%= @speaker.name %>
-      <span class="ms-2"><%= @question.session_question_answers.last.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-    </div>
-  </div>
+<%= turbo_stream.replace "answers_#{@question.id}" do %>
+  <%= turbo_frame_tag "answers_#{@question.id}" do %>
+    <% if @question.session_question_answers.any? %>
+      <div class="mt-2 ms-3">
+        <% @question.session_question_answers.order_by_time.each do |answer| %>
+          <%= turbo_frame_tag "answer_#{answer.id}" do %>
+            <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <strong>A:</strong> <%= simple_format(answer.body) %>
+                  <div class="text-muted small mt-1">
+                    回答者: <%= answer.speaker.name %>
+                    <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                  </div>
+                </div>
+                <% if @speaker && answer.speaker_id == @speaker.id %>
+                  <div class="ms-2">
+                    <%= button_to '削除', 
+                        speaker_dashboard_talk_session_question_answer_delete_path(
+                          talk_id: @talk.id, 
+                          session_question_id: @question.id, 
+                          id: answer.id, 
+                          event: @conference.abbr
+                        ), 
+                        method: :delete, 
+                        class: 'btn btn-sm btn-danger',
+                        data: { turbo_confirm: '本当に削除しますか？' } %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= turbo_stream.replace "answer_form_#{@question.id}" do %>

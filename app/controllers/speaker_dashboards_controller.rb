@@ -15,7 +15,9 @@ class SpeakerDashboardsController < ApplicationController
       
       if talk_ids.any?
         # 未回答の質問を取得（回答がない質問）
+        # 非表示の質問は除外
         @unanswered_questions = @conference.session_questions
+          .visible
           .where(talk_id: talk_ids)
           .left_joins(:session_question_answers)
           .where(session_question_answers: { id: nil })
@@ -70,6 +72,41 @@ class SpeakerDashboardsController < ApplicationController
     end
   end
 
+  def destroy_answer
+    @talk = @speaker.talks.find(params[:talk_id])
+    @question = @talk.session_questions.find(params[:session_question_id])
+    @answer = @question.session_question_answers.find(params[:id])
+
+    unless @talk.speakers.include?(@speaker)
+      flash[:alert] = 'このセッションの登壇者ではありません'
+      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      return
+    end
+
+    unless @answer.speaker_id == @speaker.id
+      flash[:alert] = 'この回答を削除する権限がありません'
+      redirect_to speaker_dashboard_questions_path(event: @conference.abbr)
+      return
+    end
+
+    if @answer.destroy
+      # ActionCableでブロードキャスト
+      broadcast_answer_deleted(@answer, @question)
+      flash.now[:notice] = '回答を削除しました'
+      @question.reload # 回答を再読み込み
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
+      end
+    else
+      flash.now[:alert] = '回答の削除に失敗しました'
+      respond_to do |format|
+        format.turbo_stream { render :destroy_answer_error, status: :unprocessable_entity }
+        format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
+      end
+    end
+  end
+
   def talks
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
@@ -88,6 +125,7 @@ class SpeakerDashboardsController < ApplicationController
         filtered_talk_ids = params[:talk_id].present? ? [params[:talk_id].to_i] : talk_ids
         
         @all_questions = @conference.session_questions
+          .visible
           .where(talk_id: filtered_talk_ids)
           .includes(:talk, :profile, :session_question_answers, :session_question_votes)
           .order_by_time
@@ -148,6 +186,24 @@ class SpeakerDashboardsController < ApplicationController
       )
     rescue StandardError => e
       Rails.logger.error "Error broadcasting answer_created: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
+  end
+
+  def broadcast_answer_deleted(answer, question)
+    begin
+      talk = question.talk
+      
+      ActionCable.server.broadcast(
+        "qa_talk_#{talk.id}",
+        {
+          type: 'answer_deleted',
+          question_id: question.id,
+          answer_id: answer.id
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting answer_deleted: #{e.class} - #{e.message}"
       # ブロードキャストエラーは無視して処理を続行
     end
   end

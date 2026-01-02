@@ -81,6 +81,9 @@
                 <td><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></td>
                 <td>
                   <%= link_to '詳細', admin_session_question_path(event: params[:event], id: question.id), class: 'btn btn-sm btn-primary' %>
+                  <% if question.hidden? %>
+                    <span class="badge bg-warning text-dark ms-1">非表示</span>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

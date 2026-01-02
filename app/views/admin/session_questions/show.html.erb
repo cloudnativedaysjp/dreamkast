@@ -12,8 +12,23 @@
       <h2>質問詳細</h2>
       
       <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
           <h4>質問 #<%= @session_question.id %></h4>
+          <div>
+            <% if @session_question.hidden? %>
+              <span class="badge bg-warning text-dark me-2">非表示</span>
+              <%= button_to '表示する', 
+                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]), 
+                  method: :patch, 
+                  class: 'btn btn-sm btn-success' %>
+            <% else %>
+              <%= button_to '非表示にする', 
+                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]), 
+                  method: :patch, 
+                  class: 'btn btn-sm btn-warning',
+                  data: { turbo_confirm: '本当に非表示にしますか？' } %>
+            <% end %>
+          </div>
         </div>
         <div class="card-body">
           <p class="card-text"><%= simple_format(@session_question.body) %></p>
@@ -39,10 +54,25 @@
         <% @session_question.session_question_answers.order_by_time.each do |answer| %>
           <div class="card mb-3">
             <div class="card-body">
-              <p class="card-text"><%= simple_format(answer.body) %></p>
-              <div class="text-muted">
-                <strong>回答者:</strong> <%= answer.speaker.name %><br>
-                <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <p class="card-text"><%= simple_format(answer.body) %></p>
+                  <div class="text-muted">
+                    <strong>回答者:</strong> <%= answer.speaker.name %><br>
+                    <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+                  </div>
+                </div>
+                <div class="ms-2">
+                  <%= button_to '削除', 
+                      admin_session_question_session_question_answer_path(
+                        @session_question, 
+                        answer, 
+                        event: params[:event]
+                      ), 
+                      method: :delete, 
+                      class: 'btn btn-sm btn-danger',
+                      data: { turbo_confirm: '本当に削除しますか？' } %>
+                </div>
               </div>
             </div>
           </div>

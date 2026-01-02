@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_31_105923) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_02_060406) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -396,8 +396,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_31_105923) do
     t.integer "votes_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "hidden", default: false, null: false
     t.index ["conference_id"], name: "index_session_questions_on_conference_id"
     t.index ["created_at"], name: "index_session_questions_on_created_at"
+    t.index ["hidden"], name: "index_session_questions_on_hidden"
     t.index ["profile_id"], name: "index_session_questions_on_profile_id"
     t.index ["talk_id"], name: "index_session_questions_on_talk_id"
     t.index ["votes_count"], name: "index_session_questions_on_votes_count"

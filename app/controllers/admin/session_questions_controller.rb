@@ -29,6 +29,19 @@ class Admin::SessionQuestionsController < ApplicationController
       .find(params[:id])
   end
 
+  def toggle_hidden
+    @session_question = @conference.session_questions.find(params[:id])
+    
+    if @session_question.update(hidden: !@session_question.hidden)
+      status = @session_question.hidden? ? '非表示' : '表示'
+      flash[:notice] = "質問を#{status}にしました"
+    else
+      flash[:alert] = '状態の変更に失敗しました'
+    end
+
+    redirect_to admin_session_question_path(@session_question, event: params[:event])
+  end
+
   private
 
   def profile_name(profile)

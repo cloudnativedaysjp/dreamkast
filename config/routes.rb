@@ -75,7 +75,12 @@ Rails.application.routes.draw do
       delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index, :edit, :update]
       get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
-      resources :session_questions, only: [:index, :show]
+      resources :session_questions, only: [:index, :show] do
+        member do
+          patch :toggle_hidden
+        end
+        resources :session_question_answers, only: [:destroy], path: 'answers'
+      end
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
@@ -125,6 +130,7 @@ Rails.application.routes.draw do
     get '/speaker_dashboard/talks' => 'speaker_dashboards#talks', as: 'speaker_dashboard_talks'
     get '/speaker_dashboard/questions' => 'speaker_dashboards#questions', as: 'speaker_dashboard_questions'
     post '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers' => 'speaker_dashboards#create_answer', as: 'speaker_dashboard_talk_session_question_answer'
+    delete '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers/:id' => 'speaker_dashboards#destroy_answer', as: 'speaker_dashboard_talk_session_question_answer_delete'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
       resources :video_registrations, only: [:new, :create, :edit, :update]

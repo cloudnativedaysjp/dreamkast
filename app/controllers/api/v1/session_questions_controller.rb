@@ -6,7 +6,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    questions = @talk.session_questions
+    questions = @talk.session_questions.visible
     questions = questions.order_by_votes if params[:sort] == 'votes'
     questions = questions.order_by_time if params[:sort] == 'time'
 
@@ -35,7 +35,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
   end
 
   def vote
-    question = @talk.session_questions.find(params[:id])
+    question = @talk.session_questions.visible.find(params[:id])
 
     begin
       vote = question.session_question_votes.find_or_initialize_by(profile_id: @profile.id)

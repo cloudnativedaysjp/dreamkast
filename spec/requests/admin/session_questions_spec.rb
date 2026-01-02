@@ -51,7 +51,9 @@ describe Admin::SessionQuestionsController, type: :request do
       it 'filters questions by talk_id' do
         get "/cndt2020/admin/session_questions?talk_id=#{talk.id}"
         expect(response.body).to include(question1.body)
-        expect(response.body).not_to include(other_question.body)
+        # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+        expect(response.body).to include(">#{question1.id}</td>")
+        expect(response.body).not_to include(">#{other_question.id}</td>")
       end
     end
 

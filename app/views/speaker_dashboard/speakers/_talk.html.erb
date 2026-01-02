@@ -97,16 +97,10 @@
           <div class="mb-3 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <div class="flex-grow-1">
-                <strong>Q:</strong> <%= simple_format(question.body) %>
+                <strong>Q:</strong> <%= simple_format(h(question.body)) %>
                 <div class="text-muted small mt-1">
                   <% profile = question.profile %>
-                  <% profile_name = if profile.public_profile&.nickname.present?
-                                      profile.public_profile.nickname
-                                    elsif profile.last_name.present? || profile.first_name.present?
-                                      "#{profile.last_name} #{profile.first_name}".strip
-                                    else
-                                      '匿名ユーザー'
-                                    end %>
+                  <% profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー' %>
                   質問者: <%= profile_name %>
                   <span class="ms-2">投票数: <%= question.votes_count %></span>
                   <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
@@ -118,7 +112,7 @@
               <div class="mt-2 ms-3">
                 <% question.session_question_answers.order_by_time.each do |answer| %>
                   <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
-                    <strong>A:</strong> <%= simple_format(answer.body) %>
+                    <strong>A:</strong> <%= simple_format(h(answer.body)) %>
                     <div class="text-muted small mt-1">
                       回答者: <%= answer.speaker.name %>
                       <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>

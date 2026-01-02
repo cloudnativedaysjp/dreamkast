@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="card-body">
-          <p class="card-text"><%= simple_format(@session_question.body) %></p>
+          <p class="card-text"><%= simple_format(h(@session_question.body)) %></p>
           
           <div class="row mt-3">
             <div class="col-md-6">
@@ -56,7 +56,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div class="flex-grow-1">
-                  <p class="card-text"><%= simple_format(answer.body) %></p>
+                  <p class="card-text"><%= simple_format(h(answer.body)) %></p>
                   <div class="text-muted">
                     <strong>回答者:</strong> <%= answer.speaker.name %><br>
                     <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>

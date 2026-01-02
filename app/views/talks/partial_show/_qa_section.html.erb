@@ -25,7 +25,7 @@
             <div class="flex-grow-1">
               <h5 class="card-title mb-1">
                 <span class="badge bg-secondary me-2">Q</span>
-                <%= simple_format(question.body) %>
+                <%= simple_format(h(question.body)) %>
               </h5>
               <div class="text-muted small">
                 <% profile = question.profile %>
@@ -45,7 +45,7 @@
                     <div class="d-flex align-items-start">
                       <span class="badge bg-primary me-2">A</span>
                       <div class="flex-grow-1">
-                        <p class="mb-1"><%= simple_format(answer.body) %></p>
+                        <p class="mb-1"><%= simple_format(h(answer.body)) %></p>
                         <div class="text-muted small">
                           回答者: <%= answer.speaker.name %>
                           <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>

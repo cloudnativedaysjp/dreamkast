@@ -7,7 +7,7 @@
     
     <div class="d-flex justify-content-between align-items-start mb-2">
       <div class="flex-grow-1">
-        <strong>Q:</strong> <%= simple_format(question.body) %>
+        <strong>Q:</strong> <%= simple_format(h(question.body)) %>
         <div class="text-muted small mt-1">
           <% profile = question.profile %>
           <% profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー' %>
@@ -26,7 +26,7 @@
               <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
                 <div class="d-flex justify-content-between align-items-start">
                   <div class="flex-grow-1">
-                    <strong>A:</strong> <%= simple_format(answer.body) %>
+                    <strong>A:</strong> <%= simple_format(h(answer.body)) %>
                     <div class="text-muted small mt-1">
                       回答者: <%= answer.speaker.name %>
                       <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>

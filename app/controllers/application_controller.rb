@@ -81,6 +81,11 @@ class ApplicationController < ActionController::Base
     @talk_difficulties.find(talk.talk_difficulty_id)
   end
 
+  # Profileモデルのpublic_nameメソッドを使用（後方互換性のため残す）
+  def profile_name(profile)
+    profile.public_name
+  end
+
   helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty,
                 :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?, :profile_name
 

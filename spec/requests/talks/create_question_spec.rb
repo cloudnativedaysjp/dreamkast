@@ -7,10 +7,14 @@ describe TalksController, type: :request do
   let!(:public_profile) { create(:public_profile, profile:, nickname: 'アリス') }
 
   before do
-    allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({
-      info: { email: 'alice@example.com' },
-      extra: { raw_info: { sub: 'google-oauth2|alice' } }
-    }))
+    ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+    allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+      if arg[1] == :userinfo
+        { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }
+      else
+        arg[0].send(:original, arg[1])
+      end
+    end)
   end
 
   describe 'POST /:event/talks/:id/create_question' do
@@ -69,11 +73,14 @@ describe TalksController, type: :request do
       let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
 
       before do
-        create(:alice, conference:)
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({
-          info: { email: 'alice@example.com' },
-          extra: { raw_info: { sub: 'google-oauth2|alice' } }
-        }))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       it 'displays visible questions only' do

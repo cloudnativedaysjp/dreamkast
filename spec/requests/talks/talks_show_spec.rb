@@ -161,7 +161,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -251,7 +251,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -341,7 +341,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -522,7 +522,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do

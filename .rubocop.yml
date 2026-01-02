@@ -35,8 +35,12 @@ Style/BlockDelimiters:
 Style/StringConcatenation:
   Enabled: false
 
+# 括弧の強制を無効化
 Style/MethodDefParentheses:
-  EnforcedStyle: require_parentheses
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes

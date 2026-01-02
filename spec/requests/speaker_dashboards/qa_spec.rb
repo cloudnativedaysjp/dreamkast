@@ -75,7 +75,9 @@ describe SpeakerDashboardsController, type: :request do
       it 'filters unanswered questions only' do
         get "/cndt2020/speaker_dashboard/questions?unanswered=true"
         expect(response.body).to include(question1.body)
-        expect(response.body).not_to include(answered_question.body)
+        # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+        expect(response.body).to include("question_#{question1.id}")
+        expect(response.body).not_to include("question_#{answered_question.id}")
       end
     end
 

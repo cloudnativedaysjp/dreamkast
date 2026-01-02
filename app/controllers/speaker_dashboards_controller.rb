@@ -39,7 +39,13 @@ class SpeakerDashboardsController < ApplicationController
   end
 
   def create_answer
-    @talk = @speaker.talks.find(params[:talk_id])
+    @talk = @speaker.talks.find_by(id: params[:talk_id])
+    unless @talk
+      flash[:alert] = 'このセッションの登壇者ではありません'
+      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      return
+    end
+
     @question = @talk.session_questions.find(params[:session_question_id])
 
     unless @talk.speakers.include?(@speaker)
@@ -73,7 +79,13 @@ class SpeakerDashboardsController < ApplicationController
   end
 
   def destroy_answer
-    @talk = @speaker.talks.find(params[:talk_id])
+    @talk = @speaker.talks.find_by(id: params[:talk_id])
+    unless @talk
+      flash[:alert] = 'このセッションの登壇者ではありません'
+      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      return
+    end
+
     @question = @talk.session_questions.find(params[:session_question_id])
     @answer = @question.session_question_answers.find(params[:id])
 

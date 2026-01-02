@@ -5,7 +5,7 @@ class SessionQuestion < ApplicationRecord
   has_many :session_question_answers, dependent: :destroy
   has_many :session_question_votes, dependent: :destroy
 
-  validates :body, presence: true, length: { maximum: 512 }
+  validates :body, presence: true
 
   # 投票数の更新（counter_cache的な役割）
   def update_votes_count!

@@ -40,7 +40,7 @@
   <%= turbo_frame_tag "answer_form_#{@question.id}" do %>
     <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: @talk.id, session_question_id: @question.id, event: @conference.abbr), method: :post, data: { turbo_frame: "_top" }, class: 'mt-2' do |f| %>
       <div class="mb-2">
-        <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください（最大512文字）', maxlength: 512, required: true %>
+        <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください', required: true %>
       </div>
       <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
     <% end %>

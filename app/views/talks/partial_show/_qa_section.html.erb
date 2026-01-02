@@ -8,8 +8,7 @@
         <h5 class="card-title">質問を投稿</h5>
         <%= form_with url: create_question_talk_path(@talk, event: event_name), method: :post, local: true do |f| %>
           <div class="mb-3">
-            <%= f.text_area :body, class: 'form-control', rows: 3, placeholder: '質問を入力してください（最大512文字）', maxlength: 512, required: true %>
-            <small class="form-text text-muted">最大512文字まで入力できます</small>
+            <%= f.text_area :body, class: 'form-control', rows: 3, placeholder: '質問を入力してください', required: true %>
           </div>
           <%= f.submit '質問を投稿', class: 'btn btn-primary' %>
         <% end %>

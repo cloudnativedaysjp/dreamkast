@@ -30,15 +30,15 @@ class TalksController < ApplicationController
     # 常に取得（質問がない場合も空配列を返す）
     # 非表示の質問は除外
     @session_questions = @talk.session_questions
-      .visible
-      .includes(:profile, :session_question_answers, :session_question_votes)
-      .order_by_time
+                              .visible
+                              .includes(:profile, :session_question_answers, :session_question_votes)
+                              .order_by_time
   end
 
   def create_question
     @conference = Conference.find_by(abbr: event_name)
     @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
-    
+
     unless @talk
       flash[:alert] = 'セッションが見つかりません'
       redirect_to talk_path(id: params[:id], event: event_name)

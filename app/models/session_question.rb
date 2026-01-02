@@ -17,7 +17,7 @@ class SessionQuestion < ApplicationRecord
   end
 
   # スコープ
-  scope :for_talk, ->(talk_id) { where(talk_id: talk_id) }
+  scope :for_talk, ->(talk_id) { where(talk_id:) }
   scope :order_by_votes, -> { order(votes_count: :desc, created_at: :desc) }
   scope :order_by_time, -> { order(created_at: :desc) }
   scope :visible, -> { where(hidden: false) }

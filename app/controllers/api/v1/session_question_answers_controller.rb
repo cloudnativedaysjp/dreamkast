@@ -21,7 +21,7 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
     answer = @question.session_question_answers.build(
       conference_id: @talk.conference_id,
       speaker_id: @speaker.id,
-      body: body
+      body:
     )
 
     if answer.save
@@ -51,7 +51,7 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
   def verify_speaker
     unless @speaker && @talk.speakers.include?(@speaker)
       render json: { error: 'Only speakers can answer questions' }, status: :forbidden
-      return
+      nil
     end
   end
 

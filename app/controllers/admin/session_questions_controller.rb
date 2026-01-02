@@ -3,8 +3,8 @@ class Admin::SessionQuestionsController < ApplicationController
 
   def index
     @session_questions = @conference.session_questions
-      .includes(:talk, :profile, :session_question_answers, :session_question_votes)
-      .order(created_at: :desc)
+                                    .includes(:talk, :profile, :session_question_answers, :session_question_votes)
+                                    .order(created_at: :desc)
 
     # トークでフィルタリング
     if params[:talk_id].present?
@@ -25,13 +25,13 @@ class Admin::SessionQuestionsController < ApplicationController
 
   def show
     @session_question = @conference.session_questions
-      .includes(:talk, :profile, :session_question_answers, :session_question_votes)
-      .find(params[:id])
+                                   .includes(:talk, :profile, :session_question_answers, :session_question_votes)
+                                   .find(params[:id])
   end
 
   def toggle_hidden
     @session_question = @conference.session_questions.find(params[:id])
-    
+
     if @session_question.update(hidden: !@session_question.hidden)
       status = @session_question.hidden? ? '非表示' : '表示'
       flash[:notice] = "質問を#{status}にしました"

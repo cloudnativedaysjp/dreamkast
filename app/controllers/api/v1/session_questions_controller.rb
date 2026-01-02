@@ -22,7 +22,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
     question = @talk.session_questions.build(
       conference_id: @talk.conference_id,
       profile_id: @profile.id,
-      body: body
+      body:
     )
 
     if question.save
@@ -53,7 +53,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
 
       render json: {
         votes_count: question.reload.votes_count,
-        has_voted: has_voted
+        has_voted:
       }
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -76,7 +76,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
     @profile = Profile.find_by(user_id: current_user_model.id, conference_id: @conference.id) if current_user_model
     unless @profile
       render json: { error: 'Profile not found' }, status: :unauthorized
-      return
+      nil
     end
   end
 
@@ -90,7 +90,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
                    else
                      '匿名ユーザー'
                    end
-    
+
     {
       id: question.id,
       body: question.body,
@@ -140,7 +140,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
           type: 'question_voted',
           question_id: question.id,
           votes_count: question.reload.votes_count,
-          has_voted: has_voted
+          has_voted:
         }
       )
     rescue StandardError => e

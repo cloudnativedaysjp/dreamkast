@@ -7,28 +7,28 @@ class SpeakerDashboardsController < ApplicationController
   def show
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
-    
+
     # 未回答の質問を取得
     if @speaker && @conference
       # スピーカーが登壇しているセッションのIDを取得
       talk_ids = @speaker.talks.pluck(:id)
-      
-      if talk_ids.any?
-        # 未回答の質問を取得（回答がない質問）
-        # 非表示の質問は除外
-        @unanswered_questions = @conference.session_questions
-          .visible
-          .where(talk_id: talk_ids)
-          .left_joins(:session_question_answers)
-          .where(session_question_answers: { id: nil })
-          .includes(:talk, :profile)
-          .distinct
-          .order_by_time
-          .limit(10) # 最新10件
-      else
-        @unanswered_questions = []
-      end
-      
+
+      @unanswered_questions = if talk_ids.any?
+                                # 未回答の質問を取得（回答がない質問）
+                                # 非表示の質問は除外
+                                @conference.session_questions
+                                           .visible
+                                           .where(talk_id: talk_ids)
+                                           .left_joins(:session_question_answers)
+                                           .where(session_question_answers: { id: nil })
+                                           .includes(:talk, :profile)
+                                           .distinct
+                                           .order_by_time
+                                           .limit(10) # 最新10件
+                              else
+                                []
+                              end
+
       # 各セッションの質問も取得（talk_list用）
       @talks.each do |talk|
         talk.session_questions.load if talk.respond_to?(:session_questions)
@@ -114,30 +114,30 @@ class SpeakerDashboardsController < ApplicationController
 
   def questions
     @talks = @speaker ? @speaker.talks.not_sponsor : []
-    
+
     # すべてのセッションの質問を取得（N+1対策）
     if @speaker && @conference
       # スピーカーが登壇しているセッションのIDを取得
       talk_ids = @speaker.talks.pluck(:id)
-      
+
       if talk_ids.any?
         # セッションでフィルタ
         filtered_talk_ids = params[:talk_id].present? ? [params[:talk_id].to_i] : talk_ids
-        
+
         @all_questions = @conference.session_questions
-          .visible
-          .where(talk_id: filtered_talk_ids)
-          .includes(:talk, :profile, :session_question_answers, :session_question_votes)
-          .order_by_time
-        
+                                    .visible
+                                    .where(talk_id: filtered_talk_ids)
+                                    .includes(:talk, :profile, :session_question_answers, :session_question_votes)
+                                    .order_by_time
+
         # 未回答でフィルタ
         if params[:unanswered] == 'true'
           @all_questions = @all_questions
-            .left_joins(:session_question_answers)
-            .where(session_question_answers: { id: nil })
-            .distinct
+                           .left_joins(:session_question_answers)
+                           .where(session_question_answers: { id: nil })
+                           .distinct
         end
-        
+
         @all_questions = @all_questions.limit(100) # 最新100件
       else
         @all_questions = []
@@ -167,7 +167,7 @@ class SpeakerDashboardsController < ApplicationController
     begin
       question = answer.session_question
       talk = question.talk
-      
+
       ActionCable.server.broadcast(
         "qa_talk_#{talk.id}",
         {
@@ -193,7 +193,7 @@ class SpeakerDashboardsController < ApplicationController
   def broadcast_answer_deleted(answer, question)
     begin
       talk = question.talk
-      
+
       ActionCable.server.broadcast(
         "qa_talk_#{talk.id}",
         {

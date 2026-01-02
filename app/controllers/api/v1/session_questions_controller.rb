@@ -88,7 +88,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
       body: question.body,
       profile: {
         id: profile.id,
-        name: profile_name(profile)
+        name: profile.public_name
       },
       votes_count: question.votes_count,
       has_voted: question.session_question_votes.exists?(profile_id: @profile.id),

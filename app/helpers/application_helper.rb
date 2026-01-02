@@ -75,7 +75,8 @@ module ApplicationHelper
     end
   end
 
+  # Profileモデルのpublic_nameメソッドを使用（後方互換性のため残す）
   def profile_name(profile)
-    profile.public_profile&.nickname.presence || '匿名ユーザー'
+    profile.public_name
   end
 end

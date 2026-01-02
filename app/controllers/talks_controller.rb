@@ -77,7 +77,7 @@ class TalksController < ApplicationController
         body: question.body,
         profile: {
           id: profile.id,
-          name: profile_name(profile)
+          name: profile.public_name
         },
         votes_count: question.votes_count,
         has_voted: false,

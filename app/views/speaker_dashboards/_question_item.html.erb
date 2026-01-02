@@ -9,7 +9,7 @@
       <div class="flex-grow-1">
         <strong>Q:</strong> <%= simple_format(h(question.body)) %>
         <div class="text-muted small mt-1">
-          質問者: <%= profile_name(question.profile) %>
+          質問者: <%= question.profile.public_name %>
           <span class="ms-2">投票数: <%= question.votes_count %></span>
           <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
         </div>

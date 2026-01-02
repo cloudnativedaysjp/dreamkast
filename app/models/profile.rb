@@ -162,6 +162,11 @@ class Profile < ApplicationRecord
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
 
+  # 公開用のプロフィール名を取得（public_profileのnicknameのみを使用）
+  def public_name
+    public_profile&.nickname.presence || '匿名ユーザー'
+  end
+
   def way_to_attend
     participation_before_type_cast
   end

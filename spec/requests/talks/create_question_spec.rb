@@ -68,9 +68,9 @@ describe TalksController, type: :request do
 
   describe 'GET /:event/talks/:id' do
     context 'when questions exist' do
-      let!(:question1) { create(:session_question, talk:, conference:, profile:) }
-      let!(:question2) { create(:session_question, talk:, conference:, profile:) }
-      let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
+      let!(:question1) { create(:session_question, talk:, conference:, profile:, body: '質問1です') }
+      let!(:question2) { create(:session_question, talk:, conference:, profile:, body: '質問2です') }
+      let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:, body: '非表示の質問です') }
 
       before do
         # original method is already defined in top-level before block

@@ -86,7 +86,9 @@ describe SpeakerDashboardsController, type: :request do
       it 'filters questions by talk_id' do
         get "/cndt2020/speaker_dashboard/questions?talk_id=#{talk.id}"
         expect(response.body).to include(question1.body)
-        expect(response.body).not_to include(other_question.body)
+        # question.id がHTMLに含まれているため、IDで判定する
+        expect(response.body).to include("question_#{question1.id}")
+        expect(response.body).not_to include("question_#{other_question.id}")
       end
     end
   end

@@ -45,13 +45,7 @@ class Admin::SessionQuestionsController < ApplicationController
   private
 
   def profile_name(profile)
-    if profile.public_profile&.nickname.present?
-      profile.public_profile.nickname
-    elsif profile.last_name.present? || profile.first_name.present?
-      "#{profile.last_name} #{profile.first_name}".strip
-    else
-      '匿名ユーザー'
-    end
+    profile.public_profile&.nickname.presence || '匿名ユーザー'
   end
 
   helper_method :profile_name

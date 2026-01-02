@@ -10,13 +10,7 @@
         <strong>Q:</strong> <%= simple_format(question.body) %>
         <div class="text-muted small mt-1">
           <% profile = question.profile %>
-          <% profile_name = if profile.public_profile&.nickname.present?
-                              profile.public_profile.nickname
-                            elsif profile.last_name.present? || profile.first_name.present?
-                              "#{profile.last_name} #{profile.first_name}".strip
-                            else
-                              '匿名ユーザー'
-                            end %>
+          <% profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー' %>
           質問者: <%= profile_name %>
           <span class="ms-2">投票数: <%= question.votes_count %></span>
           <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>

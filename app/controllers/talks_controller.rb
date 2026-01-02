@@ -71,13 +71,7 @@ class TalksController < ApplicationController
   def broadcast_question_created(question)
     begin
       profile = question.profile
-      profile_name = if profile.public_profile&.nickname.present?
-                       profile.public_profile.nickname
-                     elsif profile.last_name.present? || profile.first_name.present?
-                       "#{profile.last_name} #{profile.first_name}".strip
-                     else
-                       '匿名ユーザー'
-                     end
+      profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー'
 
       question_data = {
         id: question.id,

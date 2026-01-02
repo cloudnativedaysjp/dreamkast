@@ -82,14 +82,8 @@ class Api::V1::SessionQuestionsController < ApplicationController
 
   def question_json(question)
     profile = question.profile
-    # プロフィール名の取得: public_profileのnicknameがあればそれを使う、なければlast_name + first_name
-    profile_name = if profile.public_profile&.nickname.present?
-                     profile.public_profile.nickname
-                   elsif profile.last_name.present? || profile.first_name.present?
-                     "#{profile.last_name} #{profile.first_name}".strip
-                   else
-                     '匿名ユーザー'
-                   end
+    # プロフィール名の取得: public_profileのnicknameのみを使用
+    profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー'
 
     {
       id: question.id,

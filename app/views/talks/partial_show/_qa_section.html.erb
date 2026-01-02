@@ -2,6 +2,20 @@
   <h4>Q&A</h4>
   <p class="text-muted">このセッションに関する質問と回答</p>
   
+  <% if alert %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= alert %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  
   <% if logged_in? && @profile.present? %>
     <div class="card mb-4">
       <div class="card-body">

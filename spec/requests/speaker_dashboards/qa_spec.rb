@@ -12,7 +12,7 @@ describe SpeakerDashboardsController, type: :request do
     ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
       if arg[1] == :userinfo
-        { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }
+        { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }
       else
         arg[0].send(:original, arg[1])
       end
@@ -98,7 +98,8 @@ describe SpeakerDashboardsController, type: :request do
       it 'creates an answer successfully' do
         expect {
           post "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/answers",
-               params: { body: 'これは回答です' }
+               params: { body: 'これは回答です' },
+               headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
         }.to change { SessionQuestionAnswer.count }.by(1)
 
         expect(response).to have_http_status(:ok)

@@ -43,10 +43,4 @@ class Admin::SessionQuestionsController < ApplicationController
   end
 
   private
-
-  def profile_name(profile)
-    profile.public_profile&.nickname.presence || '匿名ユーザー'
-  end
-
-  helper_method :profile_name
 end

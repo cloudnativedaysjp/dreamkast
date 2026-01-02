@@ -71,14 +71,13 @@ class TalksController < ApplicationController
   def broadcast_question_created(question)
     begin
       profile = question.profile
-      profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー'
 
       question_data = {
         id: question.id,
         body: question.body,
         profile: {
           id: profile.id,
-          name: profile_name
+          name: profile_name(profile)
         },
         votes_count: question.votes_count,
         has_voted: false,

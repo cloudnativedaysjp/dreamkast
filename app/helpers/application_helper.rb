@@ -74,4 +74,8 @@ module ApplicationHelper
       'primary'
     end
   end
+
+  def profile_name(profile)
+    profile.public_profile&.nickname.presence || '匿名ユーザー'
+  end
 end

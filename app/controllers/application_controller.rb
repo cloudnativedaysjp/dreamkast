@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty,
-                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
+                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?, :profile_name
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')

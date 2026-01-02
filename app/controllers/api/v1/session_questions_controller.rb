@@ -82,15 +82,13 @@ class Api::V1::SessionQuestionsController < ApplicationController
 
   def question_json(question)
     profile = question.profile
-    # プロフィール名の取得: public_profileのnicknameのみを使用
-    profile_name = profile.public_profile&.nickname.presence || '匿名ユーザー'
 
     {
       id: question.id,
       body: question.body,
       profile: {
         id: profile.id,
-        name: profile_name
+        name: profile_name(profile)
       },
       votes_count: question.votes_count,
       has_voted: question.session_question_votes.exists?(profile_id: @profile.id),

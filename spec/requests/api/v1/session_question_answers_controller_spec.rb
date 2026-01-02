@@ -38,7 +38,7 @@ describe Api::V1::SessionQuestionAnswersController, type: :request do
       it 'creates an answer successfully' do
         expect {
           post "/api/v1/talks/#{talk.id}/session_questions/#{question.id}/session_question_answers",
-               params: { body: 'これは回答です' },
+               params: { body: 'これは回答です' }.to_json,
                headers: { 'Content-Type' => 'application/json' }
         }.to change { SessionQuestionAnswer.count }.by(1)
 
@@ -55,7 +55,7 @@ describe Api::V1::SessionQuestionAnswersController, type: :request do
         )
 
         post "/api/v1/talks/#{talk.id}/session_questions/#{question.id}/session_question_answers",
-             params: { body: 'これは回答です' },
+             params: { body: 'これは回答です' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
       end
     end
@@ -72,7 +72,7 @@ describe Api::V1::SessionQuestionAnswersController, type: :request do
 
       it 'returns forbidden' do
         post "/api/v1/talks/#{talk.id}/session_questions/#{question.id}/session_question_answers",
-             params: { body: 'これは回答です' },
+             params: { body: 'これは回答です' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
 
         expect(response).to have_http_status(:forbidden)
@@ -84,7 +84,7 @@ describe Api::V1::SessionQuestionAnswersController, type: :request do
     context 'with invalid parameters' do
       it 'returns validation errors' do
         post "/api/v1/talks/#{talk.id}/session_questions/#{question.id}/session_question_answers",
-             params: { body: '' },
+             params: { body: '' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)

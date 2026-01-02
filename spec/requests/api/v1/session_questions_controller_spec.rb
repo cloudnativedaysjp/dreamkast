@@ -73,7 +73,7 @@ describe Api::V1::SessionQuestionsController, type: :request do
       it 'creates a question successfully' do
         expect {
           post "/api/v1/talks/#{talk.id}/session_questions",
-               params: { body: '新しい質問です' },
+               params: { body: '新しい質問です' }.to_json,
                headers: { 'Content-Type' => 'application/json' }
         }.to change { SessionQuestion.count }.by(1)
 
@@ -90,7 +90,7 @@ describe Api::V1::SessionQuestionsController, type: :request do
         )
 
         post "/api/v1/talks/#{talk.id}/session_questions",
-             params: { body: '新しい質問です' },
+             params: { body: '新しい質問です' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
       end
     end
@@ -98,7 +98,7 @@ describe Api::V1::SessionQuestionsController, type: :request do
     context 'with invalid parameters' do
       it 'returns validation errors' do
         post "/api/v1/talks/#{talk.id}/session_questions",
-             params: { body: '' },
+             params: { body: '' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)
@@ -114,7 +114,7 @@ describe Api::V1::SessionQuestionsController, type: :request do
 
       it 'returns unauthorized' do
         post "/api/v1/talks/#{talk.id}/session_questions",
-             params: { body: '質問' },
+             params: { body: '質問' }.to_json,
              headers: { 'Content-Type' => 'application/json' }
 
         expect(response).to have_http_status(:unauthorized)

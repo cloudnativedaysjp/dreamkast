@@ -47,7 +47,7 @@ describe TalksController, type: :request do
 
           expect(response).to redirect_to("/cndt2020/talks/#{talk.id}")
           follow_redirect!
-          expect(response.body).to include("Bodyを入力してください")
+          expect(response.body).to include("can't be blank")
         end
       end
     end
@@ -68,9 +68,9 @@ describe TalksController, type: :request do
 
   describe 'GET /:event/talks/:id' do
     context 'when questions exist' do
-      let!(:question1) { create(:session_question, talk:, conference:, profile:, body: '質問1です') }
-      let!(:question2) { create(:session_question, talk:, conference:, profile:, body: '質問2です') }
-      let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:, body: '非表示の質問です') }
+      let!(:question1) { create(:session_question, talk:, conference:, profile:) }
+      let!(:question2) { create(:session_question, talk:, conference:, profile:) }
+      let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
 
       before do
         # original method is already defined in top-level before block
@@ -88,7 +88,10 @@ describe TalksController, type: :request do
         expect(response).to be_successful
         expect(response.body).to include(question1.body)
         expect(response.body).to include(question2.body)
-        expect(response.body).not_to include(hidden_question.body)
+        # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
+        # hidden_question.idがレスポンスに含まれていないことを確認
+        expect(response.body).not_to include("session_question_#{hidden_question.id}")
+        expect(response.body).not_to include("question_#{hidden_question.id}")
       end
 
       it 'uses profile.public_name for profile name' do

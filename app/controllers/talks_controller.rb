@@ -68,6 +68,47 @@ class TalksController < ApplicationController
     redirect_to talk_path(id: params[:id], event: event_name)
   end
 
+  def destroy_question
+    @conference = Conference.find_by(abbr: event_name)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
+
+    unless @talk
+      flash[:alert] = 'セッションが見つかりません'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    unless @profile
+      flash[:alert] = 'ログインが必要です'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    question = @talk.session_questions.find_by(id: params[:question_id])
+
+    unless question
+      flash[:alert] = '質問が見つかりません'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    # 自分の質問のみ削除可能
+    unless question.profile_id == @profile.id
+      flash[:alert] = '自分の質問のみ削除できます'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    if question.destroy
+      broadcast_question_deleted(question.id)
+      flash[:notice] = '質問を削除しました'
+    else
+      flash[:alert] = '質問の削除に失敗しました'
+    end
+
+    redirect_to talk_path(id: params[:id], event: event_name)
+  end
+
   def broadcast_question_created(question)
     begin
       profile = question.profile
@@ -94,6 +135,21 @@ class TalksController < ApplicationController
       )
     rescue StandardError => e
       Rails.logger.error "Error broadcasting question_created: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
+  end
+
+  def broadcast_question_deleted(question_id)
+    begin
+      ActionCable.server.broadcast(
+        "qa_talk_#{@talk.id}",
+        {
+          type: 'question_deleted',
+          question_id: question_id
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_deleted: #{e.class} - #{e.message}"
       # ブロードキャストエラーは無視して処理を続行
     end
   end

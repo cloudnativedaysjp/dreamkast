@@ -45,6 +45,15 @@
                 <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               </div>
             </div>
+            <% if logged_in? && @profile.present? && question.profile_id == @profile.id %>
+              <div class="ms-2">
+                <%= button_to '削除', 
+                    destroy_question_talk_path(@talk, question_id: question.id, event: event_name), 
+                    method: :delete, 
+                    class: 'btn btn-sm btn-danger',
+                    data: { turbo_confirm: 'この質問を削除しますか？' } %>
+              </div>
+            <% end %>
           </div>
 
           <% if question.session_question_answers.any? %>

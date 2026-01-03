@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:index, :show], path: 'events'
       resources :talks, only: [:index, :show, :update] do
-        resources :session_questions, only: [:index, :create] do
+        resources :session_questions, only: [:index, :create, :destroy] do
           member do
             post :vote
           end
@@ -163,6 +163,7 @@ Rails.application.routes.draw do
     resources :talks, only: [:show, :index] do
       member do
         post :create_question
+        delete :destroy_question
       end
     end
     resources :proposals, only: [:show, :index]

@@ -61,6 +61,24 @@ class Api::V1::SessionQuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    question = @talk.session_questions.find(params[:id])
+
+    # 自分の質問のみ削除可能
+    unless question.profile_id == @profile.id
+      render json: { error: 'You can only delete your own questions' }, status: :forbidden
+      return
+    end
+
+    if question.destroy
+      # ブロードキャスト
+      broadcast_question_deleted(question.id)
+      head :no_content
+    else
+      render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def question_params
@@ -88,6 +106,7 @@ class Api::V1::SessionQuestionsController < ApplicationController
       votes_count: question.votes_count,
       has_voted: question.session_question_votes.exists?(profile_id: @profile.id),
       created_at: question.created_at.iso8601,
+      profile_id: question.profile_id,
       answers: question.session_question_answers.order_by_time.map { |a| answer_json(a) }
     }
   end
@@ -132,6 +151,21 @@ class Api::V1::SessionQuestionsController < ApplicationController
       )
     rescue StandardError => e
       Rails.logger.error "Error broadcasting question_voted: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
+  end
+
+  def broadcast_question_deleted(question_id)
+    begin
+      ActionCable.server.broadcast(
+        "qa_talk_#{@talk.id}",
+        {
+          type: 'question_deleted',
+          question_id: question_id
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_deleted: #{e.class} - #{e.message}"
       # ブロードキャストエラーは無視して処理を続行
     end
   end

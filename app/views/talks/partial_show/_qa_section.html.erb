@@ -41,8 +41,7 @@
                 <%= simple_format(h(question.body)) %>
               </h5>
               <div class="text-muted small">
-                質問者: <%= question.profile.public_name %>
-                <span class="ms-2">投票数: <%= question.votes_count %></span>
+                <span>投票数: <%= question.votes_count %></span>
                 <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               </div>
             </div>

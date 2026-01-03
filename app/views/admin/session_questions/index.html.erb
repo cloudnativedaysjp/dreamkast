@@ -47,7 +47,6 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">質問本文</th>
-            <th scope="col">質問者</th>
             <th scope="col">セッション</th>
             <th scope="col">投票数</th>
             <th scope="col">回答数</th>
@@ -65,7 +64,6 @@
                     <%= truncate(question.body, length: 100) %>
                   </div>
                 </td>
-                <td><%= question.profile.public_name %></td>
                 <td>
                   <%= question.talk.title %>
                   <br>
@@ -89,7 +87,7 @@
             <% end %>
           <% else %>
             <tr>
-              <td colspan="8" class="text-center">質問がありません</td>
+              <td colspan="7" class="text-center">質問がありません</td>
             </tr>
           <% end %>
         </tbody>

@@ -93,11 +93,6 @@ describe TalksController, type: :request do
         expect(response.body).not_to include("session_question_#{hidden_question.id}")
         expect(response.body).not_to include("question_#{hidden_question.id}")
       end
-
-      it 'uses profile.public_name for profile name' do
-        get "/cndt2020/talks/#{talk.id}"
-        expect(response.body).to include('アリス')
-      end
     end
   end
 end

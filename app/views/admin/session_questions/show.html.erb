@@ -35,7 +35,6 @@
           
           <div class="row mt-3">
             <div class="col-md-6">
-              <strong>質問者:</strong> <%= @session_question.profile.public_name %><br>
               <strong>セッション:</strong> <%= @session_question.talk.title %><br>
               <strong>トラック:</strong> <%= @session_question.talk.track&.name || '未設定' %><br>
               <strong>作成日時:</strong> <%= @session_question.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
@@ -88,9 +87,8 @@
         <ul class="list-group">
           <% @session_question.session_question_votes.includes(:profile).each do |vote| %>
             <li class="list-group-item">
-              <%= vote.profile.public_name %>
               <small class="text-muted">
-                (<%= vote.created_at.strftime('%Y/%m/%d %H:%M:%S') %>)
+                <%= vote.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
               </small>
             </li>
           <% end %>

@@ -38,7 +38,7 @@ describe Admin::SessionQuestionsController, type: :request do
     let!(:question2) { create(:session_question, talk:, conference:, profile:) }
 
     it 'returns success response' do
-      get "/cndt2020/admin/session_questions"
+      get '/cndt2020/admin/session_questions'
       expect(response).to be_successful
       expect(response.body).to include(question1.body)
       expect(response.body).to include(question2.body)
@@ -62,7 +62,7 @@ describe Admin::SessionQuestionsController, type: :request do
       let!(:question2) { create(:session_question, talk:, conference:, profile:, votes_count: 10) }
 
       it 'sorts by votes_count desc' do
-        get "/cndt2020/admin/session_questions?sort=votes"
+        get '/cndt2020/admin/session_questions?sort=votes'
         # HTMLレスポンスなので、IDの順序を確認（votes_countが多いquestion2が先に表示される）
         expect(response.body.index(">#{question2.id}</td>")).to be < response.body.index(">#{question1.id}</td>")
       end

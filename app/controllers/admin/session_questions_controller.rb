@@ -41,6 +41,4 @@ class Admin::SessionQuestionsController < ApplicationController
 
     redirect_to admin_session_question_path(@session_question, event: params[:event])
   end
-
-  private
 end

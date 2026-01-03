@@ -31,19 +31,19 @@ describe SpeakerDashboardsController, type: :request do
       let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
 
       it 'displays unanswered questions count' do
-        get "/cndt2020/speaker_dashboard"
+        get '/cndt2020/speaker_dashboard'
         expect(response).to be_successful
         expect(response.body).to include('未回答の質問: 2')
       end
 
       it 'excludes hidden questions' do
-        get "/cndt2020/speaker_dashboard"
+        get '/cndt2020/speaker_dashboard'
         # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
         expect(response.body).not_to include("question_#{hidden_question.id}")
       end
 
       it 'excludes answered questions' do
-        get "/cndt2020/speaker_dashboard"
+        get '/cndt2020/speaker_dashboard'
         # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
         expect(response.body).not_to include("question_#{answered_question.id}")
       end
@@ -56,14 +56,14 @@ describe SpeakerDashboardsController, type: :request do
     let!(:hidden_question) { create(:session_question, :hidden, talk:, conference:, profile:) }
 
     it 'displays all questions' do
-      get "/cndt2020/speaker_dashboard/questions"
+      get '/cndt2020/speaker_dashboard/questions'
       expect(response).to be_successful
       expect(response.body).to include(question1.body)
       expect(response.body).to include(question2.body)
     end
 
     it 'excludes hidden questions' do
-      get "/cndt2020/speaker_dashboard/questions"
+      get '/cndt2020/speaker_dashboard/questions'
       # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
       expect(response.body).not_to include("question_#{hidden_question.id}")
     end
@@ -76,7 +76,7 @@ describe SpeakerDashboardsController, type: :request do
       end
 
       it 'filters unanswered questions only' do
-        get "/cndt2020/speaker_dashboard/questions?unanswered=true"
+        get '/cndt2020/speaker_dashboard/questions?unanswered=true'
         expect(response.body).to include(question1.body)
         # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
         expect(response.body).to include("question_#{question1.id}")
@@ -140,7 +140,7 @@ describe SpeakerDashboardsController, type: :request do
         post "/cndt2020/speaker_dashboard/talks/#{other_talk.id}/session_questions/#{other_question.id}/answers",
              params: { body: 'これは回答です' }
 
-        expect(response).to redirect_to("/cndt2020/speaker_dashboard")
+        expect(response).to redirect_to('/cndt2020/speaker_dashboard')
         follow_redirect!
         expect(response.body).to include('このセッションの登壇者ではありません')
       end
@@ -184,7 +184,7 @@ describe SpeakerDashboardsController, type: :request do
         delete "/cndt2020/speaker_dashboard/talks/#{other_answer.session_question.talk.id}/session_questions/#{other_answer.session_question.id}/answers/#{other_answer.id}"
 
         # other_talkは@speakerに関連付けられていないため、speaker_dashboard_pathにリダイレクトされる
-        expect(response).to redirect_to("/cndt2020/speaker_dashboard")
+        expect(response).to redirect_to('/cndt2020/speaker_dashboard')
         follow_redirect!
         expect(response.body).to include('このセッションの登壇者ではありません')
       end

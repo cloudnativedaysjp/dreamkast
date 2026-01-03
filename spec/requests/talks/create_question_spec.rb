@@ -47,7 +47,7 @@ describe TalksController, type: :request do
 
           expect(response).to redirect_to("/cndt2020/talks/#{talk.id}")
           follow_redirect!
-          expect(response.body).to include("Bodyを入力してください")
+          expect(response.body).to include('Bodyを入力してください')
         end
       end
     end
@@ -61,7 +61,7 @@ describe TalksController, type: :request do
         expect {
           post "/cndt2020/talks/#{talk.id}/create_question",
                params: { body: 'これは質問です' }
-        }.not_to change { SessionQuestion.count }
+        }.not_to(change { SessionQuestion.count })
       end
     end
   end

@@ -1,7 +1,7 @@
 class QaChannel < ApplicationCable::Channel
   def subscribed
     talk_id = params[:talk_id]
-    
+
     unless talk_id.present?
       reject
       return
@@ -14,7 +14,7 @@ class QaChannel < ApplicationCable::Channel
         reject
         return
       end
-      
+
       stream_from "qa_talk_#{talk.id}"
     rescue ActiveRecord::RecordNotFound
       reject

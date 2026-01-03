@@ -14,14 +14,14 @@ class SessionQuestionVote < ApplicationRecord
     # エラーが発生した場合はログに記録し、再試行する
     retries = 0
     max_retries = 3
-    
+
     begin
       session_question.update_votes_count!
     rescue StandardError => e
       retries += 1
       Rails.logger.error "Error updating votes_count (attempt #{retries}/#{max_retries}): #{e.class} - #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-      
+
       if retries < max_retries
         # 短い待機時間後に再試行
         sleep(0.1 * retries)

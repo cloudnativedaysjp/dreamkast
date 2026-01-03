@@ -13,30 +13,26 @@ class TalksController < ApplicationController
   # - プロポーザルの採択結果を表示しない場合：404を返す
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
-    begin
-      @conference = Conference.find_by(abbr: event_name)
-      @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
+    @conference = Conference.find_by(abbr: event_name)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
-      raise(ActiveRecord::RecordNotFound) unless @talk
+    raise(ActiveRecord::RecordNotFound) unless @talk
 
-      unless @conference.cfp_result_visible
-        raise(ActiveRecord::RecordNotFound)
-      end
-
-      if @conference.cfp_result_visible && @talk.proposal.rejected?
-        raise(ActiveRecord::RecordNotFound)
-      end
-
-      # QA一覧を取得（新しい順でソート）
-      # 常に取得（質問がない場合も空配列を返す）
-      # 非表示の質問は除外
-      @session_questions = @talk.session_questions
-                                .visible
-                                .includes(:session_question_answers, :session_question_votes, profile: :public_profile)
-                                .order_by_time
-    rescue
-      raise
+    unless @conference.cfp_result_visible
+      raise(ActiveRecord::RecordNotFound)
     end
+
+    if @conference.cfp_result_visible && @talk.proposal.rejected?
+      raise(ActiveRecord::RecordNotFound)
+    end
+
+    # QA一覧を取得（新しい順でソート）
+    # 常に取得（質問がない場合も空配列を返す）
+    # 非表示の質問は除外
+    @session_questions = @talk.session_questions
+                              .visible
+                              .includes(:session_question_answers, :session_question_votes, profile: :public_profile)
+                              .order_by_time
   end
 
   def create_question

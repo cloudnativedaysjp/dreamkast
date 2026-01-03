@@ -74,9 +74,4 @@ module ApplicationHelper
       'primary'
     end
   end
-
-  # Profileモデルのpublic_nameメソッドを使用（後方互換性のため残す）
-  def profile_name(profile)
-    profile.public_name
-  end
 end

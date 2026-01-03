@@ -65,7 +65,7 @@
                     <%= truncate(question.body, length: 100) %>
                   </div>
                 </td>
-                <td><%= profile_name(question.profile) %></td>
+                <td><%= question.profile.public_name %></td>
                 <td>
                   <%= question.talk.title %>
                   <br>

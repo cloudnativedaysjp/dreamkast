@@ -45,15 +45,24 @@
                 <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               </div>
             </div>
-            <% if logged_in? && @profile.present? && question.profile_id == @profile.id %>
-              <div class="ms-2">
-                <%= button_to '削除', 
-                    destroy_question_talk_path(@talk, question_id: question.id, event: event_name), 
-                    method: :delete, 
-                    class: 'btn btn-sm btn-danger',
-                    data: { turbo_confirm: 'この質問を削除しますか？' } %>
-              </div>
-            <% end %>
+            <div class="d-flex align-items-center gap-2 ms-2">
+              <% if logged_in? && @profile.present? && question.profile_id == @profile.id %>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-link text-muted p-0" type="button" id="questionMenu<%= question.id %>" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 18px; line-height: 1; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    ⋯
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="questionMenu<%= question.id %>">
+                    <li>
+                      <%= button_to '削除', 
+                          destroy_question_talk_path(@talk, question_id: question.id, event: event_name), 
+                          method: :delete, 
+                          class: 'dropdown-item text-danger',
+                          data: { turbo_confirm: 'この質問を削除しますか？' } %>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
           </div>
 
           <% if question.session_question_answers.any? %>

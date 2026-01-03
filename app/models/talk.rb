@@ -23,6 +23,7 @@ class Talk < ApplicationRecord
 
   has_many :talk_type_associations, dependent: :destroy
   has_many :talk_types, through: :talk_type_associations
+  has_many :session_questions, dependent: :destroy
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks

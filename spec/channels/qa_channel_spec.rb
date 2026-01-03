@@ -32,7 +32,16 @@ RSpec.describe QaChannel, type: :channel do
     end
 
     context 'with talk without conference_id' do
-      let!(:invalid_talk) { create(:talk1, conference_id: nil) }
+      let!(:invalid_talk) do
+        # 既存のtalkを一時的にconference_idをnilに設定
+        talk.update_column(:conference_id, nil)
+        talk
+      end
+
+      after do
+        # テスト後に元に戻す
+        invalid_talk.update_column(:conference_id, conference.id) if invalid_talk.persisted?
+      end
 
       it 'rejects subscription' do
         subscribe(talk_id: invalid_talk.id)

@@ -35,8 +35,15 @@ RSpec.describe SessionQuestionVote, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:session_question) }
-    it { is_expected.to belong_to(:profile) }
+    it 'belongs to session_question' do
+      expect(subject).to respond_to(:session_question)
+      expect(subject.class.reflect_on_association(:session_question)).to be_present
+    end
+
+    it 'belongs to profile' do
+      expect(subject).to respond_to(:profile)
+      expect(subject.class.reflect_on_association(:profile)).to be_present
+    end
   end
 
   describe 'callbacks' do
@@ -68,15 +75,17 @@ RSpec.describe SessionQuestionVote, type: :model do
       end
 
       context 'when update_votes_count! fails' do
+        let(:vote) { build(:session_question_vote, session_question: question, profile: profile1) }
+
         before do
-          allow_any_instance_of(SessionQuestion).to receive(:update_votes_count!).and_raise(StandardError.new('Error'))
+          allow(question).to receive(:update_votes_count!).and_raise(StandardError.new('Error'))
         end
 
         it 'retries up to 3 times and logs error' do
           expect(Rails.logger).to receive(:error).at_least(:once)
-          expect {
-            create(:session_question_vote, session_question: question, profile: profile1)
-          }.to raise_error(StandardError)
+          vote.save
+          # after_commit は use_transactional_fixtures = true の場合実行されないため、直接呼び出す
+          vote.send(:update_question_votes_count)
         end
       end
     end

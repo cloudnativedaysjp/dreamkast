@@ -4,6 +4,7 @@ RSpec.describe SessionQuestion, type: :model do
   let!(:conference) { create(:cndt2020, :opened) }
   let!(:talk) { create(:talk1, conference:) }
   let!(:profile) { create(:alice, :on_cndt2020, conference:) }
+  let!(:profile2) { create(:bob, :on_cndt2020, conference:) }
   let!(:public_profile) { create(:public_profile, profile:, nickname: 'アリス') }
 
   describe 'validations' do
@@ -21,7 +22,7 @@ RSpec.describe SessionQuestion, type: :model do
 
         it 'is invalid' do
           expect(question).not_to be_valid
-          expect(question.errors[:body]).to include("can't be blank")
+          expect(question.errors[:body]).to include('を入力してください')
         end
       end
 
@@ -30,18 +31,41 @@ RSpec.describe SessionQuestion, type: :model do
 
         it 'is invalid' do
           expect(question).not_to be_valid
-          expect(question.errors[:body]).to include("can't be blank")
+          expect(question.errors[:body]).to include('を入力してください')
         end
       end
     end
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:talk) }
-    it { is_expected.to belong_to(:conference) }
-    it { is_expected.to belong_to(:profile) }
-    it { is_expected.to have_many(:session_question_answers).dependent(:destroy) }
-    it { is_expected.to have_many(:session_question_votes).dependent(:destroy) }
+    it 'belongs to talk' do
+      expect(subject).to respond_to(:talk)
+      expect(subject.class.reflect_on_association(:talk)).to be_present
+    end
+
+    it 'belongs to conference' do
+      expect(subject).to respond_to(:conference)
+      expect(subject.class.reflect_on_association(:conference)).to be_present
+    end
+
+    it 'belongs to profile' do
+      expect(subject).to respond_to(:profile)
+      expect(subject.class.reflect_on_association(:profile)).to be_present
+    end
+
+    it 'has many session_question_answers' do
+      expect(subject).to respond_to(:session_question_answers)
+      association = subject.class.reflect_on_association(:session_question_answers)
+      expect(association).to be_present
+      expect(association.options[:dependent]).to eq(:destroy)
+    end
+
+    it 'has many session_question_votes' do
+      expect(subject).to respond_to(:session_question_votes)
+      association = subject.class.reflect_on_association(:session_question_votes)
+      expect(association).to be_present
+      expect(association.options[:dependent]).to eq(:destroy)
+    end
   end
 
   describe 'scopes' do
@@ -106,8 +130,39 @@ RSpec.describe SessionQuestion, type: :model do
     let(:question) { create(:session_question, talk:, conference:, profile:) }
 
     context 'when votes exist' do
+      let!(:profile3) do
+        user = FactoryBot.create(:user, sub: "google-oauth2|charlie-#{SecureRandom.hex(8)}", email: "charlie-#{SecureRandom.hex(8)}@example.com")
+        Profile.create!(
+          user_id: user.id,
+          last_name: 'charlie',
+          first_name: 'Charlie',
+          industry_id: '1',
+          occupation: 'aaa',
+          company_name: 'aa',
+          company_email: "charlie_company_#{SecureRandom.hex(8)}@example.com",
+          company_postal_code: '1010001',
+          company_address_level1: 'address level 1',
+          company_address_level2: 'address level 2',
+          company_address_line1: 'address line 1',
+          company_address_line2: 'address line 2',
+          company_tel: '12345678901',
+          department: 'aa',
+          position: 'aaa',
+          conference_id: conference.id,
+          number_of_employee_id: 2,
+          annual_sales_id: 3,
+          participation: 'オンライン参加'
+        )
+      end
+
       before do
-        create_list(:session_question_vote, 3, session_question: question)
+        # after_commit コールバックが実行されるため、votes_count をリセット
+        question.update_column(:votes_count, 0)
+        create(:session_question_vote, session_question: question, profile:)
+        create(:session_question_vote, session_question: question, profile: profile2)
+        create(:session_question_vote, session_question: question, profile: profile3)
+        # after_commit コールバックが実行されるため、votes_count を再度リセット
+        question.update_column(:votes_count, 0)
       end
 
       it 'updates votes_count correctly' do

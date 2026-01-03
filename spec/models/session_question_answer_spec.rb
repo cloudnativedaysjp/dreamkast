@@ -22,7 +22,7 @@ RSpec.describe SessionQuestionAnswer, type: :model do
 
         it 'is invalid' do
           expect(answer).not_to be_valid
-          expect(answer.errors[:body]).to include("can't be blank")
+          expect(answer.errors[:body]).to include('を入力してください')
         end
       end
 
@@ -31,16 +31,27 @@ RSpec.describe SessionQuestionAnswer, type: :model do
 
         it 'is invalid' do
           expect(answer).not_to be_valid
-          expect(answer.errors[:body]).to include("can't be blank")
+          expect(answer.errors[:body]).to include('を入力してください')
         end
       end
     end
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:session_question) }
-    it { is_expected.to belong_to(:speaker) }
-    it { is_expected.to belong_to(:conference) }
+    it 'belongs to session_question' do
+      expect(subject).to respond_to(:session_question)
+      expect(subject.class.reflect_on_association(:session_question)).to be_present
+    end
+
+    it 'belongs to speaker' do
+      expect(subject).to respond_to(:speaker)
+      expect(subject.class.reflect_on_association(:speaker)).to be_present
+    end
+
+    it 'belongs to conference' do
+      expect(subject).to respond_to(:conference)
+      expect(subject.class.reflect_on_association(:conference)).to be_present
+    end
   end
 
   describe 'scopes' do

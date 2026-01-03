@@ -17,6 +17,8 @@ class TalksController < ApplicationController
       @conference = Conference.find_by(abbr: event_name)
       @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
+      raise(ActiveRecord::RecordNotFound) unless @talk
+
       unless @conference.cfp_result_visible
         raise(ActiveRecord::RecordNotFound)
       end
@@ -24,8 +26,6 @@ class TalksController < ApplicationController
       if @conference.cfp_result_visible && @talk.proposal.rejected?
         raise(ActiveRecord::RecordNotFound)
       end
-
-      raise(ActiveRecord::RecordNotFound) unless @talk
 
       # QA一覧を取得（新しい順でソート）
       # 常に取得（質問がない場合も空配列を返す）

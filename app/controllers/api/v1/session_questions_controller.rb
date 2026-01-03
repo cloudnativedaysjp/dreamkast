@@ -82,15 +82,9 @@ class Api::V1::SessionQuestionsController < ApplicationController
   end
 
   def question_json(question)
-    profile = question.profile
-
     {
       id: question.id,
       body: question.body,
-      profile: {
-        id: profile.id,
-        name: profile.public_name
-      },
       votes_count: question.votes_count,
       has_voted: question.session_question_votes.exists?(profile_id: @profile.id),
       created_at: question.created_at.iso8601,

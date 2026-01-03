@@ -33,13 +33,6 @@ describe Api::V1::SessionQuestionsController, type: :request do
         expect(question_ids).not_to include(hidden_question.id)
       end
 
-      it 'uses profile.public_name for profile name' do
-        get "/api/v1/talks/#{talk.id}/session_questions"
-        json = JSON.parse(response.body)
-        question = json['questions'].find { |q| q['id'] == question1.id }
-        expect(question['profile']['name']).to eq('アリス')
-      end
-
       context 'with sort=votes' do
         it 'sorts by votes_count desc' do
           get "/api/v1/talks/#{talk.id}/session_questions?sort=votes"
@@ -80,7 +73,7 @@ describe Api::V1::SessionQuestionsController, type: :request do
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
         expect(json['body']).to eq('新しい質問です')
-        expect(json['profile']['name']).to eq('アリス')
+        expect(json).not_to have_key('profile')
       end
 
       it 'broadcasts via ActionCable' do

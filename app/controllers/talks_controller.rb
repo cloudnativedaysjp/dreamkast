@@ -145,7 +145,7 @@ class TalksController < ApplicationController
         "qa_talk_#{@talk.id}",
         {
           type: 'question_deleted',
-          question_id: question_id
+          question_id:
         }
       )
     rescue StandardError => e

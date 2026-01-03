@@ -46,47 +46,30 @@ RSpec.describe SessionQuestionVote, type: :model do
     end
   end
 
-  describe 'callbacks' do
-    describe 'after_commit' do
-      let(:question) { create(:session_question, talk:, conference:, profile: profile1, votes_count: 0) }
+  describe 'counter_cache' do
+    let(:question) { create(:session_question, talk:, conference:, profile: profile1, votes_count: 0) }
 
-      context 'when a vote is created' do
-        it 'updates the question votes_count' do
-          expect {
-            create(:session_question_vote, session_question: question, profile: profile1)
-            question.reload
-          }.to change { question.votes_count }.from(0).to(1)
-        end
+    context 'when a vote is created' do
+      it 'increments the question votes_count' do
+        expect {
+          create(:session_question_vote, session_question: question, profile: profile1)
+          question.reload
+        }.to change { question.votes_count }.from(0).to(1)
+      end
+    end
+
+    context 'when a vote is destroyed' do
+      let!(:vote) { create(:session_question_vote, session_question: question, profile: profile1) }
+
+      before do
+        question.reload # counter_cacheで更新されたvotes_countを取得
       end
 
-      context 'when a vote is destroyed' do
-        let!(:vote) { create(:session_question_vote, session_question: question, profile: profile1) }
-
-        before do
-          question.update_votes_count!
-        end
-
-        it 'updates the question votes_count' do
-          expect {
-            vote.destroy
-            question.reload
-          }.to change { question.votes_count }.from(1).to(0)
-        end
-      end
-
-      context 'when update_votes_count! fails' do
-        let(:vote) { build(:session_question_vote, session_question: question, profile: profile1) }
-
-        before do
-          allow(question).to receive(:update_votes_count!).and_raise(StandardError.new('Error'))
-        end
-
-        it 'retries up to 3 times and logs error' do
-          expect(Rails.logger).to receive(:error).at_least(:once)
-          vote.save
-          # after_commit は use_transactional_fixtures = true の場合実行されないため、直接呼び出す
-          vote.send(:update_question_votes_count)
-        end
+      it 'decrements the question votes_count' do
+        expect {
+          vote.destroy
+          question.reload
+        }.to change { question.votes_count }.from(1).to(0)
       end
     end
   end

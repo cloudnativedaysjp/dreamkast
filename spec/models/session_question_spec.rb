@@ -156,16 +156,16 @@ RSpec.describe SessionQuestion, type: :model do
       end
 
       before do
-        # after_commit コールバックが実行されるため、votes_count をリセット
+        # counter_cacheで自動更新されるため、手動でリセット
         question.update_column(:votes_count, 0)
         create(:session_question_vote, session_question: question, profile:)
         create(:session_question_vote, session_question: question, profile: profile2)
         create(:session_question_vote, session_question: question, profile: profile3)
-        # after_commit コールバックが実行されるため、votes_count を再度リセット
+        # counter_cacheで自動更新されているが、テストのために再度リセット
         question.update_column(:votes_count, 0)
       end
 
-      it 'updates votes_count correctly' do
+      it 'resets votes_count correctly using reset_counters' do
         expect { question.update_votes_count! }.to change { question.reload.votes_count }.from(0).to(3)
       end
     end
@@ -175,16 +175,6 @@ RSpec.describe SessionQuestion, type: :model do
         question.update_column(:votes_count, 5)
         question.update_votes_count!
         expect(question.reload.votes_count).to eq(0)
-      end
-    end
-
-    context 'when an error occurs' do
-      before do
-        allow(question).to receive(:session_question_votes).and_raise(StandardError.new('Database error'))
-      end
-
-      it 'raises the error' do
-        expect { question.update_votes_count! }.to raise_error(StandardError, 'Database error')
       end
     end
   end

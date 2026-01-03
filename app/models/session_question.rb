@@ -7,13 +7,13 @@ class SessionQuestion < ApplicationRecord
 
   validates :body, presence: true
 
-  # 投票数の更新（counter_cache的な役割）
+  # 投票数はcounter_cacheで自動管理される
+  # データ整合性チェック用に、手動でカウントを再計算するメソッドを提供
   def update_votes_count!
-    new_count = session_question_votes.count
-    update_column(:votes_count, new_count)
-  rescue StandardError => e
-    Rails.logger.error "Error in update_votes_count!: #{e.class} - #{e.message}"
-    raise
+    # counter_cacheを使用しているため、通常はこのメソッドは不要
+    # データ不整合が発生した場合の修復用として残す
+    self.class.reset_counters(id, :session_question_votes)
+    reload
   end
 
   # スコープ

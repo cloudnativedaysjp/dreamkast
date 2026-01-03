@@ -13,8 +13,8 @@ FactoryBot.define do
 
     trait :with_votes do
       after(:create) do |question|
+        # counter_cacheが自動的にvotes_countを更新するため、手動での更新は不要
         create_list(:session_question_vote, 3, session_question: question)
-        question.update_votes_count!
       end
     end
   end

@@ -157,8 +157,8 @@ describe Api::V1::SessionQuestionsController, type: :request do
 
     context 'when unvoting' do
       before do
+        # counter_cacheが自動的にvotes_countを更新するため、手動での更新は不要
         create(:session_question_vote, session_question: question, profile: alice)
-        question.update_votes_count!
       end
 
       it 'destroys the vote' do

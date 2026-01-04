@@ -8,7 +8,6 @@
     "awscli2",
     "jq",
     "yq",
-    "mysql80",
     "redis",
     "shared-mime-info",
     "docker@latest",
@@ -17,7 +16,8 @@
     "openssl",
     "vips",
     "vips.out",
-    "vips.dev"
+    "vips.dev",
+    "mysql84@latest"
   ],
   "shell": {
     "init_hook": [
@@ -31,9 +31,9 @@
     }
   },
   "env": {
-    "MYSQL_HOST": "127.0.0.1",
-    "REDIS_URL":  "redis://127.0.0.1:6379",
-    "LIBRARY_PATH": "$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib",
+    "MYSQL_HOST":      "127.0.0.1",
+    "REDIS_URL":       "redis://127.0.0.1:6379",
+    "LIBRARY_PATH":    "$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib",
     "LD_LIBRARY_PATH": "$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib",
     "PKG_CONFIG_PATH": "$DEVBOX_PROJECT_ROOT/.devbox/nix/profile/default/lib/pkgconfig"
   }

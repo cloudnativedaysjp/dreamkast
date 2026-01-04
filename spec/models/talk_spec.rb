@@ -338,7 +338,7 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
 
           it 'バリデーションエラーになる' do
             expect(talk).not_to(be_valid)
-            expect(talk.errors[:title]).to(include("は60文字以内で入力してください（現在61文字）"))
+            expect(talk.errors[:title]).to(include('は60文字以内で入力してください（現在61文字）'))
           end
         end
 

@@ -43,9 +43,16 @@
         "build:css": "yarn build:css:compile && yarn build:css:prefix",
         "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application-bootstrap.css --no-source-map --load-path=node_modules",
         "build:css:prefix": "postcss ./app/assets/builds/application-bootstrap.css --use=autoprefixer --output=./app/assets/builds/application-bootstrap.css",
-        "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
+        "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.1.5",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
         "webpack-bundle-analyzer": "^5.0.0"
     }
 }

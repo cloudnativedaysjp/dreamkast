@@ -101,6 +101,16 @@ const countChars = (str) => {
     }
 }
 
+// テスト用にエクスポート（Node.js環境の場合のみ）
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { 
+        countChars, 
+        MAX_TITLE_CHARS, 
+        MAX_ABSTRACT_CHARS,
+        // テスト用に他の関数もエクスポート可能にする場合はここに追加
+    };
+}
+
 // 文字数制限を適用（タイトル: 60文字、概要: 500文字）
 const MAX_TITLE_CHARS = 60;
 const MAX_ABSTRACT_CHARS = 500;

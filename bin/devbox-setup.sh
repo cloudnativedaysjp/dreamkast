@@ -16,6 +16,12 @@ echo -e "${GREEN}Dreamkast devbox セットアップを開始します...${NC}"
 # 1. 環境変数テンプレートのコピー
 if [ ! -f .env-local.devbox ]; then
   echo "環境変数ファイルをコピーしています..."
+  if [ ! -f .env-local.devbox.example ]; then
+    echo -e "${RED}❌ .env-local.devbox.exampleが見つかりません${NC}"
+    echo "現在のディレクトリ: $(pwd)"
+    ls -la .env-local.devbox.example || echo "ファイルが存在しません"
+    exit 1
+  fi
   cp .env-local.devbox.example .env-local.devbox
   echo -e "${YELLOW}⚠️  .env-local.devboxを確認してください${NC}"
   echo "   認証情報は以下のコマンドで自動取得できます:"
@@ -31,8 +37,10 @@ echo "Ruby依存をインストールしています..."
 bundle install
 
 # 4. Docker Composeサービスの起動確認
-echo "Docker Composeサービスを起動しています..."
-docker compose up -d db redis localstack nginx ui fifo-worker
+# 注意: ui と fifo-worker はECR認証が必要なため、devbox run auth 後に起動
+echo "基本Docker Composeサービスを起動しています..."
+echo "  (ui と fifo-worker は認証後に起動します)"
+docker compose up -d db redis localstack nginx
 
 # サービス起動待機
 echo "サービスの起動を待機しています(最大60秒)..."
@@ -66,6 +74,5 @@ echo ""
 echo -e "${GREEN}✅ セットアップが完了しました!${NC}"
 echo ""
 echo "次のステップ:"
-echo "  1. AWS認証: devbox run auth"
-echo "  2. 認証情報取得: devbox run fetch-secrets"
-echo "  3. アプリケーション起動: devbox run start"
+echo "  1. AWS認証とシークレット取得: devbox run auth"
+echo "  2. アプリケーション起動: devbox run start"

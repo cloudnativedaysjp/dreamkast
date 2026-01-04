@@ -8,6 +8,8 @@ devboxを使用することで、以下の利点があります:
 - **簡単なセットアップ**: rbenv/nodenvの手動インストールが不要
 - **再現性の保証**: devbox.lockでバージョンを固定
 
+**注意**: Node.jsはdevboxが提供する22系の安定版を使用します（.node-versionでは22.16.0を指定していますが、devboxでは`nodejs@22`で22系の安定バージョンを自動取得）。マイナーバージョンの違いはありますが互換性があるため、開発に支障はありません
+
 ## 前提条件
 
 - macOS、Linux、WSL2のいずれか
@@ -53,36 +55,34 @@ devbox run setup
 - Docker Composeサービスの起動
 - 健全性チェック
 
-### 4. AWS認証
+### 4. AWS認証とシークレット取得
 
 ```bash
 devbox run auth
 ```
 
-このコマンドは以下を実行します:
+このコマンドは以下を自動的に実行します:
 
-- AWS SSO設定(初回のみ、対話的に設定)
-- AWS SSOログイン
+- AWS SSO設定の自動構成（SSO Start URLを含む）
+- AWS SSOログイン（ブラウザで認証）
 - ECRログイン
+- AWS Secrets Managerから認証情報を自動取得
+  - Auth0設定(CLIENT_ID, CLIENT_SECRET, DOMAIN)
+  - Rails Master Key
 
-初回実行時は、以下の情報をDreamkastチームから取得してください:
+**注意**: 初回実行時はブラウザでAWS SSOの認証が求められます。Dreamkastチームから付与されたAWSアカウントでログインしてください。
 
-- SSO start URL
-- SSO region: `ap-northeast-1`
-- SSO registration scopes: `sso:account:access`
+#### リモート環境での認証
 
-### 5. 認証情報の自動取得
+リモート環境（SSH接続先など）でブラウザが開けない場合は、環境変数`DEVBOX_REMOTE=1`を使用します:
 
 ```bash
-devbox run fetch-secrets
+DEVBOX_REMOTE=1 devbox run auth
 ```
 
-このコマンドは、AWS Secrets Managerから以下の認証情報を自動取得し、`.env-local.devbox`に設定します:
+このコマンドは認証URLとコードを表示するので、手元のブラウザで開いて認証を完了してください。
 
-- Auth0設定(CLIENT_ID, CLIENT_SECRET, DOMAIN)
-- Rails Master Key
-
-### 6. アプリケーション起動
+### 5. アプリケーション起動
 
 ```bash
 devbox run start

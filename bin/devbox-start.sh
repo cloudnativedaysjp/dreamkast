@@ -26,7 +26,11 @@ docker compose up -d db redis localstack nginx ui fifo-worker
 echo "データベースマイグレーションを実行しています..."
 bundle exec rails db:migrate
 
-# 4. Foremanでアプリケーション起動
+# 4. シードデータ投入
+echo "シードデータを投入しています..."
+bundle exec rails db:seed
+
+# 5. Foremanでアプリケーション起動
 echo ""
 echo -e "${GREEN}アプリケーションを起動しています...${NC}"
 echo "アクセス先: http://localhost:8080"

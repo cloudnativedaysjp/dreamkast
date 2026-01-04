@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/main/.schema/devbox.schema.json",
+  "packages": [
+    "ruby@3.4.8",
+    "nodejs@22.16.0",
+    "yarn@1.22.22",
+    "docker",
+    "docker-compose",
+    "awscli2",
+    "jq",
+    "yq",
+    "mysql80",
+    "redis",
+    "shared-mime-info"
+  ],
+  "shell": {
+    "init_hook": [
+      ". $VENV_DIR/bin/devbox-setup-check.sh"
+    ],
+    "scripts": {
+      "setup": ["bin/devbox-setup.sh"],
+      "auth": ["bin/devbox-auth.sh"],
+      "fetch-secrets": ["bin/devbox-fetch-secrets.sh"],
+      "start": ["bin/devbox-start.sh"],
+      "test": ["bundle exec rspec"]
+    }
+  },
+  "env": {
+    "MYSQL_HOST": "127.0.0.1",
+    "REDIS_URL": "redis://127.0.0.1:6379"
+  }
+}

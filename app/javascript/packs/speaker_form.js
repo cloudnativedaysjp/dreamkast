@@ -21,9 +21,13 @@ const initializeAddTalkButton = () => {
         div.innerHTML = e.target.dataset.fields.replace(regexp, time);
         document.getElementsByClassName('talk-fields')[0].append(div);
         if (fieldLength() >= 3) {
-            document.getElementsByClassName('add-talk')[0].hidden = true;
+            document.getElementsByClassName('add-talk')[0].hidden = false;
         }
         addDeleteButtonListener(div.querySelector('.remove_talk_field'));
+        // 動的に追加されたフィールドにも文字数カウンターを適用
+        setTimeout(() => {
+            initializeCharCounter();
+        }, 100);
         return false;
     });
 }
@@ -82,4 +86,124 @@ const buttonListener = (e) => {
             document.getElementsByClassName('add-talk')[0].hidden = false;
         }
     }
+}
+
+// 全角換算で文字数をカウント（バイト数/2）
+const countFullWidthChars = (str) => {
+    if (!str) return 0;
+    // UTF-8エンコーディングでバイト数を取得
+    const bytes = new TextEncoder().encode(str).length;
+    // バイト数/2で全角換算の文字数を計算
+    return Math.floor(bytes / 2);
+}
+
+// 文字数制限を適用（全角換算500文字）
+const MAX_CHARS = 500;
+
+const initializeCharCounter = () => {
+    // タイトルと概要欄の入力フィールドを取得
+    const titleInputs = document.querySelectorAll('input[name*="[title]"]');
+    const abstractInputs = document.querySelectorAll('textarea[name*="[abstract]"]');
+    
+    const setupCharCounter = (input, counterId) => {
+        // カウンター要素が既に存在する場合はスキップ
+        if (document.getElementById(counterId)) {
+            return;
+        }
+        
+        // カウンター要素を作成
+        const counter = document.createElement('span');
+        counter.id = counterId;
+        counter.className = 'char-counter';
+        counter.style.fontSize = '0.7em';
+        counter.style.color = '#666';
+        counter.style.marginLeft = '5px';
+        
+        // 入力フィールドの親要素にカウンターを追加
+        const fieldDiv = input.closest('.field');
+        if (fieldDiv) {
+            const label = fieldDiv.querySelector('label');
+            if (label) {
+                label.appendChild(counter);
+            }
+        }
+        
+        // 文字数カウントと表示を更新
+        const updateCounter = () => {
+            const text = input.value || '';
+            const charCount = countFullWidthChars(text);
+            counter.textContent = `(${charCount}/${MAX_CHARS}文字)`;
+            
+            if (charCount > MAX_CHARS) {
+                counter.style.color = '#dc3545';
+                input.style.borderColor = '#dc3545';
+            } else {
+                counter.style.color = '#666';
+                input.style.borderColor = '';
+            }
+        };
+        
+        // 入力時に文字数をチェックし、制限を超えた場合は入力を制限
+        input.addEventListener('input', (e) => {
+            const text = e.target.value || '';
+            const charCount = countFullWidthChars(text);
+            
+            if (charCount > MAX_CHARS) {
+                // 制限を超えた場合、最後の文字を削除
+                let truncated = text;
+                while (countFullWidthChars(truncated) > MAX_CHARS && truncated.length > 0) {
+                    truncated = truncated.slice(0, -1);
+                }
+                e.target.value = truncated;
+            }
+            
+            updateCounter();
+        });
+        
+        // 初期表示
+        updateCounter();
+    };
+    
+    // タイトル欄にカウンターを設定
+    titleInputs.forEach((input, index) => {
+        const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
+        setupCharCounter(input, `title-counter-${formIndex}`);
+    });
+    
+    // 概要欄にカウンターを設定
+    abstractInputs.forEach((input, index) => {
+        const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
+        setupCharCounter(input, `abstract-counter-${formIndex}`);
+    });
+}
+
+// ページ読み込み時と動的に追加されたフィールドにも適用
+const initializeCharCounters = () => {
+    initializeCharCounter();
+    
+    // 動的に追加されたフィールドにも適用するため、MutationObserverを使用
+    const observer = new MutationObserver(() => {
+        initializeCharCounter();
+    });
+    
+    const talkFieldsContainer = document.querySelector('.talk-fields');
+    if (talkFieldsContainer) {
+        observer.observe(talkFieldsContainer, {
+            childList: true,
+            subtree: true
+        });
+    }
+}
+
+// 既存の初期化処理に追加
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeAddTalkButton();
+        initializeRemoveTalkButton();
+        initializeCharCounters();
+    })
+} else {
+    initializeAddTalkButton();
+    initializeRemoveTalkButton();
+    initializeCharCounters();
 }

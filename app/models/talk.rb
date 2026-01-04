@@ -463,7 +463,7 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   def validate_title_length
     return if title.blank?
-    
+
     char_count = count_chars(title)
     if char_count > MAX_TITLE_CHARS
       errors.add(:title, "は#{MAX_TITLE_CHARS}文字以内で入力してください（現在#{char_count}文字）")
@@ -472,7 +472,7 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   def validate_abstract_length
     return if abstract.blank?
-    
+
     char_count = count_chars(abstract)
     if char_count > MAX_ABSTRACT_CHARS
       errors.add(:abstract, "は#{MAX_ABSTRACT_CHARS}文字以内で入力してください（現在#{char_count}文字）")

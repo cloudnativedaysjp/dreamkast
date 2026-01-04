@@ -51,8 +51,8 @@ class TalksController < ApplicationController
       return
     end
 
-    # カンファレンスがOpenまたはClosedの時のみ質問可能
-    unless @conference.opened? || @conference.closed?
+    # カンファレンスがOpen、Closed、またはArchivedの時のみ質問可能
+    unless @conference.opened? || @conference.closed? || @conference.archived?
       flash[:alert] = '質問はカンファレンス開催中または終了後のみ投稿できます'
       redirect_to talk_path(id: params[:id], event: event_name)
       return

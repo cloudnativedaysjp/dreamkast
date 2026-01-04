@@ -37,7 +37,7 @@ class TalksController < ApplicationController
 
   def create_question
     @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     unless @talk
       flash[:alert] = 'セッションが見つかりません'
@@ -47,6 +47,13 @@ class TalksController < ApplicationController
 
     unless @profile
       flash[:alert] = 'ログインが必要です'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    # カンファレンスがOpenまたはClosedの時のみ質問可能
+    unless @conference.opened? || @conference.closed?
+      flash[:alert] = '質問はカンファレンス開催中または終了後のみ投稿できます'
       redirect_to talk_path(id: params[:id], event: event_name)
       return
     end

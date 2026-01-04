@@ -16,7 +16,7 @@
     </div>
   <% end %>
   
-  <% if logged_in? && @profile.present? %>
+  <% if logged_in? && @profile.present? && (@conference.opened? || @conference.closed?) %>
     <div class="card mb-4">
       <div class="card-body">
         <h5 class="card-title">質問を投稿</h5>

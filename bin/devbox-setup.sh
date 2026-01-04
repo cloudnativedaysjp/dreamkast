@@ -36,40 +36,7 @@ yarn install --check-files
 echo "Ruby依存をインストールしています..."
 bundle install
 
-# 4. Docker Composeサービスの起動確認
-# 注意: ui と fifo-worker はECR認証が必要なため、devbox run auth 後に起動
-echo "基本Docker Composeサービスを起動しています..."
-echo "  (ui と fifo-worker は認証後に起動します)"
-docker compose up -d db redis localstack nginx
-
-# サービス起動待機
-echo "サービスの起動を待機しています(最大60秒)..."
-timeout=60
-elapsed=0
-while ! docker compose ps | grep -q "db.*healthy\|db.*running"; do
-  if [ $elapsed -ge $timeout ]; then
-    echo -e "${RED}❌ DBサービスの起動がタイムアウトしました${NC}"
-    echo "docker compose logs db でログを確認してください"
-    exit 1
-  fi
-  sleep 2
-  elapsed=$((elapsed + 2))
-done
-
-# 5. 健全性チェック
-echo "データベース接続を確認しています..."
-if ! mysql -h 127.0.0.1 -u root -proot -e "SELECT 1" > /dev/null 2>&1; then
-  echo -e "${YELLOW}⚠️  MySQL接続に失敗しました。Docker Composeログを確認してください。${NC}"
-  echo "   docker compose logs db"
-fi
-
-echo "Redis接続を確認しています..."
-if ! redis-cli -h 127.0.0.1 ping > /dev/null 2>&1; then
-  echo -e "${YELLOW}⚠️  Redis接続に失敗しました。Docker Composeログを確認してください。${NC}"
-  echo "   docker compose logs redis"
-fi
-
-# 6. 完了メッセージ
+# 4. 完了メッセージ
 echo ""
 echo -e "${GREEN}✅ セットアップが完了しました!${NC}"
 echo ""

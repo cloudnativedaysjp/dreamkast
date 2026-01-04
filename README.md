@@ -4,26 +4,31 @@
 <img src="docs/images/dreamkast.png" width="300">
 </div>
 
-Online Conference System written in Ruby on Rails
+Ruby on Railsで構築されたオンラインカンファレンスシステム
 
-## About Dreamkast platform
+## Dreamkastプラットフォームについて
 
-See [Notion](https://www.notion.so/cloudnativedays/Dreamkast-Team-bc787244afdc45b880c014bd61891aa8) (Member only)
+詳細は[Notion](https://www.notion.so/cloudnativedays/Dreamkast-Team-bc787244afdc45b880c014bd61891aa8)を参照してください（メンバー限定）
 
-## Prerequisites
+## 前提条件
 
-- Docker Compose V2 (bundled with Docker Desktop or follow [the official doc](https://docs.docker.com/compose/install/linux/)) 
-- Auth0 application keys
+- OS: macOS, Linux, Windows
+- **Docker**
 
-## How to setup dev environment
-
-### Using devbox (Recommended for new developers)
+## 開発環境のセットアップ
 
 **devbox**を使用すると、チーム全体で統一された開発環境を簡単にセットアップできます。
 
-詳細な手順は [docs/DEVBOX_SETUP.md](docs/DEVBOX_SETUP.md) を参照してください。
+### devboxの利点
 
-クイックスタート:
+- **統一された開発環境**: チーム全体で同じバージョンのツールを使用
+- **簡単なセットアップ**: rbenv/nodenvの手動インストールが不要
+- **再現性の保証**: devbox.lockでバージョンを固定
+- **AWS認証情報の自動取得**: Secrets Managerから認証情報を自動で取得
+
+**注意**: Node.jsはdevboxが提供する22系の安定版を使用します（.node-versionでは22.16.0を指定していますが、devboxでは`nodejs@22`で22系の安定バージョンを自動取得）。マイナーバージョンの違いはありますが互換性があるため、開発に支障はありません。
+
+### クイックスタート
 
 ```bash
 # 1. devboxのインストール
@@ -36,223 +41,247 @@ cd dreamkast
 # 3. devbox環境の初期化
 devbox shell
 
-# 4. 初回セットアップ（依存関係インストール、Dockerサービス起動）
+# 4. 初回セットアップ（依存関係インストール）
 devbox run setup
 
-# 5. AWS認証（SSO設定、ECRログイン）
+# 5. AWS認証とシークレット取得
 devbox run auth
 
-# 6. Secrets Managerから認証情報を自動取得
-devbox run fetch-secrets
-
-# 7. アプリケーション起動
+# 6. アプリケーション起動
 devbox run start
 ```
 
 ブラウザで `http://localhost:8080` にアクセスしてください。
 
-### Using docker compose(quickest)
+### セットアップの詳細
 
-1. Retrieve ECR credential
-```
-# Login AWS with SSO to retrieve ECR credential. If you are not assigned to GAFA account or you don't know how to use AWS SSO, please ask Dreamkast team.
-aws configure sso
-aws ecr get-login-password --region ap-northeast-1 --profile dreamkast-core-XXXXX | docker login --username AWS --password-stdin https://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com
-```
+#### 1. devboxのインストール
 
-2. Create `.env`. This is an example.
-```
-tee .env <<EOF
-AUTH0_CLIENT_ID=
-AUTH0_CLIENT_SECRET=
-AUTH0_DOMAIN=
-SENTRY_DSN=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=ap-northeast-1
-DREAMKAST_API_ADDR="http://localhost:8080"
-S3_BUCKET=dreamkast-test-bucket
-S3_REGION=
-MYSQL_HOST=db
-MYSQL_USER=root
-MYSQL_PASSWORD=root
-MYSQL_DATABASE=dreamkast
-REDIS_URL=redis://redis:6379
-RAILS_MASTER_KEY=
-SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/default
-EOF
+```bash
+curl -fsSL https://get.jetify.com/devbox | bash
 ```
 
-You need to ask Dreamkast team to get full-filled file.
+詳細: <https://www.jetify.com/devbox/docs/installing_devbox/>
 
-3. docker compose up
+#### 2. devbox環境の初期化
 
-```
-docker compose -f compose-dev.yaml up -d
-```
-
-Wait until the dreamkast app to start (almost 3 minutes)
-
-After that, access to `http://localhost:8080` in your browser.
-
-### Using local environment
-
-This repository works with
-
-- Ruby
-- Node.js
-- Yarn
-- Docker Compose (for MySQL and Redis)
-- AWS CLI
-
-the version is controlled by `.node-version` and `.ruby-version` file.
-
-`nodenv` and `rbenv` are recommended to install those.
-
-You need to install shared-mime-info
-
-- macOS: `brew install shared-mime-info`
-- Ubuntu, Debian: `apt-get install shared-mime-info`
-
-```
-$ yarn install --check-files
-$ bundle install
+```bash
+devbox shell
 ```
 
-Then, create `.env-local` file and fill these values. If you don't know correct values, please ask us.
+初回実行時、必要なパッケージ(Ruby、Node.js、Docker等)が自動ダウンロードされます(5-10分程度)。
 
-```
-export AUTH0_CLIENT_ID=
-export AUTH0_CLIENT_SECRET=
-export AUTH0_DOMAIN=
-export SENTRY_DSN=
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
-export S3_BUCKET=
-export S3_REGION=
-export MYSQL_HOST=db
-export MYSQL_USER=user
-export MYSQL_PASSWORD=password
-export MYSQL_DATABASE=dreamkast
-export REDIS_URL=redis://redis:6379
-export RAILS_MASTER_KEY=
-export SQS_FIFO_QUEUE_URL=http://localhost:9324/queue/default
+#### 3. 初回セットアップ
+
+```bash
+devbox run setup
 ```
 
-Next, configure awscli and logged in registry using it.
+このコマンドは以下を実行します:
 
-```
-source .env-local
-aws ecr get-login-password | docker login --username AWS --password-stdin http://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/
-```
+- 環境変数テンプレート(`.env-local.devbox.example`)のコピー
+- `yarn install --check-files`
+- `bundle install`
 
-Then, setup databases, ui and load balancer by running Docker Compose
+#### 4. AWS認証とシークレット取得
 
-```
-$ docker compose pull ui
-$ docker compose up -d fifo-worker db redis nginx localstack ui
+```bash
+devbox run auth
 ```
 
-Run the application and builder js and css
+このコマンドは以下を自動的に実行します:
 
-```
-$  bundle exec foreman start -f Procfile.dev "$@" -e .env
-```
+- AWS SSO設定の自動構成（SSO Start URLを含む）
+- AWS SSOログイン（ブラウザで認証）
+- ECRログイン
+- AWS Secrets Managerから認証情報を自動取得
+  - Auth0設定(CLIENT_ID, CLIENT_SECRET, DOMAIN)
+  - Rails Master Key
 
-## DB migration and to add seed data
+**注意**: 初回実行時はブラウザでAWS SSOの認証が求められます。Dreamkastチームから付与されたAWSアカウントでログインしてください。
 
-```
-$ bundle exec rails db:migrate
-$ bundle exec rails db:seed
-```
+**リモート環境での認証**: リモート環境（SSH接続先など）でブラウザが開けない場合は、環境変数`DEVBOX_REMOTE=1`を使用します:
 
-## Ruby Type
-
-### Generate RBS files for Rails
-
-https://github.com/pocke/rbs_rails
-
-Generate RBS files for Rails (e.g. ActiveRecord models) to  under`sig/rbs_rails/`. You don't need update files by this rake task because these are auto geretated files.
-
-```
-$ rake rbs_rails:all
+```bash
+DEVBOX_REMOTE=1 devbox run auth
 ```
 
-### Generate RBS files for your application code
+このコマンドは認証URLとコードを表示するので、手元のブラウザで開いて認証を完了してください。
 
-If you want to generate RBS for your application code, you can use `rbs prototype` . This command generate prototype RBS file by your code. You can edit generated RBS file.
+#### 5. アプリケーション起動
 
-```
-$ rbs prototype rb ./app/models/access_log.rb > sig/app/models/access_log.rbs
-```
-
-## How to use REST API for VideoRegistration
-
-### Retrieve CLIENT ID and CLIENT SECRET from Auth0
-
-https://manage.auth0.com/dashboard/us/dreamkast/applications/Piz0aBnXn0vxesyZScc76PgdCB7lCAbk/settings
-
-### Generate JWT Token
-
-```
-AUTH0_DOMAIN=dreamkast.us.auth0.com
-CLIENT_ID=<CLIENT ID>
-CLIENT_SECRET=<CLIENT SECRET>
-AUDIENCE=https://event.cloudnativedays.jp/
-TOKEN=$(curl --url https://${AUTH0_DOMAIN}/oauth/token \
-  --header 'content-type: application/json' \
-  --data "{\"client_id\":\"${CLIENT_ID}\",\"client_secret\":\"${CLIENT_SECRET}\",\"audience\":\"${AUDIENCE}\",\"grant_type\":\"client_credentials\"}" | jq -r .access_token)
-DREAMKAST_DOMAIN='event.cloudnativedays.jp'
+```bash
+devbox run start
 ```
 
-※ Don't retrieve JWT token frequently due to Auth0 limitation. We recommend store generated token into environment variable. Generated token is available 1 day.
+このコマンドは以下を実行します:
 
-### Get VideoRegistration
+- Docker Composeサービスの起動（db, redis, localstack, nginx, ui, fifo-worker）
+- データベースマイグレーション（`rails db:migrate`）
+- シードデータ投入（`rails db:seed`）
+- Railsアプリケーションの起動
 
-```
-curl -X GET -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration
-```
+ブラウザで `http://localhost:8080` にアクセスしてください。
 
-### Set URL
+**注意**: PC起動後は毎回`devbox run start`を実行してください。このコマンドでDockerコンテナが起動します。
 
-```
-curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration -d '{
-  "url": "https://foobar"
-}'
-```
+### 日常の開発フロー
 
-### Set video status
+#### アプリケーション起動
 
-You can set these values in status.
-
-- unsubmitted
-- submitted
-- confirmed
-- invalid_format
-
-```
-curl -X PUT -H "Authorization: Bearer $TOKEN" https://$DREAMKAST_DOMAIN/api/v1/talks/1/video_registration -d '{
-  "status": "confirmed",
-  "statistics": {
-            "file_name": "XX",
-            "resolution_status": "OK",
-            "resolution_type": "FHD",
-            "aspect_status": "OK",
-            "aspect_ratio": "16:9",
-            "duration_status": "OK",
-            "duration_description": "Appropriate media duration.",
-            "size_status": "OK",
-            "size_description": "Appropriate media size."
-          }
-}'
+```bash
+devbox shell
+devbox run start
 ```
 
-## Run rubocop automatically
+#### テスト実行
 
+```bash
+devbox shell
+devbox run test
 ```
+
+または個別テスト:
+
+```bash
+bundle exec rspec spec/models/talk_spec.rb
+```
+
+#### Lint実行
+
+```bash
+bundle exec rubocop --autocorrect-all
+```
+
+#### データベース操作
+
+マイグレーション:
+
+```bash
+bundle exec rails db:migrate
+```
+
+シードデータ投入:
+
+```bash
+bundle exec rails db:seed
+```
+
+#### Docker Composeサービスの管理
+
+サービス一覧:
+
+```bash
+docker compose ps
+```
+
+ログ確認:
+
+```bash
+docker compose logs -f db
+```
+
+サービス再起動:
+
+```bash
+docker compose restart db
+```
+
+### トラブルシューティング
+
+#### devbox shellが遅い
+
+初回実行時はパッケージダウンロードで時間がかかります。2回目以降はキャッシュが効くため高速です。
+
+#### MySQL接続エラー
+
+```bash
+# DBサービスの状態確認
+docker compose ps db
+
+# DBログ確認
+docker compose logs db
+
+# DB再起動
+docker compose restart db
+```
+
+#### yarn installエラー
+
+```bash
+# node_modules削除
+rm -rf node_modules
+
+# 再インストール
+yarn install --check-files
+```
+
+#### bundle installエラー
+
+```bash
+# vendor/bundle削除
+rm -rf vendor/bundle
+
+# 再インストール
+bundle install
+```
+
+#### ECRログインエラー
+
+```bash
+# AWS SSOセッションの更新
+aws sso login --profile dreamkast
+
+# ECRログイン再実行
+devbox run auth
+```
+
+#### Secrets Manager取得エラー
+
+```bash
+# AWS認証状態確認
+aws sts get-caller-identity --profile dreamkast
+
+# Secrets Managerへのアクセス権限確認
+aws secretsmanager describe-secret \
+  --secret-id dreamkast/reviewapp-env \
+  --region us-west-2 \
+  --profile dreamkast
+```
+
+アクセス権限がない場合は、Dreamkastチームに権限付与を依頼してください。
+
+#### Rails起動時のRAILS_MASTER_KEYエラー
+
+`.env-local.devbox`にRAILS_MASTER_KEYが設定されているか確認してください。
+
+```bash
+# 設定確認
+grep RAILS_MASTER_KEY .env-local.devbox
+
+# 未設定の場合は再取得
+devbox run fetch-secrets
+```
+
+## その他のセットアップ方法
+
+devboxを使わない場合の代替セットアップ方法:
+
+- [Docker Composeを使ったセットアップ](docs/SETUP_DOCKER_COMPOSE.md) - 最速でセットアップしたい場合
+- [ローカル環境を使ったセットアップ](docs/SETUP_LOCAL.md) - rbenv/nodenvを使った従来方式
+
+## 高度な機能
+
+- [Ruby型定義（RBS）とVideoRegistration API](docs/ADVANCED.md)
+
+## rubocopの自動実行
+
+```bash
 git config pre-commit.ruby "bundle exec ruby"
 git config pre-commit.checks "[rubocop]"
 ```
 
+## 参考リンク
 
-
+- [devbox公式ドキュメント](https://www.jetify.com/devbox/docs/)
+- [Dreamkast AGENT.md](AGENT.md)

@@ -67,7 +67,7 @@ EOS
     conference_status: "migrated",
     theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Tokyo 2021 Committee",
@@ -88,7 +88,7 @@ EOS
     conference_status: "migrated",
     theme: "Observe the Observability 〜知らないことを知り、見えていないものを見る〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "Observability Conference 2022 Committee",
@@ -111,7 +111,7 @@ EOS
     conference_status: "migrated",
     theme: "Go \"Green\"〜ともに目指す持続可能なセキュリティ〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Security Conference 2022 Committee",
@@ -136,8 +136,8 @@ EOS
     conference_status: "migrated",
     theme: "+Native 〜ともに広がるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Tokyo 2022 Committee",
     about: <<'EOS'
@@ -156,6 +156,8 @@ EOS
     conference_status: "migrated",
     theme: "Continuous 〜ともに回す高速なアプリケーション開発ライフサイクル〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CI/CD Conference 2023 Committee",
     about: <<'EOS'
@@ -174,9 +176,11 @@ EOS
     id: 9,
     name: "CloudNative Days Fukuoka 2023",
     abbr: "cndf2023",
-    theme: "“Unlearning” 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
     conference_status: "migrated",
+    theme: "\"Unlearning\" 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     about: <<'EOS'
@@ -192,9 +196,11 @@ EOS
     id: 10,
     name: "CloudNative Days Tokyo 2023",
     abbr: "cndt2023",
-    theme: "+Native ともに飛び出せ！",
     conference_status: "migrated",
+    theme: "+Native ともに飛び出せ！",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 650,
@@ -212,9 +218,11 @@ EOS
     id: 11,
     name: "CloudNative Days Summer 2024",
     abbr: "cnds2024",
-    theme: "Synergy 〜その先の、道へ。出会いと変化を紡ぐ場所〜",
     conference_status: "migrated",
+    theme: "Synergy 〜その先の、道へ。出会いと変化を紡ぐ場所〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 300,
@@ -236,9 +244,11 @@ EOS
     id: 12,
     name: "CloudNative Days Winter 2024",
     abbr: "cndw2024",
-    theme: "小さな一歩、大きな飛躍〜クラウドネイティブを継続する",
     conference_status: "migrated",
+    theme: "小さな一歩、大きな飛躍〜クラウドネイティブを継続する",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 600,
@@ -850,11 +860,6 @@ if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
   import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
   import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
   #import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))

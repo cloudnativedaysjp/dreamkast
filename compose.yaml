@@ -89,9 +89,9 @@ services:
       - NEXT_PUBLIC_AUTH0_DOMAIN=dreamkast.us.auth0.com
       - NEXT_PUBLIC_AUTH0_CLIENT_ID=0cWWdpGt4CpWjHJ9QIHtPm5GrJLS25lz
       - NEXT_PUBLIC_AUTH0_AUDIENCE=https://event.cloudnativedays.jp/
-      - NEXT_PUBLIC_BASE_PATH=/cndt2022/ui
+      - NEXT_PUBLIC_BASE_PATH=/cnk/ui
       - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/
-      - NEXT_PUBLIC_EVENT_SALT=cndt2022
+      - NEXT_PUBLIC_EVENT_SALT=cnk
   localstack:
     image: localstack/localstack:4.12.0
     environment:

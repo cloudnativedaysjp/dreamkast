@@ -88,6 +88,10 @@ const buttonListener = (e) => {
     }
 }
 
+// 文字数制限を適用（タイトル: 60文字、概要: 500文字）
+const MAX_TITLE_CHARS = 60;
+const MAX_ABSTRACT_CHARS = 500;
+
 // 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
 const countChars = (str) => {
     if (!str) return 0;
@@ -110,10 +114,6 @@ if (typeof module !== 'undefined' && module.exports) {
         // テスト用に他の関数もエクスポート可能にする場合はここに追加
     };
 }
-
-// 文字数制限を適用（タイトル: 60文字、概要: 500文字）
-const MAX_TITLE_CHARS = 60;
-const MAX_ABSTRACT_CHARS = 500;
 
 const initializeCharCounter = () => {
     // タイトルと概要欄の入力フィールドを取得

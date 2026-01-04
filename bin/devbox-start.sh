@@ -18,9 +18,23 @@ if [ ! -f .env-local.devbox ]; then
   exit 1
 fi
 
-# 2. Docker Composeサービスの起動確認
-echo "Docker Composeサービスを確認しています..."
+# 2. Docker Composeサービスの起動
+echo "Docker Composeサービスを起動しています..."
 docker compose up -d db redis localstack nginx ui fifo-worker
+
+# サービス起動待機
+echo "サービスの起動を待機しています(最大60秒)..."
+timeout=60
+elapsed=0
+while ! docker compose ps | grep -q "db.*healthy\|db.*running"; do
+  if [ $elapsed -ge $timeout ]; then
+    echo -e "${RED}❌ DBサービスの起動がタイムアウトしました${NC}"
+    echo "docker compose logs db でログを確認してください"
+    exit 1
+  fi
+  sleep 2
+  elapsed=$((elapsed + 2))
+done
 
 # 3. DBマイグレーション
 echo "データベースマイグレーションを実行しています..."

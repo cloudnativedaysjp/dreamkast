@@ -17,6 +17,40 @@ See [Notion](https://www.notion.so/cloudnativedays/Dreamkast-Team-bc787244afdc45
 
 ## How to setup dev environment
 
+### Using devbox (Recommended for new developers)
+
+**devbox**を使用すると、チーム全体で統一された開発環境を簡単にセットアップできます。
+
+詳細な手順は [docs/DEVBOX_SETUP.md](docs/DEVBOX_SETUP.md) を参照してください。
+
+クイックスタート:
+
+```bash
+# 1. devboxのインストール
+curl -fsSL https://get.jetify.com/devbox | bash
+
+# 2. リポジトリのクローン
+git clone https://github.com/cloudnativedaysjp/dreamkast.git
+cd dreamkast
+
+# 3. devbox環境の初期化
+devbox shell
+
+# 4. 初回セットアップ（依存関係インストール、Dockerサービス起動）
+devbox run setup
+
+# 5. AWS認証（SSO設定、ECRログイン）
+devbox run auth
+
+# 6. Secrets Managerから認証情報を自動取得
+devbox run fetch-secrets
+
+# 7. アプリケーション起動
+devbox run start
+```
+
+ブラウザで `http://localhost:8080` にアクセスしてください。
+
 ### Using docker compose(quickest)
 
 1. Retrieve ECR credential

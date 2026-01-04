@@ -126,7 +126,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
             expect(response).to(have_http_status('302'))
             speaker = Speaker.find_by(name: 'Test Speaker')
             expect(speaker).to_not(be_nil)
-            expect(speaker.talks.first.title.length).to(eq(60))
+            expect(speaker.talks.first.title.each_grapheme_cluster.count).to(eq(60))
           end
         end
 
@@ -152,7 +152,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
             expect(response).to(have_http_status('302'))
             speaker = Speaker.find_by(name: 'Test Speaker')
             expect(speaker).to_not(be_nil)
-            expect(speaker.talks.first.abstract.length).to(eq(500))
+            expect(speaker.talks.first.abstract.each_grapheme_cluster.count).to(eq(500))
           end
         end
 
@@ -177,6 +177,77 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
 
             expect(response).to(have_http_status('200'))
             expect(response.body).to(include('は500文字以内で入力してください'))
+          end
+        end
+
+        context 'タイトルに絵文字が含まれる場合' do
+          context '絵文字60個 = 60文字の場合' do
+            it '正常に登録される' do
+              params = base_params.deep_dup
+              params['talks_attributes']['1644323265675']['title'] = '😀' * 60
+
+              post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
+
+              expect(response).to(have_http_status('302'))
+              speaker = Speaker.find_by(name: 'Test Speaker')
+              expect(speaker).to_not(be_nil)
+              expect(speaker.talks.first.title.each_grapheme_cluster.count).to(eq(60))
+            end
+          end
+
+          context '絵文字61個 = 61文字の場合' do
+            it 'バリデーションエラーになる' do
+              params = base_params.deep_dup
+              params['talks_attributes']['1644323265675']['title'] = '😀' * 61
+
+              post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
+
+              expect(response).to(have_http_status('200'))
+              expect(response.body).to(include('は60文字以内で入力してください'))
+            end
+          end
+
+          context '複合絵文字（ゼロ幅結合子を含む）が含まれる場合' do
+            it '正常に登録される（1文字としてカウント）' do
+              params = base_params.deep_dup
+              # 👨‍👩‍👧‍👦 は複数のコードポイントで構成されるが、1文字としてカウントされるべき
+              params['talks_attributes']['1644323265675']['title'] = '👨‍👩‍👧‍👦' * 30
+
+              post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
+
+              expect(response).to(have_http_status('302'))
+              speaker = Speaker.find_by(name: 'Test Speaker')
+              expect(speaker).to_not(be_nil)
+              expect(speaker.talks.first.title.each_grapheme_cluster.count).to(eq(30))
+            end
+          end
+        end
+
+        context '概要に絵文字が含まれる場合' do
+          context '絵文字500個 = 500文字の場合' do
+            it '正常に登録される' do
+              params = base_params.deep_dup
+              params['talks_attributes']['1644323265675']['abstract'] = '😀' * 500
+
+              post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
+
+              expect(response).to(have_http_status('302'))
+              speaker = Speaker.find_by(name: 'Test Speaker')
+              expect(speaker).to_not(be_nil)
+              expect(speaker.talks.first.abstract.each_grapheme_cluster.count).to(eq(500))
+            end
+          end
+
+          context '絵文字501個 = 501文字の場合' do
+            it 'バリデーションエラーになる' do
+              params = base_params.deep_dup
+              params['talks_attributes']['1644323265675']['abstract'] = '😀' * 501
+
+              post('/cndt2020/speaker_dashboard/speakers', params: { speaker: params })
+
+              expect(response).to(have_http_status('200'))
+              expect(response.body).to(include('は500文字以内で入力してください'))
+            end
           end
         end
       end

@@ -88,10 +88,17 @@ const buttonListener = (e) => {
     }
 }
 
-// 文字数をカウント（全角・半角関係なく）
+// 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
 const countChars = (str) => {
     if (!str) return 0;
-    return str.length;
+    // Intl.Segmenterを使って絵文字を正しく1文字としてカウント
+    try {
+        const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
+        return [...segmenter.segment(str)].length;
+    } catch (e) {
+        // フォールバック: スプレッド演算子を使用（古いブラウザ対応）
+        return [...str].length;
+    }
 }
 
 // 文字数制限を適用（タイトル: 60文字、概要: 500文字）
@@ -147,8 +154,18 @@ const initializeCharCounter = () => {
             const charCount = countChars(text);
             
             if (charCount > maxChars) {
-                // 制限を超えた場合、最後の文字を削除
-                e.target.value = text.slice(0, maxChars);
+                // 制限を超えた場合、絵文字を考慮して正しく切り詰める
+                let truncated = '';
+                try {
+                    const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
+                    const segments = [...segmenter.segment(text)];
+                    truncated = segments.slice(0, maxChars).map(seg => seg.segment).join('');
+                } catch (err) {
+                    // フォールバック: スプレッド演算子を使用
+                    const chars = [...text];
+                    truncated = chars.slice(0, maxChars).join('');
+                }
+                e.target.value = truncated;
             }
             
             updateCounter();

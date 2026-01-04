@@ -451,10 +451,11 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   private
 
-  # 文字数をカウント（全角・半角関係なく）
+  # 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
   def count_chars(str)
     return 0 if str.blank?
-    str.length
+    # each_grapheme_clusterを使って絵文字を正しく1文字としてカウント
+    str.each_grapheme_cluster.count
   end
 
   MAX_TITLE_CHARS = 60

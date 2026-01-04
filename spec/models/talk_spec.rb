@@ -310,6 +310,61 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
         end
       end
 
+      context 'タイトルに絵文字が含まれる場合（絵文字1つで1文字としてカウント）' do
+        context '絵文字59個 + 通常文字1文字 = 60文字の場合' do
+          before do
+            talk.title = '😀' * 59 + 'あ'
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字60個 = 60文字の場合' do
+          before do
+            talk.title = '😀' * 60
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字61個 = 61文字の場合' do
+          before do
+            talk.title = '😀' * 61
+          end
+
+          it 'バリデーションエラーになる' do
+            expect(talk).not_to(be_valid)
+            expect(talk.errors[:title]).to(include("は60文字以内で入力してください（現在61文字）"))
+          end
+        end
+
+        context '複合絵文字（ゼロ幅結合子を含む）が含まれる場合' do
+          before do
+            # 👨‍👩‍👧‍👦 は複数のコードポイントで構成されるが、1文字としてカウントされるべき
+            talk.title = '👨‍👩‍👧‍👦' * 30
+          end
+
+          it 'バリデーションが通る（30文字としてカウント）' do
+            expect(talk).to(be_valid)
+            expect(talk.title.each_grapheme_cluster.count).to(eq(30))
+          end
+        end
+
+        context '絵文字と通常文字の混在で60文字の場合' do
+          before do
+            talk.title = '😀' * 30 + 'あ' * 30
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+      end
+
       context 'タイトルが空の場合' do
         before do
           talk.title = ''
@@ -372,6 +427,61 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
 
         it 'バリデーションが通る' do
           expect(talk).to(be_valid)
+        end
+      end
+
+      context '概要に絵文字が含まれる場合（絵文字1つで1文字としてカウント）' do
+        context '絵文字499個 + 通常文字1文字 = 500文字の場合' do
+          before do
+            talk.abstract = '😀' * 499 + 'あ'
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字500個 = 500文字の場合' do
+          before do
+            talk.abstract = '😀' * 500
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字501個 = 501文字の場合' do
+          before do
+            talk.abstract = '😀' * 501
+          end
+
+          it 'バリデーションエラーになる' do
+            expect(talk).not_to(be_valid)
+            expect(talk.errors[:abstract]).to(include("は500文字以内で入力してください（現在501文字）"))
+          end
+        end
+
+        context '複合絵文字（ゼロ幅結合子を含む）が含まれる場合' do
+          before do
+            # 👨‍👩‍👧‍👦 は複数のコードポイントで構成されるが、1文字としてカウントされるべき
+            talk.abstract = '👨‍👩‍👧‍👦' * 250
+          end
+
+          it 'バリデーションが通る（250文字としてカウント）' do
+            expect(talk).to(be_valid)
+            expect(talk.abstract.each_grapheme_cluster.count).to(eq(250))
+          end
+        end
+
+        context '絵文字と通常文字の混在で500文字の場合' do
+          before do
+            talk.abstract = '😀' * 250 + 'あ' * 250
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
         end
       end
 

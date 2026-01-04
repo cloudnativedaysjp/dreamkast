@@ -188,14 +188,14 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-mashify (1.0.1)
+    faraday-mashify (1.0.2)
       faraday (~> 2.0)
       hashie
-    faraday-multipart (1.1.1)
+    faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    faraday-retry (2.3.2)
+    faraday-retry (2.4.0)
       faraday (~> 2.0)
     ferrum (0.15)
       addressable (~> 2.5)
@@ -625,10 +625,10 @@ GEM
     rexml (3.4.4)
     roda (3.93.0)
       rack
-    rqrcode (3.1.0)
+    rqrcode (3.1.1)
       chunky_png (~> 1.0)
       rqrcode_core (~> 2.0)
-    rqrcode_core (2.0.0)
+    rqrcode_core (2.0.1)
     rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)

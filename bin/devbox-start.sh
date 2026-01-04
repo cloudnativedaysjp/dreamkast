@@ -26,7 +26,7 @@ docker compose up -d db redis localstack nginx ui fifo-worker
 echo "サービスの起動を待機しています(最大60秒)..."
 timeout=60
 elapsed=0
-while ! docker compose ps | grep -q "db.*healthy\|db.*running"; do
+while ! docker compose ps | grep -q "db.*healthy"; do
   if [ $elapsed -ge $timeout ]; then
     echo -e "${RED}❌ DBサービスの起動がタイムアウトしました${NC}"
     echo "docker compose logs db でログを確認してください"

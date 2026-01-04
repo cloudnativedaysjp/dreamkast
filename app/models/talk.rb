@@ -460,14 +460,15 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     bytes / 2
   end
 
-  MAX_CHARS = 500
+  MAX_TITLE_CHARS = 60
+  MAX_ABSTRACT_CHARS = 500
 
   def validate_title_length
     return if title.blank?
     
     char_count = count_full_width_chars(title)
-    if char_count > MAX_CHARS
-      errors.add(:title, "は全角換算で#{MAX_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    if char_count > MAX_TITLE_CHARS
+      errors.add(:title, "は全角換算で#{MAX_TITLE_CHARS}文字以内で入力してください（現在#{char_count}文字）")
     end
   end
 
@@ -475,8 +476,8 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     return if abstract.blank?
     
     char_count = count_full_width_chars(abstract)
-    if char_count > MAX_CHARS
-      errors.add(:abstract, "は全角換算で#{MAX_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    if char_count > MAX_ABSTRACT_CHARS
+      errors.add(:abstract, "は全角換算で#{MAX_ABSTRACT_CHARS}文字以内で入力してください（現在#{char_count}文字）")
     end
   end
 

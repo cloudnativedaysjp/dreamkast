@@ -97,15 +97,16 @@ const countFullWidthChars = (str) => {
     return Math.floor(bytes / 2);
 }
 
-// 文字数制限を適用（全角換算500文字）
-const MAX_CHARS = 500;
+// 文字数制限を適用（タイトル: 全角換算60文字、概要: 全角換算500文字）
+const MAX_TITLE_CHARS = 60;
+const MAX_ABSTRACT_CHARS = 500;
 
 const initializeCharCounter = () => {
     // タイトルと概要欄の入力フィールドを取得
     const titleInputs = document.querySelectorAll('input[name*="[title]"]');
     const abstractInputs = document.querySelectorAll('textarea[name*="[abstract]"]');
     
-    const setupCharCounter = (input, counterId) => {
+    const setupCharCounter = (input, counterId, maxChars) => {
         // カウンター要素が既に存在する場合はスキップ
         if (document.getElementById(counterId)) {
             return;
@@ -132,9 +133,9 @@ const initializeCharCounter = () => {
         const updateCounter = () => {
             const text = input.value || '';
             const charCount = countFullWidthChars(text);
-            counter.textContent = `(${charCount}/${MAX_CHARS}文字)`;
+            counter.textContent = `(${charCount}/${maxChars}文字)`;
             
-            if (charCount > MAX_CHARS) {
+            if (charCount > maxChars) {
                 counter.style.color = '#dc3545';
                 input.style.borderColor = '#dc3545';
             } else {
@@ -148,10 +149,10 @@ const initializeCharCounter = () => {
             const text = e.target.value || '';
             const charCount = countFullWidthChars(text);
             
-            if (charCount > MAX_CHARS) {
+            if (charCount > maxChars) {
                 // 制限を超えた場合、最後の文字を削除
                 let truncated = text;
-                while (countFullWidthChars(truncated) > MAX_CHARS && truncated.length > 0) {
+                while (countFullWidthChars(truncated) > maxChars && truncated.length > 0) {
                     truncated = truncated.slice(0, -1);
                 }
                 e.target.value = truncated;
@@ -164,16 +165,16 @@ const initializeCharCounter = () => {
         updateCounter();
     };
     
-    // タイトル欄にカウンターを設定
+    // タイトル欄にカウンターを設定（60文字制限）
     titleInputs.forEach((input, index) => {
         const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
-        setupCharCounter(input, `title-counter-${formIndex}`);
+        setupCharCounter(input, `title-counter-${formIndex}`, MAX_TITLE_CHARS);
     });
     
-    // 概要欄にカウンターを設定
+    // 概要欄にカウンターを設定（500文字制限）
     abstractInputs.forEach((input, index) => {
         const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
-        setupCharCounter(input, `abstract-counter-${formIndex}`);
+        setupCharCounter(input, `abstract-counter-${formIndex}`, MAX_ABSTRACT_CHARS);
     });
 }
 

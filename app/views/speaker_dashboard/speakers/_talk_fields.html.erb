@@ -16,7 +16,7 @@
 
   <div class="field pb-3">
     <%= label_tag "speaker_talks_attributes_#{form_index}_title", '講演タイトル - Abstract Title（★★★）', class: 'form-label' %>*
-    <p class="field-description" style="font-size: 0.7em">（最大500文字・全角換算）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 500 characters, full-width count) Include concrete technology names as possible to attract attendees</p>
+    <p class="field-description" style="font-size: 0.7em">（最大60文字・全角換算）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 60 characters, full-width count) Include concrete technology names as possible to attract attendees</p>
     <%= text_field_tag "speaker[talks_attributes][#{form_index}][title]", f.object.title, class: "form-control", required: true %>
   </div>
 

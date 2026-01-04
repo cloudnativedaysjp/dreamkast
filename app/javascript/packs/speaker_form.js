@@ -88,16 +88,13 @@ const buttonListener = (e) => {
     }
 }
 
-// 全角換算で文字数をカウント（バイト数/2）
-const countFullWidthChars = (str) => {
+// 文字数をカウント（全角・半角関係なく）
+const countChars = (str) => {
     if (!str) return 0;
-    // UTF-8エンコーディングでバイト数を取得
-    const bytes = new TextEncoder().encode(str).length;
-    // バイト数/2で全角換算の文字数を計算
-    return Math.floor(bytes / 2);
+    return str.length;
 }
 
-// 文字数制限を適用（タイトル: 全角換算60文字、概要: 全角換算500文字）
+// 文字数制限を適用（タイトル: 60文字、概要: 500文字）
 const MAX_TITLE_CHARS = 60;
 const MAX_ABSTRACT_CHARS = 500;
 
@@ -132,7 +129,7 @@ const initializeCharCounter = () => {
         // 文字数カウントと表示を更新
         const updateCounter = () => {
             const text = input.value || '';
-            const charCount = countFullWidthChars(text);
+            const charCount = countChars(text);
             counter.textContent = `(${charCount}/${maxChars}文字)`;
             
             if (charCount > maxChars) {
@@ -147,15 +144,11 @@ const initializeCharCounter = () => {
         // 入力時に文字数をチェックし、制限を超えた場合は入力を制限
         input.addEventListener('input', (e) => {
             const text = e.target.value || '';
-            const charCount = countFullWidthChars(text);
+            const charCount = countChars(text);
             
             if (charCount > maxChars) {
                 // 制限を超えた場合、最後の文字を削除
-                let truncated = text;
-                while (countFullWidthChars(truncated) > maxChars && truncated.length > 0) {
-                    truncated = truncated.slice(0, -1);
-                }
-                e.target.value = truncated;
+                e.target.value = text.slice(0, maxChars);
             }
             
             updateCounter();

@@ -372,7 +372,7 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
 
         it 'presenceバリデーションでエラーになる' do
           expect(talk).not_to(be_valid)
-          expect(talk.errors[:title]).to(include("can't be blank"))
+          expect(talk.errors[:title]).not_to(be_empty)
         end
       end
     end

@@ -20,7 +20,7 @@ fi
 
 # 2. Docker Composeサービスの起動
 echo "Docker Composeサービスを起動しています..."
-docker compose up -d db redis localstack nginx ui fifo-worker
+docker compose up -d db redis localstack nginx fifo-worker
 
 # サービス起動待機
 echo "サービスの起動を待機しています(最大60秒)..."

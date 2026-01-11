@@ -167,7 +167,7 @@ GEM
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
-    date (3.5.0)
+    date (3.5.1)
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -268,7 +268,7 @@ GEM
     mysql2 (0.5.6)
     net-http (0.8.0)
       uri (>= 0.11.1)
-    net-imap (0.5.9)
+    net-imap (0.6.2)
       date
       net-protocol
     net-pop (0.1.2)
@@ -757,7 +757,7 @@ GEM
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.4.0)
     tilt (2.6.0)
-    timeout (0.4.3)
+    timeout (0.6.0)
     tsort (0.2.0)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)

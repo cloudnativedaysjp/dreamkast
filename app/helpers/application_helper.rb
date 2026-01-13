@@ -63,4 +63,15 @@ module ApplicationHelper
       ENV['DREAMKAST_WEAVER_ADDR'], 'query'
     ].join('/')
   end
+
+  def alert_type(message_type)
+    case message_type
+    when 'notice'
+      'success'
+    when 'danger', 'alert'
+      'danger'
+    else
+      'primary'
+    end
+  end
 end

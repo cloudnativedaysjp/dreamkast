@@ -14,7 +14,9 @@ class TalksController < ApplicationController
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
     @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
+
+    raise(ActiveRecord::RecordNotFound) unless @talk
 
     unless @conference.cfp_result_visible
       raise(ActiveRecord::RecordNotFound)
@@ -24,7 +26,139 @@ class TalksController < ApplicationController
       raise(ActiveRecord::RecordNotFound)
     end
 
-    raise(ActiveRecord::RecordNotFound) unless @talk
+    # QA一覧を取得（新しい順でソート）
+    # 常に取得（質問がない場合も空配列を返す）
+    # 非表示の質問は除外
+    @session_questions = @talk.session_questions
+                              .visible
+                              .includes(:session_question_answers, :session_question_votes, profile: :public_profile)
+                              .order_by_time
+  end
+
+  def create_question
+    @conference = Conference.find_by(abbr: event_name)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
+
+    unless @talk
+      flash[:alert] = 'セッションが見つかりません'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    unless @profile
+      flash[:alert] = 'ログインが必要です'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    # カンファレンスがOpen、Closed、またはArchivedの時のみ質問可能
+    unless @conference.opened? || @conference.closed? || @conference.archived?
+      flash[:alert] = '質問はカンファレンス開催中または終了後のみ投稿できます'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    question = @talk.session_questions.build(
+      conference_id: @talk.conference_id,
+      profile_id: @profile.id,
+      body: params[:body]
+    )
+
+    if question.save
+      # ActionCableでブロードキャスト
+      broadcast_question_created(question)
+      flash[:notice] = '質問を投稿しました'
+    else
+      flash[:alert] = question.errors.full_messages.join(', ')
+    end
+
+    redirect_to talk_path(id: params[:id], event: event_name)
+  end
+
+  def destroy_question
+    @conference = Conference.find_by(abbr: event_name)
+    @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
+
+    unless @talk
+      flash[:alert] = 'セッションが見つかりません'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    unless @profile
+      flash[:alert] = 'ログインが必要です'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    question = @talk.session_questions.find_by(id: params[:question_id])
+
+    unless question
+      flash[:alert] = '質問が見つかりません'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    # 自分の質問のみ削除可能
+    unless question.profile_id == @profile.id
+      flash[:alert] = '自分の質問のみ削除できます'
+      redirect_to talk_path(id: params[:id], event: event_name)
+      return
+    end
+
+    if question.destroy
+      broadcast_question_deleted(question.id)
+      flash[:notice] = '質問を削除しました'
+    else
+      flash[:alert] = '質問の削除に失敗しました'
+    end
+
+    redirect_to talk_path(id: params[:id], event: event_name)
+  end
+
+  def broadcast_question_created(question)
+    begin
+      profile = question.profile
+
+      question_data = {
+        id: question.id,
+        body: question.body,
+        profile: {
+          id: profile.id,
+          name: profile.public_name
+        },
+        votes_count: question.votes_count,
+        has_voted: false,
+        created_at: question.created_at.iso8601,
+        answers: []
+      }
+
+      ActionCable.server.broadcast(
+        "qa_talk_#{@talk.id}",
+        {
+          type: 'question_created',
+          question: question_data
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_created: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
+  end
+
+  def broadcast_question_deleted(question_id)
+    begin
+      ActionCable.server.broadcast(
+        "qa_talk_#{@talk.id}",
+        {
+          type: 'question_deleted',
+          question_id:
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_deleted: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
   end
 
   def index

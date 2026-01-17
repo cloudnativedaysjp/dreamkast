@@ -29,6 +29,8 @@ class Talk < ApplicationRecord
 
   validates :conference_id, presence: true
   validates :title, presence: true
+  validate :validate_title_length
+  validate :validate_abstract_length
 
   # エントリー時、セッション概要は空白でもいいのでバリデーションしなくていい
   # validates :abstract, presence: true
@@ -448,6 +450,34 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
   end
 
   private
+
+  # 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
+  def count_chars(str)
+    return 0 if str.blank?
+    # each_grapheme_clusterを使って絵文字を正しく1文字としてカウント
+    str.each_grapheme_cluster.count
+  end
+
+  MAX_TITLE_CHARS = 60
+  MAX_ABSTRACT_CHARS = 500
+
+  def validate_title_length
+    return if title.blank?
+
+    char_count = count_chars(title)
+    if char_count > MAX_TITLE_CHARS
+      errors.add(:title, "は#{MAX_TITLE_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    end
+  end
+
+  def validate_abstract_length
+    return if abstract.blank?
+
+    char_count = count_chars(abstract)
+    if char_count > MAX_ABSTRACT_CHARS
+      errors.add(:abstract, "は#{MAX_ABSTRACT_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    end
+  end
 
   def validate_proposal_item_configs
     expected = conference.proposal_item_configs.pluck(:label).uniq

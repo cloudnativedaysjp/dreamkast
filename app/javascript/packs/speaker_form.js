@@ -21,9 +21,13 @@ const initializeAddTalkButton = () => {
         div.innerHTML = e.target.dataset.fields.replace(regexp, time);
         document.getElementsByClassName('talk-fields')[0].append(div);
         if (fieldLength() >= 3) {
-            document.getElementsByClassName('add-talk')[0].hidden = true;
+            document.getElementsByClassName('add-talk')[0].hidden = false;
         }
         addDeleteButtonListener(div.querySelector('.remove_talk_field'));
+        // 動的に追加されたフィールドにも文字数カウンターを適用
+        setTimeout(() => {
+            initializeCharCounter();
+        }, 100);
         return false;
     });
 }
@@ -82,4 +86,145 @@ const buttonListener = (e) => {
             document.getElementsByClassName('add-talk')[0].hidden = false;
         }
     }
+}
+
+// 文字数制限を適用（タイトル: 60文字、概要: 500文字）
+const MAX_TITLE_CHARS = 60;
+const MAX_ABSTRACT_CHARS = 500;
+
+// 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
+const countChars = (str) => {
+    if (!str) return 0;
+    // Intl.Segmenterを使って絵文字を正しく1文字としてカウント
+    try {
+        const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
+        return [...segmenter.segment(str)].length;
+    } catch (e) {
+        // フォールバック: スプレッド演算子を使用（古いブラウザ対応）
+        return [...str].length;
+    }
+}
+
+// テスト用にエクスポート（Node.js環境の場合のみ）
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { 
+        countChars, 
+        MAX_TITLE_CHARS, 
+        MAX_ABSTRACT_CHARS,
+        // テスト用に他の関数もエクスポート可能にする場合はここに追加
+    };
+}
+
+const initializeCharCounter = () => {
+    // タイトルと概要欄の入力フィールドを取得
+    const titleInputs = document.querySelectorAll('input[name*="[title]"]');
+    const abstractInputs = document.querySelectorAll('textarea[name*="[abstract]"]');
+    
+    const setupCharCounter = (input, counterId, maxChars) => {
+        // カウンター要素が既に存在する場合はスキップ
+        if (document.getElementById(counterId)) {
+            return;
+        }
+        
+        // カウンター要素を作成
+        const counter = document.createElement('span');
+        counter.id = counterId;
+        counter.className = 'char-counter';
+        counter.style.fontSize = '0.7em';
+        counter.style.color = '#666';
+        counter.style.marginLeft = '5px';
+        
+        // 入力フィールドの親要素にカウンターを追加
+        const fieldDiv = input.closest('.field');
+        if (fieldDiv) {
+            const label = fieldDiv.querySelector('label');
+            if (label) {
+                label.appendChild(counter);
+            }
+        }
+        
+        // 文字数カウントと表示を更新
+        const updateCounter = () => {
+            const text = input.value || '';
+            const charCount = countChars(text);
+            counter.textContent = `(${charCount}/${maxChars}文字)`;
+            
+            if (charCount > maxChars) {
+                counter.style.color = '#dc3545';
+                input.style.borderColor = '#dc3545';
+            } else {
+                counter.style.color = '#666';
+                input.style.borderColor = '';
+            }
+        };
+        
+        // 入力時に文字数をチェックし、制限を超えた場合は入力を制限
+        input.addEventListener('input', (e) => {
+            const text = e.target.value || '';
+            const charCount = countChars(text);
+            
+            if (charCount > maxChars) {
+                // 制限を超えた場合、絵文字を考慮して正しく切り詰める
+                let truncated = '';
+                try {
+                    const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
+                    const segments = [...segmenter.segment(text)];
+                    truncated = segments.slice(0, maxChars).map(seg => seg.segment).join('');
+                } catch (err) {
+                    // フォールバック: スプレッド演算子を使用
+                    const chars = [...text];
+                    truncated = chars.slice(0, maxChars).join('');
+                }
+                e.target.value = truncated;
+            }
+            
+            updateCounter();
+        });
+        
+        // 初期表示
+        updateCounter();
+    };
+    
+    // タイトル欄にカウンターを設定（60文字制限）
+    titleInputs.forEach((input, index) => {
+        const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
+        setupCharCounter(input, `title-counter-${formIndex}`, MAX_TITLE_CHARS);
+    });
+    
+    // 概要欄にカウンターを設定（500文字制限）
+    abstractInputs.forEach((input, index) => {
+        const formIndex = input.name.match(/\[(\d+)\]/)?.[1] || index;
+        setupCharCounter(input, `abstract-counter-${formIndex}`, MAX_ABSTRACT_CHARS);
+    });
+}
+
+// ページ読み込み時と動的に追加されたフィールドにも適用
+const initializeCharCounters = () => {
+    initializeCharCounter();
+    
+    // 動的に追加されたフィールドにも適用するため、MutationObserverを使用
+    const observer = new MutationObserver(() => {
+        initializeCharCounter();
+    });
+    
+    const talkFieldsContainer = document.querySelector('.talk-fields');
+    if (talkFieldsContainer) {
+        observer.observe(talkFieldsContainer, {
+            childList: true,
+            subtree: true
+        });
+    }
+}
+
+// 既存の初期化処理に追加
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeAddTalkButton();
+        initializeRemoveTalkButton();
+        initializeCharCounters();
+    })
+} else {
+    initializeAddTalkButton();
+    initializeRemoveTalkButton();
+    initializeCharCounters();
 }

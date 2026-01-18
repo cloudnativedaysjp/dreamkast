@@ -22,7 +22,7 @@
 
   <div class="field pb-3">
     <%= label_tag "speaker_talks_attributes_#{form_index}_abstract", '講演内容 - Abstract（★★★）', class: 'form-label' %>
-    <p class="field-description" style="font-size: 0.7em">（最大500文字）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (Maximum 500 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
+    <p class="field-description" style="font-size: 0.7em">（最大500文字）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (Maximum 500 characters) Include a session for what kind of person, what kind of information the attendee can get</p>
     <%= text_area_tag "speaker[talks_attributes][#{form_index}][abstract]", f.object.abstract, class: "form-control abstract" %>
   </div>
 

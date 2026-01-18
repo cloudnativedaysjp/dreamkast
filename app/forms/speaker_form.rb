@@ -119,7 +119,7 @@ class SpeakerForm
   end
 
   def save
-    return if invalid?
+    return false if invalid?
 
     ActiveRecord::Base.transaction do
       speaker.update!(name:, name_mother_tongue:, profile:, company:, job_title:, twitter_id:, github_id:, avatar:, conference_id:,
@@ -147,6 +147,7 @@ class SpeakerForm
           proposal.save!
         end
       end
+      @talks
     end
   rescue => e
     puts("failed to save: #{e}")

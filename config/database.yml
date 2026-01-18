@@ -26,6 +26,7 @@ test:
   password: "<%= ENV['MYSQL_PASSWORD'] || 'root' %>"
   host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
   port: "<%= ENV['DATABASE_PORT'] || 3306 %>"
+  encoding: utf8mb4
 
 production:
   <<: *default

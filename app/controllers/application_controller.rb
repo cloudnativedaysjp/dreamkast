@@ -130,7 +130,12 @@ class ApplicationController < ActionController::Base
   def set_sentry_context
     Sentry.with_scope do |scope|
       scope.set_user(id: session[:current_user_id])
-      scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      begin
+        scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      rescue JSON::ParserError, ActionController::BadRequest
+        # リクエストパラメータのパースに失敗した場合はスキップ
+        scope.set_extras(url: request.url)
+      end
     end
   end
 

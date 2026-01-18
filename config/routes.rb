@@ -15,7 +15,14 @@ Rails.application.routes.draw do
     namespace 'v1' do
       get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:index, :show], path: 'events'
-      resources :talks, only: [:index, :show, :update]
+      resources :talks, only: [:index, :show, :update] do
+        resources :session_questions, only: [:index, :create, :destroy] do
+          member do
+            post :vote
+          end
+          resources :session_question_answers, only: [:index, :create]
+        end
+      end
       resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]
@@ -68,6 +75,12 @@ Rails.application.routes.draw do
       delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index, :edit, :update]
       get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
+      resources :session_questions, only: [:index, :show] do
+        member do
+          patch :toggle_hidden
+        end
+        resources :session_question_answers, only: [:destroy], path: 'answers'
+      end
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
@@ -114,6 +127,10 @@ Rails.application.routes.draw do
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
     get '/speakers/guidance' => 'speaker_dashboard/speakers#guidance'
     get '/speaker_dashboard' => 'speaker_dashboards#show'
+    get '/speaker_dashboard/talks' => 'speaker_dashboards#talks', as: 'speaker_dashboard_talks'
+    get '/speaker_dashboard/questions' => 'speaker_dashboards#questions', as: 'speaker_dashboard_questions'
+    post '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers' => 'speaker_dashboards#create_answer', as: 'speaker_dashboard_talk_session_question_answer'
+    delete '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers/:id' => 'speaker_dashboards#destroy_answer', as: 'speaker_dashboard_talk_session_question_answer_delete'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
       resources :video_registrations, only: [:new, :create, :edit, :update]
@@ -143,7 +160,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :talks, only: [:show, :index]
+    resources :talks, only: [:show, :index] do
+      member do
+        post :create_question
+        delete :destroy_question
+      end
+    end
     resources :proposals, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'

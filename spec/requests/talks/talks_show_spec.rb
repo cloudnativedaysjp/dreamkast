@@ -161,7 +161,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -187,13 +187,21 @@ describe TalksController, type: :request do
         end
 
         context 'user already registered' do
-          before do
-            create(:alice, conference: cndt2020)
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
-          end
-
           context 'cfp result is visible and proposal is accepted' do
             let!(:cndt2020) { create(:cndt2020, :registered, :cfp_result_visible) }
+            before do
+              TalkCategory.find_or_create_by(id: 1, conference_id: cndt2020.id) { |tc| tc.name = 'category 1' }
+              TalkDifficulty.find_or_create_by(id: 1, conference_id: cndt2020.id) { |td| td.name = 'difficulty 1' }
+              create(:alice, conference: cndt2020)
+              ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+              allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+                if arg[1] == :userinfo
+                  session[:userinfo]
+                else
+                  arg[0].send(:original, arg[1])
+                end
+              end)
+            end
             let!(:talk1) { create(:talk1, :accepted) }
             let!(:talk2) { create(:talk2, :accepted) }
 
@@ -251,7 +259,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -277,13 +285,21 @@ describe TalksController, type: :request do
         end
 
         context 'user already registered' do
-          before do
-            create(:alice, conference: cndt2020)
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
-          end
-
           context 'cfp result is visible and proposal is accepted' do
             let!(:cndt2020) { create(:cndt2020, :opened, :cfp_result_visible) }
+            before do
+              TalkCategory.find_or_create_by(id: 1, conference_id: cndt2020.id) { |tc| tc.name = 'category 1' }
+              TalkDifficulty.find_or_create_by(id: 1, conference_id: cndt2020.id) { |td| td.name = 'difficulty 1' }
+              create(:alice, conference: cndt2020)
+              ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+              allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+                if arg[1] == :userinfo
+                  session[:userinfo]
+                else
+                  arg[0].send(:original, arg[1])
+                end
+              end)
+            end
             let!(:talk1) { create(:talk1, :accepted) }
             let!(:talk2) { create(:talk2, :accepted) }
 
@@ -341,7 +357,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -367,13 +383,21 @@ describe TalksController, type: :request do
         end
 
         context 'user already registered' do
-          before do
-            create(:alice, conference: cndt2020)
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
-          end
-
           context 'cfp result is visible and proposal is accepted' do
             let!(:cndt2020) { create(:cndt2020, :closed, :cfp_result_visible) }
+            before do
+              TalkCategory.find_or_create_by(id: 1, conference_id: cndt2020.id) { |tc| tc.name = 'category 1' }
+              TalkDifficulty.find_or_create_by(id: 1, conference_id: cndt2020.id) { |td| td.name = 'difficulty 1' }
+              create(:alice, conference: cndt2020)
+              ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+              allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+                if arg[1] == :userinfo
+                  session[:userinfo]
+                else
+                  arg[0].send(:original, arg[1])
+                end
+              end)
+            end
             let!(:talk1) { create(:talk1, :accepted) }
             let!(:talk2) { create(:talk2, :accepted) }
 
@@ -431,11 +455,22 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
+            ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+              if arg[1] == :userinfo
+                { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }
+              else
+                arg[0].send(:original, arg[1])
+              end
+            end)
           end
 
           context 'cfp result is visible and proposal is accepted' do
             let!(:cndt2020) { create(:cndt2020, :archived, :cfp_result_visible) }
+            before do
+              TalkCategory.find_or_create_by(id: 1, conference_id: cndt2020.id) { |tc| tc.name = 'category 1' }
+              TalkDifficulty.find_or_create_by(id: 1, conference_id: cndt2020.id) { |td| td.name = 'difficulty 1' }
+            end
             let!(:talk1) { create(:talk1, :accepted) }
 
             it_should_behave_like :returns_success_response, 1, 'talk1', 'あいうえおかきくけこさしすせそ'
@@ -458,13 +493,21 @@ describe TalksController, type: :request do
         end
 
         context 'user already registered' do
-          before do
-            create(:alice, conference: cndt2020)
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
-          end
-
           context 'cfp result is visible and proposal is accepted' do
             let!(:cndt2020) { create(:cndt2020, :archived, :cfp_result_visible) }
+            before do
+              TalkCategory.find_or_create_by(id: 1, conference_id: cndt2020.id) { |tc| tc.name = 'category 1' }
+              TalkDifficulty.find_or_create_by(id: 1, conference_id: cndt2020.id) { |td| td.name = 'difficulty 1' }
+              create(:alice, conference: cndt2020)
+              ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+              allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+                if arg[1] == :userinfo
+                  session[:userinfo]
+                else
+                  arg[0].send(:original, arg[1])
+                end
+              end)
+            end
             let!(:talk1) { create(:talk1, :accepted) }
             let!(:talk2) { create(:talk2, :accepted) }
 
@@ -522,7 +565,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do

@@ -1,0 +1,50 @@
+<%= turbo_stream.replace "answers_#{@question.id}" do %>
+  <%= turbo_frame_tag "answers_#{@question.id}" do %>
+    <% if @question.session_question_answers.any? %>
+      <div class="mt-2 ms-3">
+        <% @question.session_question_answers.order_by_time.each do |answer| %>
+          <%= turbo_frame_tag "answer_#{answer.id}" do %>
+            <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <strong>A:</strong> <%= simple_format(h(answer.body)) %>
+                  <div class="text-muted small mt-1">
+                    回答者: <%= answer.speaker.name %>
+                    <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                  </div>
+                </div>
+                <% if @speaker && answer.speaker_id == @speaker.id %>
+                  <div class="ms-2">
+                    <%= button_to '削除', 
+                        speaker_dashboard_talk_session_question_answer_delete_path(
+                          talk_id: @talk.id, 
+                          session_question_id: @question.id, 
+                          id: answer.id, 
+                          event: @conference.abbr
+                        ), 
+                        method: :delete, 
+                        class: 'btn btn-sm btn-danger',
+                        data: { turbo_confirm: '本当に削除しますか？' } %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "answer_form_#{@question.id}" do %>
+  <%= turbo_frame_tag "answer_form_#{@question.id}" do %>
+    <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: @talk.id, session_question_id: @question.id, event: @conference.abbr), method: :post, data: { turbo_frame: "_top" }, class: 'mt-2' do |f| %>
+      <div class="mb-2">
+        <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください', required: true %>
+      </div>
+      <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream_flash %>

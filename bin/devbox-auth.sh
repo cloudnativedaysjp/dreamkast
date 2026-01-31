@@ -2,15 +2,16 @@
 # このスクリプトは source で実行してください: source bin/devbox-auth.sh
 # シークレットを環境変数にエクスポートし、ファイルには書き出しません
 
-set -euo pipefail
+# sourceで実行する場合、set -e は親シェルを終了させる可能性があるため使用しない
+# 代わりに各コマンドの戻り値を個別にチェックする
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+# カレントディレクトリは変更しない（sourceで実行するため）
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$PROJECT_ROOT"
 
 echo -e "${GREEN}AWS認証とシークレット取得を開始します...${NC}"
 
@@ -68,9 +69,15 @@ echo "AWS SSOにログインしています..."
 if [[ -n "${DEVBOX_REMOTE:-}" ]]; then
   echo -e "${YELLOW}⚠️  リモート環境モードで実行します${NC}"
   echo "以下のURLとコードをブラウザで開いて認証してください:"
-  aws sso login --profile "$SSO_PROFILE" --use-device-code
+  if ! aws sso login --profile "$SSO_PROFILE" --use-device-code; then
+    echo -e "${RED}❌ AWS SSOログインに失敗しました${NC}"
+    return 1 2>/dev/null || true
+  fi
 else
-  aws sso login --profile "$SSO_PROFILE"
+  if ! aws sso login --profile "$SSO_PROFILE"; then
+    echo -e "${RED}❌ AWS SSOログインに失敗しました${NC}"
+    return 1 2>/dev/null || true
+  fi
 fi
 
 # 3. 認証状態の確認
@@ -81,7 +88,8 @@ if aws sts get-caller-identity --profile "$SSO_PROFILE" > /dev/null 2>&1; then
 else
   echo -e "${RED}❌ AWS認証に失敗しました${NC}"
   echo "aws sts get-caller-identity --profile $SSO_PROFILE を実行して詳細を確認してください"
-  return 1 2>/dev/null || exit 1
+  # sourceで実行されている場合はreturn、そうでなければfalseを返す（exitはシェルを終了させるので使わない）
+  return 1 2>/dev/null || true
 fi
 
 # 4. ECRログイン

@@ -11,11 +11,17 @@ cd "$PROJECT_ROOT"
 
 echo -e "${GREEN}Dreamkastアプリケーションを起動します...${NC}"
 
-# 1. 環境変数ファイルの存在確認
-if [ ! -f .env-local.devbox ]; then
-  echo -e "${RED}❌ .env-local.devboxが見つかりません${NC}"
-  echo "devbox run setup を実行してください"
-  exit 1
+# 1. 必要な環境変数の確認
+if [ -z "${AUTH0_CLIENT_ID:-}" ] || [ -z "${AUTH0_DOMAIN:-}" ]; then
+  echo -e "${YELLOW}⚠️  認証情報が設定されていません${NC}"
+  echo "先に以下のコマンドを実行してください:"
+  echo "  source bin/devbox-auth.sh"
+  echo ""
+  echo "続行しますか？ (y/N)"
+  read -r response
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
 fi
 
 # 2. Docker Composeサービスの起動
@@ -49,4 +55,4 @@ echo ""
 echo -e "${GREEN}アプリケーションを起動しています...${NC}"
 echo "アクセス先: http://localhost:8080"
 echo ""
-bundle exec foreman start -f Procfile.dev -e .env-local.devbox
+bundle exec foreman start -f Procfile.dev

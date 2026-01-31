@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# このスクリプトは source で実行してください: source bin/devbox-auth.sh
+# シークレットを環境変数にエクスポートし、ファイルには書き出しません
+
 set -euo pipefail
 
 GREEN='\033[0;32m'
@@ -8,13 +11,6 @@ NC='\033[0m'
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_ROOT"
-
-# 環境変数ファイルの読み込み（.env形式）
-if [ -f .env-local.devbox ]; then
-  set -a
-  source .env-local.devbox
-  set +a
-fi
 
 echo -e "${GREEN}AWS認証とシークレット取得を開始します...${NC}"
 
@@ -67,7 +63,7 @@ fi
 
 # 2. AWS SSOログイン
 # リモート環境（非TTY）の場合は環境変数で --use-device-code オプションを使用
-# 使い方: DEVBOX_REMOTE=1 devbox run auth
+# 使い方: DEVBOX_REMOTE=1 source bin/devbox-auth.sh
 echo "AWS SSOにログインしています..."
 if [[ -n "${DEVBOX_REMOTE:-}" ]]; then
   echo -e "${YELLOW}⚠️  リモート環境モードで実行します${NC}"
@@ -85,7 +81,7 @@ if aws sts get-caller-identity --profile "$SSO_PROFILE" > /dev/null 2>&1; then
 else
   echo -e "${RED}❌ AWS認証に失敗しました${NC}"
   echo "aws sts get-caller-identity --profile $SSO_PROFILE を実行して詳細を確認してください"
-  exit 1
+  return 1 2>/dev/null || exit 1
 fi
 
 # 4. ECRログイン
@@ -102,50 +98,21 @@ else
   echo -e "${YELLOW}⚠️  ECRパスワードの取得に失敗しました（権限がない可能性があります）${NC}"
 fi
 
-# 5. クレデンシャル取得とファイル保存
-echo "AWS認証情報をファイルに保存しています..."
+# 5. AWSクレデンシャルを環境変数にエクスポート
+echo "AWS認証情報を環境変数にエクスポートしています..."
 AWS_CREDENTIALS=$(aws configure export-credentials --profile "$SSO_PROFILE" --format env 2>/dev/null || echo "")
 
 if [ -n "$AWS_CREDENTIALS" ]; then
-  # 環境変数ファイルに認証情報を設定
-  if [ -f .env-local.devbox ]; then
-    TEMP_ENV=$(mktemp)
-    cp .env-local.devbox "$TEMP_ENV"
-
-    # 既存のAWS認証情報を削除
-    sed -i.bak '/^AWS_ACCESS_KEY_ID=/d' "$TEMP_ENV"
-    sed -i.bak '/^AWS_SECRET_ACCESS_KEY=/d' "$TEMP_ENV"
-    sed -i.bak '/^AWS_SESSION_TOKEN=/d' "$TEMP_ENV"
-
-    # 新しい認証情報を追加（.env形式）
-    echo "$AWS_CREDENTIALS" >> "$TEMP_ENV"
-
-    mv "$TEMP_ENV" .env-local.devbox
-    rm -f .env-local.devbox.bak
-
-    echo -e "${GREEN}✅ AWS認証情報を.env-local.devboxに設定しました${NC}"
-  fi
+  # export形式の環境変数を評価
+  eval "$AWS_CREDENTIALS"
+  echo -e "${GREEN}✅ AWS認証情報を環境変数にエクスポートしました${NC}"
 else
   echo -e "${YELLOW}⚠️  AWS認証情報の取得に失敗しました${NC}"
 fi
 
-# 6. シークレット取得
+# 6. シークレット取得と環境変数へのエクスポート
 echo ""
 echo -e "${GREEN}AWS Secrets Managerから認証情報を取得します...${NC}"
-
-# 環境変数ファイルの存在確認
-if [ ! -f .env-local.devbox ]; then
-  echo -e "${RED}❌ .env-local.devboxが見つかりません${NC}"
-  echo "devbox run setup を先に実行してください"
-  exit 1
-fi
-
-# 一時ファイル作成
-TEMP_ENV=$(mktemp)
-trap "rm -f $TEMP_ENV" EXIT
-
-# 既存の.env-local.devboxをコピー
-cp .env-local.devbox "$TEMP_ENV"
 
 # 6.1. dreamkast/reviewapp-env から Auth0設定を取得
 echo "Auth0設定を取得しています..."
@@ -157,71 +124,37 @@ REVIEWAPP_SECRET=$(aws secretsmanager get-secret-value \
   --output text 2>/dev/null || echo "")
 
 if [ -n "$REVIEWAPP_SECRET" ]; then
-  # JSONから各値を抽出して環境変数に設定
-  AUTH0_CLIENT_ID=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_CLIENT_ID // empty')
-  AUTH0_CLIENT_SECRET=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_CLIENT_SECRET // empty')
-  AUTH0_DOMAIN=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_DOMAIN // empty')
+  # JSONから各値を抽出して環境変数にエクスポート
+  export AUTH0_CLIENT_ID=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_CLIENT_ID // empty')
+  export AUTH0_CLIENT_SECRET=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_CLIENT_SECRET // empty')
+  export AUTH0_DOMAIN=$(echo "$REVIEWAPP_SECRET" | jq -r '.AUTH0_DOMAIN // empty')
 
-  # .env-local.devboxに追記（既存の値を上書き）
-  if [ -n "$AUTH0_CLIENT_ID" ]; then
-    if ! grep -q "^AUTH0_CLIENT_ID=" "$TEMP_ENV"; then
-      echo "AUTH0_CLIENT_ID=\"$AUTH0_CLIENT_ID\"" >> "$TEMP_ENV"
-      echo "  ✓ AUTH0_CLIENT_IDを設定しました"
-    else
-      sed -i.bak "s|^AUTH0_CLIENT_ID=.*|AUTH0_CLIENT_ID=\"$AUTH0_CLIENT_ID\"|" "$TEMP_ENV"
-      echo "  ✓ AUTH0_CLIENT_IDを更新しました"
-    fi
-  fi
-
-  if [ -n "$AUTH0_CLIENT_SECRET" ]; then
-    if ! grep -q "^AUTH0_CLIENT_SECRET=" "$TEMP_ENV"; then
-      echo "AUTH0_CLIENT_SECRET=\"$AUTH0_CLIENT_SECRET\"" >> "$TEMP_ENV"
-      echo "  ✓ AUTH0_CLIENT_SECRETを設定しました"
-    else
-      sed -i.bak "s|^AUTH0_CLIENT_SECRET=.*|AUTH0_CLIENT_SECRET=\"$AUTH0_CLIENT_SECRET\"|" "$TEMP_ENV"
-      echo "  ✓ AUTH0_CLIENT_SECRETを更新しました"
-    fi
-  fi
-
-  if [ -n "$AUTH0_DOMAIN" ]; then
-    if ! grep -q "^AUTH0_DOMAIN=" "$TEMP_ENV"; then
-      echo "AUTH0_DOMAIN=\"$AUTH0_DOMAIN\"" >> "$TEMP_ENV"
-      echo "  ✓ AUTH0_DOMAINを設定しました"
-    else
-      sed -i.bak "s|^AUTH0_DOMAIN=.*|AUTH0_DOMAIN=\"$AUTH0_DOMAIN\"|" "$TEMP_ENV"
-      echo "  ✓ AUTH0_DOMAINを更新しました"
-    fi
-  fi
+  [ -n "$AUTH0_CLIENT_ID" ] && echo "  ✓ AUTH0_CLIENT_IDをエクスポートしました"
+  [ -n "$AUTH0_CLIENT_SECRET" ] && echo "  ✓ AUTH0_CLIENT_SECRETをエクスポートしました"
+  [ -n "$AUTH0_DOMAIN" ] && echo "  ✓ AUTH0_DOMAINをエクスポートしました"
 else
   echo -e "${YELLOW}⚠️  Auth0設定の取得に失敗しました（権限がない可能性があります）${NC}"
 fi
 
 # 6.2. dreamkast/rails-app-secret から RAILS_MASTER_KEY を取得
 echo "Rails Master Keyを取得しています..."
-RAILS_MASTER_KEY=$(aws secretsmanager get-secret-value \
+RAILS_MASTER_KEY_VALUE=$(aws secretsmanager get-secret-value \
   --secret-id dreamkast/rails-app-secret \
   --region "$AWS_SECRETS_REGION" \
   --profile "$SSO_PROFILE" \
   --query SecretString \
   --output text 2>/dev/null || echo "")
 
-if [ -n "$RAILS_MASTER_KEY" ]; then
-  if ! grep -q "^RAILS_MASTER_KEY=" "$TEMP_ENV"; then
-    echo "RAILS_MASTER_KEY=\"$RAILS_MASTER_KEY\"" >> "$TEMP_ENV"
-    echo "  ✓ RAILS_MASTER_KEYを設定しました"
-  else
-    sed -i.bak "s|^RAILS_MASTER_KEY=.*|RAILS_MASTER_KEY=\"$RAILS_MASTER_KEY\"|" "$TEMP_ENV"
-    echo "  ✓ RAILS_MASTER_KEYを更新しました"
-  fi
+if [ -n "$RAILS_MASTER_KEY_VALUE" ]; then
+  export RAILS_MASTER_KEY="$RAILS_MASTER_KEY_VALUE"
+  echo "  ✓ RAILS_MASTER_KEYをエクスポートしました"
 else
   echo -e "${YELLOW}⚠️  RAILS_MASTER_KEYの取得に失敗しました（権限がない可能性があります）${NC}"
 fi
-
-# 更新した環境変数ファイルを保存
-mv "$TEMP_ENV" .env-local.devbox
-rm -f .env-local.devbox.bak
 
 echo ""
 echo -e "${GREEN}✅ 認証とシークレット取得が完了しました${NC}"
 echo ""
 echo "次のステップ: devbox run start でアプリケーションを起動"
+echo ""
+echo -e "${YELLOW}注意: この環境変数は現在のシェルセッションでのみ有効です${NC}"

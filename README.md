@@ -25,6 +25,7 @@ Ruby on Railsで構築されたオンラインカンファレンスシステム
 - **簡単なセットアップ**: rbenv/nodenvの手動インストールが不要
 - **再現性の保証**: devbox.lockでバージョンを固定
 - **AWS認証情報の自動取得**: Secrets Managerから認証情報を自動で取得
+- **セキュアなシークレット管理**: 認証情報はファイルに書き出さず、環境変数として保持
 
 **注意**: Node.jsはdevboxが提供する22系の安定版を使用します（.node-versionでは22.16.0を指定していますが、devboxでは`nodejs@22`で22系の安定バージョンを自動取得）。マイナーバージョンの違いはありますが互換性があるため、開発に支障はありません。
 
@@ -44,8 +45,8 @@ devbox shell
 # 4. 初回セットアップ（依存関係インストール）
 devbox run setup
 
-# 5. AWS認証とシークレット取得
-devbox run auth
+# 5. AWS認証とシークレット取得（sourceで実行）
+source bin/devbox-auth.sh
 
 # 6. アプリケーション起動
 devbox run start
@@ -79,31 +80,35 @@ devbox run setup
 
 このコマンドは以下を実行します:
 
-- 環境変数テンプレート(`.env-local.devbox.example`)のコピー
 - `yarn install --check-files`
 - `bundle install`
 
 #### 4. AWS認証とシークレット取得
 
 ```bash
-devbox run auth
+source bin/devbox-auth.sh
 ```
+
+**重要**: `source`コマンドで実行してください。これにより認証情報が現在のシェルセッションの環境変数として設定されます。
 
 このコマンドは以下を自動的に実行します:
 
 - AWS SSO設定の自動構成（SSO Start URLを含む）
 - AWS SSOログイン（ブラウザで認証）
 - ECRログイン
-- AWS Secrets Managerから認証情報を自動取得
+- AWS Secrets Managerから認証情報を自動取得し、環境変数にエクスポート
   - Auth0設定(CLIENT_ID, CLIENT_SECRET, DOMAIN)
   - Rails Master Key
+  - AWSクレデンシャル
+
+**セキュリティ**: 認証情報はファイルに書き出されず、現在のシェルセッション内でのみ有効です。新しいターミナルを開いた場合は再度認証が必要です。
 
 **注意**: 初回実行時はブラウザでAWS SSOの認証が求められます。Dreamkastチームから付与されたAWSアカウントでログインしてください。
 
 **リモート環境での認証**: リモート環境（SSH接続先など）でブラウザが開けない場合は、環境変数`DEVBOX_REMOTE=1`を使用します:
 
 ```bash
-DEVBOX_REMOTE=1 devbox run auth
+DEVBOX_REMOTE=1 source bin/devbox-auth.sh
 ```
 
 このコマンドは認証URLとコードを表示するので、手元のブラウザで開いて認証を完了してください。
@@ -131,6 +136,7 @@ devbox run start
 
 ```bash
 devbox shell
+source bin/devbox-auth.sh  # 認証（新しいシェルセッションごとに必要）
 devbox run start
 ```
 
@@ -232,8 +238,8 @@ bundle install
 # AWS SSOセッションの更新
 aws sso login --profile dreamkast
 
-# ECRログイン再実行
-devbox run auth
+# 認証スクリプト再実行
+source bin/devbox-auth.sh
 ```
 
 #### Secrets Manager取得エラー
@@ -253,15 +259,17 @@ aws secretsmanager describe-secret \
 
 #### Rails起動時のRAILS_MASTER_KEYエラー
 
-`.env-local.devbox`にRAILS_MASTER_KEYが設定されているか確認してください。
+環境変数`RAILS_MASTER_KEY`が設定されているか確認してください。
 
 ```bash
 # 設定確認
-grep RAILS_MASTER_KEY .env-local.devbox
+echo $RAILS_MASTER_KEY
 
-# 未設定の場合は再取得
-devbox run fetch-secrets
+# 未設定の場合は認証スクリプトを再実行
+source bin/devbox-auth.sh
 ```
+
+**注意**: 認証情報は現在のシェルセッションでのみ有効です。新しいターミナルを開いた場合は`source bin/devbox-auth.sh`を再実行してください。
 
 ## その他のセットアップ方法
 

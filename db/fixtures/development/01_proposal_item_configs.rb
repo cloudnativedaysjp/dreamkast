@@ -1870,15 +1870,6 @@ ProposalItemConfig.seed(
     item_name: 'Platform Engineering - 主なカテゴリ（★★）',
     params: 'Impact - ビジネスへの影響と訴求'
   },
-  {
-    id: 262,
-    conference_id: 15,
-    type: 'ProposalItemConfigRadioButton',
-    label: 'pek_category',
-    item_number: 10,
-    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
-    params: 'Observability'
-  },
 
   # pek_assumed_visitor (CheckBox)
   {

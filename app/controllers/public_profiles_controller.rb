@@ -1,6 +1,5 @@
 class PublicProfilesController < ApplicationController
   include Secured
-  layout :event_layout
 
   before_action :set_conference, :set_profile
 

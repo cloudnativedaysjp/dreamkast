@@ -4,21 +4,8 @@
   <div class="row speaker-dashboard-form p-md-4" id="speaker-landing">
 
     <div class="col-12 my-4">
-      <h2 class="text-center">CloudNative Days Winter 2025で登壇してみませんか？</h2>
+      <h2 class="text-center">クラウドネイティブ会議 エントリーフォーム</h2>
     </div>
-
-    <%= render 'speaker_dashboard/speakers/guidance_section_1' %>
-
-    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
-      <% if logged_in? %>
-        <%= button_to 'エントリーする！', speakers_entry_path, {method: :get, class: "btn btn-secondary btn-xl inline" } %>
-      <% else %>
-        <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
-      <% end %>
-      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
-    </div>
-
-    <%= render 'speaker_dashboard/speakers/guidance_section_2' %>
 
     <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
       <% if logged_in? %>

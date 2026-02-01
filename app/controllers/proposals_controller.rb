@@ -3,7 +3,6 @@ class ProposalsController < ApplicationController
   before_action :set_profile, :set_speaker
 
   helper_method :proposal_status
-  layout :event_layout
 
   def logged_in_using_omniauth?
     # nop

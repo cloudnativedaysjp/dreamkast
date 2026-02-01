@@ -1,38 +1,52 @@
-<div class="container speaker-dashboard-form">
-  <h1 class="text-center py-3 entry">登壇者ダッシュボード</h1>
-  <div class="row speaker-dashboard-form">
+<div class="container speaker-dashboard-form cfp-form py-4">
+  <%# ===== ヘッダー ===== %>
+  <div class="text-center mb-5">
+    <h1 class="cfp-dashboard-title mb-2">登壇者ダッシュボード</h1>
+    <p class="text-muted">Speaker Dashboard</p>
+  </div>
 
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
-        <%= message %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <%# ===== フラッシュメッセージ ===== %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show mb-4" role="alert">
+      <%= message %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <%# ===== CFP要項リンク ===== %>
+  <div class="text-center mb-4">
+    <%= button_to 'CFP要項を確認する', 'https://kaigi.cloudnativedays.jp/cfp/', {method: :get, class: "btn btn-outline-primary btn-lg px-5" } %>
+  </div>
+
+  <% unless @speaker.present? %>
+    <%# ===== 未エントリー時 ===== %>
+    <div class="text-center my-5">
+      <div class="card cfp-entry-card p-5">
+        <div class="card-body">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="mb-3 text-muted opacity-50" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+          <h4 class="mb-3">まだエントリーしていません</h4>
+          <p class="text-muted mb-4">プロポーザルを提出するには、まずエントリーを完了してください。</p>
+          <%= link_to 'エントリーする', speakers_entry_path, class: "btn btn-primary btn-lg px-5" %>
+        </div>
       </div>
-    <% end %>
-
-
-    <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
-      <%= button_to 'CFP要項を確認する', 'https://kaigi.cloudnativedays.jp/cfp/', {method: :get, class: "btn btn-secondary btn-xl inline" } %>
     </div>
-
-    <% unless @speaker.present? %>
-    <div class="col-12 my-4">
-      <%= link_to 'エントリー', speakers_entry_path %>
-    </div>
-    <% else %>
-
-    <div class="col-12 my-4"  id="speaker_notice">
+  <% else %>
+    <%# ===== お知らせ ===== %>
+    <div class="mb-4" id="speaker_notice">
       <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
     </div>
 
-    <div class="col-6">
-      <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+    <%# ===== メインコンテンツ ===== %>
+    <div class="row g-4">
+      <div class="col-12 col-lg-5">
+        <%= render 'speaker_dashboard/speakers/speaker_info', speaker: @speaker %>
+      </div>
+
+      <div class="col-12 col-lg-7">
+        <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+      </div>
     </div>
-
-
-    <div class="col-6">
-      <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
-    </div>
-
-    <% end %>
-  </div>
+  <% end %>
 </div>

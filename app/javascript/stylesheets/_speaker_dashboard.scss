@@ -637,3 +637,177 @@ $font-family-serif: "Noto Serif JP", serif !default;
         }
     }
 }
+
+// ===== Dashboard Styles =====
+.cfp-dashboard-title {
+    font-family: $font-family-header;
+    font-weight: 700;
+    font-size: 2rem;
+    color: $sumi;
+    letter-spacing: 0.05em;
+}
+
+.cfp-entry-card {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 4px 16px $washi-shadow;
+
+    .cfp-entry-icon {
+        color: $beni;
+        opacity: 0.8;
+    }
+}
+
+// Profile Card
+.cfp-profile-card {
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+
+    .card-header {
+        border-radius: 2px 2px 0 0;
+    }
+
+    .cfp-avatar {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba($sumi, 0.15);
+    }
+
+    .cfp-avatar-placeholder {
+        width: 120px;
+        height: 120px;
+        background-color: $washi;
+        border: 2px dashed rgba($sumi, 0.2);
+    }
+
+    .cfp-info-section {
+        .cfp-info-label {
+            font-family: $font-family-header;
+            font-size: 0.85rem;
+            color: $sumi;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cfp-info-content {
+            font-size: 0.9rem;
+            color: lighten($sumi, 20%);
+
+            p {
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .cfp-social-links {
+        a {
+            transition: all 0.2s ease;
+
+            &:hover {
+                border-color: $beni;
+                color: $beni;
+            }
+        }
+    }
+}
+
+// Sessions Card
+.cfp-sessions-card {
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+
+    .card-header {
+        border-radius: 2px 2px 0 0;
+    }
+
+    .cfp-talk-item {
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: rgba($washi, 0.5);
+        }
+    }
+}
+
+// Talk Styles
+.cfp-talk-title {
+    font-family: $font-family-header;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: $sumi;
+}
+
+.cfp-talk-meta {
+    .badge {
+        font-weight: 500;
+        font-size: 0.75rem;
+    }
+}
+
+.cfp-status-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cfp-status-accepted {
+    background-color: #198754;
+    color: white;
+}
+
+.cfp-status-rejected {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cfp-status-pending {
+    background-color: #ffc107;
+    color: $sumi;
+}
+
+.cfp-talk-details {
+    .cfp-detail-section {
+        .cfp-detail-label {
+            font-family: $font-family-header;
+            font-size: 0.8rem;
+            color: $sumi;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cfp-detail-content {
+            font-size: 0.9rem;
+            color: lighten($sumi, 20%);
+
+            p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .cfp-qa-item {
+        background-color: $washi;
+    }
+
+    .cfp-qa-reply {
+        padding: 0.25rem 0;
+        color: lighten($sumi, 30%);
+    }
+}

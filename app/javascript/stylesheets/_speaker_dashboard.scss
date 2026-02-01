@@ -1,3 +1,12 @@
+// Japanese Modern Theme Variables (fallback values for non-CNK events)
+$tokyo-navy: #216a9c !default;
+$washi: #F5F5F0 !default;
+$sumi: #1A1A1A !default;
+$beni: #B93A32 !default;
+$washi-shadow: rgba($sumi, 0.08) !default;
+$font-family-header: "Zen Old Mincho", serif !default;
+$font-family-serif: "Noto Serif JP", serif !default;
+
 #speaker-landing {
     line-height: 200%;
     a {

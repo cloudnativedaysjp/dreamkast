@@ -20,10 +20,11 @@ const handleAddTalkClick = (e) => {
         document.getElementsByClassName('add-talk')[0].hidden = false;
     }
     addDeleteButtonListener(div.querySelector('.remove_talk_field'));
-    // 動的に追加されたフィールドにも文字数カウンターとカンファレンス選択機能を適用
+    // 動的に追加されたフィールドにも文字数カウンター、カンファレンス選択機能、スタイル変更を適用
     setTimeout(() => {
         initializeCharCounter();
         initializeConferenceFieldToggle();
+        initializeInputCardStyles();
     }, 100);
     return false;
 };
@@ -79,15 +80,28 @@ const addDeleteButtonListener = (obj) => {
 const buttonListener = (e) => {
     e.preventDefault();
     if (confirm("このセッションを削除しますか？")) {
-        e.target.parentElement.querySelector('.destroy_flag_field').value = 1;
-        e.target.closest('.talk-field').hidden = true;
+        // ボタン内のSVGやテキストがクリックされた場合も考慮して、closest()で削除ボタンを取得
+        const deleteButton = e.target.closest('.remove_talk_field');
+        const talkField = deleteButton.closest('.talk-field');
+
+        // destroy_flag_fieldを設定
+        const destroyFlag = talkField.querySelector('.destroy_flag_field');
+        if (destroyFlag) {
+            destroyFlag.value = 1;
+        }
+
+        // フィールドを非表示
+        talkField.hidden = true;
+
+        // バリデーション属性を削除
         ['input', 'textarea', 'select'].forEach((selector) => {
-            e.target.parentElement.querySelectorAll(selector).forEach((elm) => {
+            talkField.querySelectorAll(selector).forEach((elm) => {
                 ['required', 'max', 'min', 'maxlength', 'pattern'].forEach((attr) => {
                     elm.removeAttribute(attr);
                 })
             })
         })
+
         if (fieldLength() < 3) {
             document.getElementsByClassName('add-talk')[0].hidden = false;
         }
@@ -323,17 +337,103 @@ const initializeConferenceFieldToggle = () => {
     });
 };
 
+// ===== ラジオボタン・チェックボックスの選択状態スタイル =====
+
+/**
+ * ラジオボタンの選択状態に応じてカードスタイルを更新
+ */
+const updateRadioCardStyles = (radioInput) => {
+    const name = radioInput.name;
+    // 同じname属性を持つすべてのラジオボタンを取得
+    const allRadios = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+
+    allRadios.forEach(radio => {
+        const card = radio.closest('.cfp-radio-card');
+        if (card) {
+            if (radio.checked) {
+                card.classList.add('border-primary', 'bg-primary', 'bg-opacity-10');
+            } else {
+                card.classList.remove('border-primary', 'bg-primary', 'bg-opacity-10');
+            }
+        }
+    });
+};
+
+/**
+ * チェックボックスの選択状態に応じてカードスタイルを更新
+ */
+const updateCheckboxCardStyles = (checkboxInput) => {
+    const card = checkboxInput.closest('.cfp-checkbox-card, .cfp-conference-card');
+    if (card) {
+        if (checkboxInput.checked) {
+            card.classList.add('border-primary', 'bg-primary', 'bg-opacity-10');
+        } else {
+            card.classList.remove('border-primary', 'bg-primary', 'bg-opacity-10');
+        }
+    }
+};
+
+/**
+ * ラジオボタンとチェックボックスのスタイル変更イベントを初期化
+ */
+const initializeInputCardStyles = () => {
+    // ラジオボタンの変更イベント
+    document.querySelectorAll('.cfp-radio-card input[type="radio"]').forEach(radio => {
+        if (!radio.dataset.styleListenerInitialized) {
+            radio.dataset.styleListenerInitialized = 'true';
+            radio.addEventListener('change', () => {
+                updateRadioCardStyles(radio);
+            });
+        }
+    });
+
+    // チェックボックスの変更イベント
+    document.querySelectorAll('.cfp-checkbox-card input[type="checkbox"], .cfp-conference-card input[type="checkbox"]').forEach(checkbox => {
+        if (!checkbox.dataset.styleListenerInitialized) {
+            checkbox.dataset.styleListenerInitialized = 'true';
+            checkbox.addEventListener('change', () => {
+                updateCheckboxCardStyles(checkbox);
+            });
+        }
+    });
+
+    // カード全体をクリックでラジオボタン/チェックボックスを選択
+    document.querySelectorAll('.cfp-radio-card, .cfp-checkbox-card').forEach(card => {
+        if (!card.dataset.cardClickInitialized) {
+            card.dataset.cardClickInitialized = 'true';
+            card.addEventListener('click', (e) => {
+                // すでにinputやlabelをクリックした場合は何もしない
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL') {
+                    return;
+                }
+                const input = card.querySelector('input[type="radio"], input[type="checkbox"]');
+                if (input && !input.disabled) {
+                    if (input.type === 'radio') {
+                        input.checked = true;
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    } else {
+                        input.checked = !input.checked;
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
+            });
+        }
+    });
+};
+
 // 既存の初期化処理に追加
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initializeAddTalkButton();
         initializeRemoveTalkButton();
         initializeCharCounters();
-        initializeConferenceFieldToggle(); // 追加
+        initializeConferenceFieldToggle();
+        initializeInputCardStyles(); // 追加
     })
 } else {
     initializeAddTalkButton();
     initializeRemoveTalkButton();
     initializeCharCounters();
-    initializeConferenceFieldToggle(); // 追加
+    initializeConferenceFieldToggle();
+    initializeInputCardStyles(); // 追加
 }

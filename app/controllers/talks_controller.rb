@@ -41,7 +41,12 @@ class TalksController < ApplicationController
     # TODO: Conferenceのステータスを改善した後、適切な条件分岐で修正する
     @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr)
                @talks.where(show_on_timetable: true)
-             elsif @conference.cfp_result_visible
+               # タイムテーブル公開後は、紐付くconference_dayがexternal(本番)のものだけ表示する
+             elsif @conference.cfp_result_visible && @conference.show_timetable_enabled?
+               @talks.where(show_on_timetable: true,
+                            proposals: { status: :accepted })
+             # タイムテーブル公開前は talk の conference_day_id が nil なので絞り込まない
+             elsif @conference.cfp_result_visible && @conference.show_timetable_disabled?
                @talks.where(show_on_timetable: true,
                             proposals: { status: :accepted })
              else

@@ -1505,27 +1505,14 @@ language(
 )
 
 ## CNK
-assumed_visitor(
-  conference_id: 15,
-  item_number: 1,
-  items: [
-    {id: 219, params: 'architect - システム設計'},
-    {id: 220, params: 'developer - システム開発'},
-    {id: 221, params: 'app-developer - アプリケーション開発'},
-    {id: 222, params: 'operator/sys-admin - 運用管理/システム管理'},
-    {id: 223, params: 'CxO/biz - ビジネス層'},
-    {id: 224, params: 'その他'}
-  ]
-)
-
 execution_phase(
   conference_id: 15,
   item_number: 2,
   items: [
-    {id: 225, params: 'Dev/QA（開発環境）'},
-    {id: 226, params: 'PoC（検証）'},
-    {id: 227, params: 'Production（本番環境）'},
-    {id: 228, params: 'Other'},
+    {id: 219, params: 'Dev/QA（開発環境）'},
+    {id: 220, params: 'PoC（検証）'},
+    {id: 221, params: 'Production（本番環境）'},
+    {id: 222, params: 'Other'},
   ]
 )
 
@@ -1534,28 +1521,28 @@ whether_it_can_be_published(
   item_number: 3,
   items: [
     {
-      id: 229,
+      id: 223,
       params: 'All okay - スライド・動画両方ともに公開可',
       description: 'イベント終了後に講演資料（スライドはslideshareなどにご自分でアップしてください）とアーカイブ動画を公開します。公開可否は来場者がセッションを選択する際の大きな判断材料となりますので事前に意思を確認させてください。動画はスライドと同期させた映像（例：https://www.youtube.com/watch?v=V21a3WMPC7s）を予定しています - After the event ends, we will publish the lecture materials (please upload yourself to slideshare etc) and archive videos. Please tell us in advance as visitors will be a big material to choose sessions.',
       key: VideoAndSlidePublished::ALL_OK,
       value: 'All okay - スライド・動画両方ともに公開可'
     },
     {
-      id: 230,
+      id: 224,
       params: 'Only Slide - スライドのみ公開可',
       description: '',
       key: VideoAndSlidePublished::ONLY_SLIDE,
       value: 'Only Slide - スライドのみ公開可'
     },
     {
-      id: 231,
+      id: 225,
       params: 'NG - いずれも公開不可（来場者限定のコンテンツ）',
       description: '',
       key: VideoAndSlidePublished::ALL_NG,
       value: 'NG - いずれも公開不可（来場者限定のコンテンツ）'
     },
     {
-      id: 232,
+      id: 226,
       params: 'その他',
       description: '',
       key: VideoAndSlidePublished::OTHERS,
@@ -1564,36 +1551,19 @@ whether_it_can_be_published(
   ]
 )
 
-presentation_method(
-  conference_id: 15,
-  item_number: 4,
-  items: [
-    {
-      id: 233,
-      params: '現地登壇',
-      description: "プロポーザル採択後は登壇方法を変更することができません"
-    },
-    {
-      id: 234,
-      params: '事前収録',
-      description: ''
-    },
-  ]
-)
-
 session_time(
   conference_id: 15,
   item_number: 5,
   items: [
     {
-      id: 235,
+      id: 227,
       key: SessionTime::FOURTY_MINUTES,
       params: '_40min (full session)',
       value: '40',
       description: ''
     },
     {
-      id: 236,
+      id: 228,
       key: SessionTime::TWENTY_MINUTES,
       params: '_20min (for keynote)',
       value: '20',
@@ -1606,7 +1576,475 @@ language(
   conference_id: 15,
   item_number: 6,
   items: [
-    {id: 237, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
-    {id: 238, params: 'EN'},
+    {id: 229, params: 'JA', description: '英語での講演は、翻訳者や通訳機器の都合で会場やセッション時間に影響が出てくる可能性もあります - The session in English, may also affect the venue and session time'},
+    {id: 230, params: 'EN'},
   ]
+)
+
+# CNK - 3カンファレンス選択機能
+ProposalItemConfig.seed(
+  # target_conferences (CheckBox)
+  {
+    id: 231,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'target_conferences',
+    item_number: 7,
+    item_name: 'プロポーザル提出先トラック',
+    params: 'Cloud Native',
+    description: '本プロポーザルを提出するカンファレンスを選択してください。複数選択可能です。'
+  },
+  {
+    id: 232,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'target_conferences',
+    item_number: 7,
+    item_name: 'プロポーザル提出先トラック',
+    params: 'Platform Engineering'
+  },
+  {
+    id: 233,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'target_conferences',
+    item_number: 7,
+    item_name: 'プロポーザル提出先トラック',
+    params: 'SRE'
+  },
+
+  # cnd_category (RadioButton)
+  {
+    id: 234,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Customizing / Extending'
+  },
+  {
+    id: 235,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'IoT / Edge'
+  },
+  {
+    id: 236,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Microservices / Services Mesh'
+  },
+  {
+    id: 237,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'ML / HPC'
+  },
+  {
+    id: 238,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Networking'
+  },
+  {
+    id: 239,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Operation / Monitoring / Logging'
+  },
+  {
+    id: 240,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Application / Development'
+  },
+  {
+    id: 241,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Runtime'
+  },
+  {
+    id: 242,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Security'
+  },
+  {
+    id: 243,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Serverless / FaaS'
+  },
+  {
+    id: 244,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Storage / Database'
+  },
+  {
+    id: 245,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Architecture Design'
+  },
+  {
+    id: 246,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'Hybrid Cloud / Multi Cloud'
+  },
+  {
+    id: 247,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'NFV / Edge'
+  },
+  {
+    id: 248,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: '組織論'
+  },
+  {
+    id: 249,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'FinOps'
+  },
+  {
+    id: 250,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'cnd_category',
+    item_number: 8,
+    item_name: 'CloudNative Days - 主なカテゴリ（★★）',
+    params: 'その他'
+  },
+
+  # cnd_assumed_visitor (CheckBox)
+  {
+    id: 251,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'architect - システム設計'
+  },
+  {
+    id: 252,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'developer - システム開発'
+  },
+  {
+    id: 253,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'app-developer - アプリケーション開発'
+  },
+  {
+    id: 254,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'operator/sys-admin/sre - 運用管理/システム管理/SRE'
+  },
+  {
+    id: 255,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'CxO/biz - ビジネス層'
+  },
+  {
+    id: 256,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'cnd_assumed_visitor',
+    item_number: 9,
+    item_name: 'CloudNative Days - 想定受講者（★★）',
+    params: 'その他'
+  },
+
+  # pek_category (RadioButton)
+  {
+    id: 257,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Tech - 課題を解決する個別技術'
+  },
+  {
+    id: 258,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Blueprints - プラットフォームの構想や全体像'
+  },
+  {
+    id: 259,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Stories - プラットフォームエンジニアリングの実践事例'
+  },
+  {
+    id: 260,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Culture - 開発者にプラットフォームを定着させる文化'
+  },
+  {
+    id: 261,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Impact - ビジネスへの影響と訴求'
+  },
+  {
+    id: 262,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'pek_category',
+    item_number: 10,
+    item_name: 'Platform Engineering - 主なカテゴリ（★★）',
+    params: 'Observability'
+  },
+
+  # pek_assumed_visitor (CheckBox)
+  {
+    id: 263,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'Platform Engineer'
+  },
+  {
+    id: 264,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'SRE'
+  },
+  {
+    id: 265,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'Developer'
+  },
+  {
+    id: 266,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'Engineering Manager'
+  },
+  {
+    id: 267,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'CTO/VPoE'
+  },
+  {
+    id: 268,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'pek_assumed_visitor',
+    item_number: 11,
+    item_name: 'Platform Engineering - 想定受講者（★★）',
+    params: 'その他'
+  },
+
+  # srek_category (RadioButton)
+  {
+    id: 269,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Tech - SREを支える具体的な技術や手法'
+  },
+  {
+    id: 270,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Practices - SREの実践例と得られた教訓'
+  },
+  {
+    id: 271,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Architecture - SREの視点からのシステム設計'
+  },
+  {
+    id: 272,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Culture - SRE文化の醸成と組織変革'
+  },
+  {
+    id: 273,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Future - SREの未来と新しいトレンド'
+  },
+  {
+    id: 274,
+    conference_id: 15,
+    type: 'ProposalItemConfigRadioButton',
+    label: 'srek_category',
+    item_number: 12,
+    item_name: 'SRE - 主なカテゴリ（★★）',
+    params: 'Case Studies - 実際の導入事例や失敗談'
+  },
+
+  # srek_assumed_visitor (CheckBox)
+  {
+    id: 275,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'SRE'
+  },
+  {
+    id: 276,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'Platform Engineer'
+  },
+  {
+    id: 277,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'DevOps Engineer'
+  },
+  {
+    id: 278,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'Infrastructure Engineer'
+  },
+  {
+    id: 279,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'Engineering Manager'
+  },
+  {
+    id: 280,
+    conference_id: 15,
+    type: 'ProposalItemConfigCheckBox',
+    label: 'srek_assumed_visitor',
+    item_number: 13,
+    item_name: 'SRE - 想定受講者（★★）',
+    params: 'その他'
+  }
 )

@@ -8,28 +8,34 @@ const fieldLength = () => {
     return sum;
 }
 
+// セッション追加ボタンのクリックハンドラー（重複登録を防ぐため名前付き関数として定義）
+const handleAddTalkClick = (e) => {
+    e.preventDefault();
+    const time = new Date().getTime();
+    const regexp = new RegExp(e.target.dataset.id, 'g');
+    let div = document.createElement('div');
+    div.innerHTML = e.target.dataset.fields.replace(regexp, time);
+    document.getElementsByClassName('talk-fields')[0].append(div);
+    if (fieldLength() >= 3) {
+        document.getElementsByClassName('add-talk')[0].hidden = false;
+    }
+    addDeleteButtonListener(div.querySelector('.remove_talk_field'));
+    // 動的に追加されたフィールドにも文字数カウンターとカンファレンス選択機能を適用
+    setTimeout(() => {
+        initializeCharCounter();
+        initializeConferenceFieldToggle();
+    }, 100);
+    return false;
+};
+
 const initializeAddTalkButton = () => {
     const fields = Array.from(document.getElementsByClassName('add_talk_fields'))
     if (fields.length === 0) {
         return;
     }
-    fields[0].addEventListener('click', (e) => {
-        e.preventDefault();
-        const time = new Date().getTime();
-        const regexp = new RegExp(e.target.dataset.id, 'g');
-        let div = document.createElement('div');
-        div.innerHTML = e.target.dataset.fields.replace(regexp, time);
-        document.getElementsByClassName('talk-fields')[0].append(div);
-        if (fieldLength() >= 3) {
-            document.getElementsByClassName('add-talk')[0].hidden = false;
-        }
-        addDeleteButtonListener(div.querySelector('.remove_talk_field'));
-        // 動的に追加されたフィールドにも文字数カウンターを適用
-        setTimeout(() => {
-            initializeCharCounter();
-        }, 100);
-        return false;
-    });
+    // 既存のイベントリスナーを削除してから新しいリスナーを追加（重複登録を防ぐ）
+    fields[0].removeEventListener('click', handleAddTalkClick);
+    fields[0].addEventListener('click', handleAddTalkClick);
 }
 
 const initializeRemoveTalkButton = () => {
@@ -216,15 +222,118 @@ const initializeCharCounters = () => {
     }
 }
 
+// ===== 3カンファレンス選択機能 =====
+
+/**
+ * カンファレンス選択に応じてカテゴリ・受講者フィールドを表示/非表示
+ */
+const toggleConferenceFields = (formIndex) => {
+    // HTMLで生成される実際のID（parameterize.underscoreの結果）に合わせる
+    const cndCheckbox = document.getElementById(`target_conference_cloud_native_${formIndex}`);
+    const pekCheckbox = document.getElementById(`target_conference_platform_engineering_${formIndex}`);
+    const srekCheckbox = document.getElementById(`target_conference_sre_${formIndex}`);
+
+    if (!cndCheckbox) return; // conference_id: 15 以外は何もしない
+
+    // CloudNative Days フィールド
+    const cndFields = document.querySelectorAll(`.cnd-fields[data-form-index="${formIndex}"]`);
+    cndFields.forEach(field => {
+        if (cndCheckbox.checked) {
+            field.style.display = 'block';
+            // required 属性を追加（selectタグ）
+            field.querySelectorAll('.cnd-category-select').forEach(select => {
+                select.setAttribute('required', 'required');
+            });
+        } else {
+            field.style.display = 'none';
+            // required 属性を削除し、選択をクリア（selectタグ）
+            field.querySelectorAll('.cnd-category-select').forEach(select => {
+                select.removeAttribute('required');
+                select.selectedIndex = 0; // 最初のオプション（「選択してください」）に戻す
+            });
+            field.querySelectorAll('.cnd-visitor-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+    });
+
+    // Platform Engineering フィールド
+    const pekFields = document.querySelectorAll(`.pek-fields[data-form-index="${formIndex}"]`);
+    pekFields.forEach(field => {
+        if (pekCheckbox.checked) {
+            field.style.display = 'block';
+            // required 属性を追加（selectタグ）
+            field.querySelectorAll('.pek-category-select').forEach(select => {
+                select.setAttribute('required', 'required');
+            });
+        } else {
+            field.style.display = 'none';
+            // required 属性を削除し、選択をクリア（selectタグ）
+            field.querySelectorAll('.pek-category-select').forEach(select => {
+                select.removeAttribute('required');
+                select.selectedIndex = 0; // 最初のオプション（「選択してください」）に戻す
+            });
+            field.querySelectorAll('.pek-visitor-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+    });
+
+    // SRE フィールド
+    const srekFields = document.querySelectorAll(`.srek-fields[data-form-index="${formIndex}"]`);
+    srekFields.forEach(field => {
+        if (srekCheckbox.checked) {
+            field.style.display = 'block';
+            // required 属性を追加（selectタグ）
+            field.querySelectorAll('.srek-category-select').forEach(select => {
+                select.setAttribute('required', 'required');
+            });
+        } else {
+            field.style.display = 'none';
+            // required 属性を削除し、選択をクリア（selectタグ）
+            field.querySelectorAll('.srek-category-select').forEach(select => {
+                select.removeAttribute('required');
+                select.selectedIndex = 0; // 最初のオプション（「選択してください」）に戻す
+            });
+            field.querySelectorAll('.srek-visitor-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+    });
+};
+
+/**
+ * カンファレンス選択チェックボックスにイベントリスナーを設定
+ */
+const initializeConferenceFieldToggle = () => {
+    document.querySelectorAll('.target-conference-checkbox').forEach(checkbox => {
+        const formIndex = checkbox.dataset.formIndex;
+
+        // 初期表示制御
+        toggleConferenceFields(formIndex);
+
+        // 既にイベントリスナーが登録されている場合はスキップ（重複登録を防ぐ）
+        if (!checkbox.dataset.listenerInitialized) {
+            checkbox.dataset.listenerInitialized = 'true';
+            // 変更イベント
+            checkbox.addEventListener('change', () => {
+                toggleConferenceFields(formIndex);
+            });
+        }
+    });
+};
+
 // 既存の初期化処理に追加
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initializeAddTalkButton();
         initializeRemoveTalkButton();
         initializeCharCounters();
+        initializeConferenceFieldToggle(); // 追加
     })
 } else {
     initializeAddTalkButton();
     initializeRemoveTalkButton();
     initializeCharCounters();
+    initializeConferenceFieldToggle(); // 追加
 }

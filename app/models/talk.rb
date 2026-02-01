@@ -43,6 +43,7 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
+  validate :validate_three_conference_selection, on: :entry_form, if: -> { conference_id == 15 }
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -449,6 +450,39 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     end
   end
 
+    # 3カンファレンス関連のヘルパーメソッド
+  def target_conferences
+    item = proposal_items.find_by(label: 'target_conferences')
+    return [] unless item&.params
+
+    item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+  end
+
+  def cnd_category
+    proposal_item_value('cnd_category')
+  end
+
+  def pek_category
+    proposal_item_value('pek_category')
+  end
+
+  def srek_category
+    proposal_item_value('srek_category')
+  end
+
+  def cnd_assumed_visitors
+    proposal_item_value('cnd_assumed_visitor')
+  end
+
+  def pek_assumed_visitors
+    proposal_item_value('pek_assumed_visitor')
+  end
+
+  def srek_assumed_visitors
+    proposal_item_value('srek_assumed_visitor')
+  end
+
+
   private
 
   # 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
@@ -481,10 +515,71 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   def validate_proposal_item_configs
     expected = conference.proposal_item_configs.pluck(:label).uniq
+
+    # conference_id: 15 の場合、3カンファレンス関連のlabelは個別にバリデーションするので除外
+    if conference_id == 15
+      three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor',
+                           'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor']
+      expected -= three_conf_labels
+    end
+
     shorted_items = expected - proposal_items.map(&:label)
     shorted_items.each { |e|
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
+  end
+
+  # 3トラック選択機能のバリデーション（conference_id: 15 専用）
+  def validate_three_conference_selection
+    # メモリ上のproposal_itemsも検索できるようにdetectを使用
+    target_conferences_item = proposal_items.detect { |item| item.label == 'target_conferences' }
+
+    # 提出先トラックが選択されているか確認
+    if target_conferences_item.blank? || target_conferences_item.params.blank?
+      errors.add(:base, 'プロポーザル提出先トラックを最低1つ選択してください')
+      return
+    end
+
+    selected_conferences = target_conferences_item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+
+    # Cloud Native が選択されている場合
+    if selected_conferences.include?('Cloud Native')
+      cnd_category = proposal_items.detect { |item| item.label == 'cnd_category' }
+      cnd_visitor = proposal_items.detect { |item| item.label == 'cnd_assumed_visitor' }
+
+      if cnd_category.blank? || cnd_category.params.blank?
+        errors.add(:base, 'Cloud Native - 主なカテゴリは最低1項目選択してください')
+      end
+      if cnd_visitor.blank? || cnd_visitor.params.blank?
+        errors.add(:base, 'Cloud Native - 想定受講者は最低1項目選択してください')
+      end
+    end
+
+    # Platform Engineering が選択されている場合
+    if selected_conferences.include?('Platform Engineering')
+      pek_category = proposal_items.detect { |item| item.label == 'pek_category' }
+      pek_visitor = proposal_items.detect { |item| item.label == 'pek_assumed_visitor' }
+
+      if pek_category.blank? || pek_category.params.blank?
+        errors.add(:base, 'Platform Engineering - 主なカテゴリは最低1項目選択してください')
+      end
+      if pek_visitor.blank? || pek_visitor.params.blank?
+        errors.add(:base, 'Platform Engineering - 想定受講者は最低1項目選択してください')
+      end
+    end
+
+    # SRE が選択されている場合
+    if selected_conferences.include?('SRE')
+      srek_category = proposal_items.detect { |item| item.label == 'srek_category' }
+      srek_visitor = proposal_items.detect { |item| item.label == 'srek_assumed_visitor' }
+
+      if srek_category.blank? || srek_category.params.blank?
+        errors.add(:base, 'SRE - 主なカテゴリは最低1項目選択してください')
+      end
+      if srek_visitor.blank? || srek_visitor.params.blank?
+        errors.add(:base, 'SRE - 想定受講者は最低1項目選択してください')
+      end
+    end
   end
 end

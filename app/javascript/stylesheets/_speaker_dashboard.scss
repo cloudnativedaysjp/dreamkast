@@ -138,8 +138,11 @@
         color: $sumi;
     }
 
+    p.form-text,
     .form-text {
+        font-size: 0.75rem !important;
         color: lighten($sumi, 40%);
+        margin: 0.25em 0;
     }
 
     // Cards - Paper aesthetic

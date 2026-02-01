@@ -132,18 +132,25 @@
 
     <div class="col-md-4">
       <div class="cfp-image-preview text-center">
-        <p class="small text-muted mb-2">プレビュー</p>
         <div class="image-preview p-2" style="min-height: 200px;">
-          <% unless @speaker.nil? %>
-            <img src="<%= @speaker.avatar_url(:large) || @speaker.avatar_url %>" class="img-fluid" style="max-height: 250px; object-fit: cover;" alt="プロフィール写真プレビュー">
-          <% else %>
-            <div class="d-flex align-items-center justify-content-center h-100 text-muted" style="min-height: 180px;">
-              <div class="text-center">
-                <p class="small">未選択</p>
-              </div>
+          <% has_avatar = @speaker.present? && (@speaker.avatar.present? || @speaker.avatar_url.present?) %>
+          <% avatar_url = has_avatar ? (@speaker.avatar_url(:large) || @speaker.avatar_url) : nil %>
+          <%# img要素は常に存在させる（JavaScriptのプレビュー機能に必要） %>
+          <img src="<%= avatar_url || '' %>"
+               class="img-fluid"
+               style="max-height: 250px; object-fit: cover;<%= ' display: none;' unless avatar_url.present? %>"
+               alt="プロフィール写真プレビュー">
+          <%# プレースホルダー（画像未選択時に表示） %>
+          <div class="image-placeholder d-flex align-items-center justify-content-center h-100 text-muted" style="min-height: 180px;<%= ' display: none;' if avatar_url.present? %>">
+            <div class="text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="mb-2 opacity-25" viewBox="0 0 16 16">
+                <path d="M1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13zm13 1v8.293l-2.146-2.147a.5.5 0 0 0-.708 0L9 10.793 6.854 8.646a.5.5 0 0 0-.708 0L2.5 12.293V2h12zm-10.5 3a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z"/>
+              </svg>
+              <p class="small mb-0">未選択</p>
             </div>
-          <% end %>
+          </div>
         </div>
+        <p class="small text-muted mt-2 mb-0">プレビュー</p>
       </div>
     </div>
   </div>

@@ -26,9 +26,7 @@
           <% end %>
 
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
-            <% if display_proposals? %>
-              <li class="nav-item"><%= link_to "プロポーザル一覧", proposals_path, class: "nav-link js-scroll-trigger" %></li>
-            <% end %>
+            <li class="nav-item"><%= link_to "プロポーザル一覧", proposals_path, class: "nav-link js-scroll-trigger" %></li>
 
             <% if display_talks? %>
               <li class="nav-item dropdown">

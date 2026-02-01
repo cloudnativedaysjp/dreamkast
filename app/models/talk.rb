@@ -43,6 +43,7 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
+  validate :validate_three_conference_selection, on: :entry_form, if: -> { conference_id == 15 }
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -449,6 +450,39 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     end
   end
 
+  # 3カンファレンス関連のヘルパーメソッド
+  def target_conferences
+    item = proposal_items.find_by(label: 'target_conferences')
+    return [] unless item&.params
+
+    item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+  end
+
+  def cnd_category
+    proposal_item_value('cnd_category')
+  end
+
+  def pek_category
+    proposal_item_value('pek_category')
+  end
+
+  def srek_category
+    proposal_item_value('srek_category')
+  end
+
+  def cnd_assumed_visitors
+    proposal_item_value('cnd_assumed_visitor')
+  end
+
+  def pek_assumed_visitors
+    proposal_item_value('pek_assumed_visitor')
+  end
+
+  def srek_assumed_visitors
+    proposal_item_value('srek_assumed_visitor')
+  end
+
+
   private
 
   # 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
@@ -481,10 +515,66 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   def validate_proposal_item_configs
     expected = conference.proposal_item_configs.pluck(:label).uniq
+
+    # conference_id: 15 の場合、3カンファレンス関連のlabelは個別にバリデーションするので除外
+    if conference_id == 15
+      three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor',
+                           'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor']
+      expected -= three_conf_labels
+    end
+
     shorted_items = expected - proposal_items.map(&:label)
     shorted_items.each { |e|
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
+  end
+
+  THREE_CONFERENCE_VALIDATION_CONFIG = [
+    {
+      name: 'Cloud Native',
+      category_label: 'cnd_category',
+      visitor_label: 'cnd_assumed_visitor'
+    },
+    {
+      name: 'Platform Engineering',
+      category_label: 'pek_category',
+      visitor_label: 'pek_assumed_visitor'
+    },
+    {
+      name: 'SRE',
+      category_label: 'srek_category',
+      visitor_label: 'srek_assumed_visitor'
+    }
+  ].freeze
+
+  # 3トラック選択機能のバリデーション（conference_id: 15 専用）
+  def validate_three_conference_selection
+    target_conferences_item = proposal_items.detect { |item| item.label == 'target_conferences' }
+
+    if target_conferences_item.blank? || target_conferences_item.params.blank?
+      errors.add(:base, 'プロポーザル提出先トラックを最低1つ選択してください')
+      return
+    end
+
+    selected_conferences = target_conferences_item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+
+    THREE_CONFERENCE_VALIDATION_CONFIG.each do |config|
+      next unless selected_conferences.include?(config[:name])
+
+      validate_three_conference_track(config)
+    end
+  end
+
+  def validate_three_conference_track(config)
+    category_item = proposal_items.detect { |item| item.label == config[:category_label] }
+    visitor_item = proposal_items.detect { |item| item.label == config[:visitor_label] }
+
+    if category_item.blank? || category_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 主なカテゴリは最低1項目選択してください")
+    end
+    if visitor_item.blank? || visitor_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 想定受講者は最低1項目選択してください")
+    end
   end
 end

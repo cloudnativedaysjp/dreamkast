@@ -13,15 +13,6 @@
         <%= render 'proposals/partial_show/col_talk_category_block', talk: talk %>
       </div>
 
-      <div class="row py-3">
-        <div class="col-auto col-md-auto">
-          <% if @proposal.registered? %>
-            <button class="btn btn-primary inline" id="vote" vote_url="<%= vote_api_url %>" event_name="<%= @conference.abbr %>" talk_id="<%= talk.id %>" type="button">👍投票する</button>
-          <% end %>
-        </div>
-      </div>
-
-
       <p><%= simple_format talk.abstract %></p>
 
       <% talk.speakers.each do |speaker| %>

@@ -1,7 +1,8 @@
 <% classes += " #{item.params.split(' ').first}" if :session_times == label %>
-<% if (label == :session_times && item.key.to_i == SessionTime::TWENTY_MINUTES) || (f.object&.proposal&.accepted?)  %>
-  <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, disabled: 'disabled'} %>
+<% radio_id = "#{label}_#{item.id}_#{form_index}" %>
+<% if (label == :session_times && item.key.to_i == SessionTime::TWENTY_MINUTES) || (f.object&.proposal&.accepted?) %>
+  <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, disabled: 'disabled', id: radio_id} %>
 <% else %>
-  <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: "#{label}_#{item.params}"} %>
+  <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: radio_id} %>
 <% end %>
-<%= label label, item.params, {class: 'form-check-label'} %><br>
+<%= label_tag radio_id, item.params, {class: 'form-check-label'} %>

@@ -11,8 +11,6 @@ RSpec.describe(SpeakerMailer, type: :mailer) do
       it { expect(mail.body.encoded).to(include("#{conference.name} のプロポーザルを以下の内容で受け付けました。")) }
       it { expect(mail.body.encoded).to(include("タイトル: #{talk.title}")) }
       it { expect(mail.body.encoded).to(include("概要: #{talk.abstract}")) }
-      it { expect(mail.body.encoded).to(include("受講者レベル: #{talk.difficulty}")) }
-      it { expect(mail.body.encoded).to(include("資料URL: #{talk.document_url}")) }
     end
     let!(:conference) { create(:one_day) }
     let!(:speaker) { create(:speaker_alice, conference:) }

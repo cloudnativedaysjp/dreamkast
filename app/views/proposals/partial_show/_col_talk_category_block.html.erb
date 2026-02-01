@@ -5,11 +5,20 @@
         <%= talk.talk_difficulty.name %>
       </span>
     <% end %>
-    &nbsp;
     <% if talk.talk_category.present? %>
+      &nbsp;
       <span class="difficulty category_<%= talk.talk_category_id %>">
         <%= talk.talk_category.name %>
       </span>
+    <% end %>
+    <% if talk.target_conferences.present? %>
+      &nbsp;
+      <% Array(talk.target_conferences).each do |conference| %>
+        <span class="difficulty ">
+          <%= conference %>
+        </span>
+        &nbsp;
+      <% end %>
     <% end %>
   </div>
 </div>

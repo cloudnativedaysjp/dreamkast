@@ -1,3 +1,12 @@
+// Japanese Modern Theme Variables (fallback values for non-CNK events)
+$tokyo-navy: #216a9c !default;
+$washi: #F5F5F0 !default;
+$sumi: #1A1A1A !default;
+$beni: #B93A32 !default;
+$washi-shadow: rgba($sumi, 0.08) !default;
+$font-family-header: "Zen Old Mincho", serif !default;
+$font-family-serif: "Noto Serif JP", serif !default;
+
 #speaker-landing {
     line-height: 200%;
     a {
@@ -110,5 +119,695 @@
     margin: 1rem;
     a {
         text-decoration: underline;
+    }
+}
+
+// ===== CFP Form Styles - Japanese Modern Theme =====
+.cfp-form {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: $font-family-serif;
+
+    // Form controls styling
+    .form-control,
+    .form-select {
+        border-radius: 2px;
+        border-color: rgba($sumi, 0.2);
+        font-family: $font-family-serif;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+            border-color: $beni;
+            box-shadow: 0 0 0 3px rgba($beni, 0.15);
+        }
+    }
+
+    .form-label {
+        font-family: $font-family-serif;
+        color: $sumi;
+    }
+
+    p.form-text,
+    .form-text {
+        font-size: 0.75rem !important;
+        color: lighten($sumi, 40%);
+        margin: 0.25em 0;
+    }
+
+    // Cards - Paper aesthetic
+    .card {
+        background-color: #ffffff;
+        border: 1px solid rgba($sumi, 0.08);
+        border-radius: 2px;
+        box-shadow: 0 2px 8px $washi-shadow;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            box-shadow: 0 4px 16px rgba($sumi, 0.12);
+        }
+    }
+
+    // Section headers - Beni accent
+    .card-header.bg-primary {
+        background-color: $beni !important;
+        border-bottom: none;
+
+        h3 {
+            font-family: $font-family-header;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+    }
+
+    .card-header.bg-secondary {
+        background-color: $sumi !important;
+
+        h3 {
+            font-family: $font-family-header;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+    }
+
+    // Buttons - Hanko style
+    .btn-primary {
+        background-color: $beni;
+        border-color: $beni;
+        border-radius: 2px;
+        font-family: $font-family-header;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($beni, 10%) !important;
+            border-color: darken($beni, 10%) !important;
+            box-shadow: 0 2px 8px rgba($beni, 0.4);
+        }
+    }
+
+    .btn-outline-primary {
+        color: $beni;
+        border-color: $beni;
+        border-radius: 2px;
+        font-family: $font-family-header;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+
+        &:hover {
+            background-color: $beni;
+            border-color: $beni;
+            color: white;
+        }
+    }
+
+    .btn-outline-danger {
+        border-radius: 2px;
+    }
+
+    // Alerts
+    .alert {
+        border: none;
+        border-left: 4px solid $tokyo-navy;
+        border-radius: 2px;
+        background-color: white;
+
+        &.alert-info {
+            border-left-color: $tokyo-navy;
+            background-color: rgba($tokyo-navy, 0.05);
+        }
+
+        &.alert-danger {
+            border-left-color: $beni;
+            background-color: rgba($beni, 0.05);
+        }
+    }
+
+    // Badges
+    .badge {
+        border-radius: 2px;
+        font-family: $font-family-serif;
+        font-weight: 500;
+
+        &.bg-warning {
+            background-color: #D4A843 !important;
+            color: $sumi !important;
+        }
+
+        &.bg-secondary {
+            background-color: lighten($sumi, 50%) !important;
+        }
+
+        &.bg-primary {
+            background-color: $beni !important;
+        }
+    }
+}
+
+// Progress Indicator - Ink brush style
+.cfp-progress {
+    position: relative;
+    padding: 1rem 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba($sumi, 0.2), transparent);
+    }
+
+    .cfp-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+        position: relative;
+        z-index: 1;
+
+        &.active {
+            opacity: 1;
+
+            .cfp-step-icon {
+                background: $beni;
+                color: white;
+                transform: scale(1.1);
+                box-shadow: 0 2px 8px rgba($beni, 0.4);
+            }
+
+            .cfp-step-label {
+                color: $sumi;
+                font-weight: 700;
+            }
+        }
+
+        &.completed {
+            opacity: 1;
+
+            .cfp-step-icon {
+                background: $sumi;
+                color: white;
+            }
+        }
+    }
+
+    .cfp-step-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 2px; // Square like hanko
+        background: $washi;
+        border: 1px solid rgba($sumi, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .cfp-step-number {
+        font-family: $font-family-header;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0;
+    }
+
+    .cfp-step-label {
+        font-size: 0.8rem;
+        font-family: $font-family-header;
+        font-weight: 500;
+        color: lighten($sumi, 40%);
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+
+    .cfp-step-connector {
+        width: 60px;
+        height: 1px;
+        background: rgba($sumi, 0.2);
+        margin: 0 1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+// Section number - Japanese style
+.cfp-section-number {
+    font-family: $font-family-header;
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+// Field Groups
+.cfp-field-group-title {
+    color: $sumi;
+    font-size: 1rem;
+    font-family: $font-family-header;
+    letter-spacing: 0.05em;
+    border-color: rgba($sumi, 0.1) !important;
+
+    svg {
+        color: $beni;
+    }
+}
+
+// Upload Area - Washi paper style
+.cfp-upload-area {
+    cursor: pointer;
+    background-color: $washi !important;
+    border: 1px dashed rgba($sumi, 0.2) !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: $beni !important;
+        background-color: rgba($beni, 0.03) !important;
+    }
+
+    input[type="file"] {
+        cursor: pointer;
+    }
+
+    svg {
+        color: lighten($sumi, 50%);
+    }
+}
+
+// Image Preview
+.cfp-image-preview {
+    .image-preview {
+        border: 1px solid rgba($sumi, 0.1);
+        border-radius: 2px;
+        background-color: $washi;
+        transition: border-color 0.3s ease;
+
+        &:has(img) {
+            border-style: solid;
+        }
+    }
+}
+
+// Talk Field Cards - with CSS counter for numbering
+.talk-fields {
+    counter-reset: talk-counter;
+}
+
+.talk-field.card {
+    counter-increment: talk-counter;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba($sumi, 0.12) !important;
+    }
+
+    .card-header {
+        background-color: $washi !important;
+        border-bottom: 2px solid $beni;
+
+        h5 {
+            font-family: $font-family-header;
+            color: $sumi;
+        }
+
+        .badge.bg-primary {
+            background-color: $beni !important;
+        }
+
+        // Display counter number
+        .talk-field-number::before {
+            content: counter(talk-counter);
+        }
+
+        .talk-field-title::after {
+            content: " " counter(talk-counter);
+        }
+    }
+}
+
+// Checkbox/Radio Cards
+.cfp-checkbox-card,
+.cfp-radio-card {
+    cursor: pointer;
+    background-color: white;
+    border-radius: 2px !important;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &:hover {
+        background-color: rgba($beni, 0.03);
+        border-color: rgba($beni, 0.3) !important;
+    }
+
+    .form-check-input {
+        border-radius: 2px;
+        position: absolute;
+        margin-top: 0.3em;
+
+        &:checked {
+            background-color: $beni;
+            border-color: $beni;
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba($beni, 0.15);
+        }
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        padding-left: 1.5em;
+        margin-bottom: 0;
+        word-break: break-word;
+    }
+
+    .form-check-input:checked ~ .form-check-label,
+    .form-check-input:checked + .form-check-label {
+        font-weight: 600;
+        color: $sumi;
+    }
+}
+
+// Conference Selection Cards (for 3-conference UI)
+.cfp-conference-card {
+    border-radius: 2px !important;
+    background-color: white;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: rgba($beni, 0.4) !important;
+    }
+
+    .form-check-input:checked {
+        background-color: $beni;
+        border-color: $beni;
+    }
+}
+
+// Add Session Button Area
+.cfp-add-session {
+    border: 1px dashed rgba($sumi, 0.2) !important;
+    border-radius: 2px !important;
+    background-color: $washi !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: $beni !important;
+        background-color: rgba($beni, 0.03) !important;
+    }
+
+    svg {
+        color: lighten($sumi, 40%);
+    }
+}
+
+// Submit Section
+.cfp-submit {
+    .btn-primary {
+        background-color: $beni;
+        border-color: $beni;
+        border-radius: 2px;
+        font-family: $font-family-header;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            background-color: darken($beni, 10%) !important;
+            border-color: darken($beni, 10%) !important;
+            box-shadow: 0 4px 16px rgba($beni, 0.4) !important;
+        }
+    }
+}
+
+// Rating Guide
+.cfp-rating-guide {
+    border-left: 4px solid #D4A843;
+    background-color: $washi !important;
+    border-radius: 2px !important;
+}
+
+// Privacy Content Scroll
+.privacy-content {
+    background-color: $washi !important;
+    border-radius: 2px !important;
+    border: 1px solid rgba($sumi, 0.08);
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $washi;
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba($sumi, 0.2);
+        border-radius: 2px;
+
+        &:hover {
+            background: rgba($sumi, 0.3);
+        }
+    }
+}
+
+// Form floating labels
+.cfp-form .form-floating {
+    > .form-control,
+    > .form-select {
+        border-radius: 2px;
+    }
+
+    > label {
+        font-family: $font-family-serif;
+        color: lighten($sumi, 40%);
+    }
+}
+
+// Input groups
+.cfp-form .input-group {
+    .input-group-text {
+        border-radius: 2px 0 0 2px;
+        background-color: $washi;
+        border-color: rgba($sumi, 0.2);
+        color: $sumi;
+    }
+
+    .form-control {
+        border-radius: 0 2px 2px 0;
+    }
+}
+
+// Required field indicator
+.text-danger {
+    color: $beni !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .cfp-progress {
+        .cfp-step-connector {
+            width: 30px;
+            margin: 0 0.5rem;
+        }
+
+        .cfp-step-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .cfp-step-label {
+            font-size: 0.65rem;
+        }
+    }
+
+    .cfp-field-group {
+        .row {
+            > div {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+}
+
+// ===== Dashboard Styles =====
+.cfp-dashboard-title {
+    font-family: $font-family-header;
+    font-weight: 700;
+    font-size: 2rem;
+    color: $sumi;
+    letter-spacing: 0.05em;
+}
+
+.cfp-entry-card {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 4px 16px $washi-shadow;
+
+    .cfp-entry-icon {
+        color: $beni;
+        opacity: 0.8;
+    }
+}
+
+// Profile Card
+.cfp-profile-card {
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+
+    .card-header {
+        border-radius: 2px 2px 0 0;
+    }
+
+    .cfp-avatar {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba($sumi, 0.15);
+    }
+
+    .cfp-avatar-placeholder {
+        width: 120px;
+        height: 120px;
+        background-color: $washi;
+        border: 2px dashed rgba($sumi, 0.2);
+    }
+
+    .cfp-info-section {
+        .cfp-info-label {
+            font-family: $font-family-header;
+            font-size: 0.85rem;
+            color: $sumi;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cfp-info-content {
+            font-size: 0.9rem;
+            color: lighten($sumi, 20%);
+
+            p {
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .cfp-social-links {
+        a {
+            transition: all 0.2s ease;
+
+            &:hover {
+                border-color: $beni;
+                color: $beni;
+            }
+        }
+    }
+}
+
+// Sessions Card
+.cfp-sessions-card {
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+
+    .card-header {
+        border-radius: 2px 2px 0 0;
+    }
+
+    .cfp-talk-item {
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: rgba($washi, 0.5);
+        }
+    }
+}
+
+// Talk Styles
+.cfp-talk-title {
+    font-family: $font-family-header;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: $sumi;
+}
+
+.cfp-talk-meta {
+    .badge {
+        font-weight: 500;
+        font-size: 0.75rem;
+    }
+}
+
+.cfp-status-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cfp-status-accepted {
+    background-color: #198754;
+    color: white;
+}
+
+.cfp-status-rejected {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cfp-status-pending {
+    background-color: #ffc107;
+    color: $sumi;
+}
+
+.cfp-talk-details {
+    .cfp-detail-section {
+        .cfp-detail-label {
+            font-family: $font-family-header;
+            font-size: 0.8rem;
+            color: $sumi;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cfp-detail-content {
+            font-size: 0.9rem;
+            color: lighten($sumi, 20%);
+
+            p {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .cfp-qa-item {
+        background-color: $washi;
+    }
+
+    .cfp-qa-reply {
+        padding: 0.25rem 0;
+        color: lighten($sumi, 30%);
     }
 }

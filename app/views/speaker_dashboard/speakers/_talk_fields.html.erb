@@ -1,101 +1,422 @@
 <% if f.object&.errors&.any? %>
-  <div id="error_explanation" class="alert alert-danger" role="alert">
-    <h5>入力内容にエラーがあります:</h5>
-    <ul>
-      <% f.object.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+  <div class="alert alert-danger border-0 shadow-sm mb-4" role="alert">
+    <div class="d-flex align-items-start">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="flex-shrink-0 me-3 mt-1" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+      </svg>
+      <div>
+        <h6 class="alert-heading fw-bold mb-2">入力内容にエラーがあります</h6>
+        <ul class="mb-0 ps-3">
+          <% f.object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<div class="talk-field">
-  <% if f.object.persisted? %>
-    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][id]", f.object.id %>
-  <% end %>
-
-  <div class="field pb-3">
-    <%= label_tag "speaker_talks_attributes_#{form_index}_title", '講演タイトル - Abstract Title（★★★）', class: 'form-label' %>*
-    <p class="field-description" style="font-size: 0.7em">（最大60文字）受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします - (Maximum 60 characters) Include concrete technology names as possible to attract attendees</p>
-    <%= text_field_tag "speaker[talks_attributes][#{form_index}][title]", f.object.title, class: "form-control", required: true %>
-  </div>
-
-  <div class="field pb-3">
-    <%= label_tag "speaker_talks_attributes_#{form_index}_abstract", '講演内容 - Abstract（★★★）', class: 'form-label' %>
-    <p class="field-description" style="font-size: 0.7em">（最大500文字）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (Maximum 500 characters) Include a session for what kind of person, what kind of information the attendee can get</p>
-    <%= text_area_tag "speaker[talks_attributes][#{form_index}][abstract]", f.object.abstract, class: "form-control abstract" %>
-  </div>
-
-  <% unless ['cicd2021'].include?(@conference.abbr) %>
-    <div class="field pb-3">
-      <%= label_tag "speaker_talks_attributes_#{form_index}_talk_category_id", "主なカテゴリ - Main Category（★★）", class: 'form-label' %>*
-      <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
-      <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_category_id]", @conference.talk_categories, :id, :name, {prompt: "", selected: f.object.talk_category_id}, class: "form-control talk-categories", required: true %>
-    </div>
-  <% end %>
-
-  <div class="field pb-3">
-    <%= label_tag "speaker_talks_attributes_#{form_index}_talk_difficulty_id", "受講者レベル - Audience Experience Level（★★）", class: 'form-label' %>*
-    <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_difficulty_id]", @conference.talk_difficulties, :id, :name, {prompt: "", selected: f.object.talk_difficulty_id}, class: "form-control", required: true %>
-  </div>
-
-  <% if @conference.speaker_entry_disabled? %>
-  <div class="field pb-3">
-    <%= label_tag "speaker_talks_attributes_#{form_index}_document_url", "セッション資料公開URL", class: 'form-label' %>
-    <%= text_field_tag "speaker[talks_attributes][#{form_index}][document_url]", f.object.document_url, class: "form-control" %>
-  </div>
-  <% end %>
-
-  <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
-    <div class="field pb-3">
-      <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
-
-      <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
-        <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
-        <%= label_tag "speaker_talks_attributes_#{form_index}_#{first_item.label}",  first_item.item_name, {class: 'form-check-label'}%>*
-        <div class="form-check">
-          <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
-            <% label = item.label.pluralize.to_sym %>
-            <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
-            <%= check_box_tag "speaker[talks_attributes][#{form_index}][#{label}][]", item.id, checked, {id: "#{label}_#{item.params}", class: 'form-check-input'} %>
-            <%= label label, item.params, {class: 'form-check-label'} %><br>
-          <% end %>
-        </div>
-
-      <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
-        <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
-        <%= label_tag "speaker_talks_attributes_#{form_index}_#{first_item.label}[]",  first_item.item_name, {class: 'form-check-label'}%>*<br>
-        <p class="field-description" style="font-size: 0.7em"><%= first_item.description&.html_safe %></p>
-        <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
-          <% label = first_item.label.pluralize.to_sym %>
-          <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
-          <% classes = "radio_button_#{label}" %>
-          <% case item.label %>
-          <% when 'presentation_method' then %>
-            <%= render 'speaker_dashboard/speakers/presentation_method', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>
-          <% when 'session_time' then %>
-            <%= render 'speaker_dashboard/speakers/session_times', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>
-          <% else %>
-            <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: "#{label}_#{item.params}"} %>
-            <%= label label, item.params, {class: 'form-check-label'} %><br>
-          <% end %>
-        <% end %>
-      <% else %>
+<div class="talk-field card border-0 shadow-sm mb-4">
+  <div class="card-header bg-light py-3 d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 d-flex align-items-center">
+      <span class="badge bg-primary rounded-circle me-2 talk-field-number" style="width: 28px; height: 28px; line-height: 20px;"></span>
+      <span class="talk-field-title">セッション</span>
+    </h5>
+    <% if @conference.speaker_entry_enabled? || admin? %>
+      <%= link_to '#', class: 'remove_talk_field btn btn-outline-danger btn-sm' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+          <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+        </svg>
+        削除
       <% end %>
+    <% end %>
+  </div>
+
+  <div class="card-body p-4">
+    <% if f.object.persisted? %>
+      <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][id]", f.object.id %>
+    <% end %>
+
+    <%# 講演タイトル %>
+    <div class="mb-4">
+      <%= label_tag "speaker_talks_attributes_#{form_index}_title", class: 'form-label fw-semibold' do %>
+        講演タイトル<span class="text-danger">*</span>
+        <span class="badge bg-warning text-dark ms-1">★★★</span>
+      <% end %>
+      <%= text_field_tag "speaker[talks_attributes][#{form_index}][title]", f.object.title, class: "form-control form-control-lg", required: true, placeholder: '具体的なテクノロジー名を含めたタイトル', maxlength: 60 %>
+      <div class="form-text d-flex justify-content-between">
+        <span>Abstract Title - 受講者の目を引くようなるべく具体的なテクノロジー名を含めることをおすすめします</span>
+        <span class="text-muted">最大60文字</span>
+      </div>
     </div>
-  <% end %>
 
-  <% if @sponsor %>
-    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][sponsor_id]", @sponsor.id %>
-  <% end %>
+    <%# 講演内容 %>
+    <div class="mb-4">
+      <%= label_tag "speaker_talks_attributes_#{form_index}_abstract", class: 'form-label fw-semibold' do %>
+        講演内容
+        <span class="badge bg-warning text-dark ms-1">★★★</span>
+      <% end %>
+      <%= text_area_tag "speaker[talks_attributes][#{form_index}][abstract]", f.object.abstract, class: "form-control abstract", rows: 6, placeholder: '講演の概要、対象者、得られる知見などを記載してください...', maxlength: 500 %>
+      <div class="form-text d-flex justify-content-between">
+        <span>Abstract - どんな人に向けた講演か、受講者がどんな情報を得られるかを含めることをおすすめします</span>
+        <span class="text-muted">最大500文字</span>
+      </div>
+    </div>
 
-  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][_destroy]", "false", class: "destroy_flag_field" %>
-  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][conference_id]", @conference.id %>
-  <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][talk_types]", @conference.id %>
+    <%# カテゴリ・レベル選択 %>
+    <div class="row g-3 mb-4">
+      <% unless @conference.id == 15 %>
+        <div class="col-md-6">
+          <%= label_tag "speaker_talks_attributes_#{form_index}_talk_category_id", class: 'form-label fw-semibold' do %>
+            主なカテゴリ<span class="text-danger">*</span>
+            <span class="badge bg-secondary ms-1">★★</span>
+          <% end %>
+          <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_category_id]", @conference.talk_categories, :id, :name, {prompt: "カテゴリを選択", selected: f.object.talk_category_id}, class: "form-select talk-categories", required: true %>
+          <div class="form-text">Main Category - 必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません</div>
+        </div>
+      <% end %>
 
-  <% if @conference.speaker_entry_enabled? || admin? %>
-    <%= link_to 'Delete Talk', '#', class: 'remove_talk_field btn btn-danger' %>
-  <% end %>
+      <div class="<%= @conference.id == 15 ? 'col-12' : 'col-md-6' %>">
+        <%= label_tag "speaker_talks_attributes_#{form_index}_talk_difficulty_id", class: 'form-label fw-semibold' do %>
+          受講者レベル<span class="text-danger">*</span>
+          <span class="badge bg-secondary ms-1">★★</span>
+        <% end %>
+        <%= collection_select nil, "speaker[talks_attributes][#{form_index}][talk_difficulty_id]", @conference.talk_difficulties, :id, :name, {prompt: "レベルを選択", selected: f.object.talk_difficulty_id}, class: "form-select", required: true %>
+        <div class="form-text">Audience Experience Level</div>
+      </div>
+    </div>
 
-  <hr>
+    <% if @conference.speaker_entry_disabled? %>
+      <div class="mb-4">
+        <%= label_tag "speaker_talks_attributes_#{form_index}_document_url", class: 'form-label fw-semibold' do %>
+          セッション資料公開URL
+        <% end %>
+        <div class="input-group">
+          <span class="input-group-text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+              <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+            </svg>
+          </span>
+          <%= text_field_tag "speaker[talks_attributes][#{form_index}][document_url]", f.object.document_url, class: "form-control", placeholder: 'https://speakerdeck.com/...' %>
+        </div>
+      </div>
+    <% end %>
+
+    <%# 動的な設定項目 %>
+    <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+      <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
+      <% next unless first_item %>
+
+      <%# conference_id: 15の場合、3カンファレンス関連のlabelをスキップ（専用UIで表示） %>
+      <% three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor', 'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor'] %>
+      <% next if @conference.id == 15 && three_conf_labels.include?(first_item.label) %>
+
+      <div class="mb-4 p-3 bg-light rounded-3">
+        <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
+          <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : [] %>
+          <%= label_tag "speaker_talks_attributes_#{form_index}_#{first_item.label}", class: 'form-label fw-semibold d-block mb-3' do %>
+            <%= first_item.item_name %><span class="text-danger">*</span>
+          <% end %>
+          <div class="row g-2">
+            <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
+              <% label = item.label.pluralize.to_sym %>
+              <% checked = existing_items ? existing_items.include?(item.id.to_s) : false %>
+              <% checkbox_id = "#{label}_#{item.id}_#{form_index}" %>
+              <div class="col-md-6 col-lg-4">
+                <div class="form-check cfp-checkbox-card p-2 rounded border <%= 'border-primary bg-primary bg-opacity-10' if checked %>">
+                  <%= check_box_tag "speaker[talks_attributes][#{form_index}][#{label}][]", item.id, checked, {id: checkbox_id, class: 'form-check-input'} %>
+                  <%= label_tag checkbox_id, item.params, {class: 'form-check-label'} %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+        <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
+          <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : [] %>
+          <%= label_tag "speaker_talks_attributes_#{form_index}_#{first_item.label}[]", class: 'form-label fw-semibold d-block' do %>
+            <%= first_item.item_name %><span class="text-danger">*</span>
+          <% end %>
+          <% if first_item.description.present? %>
+            <p class="form-text mt-1 mb-3"><%= first_item.description&.html_safe %></p>
+          <% end %>
+          <div class="cfp-radio-options">
+            <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
+              <% label = first_item.label.pluralize.to_sym %>
+              <% checked = existing_items ? existing_items.include?(item.id.to_s) : false %>
+              <% classes = "radio_button_#{label} form-check-input" %>
+              <% radio_id = "#{label}_#{item.id}_#{form_index}" %>
+              <div class="form-check cfp-radio-card p-2 rounded border mb-2 <%= 'border-primary bg-primary bg-opacity-10' if checked %>">
+                <% case item.label %>
+                <% when 'presentation_method' %>
+                  <%= render 'speaker_dashboard/speakers/presentation_method', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>
+                <% when 'session_time' %>
+                  <%= render 'speaker_dashboard/speakers/session_times', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>
+                <% else %>
+                  <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: radio_id} %>
+                  <%= label_tag radio_id, item.params, {class: 'form-check-label'} %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# === 3カンファレンス選択UI（conference_id: 15 のみ） === %>
+    <% if @conference.id == 15 %>
+      <% target_conf_configs = @conference.proposal_item_configs.where(label: 'target_conferences') %>
+      <% first_item = target_conf_configs.first %>
+      <% existing_target_conferences = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'target_conferences')&.params : [] %>
+      <% existing_target_conferences ||= [] %>
+
+      <div class="mb-4 p-4 border rounded-3 bg-white">
+        <%= label_tag "speaker_talks_attributes_#{form_index}_target_conferences", class: 'form-label fw-semibold d-block mb-2' do %>
+          <%= first_item.item_name %><span class="text-danger">*</span>
+        <% end %>
+        <p class="form-text mb-4"><%= first_item.description&.html_safe %></p>
+
+        <%# Cloud Native %>
+        <% cnd_config = target_conf_configs.find { |c| c.params == 'Cloud Native' } %>
+        <% if cnd_config %>
+          <% cnd_checked = existing_target_conferences.include?(cnd_config.id.to_s) %>
+          <div class="cfp-conference-card mb-3 p-3 border rounded-3 <%= 'border-primary bg-primary bg-opacity-10' if cnd_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "speaker[talks_attributes][#{form_index}][target_conferences][]",
+                                cnd_config.id,
+                                cnd_checked,
+                                {
+                                  id: "target_conference_cloud_native_#{form_index}",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: {
+                                    conference_type: 'cloud-native',
+                                    form_index: form_index
+                                  }
+                                } %>
+              <%= label_tag "target_conference_cloud_native_#{form_index}", class: 'form-check-label fw-semibold' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                  <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                </svg>
+                <%= cnd_config.params %>
+              <% end %>
+            </div>
+
+            <div class="cnd-fields mt-3 ps-4" data-form-index="<%= form_index %>" style="<%= 'display: none;' unless cnd_checked %>">
+              <% cnd_category_configs = @conference.proposal_item_configs.where(label: 'cnd_category') %>
+              <% cnd_category_first = cnd_category_configs.first %>
+              <% cnd_existing_category = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'cnd_category')&.params : nil %>
+
+              <div class="mb-3">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_cnd_categories", class: 'form-label small fw-semibold' do %>
+                  <%= cnd_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "speaker[talks_attributes][#{form_index}][cnd_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + cnd_category_configs.map { |item| [item.params, item.id] },
+                                cnd_existing_category
+                              ),
+                              {
+                                class: 'form-select form-select-sm cnd-category-select',
+                                required: false,
+                                id: "cnd_category_select_#{form_index}"
+                              } %>
+              </div>
+
+              <% cnd_visitor_configs = @conference.proposal_item_configs.where(label: 'cnd_assumed_visitor') %>
+              <% cnd_visitor_first = cnd_visitor_configs.first %>
+              <% cnd_existing_visitors = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'cnd_assumed_visitor')&.params : [] %>
+              <% cnd_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_cnd_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= cnd_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <div class="row g-2">
+                  <% cnd_visitor_configs.each do |item| %>
+                    <% checked = cnd_existing_visitors.include?(item.id.to_s) %>
+                    <div class="col-auto">
+                      <div class="form-check">
+                        <%= check_box_tag "speaker[talks_attributes][#{form_index}][cnd_assumed_visitors][]",
+                                          item.id,
+                                          checked,
+                                          {
+                                            id: "cnd_visitor_#{item.params.parameterize.underscore}_#{form_index}",
+                                            class: 'form-check-input cnd-visitor-checkbox'
+                                          } %>
+                        <%= label_tag "cnd_visitor_#{item.params.parameterize.underscore}_#{form_index}", item.params, class: 'form-check-label small' %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Platform Engineering %>
+        <% pek_config = target_conf_configs.find { |c| c.params == 'Platform Engineering' } %>
+        <% if pek_config %>
+          <% pek_checked = existing_target_conferences.include?(pek_config.id.to_s) %>
+          <div class="cfp-conference-card mb-3 p-3 border rounded-3 <%= 'border-primary bg-primary bg-opacity-10' if pek_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "speaker[talks_attributes][#{form_index}][target_conferences][]",
+                                pek_config.id,
+                                pek_checked,
+                                {
+                                  id: "target_conference_platform_engineering_#{form_index}",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: {
+                                    conference_type: 'platform-engineering',
+                                    form_index: form_index
+                                  }
+                                } %>
+              <%= label_tag "target_conference_platform_engineering_#{form_index}", class: 'form-check-label fw-semibold' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                  <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9zM3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"/>
+                  <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z"/>
+                </svg>
+                <%= pek_config.params %>
+              <% end %>
+            </div>
+
+            <div class="pek-fields mt-3 ps-4" data-form-index="<%= form_index %>" style="<%= 'display: none;' unless pek_checked %>">
+              <% pek_category_configs = @conference.proposal_item_configs.where(label: 'pek_category') %>
+              <% pek_category_first = pek_category_configs.first %>
+              <% pek_existing_category = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'pek_category')&.params : nil %>
+
+              <div class="mb-3">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_pek_categories", class: 'form-label small fw-semibold' do %>
+                  <%= pek_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "speaker[talks_attributes][#{form_index}][pek_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + pek_category_configs.map { |item| [item.params, item.id] },
+                                pek_existing_category
+                              ),
+                              {
+                                class: 'form-select form-select-sm pek-category-select',
+                                required: false,
+                                id: "pek_category_select_#{form_index}"
+                              } %>
+              </div>
+
+              <% pek_visitor_configs = @conference.proposal_item_configs.where(label: 'pek_assumed_visitor') %>
+              <% pek_visitor_first = pek_visitor_configs.first %>
+              <% pek_existing_visitors = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'pek_assumed_visitor')&.params : [] %>
+              <% pek_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_pek_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= pek_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <div class="row g-2">
+                  <% pek_visitor_configs.each do |item| %>
+                    <% checked = pek_existing_visitors.include?(item.id.to_s) %>
+                    <div class="col-auto">
+                      <div class="form-check">
+                        <%= check_box_tag "speaker[talks_attributes][#{form_index}][pek_assumed_visitors][]",
+                                          item.id,
+                                          checked,
+                                          {
+                                            id: "pek_visitor_#{item.params.parameterize.underscore}_#{form_index}",
+                                            class: 'form-check-input pek-visitor-checkbox'
+                                          } %>
+                        <%= label_tag "pek_visitor_#{item.params.parameterize.underscore}_#{form_index}", item.params, class: 'form-check-label small' %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# SRE %>
+        <% srek_config = target_conf_configs.find { |c| c.params == 'SRE' } %>
+        <% if srek_config %>
+          <% srek_checked = existing_target_conferences.include?(srek_config.id.to_s) %>
+          <div class="cfp-conference-card p-3 border rounded-3 <%= 'border-primary bg-primary bg-opacity-10' if srek_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "speaker[talks_attributes][#{form_index}][target_conferences][]",
+                                srek_config.id,
+                                srek_checked,
+                                {
+                                  id: "target_conference_sre_#{form_index}",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: {
+                                    conference_type: 'sre',
+                                    form_index: form_index
+                                  }
+                                } %>
+              <%= label_tag "target_conference_sre_#{form_index}", class: 'form-check-label fw-semibold' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                  <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                </svg>
+                <%= srek_config.params %>
+              <% end %>
+            </div>
+
+            <div class="srek-fields mt-3 ps-4" data-form-index="<%= form_index %>" style="<%= 'display: none;' unless srek_checked %>">
+              <% srek_category_configs = @conference.proposal_item_configs.where(label: 'srek_category') %>
+              <% srek_category_first = srek_category_configs.first %>
+              <% srek_existing_category = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'srek_category')&.params : nil %>
+
+              <div class="mb-3">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_srek_categories", class: 'form-label small fw-semibold' do %>
+                  <%= srek_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "speaker[talks_attributes][#{form_index}][srek_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + srek_category_configs.map { |item| [item.params, item.id] },
+                                srek_existing_category
+                              ),
+                              {
+                                class: 'form-select form-select-sm srek-category-select',
+                                required: false,
+                                id: "srek_category_select_#{form_index}"
+                              } %>
+              </div>
+
+              <% srek_visitor_configs = @conference.proposal_item_configs.where(label: 'srek_assumed_visitor') %>
+              <% srek_visitor_first = srek_visitor_configs.first %>
+              <% srek_existing_visitors = f.object&.persisted? ? f.object.proposal_items.find_by(label: 'srek_assumed_visitor')&.params : [] %>
+              <% srek_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "speaker_talks_attributes_#{form_index}_srek_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= srek_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <div class="row g-2">
+                  <% srek_visitor_configs.each do |item| %>
+                    <% checked = srek_existing_visitors.include?(item.id.to_s) %>
+                    <div class="col-auto">
+                      <div class="form-check">
+                        <%= check_box_tag "speaker[talks_attributes][#{form_index}][srek_assumed_visitors][]",
+                                          item.id,
+                                          checked,
+                                          {
+                                            id: "srek_visitor_#{item.params.parameterize.underscore}_#{form_index}",
+                                            class: 'form-check-input srek-visitor-checkbox'
+                                          } %>
+                        <%= label_tag "srek_visitor_#{item.params.parameterize.underscore}_#{form_index}", item.params, class: 'form-check-label small' %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%# === 3カンファレンス選択UI ここまで === %>
+
+    <% if @sponsor %>
+      <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][sponsor_id]", @sponsor.id %>
+    <% end %>
+
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][_destroy]", "false", class: "destroy_flag_field" %>
+    <%= hidden_field_tag "speaker[talks_attributes][#{form_index}][conference_id]", @conference.id %>
+  </div>
 </div>

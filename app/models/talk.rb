@@ -450,7 +450,7 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     end
   end
 
-    # 3カンファレンス関連のヘルパーメソッド
+  # 3カンファレンス関連のヘルパーメソッド
   def target_conferences
     item = proposal_items.find_by(label: 'target_conferences')
     return [] unless item&.params
@@ -530,12 +530,28 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     }
   end
 
+  THREE_CONFERENCE_VALIDATION_CONFIG = [
+    {
+      name: 'Cloud Native',
+      category_label: 'cnd_category',
+      visitor_label: 'cnd_assumed_visitor'
+    },
+    {
+      name: 'Platform Engineering',
+      category_label: 'pek_category',
+      visitor_label: 'pek_assumed_visitor'
+    },
+    {
+      name: 'SRE',
+      category_label: 'srek_category',
+      visitor_label: 'srek_assumed_visitor'
+    }
+  ].freeze
+
   # 3トラック選択機能のバリデーション（conference_id: 15 専用）
   def validate_three_conference_selection
-    # メモリ上のproposal_itemsも検索できるようにdetectを使用
     target_conferences_item = proposal_items.detect { |item| item.label == 'target_conferences' }
 
-    # 提出先トラックが選択されているか確認
     if target_conferences_item.blank? || target_conferences_item.params.blank?
       errors.add(:base, 'プロポーザル提出先トラックを最低1つ選択してください')
       return
@@ -543,43 +559,22 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
     selected_conferences = target_conferences_item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
 
-    # Cloud Native が選択されている場合
-    if selected_conferences.include?('Cloud Native')
-      cnd_category = proposal_items.detect { |item| item.label == 'cnd_category' }
-      cnd_visitor = proposal_items.detect { |item| item.label == 'cnd_assumed_visitor' }
+    THREE_CONFERENCE_VALIDATION_CONFIG.each do |config|
+      next unless selected_conferences.include?(config[:name])
 
-      if cnd_category.blank? || cnd_category.params.blank?
-        errors.add(:base, 'Cloud Native - 主なカテゴリは最低1項目選択してください')
-      end
-      if cnd_visitor.blank? || cnd_visitor.params.blank?
-        errors.add(:base, 'Cloud Native - 想定受講者は最低1項目選択してください')
-      end
+      validate_three_conference_track(config)
     end
+  end
 
-    # Platform Engineering が選択されている場合
-    if selected_conferences.include?('Platform Engineering')
-      pek_category = proposal_items.detect { |item| item.label == 'pek_category' }
-      pek_visitor = proposal_items.detect { |item| item.label == 'pek_assumed_visitor' }
+  def validate_three_conference_track(config)
+    category_item = proposal_items.detect { |item| item.label == config[:category_label] }
+    visitor_item = proposal_items.detect { |item| item.label == config[:visitor_label] }
 
-      if pek_category.blank? || pek_category.params.blank?
-        errors.add(:base, 'Platform Engineering - 主なカテゴリは最低1項目選択してください')
-      end
-      if pek_visitor.blank? || pek_visitor.params.blank?
-        errors.add(:base, 'Platform Engineering - 想定受講者は最低1項目選択してください')
-      end
+    if category_item.blank? || category_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 主なカテゴリは最低1項目選択してください")
     end
-
-    # SRE が選択されている場合
-    if selected_conferences.include?('SRE')
-      srek_category = proposal_items.detect { |item| item.label == 'srek_category' }
-      srek_visitor = proposal_items.detect { |item| item.label == 'srek_assumed_visitor' }
-
-      if srek_category.blank? || srek_category.params.blank?
-        errors.add(:base, 'SRE - 主なカテゴリは最低1項目選択してください')
-      end
-      if srek_visitor.blank? || srek_visitor.params.blank?
-        errors.add(:base, 'SRE - 想定受講者は最低1項目選択してください')
-      end
+    if visitor_item.blank? || visitor_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 想定受講者は最低1項目選択してください")
     end
   end
 end

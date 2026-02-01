@@ -14,7 +14,11 @@
       <% else %>
         <div class="col-12 align-self-baseline my-4 justify-content-center text-center">
           <%= button_to 'ログイン / サインアップ', '/auth/auth0', {method: :post, class: "btn btn-focus btn-xl inline mb-4" } %>
-          <%= label_tag 'entry', '参加登録するにはCloudNative Daysへのサインアップが必要です' %>
+          <% if @conference.abbr == 'cnk' %>
+            <%= label_tag 'entry', '参加登録するにはクラウドネイティブ会議へのサインアップが必要です' %>
+          <% else %>
+            <%= label_tag 'entry', '参加登録するにはCloudNative Daysへのサインアップが必要です' %>
+          <% end %>
         </div>
       <% end %>
     </div>

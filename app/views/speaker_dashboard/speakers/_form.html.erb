@@ -11,7 +11,7 @@
     <p class="alert alert-info">
       <%= link_to 'CFP要項を確認する', 'https://kaigi.cloudnativedays.jp/cfp/', {target: :_blank, style: 'text-decoration: underline'} %>
     </p>
-
+    <p class="form-note text-muted">※各項目の★の数は、採択への影響度を示します。</p>
 
     <div class="talk-fields">
       <% @speaker_form.talks.each_with_index do |talk_obj, index| %>

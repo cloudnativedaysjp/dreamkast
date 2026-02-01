@@ -13,7 +13,11 @@
       <% else %>
         <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "btn btn-secondary btn-xl inline" } %>
       <% end %>
-      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+      <% if @conference.abbr == 'cnk' %>
+        <%= label_tag 'entry', 'エントリーにはクラウドネイティブ会議へのサインアップが必要です' %>
+      <% else %>
+        <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です' %>
+      <% end %>
     </div>
   </div>
 </div>

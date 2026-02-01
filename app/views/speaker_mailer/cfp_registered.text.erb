@@ -9,6 +9,6 @@
 
 提出したプロポーザルの確認・修正は登壇者ダッシュボードから行えます。
 
-<%= link_to '登壇者ダッシュボード', speaker_dashboard_url(event: @conference.abbr) %>
+<%= speaker_dashboard_url(event: @conference.abbr) %>
 
 <%= render '/layouts/footer' %>

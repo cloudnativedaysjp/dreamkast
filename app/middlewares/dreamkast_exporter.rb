@@ -53,6 +53,11 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         :dreamkast_stats_of_registrants_online,
         docstring: 'Stats of Registrants(Online)',
         labels: [:conference_id]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_cnk_talk_difficulties_count,
+        docstring: 'Count CNK talks by target conference and difficulty',
+        labels: [:conference_id, :target_conference, :talk_difficulty_name]
       )
     ]
     metrics.each do |metric|
@@ -162,6 +167,37 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         stats.online_attendees.to_i,
         labels: { conference_id: stats.conference_id }
       )
+    end
+  end
+
+  def dreamkast_cnk_talk_difficulties_count(metrics)
+    target_labels = %w[cnd_category pek_category srek_category]
+
+    # 各カテゴリラベルごとに難易度別のトーク数を集計
+    target_labels.each do |category_label|
+      # カテゴリラベルが設定されているProposalItemからtalk_idとconference_idを取得
+      proposal_items = ProposalItem.where(label: category_label).select(:talk_id, :conference_id).distinct
+
+      # conference_idごとにグループ化
+      proposal_items.group_by(&:conference_id).each do |conference_id, items|
+        talk_ids = items.map(&:talk_id)
+
+        # 該当トークの難易度別カウントを取得
+        Talk.where(id: talk_ids)
+            .joins(:talk_difficulty)
+            .group('talk_difficulties.name')
+            .count
+            .each do |difficulty_name, count|
+          metrics.set(
+            count,
+            labels: {
+              conference_id:,
+              target_conference: category_label,
+              talk_difficulty_name: difficulty_name
+            }
+          )
+        end
+      end
     end
   end
 end

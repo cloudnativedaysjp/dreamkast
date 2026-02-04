@@ -39,5 +39,46 @@ describe DreamkastExporter, type: :request do
         expect(response.body).to(include('dreamkast_registrants_count{conference_id="2"} 1.0'))
       end
     end
+
+    context 'CNK talk difficulties count by target conference' do
+      let!(:cnk) { create(:conference, id: 15, abbr: 'cnk', name: 'クラウドネイティブ会議') }
+      let!(:cnk_difficulty_beginner) { create(:talk_difficulty, id: 78, name: '初級者 - Beginner', conference: cnk) }
+      let!(:cnk_difficulty_intermediate) { create(:talk_difficulty, id: 79, name: '中級者 - Intermediate', conference: cnk) }
+      let!(:cnk_difficulty_expert) { create(:talk_difficulty, id: 80, name: '上級者 - Expert', conference: cnk) }
+
+      let!(:cnk_talk1) do
+        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_beginner, title: 'CND Talk 1')
+      end
+      let!(:cnk_talk2) do
+        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_beginner, title: 'CND Talk 2')
+      end
+      let!(:cnk_talk3) do
+        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_intermediate, title: 'PEK Talk 1')
+      end
+      let!(:cnk_talk4) do
+        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_expert, title: 'SREK Talk 1')
+      end
+
+      before do
+        # CND category proposal items
+        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'cnd_category', params: '234')
+        create(:proposal_item, talk: cnk_talk2, conference: cnk, label: 'cnd_category', params: '235')
+        # PEK category proposal item
+        create(:proposal_item, talk: cnk_talk3, conference: cnk, label: 'pek_category', params: '257')
+        # SREK category proposal item
+        create(:proposal_item, talk: cnk_talk4, conference: cnk, label: 'srek_category', params: '269')
+      end
+
+      it 'returns CNK talk difficulties count by target conference' do
+        get '/metrics'
+        expect(response).to(be_successful)
+        # CND: 2 talks with beginner difficulty
+        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
+        # PEK: 1 talk with intermediate difficulty
+        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
+        # SREK: 1 talk with expert difficulty
+        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="srek_category",talk_difficulty_name="上級者 - Expert"} 1.0'))
+      end
+    end
   end
 end

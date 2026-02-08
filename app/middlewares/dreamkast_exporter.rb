@@ -177,6 +177,7 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
     target_labels = %w[cnd_category pek_category srek_category]
 
     # CND/PEK/SREK別に難易度別トーク数を1クエリで集計
+    # 同じトークが複数のカテゴリに属する場合、各カテゴリで個別にカウントされる
     # 結果: { ["cnd_category", "初級者 - Beginner"] => 2, ... }
     counts = Talk.joins(:talk_difficulty, :proposal_items)
                  .where(proposal_items: { label: target_labels, conference_id: CONFERENCE_ID })

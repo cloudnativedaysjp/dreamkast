@@ -73,11 +73,28 @@ describe DreamkastExporter, type: :request do
         get '/metrics'
         expect(response).to(be_successful)
         # CND: 2 talks with beginner difficulty
-        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
+        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
         # PEK: 1 talk with intermediate difficulty
-        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
+        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
         # SREK: 1 talk with expert difficulty
-        expect(response.body).to(include('dreamkast_cnk_talk_difficulties_count{conference_id="15",target_conference="srek_category",talk_difficulty_name="上級者 - Expert"} 1.0'))
+        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="srek_category",talk_difficulty_name="上級者 - Expert"} 1.0'))
+      end
+
+      context 'when a talk has multiple category labels' do
+        before do
+          # cnk_talk1にPEKカテゴリも追加
+          create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'pek_category', params: '258')
+        end
+
+        it 'counts the talk in each category' do
+          get '/metrics'
+          expect(response).to(be_successful)
+          # CND: cnk_talk1 + cnk_talk2 = 2 talks with beginner
+          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
+          # PEK: cnk_talk1(beginner) + cnk_talk3(intermediate) = それぞれカウント
+          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="初級者 - Beginner"} 1.0'))
+          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
+        end
       end
     end
   end

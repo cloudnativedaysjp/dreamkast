@@ -174,6 +174,15 @@ describe DreamkastExporter, type: :request do
         # CND: cnk_talk1 -> All okay=1
         expect(response.body).to(include('dreamkast_publication_permissions_by_category_count{conference_id="15",target_conference="cnd_category",publication_permission_name="All okay - スライド・動画両方ともに公開可"} 1.0'))
       end
+
+      it 'returns proposals count by category' do
+        get '/metrics'
+        expect(response).to(be_successful)
+        # CND: cnk_talk1 + cnk_talk2 = 2, PEK: cnk_talk3 = 1, SREK: cnk_talk4 = 1
+        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="cnd_category"} 2.0'))
+        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="pek_category"} 1.0'))
+        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="srek_category"} 1.0'))
+      end
     end
   end
 end

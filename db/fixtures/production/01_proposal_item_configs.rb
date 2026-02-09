@@ -1558,8 +1558,8 @@ session_time(
     {
       id: 227,
       key: SessionTime::FOURTY_MINUTES,
-      params: '_40min (full session)',
-      value: '40',
+      params: '_30min (full session)',
+      value: '30',
       description: ''
     },
     {

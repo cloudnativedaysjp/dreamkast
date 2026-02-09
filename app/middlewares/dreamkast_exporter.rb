@@ -232,37 +232,39 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
 
   def dreamkast_assumed_visitors_by_category_count(metrics)
     config_map = proposal_item_config_params_map
-    label_to_category = {
-      'cnd_assumed_visitor' => 'cnd_category',
-      'pek_assumed_visitor' => 'pek_category',
-      'srek_assumed_visitor' => 'srek_category'
+
+    # カテゴリ -> assumed_visitorラベルのマッピング
+    category_to_av_label = {
+      'cnd_category' => 'cnd_assumed_visitor',
+      'pek_category' => 'pek_assumed_visitor',
+      'srek_category' => 'srek_assumed_visitor'
     }
 
-    items = ProposalItem.where(
-      label: label_to_category.keys,
-      conference_id: CONFERENCE_ID
-    )
+    category_talk_ids_map.each do |category, talk_ids|
+      av_label = category_to_av_label[category]
+      next unless av_label
 
-    # カテゴリ x 名称でカウント
-    counts = Hash.new(0)
-    items.each do |item|
-      category = label_to_category[item.label]
+      items = ProposalItem.where(talk_id: talk_ids, label: av_label, conference_id: CONFERENCE_ID)
+      counts = Hash.new(0)
+
       # CheckBox: params は配列
-      Array(item.params).compact.each do |pid|
-        name = config_map[pid.to_i]
-        counts[[category, name]] += 1 if name
+      items.each do |item|
+        Array(item.params).compact.each do |pid|
+          name = config_map[pid.to_i]
+          counts[name] += 1 if name
+        end
       end
-    end
 
-    counts.each do |(category, name), count|
-      metrics.set(
-        count,
-        labels: {
-          conference_id: CONFERENCE_ID,
-          target_conference: category,
-          assumed_visitor_name: name
-        }
-      )
+      counts.each do |name, count|
+        metrics.set(
+          count,
+          labels: {
+            conference_id: CONFERENCE_ID,
+            target_conference: category,
+            assumed_visitor_name: name
+          }
+        )
+      end
     end
   end
 
@@ -313,23 +315,38 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   # 共通label(execution_phase等)のカテゴリ別集計
+  # 全カテゴリのtalk_idをまとめて1クエリで取得し、カテゴリごとに振り分けてカウント
   # is_checkbox: true の場合、params を配列として展開してカウント
   def count_by_category(metrics, label:, value_label_name:, is_checkbox:)
     config_map = proposal_item_config_params_map
+    cat_map = category_talk_ids_map
 
-    category_talk_ids_map.each do |category, talk_ids|
-      items = ProposalItem.where(talk_id: talk_ids, label:, conference_id: CONFERENCE_ID)
-      counts = Hash.new(0)
+    # talk_id -> 所属カテゴリ一覧のマッピング
+    talk_id_to_categories = {}
+    cat_map.each do |category, talk_ids|
+      talk_ids.each { |tid| (talk_id_to_categories[tid] ||= []) << category }
+    end
 
-      items.each do |item|
-        param_ids = is_checkbox ? Array(item.params) : [item.params]
-        param_ids.compact.each do |pid|
-          name = config_map[pid.to_i]
-          counts[name] += 1 if name
+    # 全カテゴリのtalk_idをまとめて1クエリで取得
+    all_talk_ids = cat_map.values.flatten.uniq
+    items = ProposalItem.where(talk_id: all_talk_ids, label:, conference_id: CONFERENCE_ID)
+
+    # カテゴリ x 名称でカウント
+    counts = Hash.new { |h, k| h[k] = Hash.new(0) }
+    items.each do |item|
+      param_ids = is_checkbox ? Array(item.params) : [item.params]
+      param_ids.compact.each do |pid|
+        name = config_map[pid.to_i]
+        next unless name
+
+        talk_id_to_categories[item.talk_id]&.each do |category|
+          counts[category][name] += 1
         end
       end
+    end
 
-      counts.each do |name, count|
+    counts.each do |category, name_counts|
+      name_counts.each do |name, count|
         metrics.set(
           count,
           labels: {

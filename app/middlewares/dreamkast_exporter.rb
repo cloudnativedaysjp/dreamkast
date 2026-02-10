@@ -37,16 +37,17 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         docstring: 'Count dreamkast talk difficulties',
         labels: [:conference_id, :talk_difficulty_name]
       ),
-      Prometheus::Client::Gauge.new(
-        :dreamkast_select_talks,
-        docstring: 'Select dreamkast talks',
-        labels: [:talk_id, :conference_id, :title, :talk_difficulty_name]
-      ),
-      Prometheus::Client::Gauge.new(
-        :dreamkast_select_proposal_items,
-        docstring: 'Select dreamkast proposal items',
-        labels: [:talk_id, :conference_id, :proposal_items_label, :proposal_items_params]
-      ),
+      # カテゴリ別メトリクスで代替されたため無効化
+      # Prometheus::Client::Gauge.new(
+      #   :dreamkast_select_talks,
+      #   docstring: 'Select dreamkast talks',
+      #   labels: [:talk_id, :conference_id, :title, :talk_difficulty_name]
+      # ),
+      # Prometheus::Client::Gauge.new(
+      #   :dreamkast_select_proposal_items,
+      #   docstring: 'Select dreamkast proposal items',
+      #   labels: [:talk_id, :conference_id, :proposal_items_label, :proposal_items_params]
+      # ),
       Prometheus::Client::Gauge.new(
         :dreamkast_stats_of_registrants_offline,
         docstring: 'Stats of Registrants(Offline)',
@@ -61,6 +62,36 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         :dreamkast_talk_difficulties_by_category_count,
         docstring: 'Count talks by category and difficulty',
         labels: [:conference_id, :target_conference, :talk_difficulty_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_assumed_visitors_by_category_count,
+        docstring: 'Count assumed visitors by category',
+        labels: [:conference_id, :target_conference, :assumed_visitor_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_execution_phases_by_category_count,
+        docstring: 'Count execution phases by category',
+        labels: [:conference_id, :target_conference, :execution_phase_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_publication_permissions_by_category_count,
+        docstring: 'Count publication permissions by category',
+        labels: [:conference_id, :target_conference, :publication_permission_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_session_times_by_category_count,
+        docstring: 'Count session times by category',
+        labels: [:conference_id, :target_conference, :session_time_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_languages_by_category_count,
+        docstring: 'Count languages by category',
+        labels: [:conference_id, :target_conference, :language_name]
+      ),
+      Prometheus::Client::Gauge.new(
+        :dreamkast_proposals_by_category_count,
+        docstring: 'Count proposals by category',
+        labels: [:conference_id, :target_conference]
       )
     ]
     metrics.each do |metric|
@@ -73,6 +104,8 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def respond_with(format)
+    @category_talk_ids_map = nil
+    @proposal_item_config_params_map = nil
     @registry.metrics.each do |metrics|
       send(metrics.name, metrics)
     end
@@ -137,23 +170,24 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
     end
   end
 
-  def dreamkast_select_talks(metrics)
-    Talk.preload(:talk_difficulty).all.each do |talk|
-      metrics.set(
-        talk.id,
-        labels: { talk_id: talk.id, conference_id: talk.conference_id, title: talk.title, talk_difficulty_name: talk.talk_difficulty&.name }
-      )
-    end
-  end
+  # カテゴリ別メトリクスで代替されたため無効化
+  # def dreamkast_select_talks(metrics)
+  #   Talk.preload(:talk_difficulty).all.each do |talk|
+  #     metrics.set(
+  #       talk.id,
+  #       labels: { talk_id: talk.id, conference_id: talk.conference_id, title: talk.title, talk_difficulty_name: talk.talk_difficulty&.name }
+  #     )
+  #   end
+  # end
 
-  def dreamkast_select_proposal_items(metrics)
-    ProposalItem.all.each do |proposal_items|
-      metrics.set(
-        proposal_items.talk_id,
-        labels: { talk_id: proposal_items.talk_id, conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
-      )
-    end
-  end
+  # def dreamkast_select_proposal_items(metrics)
+  #   ProposalItem.all.each do |proposal_items|
+  #     metrics.set(
+  #       proposal_items.talk_id,
+  #       labels: { talk_id: proposal_items.talk_id, conference_id: proposal_items.conference_id, proposal_items_label: proposal_items.label, proposal_items_params: proposal_items.params }
+  #     )
+  #   end
+  # end
 
   def dreamkast_stats_of_registrants_offline(metrics)
     StatsOfRegistrant.all.each do |stats|
@@ -193,6 +227,135 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
           talk_difficulty_name: difficulty_name
         }
       )
+    end
+  end
+
+  def dreamkast_assumed_visitors_by_category_count(metrics)
+    config_map = proposal_item_config_params_map
+
+    # カテゴリ -> assumed_visitorラベルのマッピング
+    category_to_av_label = {
+      'cnd_category' => 'cnd_assumed_visitor',
+      'pek_category' => 'pek_assumed_visitor',
+      'srek_category' => 'srek_assumed_visitor'
+    }
+
+    category_talk_ids_map.each do |category, talk_ids|
+      av_label = category_to_av_label[category]
+      next unless av_label
+
+      items = ProposalItem.where(talk_id: talk_ids, label: av_label, conference_id: CONFERENCE_ID)
+      counts = Hash.new(0)
+
+      # CheckBox: params は配列
+      items.each do |item|
+        Array(item.params).compact.each do |pid|
+          name = config_map[pid.to_i]
+          counts[name] += 1 if name
+        end
+      end
+
+      counts.each do |name, count|
+        metrics.set(
+          count,
+          labels: {
+            conference_id: CONFERENCE_ID,
+            target_conference: category,
+            assumed_visitor_name: name
+          }
+        )
+      end
+    end
+  end
+
+  def dreamkast_execution_phases_by_category_count(metrics)
+    count_by_category(metrics, label: 'execution_phase', value_label_name: 'execution_phase_name', is_checkbox: true)
+  end
+
+  def dreamkast_publication_permissions_by_category_count(metrics)
+    count_by_category(metrics, label: 'whether_it_can_be_published', value_label_name: 'publication_permission_name', is_checkbox: false)
+  end
+
+  def dreamkast_session_times_by_category_count(metrics)
+    count_by_category(metrics, label: 'session_time', value_label_name: 'session_time_name', is_checkbox: false)
+  end
+
+  def dreamkast_languages_by_category_count(metrics)
+    count_by_category(metrics, label: 'language', value_label_name: 'language_name', is_checkbox: false)
+  end
+
+  def dreamkast_proposals_by_category_count(metrics)
+    category_talk_ids_map.each do |category, talk_ids|
+      metrics.set(
+        talk_ids.size,
+        labels: {
+          conference_id: CONFERENCE_ID,
+          target_conference: category
+        }
+      )
+    end
+  end
+
+  # カテゴリ別talk_idマッピング(リクエスト内キャッシュ)
+  # 結果: { "cnd_category" => [1, 2], "pek_category" => [3], "srek_category" => [4] }
+  def category_talk_ids_map
+    @category_talk_ids_map ||= ProposalItem
+                               .where(label: %w[cnd_category pek_category srek_category], conference_id: CONFERENCE_ID)
+                               .pluck(:label, :talk_id)
+                               .group_by(&:first)
+                               .transform_values { |pairs| pairs.map(&:last).uniq }
+  end
+
+  # ProposalItemConfig ID -> params(名称) マッピング(リクエスト内キャッシュ)
+  def proposal_item_config_params_map
+    @proposal_item_config_params_map ||= ProposalItemConfig
+                                         .where(conference_id: CONFERENCE_ID)
+                                         .pluck(:id, :params)
+                                         .to_h
+  end
+
+  # 共通label(execution_phase等)のカテゴリ別集計
+  # 全カテゴリのtalk_idをまとめて1クエリで取得し、カテゴリごとに振り分けてカウント
+  # is_checkbox: true の場合、params を配列として展開してカウント
+  def count_by_category(metrics, label:, value_label_name:, is_checkbox:)
+    config_map = proposal_item_config_params_map
+    cat_map = category_talk_ids_map
+
+    # talk_id -> 所属カテゴリ一覧のマッピング
+    talk_id_to_categories = {}
+    cat_map.each do |category, talk_ids|
+      talk_ids.each { |tid| (talk_id_to_categories[tid] ||= []) << category }
+    end
+
+    # 全カテゴリのtalk_idをまとめて1クエリで取得
+    all_talk_ids = cat_map.values.flatten.uniq
+    items = ProposalItem.where(talk_id: all_talk_ids, label:, conference_id: CONFERENCE_ID)
+
+    # カテゴリ x 名称でカウント
+    counts = Hash.new { |h, k| h[k] = Hash.new(0) }
+    items.each do |item|
+      param_ids = is_checkbox ? Array(item.params) : [item.params]
+      param_ids.compact.each do |pid|
+        name = config_map[pid.to_i]
+        next unless name
+
+        talk_id_to_categories[item.talk_id]&.each do |category|
+          counts[category][name] += 1
+        end
+      end
+    end
+
+    counts.each do |category, name_counts|
+      name_counts.each do |name, count|
+        metrics.set(
+          count,
+          labels: {
+            conference_id: CONFERENCE_ID,
+            target_conference: category,
+            value_label_name.to_sym => name
+          }
+        )
+      end
     end
   end
 end

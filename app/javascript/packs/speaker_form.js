@@ -437,3 +437,10 @@ if (document.readyState === 'loading') {
     initializeConferenceFieldToggle();
     initializeInputCardStyles(); // 追加
 }
+
+// Turbo Frame 内でフォームが差し替えられた場合にも再初期化
+document.addEventListener('turbo:frame-load', () => {
+    initializeCharCounters();
+    initializeConferenceFieldToggle();
+    initializeInputCardStyles();
+});

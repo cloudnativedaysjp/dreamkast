@@ -21,6 +21,7 @@
   ],
   "shell": {
     "init_hook": [
+      "source bin/devbox-fix-path.sh",
       "source bin/devbox-setup-check.sh"
     ],
     "scripts": {

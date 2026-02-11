@@ -438,8 +438,9 @@ if (document.readyState === 'loading') {
     initializeInputCardStyles(); // 追加
 }
 
-// Turbo Frameで動的にロードされたコンテンツ（スポンサーセッションのモーダル等）にも対応
+// Turbo Frame 内でフォームが差し替えられた場合にも再初期化
 document.addEventListener('turbo:frame-load', () => {
+    initializeCharCounters();
     initializeConferenceFieldToggle();
     initializeInputCardStyles();
 });

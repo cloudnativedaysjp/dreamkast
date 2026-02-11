@@ -76,6 +76,11 @@ class Conference < ApplicationRecord
     profiles.where(participation: 'offline').size >= capacity
   end
 
+  def twitter_hashtag
+    return 'cloudnativekaigi' if abbr == 'cnk'
+    abbr.upcase
+  end
+
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
   end

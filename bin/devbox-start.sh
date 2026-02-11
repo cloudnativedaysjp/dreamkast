@@ -55,4 +55,7 @@ echo ""
 echo -e "${GREEN}アプリケーションを起動しています...${NC}"
 echo "アクセス先: http://localhost:8080"
 echo ""
-bundle exec foreman start -f Procfile.dev
+# .envファイルを読み込まない（devbox環境ではdevbox.json env + devbox-auth.shで
+# 全環境変数が設定済み。.envの古い静的AWSクレデンシャルがSSOクレデンシャルを
+# 上書きしてしまう問題を防ぐ）
+bundle exec foreman start -f Procfile.dev -e /dev/null

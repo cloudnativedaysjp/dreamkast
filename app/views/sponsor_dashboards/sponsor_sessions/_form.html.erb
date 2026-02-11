@@ -44,18 +44,16 @@
         <%= f.text_field :document_url, class: "form-control" %>
       </div>
     <% end %>
+    <% three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor', 'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor'] %>
     <% conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+      <% first_item = conference.proposal_item_configs.find_by(item_number: item_number) %>
+      <% next unless first_item %>
+      <% next if conference.id == 15 && three_conf_labels.include?(first_item.label) %>
       <div class="field pb-3">
-        <% first_item = conference.proposal_item_configs.find_by(item_number: item_number) %>
-        <% next unless first_item %>
-
-        <% three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor', 'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor'] %>
-        <% next if conference.id == 15 && three_conf_labels.include?(first_item.label) %>
         <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
           <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_check_box', f: f, first_item: first_item, item_number: item_number %>
         <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
           <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_radio_button', f: f, first_item: first_item, item_number: item_number %>
-        <% else %>
         <% end %>
       </div>
     <% end %>

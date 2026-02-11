@@ -4,7 +4,7 @@
 
       <h3>
         <%= talk.title %>
-        <%= render 'talks/partial_show/twitter_share_button', hash_tag: conference.abbr.upcase %>
+        <%= render 'talks/partial_show/twitter_share_button', hash_tag: conference.twitter_hashtag %>
         <%= render 'talks/partial_show/facebook_share_button', url: request.original_url %>
       </h3>
       <h4>

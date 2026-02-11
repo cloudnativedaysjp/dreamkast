@@ -22,11 +22,13 @@
       <p class="field-description" style="font-size: 0.7em">（200文字程度）どんな人に向けた講演かこの講演によって受講者がどんな情報を得られるかを含めることをおすすめします - (About 400 letters) Include a session for what kind of person, what kind of information the attendee can get</p>
       <%= f.text_area :abstract, {class: "form-control abstract"}  %>
     </div>
-    <div class="field pb-3">
-      <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
-      <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
-      <%= f.collection_select :talk_category_id, conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
-    </div>
+    <% unless conference.id == 15 %>
+      <div class="field pb-3">
+        <%= f.label :talk_category_id, "主なカテゴリ - Main Category（★★）" %>*
+        <p class="field-description" style="font-size: 0.7em">必ずしもCNCFのプロジェクトに関する内容でなくても問題ありません - It does not necessarily have to be content of the CNCF project</p>
+        <%= f.collection_select :talk_category_id, conference.talk_categories, :id, :name, {prompt: ""}, class: "form-control talk-categories", required: true %>
+      </div>
+    <% end %>
     <div class="field pb-3">
       <%= f.label :talk_difficulty_id, "受講者レベル - Audience Experience Level（★★）" %>*
       <%= f.collection_select :talk_difficulty_id, conference.talk_difficulties, :id, :name, {prompt: ""}, class: "form-control", required: true %>
@@ -42,17 +44,215 @@
         <%= f.text_field :document_url, class: "form-control" %>
       </div>
     <% end %>
+    <%# 動的な設定項目 %>
+    <% three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor', 'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor'] %>
     <% conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
+      <% first_item = conference.proposal_item_configs.find_by(item_number: item_number) %>
+      <% next unless first_item %>
+      <%# conference_id: 15の場合、3カンファレンス関連のlabelをスキップ（専用UIで表示） %>
+      <% next if conference.id == 15 && three_conf_labels.include?(first_item.label) %>
       <div class="field pb-3">
-        <% first_item = conference.proposal_item_configs.find_by(item_number: item_number) %>
         <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
           <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_check_box', f: f, first_item: first_item, item_number: item_number %>
         <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
           <%= render 'sponsor_dashboards/sponsor_sessions/proposal_item_config_radio_button', f: f, first_item: first_item, item_number: item_number %>
-        <% else %>
         <% end %>
       </div>
     <% end %>
+
+    <%# === 3カンファレンス選択UI（conference_id: 15 のみ） === %>
+    <% if conference.id == 15 %>
+      <% target_conf_configs = conference.proposal_item_configs.where(label: 'target_conferences') %>
+      <% first_target_item = target_conf_configs.first %>
+      <% existing_target_conferences = f.object.persisted? ? f.object.proposal_items.find_by(label: 'target_conferences')&.params : [] %>
+      <% existing_target_conferences ||= [] %>
+
+      <div class="field pb-3 p-3 border rounded">
+        <%= label_tag "sponsor_session_proposal_items_attributes_target_conferences" do %>
+          <%= first_target_item.item_name %><span class="text-danger">*</span>
+        <% end %>
+        <p class="field-description" style="font-size: 0.7em"><%= first_target_item.description&.html_safe %></p>
+
+        <%# Cloud Native %>
+        <% cnd_config = target_conf_configs.find { |c| c.params == 'Cloud Native' } %>
+        <% if cnd_config %>
+          <% cnd_checked = existing_target_conferences.include?(cnd_config.id.to_s) %>
+          <div class="cfp-conference-card mb-3 p-2 border rounded <%= 'border-primary' if cnd_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "sponsor_session[proposal_items_attributes][target_conferences][]",
+                                cnd_config.id,
+                                cnd_checked,
+                                {
+                                  id: "target_conference_cloud_native_sponsor",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: { conference_type: 'cloud-native', form_index: 'sponsor' }
+                                } %>
+              <%= label_tag "target_conference_cloud_native_sponsor", class: 'form-check-label fw-bold' do %>
+                <%= cnd_config.params %>
+              <% end %>
+            </div>
+
+            <div class="cnd-fields mt-2 ps-4" data-form-index="sponsor" style="<%= 'display: none;' unless cnd_checked %>">
+              <% cnd_category_configs = conference.proposal_item_configs.where(label: 'cnd_category') %>
+              <% cnd_category_first = cnd_category_configs.first %>
+              <% cnd_existing_category = f.object.persisted? ? f.object.proposal_items.find_by(label: 'cnd_category')&.params : nil %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_cnd_categories", class: 'form-label small fw-semibold' do %>
+                  <%= cnd_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "sponsor_session[proposal_items_attributes][cnd_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + cnd_category_configs.map { |item| [item.params, item.id] },
+                                cnd_existing_category
+                              ),
+                              { class: 'form-control form-select-sm cnd-category-select', required: false, id: "cnd_category_select_sponsor" } %>
+              </div>
+
+              <% cnd_visitor_configs = conference.proposal_item_configs.where(label: 'cnd_assumed_visitor') %>
+              <% cnd_visitor_first = cnd_visitor_configs.first %>
+              <% cnd_existing_visitors = f.object.persisted? ? f.object.proposal_items.find_by(label: 'cnd_assumed_visitor')&.params : [] %>
+              <% cnd_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_cnd_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= cnd_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <% cnd_visitor_configs.each do |item| %>
+                  <% checked = cnd_existing_visitors.include?(item.id.to_s) %>
+                  <div class="form-check">
+                    <%= check_box_tag "sponsor_session[proposal_items_attributes][cnd_assumed_visitors][]",
+                                      item.id, checked,
+                                      { id: "cnd_visitor_#{item.params.parameterize.underscore}", class: 'form-check-input' } %>
+                    <%= label_tag "cnd_visitor_#{item.params.parameterize.underscore}", item.params, class: 'form-check-label small' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Platform Engineering %>
+        <% pek_config = target_conf_configs.find { |c| c.params == 'Platform Engineering' } %>
+        <% if pek_config %>
+          <% pek_checked = existing_target_conferences.include?(pek_config.id.to_s) %>
+          <div class="cfp-conference-card mb-3 p-2 border rounded <%= 'border-primary' if pek_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "sponsor_session[proposal_items_attributes][target_conferences][]",
+                                pek_config.id,
+                                pek_checked,
+                                {
+                                  id: "target_conference_platform_engineering_sponsor",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: { conference_type: 'platform-engineering', form_index: 'sponsor' }
+                                } %>
+              <%= label_tag "target_conference_platform_engineering_sponsor", class: 'form-check-label fw-bold' do %>
+                <%= pek_config.params %>
+              <% end %>
+            </div>
+
+            <div class="pek-fields mt-2 ps-4" data-form-index="sponsor" style="<%= 'display: none;' unless pek_checked %>">
+              <% pek_category_configs = conference.proposal_item_configs.where(label: 'pek_category') %>
+              <% pek_category_first = pek_category_configs.first %>
+              <% pek_existing_category = f.object.persisted? ? f.object.proposal_items.find_by(label: 'pek_category')&.params : nil %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_pek_categories", class: 'form-label small fw-semibold' do %>
+                  <%= pek_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "sponsor_session[proposal_items_attributes][pek_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + pek_category_configs.map { |item| [item.params, item.id] },
+                                pek_existing_category
+                              ),
+                              { class: 'form-control form-select-sm pek-category-select', required: false, id: "pek_category_select_sponsor" } %>
+              </div>
+
+              <% pek_visitor_configs = conference.proposal_item_configs.where(label: 'pek_assumed_visitor') %>
+              <% pek_visitor_first = pek_visitor_configs.first %>
+              <% pek_existing_visitors = f.object.persisted? ? f.object.proposal_items.find_by(label: 'pek_assumed_visitor')&.params : [] %>
+              <% pek_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_pek_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= pek_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <% pek_visitor_configs.each do |item| %>
+                  <% checked = pek_existing_visitors.include?(item.id.to_s) %>
+                  <div class="form-check">
+                    <%= check_box_tag "sponsor_session[proposal_items_attributes][pek_assumed_visitors][]",
+                                      item.id, checked,
+                                      { id: "pek_visitor_#{item.params.parameterize.underscore}", class: 'form-check-input' } %>
+                    <%= label_tag "pek_visitor_#{item.params.parameterize.underscore}", item.params, class: 'form-check-label small' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# SRE %>
+        <% srek_config = target_conf_configs.find { |c| c.params == 'SRE' } %>
+        <% if srek_config %>
+          <% srek_checked = existing_target_conferences.include?(srek_config.id.to_s) %>
+          <div class="cfp-conference-card p-2 border rounded <%= 'border-primary' if srek_checked %>">
+            <div class="form-check">
+              <%= check_box_tag "sponsor_session[proposal_items_attributes][target_conferences][]",
+                                srek_config.id,
+                                srek_checked,
+                                {
+                                  id: "target_conference_sre_sponsor",
+                                  class: 'form-check-input target-conference-checkbox',
+                                  data: { conference_type: 'sre', form_index: 'sponsor' }
+                                } %>
+              <%= label_tag "target_conference_sre_sponsor", class: 'form-check-label fw-bold' do %>
+                <%= srek_config.params %>
+              <% end %>
+            </div>
+
+            <div class="srek-fields mt-2 ps-4" data-form-index="sponsor" style="<%= 'display: none;' unless srek_checked %>">
+              <% srek_category_configs = conference.proposal_item_configs.where(label: 'srek_category') %>
+              <% srek_category_first = srek_category_configs.first %>
+              <% srek_existing_category = f.object.persisted? ? f.object.proposal_items.find_by(label: 'srek_category')&.params : nil %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_srek_categories", class: 'form-label small fw-semibold' do %>
+                  <%= srek_category_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <%= select_tag "sponsor_session[proposal_items_attributes][srek_categories]",
+                              options_for_select(
+                                [['選択してください', '']] + srek_category_configs.map { |item| [item.params, item.id] },
+                                srek_existing_category
+                              ),
+                              { class: 'form-control form-select-sm srek-category-select', required: false, id: "srek_category_select_sponsor" } %>
+              </div>
+
+              <% srek_visitor_configs = conference.proposal_item_configs.where(label: 'srek_assumed_visitor') %>
+              <% srek_visitor_first = srek_visitor_configs.first %>
+              <% srek_existing_visitors = f.object.persisted? ? f.object.proposal_items.find_by(label: 'srek_assumed_visitor')&.params : [] %>
+              <% srek_existing_visitors ||= [] %>
+
+              <div class="mb-2">
+                <%= label_tag "sponsor_session_proposal_items_attributes_srek_assumed_visitors", class: 'form-label small fw-semibold' do %>
+                  <%= srek_visitor_first.item_name %><span class="text-danger">*</span>
+                <% end %>
+                <% srek_visitor_configs.each do |item| %>
+                  <% checked = srek_existing_visitors.include?(item.id.to_s) %>
+                  <div class="form-check">
+                    <%= check_box_tag "sponsor_session[proposal_items_attributes][srek_assumed_visitors][]",
+                                      item.id, checked,
+                                      { id: "srek_visitor_#{item.params.parameterize.underscore}", class: 'form-check-input' } %>
+                    <%= label_tag "srek_visitor_#{item.params.parameterize.underscore}", item.params, class: 'form-check-label small' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%# === 3カンファレンス選択UI ここまで === %>
+
     <%= f.hidden_field :sponsor_id, value: sponsor.id %>
     <%= f.hidden_field :conference_id, value: conference.id %>
   </div>

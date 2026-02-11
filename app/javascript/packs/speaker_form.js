@@ -437,3 +437,9 @@ if (document.readyState === 'loading') {
     initializeConferenceFieldToggle();
     initializeInputCardStyles(); // 追加
 }
+
+// Turbo Frameで動的にロードされたコンテンツ（スポンサーセッションのモーダル等）にも対応
+document.addEventListener('turbo:frame-load', () => {
+    initializeConferenceFieldToggle();
+    initializeInputCardStyles();
+});

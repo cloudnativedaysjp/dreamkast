@@ -112,6 +112,9 @@ gem 'slack-incoming-webhooks'
 
 gem 'psych', '< 6'
 
+# Fix for Ruby 4.0 Ractor compatibility
+gem 'net-imap', '>= 0.6.0'
+
 gem "aws-sdk-medialive"
 gem "aws-sdk-mediapackage"
 gem "aws-sdk-mediapackagev2"

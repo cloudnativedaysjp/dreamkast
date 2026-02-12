@@ -1,26 +1,37 @@
 <% provide(:title, 'プロポーザル一覧') %>
 
-<div class="container white_background">
-  <h1 class="mx-3 mt-5 text-center">プロポーザル一覧</h1>
-  <% if @conference.cfp_result_visible %>
-    <p>CFPは終了しました。採択結果は<%= link_to 'こちら', talks_path %></p>
-  <% end %>
-  <section class="row proposals">
-    <% @proposals.select { |proposal| proposal.talk.present? }.each_with_index do |proposal, index| %>
+<div class="japanese-modern-theme proposal-index">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h1 class="proposal-index-title">プロポーザル一覧</h1>
+      <% if @conference.cfp_result_visible %>
+        <p class="proposal-index-subtitle">CFPは終了しました。採択結果は<%= link_to 'こちら', talks_path %>をご確認ください</p>
+      <% end %>
+    </div>
+
+    <div class="proposal-index-grid">
+      <% @proposals.select { |proposal| proposal.talk.present? }.each do |proposal| %>
         <% talk = proposal.talk %>
-        <%= link_to proposal_path(id: proposal.id), class: "proposal", data: {"turbolinks" => false} do %>
-          <div class="category text-primary">
-            <%= talk.talk_category.name if talk.talk_category.present? %>
+        <%= link_to proposal_path(id: proposal.id), class: "proposal-index-card", data: { turbolinks: false } do %>
+          <div class="proposal-index-card-top">
+            <div class="proposal-index-avatar">
+              <%= image_tag talk.speakers[0].avatar_or_dummy_url(:medium), size: '64x64', class: 'rounded-circle' %>
+            </div>
+            <% if talk.talk_category.present? %>
+              <span class="proposal-badge proposal-badge-category"><%= talk.talk_category.name %></span>
+            <% end %>
           </div>
-          <%= image_tag talk.speakers[0].avatar_or_dummy_url(:medium) %>
-          <h3>
-            <%= talk.title %>
-          </h3>
-          <% talk.speakers.each do |speaker| %>
-            <h5><%= speaker.company if speaker.company != "" %></h5>
-            <h4><%= speaker.name %></h4>
-          <% end %>
+          <h3 class="proposal-index-card-title"><%= talk.title %></h3>
+          <div class="proposal-index-card-speakers">
+            <% talk.speakers.each do |speaker| %>
+              <p class="proposal-index-card-name"><%= speaker.name %></p>
+              <% if speaker.company.present? && speaker.company != "" %>
+                <p class="proposal-index-card-company"><%= speaker.company %></p>
+              <% end %>
+            <% end %>
+          </div>
         <% end %>
-    <% end %>
-  </section>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -1095,3 +1095,109 @@ $font-family-serif: "Noto Serif JP", serif !default;
         margin-bottom: 0;
     }
 }
+
+// ===== Proposal Index Page =====
+.proposal-index {
+    .proposal-index-title {
+        font-family: $font-family-header;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.05em;
+    }
+
+    .proposal-index-subtitle {
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        color: lighten($sumi, 30%);
+
+        a {
+            color: $beni;
+            text-decoration: underline;
+        }
+    }
+
+    .proposal-index-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 480px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .proposal-index-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem;
+        background: white;
+        border: 1px solid rgba($sumi, 0.08);
+        border-radius: 2px;
+        box-shadow: 0 1px 6px $washi-shadow;
+        text-decoration: none !important;
+        color: $sumi;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba($sumi, 0.12);
+            color: $sumi;
+        }
+    }
+
+    .proposal-index-card-top {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .proposal-index-avatar {
+        flex-shrink: 0;
+
+        img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba($sumi, 0.1);
+        }
+    }
+
+    .proposal-index-card-title {
+        font-family: $font-family-header;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: $sumi;
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+        flex: 1;
+    }
+
+    .proposal-index-card-speakers {
+        margin-top: auto;
+    }
+
+    .proposal-index-card-name {
+        font-family: $font-family-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $sumi;
+        margin-bottom: 0;
+    }
+
+    .proposal-index-card-company {
+        font-size: 0.75rem;
+        color: lighten($sumi, 40%);
+        margin-bottom: 0;
+    }
+}

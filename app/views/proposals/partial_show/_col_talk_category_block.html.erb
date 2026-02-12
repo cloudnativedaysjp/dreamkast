@@ -1,24 +1,11 @@
-<div class="col-auto col-md-auto">
-  <div class="category_difficulty block">
-    <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
-      <span class="difficulty difficulty_<%= talk.talk_difficulty_id %>">
-        <%= talk.talk_difficulty.name %>
-      </span>
-    <% end %>
-    <% if talk.talk_category.present? %>
-      &nbsp;
-      <span class="difficulty category_<%= talk.talk_category_id %>">
-        <%= talk.talk_category.name %>
-      </span>
-    <% end %>
-    <% if talk.target_conferences.present? %>
-      &nbsp;
-      <% Array(talk.target_conferences).each do |conference| %>
-        <span class="difficulty ">
-          <%= conference %>
-        </span>
-        &nbsp;
-      <% end %>
-    <% end %>
-  </div>
-</div>
+<% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+  <span class="proposal-badge proposal-badge-difficulty"><%= talk.talk_difficulty.name %></span>
+<% end %>
+<% if talk.talk_category.present? %>
+  <span class="proposal-badge proposal-badge-category"><%= talk.talk_category.name %></span>
+<% end %>
+<% if talk.target_conferences.present? %>
+  <% Array(talk.target_conferences).each do |conference| %>
+    <span class="proposal-badge proposal-badge-conference"><%= conference %></span>
+  <% end %>
+<% end %>

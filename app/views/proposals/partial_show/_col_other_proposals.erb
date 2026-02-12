@@ -1,12 +1,20 @@
-<h3>他のプロポーザルも要チェック！</h3>
-<div class="d-flex gap-3">
+<h2 class="proposal-section-heading">他のプロポーザルも要チェック！</h2>
+<div class="proposal-related-grid">
   <% conference.proposals.select { |proposal| proposal.talk.present? }.shuffle[0..3].each do |proposal| %>
     <% talk = proposal.talk %>
-    <div class="card talk gap-3">
-      <a href="<%= url_for(controller: "proposals",action: "show", id: proposal.id) %>">
-        <h3><%= talk.title %></h3>
-        <p><%= talk.abstract[..40] if talk.abstract.present? %></p>
-      </a>
-    </div>
+    <%= link_to url_for(controller: "proposals", action: "show", id: proposal.id), class: "proposal-related-card" do %>
+      <% if talk.speakers.any? %>
+        <div class="proposal-related-avatar">
+          <%= image_tag talk.speakers[0].avatar_or_dummy_url(:small), size: '48x48', class: 'rounded-circle' %>
+        </div>
+      <% end %>
+      <h3 class="proposal-related-title"><%= talk.title %></h3>
+      <% if talk.abstract.present? %>
+        <p class="proposal-related-abstract"><%= truncate(talk.abstract, length: 80) %></p>
+      <% end %>
+      <% if talk.speakers.any? %>
+        <p class="proposal-related-speaker"><%= talk.speakers.map(&:name).join(', ') %></p>
+      <% end %>
+    <% end %>
   <% end %>
 </div>

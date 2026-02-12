@@ -1,33 +1,38 @@
-<div class="row">
-  <div class="col-12">
-    <div class="talk">
+<div class="proposal-card">
+  <div class="proposal-card-body">
+    <%= render 'proposals/partial_show/proposal_result', talk: talk %>
 
-      <h3>
-        <%= talk.title %>
-        <%= render 'proposals/partial_show/twitter_share_button', hash_tag: conference.twitter_hashtag %>
-        <%= render 'proposals/partial_show/facebook_share_button', url: request.original_url %>
-      </h3>
-      <%= render 'proposals/partial_show/proposal_result', talk: talk %>
+    <h1 class="proposal-title"><%= talk.title %></h1>
 
-      <div class="row py-3">
-        <%= render 'proposals/partial_show/col_talk_category_block', talk: talk %>
-      </div>
-
-      <p><%= simple_format talk.abstract %></p>
-
-      <% talk.speakers.each do |speaker| %>
-        <div class="row py-3">
-          <%= render 'proposals/partial_show/col_speaker_avatar', speaker: speaker %>
-          <%= render 'proposals/partial_show/col_speaker', speaker: speaker %>
-        </div>
-      <% end %>
-
-
-      <% if (conference.registered? || conference.opened?) && conference.attendee_entry_enabled? && !(logged_in? && @profile.present?) %>
-        <div class="col-12 text-center my-4">
-          <%= link_to "このイベントに参加申し込み <br/> (参加無料)".html_safe, registration_path, {method: :get, class: "btn btn-focus btn-xl inline" } %>
-        </div>
-      <% end %>
+    <div class="proposal-share mb-3">
+      <%= render 'proposals/partial_show/twitter_share_button', hash_tag: conference.twitter_hashtag %>
+      <%= render 'proposals/partial_show/facebook_share_button', url: request.original_url %>
     </div>
+
+    <div class="proposal-badges mb-4">
+      <%= render 'proposals/partial_show/col_talk_category_block', talk: talk %>
+    </div>
+
+    <div class="proposal-abstract">
+      <%= simple_format talk.abstract %>
+    </div>
+
+    <% if talk.speakers.any? %>
+      <div class="proposal-speakers">
+        <h2 class="proposal-section-heading">Speaker</h2>
+        <% talk.speakers.each do |speaker| %>
+          <div class="proposal-speaker-card">
+            <%= render 'proposals/partial_show/col_speaker_avatar', speaker: speaker %>
+            <%= render 'proposals/partial_show/col_speaker', speaker: speaker %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if (conference.registered? || conference.opened?) && conference.attendee_entry_enabled? && !(logged_in? && @profile.present?) %>
+      <div class="text-center mt-5 mb-3">
+        <%= link_to "このイベントに参加申し込み（参加無料）", registration_path, method: :get, class: "btn btn-primary btn-lg px-5" %>
+      </div>
+    <% end %>
   </div>
 </div>

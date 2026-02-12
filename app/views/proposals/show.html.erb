@@ -8,27 +8,24 @@
   <% end %>
 <% end %>
 <% provide(:title, @talk.title) %>
-  
-<div class="container white_background talk-page">
-  <div class="row my-3">
 
-    <div class="col-12 col-lg-8 main-pane">
-      <% if @conference.cfp_result_visible %>
-        <div class="alert alert-info">
-          <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
-        </div>
-      <% end %>
-      <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
-    </div>
+<div class="japanese-modern-theme proposal-show">
+  <div class="container">
+    <% if @conference.cfp_result_visible %>
+      <div class="alert alert-info mb-4">
+        <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
+      </div>
+    <% end %>
+
+    <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
 
     <% unless @conference.cfp_result_visible %>
-      <div class="col-12 p-3 other-talks">
+      <div class="proposal-related mt-5">
         <%= render 'proposals/partial_show/col_other_proposals', conference: @conference %>
       </div>
     <% end %>
   </div>
 </div>
-
 
 <% if current_user %>
   <script>

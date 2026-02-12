@@ -1,10 +1,9 @@
 <% if talk.proposal.present? && !talk.sponsor_session? %>
-  <% case talk.proposal.status %>
-  <% when "accepted" %>
-    <div class="proposal-status proposal-status-accepted">採択</div>
-  <% when "rejected" %>
-    <div class="proposal-status proposal-status-rejected">落選</div>
-  <% when "registered" %>
-    <div class="proposal-status proposal-status-pending">採択待ち</div>
-  <% end %>
+  <% message = talk.proposal.status_message %>
+  <% badge_class = case talk.proposal.status
+                   when "accepted" then "proposal-status-accepted"
+                   when "rejected" then "proposal-status-rejected"
+                   else "proposal-status-pending"
+                   end %>
+  <div class="proposal-status <%= badge_class %>"><%= message %></div>
 <% end %>

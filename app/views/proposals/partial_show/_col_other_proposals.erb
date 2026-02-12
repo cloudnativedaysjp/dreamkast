@@ -1,6 +1,6 @@
 <h2 class="proposal-section-heading">他のプロポーザルも要チェック！</h2>
 <div class="proposal-related-grid">
-  <% conference.proposals.select { |proposal| proposal.talk.present? }.shuffle[0..3].each do |proposal| %>
+  <% conference.proposals.select { |proposal| proposal.talk.present? }.shuffle[0..2].each do |proposal| %>
     <% talk = proposal.talk %>
     <%= link_to url_for(controller: "proposals", action: "show", id: proposal.id), class: "proposal-related-card" do %>
       <% if talk.speakers.any? %>

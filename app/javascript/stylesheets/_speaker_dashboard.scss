@@ -814,13 +814,16 @@ $font-family-serif: "Noto Serif JP", serif !default;
 
 // ===== Proposal Show Page =====
 .proposal-show {
+    .proposal-content-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
     .proposal-card {
         background: white;
         border: 1px solid rgba($sumi, 0.08);
         border-radius: 2px;
         box-shadow: 0 2px 12px $washi-shadow;
-        max-width: 860px;
-        margin: 0 auto;
     }
 
     .proposal-card-body {
@@ -1028,19 +1031,10 @@ $font-family-serif: "Noto Serif JP", serif !default;
     }
 
     // Related proposals
-    .proposal-related {
-        max-width: 860px;
-        margin: 0 auto;
-    }
-
     .proposal-related-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
-
-        @media (max-width: 992px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
 
         @media (max-width: 576px) {
             grid-template-columns: 1fr;

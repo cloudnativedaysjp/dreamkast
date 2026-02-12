@@ -11,19 +11,21 @@
 
 <div class="japanese-modern-theme proposal-show">
   <div class="container">
-    <% if @conference.cfp_result_visible %>
-      <div class="alert alert-info mb-4">
-        <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
-      </div>
-    <% end %>
+    <div class="proposal-content-wrap">
+      <% if @conference.cfp_result_visible %>
+        <div class="alert alert-info mb-4">
+          <%= link_to 'CFPは終了しました。採択結果はこちら', talks_path %>
+        </div>
+      <% end %>
 
-    <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
+      <%= render 'proposals/partial_show/col_main_pane', talk: @talk, conference: @conference %>
 
-    <% unless @conference.cfp_result_visible %>
-      <div class="proposal-related mt-5">
-        <%= render 'proposals/partial_show/col_other_proposals', conference: @conference %>
-      </div>
-    <% end %>
+      <% unless @conference.cfp_result_visible %>
+        <div class="proposal-related mt-5">
+          <%= render 'proposals/partial_show/col_other_proposals', conference: @conference %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

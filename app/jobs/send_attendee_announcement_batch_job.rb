@@ -2,8 +2,9 @@ class SendAttendeeAnnouncementBatchJob < ApplicationJob
   queue_as :fifo
   self.queue_adapter = :sqs unless Rails.env.test?
 
-  BATCH_SIZE = ENV.fetch('ATTENDEE_ANNOUNCEMENT_BATCH_SIZE', 100).to_i
-  BATCH_INTERVAL = ENV.fetch('ATTENDEE_ANNOUNCEMENT_BATCH_INTERVAL_SECONDS', 30).to_i
+  # Default: 10 emails per second (10 / 1s)
+  BATCH_SIZE = ENV.fetch('ATTENDEE_ANNOUNCEMENT_BATCH_SIZE', 10).to_i
+  BATCH_INTERVAL = ENV.fetch('ATTENDEE_ANNOUNCEMENT_BATCH_INTERVAL_SECONDS', 1).to_i
 
   def perform(attendee_announcement_id)
     announcement = AttendeeAnnouncement.find_by(id: attendee_announcement_id)

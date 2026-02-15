@@ -7,6 +7,7 @@
 - 配信対象を `announcement_deliveries` に分割してバッチ送信
 - SESイベント（Bounce/Complaint/Delivery）を SNS -> SQS で受信
 - バウンス/苦情は `email_suppressions` に保存し以後の送信を抑制
+- 送信レートは ActiveJob のバッチ設定で制御（デフォルト 10通/秒）
 
 ## 主要テーブル
 - `attendee_announcements`
@@ -22,9 +23,15 @@
 - `SES_EVENT_QUEUE_URL`
   - SESイベントを流し込む SQS URL
 - `ATTENDEE_ANNOUNCEMENT_BATCH_SIZE` (optional)
-  - 1バッチの送信数（デフォルト 100）
+  - 1バッチの送信数（デフォルト 10）
 - `ATTENDEE_ANNOUNCEMENT_BATCH_INTERVAL_SECONDS` (optional)
-  - バッチ間隔（秒。デフォルト 30）
+  - バッチ間隔（秒。デフォルト 1）
+
+## レート制御設計（ActiveJob前提）
+- ワーカーは **1プロセス** を前提
+- 送信レート = `BATCH_SIZE / BATCH_INTERVAL_SECONDS`
+- デフォルトは **10通/秒**（10 / 1s）
+- SES上限に合わせて環境変数で調整
 
 ## SESの設定（Terraform想定）
 1. Configuration Set 作成
@@ -39,14 +46,15 @@
 3. `SendAttendeeAnnouncementBatchJob` がバッチ送信
 4. SESイベントでバウンス/苦情を反映し抑制
 
-## SESイベント受信
-SQS から受信したイベントを処理するタスク:
+## SESイベント受信（ActiveJob前提）
+ActiveJobワーカーが **生SQSメッセージを処理できない** 前提の場合、\n
+別途「SESイベントSQS -> ActiveJob」変換プロセスが必要。\n
 
-```bash
-bundle exec rake ses:poll
-```
+現状のブリッジは以下のタスクを常駐実行する想定:\n
 
-運用では常駐または定期実行（cron / job runner）を想定。
+```bash\nbundle exec rake ses:poll\n```\n
+
+運用では常駐（systemd/Procfile/k8s sidecar 等）を推奨。\n
 
 ## 管理画面での確認
 `/admin/attendee_announcements` の一覧で送信状況を確認。

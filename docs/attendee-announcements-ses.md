@@ -9,6 +9,25 @@
 - バウンス/苦情は `email_suppressions` に保存し以後の送信を抑制
 - 送信レートは ActiveJob のバッチ設定で制御（デフォルト 10通/秒）
 
+## 送信フロー詳細
+1. 管理画面からアナウンスを作成
+2. `PrepareAttendeeAnnouncementDeliveriesJob` が対象プロフィールを展開し、`announcement_deliveries` を作成
+   - `email_suppressions` に該当するアドレスは `suppressed` として記録
+3. `SendAttendeeAnnouncementBatchJob` が `queued` を一定数ずつ送信
+   - 成功: `sent` + `provider_message_id` 付与
+   - 失敗: `failed` + `last_error`
+4. バッチが完了すると `send_status=completed` に更新
+
+## バウンス/苦情対応フロー詳細
+1. SESイベント（Bounce/Complaint/Delivery）が SNS -> SQS に届く
+2. `ses:poll` が SQS を読み取り `SesEventProcessor` を実行
+3. `email_suppressions` を更新
+   - 既存があれば `last_seen_at` を更新
+   - 無ければ新規作成（`reason=bounce/complaint`）
+4. `announcement_deliveries` のステータスを更新
+   - `bounced` / `complaint`
+5. 以後の送信時に suppression に該当するメールは送らない
+
 ## 主要テーブル
 - `attendee_announcements`
   - `send_status` / `sent_count` / `failed_count` / `bounced_count` / `suppressed_count`

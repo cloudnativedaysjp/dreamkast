@@ -69,11 +69,9 @@
 ActiveJobワーカーが **生SQSメッセージを処理できない** 前提の場合、\n
 別途「SESイベントSQS -> ActiveJob」変換プロセスが必要。\n
 
-現状のブリッジは以下のタスクを常駐実行する想定:\n
+SESイベントの取り込みは **ECS Scheduled Task** で `ses:poll` を定期実行する運用とする。\n
 
 ```bash\nbundle exec rake ses:poll\n```\n
-
-運用では常駐（systemd/Procfile/k8s sidecar 等）を推奨。\n
 
 ## 管理画面での確認
 `/admin/attendee_announcements` の一覧で送信状況を確認。

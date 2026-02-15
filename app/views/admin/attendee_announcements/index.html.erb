@@ -1,0 +1,38 @@
+<%= render 'admin/layout' do %>
+  <h1>Attendee Announcement</h1>
+
+  <%= link_to 'New AttendeeAnnouncement', new_admin_attendee_announcement_path, class: "btn btn-primary" %>
+
+  <table class="table table-striped talks_table" >
+    <thead>
+    <tr>
+      <th scope="col">Published?</th>
+      <th scope="col">To</th>
+      <th scope="col">Time</th>
+      <th scope="col">Announcement</th>
+      <th scope="col">Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @attendee_announcements.eager_load(:profiles).each do |announcement| %>
+      <tr>
+        <td>
+          <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
+        <td>
+          <%= announcement.profile_names %>
+        </td>
+        <td>
+          <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+        </td>
+        <td>
+          <%= simple_format announcement.body %>
+        </td>
+        <td>
+          <%= link_to'Edit', edit_admin_attendee_announcement_path(id: announcement.id) %>
+          <%= link_to'Delete', admin_attendee_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -125,6 +125,12 @@
       </div>
       <% end %>
 
+      <% if @attendee_announcements.present? %>
+      <div class="mt-3">
+        <%= render 'tracks/attendee_announcements', attendee_announcements: @attendee_announcements, profile: @profile %>
+      </div>
+      <% end %>
+
       <div class="mb-5">
           <h3 class="section-header">運営からのお知らせ</h3>
           <div class="px-2">

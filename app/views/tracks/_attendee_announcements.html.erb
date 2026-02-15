@@ -1,0 +1,11 @@
+<div class="card notification">
+  <div class="card-header">
+    <b><%= "#{profile.last_name} #{profile.first_name}様へのお知らせ" %></b>
+  </div>
+  <div class="card-body">
+    <% attendee_announcements.order(publish_time: 'DESC').uniq.each do |announcement| %>
+    <h5 class="card-title"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></h5>
+    <div class="card-text"><%= simple_format announcement.body %></div>
+    <% end %>
+  </div>
+</div>

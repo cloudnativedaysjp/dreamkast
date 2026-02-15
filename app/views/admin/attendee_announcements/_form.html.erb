@@ -1,0 +1,56 @@
+<%= form_with(url: attendee_announcement_url, model: @attendee_announcement) do |form| %>
+  <section class="speaker-information py-3">
+
+    <div class="field">
+      <%= form.label :publish_time, '公開日' %>*<br/>
+      <%= form.datetime_select :publish_time, class: 'form-control' %>
+    </div>
+
+    <% unless @profiles.blank? || @profiles.nil? %>
+        <div class="field">
+          <%= form.label :profile_id, '参加者' %>*<br/>
+
+          <!-- @profiles.length == 1 -->
+          <% @profiles.each do |profile| %>
+            <%= form.hidden_field :profile_ids, multiple: true, value: profile.id %>
+          <% end %>
+          <%= form.text_field :profile_names, value: @profiles.length == 1 ? "#{@profiles[0].last_name} #{@profiles[0].first_name}" : "全員", readonly: true %>
+        </div>
+    <% end %>
+    <br/>
+    <% if is_to_all_announcements? %>
+      <div class="field">
+        <% @attendee_announcement.receiver = :all_attendee if @attendee_announcement.person? %>
+        <%= form.radio_button :receiver, :all_attendee %>
+        <%= form.label :receiver, '全参加者に通知', value: @attendee_announcement.receiver %>
+        <br/>
+        <%= form.radio_button :receiver, :only_online %>
+        <%= form.label :receiver, 'オンライン参加者に通知', value: @attendee_announcement.receiver %>
+        <br/>
+        <%= form.radio_button :receiver, :only_offline %>
+        <%= form.label :receiver, '現地参加者に通知', value: @attendee_announcement.receiver %>
+        <br/>
+        <%= form.radio_button :receiver, :early_bird %>
+        <%= form.label :receiver, '先行申込者に通知', value: @attendee_announcement.receiver %>
+      </div>
+    <% else %>
+    <div class="field">
+        <%= form.hidden_field :receiver, value: :person %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :body, 'アナウンス内容' %>*
+      <%= form.text_area :body, class: "form-control", required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :publish, '公開・非公開' %>*<br/>
+      <%= form.select :publish, {'非公開': false, '公開': true}, class: "form-control", required: true %>
+    </div>
+
+    <div class="actions justify-content-center py-3">
+      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    </div>
+  </section>
+<% end %>

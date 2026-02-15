@@ -6,6 +6,7 @@ class AttendeeDashboardsController < ApplicationController
   def show
     @conference = Conference.includes(:talks).find_by(abbr: event_name)
     @announcements = @conference.announcements.published
+    @attendee_announcements = @conference.attendee_announcements.find_by_profile(@profile.id) unless @profile.nil?
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
     @talks = @conference.talks.eager_load(:talk_category, :talk_difficulty).all
     @talk_categories = @conference.talk_categories

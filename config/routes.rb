@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
       resources :announcements
+      resources :attendee_announcements
       resources :speaker_announcements
       resources :keynote_speaker_invitations do
         member do

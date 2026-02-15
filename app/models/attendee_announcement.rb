@@ -8,12 +8,13 @@ class AttendeeAnnouncement < ApplicationRecord
     early_bird: '先行申込者'
   }.freeze
 
-  after_create -> { inform('create') }
-  before_update -> { inform('update') }
+  after_commit -> { inform('create') }, on: :create
+  after_commit -> { inform('update') }, on: :update
 
   belongs_to :conference
   has_many :attendee_announcement_middles, dependent: :destroy
   has_many :profiles, through: :attendee_announcement_middles
+  has_many :announcement_deliveries, dependent: :destroy
 
   validates :publish_time, presence: true
   validates :body, presence: true
@@ -28,12 +29,11 @@ class AttendeeAnnouncement < ApplicationRecord
 
   def inform(context)
     return unless should_inform?(context)
+    return unless send_status == 'pending'
 
-    profiles.each do |profile|
-      ProfileMailer.inform_attendee_announcement(conference, profile).deliver_later
-    rescue StandardError => e
-      Rails.logger.warn("Failed to enqueue attendee announcement mail: #{e.class} #{e.message}")
-    end
+    PrepareAttendeeAnnouncementDeliveriesJob.perform_later(id)
+  rescue StandardError => e
+    Rails.logger.warn("Failed to enqueue attendee announcement prepare job: #{e.class} #{e.message}")
   end
 
   def profile_names
@@ -49,5 +49,36 @@ class AttendeeAnnouncement < ApplicationRecord
     when 'update'
       publish && publish_changed?
     end
+  end
+
+  def target_profiles
+    case receiver
+    when 'person'
+      profiles
+    when 'all_attendee'
+      conference.profiles
+    when 'only_online'
+      conference.profiles.online
+    when 'only_offline'
+      conference.profiles.offline
+    when 'early_bird'
+      conference.profiles.where('created_at < ?', conference.early_bird_cutoff_at)
+    else
+      conference.profiles.none
+    end
+  end
+
+  def delivery_counts
+    announcement_deliveries.group(:status).count
+  end
+
+  def refresh_delivery_counts!
+    counts = delivery_counts
+    update!(
+      sent_count: counts['sent'].to_i,
+      failed_count: counts['failed'].to_i,
+      bounced_count: counts['bounced'].to_i,
+      suppressed_count: counts['suppressed'].to_i
+    )
   end
 end

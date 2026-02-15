@@ -7,17 +7,23 @@
     <thead>
     <tr>
       <th scope="col">Published?</th>
+      <th scope="col">Send Status</th>
       <th scope="col">To</th>
       <th scope="col">Time</th>
       <th scope="col">Announcement</th>
+      <th scope="col">Delivery</th>
       <th scope="col">Edit</th>
     </tr>
     </thead>
     <tbody>
     <% @attendee_announcements.eager_load(:profiles).each do |announcement| %>
+      <% counts = announcement.delivery_counts %>
       <tr>
         <td>
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
+        <td>
+          <div class="date"><%= announcement.send_status %></div>
+        </td>
         <td>
           <%= announcement.profile_names %>
         </td>
@@ -26,6 +32,15 @@
         </td>
         <td>
           <%= simple_format announcement.body %>
+        </td>
+        <td>
+          queued: <%= counts['queued'].to_i %><br/>
+          processing: <%= counts['processing'].to_i %><br/>
+          sent: <%= counts['sent'].to_i %><br/>
+          failed: <%= counts['failed'].to_i %><br/>
+          bounced: <%= counts['bounced'].to_i %><br/>
+          complaint: <%= counts['complaint'].to_i %><br/>
+          suppressed: <%= counts['suppressed'].to_i %>
         </td>
         <td>
           <%= link_to'Edit', edit_admin_attendee_announcement_path(id: announcement.id) %>

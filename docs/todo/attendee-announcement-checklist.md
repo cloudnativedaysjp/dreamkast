@@ -1,8 +1,9 @@
-# 参加者向けアナウンス機能 実装チェックリスト
+# 参加者向けアナウンス機能（大量配信対応）チェックリスト
 
-- [ ] モデル・マイグレーションを追加する（`AttendeeAnnouncement`, `AttendeeAnnouncementMiddle`）
-- [ ] 管理画面を追加する（一覧/作成/編集/削除）
-- [ ] 宛先ロジック（全体/現地/オンライン/先行申込/個別）を実装する
-- [ ] メール通知を追加する（参加者向け）
-- [ ] 参加者ダッシュボードに表示する
-- [ ] 動作確認（管理画面作成、メール送信、表示）
+- [ ] 送信管理カラム追加（`send_status`, 集計系）
+- [ ] `announcement_deliveries` と `email_suppressions` を追加
+- [ ] バッチ送信ジョブを実装
+- [ ] SESイベント取り込み（SNS→SQS）を実装
+- [ ] 管理画面で送信状況を表示
+- [ ] SES設定（Configuration Set / イベント通知）をTerraformで作成
+- [ ] 送信レートの調整（`ATTENDEE_ANNOUNCEMENT_BATCH_SIZE` / `..._INTERVAL_SECONDS`）

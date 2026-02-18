@@ -8,9 +8,6 @@ class AttendeeAnnouncement < ApplicationRecord
     early_bird: '先行申込者'
   }.freeze
 
-  after_create -> { inform('create') }
-  before_update -> { inform('update') }
-
   belongs_to :conference
   has_many :attendee_announcement_middles, dependent: :destroy
   has_many :profiles, through: :attendee_announcement_middles
@@ -26,28 +23,9 @@ class AttendeeAnnouncement < ApplicationRecord
     joins(:attendee_announcement_middles).where(attendee_announcement_middles: { profile_id: }, publish: true)
   }
 
-  def inform(context)
-    return unless should_inform?(context)
-
-    profiles.each do |profile|
-      ProfileMailer.inform_attendee_announcement(conference, profile).deliver_later
-    rescue StandardError => e
-      Rails.logger.warn("Failed to enqueue attendee announcement mail: #{e.class} #{e.message}")
-    end
-  end
-
   def profile_names
     return profiles.map { |profile| "#{profile.last_name} #{profile.first_name}" }.join(',') if person?
 
     JA_RECEIVER[receiver.to_sym]
-  end
-
-  def should_inform?(context)
-    case context
-    when 'create'
-      publish
-    when 'update'
-      publish && publish_changed?
-    end
   end
 end

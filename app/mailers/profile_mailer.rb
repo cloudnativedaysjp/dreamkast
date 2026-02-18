@@ -10,5 +10,4 @@ class ProfileMailer < ApplicationMailer
       subject: "#{@conference.name}への登録ありがとうございます"
     )
   end
-
 end

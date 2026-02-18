@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_15_090100) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_15_130100) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -25,11 +25,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_15_090100) do
     t.index ["user_id"], name: "fk_rails_bdfe0f01ea"
   end
 
+  create_table "announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "announcement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["announcement_id"], name: "index_announcement_middles_on_announcement_id"
+    t.index ["profile_id"], name: "index_announcement_middles_on_profile_id"
+  end
+
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", precision: nil
     t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
+    t.integer "receiver", default: 0, null: false
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
@@ -786,6 +796,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_15_090100) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "admin_profiles", "users"
+  add_foreign_key "announcement_middles", "announcements"
+  add_foreign_key "announcement_middles", "profiles"
   add_foreign_key "announcements", "conferences"
   add_foreign_key "attendee_announcement_middles", "attendee_announcements"
   add_foreign_key "attendee_announcement_middles", "profiles"

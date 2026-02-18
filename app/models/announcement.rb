@@ -12,6 +12,9 @@ class Announcement < ApplicationRecord
   has_many :announcement_middles, dependent: :destroy
   has_many :profiles, through: :announcement_middles
 
+  validates :receiver, presence: true
+  validate :profiles_required_for_person
+
   scope :published, -> {
     where(publish: true)
   }
@@ -38,5 +41,14 @@ class Announcement < ApplicationRecord
 
     person_scope = base.joins(:announcement_middles).where(announcement_middles: { profile_id: profile.id })
     result.or(person_scope)
+  end
+
+  private
+
+  def profiles_required_for_person
+    return unless receiver == 'person'
+    return if profiles.present?
+
+    errors.add(:profiles, 'を選択してください')
   end
 end

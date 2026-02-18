@@ -20,17 +20,16 @@
     <br/>
     <% if is_to_all_announcements? %>
       <div class="field">
-        <% @announcement.receiver = :all_attendee if @announcement.person? %>
-        <%= form.radio_button :receiver, :all_attendee %>
+        <%= form.radio_button :receiver, :all_attendee, required: true %>
         <%= form.label :receiver, '全参加者に通知', value: @announcement.receiver %>
         <br/>
-        <%= form.radio_button :receiver, :only_online %>
+        <%= form.radio_button :receiver, :only_online, required: true %>
         <%= form.label :receiver, 'オンライン参加者に通知', value: @announcement.receiver %>
         <br/>
-        <%= form.radio_button :receiver, :only_offline %>
+        <%= form.radio_button :receiver, :only_offline, required: true %>
         <%= form.label :receiver, '現地参加者に通知', value: @announcement.receiver %>
         <br/>
-        <%= form.radio_button :receiver, :early_bird %>
+        <%= form.radio_button :receiver, :early_bird, required: true %>
         <%= form.label :receiver, '先行申込者に通知', value: @announcement.receiver %>
       </div>
     <% else %>

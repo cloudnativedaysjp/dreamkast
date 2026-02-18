@@ -6,7 +6,6 @@
   <ul class="list-unstyled components">
     <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: controller_name == 'admin' &&  action_name == 'show' %>
     <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'announcements' %>
-    <%= render 'admin/nav_item', name: 'AttendeeAnnouncements', path: admin_attendee_announcements_path, active: controller_name == 'attendee_announcements' %>
     <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
     <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'check_in_statuses' %>
     <%= render 'admin/nav_item', name: 'KeynoteSpeakerInvitations', path: admin_keynote_speaker_invitations_path, active:  controller_name == 'keynote_speaker_invitations' %>

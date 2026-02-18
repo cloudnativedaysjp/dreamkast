@@ -1,4 +1,4 @@
-# 参加者向けアナウンス（SES大量配信）運用ガイド
+# アナウンス（SES大量配信）運用ガイド
 
 ## 目的
 参加者向けアナウンスを大量配信する際のスパム回避・バウンス対応・配信状況の可視化を行う。
@@ -11,9 +11,9 @@
 
 ## 送信フロー詳細
 1. 管理画面からアナウンスを作成
-2. `PrepareAttendeeAnnouncementDeliveriesJob` が対象プロフィールを展開し、`announcement_deliveries` を作成
+2. `PrepareAnnouncementDeliveriesJob` が対象プロフィールを展開し、`announcement_deliveries` を作成
    - `email_suppressions` に該当するアドレスは `suppressed` として記録
-3. `SendAttendeeAnnouncementBatchJob` が `queued` を一定数ずつ送信
+3. `SendAnnouncementBatchJob` が `queued` を一定数ずつ送信
    - 成功: `sent` + `provider_message_id` 付与
    - 失敗: `failed` + `last_error`
 4. バッチが完了すると `send_status=completed` に更新
@@ -29,7 +29,7 @@
 5. 以後の送信時に suppression に該当するメールは送らない
 
 ## 主要テーブル
-- `attendee_announcements`
+- `announcements`
   - `send_status` / `sent_count` / `failed_count` / `bounced_count` / `suppressed_count`
 - `announcement_deliveries`
   - 1通単位の配信ログ
@@ -41,9 +41,9 @@
   - SES の Configuration Set 名
 - `SES_EVENT_QUEUE_URL`
   - SESイベントを流し込む SQS URL
-- `ATTENDEE_ANNOUNCEMENT_BATCH_SIZE` (optional)
+- `ANNOUNCEMENT_BATCH_SIZE` (optional)
   - 1バッチの送信数（デフォルト 10）
-- `ATTENDEE_ANNOUNCEMENT_BATCH_INTERVAL_SECONDS` (optional)
+- `ANNOUNCEMENT_BATCH_INTERVAL_SECONDS` (optional)
   - バッチ間隔（秒。デフォルト 1）
 
 ## レート制御設計（ActiveJob前提）
@@ -61,23 +61,25 @@
 
 ## アプリ側の動き
 1. 管理画面からアナウンス作成
-2. `PrepareAttendeeAnnouncementDeliveriesJob` が対象者を `announcement_deliveries` に展開
-3. `SendAttendeeAnnouncementBatchJob` がバッチ送信
+2. `PrepareAnnouncementDeliveriesJob` が対象者を `announcement_deliveries` に展開
+3. `SendAnnouncementBatchJob` がバッチ送信
 4. SESイベントでバウンス/苦情を反映し抑制
 
 ## SESイベント受信（ActiveJob前提）
-ActiveJobワーカーが **生SQSメッセージを処理できない** 前提の場合、\n
-別途「SESイベントSQS -> ActiveJob」変換プロセスが必要。\n
+ActiveJobワーカーが **生SQSメッセージを処理できない** 前提の場合、  
+別途「SESイベントSQS -> ActiveJob」変換プロセスが必要。
 
-SESイベントの取り込みは **ECS Scheduled Task** で `ses:poll` を定期実行する運用とする。\n
+SESイベントの取り込みは **ECS Scheduled Task** で `ses:poll` を定期実行する運用とする。
 
-```bash\nbundle exec rake ses:poll\n```\n
+```bash
+bundle exec rake ses:poll
+```
 
 ## 管理画面での確認
-`/admin/attendee_announcements` の一覧で送信状況を確認。
+`/admin/announcements` の一覧で送信状況を確認。
 
 - `queued` / `processing` / `sent` / `failed` / `bounced` / `complaint` / `suppressed` を表示
 
 ## 注意点
-- SESの送信上限はアカウントで異なるため、`ATTENDEE_ANNOUNCEMENT_BATCH_SIZE` と `ATTENDEE_ANNOUNCEMENT_BATCH_INTERVAL_SECONDS` を調整すること。
+- SESの送信上限はアカウントで異なるため、`ANNOUNCEMENT_BATCH_SIZE` と `ANNOUNCEMENT_BATCH_INTERVAL_SECONDS` を調整すること。
 - `email_suppressions` に登録されたメールアドレスは以後自動的に送信対象から除外される。

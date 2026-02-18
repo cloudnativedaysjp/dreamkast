@@ -39,7 +39,7 @@
             <td><%= link_to 'QRコードを表示する', admin_entry_sheet_path(id: profile.id) %></td>
             <td><%= render('admin/profiles/partial/check_in_status', profile: profile) %></td>
             <td><%= render('admin/profiles/partial/check_in_button', profile: profile) %></td>
-            <td><%= link_to 'Notice', "attendee_announcements/new?profile_id=#{profile.id}" %></td>
+            <td><%= link_to 'Notice', "announcements/new?profile_id=#{profile.id}" %></td>
           </tr>
         <% end %>
         </tbody>

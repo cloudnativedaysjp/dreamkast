@@ -39,8 +39,8 @@ class Announcement < ApplicationRecord
       result = result.or(base.where(receiver: :early_bird))
     end
 
-    person_scope = base.joins(:announcement_middles).where(announcement_middles: { profile_id: profile.id })
-    result.or(person_scope)
+    person_scope_ids = AnnouncementMiddle.where(profile_id: profile.id).select(:announcement_id)
+    result.or(base.where(id: person_scope_ids))
   end
 
   private

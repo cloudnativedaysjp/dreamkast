@@ -1,27 +1,21 @@
 class Announcement < ApplicationRecord
-  enum :receiver, { all_attendee: 0, person: 1, only_online: 2, only_offline: 3, early_bird: 4 }
+  enum :receiver, { all_attendee: 0, only_online: 2, only_offline: 3, early_bird: 4 }
   JA_RECEIVER = {
     all_attendee: '全員',
-    person: '個人',
     only_online: 'オンライン参加者',
     only_offline: '現地参加者',
     early_bird: '先行申込者'
   }.freeze
 
   belongs_to :conference
-  has_many :announcement_middles, dependent: :destroy
-  has_many :profiles, through: :announcement_middles
 
   validates :receiver, presence: true
-  validate :profiles_required_for_person
 
   scope :published, -> {
     where(publish: true)
   }
 
   def profile_names
-    return profiles.map { |profile| "#{profile.last_name} #{profile.first_name}" }.join(',') if person?
-
     JA_RECEIVER[receiver.to_sym]
   end
 
@@ -39,16 +33,6 @@ class Announcement < ApplicationRecord
       result = result.or(base.where(receiver: :early_bird))
     end
 
-    person_scope_ids = AnnouncementMiddle.where(profile_id: profile.id).select(:announcement_id)
-    result.or(base.where(id: person_scope_ids))
-  end
-
-  private
-
-  def profiles_required_for_person
-    return unless receiver == 'person'
-    return if profiles.present?
-
-    errors.add(:profiles, 'を選択してください')
+    result
   end
 end

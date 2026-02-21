@@ -39,22 +39,6 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
   let!(:early_bird) do
     Announcement.create!(conference:, receiver: :early_bird, publish: true, publish_time: Time.zone.now, body: 'announcement early')
   end
-  let!(:person_for_online) do
-    Announcement.create!(conference:, receiver: :person, publish: true, publish_time: Time.zone.now, body: 'announcement person online',
-                         profile_ids: [online_recent.id])
-  end
-  let!(:person_for_offline) do
-    Announcement.create!(conference:, receiver: :person, publish: true, publish_time: Time.zone.now, body: 'announcement person offline',
-                         profile_ids: [offline_early.id])
-  end
-  let!(:person_for_online_early) do
-    Announcement.create!(conference:, receiver: :person, publish: true, publish_time: Time.zone.now, body: 'early bird online person',
-                         profile_ids: [online_early.id])
-  end
-  let!(:person_for_offline_recent) do
-    Announcement.create!(conference:, receiver: :person, publish: true, publish_time: Time.zone.now, body: 'recent offline person',
-                         profile_ids: [offline_recent.id])
-  end
 
   def stub_session_for(sub:, email:, roles: [])
     session = {
@@ -83,8 +67,8 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
       it 'shows only announcements visible to the online attendee' do
         get '/cndt2020/dashboard'
         expect(response).to(be_successful)
-        expect(response.body).to(include('announcement all', 'announcement online', 'announcement person online'))
-        expect(response.body).not_to(include('announcement offline', 'announcement early', 'announcement person offline'))
+        expect(response.body).to(include('announcement all', 'announcement online'))
+        expect(response.body).not_to(include('announcement offline', 'announcement early'))
       end
     end
 
@@ -96,8 +80,8 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
       it 'shows only announcements visible to the offline early-bird attendee' do
         get '/cndt2020/dashboard'
         expect(response).to(be_successful)
-        expect(response.body).to(include('announcement all', 'announcement offline', 'announcement early', 'announcement person offline'))
-        expect(response.body).not_to(include('announcement online', 'announcement person online'))
+        expect(response.body).to(include('announcement all', 'announcement offline', 'announcement early'))
+        expect(response.body).not_to(include('announcement online'))
       end
     end
 
@@ -109,8 +93,8 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
       it 'shows only announcements visible to the online early-bird attendee' do
         get '/cndt2020/dashboard'
         expect(response).to(be_successful)
-        expect(response.body).to(include('announcement all', 'announcement online', 'announcement early', 'early bird online person'))
-        expect(response.body).not_to(include('announcement offline', 'announcement person offline', 'recent offline person', 'announcement person online'))
+        expect(response.body).to(include('announcement all', 'announcement online', 'announcement early'))
+        expect(response.body).not_to(include('announcement offline'))
       end
     end
 
@@ -122,8 +106,8 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
       it 'shows only announcements visible to the offline non-early attendee' do
         get '/cndt2020/dashboard'
         expect(response).to(be_successful)
-        expect(response.body).to(include('announcement all', 'announcement offline', 'recent offline person'))
-        expect(response.body).not_to(include('announcement online', 'announcement early', 'announcement person online', 'announcement person offline', 'early bird online person'))
+        expect(response.body).to(include('announcement all', 'announcement offline'))
+        expect(response.body).not_to(include('announcement online', 'announcement early'))
       end
     end
   end

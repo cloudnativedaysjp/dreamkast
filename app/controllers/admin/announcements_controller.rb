@@ -18,11 +18,11 @@ class Admin::AnnouncementsController < ApplicationController
 
     @announcement = Announcement.create(params)
     respond_to do |format|
-      if @announcement
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
-        format.json { render(:show, status: :ok, location: @announcement) }
+      if @announcement.persisted?
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully created.') }
+        format.json { render(:show, status: :created, location: @announcement) }
       else
-        format.html { render(:edit) }
+        format.html { render(:new) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
       end
     end
@@ -34,7 +34,7 @@ class Admin::AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.update(params)
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
         format.html { render(:edit) }

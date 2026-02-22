@@ -1,5 +1,5 @@
 class Announcement < ApplicationRecord
-  enum :receiver, { all_attendee: 0, only_online: 2, only_offline: 3, early_bird: 4 }
+  enum :receiver, { all_attendee: 0, only_online: 1, only_offline: 2, early_bird: 3 }
   JA_RECEIVER = {
     all_attendee: '全員',
     only_online: 'オンライン参加者',
@@ -29,7 +29,7 @@ class Announcement < ApplicationRecord
                result.or(base.where(receiver: :only_offline))
              end
 
-    if profile.created_at < profile.conference.early_bird_cutoff_at
+    if profile.conference.early_bird_cutoff_at && profile.created_at < profile.conference.early_bird_cutoff_at
       result = result.or(base.where(receiver: :early_bird))
     end
 

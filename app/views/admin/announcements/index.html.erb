@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @announcements.eager_load(:profiles).each do |announcement| %>
+    <% @announcements.each do |announcement| %>
       <tr>
         <td>
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>

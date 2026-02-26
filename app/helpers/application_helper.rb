@@ -70,7 +70,7 @@ module ApplicationHelper
 
   def asset_available?(path)
     if Rails.env.production?
-      Rails.application.assets_manifest.find_sources(path).present?
+      Rails.application.assets_manifest&.assets&.[](path).present?
     else
       Rails.application.assets.find_asset(path).present?
     end

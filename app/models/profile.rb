@@ -172,6 +172,10 @@ class Profile < ApplicationRecord
     online?
   end
 
+  def early_bird?
+    conference.early_bird_cutoff_at && created_at < conference.early_bird_cutoff_at
+  end
+
   private
 
   def ensure_user

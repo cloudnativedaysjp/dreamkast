@@ -9,7 +9,7 @@
 
     <div class="attendees-grid">
       <% @public_profiles.each do |public_profile| %>
-        <% early_bird = public_profile.profile.created_at < @early_bird_cutoff %>
+        <% early_bird = public_profile.profile.early_bird? %>
         <div class="attendee-item">
           <div class="attendee-avatar-wrap <%= 'attendee-early-bird' if early_bird %>">
             <% if public_profile.avatar_url.nil? %>

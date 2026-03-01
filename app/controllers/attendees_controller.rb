@@ -14,6 +14,5 @@ class AttendeesController < ApplicationController
                        .joins(:public_profile)
                        .where(public_profile: { is_public: true })
                        .map(&:public_profile)
-    @early_bird_cutoff = conference.early_bird_cutoff_at
   end
 end

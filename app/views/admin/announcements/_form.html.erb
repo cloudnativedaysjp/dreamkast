@@ -5,6 +5,20 @@
       <%= form.label :publish_time, '公開日' %>*<br/>
       <%= form.datetime_select :publish_time, class: 'form-control' %>
     </div>
+    <br/>
+    <div class="field">
+      <%= form.radio_button :receiver, :all_attendee, required: true %>
+      <%= form.label :receiver, '全参加者に通知', value: @announcement.receiver %>
+      <br/>
+      <%= form.radio_button :receiver, :only_online, required: true %>
+      <%= form.label :receiver, 'オンライン参加者に通知', value: @announcement.receiver %>
+      <br/>
+      <%= form.radio_button :receiver, :only_offline, required: true %>
+      <%= form.label :receiver, '現地参加者に通知', value: @announcement.receiver %>
+      <br/>
+      <%= form.radio_button :receiver, :early_bird, required: true %>
+      <%= form.label :receiver, '先行申込者に通知', value: @announcement.receiver %>
+    </div>
 
     <div class="field">
       <%= form.label :body, 'アナウンス内容' %>*

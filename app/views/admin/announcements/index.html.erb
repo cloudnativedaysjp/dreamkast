@@ -7,6 +7,7 @@
     <thead>
     <tr>
       <th scope="col">Published?</th>
+      <th scope="col">To</th>
       <th scope="col">Time</th>
       <th scope="col">Announcement</th>
       <th scope="col">Edit</th>
@@ -17,6 +18,9 @@
       <tr>
         <td>
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
+        <td>
+          <%= announcement.profile_names %>
+        </td>
         <td>
           <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
         </td>

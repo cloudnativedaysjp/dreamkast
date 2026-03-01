@@ -15,6 +15,7 @@ class Conference < ApplicationRecord
   STATUS_CLOSED = 'closed'.freeze
   STATUS_ARCHIVED = 'archived'.freeze
   STATUS_MIGRATED = 'migrated'.freeze
+  EARLY_BIRD_CUTOFF = Time.zone.parse('2026-03-01').freeze
 
   enum :conference_status, {
     registered: STATUS_REGISTERED,
@@ -83,5 +84,9 @@ class Conference < ApplicationRecord
 
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
+  end
+
+  def early_bird_cutoff_at
+    EARLY_BIRD_CUTOFF
   end
 end

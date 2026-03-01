@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_15_130000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -30,7 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
     t.datetime "publish_time", precision: nil
     t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
-    t.integer "receiver", null: false
+    t.integer "receiver", default: 0, null: false
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 

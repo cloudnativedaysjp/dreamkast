@@ -14,14 +14,15 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   def create
-    @announcement = Announcement.new(announcement_params.merge(conference_id: @conference.id))
+    params = announcement_params.merge(conference_id: @conference.id)
 
+    @announcement = Announcement.create(params)
     respond_to do |format|
-      if @announcement.save
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
-        format.json { render(:show, status: :ok, location: @announcement) }
+      if @announcement.persisted?
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully created.') }
+        format.json { render(:show, status: :created, location: @announcement) }
       else
-        format.html { render(:edit) }
+        format.html { render(:new) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
       end
     end
@@ -29,10 +30,11 @@ class Admin::AnnouncementsController < ApplicationController
 
   def update
     @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
+    params = announcement_params.merge(conference_id: @conference.id)
 
     respond_to do |format|
-      if @announcement.update(announcement_params)
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
+      if @announcement.update(params)
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
         format.html { render(:edit) }
@@ -65,6 +67,6 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   def announcement_params
-    params.require(:announcement).permit(:publish_time, :body, :publish, :conference_id)
+    params.require(:announcement).permit(:publish_time, :body, :publish, :conference_id, :receiver)
   end
 end

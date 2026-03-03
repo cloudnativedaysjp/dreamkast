@@ -1,0 +1,97 @@
+<%= render 'admin/layout' do %>
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-info" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <h2>セッション質問一覧</h2>
+    
+    <!-- フィルタリングUI -->
+    <div class="col-12 mb-3">
+      <%= form_with url: admin_session_questions_path(event: params[:event]), method: :get, local: true, class: 'd-flex gap-2 align-items-end' do |f| %>
+        <%= hidden_field_tag :event, params[:event] %>
+        
+        <div class="form-group">
+          <%= label_tag :talk_id, 'セッション', class: 'form-label' %>
+          <%= select_tag :talk_id, 
+              options_from_collection_for_select(@talks, :id, :title, params[:talk_id]),
+              { include_blank: 'すべて', class: 'form-select' } %>
+        </div>
+        
+        <div class="form-group">
+          <%= label_tag :sort, 'ソート', class: 'form-label' %>
+          <%= select_tag :sort,
+              options_for_select([
+                ['時間順（新しい順）', 'time'],
+                ['投票数順', 'votes']
+              ], params[:sort]),
+              { include_blank: 'デフォルト', class: 'form-select' } %>
+        </div>
+        
+        <%= submit_tag 'フィルタ', class: 'btn btn-primary' %>
+        <%= link_to 'リセット', admin_session_questions_path(event: params[:event]), class: 'btn btn-secondary' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <p class="text-muted">
+        全<%= @session_questions.count %>件の質問
+      </p>
+      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">質問本文</th>
+            <th scope="col">セッション</th>
+            <th scope="col">投票数</th>
+            <th scope="col">回答数</th>
+            <th scope="col">作成日時</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @session_questions.any? %>
+            <% @session_questions.each do |question| %>
+              <tr>
+                <td><%= question.id %></td>
+                <td>
+                  <div style="max-width: 300px; word-wrap: break-word;">
+                    <%= truncate(question.body, length: 100) %>
+                  </div>
+                </td>
+                <td>
+                  <%= question.talk.title %>
+                  <br>
+                  <small class="text-muted">
+                    <%= question.talk.track&.name %>
+                    <% if question.talk.conference_day&.date.present? %>
+                      - <%= question.talk.conference_day.date.strftime('%Y/%m/%d') %>
+                    <% end %>
+                  </small>
+                </td>
+                <td><%= question.votes_count %></td>
+                <td><%= question.session_question_answers.count %></td>
+                <td><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+                <td>
+                  <%= link_to '詳細', admin_session_question_path(event: params[:event], id: question.id), class: 'btn btn-sm btn-primary' %>
+                  <% if question.hidden? %>
+                    <span class="badge bg-warning text-dark ms-1">非表示</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="7" class="text-center">質問がありません</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

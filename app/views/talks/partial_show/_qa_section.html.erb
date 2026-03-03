@@ -1,0 +1,100 @@
+<div class="col-12 my-4 pt-4" style="border-top: 2px solid #CCC">
+  <h4>Q&A</h4>
+  <p class="text-muted">このセッションに関する質問と回答</p>
+  
+  <% if alert %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= alert %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  
+  <% if logged_in? && @profile.present? && (@conference.opened? || @conference.closed? || @conference.archived?) %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">質問を投稿</h5>
+        <%= form_with url: create_question_talk_path(@talk, event: event_name), method: :post, local: true do |f| %>
+          <div class="mb-3">
+            <%= f.text_area :body, class: 'form-control', rows: 3, placeholder: '質問を入力してください', required: true %>
+          </div>
+          <%= f.submit '質問を投稿', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @session_questions.present? %>
+    <% @session_questions.each do |question| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+              <h5 class="card-title mb-1">
+                <span class="badge bg-secondary me-2">Q</span>
+                <%= simple_format(h(question.body)) %>
+              </h5>
+              <div class="text-muted small">
+                <span>投票数: <%= question.votes_count %></span>
+                <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 ms-2">
+              <% if logged_in? && @profile.present? && question.profile_id == @profile.id %>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-link text-muted p-0" type="button" id="questionMenu<%= question.id %>" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 18px; line-height: 1; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    ⋯
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="questionMenu<%= question.id %>">
+                    <li>
+                      <%= button_to '削除', 
+                          destroy_question_talk_path(@talk, question_id: question.id, event: event_name), 
+                          method: :delete, 
+                          class: 'dropdown-item text-danger',
+                          data: { turbo_confirm: 'この質問を削除しますか？' } %>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <% if question.session_question_answers.any? %>
+            <div class="mt-3 ms-4">
+              <% question.session_question_answers.order_by_time.each do |answer| %>
+                <div class="card mb-2" style="background-color: #f8f9fa;">
+                  <div class="card-body py-2">
+                    <div class="d-flex align-items-start">
+                      <span class="badge bg-primary me-2">A</span>
+                      <div class="flex-grow-1">
+                        <p class="mb-1"><%= simple_format(h(answer.body)) %></p>
+                        <div class="text-muted small">
+                          回答者: <%= answer.speaker.name %>
+                          <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="mt-2 ms-4 text-muted small">
+              まだ回答がありません
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info">
+      まだ質問がありません。最初の質問を投稿してみましょう！
+    </div>
+  <% end %>
+</div>

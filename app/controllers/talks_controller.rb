@@ -9,22 +9,20 @@ class TalksController < ApplicationController
 
   # - プロポーザルの採択結果を表示する場合
   #   - プロポーザルが採択されている場合：セッション情報を表示する
+  #   - cndt2020・cndo2021 のようにプロポーザルが存在しない場合：セッション情報を表示する
   #   - プロポーザルが採択されていない場合：404を返す
   # - プロポーザルの採択結果を表示しない場合：404を返す
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
-    @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
-
+    @conference = Conference.find_by!(abbr: event_name)
     unless @conference.cfp_result_visible
       raise(ActiveRecord::RecordNotFound)
     end
 
-    if @conference.cfp_result_visible && @talk.proposal.rejected?
+    @talk = Talk.find_by!(id: params[:id], conference_id: @conference.id)
+    if @talk.proposal&.rejected?
       raise(ActiveRecord::RecordNotFound)
     end
-
-    raise(ActiveRecord::RecordNotFound) unless @talk
   end
 
   def index

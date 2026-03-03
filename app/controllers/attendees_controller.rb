@@ -1,6 +1,6 @@
 class AttendeesController < ApplicationController
   include Secured
-  layout :event_layout
+
   before_action :set_profile
 
   def logged_in_using_omniauth?

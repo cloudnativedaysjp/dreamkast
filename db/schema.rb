@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_02_060406) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -30,7 +30,28 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_02_060406) do
     t.datetime "publish_time", precision: nil
     t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
+    t.integer "receiver", null: false
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
+  end
+
+  create_table "attendee_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "attendee_announcement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_announcement_id"], name: "index_attendee_announcement_middles_on_attendee_announcement_id"
+    t.index ["profile_id"], name: "index_attendee_announcement_middles_on_profile_id"
+  end
+
+  create_table "attendee_announcements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.datetime "publish_time", precision: nil, null: false
+    t.text "body", null: false
+    t.boolean "publish", default: false, null: false
+    t.integer "receiver", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_attendee_announcements_on_conference_id"
   end
 
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -627,6 +648,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_02_060406) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
+    t.string "sub_conference_type"
+    t.index ["conference_id", "sub_conference_type"], name: "index_talk_categories_on_conference_id_and_sub_conference_type"
     t.index ["conference_id"], name: "index_talk_categories_on_conference_id"
   end
 
@@ -765,6 +788,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_02_060406) do
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "admin_profiles", "users"
   add_foreign_key "announcements", "conferences"
+  add_foreign_key "attendee_announcement_middles", "attendee_announcements"
+  add_foreign_key "attendee_announcement_middles", "profiles"
+  add_foreign_key "attendee_announcements", "conferences"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"

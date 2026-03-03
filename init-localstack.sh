@@ -1,1 +1,1 @@
-awslocal sqs create-queue --queue-name default
+awslocal sqs create-queue --queue-name fifo

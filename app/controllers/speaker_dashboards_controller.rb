@@ -4,6 +4,7 @@ class SpeakerDashboardsController < ApplicationController
   before_action :set_speaker
   before_action :set_conference
 
+
   def show
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?

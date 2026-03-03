@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :set_sentry_context, :event_exists?
+  layout :event_layout
 
   unless Rails.env.development?
     rescue_from Exception do |e|

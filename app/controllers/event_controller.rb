@@ -2,7 +2,6 @@ class EventController < ApplicationController
   include Secured
   include SponsorHelper
   include ActionView::Helpers::UrlHelper
-  layout :event_layout
 
   before_action :set_profile, :set_speaker
 

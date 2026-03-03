@@ -98,7 +98,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when 'new'
+    when 'new', 'create'
       "/#{params[:event]}/speaker_dashboard/speakers"
     when 'edit', 'update'
       "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"

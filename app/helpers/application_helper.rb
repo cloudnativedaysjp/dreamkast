@@ -51,11 +51,13 @@ module ApplicationHelper
   end
 
   def event_js_path
-    if Conference.all.map { |conf| conf.abbr }.include?(event_name) && event_name != 'cndt2020'
-      event_name
-    else
-      'application'
-    end
+    event_asset = if Conference.exists?(abbr: event_name) && event_name != 'cndt2020'
+                    event_name
+                  else
+                    'application'
+                  end
+    return event_asset if asset_available?("#{event_asset}.css") && asset_available?("#{event_asset}.js")
+    'application'
   end
 
   def vote_api_url
@@ -72,6 +74,16 @@ module ApplicationHelper
       'danger'
     else
       'primary'
+    end
+  end
+
+  private
+
+  def asset_available?(path)
+    if Rails.env.production?
+      Rails.application.assets_manifest&.assets&.[](path).present?
+    else
+      Rails.application.assets.find_asset(path).present?
     end
   end
 end

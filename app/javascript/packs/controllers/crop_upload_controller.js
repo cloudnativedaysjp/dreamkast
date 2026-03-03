@@ -31,6 +31,20 @@ export default class extends Controller {
     let imagePreview = document.querySelector(".image-preview img");
     console.log(imagePreview);
 
+    // Cropperインスタンスを保持する変数
+    let currentCropper = null;
+
+    // 既に画像がある場合はプレースホルダーを非表示にする
+    const imagePreviewContainer = imagePreview.parentNode;
+    const placeholder = imagePreviewContainer.querySelector(".image-placeholder");
+
+    // srcが有効なURLの場合（空でなく、現在のページURLでもない）
+    const hasValidSrc = imagePreview.getAttribute("src") && imagePreview.getAttribute("src") !== "";
+    if (hasValidSrc && placeholder) {
+      placeholder.style.setProperty("display", "none", "important");
+      imagePreview.style.setProperty("display", "block", "important");
+    }
+
     formGroup.removeChild(fileInput);
 
     let uppy = new Uppy({
@@ -54,23 +68,38 @@ export default class extends Controller {
       });
 
     uppy.on("upload-success", function (file, response) {
-      imagePreview.src = response.uploadURL;
+      // プレースホルダーを非表示
+      const imagePreviewContainer = imagePreview.parentNode;
+      const placeholder = imagePreviewContainer.querySelector(".image-placeholder");
+      if (placeholder) {
+        placeholder.style.setProperty("display", "none", "important");
+      }
 
       hiddenInput.value = JSON.stringify(response.body["data"]);
 
-      let copper = new Cropper(imagePreview, {
-        aspectRatio: 1,
-        viewMode: 1,
-        guides: false,
-        autoCropArea: 1.0,
-        background: false,
-        checkCrossOrigin: false,
-        crop: function (event) {
-          let data = JSON.parse(hiddenInput.value);
-          data["metadata"]["crop"] = event.detail;
-          hiddenInput.value = JSON.stringify(data);
-        },
-      });
+      // 既存のCropperインスタンスがあれば画像を置き換え
+      if (currentCropper) {
+        currentCropper.replace(response.uploadURL);
+      } else {
+        // 初回アップロード時: 画像を設定してCropperを作成
+        imagePreview.src = response.uploadURL;
+        // Cropperが表示を管理するので、inline styleのdisplay:noneを削除
+        imagePreview.style.removeProperty("display");
+
+        currentCropper = new Cropper(imagePreview, {
+          aspectRatio: 1,
+          viewMode: 1,
+          guides: false,
+          autoCropArea: 1.0,
+          background: false,
+          checkCrossOrigin: false,
+          crop: function (event) {
+            let data = JSON.parse(hiddenInput.value);
+            data["metadata"]["crop"] = event.detail;
+            hiddenInput.value = JSON.stringify(data);
+          },
+        });
+      }
     });
   }
 }

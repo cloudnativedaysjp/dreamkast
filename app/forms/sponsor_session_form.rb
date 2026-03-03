@@ -16,6 +16,8 @@ class SponsorSessionForm
 
   delegate :persisted?, to: :sponsor_session
 
+  validate :validate_three_conference_selection, if: -> { conference_id == 15 }
+
   concerning :ProposalItemsBuilder do
     attr_accessor :proposal_items
 
@@ -56,6 +58,13 @@ class SponsorSessionForm
   rescue => e
     Rails.logger.error(e)
     false
+  end
+
+  def validate_three_conference_selection
+    sponsor_session.valid?(:entry_form)
+    sponsor_session.errors.each do |error|
+      errors.add(error.attribute, error.message)
+    end
   end
 
   def process_existing_talk

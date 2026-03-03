@@ -28,7 +28,7 @@ services:
       MYSQL_DATABASE: dreamkast
       REDIS_URL: redis://redis:6379
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
+      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/fifo.fifo
       REVIEW_APP: "true"
       DREAMKAST_NAMESPACE: "localhost"
       DREAMKAST_WEAVER_ADDR: "localhost:8080"
@@ -110,7 +110,7 @@ services:
     ports:
       - 4566:4566
     healthcheck:
-      test: awslocal sqs list-queues --output=text | grep default
+      test: awslocal sqs list-queues --output=text | grep fifo
       interval: 10s
       timeout: 60s
       retries: 10

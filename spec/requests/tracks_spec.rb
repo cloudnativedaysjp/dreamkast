@@ -35,7 +35,7 @@ RSpec.describe(TracksController, type: :request) do
           it 'show speaker' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).to(include('Alice様へのお知らせ'))
+            expect(response.body).not_to(include('Alice様へのお知らせ'))
           end
 
           context 'when announcement is not published' do
@@ -45,7 +45,7 @@ RSpec.describe(TracksController, type: :request) do
             it 'not exists speaker_announcements' do
               subject
               expect(response).to(be_successful)
-              expect(response.body).to(include('Alice様へのお知らせ'))
+              expect(response.body).not_to(include('Alice様へのお知らせ'))
               expect(response.body).not_to(include('test_announcement'))
             end
           end

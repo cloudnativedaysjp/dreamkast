@@ -741,26 +741,6 @@ TalkCategory.seed(
   { id: 180, conference_id: 14, name: "組織論"},
   { id: 181, conference_id: 14, name: "FinOps"},
   { id: 182, conference_id: 14, name: "その他"},
-
-  # CNK
-  { id: 183, conference_id: 15, name: "CI / CD"},
-  { id: 184, conference_id: 15, name: "Customizing / Extending"},
-  { id: 185, conference_id: 15, name: "IoT / Edge"},
-  { id: 186, conference_id: 15, name: "Microservices / Services Mesh"},
-  { id: 187, conference_id: 15, name: "ML / HPC"},
-  { id: 188, conference_id: 15, name: "Networking"},
-  { id: 189, conference_id: 15, name: "Operation / Monitoring / Logging"},
-  { id: 190, conference_id: 15, name: "Application / Development"},
-  { id: 191, conference_id: 15, name: "Runtime"},
-  { id: 192, conference_id: 15, name: "Security"},
-  { id: 193, conference_id: 15, name: "Serverless / FaaS"},
-  { id: 194, conference_id: 15, name: "Storage / Database"},
-  { id: 195, conference_id: 15, name: "Architecture Design"},
-  { id: 196, conference_id: 15, name: "Hybrid Cloud / Multi Cloud"},
-  { id: 197, conference_id: 15, name: "NFV / Edge"},
-  { id: 198, conference_id: 15, name: "組織論"},
-  { id: 199, conference_id: 15, name: "FinOps"},
-  { id: 200, conference_id: 15, name: "その他"},
 )
 
 TalkDifficulty.seed(
@@ -813,9 +793,10 @@ TalkDifficulty.seed(
   { id: 77, conference_id: 14, name: "上級者"},
 
   # CNK
-  { id: 78, conference_id: 15, name: "初級者"},
-  { id: 79, conference_id: 15, name: "中級者"},
-  { id: 80, conference_id: 15, name: "上級者"},
+  { id: 78, conference_id: 15, name: "初級者 - Beginner"},
+  { id: 79, conference_id: 15, name: "中級者 - Intermediate"},
+  { id: 80, conference_id: 15, name: "上級者 - Expert"},
+  { id: 81, conference_id: 15, name: "全て - Any"},
 )
 
 TalkTime.seed(
@@ -877,7 +858,7 @@ if ENV['REVIEW_APP'] == 'true'
   )
 
   Announcement.seed(
-    {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, body: <<'EOS'
+    {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, receiver: :all_attendee, body: <<'EOS'
 <a href="/cndt2021/" target="_blank">CloudNative Days Tokyo 2021</a>開催に向けて、10/18（月）19:00からプレイベントを実施します!
 EOS
     }

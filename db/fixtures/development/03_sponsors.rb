@@ -201,6 +201,12 @@ SponsorType.seed(
     conference_id: 15,
     name: "Media",
     order: 5,
+  },
+  {
+    id: 104,
+    conference_id: 15,
+    name: "Tool",
+    order: 5,
   }
 )
 

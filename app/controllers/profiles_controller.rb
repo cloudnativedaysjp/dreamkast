@@ -46,6 +46,7 @@ class ProfilesController < ApplicationController
       end
 
       ProfileMailer.registered(@profile, @conference).deliver_later
+
       if @profile.public_profile.present?
         redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
       else

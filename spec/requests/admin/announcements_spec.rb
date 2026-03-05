@@ -27,7 +27,7 @@ describe Admin::AnnouncementsController, type: :request do
       clear_enqueued_jobs
 
       expect do
-        post admin_announcements_path(event: 'cndt2020'),
+        post(admin_announcements_path(event: 'cndt2020'),
              params: {
                announcement: {
                  publish_time: Time.zone.now,
@@ -35,7 +35,7 @@ describe Admin::AnnouncementsController, type: :request do
                  publish: 1,
                  receiver: 'all_attendee'
                }
-             }
+             })
       end.to(change(Announcement, :count).by(1))
 
       expect(response).to(redirect_to(admin_announcements_path(event: 'cndt2020')))
@@ -48,7 +48,7 @@ describe Admin::AnnouncementsController, type: :request do
       clear_enqueued_jobs
 
       expect do
-        post admin_announcements_path(event: 'cndt2020'),
+        post(admin_announcements_path(event: 'cndt2020'),
              params: {
                announcement: {
                  publish_time: Time.zone.now,
@@ -56,7 +56,7 @@ describe Admin::AnnouncementsController, type: :request do
                  publish: 0,
                  receiver: 'only_online'
                }
-             }
+             })
       end.to(change(Announcement, :count).by(1))
 
       expect(response).to(redirect_to(admin_announcements_path(event: 'cndt2020')))
@@ -68,7 +68,7 @@ describe Admin::AnnouncementsController, type: :request do
       allow(PrepareAnnouncementDeliveriesJob).to(receive(:perform_later).and_raise(StandardError, 'queue missing'))
 
       expect do
-        post admin_announcements_path(event: 'cndt2020'),
+        post(admin_announcements_path(event: 'cndt2020'),
              params: {
                announcement: {
                  publish_time: Time.zone.now,
@@ -76,7 +76,7 @@ describe Admin::AnnouncementsController, type: :request do
                  publish: 1,
                  receiver: 'all_attendee'
                }
-             }
+             })
       end.to(raise_error(StandardError, 'queue missing'))
 
       expect(Announcement.where(body: 'will fail')).to(be_empty)
@@ -98,14 +98,14 @@ describe Admin::AnnouncementsController, type: :request do
       clear_enqueued_jobs
 
       expect do
-        patch admin_announcement_path(event: 'cndt2020', id: announcement.id),
+        patch(admin_announcement_path(event: 'cndt2020', id: announcement.id),
               params: {
                 announcement: {
                   body: 'updated body',
                   publish: 0,
                   receiver: 'all_attendee'
                 }
-              }
+              })
       end.not_to(have_enqueued_job(PrepareAnnouncementDeliveriesJob))
 
       expect(response).to(redirect_to(admin_announcements_path(event: 'cndt2020')))
@@ -115,14 +115,14 @@ describe Admin::AnnouncementsController, type: :request do
       clear_enqueued_jobs
 
       expect do
-        patch admin_announcement_path(event: 'cndt2020', id: announcement.id),
+        patch(admin_announcement_path(event: 'cndt2020', id: announcement.id),
               params: {
                 announcement: {
                   body: 'publish now',
                   publish: 1,
                   receiver: 'all_attendee'
                 }
-              }
+              })
       end.to(have_enqueued_job(PrepareAnnouncementDeliveriesJob).with(announcement.id))
 
       expect(response).to(redirect_to(admin_announcements_path(event: 'cndt2020')))

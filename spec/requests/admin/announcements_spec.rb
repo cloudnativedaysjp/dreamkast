@@ -77,8 +77,9 @@ describe Admin::AnnouncementsController, type: :request do
                  receiver: 'all_attendee'
                }
              })
-      end.to(raise_error(StandardError, 'queue missing'))
+      end.not_to(change(Announcement, :count))
 
+      expect(response).to(have_http_status(:internal_server_error))
       expect(Announcement.where(body: 'will fail')).to(be_empty)
     end
   end

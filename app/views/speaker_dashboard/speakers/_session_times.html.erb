@@ -1,6 +1,6 @@
 <% classes += " #{item.params.split(' ').first}" if :session_times == label %>
 <% radio_id = "#{label}_#{item.id}_#{form_index}" %>
-<% if (label == :session_times && item.key.to_i == SessionTime::TWENTY_MINUTES) || (f.object&.proposal&.accepted?) %>
+<% if (label == :session_times && item.params.include('for keynote')) || (f.object&.proposal&.accepted?) %>
   <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, disabled: 'disabled', id: radio_id} %>
 <% else %>
   <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: radio_id} %>

@@ -4,15 +4,20 @@ class PrepareAnnouncementDeliveriesJob < ApplicationJob
 
   def perform(announcement_id)
     announcement = Announcement.find(announcement_id)
-    announcement.target_profiles.each do |profile|
-      AnnouncementDelivery.create!(
-        announcement:,
-        profile:,
-        email: profile.email,
-        status: :queued
-      )
+    profiles = announcement.target_profiles.select(:id, :email)
+
+    Rails.logger.info("[PrepareAnnouncementDeliveriesJob] announcement=#{announcement_id} target_count=#{profiles.count}")
+
+    ActiveRecord::Base.transaction do
+      profiles.each do |profile|
+        AnnouncementDelivery.find_or_create_by!(announcement:, profile_id: profile.id) do |d|
+          d.email = profile.email
+          d.status = :queued
+        end
+      end
+      announcement.update!(send_status: :processing)
     end
-    announcement.update!(send_status: :processing)
+
     SendAnnouncementBatchJob.perform_later(announcement_id)
   end
 end

@@ -9,10 +9,13 @@ class SendAnnouncementBatchJob < ApplicationJob
     announcement = Announcement.find(announcement_id)
     batch = announcement.announcement_deliveries.queued.limit(BATCH_SIZE)
 
+    Rails.logger.info("[SendAnnouncementBatchJob] announcement=#{announcement_id} batch_size=#{batch.count}")
+
     batch.each do |delivery|
       result = AnnouncementMailer.notify(announcement, delivery).deliver_now
       delivery.update!(status: :sent, provider_message_id: result.message_id)
     rescue StandardError => e
+      Rails.logger.warn("[SendAnnouncementBatchJob] delivery=#{delivery.id} failed: #{e.class}: #{e.message}")
       delivery.update!(status: :failed, last_error: e.message)
     end
 

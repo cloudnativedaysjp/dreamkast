@@ -804,7 +804,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "admin_profiles", "users"
-  add_foreign_key "announcement_deliveries", "announcements"
+  add_foreign_key "announcement_deliveries", "announcements", on_delete: :cascade
   add_foreign_key "announcement_deliveries", "profiles", on_delete: :nullify
   add_foreign_key "announcements", "conferences"
   add_foreign_key "attendee_announcement_middles", "attendee_announcements"

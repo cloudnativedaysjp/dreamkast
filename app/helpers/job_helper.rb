@@ -14,7 +14,7 @@ module JobHelper
     raise(result.error) unless result.successful?
     result.queue_url
   rescue StandardError => e
-    warn("Failed to resolve SQS queue URL (#{e.class}: #{e.message}), fallback to #{DEFAULT_FIFO_QUEUE_URL}")
+    Rails.logger.warn("Failed to resolve SQS queue URL (#{e.class}: #{e.message}), fallback to #{DEFAULT_FIFO_QUEUE_URL}")
     DEFAULT_FIFO_QUEUE_URL
   end
 end

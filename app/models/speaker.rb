@@ -19,7 +19,7 @@ class Speaker < ApplicationRecord
   validates :company, presence: true
   validates :job_title, presence: true
   validates :conference_id, presence: true
-  validates :user_id, uniqueness: { scope: :conference_id }
+  validates :user_id, uniqueness: { scope: :conference_id }, allow_nil: true
 
   # userのsubとemailを委譲（userがnilの可能性がある場合はallow_nil: true）
   delegate :sub, :email, to: :user, allow_nil: true

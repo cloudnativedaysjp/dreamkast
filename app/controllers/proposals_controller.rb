@@ -9,8 +9,8 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    @conference = Conference.find_by(abbr: event_name)
-    @proposal = Proposal.find_by(id: params[:id], conference_id: @conference.id)
+    @conference = Conference.find_by!(abbr: event_name)
+    @proposal = Proposal.find_by!(id: params[:id], conference_id: @conference.id)
     @talk = @proposal.talk
   end
 

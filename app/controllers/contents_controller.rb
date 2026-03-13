@@ -11,7 +11,7 @@ class ContentsController < ApplicationController
 
   def discussion
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_discussion".to_sym)
+    render_if_template_exists("#{@conference.abbr}_discussion")
   end
 
   def kontest
@@ -20,12 +20,12 @@ class ContentsController < ApplicationController
 
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_hands_on".to_sym)
+    render_if_template_exists("#{@conference.abbr}_hands_on")
   end
 
   def job_board
     @conference = Conference.find_by(abbr: params[:event])
-    render("#{@conference.abbr}_job_board".to_sym)
+    render_if_template_exists("#{@conference.abbr}_job_board")
   end
 
   def o11y
@@ -35,16 +35,24 @@ class ContentsController < ApplicationController
 
   def community_lt
     @conference = Conference.find_by(abbr: params[:event])
-    render("contents/#{@conference.abbr}/community_lt")
+    render_if_template_exists("contents/#{@conference.abbr}/community_lt")
   end
 
   def yurucafe
     @conference = Conference.find_by(abbr: params[:event])
-    render("contents/#{@conference.abbr}/yurucafe")
+    render_if_template_exists("contents/#{@conference.abbr}/yurucafe")
   end
 
   def stamprally
     @conference = Conference.find_by(abbr: params[:event])
-    render("contents/#{@conference.abbr}/stamprally")
+    render_if_template_exists("contents/#{@conference.abbr}/stamprally")
+  end
+
+  private
+
+  def render_if_template_exists(template)
+    raise(NotFound) unless lookup_context.template_exists?(template, [], false)
+
+    render(template)
   end
 end

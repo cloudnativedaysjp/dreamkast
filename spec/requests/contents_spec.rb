@@ -94,4 +94,30 @@ describe ContentsController, type: :request do
       end
     end
   end
+
+  describe 'GET missing content pages' do
+    before do
+      create(:cndt2020)
+    end
+
+    it 'returns 404 for hands-on without a template' do
+      get '/cndt2020/hands-on'
+      expect(response).to(have_http_status('404'))
+    end
+
+    it 'returns 404 for community_lt without a template' do
+      get '/cndt2020/community_lt'
+      expect(response).to(have_http_status('404'))
+    end
+
+    it 'returns 404 for yurucafe without a template' do
+      get '/cndt2020/yurucafe'
+      expect(response).to(have_http_status('404'))
+    end
+
+    it 'returns 404 for stamprally without a template' do
+      get '/cndt2020/stamprally'
+      expect(response).to(have_http_status('404'))
+    end
+  end
 end

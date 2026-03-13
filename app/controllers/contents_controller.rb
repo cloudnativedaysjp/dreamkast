@@ -11,7 +11,11 @@ class ContentsController < ApplicationController
 
   def discussion
     @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("#{@conference.abbr}_discussion")
+    render_if_template_exists(
+      "#{@conference.abbr}_discussion",
+      prefixes: controller_path,
+      render_target: "#{@conference.abbr}_discussion".to_sym
+    )
   end
 
   def kontest
@@ -20,12 +24,20 @@ class ContentsController < ApplicationController
 
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("#{@conference.abbr}_hands_on")
+    render_if_template_exists(
+      "#{@conference.abbr}_hands_on",
+      prefixes: controller_path,
+      render_target: "#{@conference.abbr}_hands_on".to_sym
+    )
   end
 
   def job_board
     @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("#{@conference.abbr}_job_board")
+    render_if_template_exists(
+      "#{@conference.abbr}_job_board",
+      prefixes: controller_path,
+      render_target: "#{@conference.abbr}_job_board".to_sym
+    )
   end
 
   def o11y
@@ -50,9 +62,9 @@ class ContentsController < ApplicationController
 
   private
 
-  def render_if_template_exists(template)
-    raise(NotFound) unless lookup_context.template_exists?(template, [], false)
+  def render_if_template_exists(template, prefixes: [], render_target: template)
+    raise(NotFound) unless lookup_context.template_exists?(template, prefixes, false)
 
-    render(template)
+    render(render_target)
   end
 end

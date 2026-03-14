@@ -45,7 +45,7 @@ MYSQL_PASSWORD=root
 MYSQL_DATABASE=dreamkast
 REDIS_URL=redis://redis:6379
 RAILS_MASTER_KEY=
-SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/default
+SQS_FIFO_QUEUE_URL=http://localstack:4566/000000000000/fifo.fifo
 EOF
 ```
 

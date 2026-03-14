@@ -15,7 +15,7 @@ class CreateAnnouncementDeliveries < ActiveRecord::Migration[8.0]
     add_index(:announcement_deliveries, :announcement_id)
     add_index(:announcement_deliveries, :profile_id)
 
-    add_foreign_key(:announcement_deliveries, :announcements)
+    add_foreign_key(:announcement_deliveries, :announcements, on_delete: :cascade)
     add_foreign_key(:announcement_deliveries, :profiles, on_delete: :nullify)
   end
 end

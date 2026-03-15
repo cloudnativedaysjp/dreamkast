@@ -1,0 +1,61 @@
+id,name,profile,company,job_title,twitter_id,github_id,conference_id
+1302,高石 諒,CNCF Ambassadorとして活動し、KubernetesとIstioを活用した大規模マイクロサービスアーキテクチャの設計・構築を多数手がける。著書「マイクロサービスパターン実践ガイド」が好評。,CloudNative Solutions Inc.,Cloud Native Architect,r_takaishi,takaishi,15
+1303,三輪 昌光,オープンソースの監視システムのエキスパート。PrometheusとGrafanaのコミッターとして活動し、大規模環境での監視システム構築の実績多数。CNCFのTechnical Advisory Groupメンバー。,TechNative Systems,Infrastructure Engineer,m_miwa,miwa-m,15
+1304,山岸 克明,Kubernetes Gateway APIのコントリビューター。サービスメッシュとAPI管理の知見が豊富で、国内外のカンファレンスで講演多数。,CloudNativeOps,Infrastructure Engineer,k_yamagishi,yamagishi-k,15
+1305,奥村 秀司,OpenTelemetryプロジェクトのコントリビューター。分散トレーシングとオブザーバビリティの導入支援を多数手がける。,ServerlessTech,Infrastructure Engineer,s_okumura,okumura-s,15
+1306,大川 文典,WebAssemblyランタイムの開発者。WasmEdgeやSpinなどのプロジェクトに貢献し、Wasmのクラウドネイティブ活用を推進している。,WasmTech,Software Engineer,f_okawa,okawa-f,15
+1307,佐藤 雅彦,データベースエンジニアとして15年以上の経験。NewSQLやクラウドネイティブデータベースの設計・運用を多数手がける。,DataNative Inc.,Database Architect,m_sato,sato-m,15
+1308,田村 由紀,マネージドKubernetesサービスの開発チームリーダー。マルチクラウド環境での運用経験が豊富。,KubeCloud Inc.,Engineering Manager,y_tamura,tamura-y,15
+1309,中村 健太,AIインフラの設計・構築の専門家。GPU最適化とMLOpsパイプラインの構築を多数手がける。,AINative Corp.,ML Platform Engineer,k_nakamura,nakamura-k,15
+1310,藤田 初美,Platform Engineeringの実践者。内部開発者プラットフォームの設計と組織変革の支援を多数手がける。,PlatformOps Inc.,Platform Engineer,h_fujita,fujita-h,15
+1311,奥村 真志,eBPFを活用したカーネルレベルの可観測性ツールの開発者。Linux kernel communityへの貢献多数。,KernelTech,Systems Engineer,m_okumura,okumura-m,15
+1312,小柳 たか子,GitOpsの実践者として知られ、ArgoCDとCrossplaneの導入支援を多数手がける。CNCFのApp Delivery TAGメンバー。,GitOpsTech,Software Engineer,t_koyanagi,koyanagi-t,15
+1313,北島 友隆,エンタープライズKubernetesプラットフォームの構築コンサルタント。大規模企業でのクラウドネイティブ導入を支援。,EnterpriseTech,Solutions Architect,t_kitajima,kitajima-t,15
+1314,大石 禎二,クラウドネイティブセキュリティの専門家。コンテナスキャンツールやランタイムセキュリティの導入を多数手がける。,SecureCloud,Security Engineer,t_oishi,oishi-t,15
+1315,岩本 敬史,SREとして大規模システムの信頼性向上に携わる。SLI/SLOの設計とインシデント管理の知見が豊富。,ReliabilityFirst,SRE Lead,t_iwamoto,iwamoto-t,15
+1316,新谷 憲広,KubernetesのマルチクラスタFederationの実装経験が豊富。グローバル分散システムの設計を多数手がける。,MultiCloudTech,Infrastructure Engineer,n_shintani,shintani-n,15
+1317,横井 兼典,Ciliumコントリビューター。eBPFを活用したクラウドネイティブネットワーキングの専門家。,NetworkNative,Network Engineer,k_yokoi,yokoi-k,15
+1318,武田 芳伸,KubeVirtプロジェクトのコントリビューター。仮想マシンとコンテナの統合管理の知見が豊富。,VirtualNative,Infrastructure Engineer,y_takeda,takeda-y,15
+1319,前川 政年,FinOpsの実践者。クラウドコスト最適化ツールの開発と導入支援を多数手がける。,FinOpsTech,FinOps Lead,m_maekawa,maekawa-m,15
+1320,福本 華代,サービスメッシュの専門家。IstioとLinkerdの導入・運用支援を多数手がけ、メッシュの進化と未来について講演多数。,MeshNative,Software Engineer,h_fukumoto,fukumoto-h,15
+1321,千葉 信平,CI/CDパイプラインの最適化に注力。TektonやGitHub Actionsを活用した効率的なデリバリーフローの構築を手がける。,PipelineTech,DevOps Engineer,s_chiba,chiba-s,15
+1322,馬場 玲,Backstageの導入・カスタマイズの専門家。開発者体験の向上を目指した内部ポータルの構築を多数手がける。,DevPortalTech,Developer Advocate,r_baba,baba-r,15
+1323,松尾 晴仁,Keptnプロジェクトのコントリビューター。継続的デリバリーの自動化と品質ゲートの実装に定評がある。,DeliveryNative,Software Engineer,h_matsuo,matsuo-h,15
+1324,高山 華代,Falcoのコアコントリビューター。ランタイムセキュリティとコンテナの脅威検出の知見が豊富。,RuntimeSec,Security Engineer,k_takayama,takayama-k,15
+1325,塚本 定二,SpinKubeプロジェクトの初期メンバー。WebAssemblyワークロードのKubernetes上での運用を推進している。,WasmCloud,Software Engineer,t_tsukamoto,tsukamoto-t,15
+1326,大城 源三郎,Grafana Tempoの導入支援を多数手がける。分散トレーシングの設計と大規模環境での運用に定評がある。,ObservabilityTech,Infrastructure Engineer,g_oshiro,oshiro-g,15
+1327,田中 紀世実,Kyvernoプロジェクトのコントリビューター。Kubernetesポリシーの管理とガバナンスの設計を多数手がける。,PolicyNative,Platform Engineer,k_tanaka,tanaka-k,15
+1328,大塚 勝夫,CNCFエコシステムの動向に精通。クラウドネイティブ技術のトレンド分析と戦略立案を手がける。,CloudNativeVentures,CTO,k_otsuka,otsuka-k,15
+1329,滝沢 直広,Knativeプロジェクトのコントリビューター。イベントドリブンアーキテクチャとサーバーレスの実装経験が豊富。,EventDrivenTech,Software Engineer,n_takizawa,takizawa-n,15
+1330,川野 文吾,コンテナイメージのサプライチェーンセキュリティの専門家。SigstoreやSBOMの導入を推進している。,SupplyChainSec,Security Engineer,b_kawano,kawano-b,15
+1331,沢田 裕子,品質管理のエキスパート。テスト自動化とCI/CDの導入支援を多数手がけ、品質改善の戦略設計に定評がある。,QualityNative,Infrastructure Engineer,y_sawada,sawada-y,15
+1332,浜崎 俊康,技術イベントの企画・運営の専門家。複数のカンファレンスのオーガナイザーを務め、技術コミュニティの育成に力を入れている。,EventNative,Marketing,t_hamasaki,hamasaki-t,15
+1402,吉田 真一,CNCFアンバサダー。OSSコミュニティの運営と技術啓蒙活動に注力。KubeCon登壇多数。,OpenSourceJapan,Community Manager,s_yoshida,yoshida-s,15
+1403,安藤 美咲,Platform Engineeringの先駆者。大規模組織でのIDP構築と開発者体験の改善を推進。,PlatformEng Inc.,VP of Engineering,m_ando,ando-m,15
+1404,村上 拓也,Thanosプロジェクトのメンテナー。大規模メトリクス基盤の設計と運用に精通。Prometheus Meetup Tokyo主催。,MetricsNative,SRE,t_murakami,murakami-t,15
+1405,渡辺 翔太,Envoy Proxyのコントリビューター。データプレーン技術とサービスプロキシの設計に定評がある。,ProxyTech,Software Engineer,s_watanabe,watanabe-s,15
+1406,木村 亮介,コンテナランタイムの専門家。Podman・Buildahのコントリビューターとしてルートレスコンテナ技術の普及に貢献。,ContainerTech,Systems Engineer,r_kimura,kimura-r,15
+1407,鈴木 麻衣,ログ管理基盤の設計・構築の専門家。Fluent Bitのコントリビューターとして大規模ログ処理パイプラインの最適化に注力。,LogPlatform Inc.,Infrastructure Engineer,m_suzuki,suzuki-m,15
+1408,石井 大輔,コンテナ最適化OSの研究者。イミュータブルインフラストラクチャの設計思想とセキュリティ分析を多数発表。,ImmutableInfra,Research Engineer,d_ishii,ishii-d,15
+1409,加藤 理恵,Kubernetesマルチテナンシーの専門家。vClusterプロジェクトへの貢献とエンタープライズ環境での導入支援を手がける。,MultiTenantTech,Platform Engineer,r_kato,kato-r,15
+1410,長谷川 健,Daprプロジェクトのコントリビューター。分散アプリケーションランタイムとマイクロサービスパターンの実装経験が豊富。,DistributedApps,Application Architect,k_hasegawa,hasegawa-k,15
+1411,井上 裕太,Helmメンテナー。Kubernetesパッケージ管理のベストプラクティスと大規模チャートリポジトリの運用ノウハウを持つ。,ChartNative,DevOps Engineer,y_inoue,inoue-y,15
+1412,西村 香織,OPAとRegoの専門家。ポリシーアズコードの設計とKubernetesアドミッションコントロールの導入支援を多数手がける。,PolicyTech,Security Architect,k_nishimura,nishimura-k,15
+1413,森田 誠,分散ストレージシステムの専門家。RookとCephの運用経験が豊富で、大規模ストレージ基盤の設計を手がける。,StorageNative,Storage Engineer,m_morita,morita-m,15
+1414,斎藤 洋平,ステートフルワークロードのKubernetes運用のエキスパート。データベースOperatorの開発と運用改善に貢献。,StatefulTech,Database Engineer,y_saito,saito-y,15
+1415,松田 あゆみ,DevSecOpsの実践者。セキュリティテスト自動化ツールの開発とCI/CDパイプラインへの統合を専門とする。,DevSecOps Inc.,AppSec Engineer,a_matsuda,matsuda-a,15
+1416,原田 剛志,Flaggerプロジェクトのコントリビューター。プログレッシブデリバリーとトラフィック管理の実装経験が豊富。,DeliveryTech,Software Engineer,t_harada,harada-t,15
+1417,小林 雄大,gRPCエコシステムの専門家。高性能なマイクロサービス通信基盤の設計と、Protocol Buffersのスキーマ管理を手がける。,gRPCTech,Backend Engineer,y_kobayashi,kobayashi-y,15
+1418,佐々木 遥,Kubebuilderを活用したオペレーター開発の専門家。複数のカスタムオペレーターを開発し、OSS公開している。,OperatorFactory,Software Engineer,h_sasaki,sasaki-h,15
+1419,山本 太一,Apache Kafkaとイベントストリーミング基盤の専門家。Strimziを活用したKubernetes上のKafka運用に精通。,StreamNative,Data Engineer,t_yamamoto,yamamoto-t,15
+1420,中島 由美,SPIFFE/SPIREプロジェクトのコントリビューター。ゼロトラストアーキテクチャの設計と実装を専門とする。,ZeroTrustTech,Security Engineer,y_nakajima,nakajima-y,15
+1421,遠藤 公一,クラウドコスト最適化の専門家。OpenCostプロジェクトへの貢献とFinOpsプラクティスの導入支援を手がける。,CostOptimize,FinOps Engineer,k_endo,endo-k,15
+1422,河合 智史,LitmusChaosプロジェクトのコントリビューター。カオスエンジニアリングの実践と信頼性テストのフレームワーク設計に注力。,ChaosTech,Reliability Engineer,s_kawai,kawai-s,15
+1423,上田 恵子,コンテナランタイムの比較研究者。containerd・CRI-Oのベンチマーク分析とパフォーマンスチューニングに定評がある。,RuntimeLab,Performance Engineer,k_ueda,ueda-k,15
+1424,高橋 翔平,Telepresenceを活用したKubernetes開発ワークフローの改善コンサルタント。開発者体験の向上に注力。,DevWorkflow Inc.,Developer Advocate,s_takahashi,takahashi-s,15
+1425,伊藤 真理子,Veleroプロジェクトのコントリビューター。Kubernetesの災害復旧戦略とデータ保護の設計を専門とする。,BackupNative,Infrastructure Engineer,m_ito,ito-m,15
+1426,坂本 龍一,Pixieプロジェクトの利用推進者。eBPFベースの自動オブザーバビリティとリアルタイムデバッグ手法の普及に貢献。,AutoObserve,Observability Engineer,r_sakamoto,sakamoto-r,15
+1427,宮崎 哲也,cert-managerプロジェクトのメンテナー。PKI基盤の設計と証明書ライフサイクル管理の自動化に精通。,CertNative,Security Engineer,t_miyazaki,miyazaki-t,15
+1428,内田 勇気,CloudNativePGプロジェクトのコントリビューター。Kubernetes上でのPostgreSQL運用とデータベースオペレーターの開発に注力。,DBOperator Inc.,Database Engineer,y_uchida,uchida-y,15
+1429,小山 美穂,Argo Workflowsの導入コンサルタント。データパイプラインとMLワークフローのKubernetesネイティブな設計を手がける。,WorkflowTech,Data Platform Engineer,m_koyama,koyama-m,15
+1430,菊地 正人,Kubernetesセキュリティ監査の専門家。CIS Benchmarkの実装とkube-bench・kubescapeの活用による継続的セキュリティ検証を推進。,AuditSec,Security Auditor,m_kikuchi,kikuchi-m,15

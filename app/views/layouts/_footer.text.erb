@@ -1,4 +1,6 @@
 ----------------------------
-<%= @conference.name %>運営事務局
+<%= @conference.name %> 実行委員会
 X(Twitter): @cloudnativedays
-E-mail: <%= @conference.abbr %>@impress.co.jp
+<% if @conference.contact_url.present? %>
+<%= @conference.contact_url %>
+<% end %>

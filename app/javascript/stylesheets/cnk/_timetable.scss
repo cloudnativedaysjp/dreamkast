@@ -533,6 +533,20 @@ input[type="checkbox"]:checked+.content .content_caption:before {
         display: none;
     }
 
+    // Closing section
+    .timetable-modern-closing {
+        margin-top: 0.75rem;
+
+        .timetable-modern-closing-card {
+            background: white;
+            border: 1px solid rgba($sumi, 0.08);
+            border-radius: 2px;
+            box-shadow: 0 1px 4px $washi-shadow;
+            padding: 0.75rem 1rem;
+            text-align: center;
+        }
+    }
+
     // Mobile responsive
     @media (max-width: 768px) {
         .timetable-modern-grid {

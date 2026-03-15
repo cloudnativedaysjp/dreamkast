@@ -82,6 +82,14 @@
             </div>
           <% end %>
         </div>
+        <% if conference_day.date.day == 14 %>
+        <div class="timetable-modern-closing">
+          <div class="timetable-modern-closing-card">
+            <div class="timetable-modern-card-time">18:40 - 20:30</div>
+            <div class="timetable-modern-card-title">懇親会</div>
+          </div>
+        </div>
+        <% end %>
         <% if conference_day.date.day == 15 %>
         <div class="timetable-modern-closing">
           <div class="timetable-modern-closing-card">

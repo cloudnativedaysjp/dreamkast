@@ -13,7 +13,7 @@ section.timetable {
     .grid {
         display: grid;
         grid-template-rows: repeat(var(--rows), 3px);
-        grid-template-columns: repeat(4, minmax(180px, 240px));
+        grid-template-columns: repeat(3, minmax(240px, 320px));
         grid-auto-columns: 100px;
         overflow-x: auto;
         overflow-scrolling: touch;
@@ -366,4 +366,198 @@ input[type="checkbox"]+.content .content_caption:before {
 
 input[type="checkbox"]:checked+.content .content_caption:before {
     content: "選択解除";
+}
+
+// ===== Timetable Modern - Japanese Modern Theme =====
+.timetable-modern {
+    background-color: $washi;
+    padding: 2rem 0 4rem;
+
+    .timetable-modern-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .timetable-modern-title {
+        font-family: $font-family-header;
+        font-size: 2rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.08em;
+    }
+
+    .timetable-modern-day {
+        margin-bottom: 3rem;
+    }
+
+    .timetable-modern-date {
+        font-family: $font-family-header;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.05em;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid $beni;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+    }
+
+    // Grid layout
+    .timetable-modern-grid {
+        display: grid;
+        grid-template-rows: repeat(var(--rows), 5px);
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        grid-gap: 0px 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: center;
+    }
+
+    .timetable-modern-track {
+        grid-column: calc(var(--track) + 1);
+        grid-row: 1 / -1;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        font-family: $font-family-header;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: lighten($sumi, 30%);
+        letter-spacing: 0.05em;
+        padding-top: 0.25rem;
+        background-color: rgba(white, 0.3);
+        border-radius: 2px;
+    }
+
+    .timetable-modern-talk {
+        --start: calc(1 + var(--track));
+        --end: calc(2 + var(--track));
+        grid-column: var(--start) / var(--end);
+        grid-row: calc(1 + var(--row-start)) / calc(1 + var(--row-end));
+        z-index: 1;
+    }
+
+    .timetable-modern-talk:hover {
+        z-index: 10;
+    }
+
+    .timetable-modern-label {
+        display: block;
+        height: 100%;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    // チェックボックスの非表示
+    .timetable-modern-label input[type="checkbox"] {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    // チェックボックス選択時のスタイル
+    input[type="checkbox"]:checked + .timetable-modern-card {
+        background-color: rgba($tokyo-navy, 0.06);
+        border-color: $tokyo-navy;
+        border-width: 2px;
+    }
+
+    // Card styling
+    .timetable-modern-card {
+        background: white;
+        height: 100%;
+        border: 1px solid rgba($sumi, 0.08);
+        border-radius: 2px;
+        box-shadow: 0 1px 4px $washi-shadow;
+        overflow: hidden;
+        padding: 0.4rem 0.5rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba($tokyo-navy, 0.03);
+            border-color: rgba($tokyo-navy, 0.2);
+            height: auto;
+            overflow: visible;
+            min-height: 100%;
+            box-shadow: 0 4px 12px rgba($sumi, 0.12);
+        }
+
+        &.disabled {
+            opacity: 0.5;
+        }
+    }
+
+    .timetable-modern-card-time {
+        font-family: $font-family-serif;
+        font-size: 0.65rem;
+        color: lighten($sumi, 40%);
+        letter-spacing: 0.03em;
+        margin-bottom: 0.15rem;
+    }
+
+    .timetable-modern-card-title {
+        font-family: $font-family-header;
+        font-size: 0.85rem;
+        font-weight: 700;
+        line-height: 1.4;
+        word-wrap: break-word;
+        word-break: break-all;
+
+        a {
+            color: $sumi;
+            text-decoration: none;
+
+            &:hover {
+                color: $beni;
+            }
+        }
+    }
+
+    .timetable-modern-card-speaker {
+        font-family: $font-family-serif;
+        font-size: 0.7rem;
+        color: lighten($sumi, 30%);
+        margin-top: 0.15rem;
+    }
+
+    .timetable-modern-card-hint {
+        font-size: 0.55rem;
+        color: lighten($sumi, 50%);
+        margin-top: 0.25rem;
+
+        span {
+            font-style: italic;
+        }
+    }
+
+    .timetable-modern-track-name {
+        display: none;
+    }
+
+    // Mobile responsive
+    @media (max-width: 768px) {
+        .timetable-modern-grid {
+            display: block;
+        }
+
+        .timetable-modern-track {
+            display: none;
+        }
+
+        .timetable-modern-track-name {
+            display: inline;
+        }
+
+        .timetable-modern-card {
+            margin-bottom: 4px;
+            border-left: 3px solid $tokyo-navy;
+        }
+
+        input[type="checkbox"]:checked + .timetable-modern-card {
+            border-left: 5px solid $tokyo-navy;
+        }
+
+        .timetable-modern-talk {
+            margin-bottom: 2px;
+        }
+    }
 }

@@ -842,20 +842,7 @@ if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
   import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
   #import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))
-
-  Video.seed(
-    { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true},
-    { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true},
-    { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true},
-    { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true},
-    { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true},
-    { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true},
-    { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false},
-    { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false},
-    { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false},
-  )
+  import_dummy_data('cnk', %w(talks speakers talks_speakers proposals proposal_items))
 
   Announcement.seed(
     {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, receiver: :all_attendee, body: <<'EOS'

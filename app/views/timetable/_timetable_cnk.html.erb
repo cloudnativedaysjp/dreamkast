@@ -42,7 +42,10 @@
                                     talk_number: talk.talk_number,
                                     checked: talks_checked?(talk.id),
                                     class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}",
-                                    disabled: form_status
+                                    disabled: form_status,
+                                    "data-conference-day": conference_day.id,
+                                    "data-start-time": talk.start_time.to_i,
+                                    "data-end-time": talk.end_time.to_i
                                   },
                                   true,
                                   false %>

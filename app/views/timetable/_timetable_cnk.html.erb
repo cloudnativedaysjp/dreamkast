@@ -9,8 +9,15 @@
         <h2 class="timetable-modern-date"><%= conference_day.date.strftime("%Y年%m月%d日") %></h2>
 
         <div class="timetable-modern-grid" style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
-          <% @conference.tracks.map(&:name).each_with_index do |track_name, n| %>
-            <div class="timetable-modern-track" style="--track: <%= n %>">Track <%= track_name %></div>
+          <%
+            cnk_track_labels = if conference_day.date.day == 14
+              @conference.tracks.map { |t| "Cloud Native Track #{t.name}" }
+            else
+              ["Platform Engineering Track", "SRE Track", "初心者向けTrack"]
+            end
+          %>
+          <% cnk_track_labels.each_with_index do |label, n| %>
+            <div class="timetable-modern-track" style="--track: <%= n %>"><%= label %></div>
           <% end %>
 
           <% intermissions = conference_day.talks
@@ -19,12 +26,13 @@
                .order(:end_time)
                .to_a %>
 
-          <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+          <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
             <%
               total_break = intermissions
                 .select { |i| i.end_time <= talk.start_time }
                 .sum { |i| ((i.end_time - i.start_time).to_i / 60) }
-              row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break
+              track_header_offset = 6
+              row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break + track_header_offset
               row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
             %>
             <div class="timetable-modern-talk"
@@ -62,7 +70,7 @@
                   <%= talk.seats_status if @profile.attend_offline? %>
                 </div>
                 <div class="timetable-modern-card-title">
-                  <%= link_to talk.title, talk_path(id: talk.id), remote: true %>
+                  <%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %>
                 </div>
                 <div class="timetable-modern-card-speaker"><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></div>
                 <div class="timetable-modern-card-hint"><span>(タイトルクリックで詳細表示)</span></div>

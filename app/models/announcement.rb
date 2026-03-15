@@ -31,7 +31,7 @@ class Announcement < ApplicationRecord
     when 'only_offline' then base.offline
     when 'early_bird'   then base.where('profiles.created_at < ?', conference.early_bird_cutoff_at)
     else
-      raise ArgumentError, "Unknown receiver: #{receiver}"
+      raise(ArgumentError, "Unknown receiver: #{receiver}")
     end
   end
 

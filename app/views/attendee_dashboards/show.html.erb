@@ -32,16 +32,20 @@
       <div class="dashboard-section dashboard-participation">
         <h3 class="dashboard-section-title">企画一覧</h3>
         <div class="row justify-content-md-center mb-5  align-items-center">
-          <%= link_to "https://kaigi.cloudnativedays.jp/handson/", target: '_blank' do %>
-              <div class='project'>
-                <%= image_tag 'cnk/handson.png' %>
-              </div>
-          <% end %>
-          <%= link_to "https://kaigi.cloudnativedays.jp/blog/gameday-3/", target: '_blank' do %>
-              <div class='project'>
-                <%= image_tag 'cnk/gameday.png' %>
-              </div>
-          <% end %>
+          <div class="col-12 col-md-4 my-3 m-md-3">
+            <%= link_to "https://kaigi.cloudnativedays.jp/handson/", target: '_blank' do %>
+                <div class='project'>
+                  <%= image_tag 'cnk/handson.png' %>
+                </div>
+            <% end %>
+          </div>
+          <div class="col-12 col-md-4 my-3 m-md-3">
+            <%= link_to "https://kaigi.cloudnativedays.jp/blog/gameday-3/", target: '_blank' do %>
+                <div class='project'>
+                  <%= image_tag 'cnk/gameday.png' %>
+                </div>
+            <% end %>
+          </end>
         </div>
       </div>
       <% if @profile.instance_of?(Profile) %>

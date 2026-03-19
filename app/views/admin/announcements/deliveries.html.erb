@@ -1,0 +1,60 @@
+<%= render 'admin/layout' do %>
+  <h1>Announcement Deliveries</h1>
+
+  <p>
+    <strong>To:</strong>
+    <%= @announcement.profile_names %>
+  </p>
+
+  <p>
+    <strong>Time:</strong>
+    <%= @announcement.publish_time&.strftime('%Y-%m-%d %H:%M') %>
+  </p>
+
+  <p>
+    <strong>Announcement:</strong><br>
+    <%= simple_format @announcement.body %>
+  </p>
+
+  <p>
+    <strong>送信状況:</strong>
+    <%= @announcement.send_status %>
+    /
+    <strong>送信数:</strong>
+    <%= @announcement.sent_count %>
+    /
+    <strong>失敗数:</strong>
+    <%= @announcement.failed_count %>
+  </p>
+
+  <p>
+    <%= link_to 'Back to Announcements', admin_announcements_path, class: 'btn btn-secondary' %>
+  </p>
+
+  <table class="table table-striped talks_table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Email</th>
+        <th scope="col">Profile</th>
+        <th scope="col">Status</th>
+        <th scope="col">Provider Message ID</th>
+        <th scope="col">Last Error</th>
+        <th scope="col">Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @announcement_deliveries.each do |delivery| %>
+        <tr>
+          <td><%= delivery.id %></td>
+          <td><%= delivery.email %></td>
+          <td><%= delivery.profile.present? ? "#{delivery.profile.last_name} #{delivery.profile.first_name}" : '' %></td>
+          <td><%= delivery.status %></td>
+          <td><%= delivery.provider_message_id %></td>
+          <td><%= delivery.last_error %></td>
+          <td><%= delivery.updated_at&.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

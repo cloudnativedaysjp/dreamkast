@@ -13,6 +13,11 @@ class Admin::AnnouncementsController < ApplicationController
     @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
   end
 
+  def deliveries
+    @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
+    @announcement_deliveries = @announcement.announcement_deliveries.includes(:profile).order(id: :desc)
+  end
+
   def create
     params = announcement_params.merge(conference_id: @conference.id)
 

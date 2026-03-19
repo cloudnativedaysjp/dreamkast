@@ -74,7 +74,11 @@ Rails.application.routes.draw do
       resources :videos, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
-      resources :announcements
+      resources :announcements do
+        member do
+          get :deliveries
+        end
+      end
       resources :speaker_announcements
       resources :keynote_speaker_invitations do
         member do

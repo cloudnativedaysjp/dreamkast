@@ -9,6 +9,7 @@ class SendAnnouncementBatchJob < ApplicationJob
   def perform(announcement_id)
     announcement = Announcement.find(announcement_id)
     batch = announcement.announcement_deliveries.queued.limit(BATCH_SIZE)
+    retry_later = false
 
     Rails.logger.info("[SendAnnouncementBatchJob] announcement=#{announcement_id} batch_size=#{batch.count}")
 
@@ -21,9 +22,8 @@ class SendAnnouncementBatchJob < ApplicationJob
           "[SendAnnouncementBatchJob] rate limited announcement=#{announcement_id} " \
           "delivery=#{delivery.id} #{e.class}: #{e.message}"
         )
-        refresh_counts!(announcement)
-        SendAnnouncementBatchJob.set(wait: RATE_LIMIT_RETRY_WAIT.seconds).perform_later(announcement_id)
-        return
+        retry_later = true
+        break
       end
 
       Rails.logger.warn("[SendAnnouncementBatchJob] delivery=#{delivery.id} failed: #{e.class}: #{e.message}")
@@ -31,6 +31,11 @@ class SendAnnouncementBatchJob < ApplicationJob
     end
 
     refresh_counts!(announcement)
+
+    if retry_later
+      SendAnnouncementBatchJob.set(wait: RATE_LIMIT_RETRY_WAIT.seconds).perform_later(announcement_id)
+      return
+    end
 
     if announcement.announcement_deliveries.queued.exists?
       SendAnnouncementBatchJob.set(wait: BATCH_INTERVAL.seconds).perform_later(announcement_id)

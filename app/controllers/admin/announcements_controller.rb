@@ -15,8 +15,17 @@ class Admin::AnnouncementsController < ApplicationController
 
   def create
     params = announcement_params.merge(conference_id: @conference.id)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#create] conference=#{@conference.id} " \
+      "publish=#{params[:publish].inspect} receiver=#{params[:receiver].inspect} " \
+      "publish_time=#{params[:publish_time].inspect}"
+    )
 
     @announcement = Announcement.create(params)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#create] announcement=#{@announcement.id.inspect} " \
+      "persisted=#{@announcement.persisted?} errors=#{@announcement.errors.full_messages.join(', ')}"
+    )
     respond_to do |format|
       if @announcement.persisted?
         format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully created.') }
@@ -31,12 +40,25 @@ class Admin::AnnouncementsController < ApplicationController
   def update
     @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
     params = announcement_params.merge(conference_id: @conference.id)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#update] announcement=#{@announcement&.id.inspect} " \
+      "conference=#{@conference.id} publish=#{params[:publish].inspect} " \
+      "receiver=#{params[:receiver].inspect} publish_time=#{params[:publish_time].inspect}"
+    )
 
     respond_to do |format|
       if @announcement.update(params)
+        Rails.logger.info(
+          "[Admin::AnnouncementsController#update] updated announcement=#{@announcement.id} " \
+          "publish=#{@announcement.publish.inspect} send_status=#{@announcement.send_status.inspect}"
+        )
         format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
+        Rails.logger.warn(
+          "[Admin::AnnouncementsController#update] failed announcement=#{@announcement.id} " \
+          "errors=#{@announcement.errors.full_messages.join(', ')}"
+        )
         format.html { render(:edit) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
       end

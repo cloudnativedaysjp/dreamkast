@@ -4,7 +4,7 @@ class PrepareAnnouncementDeliveriesJob < ApplicationJob
 
   def perform(announcement_id)
     announcement = Announcement.find(announcement_id)
-    profiles = announcement.target_profiles.select(:id, :email)
+    profiles = announcement.target_profiles.includes(:user)
 
     Rails.logger.info("[PrepareAnnouncementDeliveriesJob] announcement=#{announcement_id} target_count=#{profiles.count}")
 

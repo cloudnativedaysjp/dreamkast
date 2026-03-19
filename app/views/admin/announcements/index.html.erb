@@ -13,6 +13,7 @@
       <th scope="col">送信状況</th>
       <th scope="col">送信数</th>
       <th scope="col">失敗数</th>
+      <th scope="col">Deliveries</th>
       <th scope="col">Edit</th>
     </tr>
     </thead>
@@ -33,6 +34,7 @@
         <td><%= announcement.send_status %></td>
         <td><%= announcement.sent_count %></td>
         <td><%= announcement.failed_count %></td>
+        <td><%= link_to 'View', deliveries_admin_announcement_path(id: announcement.id) %></td>
         <td>
           <%= link_to'Edit', edit_admin_announcement_path(id: announcement.id) %>
           <%= link_to'Delete', admin_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>

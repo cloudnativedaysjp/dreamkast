@@ -6,7 +6,7 @@ json.array!(@talks) do |talk|
   json.videoId(talk.video_id)
   json.title(talk.title)
   json.abstract(talk.abstract)
-  json.speakers(talk.speakers.map { |speaker| { id: speaker.id, name: speaker.name } })
+  json.speakers(talk.speakers.map { |speaker| { id: speaker.id, name: speaker.name, nameKanji: speaker.name_mother_tongue } })
   json.dayId(talk.conference_day.present? ? talk.conference_day.id : 0)
   json.showOnTimetable(talk.show_on_timetable)
   json.startTime(talk.start_time)
@@ -28,4 +28,5 @@ json.array!(@talks) do |talk|
   json.offlineParticipationCount(talk.offline_participation_size)
   json.onlineParticipationCount(talk.online_participation_size)
   json.sponsor(talk.sponsor.present? ? { id: talk.sponsor.id, name: talk.sponsor.name } : nil)
+  json.ogpImageUrl(talk.ogp_image)
 end

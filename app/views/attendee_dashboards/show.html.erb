@@ -31,15 +31,20 @@
       <% end %>
       <div class="dashboard-section dashboard-participation">
         <h3 class="dashboard-section-title">企画一覧</h3>
-        <div class="row justify-content-md-center mb-5  align-items-center">
-          <div class="col-12 col-md-5 my-3 m-md-3">
+        <div class="d-flex flex-column align-items-center mb-5">
+          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
             <%= link_to "https://kaigi.cloudnativedays.jp/handson/", target: '_blank' do %>
-              <%= image_tag 'cnk/handson.png', class: "w-100"  %>
+              <%= image_tag 'cnk/handson.png', class: "w-100" %>
             <% end %>
           </div>
-          <div class="col-12 col-md-5 my-3 m-md-3">
+          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
             <%= link_to "https://kaigi.cloudnativedays.jp/blog/gameday-3/", target: '_blank' do %>
-              <%= image_tag 'cnk/gameday.png',class: "w-100"  %>
+              <%= image_tag 'cnk/gameday.png', class: "w-100" %>
+            <% end %>
+          </div>
+          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
+            <%= link_to "https://eventregist.com/e/cnk_party", target: '_blank' do %>
+              <%= image_tag 'cnk/afterparty.png', class: "w-100" %>
             <% end %>
           </div>
         </div>

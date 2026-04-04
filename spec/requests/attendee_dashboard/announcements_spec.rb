@@ -121,6 +121,7 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
       it 'responds successfully using published announcements' do
         get '/cndt2020/dashboard'
         expect(response).to(be_successful)
+        expect(response.body).to(include('announcement all'))
       end
     end
   end

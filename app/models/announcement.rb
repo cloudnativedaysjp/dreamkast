@@ -36,6 +36,8 @@ class Announcement < ApplicationRecord
   end
 
   def self.visible_to(profile)
+    return none unless profile&.conference.present?
+
     base = where(publish: true, conference_id: profile.conference_id)
     result = base.where(receiver: :all_attendee)
 

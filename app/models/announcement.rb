@@ -36,6 +36,11 @@ class Announcement < ApplicationRecord
   end
 
   def self.visible_to(profile)
+    return none unless profile.is_a?(Profile)
+
+    conference = profile.conference
+    return none unless conference.present?
+
     base = where(publish: true, conference_id: profile.conference_id)
     result = base.where(receiver: :all_attendee)
 
@@ -45,7 +50,7 @@ class Announcement < ApplicationRecord
                result.or(base.where(receiver: :only_offline))
              end
 
-    if profile.conference.early_bird_cutoff_at && profile.created_at < profile.conference.early_bird_cutoff_at
+    if conference.early_bird_cutoff_at && profile.created_at < conference.early_bird_cutoff_at
       result = result.or(base.where(receiver: :early_bird))
     end
 

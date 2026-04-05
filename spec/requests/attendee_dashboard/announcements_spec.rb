@@ -110,5 +110,19 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
         expect(response.body).not_to(include('announcement online', 'announcement early'))
       end
     end
+
+    context 'when conference is archived (GuestProfile; no visible_to crash)' do
+      let!(:conference) { create(:cndt2020, :archived) }
+
+      before do
+        stub_session_for(sub: 'google-oauth2|alice', email: 'alice@example.com')
+      end
+
+      it 'responds successfully using published announcements' do
+        get '/cndt2020/dashboard'
+        expect(response).to(be_successful)
+        expect(response.body).to(include('announcement all'))
+      end
+    end
   end
 end

@@ -203,8 +203,10 @@
   <div class="cfp-field-group mb-5" id="participation">
     <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">参加方法</h5>
     <div class="px-3">
-        <div class="cfp-radio-card border p-3">
-            <%= form.radio_button :participation, :offline, { class: "form-check-input", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: @profile.participation.blank? || @profile.participation == 'offline' } %>
+            <%= form.radio_button :participation, :online, { class: "form-check-input", id: "participation_online", required: true, checked: @profile.participation == 'online' || (@profile.participation.blank? && @conference.reach_capacity?) } %>
+            <%= form.label :online, "リモート参加", { for: "participation_online", class: "form-check-label reached_capacity"} %>
+            </br>
+            <%= form.radio_button :participation, :offline, { class: "form-check-input", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: !@conference.reach_capacity? && (@profile.participation.blank? || @profile.participation == 'offline') } %>
             <% if @conference.reach_capacity? %>
               <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "form-check-label reached_capacity"} %>
               <span class="text-danger small d-block mt-1">現地参加は定員に達したためお申込みいただけません</span>

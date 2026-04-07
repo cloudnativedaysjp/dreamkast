@@ -205,8 +205,7 @@
     <div class="px-3">
         <div class="cfp-radio-card border p-3">
             <%= form.radio_button :participation, :online, { class: "form-check-input", id: "participation_online", required: true } %>
-            <%= form.label :online, "リモート参加", { for: "participation_online", class: "form-check-label reached_capacity"} %>
-            </br>
+            <%= form.label :online, "リモート参加", { for: "participation_online", class: "form-check-label fw-semibold"} %>
             <%= form.radio_button :participation, :offline, { class: "form-check-input", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: @profile.participation.blank? || @profile.participation == 'offline' } %>
             <% if @conference.reach_capacity? %>
               <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "form-check-label reached_capacity"} %>

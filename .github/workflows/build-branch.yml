@@ -13,6 +13,5 @@ jobs:
       id-token: write
     with:
       image_name: dreamkast-ecs
-      platforms: amd64
       aws_region: us-west-2
       run-trivy: true

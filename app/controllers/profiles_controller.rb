@@ -11,7 +11,13 @@ class ProfilesController < ApplicationController
   def new
     @profile = Profile.new
     @conference = Conference.find_by(abbr: params[:event])
-    if current_user && Profile.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+
+    # FormItemの数だけform_valuesを初期化
+    FormItem.where(conference_id: @conference.id).each do |form_item|
+      @profile.form_values.build(form_item_id: form_item.id)
+    end
+
+    if current_user && current_user_model && Profile.find_by(conference_id: @conference.id, user_id: current_user_model.id)
       redirect_to(dashboard_path)
     end
     @event = params[:event]
@@ -25,16 +31,22 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
 
     @profile = Profile.new(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-    @profile.sub = current_user[:extra][:raw_info][:sub]
+    @profile.sub = current_user_model&.sub
     @profile.email = current_user[:info][:email]
 
     if @profile.save
-      Agreement.create!(profile_id: @profile.id, form_item_id: 1, value: 1) if agreement_params['require_email']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 2, value: 1) if agreement_params['require_tel']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 3, value: 1) if agreement_params['require_posting']
-      Agreement.create!(profile_id: @profile.id, form_item_id: 4, value: 1) if agreement_params['agree_ms']
+      # フォーム項目の値を保存
+      if params[:form_item].present?
+        params[:form_item].each do |attr, value|
+          form_item = FormItem.find_by(attr:, conference_id: @conference.id)
+          if form_item
+            FormValue.create!(profile_id: @profile.id, form_item_id: form_item.id, value:)
+          end
+        end
+      end
 
       ProfileMailer.registered(@profile, @conference).deliver_later
+
       if @profile.public_profile.present?
         redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
       else
@@ -53,7 +65,20 @@ class ProfilesController < ApplicationController
     tel = profile_params[:company_tel].gsub(/-/, '')
     respond_to do |format|
       if @profile.update(profile_params.merge(conference_id: @conference.id, company_postal_code: postal_code, company_tel: tel))
-        format.html { redirect_to(edit_profile_path(id: @profile.id), notice: '登録情報の変更が完了しました') }
+        # フォーム項目の値を更新
+        if params[:form_item].present?
+          params[:form_item].each do |attr, value|
+            form_item = FormItem.find_by(attr:, conference_id: @conference.id)
+            if form_item
+              # 既存のフォーム値を探すか、新しく作成
+              form_value = @profile.form_values.find_or_initialize_by(form_item_id: form_item.id)
+              form_value.value = value
+              form_value.save!
+            end
+          end
+        end
+
+        format.html { redirect_to(dashboard_path, notice: '登録情報の変更が完了しました') }
         format.json { render(:show, status: :ok, location: @profile) }
       else
         format.html { render(:edit, notice: '登録情報の変更時にエラーが発生しました') }
@@ -98,18 +123,6 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def checkin
-    if @profile.present?
-      c = CheckIn.new
-      c.profile_id = @profile.id
-      c.save
-    elsif @profile.nil?
-      redirect_to("/#{params[:event]}/registration")
-    else
-      redirect_to(dashboard_path)
-    end
-  end
-
   def view_qr
   end
 
@@ -128,7 +141,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
   end
 
   def profile_params
@@ -159,22 +172,12 @@ class ProfilesController < ApplicationController
       :number_of_employee_id,
       :annual_sales_id,
       :company_fax,
-      :occupation_id
+      :occupation_id,
+      form_items_attributes: form_items_params
     )
   end
 
-  def agreement_params
-    params.require(:profile).permit(
-      :require_email,
-      :require_tel,
-      :require_posting,
-      :agree_ms,
-      :agree_ms_cndo2021,
-      # for CNDT2022
-      :ibm_require_email_cndt2022,
-      :ibm_require_tel_cndt2022,
-      :redhat_require_email_cndt2022,
-      :redhat_require_tel_cndt2022
-    )
+  def form_items_params
+    FormItem.where(conference_id: @conference.id).map { |item| item.attr.to_sym }
   end
 end

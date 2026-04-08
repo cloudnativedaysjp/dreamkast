@@ -1,7 +1,8 @@
 // Import custom variables and override default Bootstrap variables
 @import "./_variables.scss";
 // Import Bootstrap
-//@import 'bootstrap-icons/font/bootstrap-icons';
+$bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
+@import 'bootstrap-icons/font/bootstrap-icons';
 @import '~bootstrap/scss/bootstrap';
 // Import custom styles
 @import "./_global.scss";

@@ -2,7 +2,9 @@ class SpeakerDashboardsController < ApplicationController
   include SecuredSpeaker
   before_action :set_speaker
 
+
   def show
+    @conference = Conference.find_by(abbr: event_name)
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
   end
@@ -12,7 +14,7 @@ class SpeakerDashboardsController < ApplicationController
   helper_method :sponsor?
 
   def sponsor?
-    @conference.sponsor_contacts.where(email: current_user[:info][:email]).present?
+    @conference.sponsor_contacts.where(user_id: current_user_model.id).present?
   end
 
   def logged_in_using_omniauth?

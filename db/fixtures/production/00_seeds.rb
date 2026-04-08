@@ -67,7 +67,7 @@ EOS
     conference_status: "migrated",
     theme: "＋Native 〜ともに繋げるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2021.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Tokyo 2021 Committee",
@@ -88,7 +88,7 @@ EOS
     conference_status: "migrated",
     theme: "Observe the Observability 〜知らないことを知り、見えていないものを見る〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_o11y2022.md')), #TODO: o11y2022版プライバシーポリシー
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndo2021.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "Observability Conference 2022 Committee",
@@ -111,7 +111,7 @@ EOS
     conference_status: "migrated",
     theme: "Go \"Green\"〜ともに目指す持続可能なセキュリティ〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cnsec2022.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
     privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Security Conference 2022 Committee",
@@ -136,8 +136,8 @@ EOS
     conference_status: "migrated",
     theme: "+Native 〜ともに広がるクラウドネイティブの世界〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
-    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_cndt2022.md')),
-    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker_cndt2022.md')),
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Tokyo 2022 Committee",
     about: <<'EOS'
@@ -156,6 +156,8 @@ EOS
     conference_status: "migrated",
     theme: "Continuous 〜ともに回す高速なアプリケーション開発ライフサイクル〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CI/CD Conference 2023 Committee",
     about: <<'EOS'
@@ -174,8 +176,11 @@ EOS
     id: 9,
     name: "CloudNative Days Fukuoka 2023",
     abbr: "cndf2023",
-    theme: "“Unlearning” 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
+    conference_status: "migrated",
+    theme: "\"Unlearning\" 〜 クラウドの『べき』を外して、新たな世界と繋がろう",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     about: <<'EOS'
@@ -191,8 +196,11 @@ EOS
     id: 10,
     name: "CloudNative Days Tokyo 2023",
     abbr: "cndt2023",
+    conference_status: "migrated",
     theme: "+Native ともに飛び出せ！",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 650,
@@ -210,8 +218,11 @@ EOS
     id: 11,
     name: "CloudNative Days Summer 2024",
     abbr: "cnds2024",
+    conference_status: "migrated",
     theme: "Synergy 〜その先の、道へ。出会いと変化を紡ぐ場所〜",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 300,
@@ -233,8 +244,11 @@ EOS
     id: 12,
     name: "CloudNative Days Winter 2024",
     abbr: "cndw2024",
+    conference_status: "migrated",
     theme: "小さな一歩、大きな飛躍〜クラウドネイティブを継続する",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    privacy_policy: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy.md')),
+    privacy_policy_for_speaker: File.read(File.join(Rails.root, 'db/fixtures/production/privacy_policy_for_speaker.md')),
     coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
     committee_name: "CloudNative Days Committee",
     capacity: 600,
@@ -258,6 +272,75 @@ EOS
     あなたの一歩を後押しします。
     CloudNative Daysは、クラウドネイティブへの小さな一歩を踏み出し、
     大きな飛躍へと前進するエンジニアと共に歩んでいきます。
+EOS
+  },
+  {
+    id: 13,
+    name: "CloudNative Days Summer 2025",
+    abbr: "cnds2025",
+    theme: "Passion ~ CloudNativeに熱中する ~",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    capacity: 300,
+    about: <<'EOS'
+    今年、CloudNativeはさらなる広がりを見せ、その魅力は多くの人々の情熱を掻き立てています。
+    推しのプロダクトをとことん使い込んでいたり、OSSの開発に熱中するエンジニアたちが集まり、
+    その知見や思いを共有し合うことで新たな発想や出会いが生まれていくのです。
+    
+    2025年は、日本でCloudNativeがいっそう盛り上がる、まさに"情熱"に満ちた年となるでしょう。
+    コミュニティに加わることで、人生や仕事に新たな刺激を得て、より豊かで充実した日々を過ごせるはずです。
+    
+    ここには、同じ思いを抱く仲間との出会いがあり、成長のきっかけが無数に散りばめられています。
+    一人ひとりの情熱と行動が重なり合うことで、未来を拓くためのアイデアやイノベーションが紡がれていくでしょう。
+    
+    さぁ、CloudNativeに熱中する旅へ踏み出しましょう。
+    私たちの情熱が、新しい世界と可能性を切り拓いていくのです。
+EOS
+  },
+  {
+    id: 14,
+    name: "CloudNative Days Winter 2025",
+    abbr: "cndw2025",
+    theme: "Scaling Together",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    capacity: 600,
+    about: <<'EOS'
+    クラウドネイティブという波は、単なる技術革新にとどまらず、組織や社会、そして技術に関わるすべての人の在り方も変えていきます。
+    私たちはこれまで、知識や熱意を分かち合うことで、クラウドネイティブに取り組むエンジニアを後押ししてきました。
+    そして今、私たちは次のステージに向かって、日本のクラウドネイティブを「ともにスケールする」フェーズを迎えています。
+
+    "Scaling Together" には、個人の技術力、組織の開発力、プロダクトの品質、そしてコミュニティの可能性——あらゆる「成長」への思いを込めています。
+
+    生成AIによる開発の爆発的な加速、組織文化の変革、そして日々の運用課題。
+    クラウドネイティブの真価を発揮するには、今後もこれらすべてに向き合う必要があります。
+    でも、その壁を一人で越える必要はありません。
+
+    日本中のエンジニアが集い、現場の知見を分かち合う。
+    成功も失敗も、すべてが学びとなり、明日への糧となる。
+    これらすべてが交差し、相乗効果を生み出す場所がCloudNative Daysです。
+
+    垣根を越えて、世代を超えて、地域を超えて。
+    ともに成長し、ともに未来へ。
+EOS
+  },
+  {
+    id: 15,
+    name: "クラウドネイティブ会議",
+    abbr: "cnk",
+    theme: "-",
+    copyright: '© Cloud Native Kaigi (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "Cloud Native Kaigi Committee",
+    capacity: 1000,
+    about: <<'EOS'
+    クラウドネイティブの時代、私たちは常に進化し続けています。 紙に染み渡る墨のように、技術は適応し、私たちの世界を形作ります。
+
+    クラウドネイティブ会議は、CloudNative Days、Platform Engineering Kaigi、SRE Kaigiの 3つの主要なコミュニティを結集します。
+
+    名古屋で知識を共有し、文化を体験し、共に技術の未来を描きましょう。
 EOS
   },
 )
@@ -314,6 +397,17 @@ ConferenceDay.seed(
   # CNDW2024
   {id: 32, date: "2024-11-28", start_time: "09:50", end_time: "18:00", conference_id: 12, internal: false},
   {id: 33, date: "2024-11-29", start_time: "09:50", end_time: "18:00", conference_id: 12, internal: false},
+
+  # CNDS2025
+  {id: 34, date: "2025-05-23", start_time: "10:20", end_time: "18:00", conference_id: 13, internal: false},
+
+  # CNDW2025
+  {id: 35, date: "2025-11-18", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
+  {id: 36, date: "2025-11-19", start_time: "09:50", end_time: "18:00", conference_id: 14, internal: false},
+
+  # CNK
+  {id: 37, date: "2026-05-14", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false},
+  {id: 38, date: "2026-05-15", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false}
 )
 
 FormItem.seed(
@@ -325,7 +419,10 @@ FormItem.seed(
   { id: 6, conference_id: 7, name: "IBMからのメールを希望する"},
   { id: 7, conference_id: 7, name: "IBMからの電話を希望する"},
   { id: 8, conference_id: 7, name: "Red Hatからのメールを希望する"},
-  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"}
+  { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"},
+  { id: 10, conference_id: 13, name: "推しのOSS名(あれば)", attr: "oss_name"},
+  { id: 11, conference_id: 13, name: "推しのOSSのURL", attr: "oss_url"},
+  { id: 12, conference_id: 14, name: "推しのクラウドネイティブ技術", attr: "favorite_tech"}
 )
 
 Track.seed(
@@ -386,6 +483,22 @@ Track.seed(
   { id: 52, number: 2, name: "B", conference_id: 12, room_id: 25},
   { id: 53, number: 3, name: "C", conference_id: 12, room_id: 26},
   { id: 54, number: 4, name: "D", conference_id: 12, room_id: 27},
+
+  # CNDS2025
+  { id: 55, number: 1, name: "A", conference_id: 13, room_id: 28},
+  { id: 56, number: 2, name: "B", conference_id: 13, room_id: 29},
+  { id: 57, number: 3, name: "C", conference_id: 13, room_id: 30},
+
+  # CNDW2025
+  { id: 58, number: 1, name: "A", conference_id: 14, room_id: 31},
+  { id: 59, number: 2, name: "B", conference_id: 14, room_id: 32},
+  { id: 60, number: 3, name: "C", conference_id: 14, room_id: 33},
+  { id: 61, number: 4, name: "D", conference_id: 14, room_id: 34},
+
+  # CNK
+  { id: 62, number: 1, name: "A", conference_id: 15, room_id: 35},
+  { id: 63, number: 2, name: "B", conference_id: 15, room_id: 36},
+  { id: 64, number: 3, name: "C", conference_id: 15, room_id: 37}
 )
 
 Room.seed(
@@ -416,6 +529,22 @@ Room.seed(
   {id: 25, conference_id: 12, name: 'B-Room2'},
   {id: 26, conference_id: 12, name: 'C-Boardroom'},
   {id: 27, conference_id: 12, name: 'D-Room6'},
+
+  # CNDS2025
+  {id: 28, conference_id: 13, name: 'A'},
+  {id: 29, conference_id: 13, name: 'B'},
+  {id: 30, conference_id: 13, name: 'C'},
+
+  # CNDW2025
+  {id: 31, conference_id: 14, name: 'A-Room1'},
+  {id: 32, conference_id: 14, name: 'B-Room2'},
+  {id: 33, conference_id: 14, name: 'C-Boardroom'},
+  {id: 34, conference_id: 14, name: 'D-Room6'},
+
+  # CNK
+  {id: 35, conference_id: 15, name: 'A'},
+  {id: 36, conference_id: 15, name: 'B'},
+  {id: 37, conference_id: 15, name: 'C'},
 )
 
 TalkCategory.seed(
@@ -571,6 +700,47 @@ TalkCategory.seed(
   { id: 143, conference_id: 12, name: "FinOps"},
   { id: 144, conference_id: 12, name: "その他"},
   { id: 145, conference_id: 12, name: "Keynote"},
+
+  # CNDS2025
+  { id: 146, conference_id: 13, name: "CI / CD"},
+  { id: 147, conference_id: 13, name: "Customizing / Extending"},
+  { id: 148, conference_id: 13, name: "IoT / Edge"},
+  { id: 149, conference_id: 13, name: "Microservices / Services Mesh"},
+  { id: 150, conference_id: 13, name: "ML / HPC"},
+  { id: 151, conference_id: 13, name: "Networking"},
+  { id: 152, conference_id: 13, name: "Operation / Monitoring / Logging"},
+  { id: 153, conference_id: 13, name: "Application / Development"},
+  { id: 154, conference_id: 13, name: "Runtime"},
+  { id: 155, conference_id: 13, name: "Security"},
+  { id: 156, conference_id: 13, name: "Serverless / FaaS"},
+  { id: 157, conference_id: 13, name: "Storage / Database"},
+  { id: 158, conference_id: 13, name: "Architecture Design"},
+  { id: 159, conference_id: 13, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 160, conference_id: 13, name: "NFV / Edge"},
+  { id: 161, conference_id: 13, name: "組織論"},
+  { id: 162, conference_id: 13, name: "FinOps"},
+  { id: 163, conference_id: 13, name: "その他"},
+  { id: 164, conference_id: 13, name: "Keynote"},
+
+  # CNDW2025
+  { id: 165, conference_id: 14, name: "CI / CD"},
+  { id: 166, conference_id: 14, name: "Customizing / Extending"},
+  { id: 167, conference_id: 14, name: "IoT / Edge"},
+  { id: 168, conference_id: 14, name: "Microservices / Services Mesh"},
+  { id: 169, conference_id: 14, name: "ML / HPC"},
+  { id: 170, conference_id: 14, name: "Networking"},
+  { id: 171, conference_id: 14, name: "Operation / Monitoring / Logging"},
+  { id: 172, conference_id: 14, name: "Application / Development"},
+  { id: 173, conference_id: 14, name: "Runtime"},
+  { id: 174, conference_id: 14, name: "Security"},
+  { id: 175, conference_id: 14, name: "Serverless / FaaS"},
+  { id: 176, conference_id: 14, name: "Storage / Database"},
+  { id: 177, conference_id: 14, name: "Architecture Design"},
+  { id: 178, conference_id: 14, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 179, conference_id: 14, name: "NFV / Edge"},
+  { id: 180, conference_id: 14, name: "組織論"},
+  { id: 181, conference_id: 14, name: "FinOps"},
+  { id: 182, conference_id: 14, name: "その他"},
 )
 
 TalkDifficulty.seed(
@@ -611,6 +781,22 @@ TalkDifficulty.seed(
   { id: 69, conference_id: 12, name: "初級者"},
   { id: 70, conference_id: 12, name: "中級者"},
   { id: 71, conference_id: 12, name: "上級者"},
+
+  # CNDS2025
+  { id: 72, conference_id: 13, name: "初級者"},
+  { id: 73, conference_id: 13, name: "中級者"},
+  { id: 74, conference_id: 13, name: "上級者"},
+
+  # CNDW2025
+  { id: 75, conference_id: 14, name: "初級者"},
+  { id: 76, conference_id: 14, name: "中級者"},
+  { id: 77, conference_id: 14, name: "上級者"},
+
+  # CNK
+  { id: 78, conference_id: 15, name: "初級者 - Beginner"},
+  { id: 79, conference_id: 15, name: "中級者 - Intermediate"},
+  { id: 80, conference_id: 15, name: "上級者 - Expert"},
+  { id: 81, conference_id: 15, name: "全て - Any"},
 )
 
 TalkTime.seed(
@@ -624,40 +810,44 @@ TalkTime.seed(
   { id: 8, conference_id: 2, time_minutes: 40}
 )
 
-Talk::Type::KLASSES.each do |klass|
-  Talk::Type.seed({id: klass.name})
-end
+Talk::Type.seed(
+  {
+    id: 'Session',
+    display_name: '公募セッション',
+    description: '公募セッション',
+    is_exclusive: false
+  },
+  {
+    id: 'KeynoteSession',
+    display_name: 'キーノート',
+    description: 'メインの基調講演',
+    is_exclusive: false
+  },
+  {
+    id: 'SponsorSession',
+    display_name: 'スポンサーセッション',
+    description: 'スポンサー企業によるセッション',
+    is_exclusive: false
+  },
+  {
+    id: 'Intermission',
+    display_name: '休憩',
+    description: '休憩時間',
+    is_exclusive: true
+  }
+)
 
 if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cndt2020', %w(talks speakers talks_speakers))
   import_dummy_data('cndo2021', %w(talks speakers talks_speakers))
   import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('cndt2021', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('o11y2022', %w(talks speakers talks_speakers proposals))
-  import_dummy_data('cnsec2022', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cndt2022', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cicd2023', %w(talks speakers talks_speakers proposals proposal_items))
   #import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cnds2024', %w(talks speakers talks_speakers proposals proposal_items))
-  import_dummy_data('cndw2024', %w(talks speakers talks_speakers proposals proposal_items))
-
-  Video.seed(
-    { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true},
-    { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true},
-    { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true},
-    { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true},
-    { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true},
-    { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true},
-    { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false},
-    { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false},
-    { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false},
-  )
+  import_dummy_data('cnk', %w(talks speakers talks_speakers proposals proposal_items))
 
   Announcement.seed(
-    {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, body: <<'EOS'
+    {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, receiver: :all_attendee, body: <<'EOS'
 <a href="/cndt2021/" target="_blank">CloudNative Days Tokyo 2021</a>開催に向けて、10/18（月）19:00からプレイベントを実施します!
 EOS
     }
   )
 end
-

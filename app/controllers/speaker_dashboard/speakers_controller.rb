@@ -15,8 +15,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    if current_user
-      if Speaker.find_by(conference_id: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      if Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
         redirect_to(speaker_dashboard_path)
       end
     end
@@ -32,7 +32,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
 
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
 
@@ -42,12 +42,12 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = Conference.find_by(abbr: params[:event])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
 
     respond_to do |format|
       if r = @speaker_form.save
-        @speaker = Speaker.find_by(email: @speaker_form.email)
+        @speaker = @speaker_form.speaker
         r.each do |talk|
           SpeakerMailer.cfp_registered(@conference, @speaker, talk).deliver_later
         end
@@ -69,7 +69,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
-    @speaker_form.sub = current_user[:extra][:raw_info][:sub]
+    @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
     # @speaker_form.load
     exists_talks = @speaker.talk_ids
@@ -98,7 +98,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when 'new'
+    when 'new', 'create'
       "/#{params[:event]}/speaker_dashboard/speakers"
     when 'edit', 'update'
       "/#{params[:event]}/speaker_dashboard/speakers/#{params[:id]}"
@@ -106,8 +106,8 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   def pundit_user
-    if current_user
-      Speaker.find_by(conference: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 
@@ -137,7 +137,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   def talks_attributes
-    attr = [:id, :type, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id]
+    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)

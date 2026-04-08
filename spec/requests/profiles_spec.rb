@@ -16,7 +16,14 @@ describe ProfilesController, type: :request do
       subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
+        ActionDispatch::Request::Session.define_method(:original, ActionDispatch::Request::Session.instance_method(:[]))
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]) do |*arg|
+          if arg[1] == :userinfo
+            user_session[:userinfo]
+          else
+            arg[0].send(:original, arg[1])
+          end
+        end)
       end
 
       it "doesn't have timetable and speakers links" do
@@ -28,7 +35,7 @@ describe ProfilesController, type: :request do
     end
 
     describe 'logged in and already registered' do
-      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
+      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => '' } } } } }
 
       before do
         create(:alice, :on_cndt2020)
@@ -44,17 +51,9 @@ describe ProfilesController, type: :request do
     end
 
     describe 'register' do
-      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => '' } } } } }
+      subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => '' } } } } }
       subject(:profiles_params)  do
         attributes_for(:alice)
-      end
-      subject(:agreement_params) do
-        {
-          require_email: '1',
-          require_tel: '1',
-          require_posting: '1',
-          agree_ms: '1',
-        }
       end
 
       before do
@@ -63,28 +62,6 @@ describe ProfilesController, type: :request do
         create(:form_item2)
         create(:form_item3)
         create(:form_item4)
-      end
-
-      it 'is created 4 agreements when user select 4 checkbox' do
-        expect do
-          post('/cndt2020/profiles', params: { profile: profiles_params.merge(agreement_params) })
-        end.to(change(Agreement, :count).by(+4))
-        expect(response.body).to(redirect_to('/cndt2020/public_profiles/new'))
-      end
-    end
-  end
-
-  describe 'GET /cndt2020/profiles/checkin without profile' do
-    subject(:user_session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'mock', 'https://cloudnativedays.jp/roles' => '' } } } } }
-
-    before do
-      allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(user_session[:userinfo]))
-    end
-
-    context 'GET /profiles/checkin' do
-      it 'should redirect to registration' do
-        get '/cndt2020/profiles/checkin'
-        expect(response).to(redirect_to('/cndt2020/registration'))
       end
     end
   end

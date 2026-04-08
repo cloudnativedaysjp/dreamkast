@@ -49,7 +49,17 @@ module SecuredPublicApi
     conference
   end
 
+  def current_user_model
+    return nil unless @current_user
+    symbolized_current_user = @current_user.deep_symbolize_keys
+    return nil unless symbolized_current_user[:extra] && symbolized_current_user[:extra][:raw_info] && symbolized_current_user[:extra][:raw_info][:sub]
+    @current_user_model ||= User.find_or_create_by_auth0_info(
+      sub: symbolized_current_user[:extra][:raw_info][:sub],
+      email: symbolized_current_user[:info][:email]
+    )
+  end
+
   def profile
-    @profile ||= Profile.find_by(email: @current_user[:info][:email], conference_id: conference.id)
+    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: conference.id)
   end
 end

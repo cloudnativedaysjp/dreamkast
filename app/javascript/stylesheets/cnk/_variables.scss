@@ -1,0 +1,43 @@
+// Variables
+//- Override and add to color system
+$orange: #f4623a;
+$purple: #BD4392;
+$dark-blue: #206A9B;
+$brown: hsl(25, 16%, 31%);
+$gray: #808080;
+
+// CNDW2025 Theme color
+$tokyo-navy: #216a9c;
+
+// Japanese Modern Theme Colors
+$washi: #F5F5F0;
+$sumi: #1A1A1A;
+$beni: #B93A32;
+$washi-shadow: rgba($sumi, 0.08);
+
+
+$text: #001a3a;
+//- Override primary color
+$primary: $tokyo-navy;
+$secondary: $beni;
+//- Override font system
+$font-family-sans-serif: "din-2014",
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-family-serif: "Noto Serif JP", serif;
+$font-family-header: "Zen Old Mincho", serif;
+$font-family-base: $font-family-serif;
+$headings-font-family: $font-family-serif;
+//- Add custom variables
+$navbar-height: 4.5rem;
+

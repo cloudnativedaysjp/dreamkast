@@ -6,9 +6,10 @@
   <% end %>
 
   <div class="row">
-    <h2>Download TALKS to CSV</h2>
-    <div class="col-12 form-group">
-      <%= link_to 'download', admin_talks_path(format: :csv), class: "btn btn-primary" %>
+    <h2>エクスポート</h2>
+    <div class="col-12 form-group d-flex">
+      <%= button_to 'エクスポート(CSV)', admin_talks_path(format: :csv), {method: :get, class: 'me-2' } %>
+      <%= button_to 'エクスポート(JSON, for Website)', admin_export_talks_for_website_path, {method: :get } %>
     </div>
   </div>
 
@@ -26,6 +27,7 @@
         <th scope="col">公開可否</th>
         <th scope="col">Video File</th>
         <th scope="col">Video URL</th>
+        <th scope="col">操作</th>
       </tr>
       </thead>
       <tbody>
@@ -62,6 +64,9 @@
             <td>
               <% video_id = talk.video ? talk.video.video_id : nil %>
               <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "video url", size: "9" %>
+            </td>
+            <td>
+              <%= link_to '編集', edit_admin_talk_path(event: params[:event], id: talk.id), class: 'btn btn-sm btn-primary' %>
             </td>
           </tr>
         <% end %>

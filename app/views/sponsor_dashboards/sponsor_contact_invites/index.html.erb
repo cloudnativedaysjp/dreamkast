@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>Sponsor Contact Invites</h2>
+
+  <div class="mb-3">
+    <%= link_to "New Invite", 
+                new_sponsor_contact_invite_path(sponsor_id: params[:sponsor_id]), 
+                class: "btn btn-primary",
+                data: { turbo_frame: "sponsor_contact_invite_modal" } %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Sent At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @invites.each do |invite| %>
+          <tr>
+            <td><%= invite.email %></td>
+            <td><%= invite.accepted? ? 'Accepted' : 'Pending' %></td>
+            <td><%= l invite.created_at, format: :long %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= turbo_frame_tag "sponsor_contact_invite_modal" %>

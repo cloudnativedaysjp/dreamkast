@@ -1,19 +1,14 @@
-# == Schema Information
-#
-# Table name: talk_categories
-#
-#  id            :bigint           not null, primary key
-#  name          :string(255)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  conference_id :integer
-#
-# Indexes
-#
-#  index_talk_categories_on_conference_id  (conference_id)
-#
-
 class TalkCategory < ApplicationRecord
   has_one :talk
   belongs_to :conference
+
+  enum :sub_conference_type, {
+    cnd: 'cnd',
+    pek: 'pek',
+    srek: 'srek'
+  }, prefix: true
+
+  scope :for_cnd, -> { where(conference_id: 15, sub_conference_type: 'cnd') }
+  scope :for_pek, -> { where(conference_id: 15, sub_conference_type: 'pek') }
+  scope :for_srek, -> { where(conference_id: 15, sub_conference_type: 'srek') }
 end

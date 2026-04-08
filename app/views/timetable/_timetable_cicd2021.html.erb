@@ -8,7 +8,7 @@
                style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
-      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+      <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
         <% 
           row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 13:00")) / 60).to_i + 10
           row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
@@ -35,7 +35,7 @@
                 <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
                 <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
             </h6>
-            <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+            <h4><%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %></h4>
             <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
             <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
           </div>

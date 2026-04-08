@@ -1,0 +1,18 @@
+<%= render 'admin/layout' do %>
+  <%= turbo_frame_tag "keynote_speaker_invites" do %>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">キーノートスピーカー招待管理</h2>
+      <%= link_to '新規招待',
+                  new_admin_keynote_speaker_invitation_path(event: @conference.abbr),
+                  class: 'btn btn-primary',
+                  data: { turbo_frame: "modal" } %>
+    </div>
+
+    <!-- 招待一覧 -->
+    <%= render 'admin/keynote_speaker_invitations/list', keynote_speaker_invitations: @keynote_speaker_invitations %>
+
+    <!-- モーダル用のTurbo Frame -->
+  <% end %>
+  <%= turbo_frame_tag "modal" %>
+  <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+<% end %>

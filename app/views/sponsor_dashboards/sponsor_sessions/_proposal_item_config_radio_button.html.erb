@@ -1,0 +1,17 @@
+<% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
+<%= label_tag "sponsor_session[proposal_items_attributes][#{first_item.label}]",  first_item.item_name, {class: 'form-check-label'}%>*<br>
+<p class="field-description" style="font-size: 0.7em"><%= first_item.description&.html_safe %></p>
+<% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
+  <% label = first_item.label.pluralize.to_sym %>
+  <% checked = existing_items ? existing_items.include?(item.id.to_s) : false%>
+  <% classes = "radio_button_#{label}" %>
+  <% case item.label %>
+  <% when 'presentation_method' then %>
+    <%= render 'sponsor_dashboards/sponsor_sessions/presentation_method', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked %>
+  <% when 'session_time' then %>
+    <%= render 'sponsor_dashboards/sponsor_sessions/session_times', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked %>
+  <% else %>
+    <%= radio_button_tag "sponsor_session[proposal_items_attributes][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: "#{label}_#{item.params}"} %>
+    <%= label label, item.params, {class: 'form-check-label'} %><br>
+  <% end %>
+<% end %>

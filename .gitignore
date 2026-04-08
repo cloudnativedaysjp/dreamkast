@@ -56,3 +56,14 @@ localstack
 /app/assets/builds/*
 !/app/assets/builds/.keep
 .aider*
+.claude/settings.local.json
+
+.serena
+.cursor
+
+# devbox関連
+.devbox/
+.env-local.devbox
+
+# direnv（オプション）
+.envrc

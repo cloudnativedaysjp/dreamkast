@@ -1,44 +1,31 @@
-# == Schema Information
-#
-# Table name: speakers
-#
-#  id                   :bigint           not null, primary key
-#  additional_documents :text(65535)
-#  avatar_data          :text(65535)
-#  company              :string(255)
-#  email                :text(65535)
-#  job_title            :string(255)
-#  name                 :string(255)
-#  name_mother_tongue   :string(255)
-#  profile              :text(65535)
-#  sub                  :text(65535)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  conference_id        :integer
-#  github_id            :string(255)
-#  twitter_id           :string(255)
-#
-# Indexes
-#
-#  index_speakers_on_conference_id_and_email  (conference_id,email)
-#
-
 class Speaker < ApplicationRecord
   include ActionView::Helpers::UrlHelper
   include AvatarUploader::Attachment(:avatar)
 
   belongs_to :conference
+  belongs_to :sponsor, optional: true
+  belongs_to :user, optional: true
 
   has_many :talks_speakers
   has_many :talks, through: :talks_speakers
   has_many :speaker_announcement_middles
   has_many :speaker_announcements, through: :speaker_announcement_middles
+  has_many :sponsor_speaker_invite_accepts, dependent: :destroy
+
+  before_validation :ensure_user, on: :create
 
   validates :name, presence: true
   validates :profile, presence: true
   validates :company, presence: true
   validates :job_title, presence: true
   validates :conference_id, presence: true
+  validates :user_id, uniqueness: { scope: :conference_id }, allow_nil: true
+
+  # userのsubとemailを委譲（userがnilの可能性がある場合はallow_nil: true）
+  delegate :sub, :email, to: :user, allow_nil: true
+
+  # 一時的な属性（before_validationでuserを作成するために使用）
+  attr_accessor :pending_sub, :pending_email
 
   def proposals
     talks.map(&:proposal)
@@ -92,6 +79,48 @@ class Speaker < ApplicationRecord
   end
 
   def attendee_profile
-    conference.profiles.where(sub:).first
+    conference.profiles.where(user_id:).first
+  end
+
+  # 既存コードとの互換性のため、セッターを提供
+  def sub=(value)
+    if user_id.present?
+      user.update!(sub: value)
+    else
+      self.pending_sub = value
+    end
+  end
+
+  def email=(value)
+    if user_id.present?
+      user.update!(email: value)
+    else
+      self.pending_email = value
+    end
+  end
+
+  private
+
+  def ensure_user
+    return if user_id.present?
+
+    sub_value = pending_sub
+    email_value = pending_email
+
+    if sub_value.present? && email_value.present?
+      # 通常のケース：subとemailの両方が指定されている
+      self.user = User.find_or_create_by!(sub: sub_value) do |u|
+        u.email = email_value
+      end
+      # emailが指定されていて、Userのemailが異なる場合は更新
+      if user.email != email_value
+        user.update!(email: email_value)
+      end
+    elsif email_value.present?
+      # 招待のケース：emailのみが指定されている
+      # user_idはnilのまま（承諾時にaccept!メソッドで設定される）
+    else
+      errors.add(:base, 'subとemailのいずれかが必要です')
+    end
   end
 end

@@ -6,16 +6,7 @@
       <%= form.datetime_select :publish_time, class: 'form-control' %>
     </div>
 
-    <% if @speakers.blank? || @speakers.nil? %>
-      <div class="field">
-        <%= form.label :speaker_id, '登壇者' %>*<br/>
-        <% Speaker.where(conference_id: @conference.id).pluck(:id).each do |speaker_id| %>
-          <%= form.hidden_field :speaker_ids, multiple: true, value: speaker_id, class: 'form-control' %>
-        <% end %>
-        <%= form.text_field :speaker_names, value: "全員", readonly: true %>
-        <%= form.hidden_field :receiver, value: :all_speaker %>
-      </div>
-    <% else %>
+    <% unless @speakers.blank? || @speakers.nil? %>
         <div class="field">
           <%= form.label :speaker_id, '登壇者' %>*<br/>
 
@@ -35,6 +26,10 @@
         <br/>
         <%= form.radio_button :receiver, :all_speaker %>
         <%= form.label :receiver, 'CFP採択に関わらず通知', value: @speaker_announcement.receiver %>
+      </div>
+    <% else %>
+    <div class="field">
+        <%= form.hidden_field :receiver, value: :person %>
       </div>
     <% end %>
 

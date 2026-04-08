@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SpeakerDashboardsController, type: :request do
-  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
+  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
   subject { get '/cndt2020/speaker_dashboard' }
   describe 'GET speaker_dashboards#show' do
     shared_examples_for :request_is_successful do

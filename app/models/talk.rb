@@ -1,45 +1,4 @@
-# == Schema Information
-#
-# Table name: talks
-#
-#  id                    :bigint           not null, primary key
-#  abstract              :text(65535)
-#  acquired_seats        :integer          default(0), not null
-#  document_url          :string(255)
-#  end_offset            :integer          default(0), not null
-#  end_time              :time
-#  execution_phases      :json
-#  expected_participants :json
-#  movie_url             :string(255)
-#  number_of_seats       :integer          default(0), not null
-#  show_on_timetable     :boolean
-#  start_offset          :integer          default(0), not null
-#  start_time            :time
-#  title                 :string(255)
-#  type                  :string(255)      not null
-#  video_published       :boolean          default(FALSE), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  conference_day_id     :integer
-#  conference_id         :integer
-#  sponsor_id            :integer
-#  talk_category_id      :bigint
-#  talk_difficulty_id    :bigint
-#  talk_time_id          :integer
-#  track_id              :integer
-#
-# Indexes
-#
-#  fk_rails_9c6f538eea                (type)
-#  index_talks_on_conference_id       (conference_id)
-#  index_talks_on_talk_category_id    (talk_category_id)
-#  index_talks_on_talk_difficulty_id  (talk_difficulty_id)
-#  index_talks_on_track_id            (track_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (type => talk_types.id)
-#
+require 'csv'
 
 class Talk < ApplicationRecord
   belongs_to :talk_category, optional: true
@@ -48,7 +7,7 @@ class Talk < ApplicationRecord
   belongs_to :conference_day, optional: true
   belongs_to :track, optional: true
   belongs_to :sponsor, optional: true
-  has_one :proposal
+  has_one :proposal, dependent: :destroy
 
   has_one :video_registration, dependent: :destroy
   has_one :video, dependent: :destroy
@@ -60,12 +19,18 @@ class Talk < ApplicationRecord
   has_many :media_package_harvest_jobs
   has_many :check_in_talks
   has_many :speaker_invitations, dependent: :destroy
+  has_many :media_package_harvest_jobs, dependent: :destroy
+
+  has_many :talk_type_associations, dependent: :destroy
+  has_many :talk_types, through: :talk_type_associations
 
   has_many :proposal_items, autosave: true, dependent: :destroy
   has_many :profiles, through: :registered_talks
 
   validates :conference_id, presence: true
   validates :title, presence: true
+  validate :validate_title_length
+  validate :validate_abstract_length
 
   # エントリー時、セッション概要は空白でもいいのでバリデーションしなくていい
   # validates :abstract, presence: true
@@ -78,6 +43,7 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
+  validate :validate_three_conference_selection, on: :entry_form, if: -> { conference_id == 15 }
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
 
@@ -107,6 +73,10 @@ class Talk < ApplicationRecord
 
   scope :sponsor, -> {
     where.not(sponsor_id: nil)
+  }
+
+  scope :regular_sessions, -> {
+    joins(:talk_types).where(talk_types: { id: TalkType::SESSION_ID })
   }
 
   def self.export_csv(conference, talks, track_name = 'all', date = 'all')
@@ -307,13 +277,39 @@ class Talk < ApplicationRecord
   end
 
   def archived?
-    now = Time.now.in_time_zone('Tokyo')
+    now = Time.current
     etime = DateTime.parse("#{conference_day.date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     (now.to_i - etime.to_i) >= 600
   end
 
+  # Talk type checking methods
+  def keynote?
+    talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
+  end
+
   def sponsor_session?
-    sponsor.present?
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) || sponsor.present?
+  end
+
+  def intermission?
+    talk_types.exists?(id: TalkType::INTERMISSION_ID) || abstract == 'intermission'
+  end
+
+  def sponsor_keynote?
+    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) && talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
+  end
+
+  # Talk type management methods
+  def talk_types=(type_names)
+    return if type_names.nil?
+
+    type_names = Array(type_names).reject(&:blank?)
+    types = TalkType.where(id: type_names)
+    super(types)
+  end
+
+  def session_type_names
+    talk_types.map(&:id)
   end
 
   def create_or_update_proposal_item(label, params)
@@ -355,30 +351,6 @@ class Talk < ApplicationRecord
       end
     end
     r
-  end
-
-  def start_streaming
-    ActiveRecord::Base.transaction do
-      other_talks_in_track = conference.tracks.find_by(name: track.name).talks
-                                       .accepted_and_intermission
-                                       .reject { |t| t.id == id }
-      other_talks_in_track.each do |other_talk|
-        other_talk.video.update!(on_air: false)
-      end
-
-      video.update!(on_air: true)
-    end
-
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-    )
-  end
-
-  def stop_streaming
-    video.update!(on_air: false)
-    ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
-    )
   end
 
   def live?
@@ -425,10 +397,6 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
   end
 
   def number_of_seats
-    # Workaround for CNDT2022
-    if [1601, 1603, 1561, 1547, 1516, 1539, 1596, 1582, 1546, 1523, 1600, 1626].include?(id)
-      return 454
-    end
     self[:number_of_seats]
   end
 
@@ -472,14 +440,141 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     registered_talks.select { |rt| rt.profile.participation == 'offline' }.size
   end
 
+  def ogp_image
+    if ogp_image_url.present?
+      ogp_image_url
+    elsif !speakers.empty?
+      speakers[0].avatar_or_dummy_url
+    else
+      'dummy.png'
+    end
+  end
+
+  # 3カンファレンス関連のヘルパーメソッド
+  def target_conferences
+    item = proposal_items.find_by(label: 'target_conferences')
+    return [] unless item&.params
+
+    item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+  end
+
+  def cnd_category
+    proposal_item_value('cnd_category')
+  end
+
+  def pek_category
+    proposal_item_value('pek_category')
+  end
+
+  def srek_category
+    proposal_item_value('srek_category')
+  end
+
+  def cnd_assumed_visitors
+    proposal_item_value('cnd_assumed_visitor')
+  end
+
+  def pek_assumed_visitors
+    proposal_item_value('pek_assumed_visitor')
+  end
+
+  def srek_assumed_visitors
+    proposal_item_value('srek_assumed_visitor')
+  end
+
+
   private
+
+  # 文字数をカウント（全角・半角・絵文字関係なく、絵文字は1文字としてカウント）
+  def count_chars(str)
+    return 0 if str.blank?
+    # each_grapheme_clusterを使って絵文字を正しく1文字としてカウント
+    str.each_grapheme_cluster.count
+  end
+
+  MAX_TITLE_CHARS = 60
+  MAX_ABSTRACT_CHARS = 500
+
+  def validate_title_length
+    return if title.blank?
+
+    char_count = count_chars(title)
+    if char_count > MAX_TITLE_CHARS
+      errors.add(:title, "は#{MAX_TITLE_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    end
+  end
+
+  def validate_abstract_length
+    return if abstract.blank?
+
+    char_count = count_chars(abstract)
+    if char_count > MAX_ABSTRACT_CHARS
+      errors.add(:abstract, "は#{MAX_ABSTRACT_CHARS}文字以内で入力してください（現在#{char_count}文字）")
+    end
+  end
 
   def validate_proposal_item_configs
     expected = conference.proposal_item_configs.pluck(:label).uniq
+
+    # conference_id: 15 の場合、3カンファレンス関連のlabelは個別にバリデーションするので除外
+    if conference_id == 15
+      three_conf_labels = ['target_conferences', 'cnd_category', 'cnd_assumed_visitor',
+                           'pek_category', 'pek_assumed_visitor', 'srek_category', 'srek_assumed_visitor']
+      expected -= three_conf_labels
+    end
+
     shorted_items = expected - proposal_items.map(&:label)
     shorted_items.each { |e|
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
+  end
+
+  THREE_CONFERENCE_VALIDATION_CONFIG = [
+    {
+      name: 'Cloud Native',
+      category_label: 'cnd_category',
+      visitor_label: 'cnd_assumed_visitor'
+    },
+    {
+      name: 'Platform Engineering',
+      category_label: 'pek_category',
+      visitor_label: 'pek_assumed_visitor'
+    },
+    {
+      name: 'SRE',
+      category_label: 'srek_category',
+      visitor_label: 'srek_assumed_visitor'
+    }
+  ].freeze
+
+  # 3トラック選択機能のバリデーション（conference_id: 15 専用）
+  def validate_three_conference_selection
+    target_conferences_item = proposal_items.detect { |item| item.label == 'target_conferences' }
+
+    if target_conferences_item.blank? || target_conferences_item.params.blank?
+      errors.add(:base, 'プロポーザル提出先トラックを最低1つ選択してください')
+      return
+    end
+
+    selected_conferences = target_conferences_item.params.map { |id| ProposalItemConfig.find(id.to_i).params }
+
+    THREE_CONFERENCE_VALIDATION_CONFIG.each do |config|
+      next unless selected_conferences.include?(config[:name])
+
+      validate_three_conference_track(config)
+    end
+  end
+
+  def validate_three_conference_track(config)
+    category_item = proposal_items.detect { |item| item.label == config[:category_label] }
+    visitor_item = proposal_items.detect { |item| item.label == config[:visitor_label] }
+
+    if category_item.blank? || category_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 主なカテゴリは最低1項目選択してください")
+    end
+    if visitor_item.blank? || visitor_item.params.blank?
+      errors.add(:base, "#{config[:name]} - 想定受講者は最低1項目選択してください")
+    end
   end
 end

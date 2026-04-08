@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       args:
         - RAILS_ENV=development
+    platform: linux/amd64
     volumes:
       - .:/app
     entrypoint: /bin/sh -c "bundle install && docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --check-files && bundle exec rake assets:precompile && bundle exec rails db:migrate && bundle exec rails db:seed && foreman start -f Procfile.dev"
@@ -27,10 +28,11 @@ services:
       MYSQL_DATABASE: dreamkast
       REDIS_URL: redis://redis:6379
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/default
+      SQS_FIFO_QUEUE_URL: http://localstack:4566/000000000000/fifo.fifo
       REVIEW_APP: "true"
       DREAMKAST_NAMESPACE: "localhost"
       DREAMKAST_WEAVER_ADDR: "localhost:8080"
+      OTEL_ENDPOINT: "http://host.docker.internal:4318/v1/traces"
     tty: true
     stdin_open: true
     tmpfs:
@@ -42,7 +44,8 @@ services:
       - localstack
   fifo-worker:
     build: .
-    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_sqs_active_job --queue fifo"
+    platform: linux/amd64
+    entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_active_job_sqs --queue fifo"
     environment:
       <<: *dkenv
     tty: true
@@ -71,7 +74,7 @@ services:
     ports:
     - "3306:3306"
   redis:
-    image: "redis:7"
+    image: "redis:8"
     volumes:
       - redis-data:/data
     ports:
@@ -91,9 +94,9 @@ services:
       - NEXT_PUBLIC_AUTH0_DOMAIN=dreamkast.us.auth0.com
       - NEXT_PUBLIC_AUTH0_CLIENT_ID=0cWWdpGt4CpWjHJ9QIHtPm5GrJLS25lz
       - NEXT_PUBLIC_AUTH0_AUDIENCE=https://event.cloudnativedays.jp/
-      - NEXT_PUBLIC_BASE_PATH=/cndt2022/ui
+      - NEXT_PUBLIC_BASE_PATH=/cnk/ui
       - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/
-      - NEXT_PUBLIC_EVENT_SALT=cndt2022
+      - NEXT_PUBLIC_EVENT_SALT=cnk
   localstack:
     image: localstack/localstack:latest
     environment:
@@ -107,7 +110,7 @@ services:
     ports:
       - 4566:4566
     healthcheck:
-      test: awslocal sqs list-queues --output=text | grep default
+      test: awslocal sqs list-queues --output=text | grep fifo
       interval: 10s
       timeout: 60s
       retries: 10

@@ -19,7 +19,7 @@ const appRoom = consumer.subscriptions.create("ChatChannel", {
 
   received(data) {
     console.log('received ' + data)
-    $('#chat').append(`<p class="chat_message" id="${data['id']}">${data['body']}</p>`)
+    document.getElementById('chat').insertAdjacentHTML('beforeend', `<p class="chat_message" id="${data['id']}">${data['body']}</p>`)
 
     // Called when there's incoming data on the websocket for this channel
   },

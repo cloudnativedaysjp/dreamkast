@@ -1,28 +1,3 @@
-# == Schema Information
-#
-# Table name: proposal_item_configs
-#
-#  id            :bigint           not null, primary key
-#  description   :text(65535)
-#  item_name     :string(255)
-#  item_number   :integer
-#  key           :string(255)
-#  label         :string(255)
-#  params        :json
-#  type          :string(255)
-#  value         :string(255)
-#  conference_id :bigint           not null
-#
-# Indexes
-#
-#  index_proposal_item_configs_on_conference_id                  (conference_id)
-#  index_proposal_item_configs_on_conference_id_and_item_number  (conference_id,item_number)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (conference_id => conferences.id)
-#
-
 FactoryBot.define do
   factory :proposal_item_config
 
@@ -98,12 +73,24 @@ FactoryBot.define do
     end
   end
 
-  factory :proposal_item_configs_session_time, class: ProposalItemConfig do
+  factory :proposal_item_configs_session_time_40_min, class: ProposalItemConfig do
     type { 'ProposalItemConfigRadioButton' }
+    key { SessionTime::FOURTY_MINUTES }
     label { 'session_time' }
     item_number { 1 }
     item_name { '必要とする講演時間 - Session time you need（★）' }
-    params { '40min (full session)' }
+    params { '_40min (full session)' }
+    value { '40' }
+  end
+
+  factory :proposal_item_configs_session_time_20_min, class: ProposalItemConfig do
+    type { 'ProposalItemConfigRadioButton' }
+    label { 'session_time' }
+    key { SessionTime::TWENTY_MINUTES }
+    item_number { 2 }
+    item_name { '必要とする講演時間 - Session time you need（★）' }
+    params { '_20min (for keynote)' }
+    value { '20' }
   end
 
   factory :proposal_item_configs_whether_it_can_be_published, class: ProposalItemConfig do

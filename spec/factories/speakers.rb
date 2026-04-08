@@ -1,35 +1,22 @@
-# == Schema Information
-#
-# Table name: speakers
-#
-#  id                   :bigint           not null, primary key
-#  additional_documents :text(65535)
-#  avatar_data          :text(65535)
-#  company              :string(255)
-#  email                :text(65535)
-#  job_title            :string(255)
-#  name                 :string(255)
-#  name_mother_tongue   :string(255)
-#  profile              :text(65535)
-#  sub                  :text(65535)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  conference_id        :integer
-#  github_id            :string(255)
-#  twitter_id           :string(255)
-#
-# Indexes
-#
-#  index_speakers_on_conference_id_and_email  (conference_id,email)
-#
-
 FactoryBot.define do
-  factory :speaker
+  factory :speaker do
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+  end
 
   factory :speaker_alice, class: Speaker do
     id { 1 }
-    sub { 'aaa' }
-    email { 'alice@example.com' }
     name { 'Alice' }
     profile { 'This is profile' }
     company { 'company' }
@@ -38,39 +25,45 @@ FactoryBot.define do
 
     trait :with_talk1_registered do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :registered)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 0)
       end
     end
 
     trait :with_talk1_accepted do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :accepted)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 1)
       end
     end
 
     trait :with_talk1_rejected do
       after(:build) do |speaker|
-        talk = FactoryBot.create(:talk1)
+        talk = FactoryBot.create(:talk1, :rejected)
         speaker.talks << talk
-        FactoryBot.create(:talks_speakers, { talk:, speaker: })
-        proposal = FactoryBot.create(:proposal, :with_cndt2021, talk:, status: 2)
       end
     end
 
     trait :with_sponsor_session do
       after(:build) do |speaker|
         sponsor = create(:sponsor)
-        talk = create(:sponsor_session, sponsor:)
+        talk = create(:sponsor_session, :registered, sponsor:)
         speaker.talks << talk
-        create(:talks_speakers, { talk:, speaker: })
-        create(:proposal, :with_cndt2021, talk:, status: 0)
       end
+    end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user_alice)
+      speaker.user_id = user.id
     end
   end
 
@@ -78,19 +71,36 @@ FactoryBot.define do
 
   factory :speaker_bob, class: Speaker do
     id { 2 }
-    sub { 'bbb' }
-    email { 'bar@example.com' }
     name { 'Bob' }
     profile { 'This is profile' }
     company { 'company' }
     job_title { 'job_title' }
     conference_id { 1 }
+
+    trait :with_talk2_rejected do
+      after(:build) do |speaker|
+        talk = FactoryBot.create(:talk2, :rejected)
+        speaker.talks << talk
+      end
+    end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
   end
 
   factory :speaker_mike, class: Speaker do
     id { 3 }
-    sub { 'github' }
-    email { 'mike@example.com' }
     name { 'Mike' }
     profile { 'This is profile' }
     company { 'company' }
@@ -104,6 +114,20 @@ FactoryBot.define do
         speaker.speaker_announcements << speaker_announcement
         FactoryBot.create(:speaker_announcement_middle, { speaker:, speaker_announcement: })
       end
+    end
+
+    after(:build) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
+    end
+
+    before(:create) do |speaker|
+      next if speaker.user_id.present?
+
+      user = FactoryBot.create(:user)
+      speaker.user_id = user.id
     end
   end
 end

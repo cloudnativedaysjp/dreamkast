@@ -5,14 +5,11 @@ describe TalksController, type: :request do
     {
       userinfo: {
         info: {
-          email: 'alice@example.com',
-          extra: {
-            sub: 'aaa'
-          }
+          email: 'alice@example.com'
         },
         extra: {
           raw_info: {
-            sub: 'aaa',
+            sub: 'google-oauth2|alice',
             'https://cloudnativedays.jp/roles' => roles
           }
         }
@@ -139,6 +136,13 @@ describe TalksController, type: :request do
       end
 
       context "user doesn't logged in" do
+        context 'cfp result is visible and proposal does not exist' do
+          let!(:cndt2020) { create(:cndt2020, :registered, :cfp_result_visible) }
+          let!(:talk1) { create(:talk1) }
+
+          it_should_behave_like :returns_success_response, 1, 'talk1', 'あいうえおかきくけこさしすせそ'
+        end
+
         context 'cfp result is visible and proposal is accepted' do
           let!(:cndt2020) { create(:cndt2020, :registered, :cfp_result_visible) }
           let!(:talk1) { create(:talk1, :accepted) }
@@ -164,7 +168,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -344,7 +348,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa' } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice' } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do
@@ -434,7 +438,7 @@ describe TalksController, type: :request do
       context 'user logged in' do
         context "user doesn't registered" do
           before do
-            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => [] } } }))
+            allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return({ info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => [] } } }))
           end
 
           context 'cfp result is visible and proposal is accepted' do

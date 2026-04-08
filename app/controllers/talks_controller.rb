@@ -9,22 +9,20 @@ class TalksController < ApplicationController
 
   # - プロポーザルの採択結果を表示する場合
   #   - プロポーザルが採択されている場合：セッション情報を表示する
+  #   - cndt2020・cndo2021 のようにプロポーザルが存在しない場合：セッション情報を表示する
   #   - プロポーザルが採択されていない場合：404を返す
   # - プロポーザルの採択結果を表示しない場合：404を返す
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
-    @conference = Conference.find_by(abbr: event_name)
-    @talk = Talk.find_by(id: params[:id], conference_id: conference.id)
-
+    @conference = Conference.find_by!(abbr: event_name)
     unless @conference.cfp_result_visible
       raise(ActiveRecord::RecordNotFound)
     end
 
-    if @conference.cfp_result_visible && @talk.proposal.rejected?
+    @talk = Talk.find_by!(id: params[:id], conference_id: @conference.id)
+    if @talk.proposal&.rejected?
       raise(ActiveRecord::RecordNotFound)
     end
-
-    raise(ActiveRecord::RecordNotFound) unless @talk
   end
 
   def index
@@ -43,7 +41,6 @@ class TalksController < ApplicationController
                @talks.where(show_on_timetable: true)
              elsif @conference.cfp_result_visible
                @talks.where(show_on_timetable: true,
-                            conference_day_id: @conference.conference_days.externals.map(&:id),
                             proposals: { status: :accepted })
              else
                # NOTE: Proposal 採択前は conference_days が nil
@@ -122,8 +119,8 @@ class TalksController < ApplicationController
   end
 
   def speaker?
-    return false if current_user.nil?
-    Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id).present?
+    return false if current_user_model.nil?
+    @speaker.present? || Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id).present?
   end
 
   def talk_params

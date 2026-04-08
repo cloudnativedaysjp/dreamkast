@@ -11,7 +11,7 @@
       <% end %>
 
       <% talk_numbers = []; day_slots = [] %>
-      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+      <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
         <div class="talk" slot="<%= talk.slot_number %>" style="--track: <%= talk.track.number - 1 %>; --duration: 60; --row-start: <%= talk.row_start %>; --row-end: <%= talk.row_end  %>;">
           <% day_slot = "#{talk.conference_day_id}_#{talk.slot_number}" %>
           <div class="content <%= 'checked' if current_user && talks_checked?(talk.id) %>  <%= 'first' unless day_slots.include?(day_slot) %>"
@@ -38,7 +38,7 @@
 
             <%= render 'timetable/talk_category_difficulty', talk: talk %>
 
-            <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
+            <h5><%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %></h5>
           </div>
         </div>
       <% end %>

@@ -1,0 +1,4 @@
+queues:
+  fifo:
+   url: <%= sqs_queue_url %>
+   max_messages: 10

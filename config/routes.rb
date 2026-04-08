@@ -55,25 +55,36 @@ Rails.application.routes.draw do
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
       resources :sponsor_contacts, only: [:destroy]
-      resources :sponsor_contact_invites, only: [:index, :new, :create]
+      resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
       resources :conferences, only: [:index, :show, :edit, :update] do
         post 'add_link' => 'conferences#add_link'
       end
       resources :speakers, only: [:index, :edit, :update]
       get 'export_speakers' => 'speakers#export_speakers'
+      get 'export_speakers_for_website' => 'speakers#export_speakers_for_website', defaults: { format: 'json' }
       get 'export_profiles' => 'profiles#export_profiles'
       get 'speaker_check_in_statuses' => 'speakers#check_in_statuses'
       resources :check_in_events, only: [:create, :destroy]
       delete 'check_in_events' => 'check_in_events#destroy_all'
-      resources :talks, only: [:index]
+      resources :talks, only: [:index, :edit, :update]
+      get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
       resources :videos, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
-      resources :announcements
+      resources :announcements do
+        member do
+          get :deliveries
+        end
+      end
       resources :speaker_announcements
+      resources :keynote_speaker_invitations do
+        member do
+          post :resend
+        end
+      end
       resources :streamings
       resources :stamp_rally_check_points do
         patch :reorder, on: :member
@@ -114,17 +125,25 @@ Rails.application.routes.draw do
     resources :speaker_invitations, only: [:index, :new, :create]
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
     get '/speaker_invitation_accepts/invite' => 'speaker_invitation_accepts#invite'
+
+    resources :keynote_speaker_accepts, only: [:index, :new, :create]
+    get '/keynote_speaker_accepts/invite' => 'keynote_speaker_accepts#invite'
     resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
-    resources :sponsor_contact_invites, only: [:index, :new, :create]
+    # resources :sponsor_contact_invites, only: [:index, :new, :create]
     resources :sponsor_contact_invite_accepts, only: [:index, :new, :create]
     get '/sponsor_contact_invite_accepts/invite' => 'sponsor_contact_invite_accepts#invite'
+    resources :sponsor_speaker_invite_accepts, only: [:index, :new, :create]
+    get '/sponsor_speaker_invite_accepts/invite' => 'sponsor_speaker_invite_accepts#invite'
 
     namespace :sponsor_dashboards do
       get ':sponsor_id' => 'sponsor_dashboards#show'
       scope ':sponsor_id' do
-        resources :sponsor_contacts, only: [:new, :edit, :create, :update]
-        resources :speakers, only: [:new, :edit, :create, :update]
+        resources :sponsor_contacts, only: [:index, :new, :edit, :create, :update, :destroy]
+        resources :sponsor_speakers, only: [:index, :new, :edit, :create, :update, :destroy]
+        resources :sponsor_sessions
+        resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
+        resources :sponsor_speaker_invites, only: [:index, :new, :create, :destroy]
       end
     end
 
@@ -152,6 +171,8 @@ Rails.application.routes.draw do
 
     resources :attachments, only: [:show]
 
+    get 'self_check_in' => 'check_in_conferences#new'
+
     # Profile
     resources :profiles, only: [:new, :edit, :update, :create]
     namespace :profiles do
@@ -163,7 +184,6 @@ Rails.application.routes.draw do
     delete 'profiles', to: 'profiles#destroy'
     get 'profiles', to: 'profiles#edit'
     get 'profiles/edit', to: 'profiles#edit'
-    get 'profiles/checkin', to: 'profiles#checkin'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'
     get 'profiles/view_qr' => 'profiles#view_qr'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'

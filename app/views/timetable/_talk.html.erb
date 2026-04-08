@@ -5,7 +5,7 @@
   <% tracks.each_with_index do |track_name, n| %>
     <div class="track <%= 'even' if n.zero? || n.even? %>" style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
   <% end %>
-  <% conference_day.talks.where(show_on_timetable: true, start_time:Time.zone.parse(from).utc..Time.zone.parse(to).utc).each do |talk| %>
+  <% conference_day.talks.where(show_on_timetable: true, start_time:Time.zone.parse(from).utc..Time.zone.parse(to).utc).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
     <div class="talk"
       slot="<%= talk.slot_number %>"
       style="--track: <%= talk.track.number - 1 %>;
@@ -21,7 +21,7 @@
           <h6>
               <span class="track_name">Track <%= talk.track.name %>&nbsp;</span><%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %><%= ' (アーカイブ視聴不可)' unless talk.video_published %></span>
           </h6>
-          <h5><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h5>
+          <h5><%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %></h5>
           <%= render 'timetable/talk_category_difficulty', talk: talk %>
         </div>
 

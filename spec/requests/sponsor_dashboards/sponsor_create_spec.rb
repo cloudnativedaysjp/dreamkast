@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe(SponsorDashboards::SpeakersController, type: :request) do
-  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
+  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
   context 'POST /cndt2020/speaker_dashboard/speakers' do
     context 'user already logged in' do
       context "user doesn't registered" do
@@ -23,6 +23,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
           let(:assumed_visitor) { create(:proposal_item_configs_assumed_visitor, conference:) }
           let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
           let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
+          let!(:sponsor_talk_attribute) { create(:talk_type, :sponsor) }
 
           it 'talk\'s session time should be 40 minutes (default value)' do
             params = {
@@ -40,9 +41,9 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
                 '1644323265675' =>
                   {
                     'sponsor_id' => sponsor.id,
-                    'type' => 'SponsorSession',
                     'title' => 'すごいセッション',
                     'abstract' => 'すごいぞ！',
+                    'talk_types' => ['SponsorSession'],
                     'talk_difficulty_id' => '41',
                     'assumed_visitors' => [assumed_visitor.id],
                     'execution_phases' => [execution_phase.id],
@@ -65,7 +66,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
 
             talk = speaker.talks.first
             expect(talk.time).to(eq(40))
-            expect(talk.type).to(eq('SponsorSession'))
+            expect(talk.talk_types.pluck(:id)).to(include('SponsorSession'))
           end
         end
       end

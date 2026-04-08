@@ -148,41 +148,42 @@
           このセッションへの質問
         </h6>
         <div class="cfp-detail-content cfp-qa-list">
-          <% if talk.qa_messages.any? %>
           <% questions = talk.session_questions.includes(:profile, :session_question_answers, :session_question_votes).order_by_time %>
-      <% if questions.any? %>
-        <% questions.each do |question| %>
-          <div class="mb-3 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <div class="flex-grow-1">
-                <strong>Q:</strong> <%= simple_format(h(question.body)) %>
-                <div class="text-muted small mt-1">
-                  <span>投票数: <%= question.votes_count %></span>
-                  <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                </div>
-              </div>
-            </div>
-
-            <% if question.session_question_answers.any? %>
-              <div class="mt-2 ms-3">
-                <% question.session_question_answers.order_by_time.each do |answer| %>
-                  <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
-                    <strong>A:</strong> <%= simple_format(h(answer.body)) %>
+          <% if questions.any? %>
+            <% questions.each do |question| %>
+              <div class="mb-3 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div class="flex-grow-1">
+                    <strong>Q:</strong> <%= simple_format(h(question.body)) %>
                     <div class="text-muted small mt-1">
-                      回答者: <%= answer.speaker.name %>
-                      <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                      <span>投票数: <%= question.votes_count %></span>
+                      <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                     </div>
                   </div>
+                </div>
+
+                <% if question.session_question_answers.any? %>
+                  <div class="mt-2 ms-3">
+                    <% question.session_question_answers.order_by_time.each do |answer| %>
+                      <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+                        <strong>A:</strong> <%= simple_format(h(answer.body)) %>
+                        <div class="text-muted small mt-1">
+                          回答者: <%= answer.speaker.name %>
+                          <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <!-- 回答フォーム -->
+                <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: talk.id, session_question_id: question.id, event: @conference.abbr), method: :post, local: true, class: 'mt-2' do |f| %>
+                  <div class="mb-2">
+                    <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください', required: true %>
+                  </div>
+                  <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
                 <% end %>
               </div>
-            <% end %>
-
-            <!-- 回答フォーム -->
-            <%= form_with url: speaker_dashboard_talk_session_question_answer_path(talk_id: talk.id, session_question_id: question.id, event: @conference.abbr), method: :post, local: true, class: 'mt-2' do |f| %>
-              <div class="mb-2">
-                <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください', required: true %>
-              </div>
-              <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
             <% end %>
           <% else %>
             <p class="text-muted small mb-0">まだQAはありません</p>

@@ -90,7 +90,7 @@ class TalksController < ApplicationController
           talk.allowed_showing_video? && talk.archived?
         end
       else
-        (talk.video_published && talk.video.present? && talk.archived?)
+        talk.video_published && talk.video.present? && talk.archived?
       end
     else
       false

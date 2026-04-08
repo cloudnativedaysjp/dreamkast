@@ -30,7 +30,7 @@ class SpeakerForm
     def talks_attributes=(attributes)
       @talks ||= []
       @destroy_talks ||= []
-      attributes.each do |_i, params|
+      attributes.each_value do |params|
         next if params.nil?
 
         params = params.symbolize_keys

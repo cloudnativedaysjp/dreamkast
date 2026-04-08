@@ -123,7 +123,7 @@ Metrics/PerceivedComplexity:
 
 # Does not allow distinguishing verbs (e.g. is vs has). Also causes problems
 # for generated code that might have generated method names.
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Enabled: false
 
 # Numbers are occasionally semantically useful in names, and also occasionally

@@ -61,5 +61,7 @@ class Announcement < ApplicationRecord
 
   def schedule_delivery
     PrepareAnnouncementDeliveriesJob.perform_later(id) if publish?
+  rescue StandardError => e
+    Rails.logger.warn("[Announcement#schedule_delivery] Failed to enqueue job for announcement #{id}: #{e.class}: #{e.message}")
   end
 end

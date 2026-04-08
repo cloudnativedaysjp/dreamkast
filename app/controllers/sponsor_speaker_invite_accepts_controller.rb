@@ -23,8 +23,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
     end
     @sponsor = @sponsor_speaker_invite.sponsor
     user_id = current_user_model.id
-    @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
-                         Speaker.find_by(user_id:, conference: @conference, sponsor: @sponsor)
+    @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                         Speaker.find_by(user_id:, conference: @conference)
                        else
                          Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                        end
@@ -52,8 +52,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
         end
 
         user_id = current_user_model.id
-        @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
-                             Speaker.find_by(conference: @conference, user_id:, sponsor: @sponsor)
+        @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                             Speaker.find_by(conference: @conference, user_id:)
                            else
                              Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end

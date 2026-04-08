@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -25,12 +25,29 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
     t.index ["user_id"], name: "fk_rails_bdfe0f01ea"
   end
 
+  create_table "announcement_deliveries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "announcement_id", null: false
+    t.bigint "profile_id"
+    t.string "email", null: false
+    t.string "status", default: "queued", null: false
+    t.string "provider_message_id"
+    t.text "last_error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["announcement_id", "status"], name: "index_announcement_deliveries_on_announcement_id_and_status"
+    t.index ["announcement_id"], name: "index_announcement_deliveries_on_announcement_id"
+    t.index ["profile_id"], name: "index_announcement_deliveries_on_profile_id"
+  end
+
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", precision: nil
     t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
     t.integer "receiver", null: false
+    t.string "send_status", default: "pending"
+    t.integer "sent_count", default: 0, null: false
+    t.integer "failed_count", default: 0, null: false
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
   end
 
@@ -787,6 +804,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_15_133000) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "admin_profiles", "users"
+  add_foreign_key "announcement_deliveries", "announcements", on_delete: :cascade
+  add_foreign_key "announcement_deliveries", "profiles", on_delete: :nullify
   add_foreign_key "announcements", "conferences"
   add_foreign_key "attendee_announcement_middles", "attendee_announcements"
   add_foreign_key "attendee_announcement_middles", "profiles"

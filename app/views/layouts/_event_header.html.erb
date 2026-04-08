@@ -37,7 +37,7 @@
             <% if display_talks? %>
               <li class="nav-item dropdown">
                 <% if display_timetable? %>
-                <li class="nav-item"><%= link_to "参加者", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "参加者", "/#{event_name}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
                 <% end %>
                 <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>

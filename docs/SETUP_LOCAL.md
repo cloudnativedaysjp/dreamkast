@@ -60,7 +60,7 @@ export MYSQL_PASSWORD=password
 export MYSQL_DATABASE=dreamkast
 export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
-export SQS_FIFO_QUEUE_URL=http://localhost:9324/queue/default
+export SQS_FIFO_QUEUE_URL=http://localhost:4566/000000000000/fifo.fifo
 ```
 
 ### 4. AWS CLIの設定とECRログイン

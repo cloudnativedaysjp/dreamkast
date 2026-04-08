@@ -903,28 +903,6 @@ Link.seed(
   {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
 )
 
-
-Video.seed(
-  { id: 1, talk_id: 1, site: "vimeo", video_id: "444387842", on_air: true},
-  { id: 2, talk_id: 2, site: "vimeo", video_id: "442363621", on_air: true},
-  { id: 3, talk_id: 3, site: "vimeo", video_id: "334092219", on_air: true},
-  { id: 4, talk_id: 4, site: "vimeo", video_id: "410005892", on_air: true},
-  { id: 5, talk_id: 5, site: "vimeo", video_id: "303648115", on_air: true},
-  { id: 6, talk_id: 6, site: "vimeo", video_id: "417159783", on_air: true},
-  { id: 7, talk_id: 7, site: "vimeo", video_id: "442385897", on_air: false},
-  { id: 8, talk_id: 8, site: "vimeo", video_id: "444712888", on_air: false},
-  { id: 9, talk_id: 9, site: "vimeo", video_id: "443856794", on_air: false},
-  { id: 10, talk_id: 65, site: "vimeo", video_id: "442956490", on_air: false},
-  { id: 11, talk_id: 68, site: "vimeo", video_id: "442956490", on_air: false},
-)
-
-
-Link.seed(
-  {id: 1, title: "link 1", url: "https://example.com", description: "this is description", conference_id: 1},
-  {id: 2, title: "link 2", url: "https://example.com", description: "this is description", conference_id: 1},
-  {id: 3, title: "link 3", url: "https://example.com", description: "this is description", conference_id: 1}
-)
-
 Announcement.seed(
   {id: 1, conference_id: 1, publish_time: "2020-08-24 10:00:00", publish: true, receiver: :all_attendee, body: <<'EOS'
 9/2（水）19:00-20:30に、プレイベントとして、CNDT2020 Rejektsを開催します！CNDT2020にお申込の方はどなたでもご参加できます！ぜひご視聴ください！,
@@ -940,3 +918,4 @@ EOS
 EOS
 }
 )
+import_dummy_data('cnk', %w(talks speakers talks_speakers proposals proposal_items))

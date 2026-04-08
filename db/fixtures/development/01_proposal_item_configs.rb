@@ -1568,6 +1568,20 @@ session_time(
       params: '_20min (for keynote)',
       value: '20',
       description: ''
+    },
+    {
+      id: 281,
+      key: SessionTime::THIRTY_MINUTES,
+      params: '_30min (for keynote)',
+      value: '30',
+      description: ''
+    },
+    {
+      id: 282,
+      key: SessionTime::FIFTY_MINUTES,
+      params: '_50min (for keynote)',
+      value: '50',
+      description: ''
     }
   ]
 )

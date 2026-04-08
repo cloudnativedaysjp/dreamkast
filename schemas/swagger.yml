@@ -644,6 +644,9 @@ components:
           type: number
         name:
           type: string
+        nameKanji:
+          type: string
+          nullable: true
         company:
           type: string
           nullable: true
@@ -708,6 +711,9 @@ components:
                 type: number
               name:
                 type: string
+              nameKanji:
+                type: string
+                nullable: true
         dayId:
           type: number
           nullable: true
@@ -761,6 +767,9 @@ components:
               type: number
             name:
               type: string
+        ogpImageUrl:
+          type: string
+          nullable: true
       example:
         - id: 1
           trackId: 2

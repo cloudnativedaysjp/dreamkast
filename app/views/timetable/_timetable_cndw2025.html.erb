@@ -25,7 +25,7 @@
                style="--track: <%= n %>"><%= "Track #{track_name}" %></div>
       <% end %>
 
-      <% conference_day.talks.where(show_on_timetable: true).each do |talk| %>
+      <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
         <%
           if talk.start_time.in_time_zone('Asia/Tokyo').hour < 13
             lunch_break = 0
@@ -74,7 +74,7 @@
                 <!-- % ' (アーカイブ視聴不可)' unless talk.video_published % -->
                 <%= talk.seats_status if @profile.attend_offline? %>
             </h6>
-            <h4><%= link_to talk.title, talk_path(id: talk.id), remote: true %></h4>
+            <h4><%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %></h4>
             <h5><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></h5>
             <div class="content_caption"><br/><span>(タイトルクリックで詳細表示)</span></div>
           </div>

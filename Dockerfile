@@ -47,10 +47,10 @@ ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=ena
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 \
-    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt install -y ./google-chrome-stable_current_amd64.deb \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 chromium && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+ENV CHROME_BIN=/usr/bin/chromium
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
 EXPOSE 3000

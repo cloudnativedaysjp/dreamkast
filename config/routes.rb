@@ -135,6 +135,7 @@ Rails.application.routes.draw do
     get '/speaker_dashboard/questions' => 'speaker_dashboards#questions', as: 'speaker_dashboard_questions'
     post '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers' => 'speaker_dashboards#create_answer', as: 'speaker_dashboard_talk_session_question_answer'
     delete '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers/:id' => 'speaker_dashboards#destroy_answer', as: 'speaker_dashboard_talk_session_question_answer_delete'
+    patch '/speaker_dashboard/talks/:talk_id/session_questions/:id/toggle_hidden' => 'speaker_dashboards#toggle_question_hidden', as: 'speaker_dashboard_talk_session_question_toggle_hidden'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
       resources :video_registrations, only: [:new, :create, :edit, :update]

@@ -121,6 +121,35 @@ class SpeakerDashboardsController < ApplicationController
     end
   end
 
+  def toggle_question_hidden
+    @talk = @speaker.talks.find_by(id: params[:talk_id])
+    unless @talk
+      flash[:alert] = 'このセッションの登壇者ではありません'
+      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      return
+    end
+
+    @question = @talk.session_questions.find(params[:id])
+
+    unless @talk.speakers.include?(@speaker)
+      flash[:alert] = 'このセッションの登壇者ではありません'
+      redirect_to speaker_dashboard_path(event: @conference.abbr)
+      return
+    end
+
+    if @question.update(hidden: !@question.hidden)
+      status = @question.hidden? ? '非表示' : '表示'
+      flash.now[:notice] = "質問を#{status}にしました"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
+      end
+    else
+      flash[:alert] = '状態の変更に失敗しました'
+      redirect_to speaker_dashboard_questions_path(event: @conference.abbr)
+    end
+  end
+
   def talks
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
@@ -145,7 +174,6 @@ class SpeakerDashboardsController < ApplicationController
                             end
 
         @all_questions = @conference.session_questions
-                                    .visible
                                     .where(talk_id: filtered_talk_ids)
                                     .includes(:talk, :profile, :session_question_answers, :session_question_votes)
                                     .order_by_time

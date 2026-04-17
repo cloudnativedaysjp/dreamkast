@@ -4,6 +4,13 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
+  # ApplicationController の user_not_authorized は html テンプレートを
+  # 前提にしているため、turbo_stream 等の非 html リクエストでは
+  # ActionView::MissingTemplate となる。format 非依存で 403 を返す。
+  rescue_from Pundit::NotAuthorizedError do
+    head(:forbidden)
+  end
+
   def index
     @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
@@ -26,7 +33,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    # authorize(@speaker)
+    authorize([:sponsor_dashboards, @speaker])
   end
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
@@ -52,6 +59,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def update
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
+    authorize([:sponsor_dashboards, @speaker])
 
     if @speaker.update(speaker_params)
       flash.now[:notice] = 'スポンサー登壇者を更新しました'
@@ -65,6 +73,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
+    authorize([:sponsor_dashboards, @speaker])
 
     # スポンサーセッションと紐付いているかチェック
     if @speaker.talks.present?
@@ -94,10 +103,10 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     end
   end
 
+  # スポンサー管理画面の context では pundit_user として SponsorContact を返し、
+  # SponsorDashboards::SpeakerPolicy で「自スポンサー所属の Speaker か」を判定する
   def pundit_user
-    if current_user && current_user_model
-      Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
-    end
+    @sponsor_contact
   end
 
   def expected_participant_params

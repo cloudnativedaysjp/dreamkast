@@ -1,8 +1,7 @@
 class SponsorDashboards::SponsorSpeakersController < ApplicationController
   include SecuredSponsor
   before_action :set_sponsor_contact
-
-  skip_before_action :logged_in_using_omniauth?, only: [:new]
+  before_action :ensure_speaker_belongs_to_sponsor, only: [:edit, :update, :destroy]
 
   def index
     @conference = Conference.find_by(abbr: params[:event])
@@ -15,37 +14,12 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
                                        .map { |invites| invites.max_by(&:expires_at) }
   end
 
-  # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
-  def new
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @speaker = Speaker.new
-  end
-
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
     # authorize(@speaker)
-  end
-
-  # POST /:event/speaker_dashboard/:sponsor_id/speakers
-  def create
-    @sponsor = Sponsor.find(params[:sponsor_id])
-
-    @speaker = Speaker.new(speaker_params)
-    @speaker.conference = conference
-    @speaker.sponsor = @sponsor
-    @speaker.sub = current_user_model&.sub
-    @speaker.email = current_user[:info][:email]
-
-    if @speaker.save
-      flash.now[:notice] = 'スポンサー登壇者を登録しました'
-    else
-      flash.now[:alert] = 'スポンサー登壇者の登録に失敗しました'
-      puts(@speaker.errors.full_messages.join(', '))
-      render(:new, status: :unprocessable_entity)
-    end
   end
 
   # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
@@ -62,23 +36,23 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
+  # Speaker 本体は削除せず、このスポンサーとの紐付け（sponsor_id と
+  # SponsorSpeakerInviteAccept）のみを解除する。Speaker は他のスポンサーや
+  # 通常プロポーザルからも参照されうるため。
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
 
-    # スポンサーセッションと紐付いているかチェック
-    if @speaker.talks.present?
-      flash.now[:alert] = 'スポンサーセッションと紐付いているため削除できません'
-      return
+    ActiveRecord::Base.transaction do
+      @sponsor.sponsor_speaker_invite_accepts.where(speaker_id: @speaker.id).destroy_all
+      @speaker.update!(sponsor_id: nil) if @speaker.sponsor_id == @sponsor.id
     end
 
-    if @speaker.destroy
-      @sponsor_speakers = @sponsor.speakers
-      @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
-      flash.now[:notice] = 'スポンサー登壇者を削除しました'
-    else
-      flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
-    end
+    @sponsor_speakers = @sponsor.speakers
+    @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
+    flash.now[:notice] = 'スポンサー登壇者から外しました'
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
   end
 
   private
@@ -87,8 +61,6 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   def speaker_url
     case action_name
-    when 'new'
-      "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers"
     when 'edit', 'update'
       "/#{params[:event]}/sponsor_dashboards/#{params[:sponsor_id]}/speakers/#{params[:id]}"
     end
@@ -133,6 +105,13 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
       @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+    end
+  end
+
+  def ensure_speaker_belongs_to_sponsor
+    sponsor = Sponsor.find(params[:sponsor_id])
+    unless sponsor.speakers.exists?(id: params[:id])
+      render_404
     end
   end
 end

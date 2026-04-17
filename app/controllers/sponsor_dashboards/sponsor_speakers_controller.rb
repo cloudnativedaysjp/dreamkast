@@ -70,24 +70,24 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
+  # Speaker 本体は削除せず、このスポンサーとの紐付け（sponsor_id と
+  # SponsorSpeakerInviteAccept）のみを解除する。Speaker は他のスポンサーや
+  # 通常プロポーザルからも参照されうるため。
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
     authorize([:sponsor_dashboards, @speaker])
 
-    # スポンサーセッションと紐付いているかチェック
-    if @speaker.talks.present?
-      flash.now[:alert] = 'スポンサーセッションと紐付いているため削除できません'
-      return
+    ActiveRecord::Base.transaction do
+      @sponsor.sponsor_speaker_invite_accepts.where(speaker_id: @speaker.id).destroy_all
+      @speaker.update!(sponsor_id: nil) if @speaker.sponsor_id == @sponsor.id
     end
 
-    if @speaker.destroy
-      @sponsor_speakers = @sponsor.speakers
-      @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
-      flash.now[:notice] = 'スポンサー登壇者を削除しました'
-    else
-      flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
-    end
+    @sponsor_speakers = @sponsor.speakers
+    @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
+    flash.now[:notice] = 'スポンサー登壇者から外しました'
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
   end
 
   private

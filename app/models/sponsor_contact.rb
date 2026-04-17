@@ -5,6 +5,7 @@ class SponsorContact < ApplicationRecord
   belongs_to :sponsor
   belongs_to :user, optional: true
   has_many :sponsor_contact_invite_accepts, dependent: :destroy
+  has_many :sponsor_speaker_invite_accepts, dependent: :destroy
 
   before_validation :ensure_user, on: :create
 

@@ -73,7 +73,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
       end
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e)
-      render(:new, alert: e.message)
+      flash.now[:alert] = e.record.errors.full_messages.join(', ')
+      render(:new)
     end
   end
 

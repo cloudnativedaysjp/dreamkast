@@ -17,20 +17,18 @@ RSpec.describe(SponsorDashboards::SponsorSpeakersController, type: :request) do
                                                                  ))
     end
 
-    context 'sponsor_id で紐付く Speaker の場合（legacy）' do
+    context 'スポンサーとのみ紐付く Speaker の場合（sponsor_id, talks なし）' do
       let!(:speaker) { create(:speaker, **speaker_attrs, sponsor:) }
 
-      it 'Speaker 本体は削除されず、sponsor_id が nil にクリアされる' do
+      it 'Speaker 本体も削除される' do
         delete sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor.id, id: speaker.id),
                headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
 
-        expect(Speaker.exists?(speaker.id)).to(be(true))
-        expect(speaker.reload.sponsor_id).to(be_nil)
-        expect(sponsor.speakers).not_to(include(speaker))
+        expect(Speaker.exists?(speaker.id)).to(be(false))
       end
     end
 
-    context 'SponsorSpeakerInviteAccept 経由で紐付く Speaker の場合（既存プロポーザル由来）' do
+    context 'スポンサーとのみ紐付く Speaker の場合（invite_accept のみ, talks なし）' do
       let!(:speaker) { create(:speaker, **speaker_attrs, sponsor: nil) }
       let!(:invite) { create(:sponsor_speaker_invite, conference:, sponsor:) }
       let!(:invite_accept) do
@@ -38,28 +36,28 @@ RSpec.describe(SponsorDashboards::SponsorSpeakersController, type: :request) do
                conference:, sponsor:, sponsor_contact:, speaker:, sponsor_speaker_invite: invite)
       end
 
-      it 'Speaker 本体は削除されず、invite_accept のみ削除される' do
+      it 'Speaker 本体も invite_accept も削除される' do
         delete sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor.id, id: speaker.id),
                headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
 
-        expect(Speaker.exists?(speaker.id)).to(be(true))
+        expect(Speaker.exists?(speaker.id)).to(be(false))
         expect(SponsorSpeakerInviteAccept.exists?(invite_accept.id)).to(be(false))
-        expect(sponsor.speakers).not_to(include(speaker))
       end
     end
 
-    context '通常プロポーザルの Talk を持つ Speaker の場合' do
+    context 'CFP 経由の Speaker（Proposal 付き Talk あり）の場合' do
       let!(:speaker) { create(:speaker, **speaker_attrs, sponsor:) }
-      let!(:talk) { create(:talk1) }
+      let!(:talk) { create(:talk1, :registered) }
 
       before { speaker.talks << talk }
 
-      it 'Speaker 本体も Talk も削除されず、sponsor_id が nil にクリアされる' do
+      it 'Speaker も Talk も Proposal も残り、sponsor_id のみ nil にクリアされる' do
         delete sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor.id, id: speaker.id),
                headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
 
         expect(Speaker.exists?(speaker.id)).to(be(true))
         expect(Talk.exists?(talk.id)).to(be(true))
+        expect(talk.reload.proposal).to(be_present)
         expect(speaker.reload.sponsor_id).to(be_nil)
       end
     end

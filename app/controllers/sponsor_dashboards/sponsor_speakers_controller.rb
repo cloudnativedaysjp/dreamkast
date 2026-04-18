@@ -70,9 +70,10 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
-  # Speaker 本体は削除せず、このスポンサーとの紐付け（sponsor_id と
-  # SponsorSpeakerInviteAccept）のみを解除する。Speaker は他のスポンサーや
-  # 通常プロポーザルからも参照されうるため。
+  # スポンサーとのみ紐付いている Speaker（Talk を持たない = 純粋なスポンサー
+  # 登壇者招待で作られた Speaker）は本体ごと削除する。Talk を持つ Speaker
+  # （CFP 経由でプロポーザルを出している等）は本体を残し、このスポンサーとの
+  # 紐付け（sponsor_id と SponsorSpeakerInviteAccept）のみを解除する。
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
@@ -80,7 +81,11 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @sponsor.sponsor_speaker_invite_accepts.where(speaker_id: @speaker.id).destroy_all
-      @speaker.update!(sponsor_id: nil) if @speaker.sponsor_id == @sponsor.id
+      if @speaker.talks.empty?
+        @speaker.destroy!
+      elsif @speaker.sponsor_id == @sponsor.id
+        @speaker.update!(sponsor_id: nil)
+      end
     end
 
     @sponsor_speakers = @sponsor.speakers

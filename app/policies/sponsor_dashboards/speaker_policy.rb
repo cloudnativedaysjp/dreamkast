@@ -19,6 +19,12 @@ class SponsorDashboards::SpeakerPolicy < ApplicationPolicy
   private
 
   def belongs_to_my_sponsor?
-    speaker.present? && record.sponsor_id == speaker.sponsor_id
+    return false unless speaker
+
+    # 経路1: 直接紐付く Speaker（legacy）
+    return true if record.sponsor_id == speaker.sponsor_id
+
+    # 経路2: SponsorSpeakerInviteAccept 経由（既存プロポーザル由来など）
+    SponsorSpeakerInviteAccept.where(speaker_id: record.id, sponsor_id: speaker.sponsor_id).exists?
   end
 end

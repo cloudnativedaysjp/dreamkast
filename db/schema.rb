@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_17_101147) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -565,6 +565,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.bigint "speaker_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conference_id", "speaker_id"], name: "idx_spk_inv_accepts_on_conf_speaker_uniq", unique: true
     t.index ["conference_id", "sponsor_id", "speaker_id", "sponsor_contact_id"], name: "idx_spk_inv_accepts_on_conf_spsr_speaker_contact", unique: true
     t.index ["conference_id"], name: "index_sponsor_speaker_invite_accepts_on_conference_id"
     t.index ["speaker_id"], name: "index_sponsor_speaker_invite_accepts_on_speaker_id"

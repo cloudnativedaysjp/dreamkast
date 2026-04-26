@@ -1,27 +1,6 @@
-# == Schema Information
-#
-# Table name: video_registrations
-#
-#  id         :bigint           not null, primary key
-#  statistics :json             not null
-#  status     :integer          default("unsubmitted"), not null
-#  url        :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  talk_id    :bigint           not null
-#
-# Indexes
-#
-#  index_video_registrations_on_talk_id  (talk_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (talk_id => talks.id)
-#
-
 class VideoRegistration < ApplicationRecord
   belongs_to :talk
-  enum status: { unsubmitted: 0, submitted: 1, confirmed: 2, invalid_format: 3 }
+  enum :status, { unsubmitted: 0, submitted: 1, confirmed: 2, invalid_format: 3 }
   STATUS_MESSAGE = {
     'submitted' => '提出されたビデオファイルの確認中です。',
     'unsubmitted' =>  '未確認 ※アップロードからステータス反映まで30分程度かかることがあります',

@@ -7,9 +7,15 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :set_sentry_context, :event_exists?
+  layout :event_layout
 
   unless Rails.env.development?
-    rescue_from Exception, with: :render_500
+    rescue_from Exception do |e|
+      # Record exception in OpenTelemetry span before re-raising
+      OpenTelemetry::Trace.current_span.record_exception(e)
+
+      render_500(e)
+    end
     rescue_from ActiveRecord::RecordNotFound, NotFound, with: :render_404
     rescue_from Forbidden, with: :render_403
   end
@@ -28,6 +34,16 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
   helper_method :logged_in?
+
+  def current_user_model
+    return nil unless current_user
+    symbolized_current_user = current_user.deep_symbolize_keys
+    return nil unless symbolized_current_user[:extra] && symbolized_current_user[:extra][:raw_info] && symbolized_current_user[:extra][:raw_info][:sub]
+    @current_user_model ||= User.find_or_create_by_auth0_info(
+      sub: symbolized_current_user[:extra][:raw_info][:sub],
+      email: symbolized_current_user[:info][:email]
+    )
+  end
 
   def user_not_authorized
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
@@ -81,6 +97,9 @@ class ApplicationController < ActionController::Base
     if e
       logger.error("Rendering 500 with exception: #{e.message}")
       logger.error(e.backtrace.join("\n"))
+
+      # Record exception in OpenTelemetry span
+      OpenTelemetry::Trace.current_span.record_exception(e)
     end
 
     render(template: 'errors/error_500', status: 500, layout: 'application', content_type: 'text/html')
@@ -112,7 +131,12 @@ class ApplicationController < ActionController::Base
   def set_sentry_context
     Sentry.with_scope do |scope|
       scope.set_user(id: session[:current_user_id])
-      scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      begin
+        scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      rescue JSON::ParserError, ActionController::BadRequest
+        # リクエストパラメータのパースに失敗した場合はスキップ
+        scope.set_extras(url: request.url)
+      end
     end
   end
 
@@ -146,22 +170,22 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile
-    @profile = if current_user && (set_conference.opened? || set_conference.registered?)
-                 Profile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @profile = if current_user_model && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
+                 Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
                else
                  GuestProfile.new
                end
   end
 
   def set_speaker
-    if current_user
-      @speaker = Speaker.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    if current_user_model
+      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
     end
   end
 
   def set_sponsor_contact
-    if current_user
-      @sponsor_contact = SponsorContact.find_by(email: current_user[:info][:email], conference_id: conference.id)
+    if current_user_model
+      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
     end
   end
 
@@ -174,7 +198,7 @@ class ApplicationController < ActionController::Base
   end
 
   def display_sponsor_guideline_url?
-    @conference&.sponsor_guideline_url
+    @conference&.sponsor_guideline_url.present?
   end
 
   def display_dashboard_link?
@@ -199,5 +223,13 @@ class ApplicationController < ActionController::Base
   helper_method :admin?
   def admin?
     false
+  end
+
+  def event_layout
+    if FileTest.exist?("#{Rails.root}/app/views/layouts/#{event_name}.html.erb")
+      event_name
+    else
+      'application'
+    end
   end
 end

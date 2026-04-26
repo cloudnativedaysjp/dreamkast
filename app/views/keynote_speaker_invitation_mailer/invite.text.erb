@@ -1,0 +1,26 @@
+<% if @invitation.name.present? %>
+<%= @invitation.name %> 様
+<% end %>
+
+<%= @conference.name %> のキーノートスピーカーとして招待されました。
+
+■ 招待の承諾方法
+
+下記のリンクをクリックして、招待を承諾してください。
+承諾後、スピーカーダッシュボードからプロフィール情報とセッション情報を編集できます。
+
+<%= @accept_url %>
+
+注意：この招待リンクは <%= l(@invitation.expires_at, format: :long) %> まで有効です。
+
+■ カンファレンス情報
+
+・カンファレンス名: <%= @conference.name %>
+・略称: <%= @conference.abbr %>
+<% if @conference.conference_days.any? %>
+・開催日: <%= @conference.conference_days.map { |day| l(day.date, format: :long) }.join(', ') %>
+<% end %>
+
+ご不明な点がございましたら、カンファレンス運営チームまでお問い合わせください。
+
+<%= render '/layouts/footer' %>

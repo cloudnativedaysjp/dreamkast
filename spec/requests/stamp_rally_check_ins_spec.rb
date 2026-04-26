@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe StampRallyCheckInsController, type: :request do
-  let!(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  let!(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
 
   describe 'GET /stamp_rally_check_ins' do

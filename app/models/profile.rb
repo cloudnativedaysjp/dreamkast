@@ -1,41 +1,3 @@
-# == Schema Information
-#
-# Table name: profiles
-#
-#  id                            :bigint           not null, primary key
-#  calendar_unique_code          :string(255)
-#  company_address               :string(255)
-#  company_address_level1        :string(255)
-#  company_address_level2        :string(255)
-#  company_address_line1         :string(255)
-#  company_address_line2         :string(255)
-#  company_email                 :string(255)
-#  company_fax                   :string(255)
-#  company_name                  :string(255)
-#  company_postal_code           :string(255)
-#  company_tel                   :string(255)
-#  department                    :string(255)
-#  email                         :string(255)
-#  first_name                    :string(255)
-#  first_name_kana               :string(255)
-#  last_name                     :string(255)
-#  last_name_kana                :string(255)
-#  occupation                    :string(255)
-#  participation                 :string(255)
-#  position                      :string(255)
-#  sub                           :string(255)
-#  created_at                    :datetime         not null
-#  updated_at                    :datetime         not null
-#  annual_sales_id               :integer          default(11)
-#  company_address_prefecture_id :string(255)
-#  company_name_prefix_id        :string(255)
-#  company_name_suffix_id        :string(255)
-#  conference_id                 :integer
-#  industry_id                   :integer
-#  number_of_employee_id         :integer          default(12)
-#  occupation_id                 :integer          default(34)
-#
-
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -67,24 +29,29 @@ class Profile < ApplicationRecord
   belongs_to_active_hash :company_name_suffix, shortcuts: [:name], class_name: '::FormModels::CompanyNameSuffix'
 
   belongs_to :conference
+  belongs_to :user
   has_many :registered_talks
   has_many :talks, -> { order('conference_day_id ASC, start_time ASC') }, through: :registered_talks
-  has_many :agreements
-  has_many :form_items, through: :agreements
+  has_many :form_values
+  has_many :form_items, through: :form_values, source: :form_item
   has_many :chat_messages
   has_many :check_ins
+  has_many :session_questions, dependent: :destroy
+  has_many :session_question_votes, dependent: :destroy
   has_many :check_in_conferences, dependent: :destroy
   has_many :check_in_talks
   has_many :stamp_rally_check_ins
   has_one :public_profile, dependent: :destroy
+  accepts_nested_attributes_for :form_items
+
+  before_validation :ensure_user, on: :create
 
   before_create do
     self.calendar_unique_code = SecureRandom.uuid
   end
 
   validate :sub_and_email_must_be_unique_in_a_conference, on: :create
-  validates :sub, presence: true, length: { maximum: 250 }
-  validates :email, presence: true, email: true
+  validates :user_id, uniqueness: { scope: :conference_id }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :industry_id, length: { maximum: 10 }
@@ -100,6 +67,7 @@ class Profile < ApplicationRecord
   validates :company_fax, presence: false, length: { maximum: 128 }
   validates :department, presence: true, length: { maximum: 128 }
   validates :position, presence: true, length: { maximum: 128 }
+  validates :participation, presence: true
   validates :number_of_employee_id, length: { maximum: 128 }
   validates :annual_sales_id, length: { maximum: 128 }
 
@@ -108,9 +76,32 @@ class Profile < ApplicationRecord
     offline: '現地参加'
   }
 
+  # userのsubとemailを委譲（userがnilの可能性がある場合はallow_nil: true）
+  delegate :sub, :email, to: :user, allow_nil: true
+
+  # 一時的な属性（before_validationでuserを作成するために使用）
+  attr_accessor :pending_sub, :pending_email
+
   def sub_and_email_must_be_unique_in_a_conference
-    if Profile.where(sub:, email:, conference_id:).exists?
+    if Profile.where(user_id:, conference_id:).exists?
       errors.add(:email, ": #{conference.abbr.upcase}に既に同じメールアドレスで登録されています")
+    end
+  end
+
+  # 既存コードとの互換性のため、セッターを提供
+  def sub=(value)
+    if user_id.present?
+      user.update!(sub: value)
+    else
+      self.pending_sub = value
+    end
+  end
+
+  def email=(value)
+    if user_id.present?
+      user.update!(email: value)
+    else
+      self.pending_email = value
     end
   end
 
@@ -171,6 +162,11 @@ class Profile < ApplicationRecord
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
 
+  # 公開用のプロフィール名を取得（public_profileのnicknameのみを使用）
+  def public_name
+    public_profile&.nickname.presence || '匿名ユーザー'
+  end
+
   def way_to_attend
     participation_before_type_cast
   end
@@ -181,5 +177,30 @@ class Profile < ApplicationRecord
 
   def attend_online?
     online?
+  end
+
+  def early_bird?
+    conference.early_bird_cutoff_at && created_at < conference.early_bird_cutoff_at
+  end
+
+  private
+
+  def ensure_user
+    return if user_id.present?
+
+    sub_value = pending_sub
+    email_value = pending_email
+
+    if sub_value.present? && email_value.present?
+      self.user = User.find_or_create_by!(sub: sub_value) do |u|
+        u.email = email_value
+      end
+      # emailが指定されていて、Userのemailが異なる場合は更新
+      if user.email != email_value
+        user.update!(email: email_value)
+      end
+    else
+      errors.add(:base, 'subとemailの両方が必要です')
+    end
   end
 end

@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 8.0.0'
 # Use Puma as the app server
-gem 'puma', '~> 6.0'
+gem 'puma', '~> 7.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -29,11 +29,12 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # OmniAuth Auth0 strategy and CSRF protection
 gem 'omniauth-auth0', '~> 3.0'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
+gem 'omniauth-rails_csrf_protection', '~> 2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem "debug", require: false
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'committee'
@@ -42,7 +43,6 @@ group :development, :test do
   gem 'rubocop', '~> 1.56.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'annotate', require: false
 end
 
 group :development do
@@ -77,9 +77,11 @@ gem "sentry-rails"
 gem "sentry-opentelemetry"
 
 gem "opentelemetry-sdk"
+gem "opentelemetry-exporter-otlp"
 gem "opentelemetry-instrumentation-all"
 
-gem "redis-rails"
+gem "redis"
+gem "redis-session-store"
 
 gem "shrine", "~> 3.3"
 
@@ -101,6 +103,8 @@ gem "image_processing", "~> 1.12.2"
 
 gem 'awesome_nested_set'
 gem 'aws-sdk-rails'
+gem 'aws-actionmailer-ses', '~> 1.0'
+gem 'aws-activejob-sqs'
 
 gem 'activerecord-nulldb-adapter'
 
@@ -120,16 +124,18 @@ gem "turbo-rails", "2.0.5"
 
 gem 'slack-ruby-client'
 
-gem 'nokogiri', '1.18.3'
+gem 'nokogiri', '1.18.9'
 
 gem 'faraday-retry'
 
 # QRcode rendering
-gem "rqrcode", "~> 2.0"
+gem "rqrcode", "~> 3.0"
 
 gem 'ulid'
 
 gem 'acts_as_list'
+
+gem 'kaminari'
 
 # PDF tool
 gem 'ferrum'

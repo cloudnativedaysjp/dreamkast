@@ -3,7 +3,7 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
   include MediaPackageV2Helper
 
   # queue_as :default
-  self.queue_adapter = :async
+  self.queue_adapter = :async unless Rails.env.test?
 
   attr_reader :conference
   attr_reader :track

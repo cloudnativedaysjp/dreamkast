@@ -47,20 +47,43 @@ module ApplicationHelper
       strikethrough: true
     }
     markdown = Redcarpet::Markdown.new(html_render, options)
-    markdown.render(text).html_safe
+    markdown.render(text.to_s).html_safe
   end
 
   def event_js_path
-    if Conference.all.map { |conf| conf.abbr }.include?(event_name) && event_name != 'cndt2020'
-      event_name
-    else
-      'application'
-    end
+    event_asset = if Conference.exists?(abbr: event_name) && event_name != 'cndt2020'
+                    event_name
+                  else
+                    'application'
+                  end
+    return event_asset if asset_available?("#{event_asset}.css") && asset_available?("#{event_asset}.js")
+    'application'
   end
 
   def vote_api_url
     [
       ENV['DREAMKAST_WEAVER_ADDR'], 'query'
     ].join('/')
+  end
+
+  def alert_type(message_type)
+    case message_type
+    when 'notice'
+      'success'
+    when 'danger', 'alert'
+      'danger'
+    else
+      'primary'
+    end
+  end
+
+  private
+
+  def asset_available?(path)
+    if Rails.env.production?
+      Rails.application.assets_manifest&.assets&.[](path).present?
+    else
+      Rails.application.assets.find_asset(path).present?
+    end
   end
 end

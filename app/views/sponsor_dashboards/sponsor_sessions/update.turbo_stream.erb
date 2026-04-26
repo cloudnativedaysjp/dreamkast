@@ -1,3 +1,5 @@
-<%= turbo_stream.replace @sponsor_session %>
+<%= turbo_stream.replace @sponsor_session, 
+    partial: 'sponsor_dashboards/sponsor_sessions/sponsor_session',
+    locals: { sponsor_session: @sponsor_session } %>
 <%= turbo_stream_flash %>
 <%= yield %>

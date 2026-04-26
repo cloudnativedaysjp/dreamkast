@@ -3,6 +3,10 @@ class Admin::ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.where(conference_id: @conference.id)
+                       .includes(:check_in_conferences)
+                       .order(:id)
+                       .page(params[:page])
+                       .per(50)
   end
 
   def export_profiles
@@ -18,7 +22,7 @@ class Admin::ProfilesController < ApplicationController
 
   def entry_sheet
     @profile = Profile.find(params[:id])
-    @speaker = conference.speakers.find_by(sub: @profile.sub)
+    @speaker = conference.speakers.find_by(user_id: @profile.user_id)
 
     render('profiles/entry_sheet')
   end

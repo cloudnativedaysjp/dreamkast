@@ -1,62 +1,157 @@
-<div class="field pb-3">
-  <%= form.label :name, '講演者氏名（英語表記） - Your Name' %>*
-  <%= form.text_field :name, class: "form-control", required: true, placeholder: 'Taro Cloud' %>
+<%# ===== 基本情報 ===== %>
+<div class="cfp-field-group mb-4">
+  <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">基本情報</h5>
+
+  <div class="row g-3">
+    <%# 英語名 %>
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= form.text_field :name, class: "form-control", required: true, placeholder: 'Taro Cloud', id: 'speaker_name' %>
+        <%= form.label :name, class: 'form-label' do %>
+          講演者氏名（英語表記）<span class="text-danger">*</span>
+        <% end %>
+      </div>
+      <div class="form-text">Your Name (e.g., Taro Cloud)</div>
+    </div>
+
+    <%# 漢字名 %>
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= form.text_field :name_mother_tongue, class: "form-control", required: true, placeholder: 'クラウド 太郎', id: 'speaker_name_mother_tongue' %>
+        <%= form.label :name_mother_tongue, class: 'form-label' do %>
+          講演者氏名（漢字）<span class="text-danger">*</span>
+        <% end %>
+      </div>
+      <div class="form-text">Name "kanji" - If you do not have a Kanji name, please set "N/A"</div>
+    </div>
+  </div>
 </div>
 
-<div class="field pb-3">
-  <%= form.label :name_mother_tongue, '講演者氏名（漢字）- Name "kanji"' %>*
-  <p class="field-description" style="font-size: 0.7em">If you do not have a Kanji name, please set "N/A"</p>
-  <%= form.text_field :name_mother_tongue, class: "form-control", required: true, placeholder: 'クラウド 太郎' %>
+<%# ===== 所属情報 ===== %>
+<div class="cfp-field-group mb-4">
+  <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">所属情報</h5>
+
+  <div class="row g-3">
+    <%# 会社名 %>
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社', id: 'speaker_company' %>
+        <%= form.label :company, class: 'form-label' do %>
+          会社名/所属団体名<span class="text-danger">*</span>
+          <span class="badge bg-secondary ms-1">★</span>
+        <% end %>
+      </div>
+      <div class="form-text">Company/Organizations</div>
+    </div>
+
+    <%# 肩書き %>
+    <div class="col-md-6">
+      <div class="form-floating">
+        <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア', id: 'speaker_job_title' %>
+        <%= form.label :job_title, class: 'form-label' do %>
+          肩書き<span class="text-danger">*</span>
+        <% end %>
+      </div>
+      <div class="form-text">Job Title</div>
+    </div>
+  </div>
 </div>
 
-<div class="field pb-3">
-  <%= form.label :profile, '講演者プロフィール - Biography' %>*
-  <p class="field-description" style="font-size: 0.7em">最大300文字 (Maximum 300 letters)</p>
-  <%= form.text_area :profile, class: "form-control", required: true %>
+<%# ===== プロフィール ===== %>
+<div class="cfp-field-group mb-4">
+  <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">プロフィール</h5>
+
+  <div class="mb-3">
+    <%= form.label :profile, class: 'form-label fw-semibold' do %>
+      講演者プロフィール<span class="text-danger">*</span>
+    <% end %>
+    <%= form.text_area :profile, class: "form-control", required: true, rows: 5, id: 'speaker_profile', placeholder: 'あなたの経歴や専門分野について記載してください...' %>
+    <div class="form-text d-flex justify-content-between">
+      <span>Biography - 最大300文字 (Maximum 300 letters)</span>
+      <span class="text-muted" id="profile-char-count">0 / 300</span>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :additional_documents, class: 'form-label fw-semibold' do %>
+      過去の登壇実績が分かるスライド等
+      <span class="badge bg-secondary ms-1">★</span>
+    <% end %>
+    <%= form.text_area :additional_documents, class: "form-control", required: false, rows: 3, id: 'speaker_additional_documents', placeholder: "https://speakerdeck.com/your-slides\nhttps://www.slideshare.net/your-presentation" %>
+    <div class="form-text">Published Slides, etc. - 複数ある場合は改行で区切ってください</div>
+  </div>
 </div>
 
-<div class="field pb-3">
-  <%= form.label :company, '会社名/所属団体名 - Company/Organizations（★）' %>*
-  <%= form.text_field :company, class: "form-control", required: true, placeholder: 'クラウドネイティブデイズ株式会社' %>
+<%# ===== SNS・連絡先 ===== %>
+<div class="cfp-field-group mb-4">
+  <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">SNS・連絡先</h5>
+
+  <div class="row g-3">
+    <%# X(Twitter) %>
+    <div class="col-md-6">
+      <label class="form-label fw-semibold">X(Twitter) ID</label>
+      <div class="input-group">
+        <span class="input-group-text">@</span>
+        <%= form.text_field :twitter_id, class: "form-control", placeholder: 'cloudnativedays', id: 'speaker_twitter_id' %>
+      </div>
+      <div class="form-text">@は不要です</div>
+    </div>
+
+    <%# GitHub %>
+    <div class="col-md-6">
+      <label class="form-label fw-semibold">GitHub ID</label>
+      <div class="input-group">
+        <span class="input-group-text">github.com/</span>
+        <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp', id: 'speaker_github_id' %>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="field pb-3">
-  <%= form.label :job_title, '肩書き - Job Title' %>*
-  <%= form.text_field :job_title, class: "form-control", required: true, placeholder: '凄腕エンジニア'  %>
-</div>
+<%# ===== プロフィール写真 ===== %>
+<div class="cfp-field-group mb-4">
+  <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">プロフィール写真</h5>
 
-<div class="field pb-3">
-  <%= form.label :additional_documents, '過去の登壇実績が分かるスライド等 - Published Slides, etc.（★）' %>
-  <%= form.text_area :additional_documents, class: "form-control", required: false, placeholder: "https://speakerdeck.com/\nhttps://www.slideshare.net/"  %>
-</div>
+  <div class="row g-4">
+    <div class="col-md-8">
+      <div class="cfp-upload-area p-4 text-center" data-controller="crop-upload">
+        <p class="mb-2 fw-semibold">講演者写真をアップロード</p>
+        <p class="small text-muted mb-3">Photographs - クリックまたはドラッグ&ドロップ</p>
+        <%= form.text_field :avatar,
+                            type: :file,
+                            id: "avatar_upload",
+                            "data-crop-upload-target": "fileInput",
+                            class: "form-control" %>
+        <%= form.text_field :avatar,
+                            type: :hidden,
+                            error_handler: false,
+                            class: "upload-data",
+                            value: @speaker.nil? ? "" : @speaker.cached_avatar_data %>
+      </div>
+    </div>
 
-<div class="field pb-3">
-  <%= form.label :twitter_id, 'X(Twitter) ID' %>
-  <%= form.text_field :twitter_id, class: "form-control", placeholder: 'cloudnativedays'  %>
-</div>
-
-<div class="field pb-3">
-  <%= form.label :github_id, 'GitHub ID' %>
-  <%= form.text_field :github_id, class: "form-control", placeholder: 'cloudnativedaysjp'  %>
-</div>
-
-<div class="field pb-3" data-controller="crop-upload">
-  <%= form.label :avatar, '講演者写真 - Photographs' %>
-  <!-- will be replaced by Uppy -->
-  <%= form.text_field :avatar,
-                      type: :file,
-                      id: "avatar_upload",
-                      "data-crop-upload-target": "fileInput",
-                      class: "form-control" %>
-
-  <!-- for storing uploaded file data -->
-  <%= form.text_field :avatar,
-                      type: :hidden,
-                      error_handler: false,
-                      class: "upload-data",
-                      value: @speaker.nil? ? "" : @speaker.cached_avatar_data %>
-</div>
-
-<div class="image-preview">
-  <img src="<%= (@speaker.avatar_url(:large) || @speaker.avatar_url) unless @speaker.nil? %>" height="300" class="rounded" \>
+    <div class="col-md-4">
+      <div class="cfp-image-preview text-center">
+        <div class="image-preview p-2" style="min-height: 200px;">
+          <% has_avatar = @speaker.present? && (@speaker.avatar.present? || @speaker.avatar_url.present?) %>
+          <% avatar_url = has_avatar ? (@speaker.avatar_url(:large) || @speaker.avatar_url) : nil %>
+          <%# img要素は常に存在させる（JavaScriptのプレビュー機能に必要） %>
+          <img src="<%= avatar_url || '' %>"
+               class="img-fluid"
+               style="max-height: 250px; object-fit: cover;<%= ' display: none;' unless avatar_url.present? %>"
+               alt="プロフィール写真プレビュー">
+          <%# プレースホルダー（画像未選択時に表示） %>
+          <div class="image-placeholder d-flex align-items-center justify-content-center h-100 text-muted" style="min-height: 180px;<%= ' display: none;' if avatar_url.present? %>">
+            <div class="text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="mb-2 opacity-25" viewBox="0 0 16 16">
+                <path d="M1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13zm13 1v8.293l-2.146-2.147a.5.5 0 0 0-.708 0L9 10.793 6.854 8.646a.5.5 0 0 0-.708 0L2.5 12.293V2h12zm-10.5 3a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z"/>
+              </svg>
+              <p class="small mb-0">未選択</p>
+            </div>
+          </div>
+        </div>
+        <p class="small text-muted mt-2 mb-0">プレビュー</p>
+      </div>
+    </div>
+  </div>
 </div>

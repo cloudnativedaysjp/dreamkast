@@ -9,7 +9,7 @@ class Admin::SpeakersController < ApplicationController
 
   def edit
     @speaker = Speaker.find_by_id(params[:id])
-    @speaker_form = SpeakerForm.new(speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
 
@@ -18,7 +18,7 @@ class Admin::SpeakersController < ApplicationController
   def update
     @speaker = Speaker.find(params[:id])
 
-    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker)
+    @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
     @speaker_form.sub = @speaker.sub
     @speaker_form.email = @speaker.email
 
@@ -50,9 +50,15 @@ class Admin::SpeakersController < ApplicationController
 
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
-               @talks.where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.left_joins(:talk_types)
+                     .where.not(talk_types: { id: 'Intermission' })
+                     .where.not(abstract: '-')
              else
-               @talks.where(proposals: { status: :accepted }).where.not(abstract: 'intermission').where.not(abstract: '-')
+               @talks.joins(:proposal)
+                     .left_joins(:talk_types)
+                     .where(proposals: { status: :accepted })
+                     .where.not(talk_types: { id: 'Intermission' })
+                     .where.not(abstract: '-')
              end
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))
     @talks = @talks.select do |talk|
@@ -108,7 +114,22 @@ class Admin::SpeakersController < ApplicationController
                                     :github_id,
                                     :avatar,
                                     :conference_id,
-                                    talks_attributes: [:id, :title, :abstract, :conference_id, :_destroy, :talk_category_id, :talk_time_id])
+                                    :additional_documents,
+                                    talks_attributes:)
+  end
+
+  def talks_attributes
+    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
+    h = {}
+    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
+      conf = @conference.proposal_item_configs.find_by(label:)
+      if conf.instance_of?(::ProposalItemConfigCheckBox)
+        h[conf.label.pluralize.to_sym] = []
+      elsif conf.instance_of?(::ProposalItemConfigRadioButton)
+        attr << conf.label.pluralize.to_sym
+      end
+    end
+    attr.append(h)
   end
 
   helper_method :speaker_url, :session_type_name, :speaker_check_in_status
@@ -116,22 +137,19 @@ class Admin::SpeakersController < ApplicationController
   def speaker_url
     case action_name
     when 'new'
-      "/#{params[:event]}/admin/speaker"
-    when 'edit'
+      "/#{params[:event]}/admin/speakers"
+    when 'edit', 'update'
       "/#{params[:event]}/admin/speakers/#{params[:id]}"
     end
   end
 
   def session_type_name(talk)
-    case talk.type
-    when 'Session'
-      'CFP'
-    when 'Keynote'
+    if talk.keynote?
       'Keynote'
-    when 'SponsorSession'
+    elsif talk.sponsor_session?
       'スポンサー'
     else
-      ''
+      'CFP'
     end
   end
 

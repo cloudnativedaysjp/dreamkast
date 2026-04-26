@@ -1,19 +1,19 @@
-# syntax = docker/dockerfile:1.12
+# syntax = docker/dockerfile:1.21
 
-FROM node:18.20.5-slim AS node
+FROM node:22.22.0-slim AS node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
     yarn install --modules-folder .cache/node_modules && \
     cp -ar .cache/node_modules node_modules
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6 AS fetch-lib
+FROM public.ecr.aws/docker/library/ruby:3.4.8 AS fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
 RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
 RUN bundle install
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6 AS asset-compile
+FROM public.ecr.aws/docker/library/ruby:3.4.8 AS asset-compile
 ENV YARN_VERSION=1.22.22
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
@@ -33,9 +33,9 @@ COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get install -y libvips42
 ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
-RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DB_ADAPTER=nulldb bin/rails assets:precompile
+RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
 
-FROM public.ecr.aws/docker/library/ruby:3.3.6-slim
+FROM public.ecr.aws/docker/library/ruby:3.4.8-slim
 
 ENV YARN_VERSION=1.22.22
 COPY --link --from=node /opt/yarn-v$YARN_VERSION /opt/yarn
@@ -47,10 +47,10 @@ ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=ena
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 \
-    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt install -y ./google-chrome-stable_current_amd64.deb \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 chromium && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+ENV CHROME_BIN=/usr/bin/chromium
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
 EXPOSE 3000

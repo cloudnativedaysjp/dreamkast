@@ -1,0 +1,61 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'speaker_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <h1 class="text-center py-3 entry">質問一覧</h1>
+    <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem; z-index: 9999;"></div>
+    <div class="row speaker-dashboard-form">
+      <% if @speaker.present? %>
+        <div class="col-12 my-4">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="mb-0">すべてのセッションへの質問</h4>
+            </div>
+            <div class="card-body">
+              <!-- フィルタリングUI -->
+              <div class="mb-3">
+                <%= form_with url: speaker_dashboard_questions_path, method: :get, local: true, class: 'd-flex gap-2 align-items-end flex-wrap' do |f| %>
+                  <%= hidden_field_tag :event, @conference&.abbr || event_name %>
+                  
+                  <div class="form-group">
+                    <%= label_tag :talk_id, 'セッション', class: 'form-label' %>
+                    <%= select_tag :talk_id, 
+                        options_from_collection_for_select(@talks, :id, :title, params[:talk_id]),
+                        { include_blank: 'すべて', class: 'form-select' } %>
+                  </div>
+                  
+                  <div class="form-group">
+                    <%= label_tag :unanswered, '状態', class: 'form-label' %>
+                    <%= select_tag :unanswered,
+                        options_for_select([
+                          ['すべて', ''],
+                          ['未回答のみ', 'true']
+                        ], params[:unanswered]),
+                        { class: 'form-select' } %>
+                  </div>
+                  
+                  <%= submit_tag 'フィルタ', class: 'btn btn-primary' %>
+                  <%= link_to 'リセット', speaker_dashboard_questions_path(event: @conference&.abbr || event_name), class: 'btn btn-secondary' %>
+                <% end %>
+              </div>
+              
+              <hr>
+              <%= turbo_frame_tag "questions_list" do %>
+                <% if @all_questions.present? && @all_questions.any? %>
+                  <% @all_questions.each do |question| %>
+                    <%= render 'speaker_dashboards/question_item', question: question %>
+                  <% end %>
+                <% else %>
+                  <p class="text-muted">まだ質問がありません</p>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-12 my-4">
+          <%= link_to 'エントリー', speakers_entry_path %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,85 +1,6 @@
-# == Schema Information
-#
-# Table name: talks
-#
-#  id                    :bigint           not null, primary key
-#  abstract              :text(65535)
-#  acquired_seats        :integer          default(0), not null
-#  document_url          :string(255)
-#  end_offset            :integer          default(0), not null
-#  end_time              :time
-#  execution_phases      :json
-#  expected_participants :json
-#  movie_url             :string(255)
-#  number_of_seats       :integer          default(0), not null
-#  show_on_timetable     :boolean
-#  start_offset          :integer          default(0), not null
-#  start_time            :time
-#  title                 :string(255)
-#  type                  :string(255)      not null
-#  video_published       :boolean          default(FALSE), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  conference_day_id     :integer
-#  conference_id         :integer
-#  sponsor_id            :integer
-#  talk_category_id      :bigint
-#  talk_difficulty_id    :bigint
-#  talk_time_id          :integer
-#  track_id              :integer
-#
-# Indexes
-#
-#  fk_rails_9c6f538eea                (type)
-#  index_talks_on_conference_id       (conference_id)
-#  index_talks_on_talk_category_id    (talk_category_id)
-#  index_talks_on_talk_difficulty_id  (talk_difficulty_id)
-#  index_talks_on_track_id            (track_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (type => talk_types.id)
-#
-
 require 'rails_helper'
 
 describe Talk, type: :model do
-  context 'update on_air status' do
-    before do
-      create(:cndt2020)
-    end
-    let!(:talk1) { create(:talk1, :accepted, track_id: 1) }
-    let!(:talk2) { create(:talk2, :accepted, :conference_day_id_1) }
-    let!(:talk3) { create(:talk3, :accepted, track_id: 1) }
-    let!(:video1) { create(:video, :off_air) }
-    let!(:video2) { create(:video, :on_air, :talk2) }
-    let!(:video3) { create(:video, :on_air, :talk3) }
-    context 'start streaming talk1' do
-      before do
-        talk1.start_streaming
-      end
-
-      it 'should be on_air' do
-        expect(talk1.video.on_air).to(eq(true))
-      end
-
-      it "shouldn't be on_air whatever talks has different conference_day_id" do
-        expect(talk3.video.on_air).to(eq(false))
-      end
-
-      example 'talk in the same track and same conference_day should be off_air' do
-        expect(talk2.video.on_air).to(eq(false))
-      end
-    end
-
-    context 'stop streaming' do
-      it 'should be off_air' do
-        talk1.stop_streaming
-        expect(talk1.video.on_air).to(eq(false))
-      end
-    end
-  end
-
   context 'live?' do
     let!(:cndt2020) { create(:cndt2020) }
     let!(:talk) { create(:talk1) }
@@ -294,6 +215,284 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
       it 'return 1' do
         expect(talk.online_participation_size).to(eq(1))
+      end
+    end
+  end
+
+
+  describe '#ogp_image' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+
+    context 'when ogp_image_url is present' do
+      before do
+        talk.update(ogp_image_url: 'https://example.com/custom-ogp.png')
+      end
+
+      it 'returns the custom ogp_image_url' do
+        expect(talk.ogp_image).to(eq('https://example.com/custom-ogp.png'))
+      end
+    end
+
+    context 'when ogp_image_url is blank and has speakers' do
+      let!(:speaker) { create(:speaker_alice) }
+
+      before do
+        talk.speakers << speaker
+      end
+
+      it 'returns the first speaker avatar' do
+        expect(talk.ogp_image).to(eq(speaker.avatar_or_dummy_url))
+      end
+    end
+
+    context 'when ogp_image_url is blank and has no speakers' do
+      it 'returns dummy.png' do
+        expect(talk.ogp_image).to(eq('dummy.png'))
+      end
+    end
+  end
+
+  describe '文字数制限のバリデーション' do
+    let!(:cndt2020) { create(:cndt2020) }
+    let!(:talk) { build(:talk1, conference: cndt2020) }
+
+    describe 'タイトルの文字数制限' do
+      context 'タイトルが60文字の場合' do
+        before do
+          talk.title = 'あ' * 60
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context 'タイトルが61文字の場合' do
+        before do
+          talk.title = 'あ' * 61
+        end
+
+        it 'バリデーションエラーになる' do
+          expect(talk).not_to(be_valid)
+          expect(talk.errors[:title]).to(include('は60文字以内で入力してください（現在61文字）'))
+        end
+      end
+
+      context 'タイトルが半角60文字の場合' do
+        before do
+          talk.title = 'a' * 60
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context 'タイトルが半角61文字の場合' do
+        before do
+          talk.title = 'a' * 61
+        end
+
+        it 'バリデーションエラーになる' do
+          expect(talk).not_to(be_valid)
+          expect(talk.errors[:title]).to(include('は60文字以内で入力してください（現在61文字）'))
+        end
+      end
+
+      context 'タイトルが全角・半角混在で60文字の場合' do
+        before do
+          talk.title = 'あ' * 30 + 'a' * 30
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context 'タイトルに絵文字が含まれる場合（絵文字1つで1文字としてカウント）' do
+        context '絵文字59個 + 通常文字1文字 = 60文字の場合' do
+          before do
+            talk.title = '😀' * 59 + 'あ'
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字60個 = 60文字の場合' do
+          before do
+            talk.title = '😀' * 60
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字61個 = 61文字の場合' do
+          before do
+            talk.title = '😀' * 61
+          end
+
+          it 'バリデーションエラーになる' do
+            expect(talk).not_to(be_valid)
+            expect(talk.errors[:title]).to(include('は60文字以内で入力してください（現在61文字）'))
+          end
+        end
+
+        context '複合絵文字（ゼロ幅結合子を含む）が含まれる場合' do
+          before do
+            # 👨‍👩‍👧‍👦 は複数のコードポイントで構成されるが、1文字としてカウントされるべき
+            talk.title = '👨‍👩‍👧‍👦' * 30
+          end
+
+          it 'バリデーションが通る（30文字としてカウント）' do
+            expect(talk).to(be_valid)
+            expect(talk.title.each_grapheme_cluster.count).to(eq(30))
+          end
+        end
+
+        context '絵文字と通常文字の混在で60文字の場合' do
+          before do
+            talk.title = '😀' * 30 + 'あ' * 30
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+      end
+
+      context 'タイトルが空の場合' do
+        before do
+          talk.title = ''
+        end
+
+        it 'presenceバリデーションでエラーになる' do
+          expect(talk).not_to(be_valid)
+          expect(talk.errors[:title]).not_to(be_empty)
+        end
+      end
+    end
+
+    describe '概要の文字数制限' do
+      context '概要が500文字の場合' do
+        before do
+          talk.abstract = 'あ' * 500
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context '概要が501文字の場合' do
+        before do
+          talk.abstract = 'あ' * 501
+        end
+
+        it 'バリデーションエラーになる' do
+          expect(talk).not_to(be_valid)
+          expect(talk.errors[:abstract]).to(include('は500文字以内で入力してください（現在501文字）'))
+        end
+      end
+
+      context '概要が半角500文字の場合' do
+        before do
+          talk.abstract = 'a' * 500
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context '概要が半角501文字の場合' do
+        before do
+          talk.abstract = 'a' * 501
+        end
+
+        it 'バリデーションエラーになる' do
+          expect(talk).not_to(be_valid)
+          expect(talk.errors[:abstract]).to(include('は500文字以内で入力してください（現在501文字）'))
+        end
+      end
+
+      context '概要が全角・半角混在で500文字の場合' do
+        before do
+          talk.abstract = 'あ' * 250 + 'a' * 250
+        end
+
+        it 'バリデーションが通る' do
+          expect(talk).to(be_valid)
+        end
+      end
+
+      context '概要に絵文字が含まれる場合（絵文字1つで1文字としてカウント）' do
+        context '絵文字499個 + 通常文字1文字 = 500文字の場合' do
+          before do
+            talk.abstract = '😀' * 499 + 'あ'
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字500個 = 500文字の場合' do
+          before do
+            talk.abstract = '😀' * 500
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+
+        context '絵文字501個 = 501文字の場合' do
+          before do
+            talk.abstract = '😀' * 501
+          end
+
+          it 'バリデーションエラーになる' do
+            expect(talk).not_to(be_valid)
+            expect(talk.errors[:abstract]).to(include('は500文字以内で入力してください（現在501文字）'))
+          end
+        end
+
+        context '複合絵文字（ゼロ幅結合子を含む）が含まれる場合' do
+          before do
+            # 👨‍👩‍👧‍👦 は複数のコードポイントで構成されるが、1文字としてカウントされるべき
+            talk.abstract = '👨‍👩‍👧‍👦' * 250
+          end
+
+          it 'バリデーションが通る（250文字としてカウント）' do
+            expect(talk).to(be_valid)
+            expect(talk.abstract.each_grapheme_cluster.count).to(eq(250))
+          end
+        end
+
+        context '絵文字と通常文字の混在で500文字の場合' do
+          before do
+            talk.abstract = '😀' * 250 + 'あ' * 250
+          end
+
+          it 'バリデーションが通る' do
+            expect(talk).to(be_valid)
+          end
+        end
+      end
+
+      context '概要が空の場合' do
+        before do
+          talk.abstract = ''
+        end
+
+        it 'バリデーションが通る（概要は任意）' do
+          expect(talk).to(be_valid)
+        end
       end
     end
   end

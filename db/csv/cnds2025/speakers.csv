@@ -1,0 +1,31 @@
+id,name,profile,company,job_title,twitter_id,github_id,conference_id
+1301,高石 諒,CNCF Ambassadorとして活動し、KubernetesとIstioを活用した大規模マイクロサービスアーキテクチャの設計・構築を多数手がける。著書「マイクロサービスパターン実践ガイド」が好評。,CloudNative Solutions Inc.,Cloud Native Architect,r_takaishi,takaishi,13
+1302,三輪 昌光,オープンソースの監視システムのエキスパート。PrometheusとGrafanaのコミッターとして活動し、大規模環境での監視システム構築の実績多数。CNCFのTechnical Advisory Groupメンバー。,TechNative Systems,Infrastructure Engineer,hoge,fuga,13
+1303,山岸 克明,CNCFの複数プロジェクトにコントリビュート。特に大規模環境での運用・管理の知見が豊富で、国内外のカンファレンスで講演多数。Kubernetesのトラブルシューティングガイドを共同執筆。,CloudNativeOps,Infrastructure Engineer,realDonaldTrump,donaldtrump,13
+1304,奥村 秀司,サーバーレスアーキテクチャの先駆者。AWS Lambdaの初期導入から携わり、Knativeの日本語ドキュメントを執筆。著書「サーバーレスアーキテクチャ実践ガイド」が技術書大賞を受賞。,ServerlessTech,Infrastructure Engineer,twi11,github11,13
+1305,大川 文典,セキュリティエンジニアとして10年以上の経験。Falcoのコアコントリビューターとして活動し、クラウドネイティブセキュリティの啓蒙活動に力を入れている。CNCF Security TAGメンバー。,SecureCloud,Infrastructure Engineer,twi12,github12,13
+1306,スノー・ホワイト・パラダイス・エルサント・フロウ・ワスレナ・ピュア・プリンセス・リーブル・ラブ・ハイデルン・ドコドコ・ヤッタゼ・ヴァルキュリア・パッション・アールヴ・ノエル・チャコボシ・エルアリア・フロージア・メイドイン・ブルーム・エル,DevOpsとSREの実践者として、複数の企業でCI/CDパイプラインの自動化を推進。GitOpsの導入支援や監視システムの構築を多数手がける。CNCF Ambassadorとしても活動中。,DevOpsInnovation,Marketing,twi13,github13,13
+1307,藤田 初美,女性エンジニアの育成と支援に注力。CNCFのDiversity & Inclusion Working Groupのメンバーとして活動。技術コミュニティの運営経験が豊富で、複数のカンファレンスのオーガナイザーを務める。,WomenInTech,Manager,twi14,github14,13
+1308,奥村 真志,データベースエンジニアとして15年以上の経験。特に分散データベースの運用に精通し、複数の企業で大規模データベースの設計・構築を手がける。PostgreSQLのコミッターとしても活動。,DataNative,Infrastructure Engineer,twi15,github15,13
+1309,小柳 たか子,マイクロサービスアーキテクチャの設計・実装のエキスパート。gRPCとGraphQLの実装経験が豊富で、複数の企業でマイクロサービス移行を支援。CNCFのMicroservices Working Groupメンバー。,MicroServiceTech,Software Engineer,twi16,github16,13
+1310,北島 友隆,CI/CDの専門家として、ArgoCDとTektonの導入支援を多数手がける。GitOpsの実践者として知られ、関連する書籍や記事を多数執筆。CNCFのApp Delivery TAGメンバー。,PipelineTech,Software Engineer,twi17,github17,13
+1311,大石 禎二,ログ管理のエキスパート。ELKスタックの導入支援を多数手がけ、Fluentdのコアコントリビューターとして活動。著書「ログ管理実践ガイド」が技術書大賞を受賞。,LogNative,Manager,twi18,github18,13
+1312,岩本 敬史,クラウドネイティブ技術のスタートアップを創業。複数のCNCFプロジェクトにコントリビュートし、特にService Meshの実装経験が豊富。国内外のカンファレンスで講演多数。,CloudNativeStartup,CEO,twi19,github19,13
+1313,新谷 憲広,AI/MLシステムの設計・実装の専門家。Kubeflowの初期導入から携わり、複数の企業でMLOpsの導入を支援。機械学習の実務経験も豊富で、関連する書籍を執筆。,AINative,CTO,twi20,github20,13
+1314,横井 兼典,GoとRustのエキスパート。マイクロサービス開発の実績多数で、特にパフォーマンスチューニングに定評がある。オープンソースプロジェクトへのコントリビューションも多数。,CloudNativeDev,Application Engineer,twi21,github21,13
+1315,武田 芳伸,ネットワークエンジニアとして10年以上の経験。Service Meshの実装・運用に精通し、特にIstioとLinkerdの導入支援を多数手がける。CNCFのNetwork TAGメンバー。,NetworkNative,Software Engineer,twi22,github22,13
+1316,前川 政年,ストレージシステムのエキスパート。分散ストレージの設計・構築を多数手がけ、特にCephの運用経験が豊富。ストレージ関連の書籍を執筆し、技術書大賞を受賞。,StorageNative,Infrastructure Engineer,twi23,github23,13
+1317,福本 華代,セキュリティ監視の専門家。FalcoとOPAの導入支援を多数手がけ、特にコンテナセキュリティの知見が豊富。セキュリティ関連の書籍を執筆し、国内外のカンファレンスで講演多数。,SecurityNative,Infrastructure Engineer,twi24,github24,13
+1318,千葉 信平,技術コミュニティの運営経験が豊富。CNCFのAmbassadorとして活動し、複数のカンファレンスのオーガナイザーを務める。技術記事の執筆やポッドキャストのホストも担当。,CloudNativeMarketing,Marketing,twi25,github25,13
+1319,馬場 玲,プロジェクトマネージャーとして10年以上の経験。アジャイル開発とDevOpsの導入支援を多数手がけ、特に大規模プロジェクトのマネジメントに定評がある。関連する書籍を執筆。,CloudNativePM,Manager,twi26,github26,13
+1320,松尾 晴仁,パフォーマンスチューニングのエキスパート。分散システムのパフォーマンス分析を多数手がけ、特に大規模環境での最適化に定評がある。関連する書籍を執筆し、技術書大賞を受賞。,PerformanceNative,Infrastructure Engineer,twi27,github27,13
+1321,Hogehoge Piyo Foobar,テスト自動化の専門家。E2EテストとChaos Engineeringの実装経験が豊富で、特に大規模システムのテスト戦略の設計に定評がある。テスト関連の書籍を執筆。,TestNative,Software Engineer,twi28,github28,13
+1322,高山 華代,フロントエンド開発のエキスパート。SPAとPWAの実装経験が豊富で、特にパフォーマンス最適化に定評がある。フロントエンド関連の書籍を執筆し、技術書大賞を受賞。,FrontendNative,Software Engineer,twi29,github29,13
+1323,塚本 定二,バックエンド開発の専門家。分散システムの設計・実装を多数手がけ、特にスケーラビリティの設計に定評がある。バックエンド関連の書籍を執筆。,BackendNative,Manager,twi30,github30,13
+1324,大城 源三郎,クラウドネイティブ技術のスタートアップを創業。複数のCNCFプロジェクトにコントリビュートし、特にコンテナ技術の実装経験が豊富。国内外のカンファレンスで講演多数。,CloudNativeVentures,CEO,twi31,github31,13
+1325,田中 紀世実,データ分析のエキスパート。リアルタイムデータ処理システムの設計を多数手がけ、特に大規模データの分析に定評がある。データ分析関連の書籍を執筆。,DataAnalyticsNative,CTO,twi32,github32,13
+1326,大塚 勝夫,モバイルアプリ開発の専門家。クロスプラットフォーム開発の実績多数で、特にパフォーマンス最適化に定評がある。モバイル開発関連の書籍を執筆。,MobileNative,Application Engineer,twi33,github33,13
+1327,滝沢 直広,API設計のエキスパート。RESTful APIとGraphQLの実装経験が豊富で、特に大規模APIの設計に定評がある。API設計関連の書籍を執筆。,APINative,Software Engineer,twi34,github34,13
+1328,川野 文吾,インフラ自動化の専門家。TerraformとAnsibleの実装経験が豊富で、特に大規模環境の自動化に定評がある。インフラ自動化関連の書籍を執筆。,InfraNative,Infrastructure Engineer,twi35,github35,13
+1329,沢田 裕子,品質管理のエキスパート。テスト自動化とCI/CDの導入支援を多数手がけ、特に品質改善の戦略設計に定評がある。品質管理関連の書籍を執筆。,QualityNative,Infrastructure Engineer,twi36,github36,13
+1330,浜崎 俊康,技術イベントの企画・運営の専門家。複数のカンファレンスのオーガナイザーを務め、特に技術コミュニティの育成に力を入れている。技術イベント関連の書籍を執筆。,EventNative,Marketing,twi37,github37,13

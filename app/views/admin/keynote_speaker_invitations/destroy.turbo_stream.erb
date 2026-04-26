@@ -1,0 +1,5 @@
+<%= turbo_stream.update "invitations-list" do %>
+  <%= render partial: 'admin/keynote_speaker_invitations/list', locals: { keynote_speaker_invitations: @keynote_speaker_invitations } %>
+<% end %>
+<%= turbo_stream_flash %>
+<%= yield %>

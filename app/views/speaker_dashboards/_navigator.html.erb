@@ -1,0 +1,17 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h4>登壇者ダッシュボード</h4>
+    <% if @speaker.present? %>
+      <h4><%= @speaker.name %></h4>
+    <% end %>
+  </div>
+
+  <ul class="list-unstyled components">
+    <%= render 'admin/nav_item', name: 'トップ', path: speaker_dashboard_path, active: controller_name == 'speaker_dashboards' && action_name == 'show' %>
+    <% if @speaker.present? %>
+      <%= render 'admin/nav_item', name: 'プロフィール', path: edit_speaker_dashboard_speaker_path(id: @speaker.id), active: controller_name == 'speakers' && action_name == 'edit' %>
+      <%= render 'admin/nav_item', name: 'セッション一覧', path: speaker_dashboard_talks_path, active: controller_name == 'speaker_dashboards' && action_name == 'talks' %>
+      <%= render 'admin/nav_item', name: '質問一覧', path: speaker_dashboard_questions_path, active: controller_name == 'speaker_dashboards' && action_name == 'questions' %>
+    <% end %>
+  </ul>
+</nav>

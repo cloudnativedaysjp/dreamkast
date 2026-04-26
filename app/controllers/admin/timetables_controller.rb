@@ -16,7 +16,7 @@ class Admin::TimetablesController < ApplicationController
       talk = Talk.find(id)
       end_time = ''
       if talk_param[:start_time] != ''
-        end_time = (Time.parse(talk_param[:start_time]) + (talk.time.to_i * 60)).to_s(:db)
+        end_time = (Time.parse(talk_param[:start_time]) + (talk.time * 60)).to_formatted_s(:db)
       end
       talk.update(talk_param.merge(end_time:))
       @talks << talk

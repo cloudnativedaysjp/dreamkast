@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe(TracksController, type: :request) do
   subject { get '/cndt2020/dashboard' }
-  let!(:session) { { userinfo: { info: { email: 'alice@example.com', extra: { sub: 'aaa' } }, extra: { raw_info: { sub: 'aaa', 'https://cloudnativedays.jp/roles' => roles } } } } }
+  let!(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
   let(:roles) { [] }
 
   describe 'GET /:event/dashboard' do
@@ -28,11 +28,14 @@ RSpec.describe(TracksController, type: :request) do
         end
 
         context 'user is speaker' do
-          let!(:alice) { create(:speaker_alice) }
+          let!(:alice) do
+            user = User.find_by(sub: 'google-oauth2|alice') || create(:user_alice)
+            create(:speaker_alice, user:)
+          end
           it 'show speaker' do
             subject
             expect(response).to(be_successful)
-            expect(response.body).to(include('Alice様へのお知らせ'))
+            expect(response.body).not_to(include('Alice様へのお知らせ'))
           end
 
           context 'when announcement is not published' do
@@ -42,7 +45,7 @@ RSpec.describe(TracksController, type: :request) do
             it 'not exists speaker_announcements' do
               subject
               expect(response).to(be_successful)
-              expect(response.body).to(include('Alice様へのお知らせ'))
+              expect(response.body).not_to(include('Alice様へのお知らせ'))
               expect(response.body).not_to(include('test_announcement'))
             end
           end

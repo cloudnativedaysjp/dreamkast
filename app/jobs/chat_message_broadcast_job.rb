@@ -1,6 +1,6 @@
 class ChatMessageBroadcastJob < ApplicationJob
   queue_as :fifo
-  self.queue_adapter = :amazon_sqs
+  self.queue_adapter = :sqs unless Rails.env.test?
 
   def perform(*args)
     msg = args[0]

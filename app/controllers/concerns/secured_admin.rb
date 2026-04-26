@@ -27,11 +27,11 @@ module SecuredAdmin
   end
 
   def get_or_create_admin_profile
-    @admin_profile ||= AdminProfile.find_by(email: current_user[:info][:email], conference_id: set_conference.id)
+    @admin_profile ||= AdminProfile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
 
     if admin? && @admin_profile.blank?
       @admin_profile = AdminProfile.new(conference_id: @conference.id)
-      @admin_profile.sub = current_user[:extra][:raw_info][:sub]
+      @admin_profile.sub = current_user_model&.sub
       @admin_profile.email = current_user[:info][:email]
 
       @admin_profile.save!

@@ -33,7 +33,7 @@ end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -110,7 +110,7 @@ def alice_claim
   [JSON.parse('{
     "https://cloudnativedays.jp/roles": [
       "CNDT2020-Admin",
-      "CNDT2022-Admin"
+      "CNDO2021-Admin"
     ],
     "https://cloudnativedays.jp/userinfo": {
       "given_name": "Alice",

@@ -1,5 +1,6 @@
 class PublicProfilesController < ApplicationController
   include Secured
+
   before_action :set_conference, :set_profile
 
   def new
@@ -45,8 +46,8 @@ class PublicProfilesController < ApplicationController
   end
 
   def pundit_user
-    if current_user
-      Profile.find_by(conference: @conference.id, email: current_user[:info][:email])
+    if current_user && current_user_model
+      Profile.find_by(conference_id: @conference.id, user_id: current_user_model.id)
     end
   end
 

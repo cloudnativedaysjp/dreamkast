@@ -24,10 +24,11 @@ class SpeakerInvitationAcceptsController < ApplicationController
     end
     @talk = @speaker_invitation.talk
     @proposal = @talk.proposal
-    @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
-                 Speaker.find_by(conference: @conference, email: current_user[:info][:email])
+    user_id = current_user_model.id
+    @speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                 Speaker.find_by(conference: @conference, user_id:)
                else
-                 Speaker.new(conference: @conference, email: current_user[:info][:email])
+                 Speaker.new(conference: @conference, user_id:, email: current_user[:info][:email])
                end
   end
 
@@ -40,10 +41,11 @@ class SpeakerInvitationAcceptsController < ApplicationController
         speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:speaker_invitation_id)
 
-        @speaker = if Speaker.where(email: current_user[:info][:email], conference: @conference).exists?
-                     Speaker.find_by(conference: @conference, email: current_user[:info][:email])
+        user_id = current_user_model.id
+        @speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                     Speaker.find_by(conference: @conference, user_id:)
                    else
-                     Speaker.new(conference: @conference, email: current_user[:info][:email])
+                     Speaker.new(conference: @conference, user_id:, email: current_user[:info][:email])
                    end
         @speaker.update!(speaker_param)
         @speaker.save!

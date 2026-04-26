@@ -44,7 +44,8 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
 
       it 'redirects to sponsor_dashboards_path if user is already a sponsor contact' do
         # Create a sponsor contact with the same email as the current user
-        create(:sponsor_contact, conference:, email: 'new_user@example.com', sponsor: sponsor_contact.sponsor)
+        new_user = User.find_or_create_by!(sub: 'new_user_sub') { |u| u.email = 'new_user@example.com' }
+        create(:sponsor_contact, conference:, sponsor: sponsor_contact.sponsor, user_id: new_user.id)
 
         get new_sponsor_dashboards_sponsor_contact_path(event: conference.abbr, sponsor_id: sponsor.id)
         expect(response).to(redirect_to(sponsor_dashboards_path))
@@ -72,16 +73,27 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
   end
 
   describe 'POST /sponsor_dashboards/:sponsor_id/sponsor_contacts' do
-    let(:valid_attributes) do
-      {
-        sponsor_contact: {
-          name: 'New Contact',
-          email: sponsor_contact.email
+    context 'when sponsor contact does not exist for the current user' do
+      let(:new_user_email) { 'new_user@example.com' }
+      let(:new_user_sub) { 'new_user_sub' }
+      let(:valid_attributes) do
+        {
+          sponsor_contact: {
+            name: 'New Contact',
+            email: new_user_email
+          }
         }
-      }
-    end
+      end
 
-    context 'when sponsor exists for the current user' do
+      before do
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
+                                                                     {
+                                                                       info: { email: new_user_email, name: 'New User' },
+                                                                       extra: { raw_info: { sub: new_user_sub, 'https://cloudnativedays.jp/roles' => [] } }
+                                                                     }
+                                                                   ))
+      end
+
       it 'creates a new sponsor contact' do
         expect {
           post(sponsor_dashboards_sponsor_contacts_path(event: conference.abbr, sponsor_id: sponsor.id), params: valid_attributes)
@@ -92,15 +104,21 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
       end
     end
 
-    context 'when sponsor does not exist for the current user' do
-      before do
-        allow_any_instance_of(SponsorDashboards::SponsorContactsController).to(receive(:current_user).and_return(
-                                                                                 { info: { email: 'unknown@example.com', extra: { sub: 'unknown' } }, extra: { raw_info: { sub: 'unknown', 'https://cloudnativedays.jp/roles' => [] } } }
-                                                                               ))
+    context 'when sponsor contact already exists for the current user' do
+      let(:valid_attributes) do
+        {
+          sponsor_contact: {
+            name: 'New Contact',
+            email: sponsor_contact.email
+          }
+        }
       end
 
       it 'redirects with an error message' do
-        post sponsor_dashboards_sponsor_contacts_path(event: conference.abbr, sponsor_id: sponsor.id), params: valid_attributes
+        expect {
+          post(sponsor_dashboards_sponsor_contacts_path(event: conference.abbr, sponsor_id: sponsor.id), params: valid_attributes)
+        }.not_to(change(SponsorContact, :count))
+
         expect(response).to(redirect_to("/#{conference.abbr}/sponsor_dashboards"))
         expect(flash[:notice]).to(eq('ログインが許可されていません'))
       end

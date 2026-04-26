@@ -33,12 +33,10 @@ class Admin::SponsorsController < ApplicationController
     @sponsor_types = conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: Sponsor.new(conference:))
 
-    respond_to do |format|
-      if @sponsor_form.save
-        format.html { redirect_to(admin_sponsors_path(event: params[:event]), notice: 'Sponsor was successfully created.') }
-      else
-        format.html { redirect_to(new_admin_sponsor_path(event: params[:event]), notice: 'Failed to create sponsor.') }
-      end
+    if @sponsor_form.save
+      flash.now[:notice] = "スポンサー #{@sponsor_form.sponsor.name} を登録しました"
+    else
+      render(:new, status: :unprocessable_entity)
     end
   end
 
@@ -47,40 +45,24 @@ class Admin::SponsorsController < ApplicationController
     @sponsor_types = conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
-    respond_to do |format|
-      if @sponsor_form.save
-        format.html { redirect_to(admin_sponsor_url(event: params[:event], id: params[:id]), notice: 'Sponsor was successfully updated.') }
-      else
-        format.html { render(:edit) }
-      end
+    if @sponsor_form.save
+      flash.now.notice = "スポンサー #{@sponsor.name} を更新しました"
+    else
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
   def destroy
     @sponsor = Sponsor.find(params[:id])
 
-    respond_to do |format|
-      if @sponsor.destroy
-        format.html { redirect_to(admin_sponsors_path(event: params[:event]), notice: 'Sponsor was successfully destroyed.') }
-      else
-        format.html { redirect_to(admin_sponsor_url(event: params[:event], id: params[:id]), notice: 'Failed destroying sponsor.') }
-      end
+    if @sponsor.destroy
+      flash.now.notice = "スポンサー #{@sponsor.name} を削除しました"
+    else
+      flash.now.alert = "スポンサー #{@sponsor.name} の削除に失敗しました"
     end
   end
 
   private
-
-
-  helper_method :sponsors_url
-
-  def sponsors_url
-    case action_name
-    when 'new'
-      "/#{params[:event]}/admin/sponsors"
-    when 'edit', 'update'
-      "/#{params[:event]}/admin/sponsors/#{params[:id]}"
-    end
-  end
 
   def sponsor_params
     params.require(:sponsor).permit(:id,

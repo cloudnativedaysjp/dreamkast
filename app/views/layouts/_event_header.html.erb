@@ -18,6 +18,8 @@
           <% if display_sponsor_guideline_url? %>
             <li class="nav-item"><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
           <% end %>
+            
+          <li class="nav-item"><%= link_to "早期申し込み特典あり！", "https://cloudnativedays.jp/posts/cndw2025-early-benefits", class: "nav-link js-scroll-trigger", target: '_blank' %></li>
 
           <% if display_dashboard_link? %>
             <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
@@ -35,7 +37,7 @@
             <% if display_talks? %>
               <li class="nav-item dropdown">
                 <% if display_timetable? %>
-                <li class="nav-item"><%= link_to "参加者", "/#{@conference.abbr}/attendees", class: "nav-link js-scroll-trigger" %></li>
+                <li class="nav-item"><%= link_to "参加者", "/#{event_name}/attendees", class: "nav-link js-scroll-trigger" %></li>
                 <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
                 <% end %>
                 <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
@@ -43,10 +45,6 @@
               </li>
             <% end %>
 
-            <% case event_name %>
-            <% when 'cndw2024' %>
-              <li class="nav-item"><%= link_to "企画一覧", "#{root_url}#{event_name}#project-list", class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}  %></li>
-            <% end %>
 
             <% if display_contact_url? %>
               <li class="nav-item"><%= link_to "お問い合わせ", @conference.contact_url, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>

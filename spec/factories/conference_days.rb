@@ -1,21 +1,3 @@
-# == Schema Information
-#
-# Table name: conference_days
-#
-#  id            :bigint           not null, primary key
-#  date          :date
-#  end_time      :time
-#  internal      :boolean          default(FALSE), not null
-#  start_time    :time
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  conference_id :bigint
-#
-# Indexes
-#
-#  index_conference_days_on_conference_id  (conference_id)
-#
-
 FactoryBot.define do
   factory :conference_day
 

@@ -9,14 +9,18 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    @conference = Conference.find_by(abbr: event_name)
-    @proposal = Proposal.find_by(id: params[:id], conference_id: @conference.id)
+    @conference = Conference.find_by!(abbr: event_name)
+    @proposal = Proposal.find_by!(id: params[:id], conference_id: @conference.id)
     @talk = @proposal.talk
   end
 
   def index
     @conference = Conference.find_by(abbr: event_name)
-    @proposals = Proposal.includes(talk: [:speakers, :talk_category, :talks_speakers]).where(conference_id: @conference.id, talks: { type: Session.model_name.to_s })
+    @proposals = Proposal
+                 .includes(talk: [:speakers, :talk_category, :talks_speakers, :talk_types])
+                 .joins(:talk)
+                 .merge(Talk.regular_sessions)
+                 .where(conference_id: @conference.id)
   end
 
   def proposal_status

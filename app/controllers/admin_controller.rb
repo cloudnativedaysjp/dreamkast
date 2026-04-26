@@ -5,21 +5,26 @@ class AdminController < ApplicationController
     @session = session
     @conference = Conference.find_by(abbr: event_name)
     @current = Video.on_air(@conference)
+    @offline_registrants_count = @conference.profiles.offline.count
+    @online_registrants_count = @conference.profiles.online.count
+    @checked_in_count = @conference.check_in_conferences.count
+    # TODO: 実際のオンライン視聴者数を取得できるようになったら置き換える
+    @online_viewers_count = 1234
   end
 
   def destroy_user
-    @profile = Profile.find_by(sub: current_user[:extra][:raw_info][:sub])
+    @profile = Profile.find_by(user_id: current_user_model.id)
     @profile.destroy
     redirect_to(logout_url)
   end
 
   def statistics
-    @talks = @conference.talks.includes(:registered_talks).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.includes(:check_in_talks, registered_talks: :profile).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
   end
 
   def export_statistics
     f = Tempfile.create('statistics.csv')
-    @conference = Conference.includes(talks: [:registered_talks]).find_by(abbr: params[:event])
+    @conference = Conference.includes(talks: [registered_talks: :profile]).find_by(abbr: params[:event])
     CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
       @conference.talks.accepted.each do |talk|

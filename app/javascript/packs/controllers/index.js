@@ -33,3 +33,9 @@ application.register("sponsor", SponsorController)
 
 import DragDropController from "./drag_drop_controller.js"
 application.register("drag-drop", DragDropController)
+
+import TalkLoggerController from "./talk_logger_controller.js"
+application.register("talk-logger", TalkLoggerController)
+
+import PostalCodeController from "./postal_code_controller.js"
+application.register("postal-code", PostalCodeController)

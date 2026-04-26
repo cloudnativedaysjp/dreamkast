@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SponsorDashboards::SponsorDashboardsController, type: :request do
-  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'aaaa', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
+  admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
   describe 'GET sponsor_dashboards#show' do
     let!(:cndt2020) { create(:cndt2020, :registered) }
 

@@ -18,10 +18,6 @@ class ContentsController < ApplicationController
     )
   end
 
-  def kontest
-    @conference = Conference.find_by(abbr: params[:event])
-  end
-
   def hands_on
     @conference = Conference.find_by(abbr: params[:event])
     render_if_template_exists(

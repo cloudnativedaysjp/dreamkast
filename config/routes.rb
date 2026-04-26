@@ -176,7 +176,6 @@ Rails.application.routes.draw do
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'attendee_dashboards#show'
     get 'tracks/blank' => 'tracks#blank'
-    get 'kontest' => 'contents#kontest'
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'

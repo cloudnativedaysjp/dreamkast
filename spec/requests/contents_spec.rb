@@ -1,53 +1,6 @@
 require 'rails_helper'
 
 describe ContentsController, type: :request do
-  describe 'GET #kontest' do
-    describe 'logged in and registered' do
-      subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }
-      let(:roles) { [] }
-
-      before do
-        cndt2020 = create(:cndt2020)
-        create(:alice, conference: cndt2020)
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(session[:userinfo]))
-      end
-
-      it 'returns a success response with kontest (sub event) list' do
-        get '/cndt2020/kontest'
-        expect(response).to(be_successful)
-        expect(response).to(have_http_status('200'))
-        expect(response.body).to(include('https://'))
-      end
-    end
-
-    describe 'logged in and not registered' do
-      before do
-        create(:cndt2020)
-        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(info: { email: 'alice@example.com' }))
-      end
-
-      it 'redirect to /cndt2020/registration' do
-        get '/cndt2020/kontest'
-        expect(response).to_not(be_successful)
-        expect(response).to(have_http_status('302'))
-        expect(response).to(redirect_to('/cndt2020/registration'))
-      end
-    end
-
-    describe 'not logged in' do
-      before do
-        create(:cndt2020)
-      end
-
-      it 'returns a success response with kontest (sub event) list' do
-        get '/cndt2020/kontest'
-        expect(response).to(be_successful)
-        expect(response).to(have_http_status('200'))
-        expect(response.body).to(include('kontest'))
-      end
-    end
-  end
-
   describe 'GET #discussion' do
     describe 'logged in and registered' do
       subject(:session) { { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => roles } } } } }

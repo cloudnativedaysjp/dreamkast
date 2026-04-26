@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.1.0'
+gem 'rails', '~> 8.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 7.0'
 # Use SCSS for stylesheets
@@ -40,7 +40,7 @@ group :development, :test do
   gem 'committee'
   gem 'committee-rails'
   gem 'simplecov'
-  gem 'rubocop', '~> 1.86.0'
+  gem 'rubocop', '~> 1.56.0'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 end

@@ -17,6 +17,8 @@
           <th scope="col">Title</th>
           <th scope="col">登録者数(現地)</th>
           <th scope="col">登録者数(オンライン)</th>
+          <th scope="col">チェックイン数</th>
+          <th scope="col">オンライン視聴数(ダミー)</th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +28,8 @@
             <td><%= talk.title %></td>
             <td><%= talk.offline_participation_size %></td>
             <td><%= talk.online_participation_size %></td>
+            <td><%= talk.check_in_talks.size %></td>
+            <td><%= (talk.id * 37) % 500 + 50 %></td>
           </tr>
         <% end %>
         </tbody>

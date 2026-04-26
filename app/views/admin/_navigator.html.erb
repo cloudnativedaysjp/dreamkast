@@ -27,7 +27,7 @@
 
     <li class="nav-header">配信・収録</li>
     <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: action_name == 'streaming' %>
-    <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: action_name == 'media_package_harvest_job' %>
+    <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: controller_name == 'harvest_jobs' %>
 
     <li class="nav-header">スポンサー・参加者企画</li>
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>

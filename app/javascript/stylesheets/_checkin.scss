@@ -6,4 +6,23 @@
         background-size: 100% 100%;
         margin: 3em auto;
     }
+
+    .early-bird-badge {
+        margin: 1.5em auto;
+
+        .badge {
+            display: inline-block;
+            padding: 0.6em 1.2em;
+            font-size: 1.1em;
+            color: #fff;
+            background-color: #d4a017;
+            border-radius: 999px;
+        }
+
+        .early-bird-message {
+            margin-top: 0.8em;
+            font-weight: bold;
+            color: #d4a017;
+        }
+    }
 }

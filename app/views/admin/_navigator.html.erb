@@ -7,7 +7,7 @@
     <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: controller_name == 'admin' &&  action_name == 'show' %>
 
     <li class="nav-header">告知</li>
-    <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'announcements' %>
+    <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: controller_name == 'announcements' %>
     <%= render 'admin/nav_item', name: 'SpeakerAnnouncements', path: admin_speaker_announcements_path, active:  controller_name == 'speaker_announcements' %>
 
     <li class="nav-header">CFP・スピーカー</li>

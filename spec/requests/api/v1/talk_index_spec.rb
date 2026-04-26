@@ -50,5 +50,23 @@ describe TalksController, type: :request do
         expect(response.body).to(include('"conferenceDayDate":null'))
       end
     end
+
+    describe 'speakers exposes userId' do
+      let!(:cndt2020) { create(:cndt2020) }
+      let!(:speaker) { create(:speaker_alice, :with_talk1_accepted) }
+
+      it 'returns userId for each speaker' do
+        get '/api/v1/talks?eventAbbr=cndt2020'
+        assert_response_schema_confirm(200)
+
+        json = JSON.parse(response.body)
+        talk = json.find { |t| t['speakers'].any? { |s| s['id'] == speaker.id } }
+        expect(talk).to(be_present)
+
+        speaker_payload = talk['speakers'].find { |s| s['id'] == speaker.id }
+        expect(speaker_payload['userId']).to(eq(speaker.user_id))
+        expect(speaker_payload['userId']).to(be_present)
+      end
+    end
   end
 end

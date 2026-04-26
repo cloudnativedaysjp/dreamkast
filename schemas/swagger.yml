@@ -494,7 +494,7 @@ components:
           type: number
         userId:
           type: number
-          nullable: true
+          description: "User ID associated with this profile. Used to identify if the logged-in user is a speaker by comparing with Talk.speakers[].userId."
         name:
           type: string
         email:
@@ -507,6 +507,7 @@ components:
             $ref: '#/components/schemas/RegisteredTalk'
       required:
         - id
+        - userId
         - name
         - email
         - isAttendOffline
@@ -720,6 +721,7 @@ components:
               userId:
                 type: number
                 nullable: true
+                description: "User ID of the speaker. Null if the speaker has been invited but has not yet accepted. Used to identify if the logged-in user is a speaker by comparing with Profile.userId."
         dayId:
           type: number
           nullable: true

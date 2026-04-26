@@ -3,6 +3,10 @@ class Admin::ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.where(conference_id: @conference.id)
+                       .includes(:check_in_conferences)
+                       .order(:id)
+                       .page(params[:page])
+                       .per(50)
   end
 
   def export_profiles

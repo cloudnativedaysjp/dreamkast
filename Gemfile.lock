@@ -241,6 +241,18 @@ GEM
     json_schema (0.21.0)
     jwt (3.0.0)
       base64
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     language_server-protocol (3.17.0.5)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -820,6 +832,7 @@ DEPENDENCIES
   image_processing (~> 1.12.2)
   jbuilder (~> 2.11)
   jsbundling-rails
+  kaminari
   listen (~> 3.2)
   mysql2 (~> 0.5.6)
   nokogiri (= 1.18.9)

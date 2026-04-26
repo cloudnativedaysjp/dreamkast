@@ -12,9 +12,9 @@
 
     <li class="nav-header">CFP・スピーカー</li>
     <%= render 'admin/nav_item', name: 'Proposals', path: admin_proposals_path, active: controller_name == 'proposals' %>
-    <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'check_in_statuses' %>
+    <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active: controller_name == 'speakers' && action_name != 'check_in_statuses' %>
     <%= render 'admin/nav_item', name: 'KeynoteSpeakerInvitations', path: admin_keynote_speaker_invitations_path, active:  controller_name == 'keynote_speaker_invitations' %>
-    <%= render 'admin/nav_item', name: 'スピーカーの会場受付状況', path: admin_speaker_check_in_statuses_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
+    <%= render 'admin/nav_item', name: 'スピーカーの会場受付状況', path: admin_speaker_check_in_statuses_path, active: controller_name == 'speaker_check_in_statuses' || (controller_name == 'speakers' && action_name == 'check_in_statuses') %>
 
     <li class="nav-header">セッション・タイムテーブル</li>
     <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>

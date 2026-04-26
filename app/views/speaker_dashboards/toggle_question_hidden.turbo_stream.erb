@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "question_#{@question.id}" do %>
+  <%= render 'speaker_dashboards/question_item', question: @question %>
+<% end %>
+
+<%= turbo_stream_flash %>

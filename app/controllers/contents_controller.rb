@@ -17,9 +17,6 @@ class ContentsController < ApplicationController
     )
   end
 
-  def kontest
-  end
-
   def hands_on
     render_if_template_exists(
       "#{current_conference.abbr}_hands_on",

@@ -5,26 +5,38 @@
 
   <ul class="list-unstyled components">
     <%= render 'admin/nav_item', name: 'Admin Top', path: admin_path, active: controller_name == 'admin' &&  action_name == 'show' %>
-    <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: action_name == 'announcements' %>
-    <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: action_name == 'users' %>
-    <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active:  controller_name == 'speakers' || action_name == 'check_in_statuses' %>
-    <%= render 'admin/nav_item', name: 'KeynoteSpeakerInvitations', path: admin_keynote_speaker_invitations_path, active:  controller_name == 'keynote_speaker_invitations' %>
-    <%= render 'admin/nav_item', name: 'スピーカーの会場受付状況', path: admin_speaker_check_in_statuses_path, active:  controller_name == 'speakers' || action_name == 'edit_speaker' %>
+
+    <li class="nav-header">告知</li>
+    <%= render 'admin/nav_item', name: 'Announcements', path: admin_announcements_path, active: controller_name == 'announcements' %>
     <%= render 'admin/nav_item', name: 'SpeakerAnnouncements', path: admin_speaker_announcements_path, active:  controller_name == 'speaker_announcements' %>
+
+    <li class="nav-header">CFP・スピーカー</li>
     <%= render 'admin/nav_item', name: 'Proposals', path: admin_proposals_path, active: controller_name == 'proposals' %>
-    <%= render 'admin/nav_item', name: 'Rooms', path: admin_rooms_path, active: controller_name == 'rooms'%>
+    <%= render 'admin/nav_item', name: 'Speakers', path: admin_speakers_path, active: controller_name == 'speakers' && action_name != 'check_in_statuses' %>
+    <%= render 'admin/nav_item', name: 'KeynoteSpeakerInvitations', path: admin_keynote_speaker_invitations_path, active:  controller_name == 'keynote_speaker_invitations' %>
+    <%= render 'admin/nav_item', name: 'スピーカーの会場受付状況', path: admin_speaker_check_in_statuses_path, active: controller_name == 'speaker_check_in_statuses' || (controller_name == 'speakers' && action_name == 'check_in_statuses') %>
+
+    <li class="nav-header">セッション・タイムテーブル</li>
     <%= render 'admin/nav_item', name: 'Talks', path: admin_talks_path, active: controller_name == 'talks' %>
     <%= render 'admin/nav_item', name: 'Session Questions', path: admin_session_questions_path, active: controller_name == 'session_questions' %>
     <%= render 'admin/nav_item', name: 'ビデオファイル提出状況', path: admin_videos_path, active: controller_name == 'videos' %>
     <%= render 'admin/nav_item', name: 'TimeTable', path: admin_timetables_path, active: controller_name == 'timetables' %>
     <%= render 'admin/nav_item', name: 'Tracks', path: admin_tracks_path, active: controller_name == 'tracks'%>
-    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: action_name == 'streaming' %>
-    <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: action_name == 'media_package_harvest_job' %>
-    <%= render 'admin/nav_item', name: 'Statistics', path: admin_statistics_path, active: action_name == 'statistics' %>
+    <%= render 'admin/nav_item', name: 'Rooms', path: admin_rooms_path, active: controller_name == 'rooms'%>
+    <%= render 'admin/nav_item', name: 'Session stats', path: admin_statistics_path, active: action_name == 'statistics' %>
+
+    <li class="nav-header">配信・収録</li>
+    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: controller_name == 'streamings' %>
+    <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: controller_name == 'harvest_jobs' %>
+
+    <li class="nav-header">スポンサー・参加者企画</li>
     <%= render 'admin/nav_item', name: 'Sponsors', path: admin_sponsors_path, active: controller_name == 'sponsors' || action_name == 'show_sponsor' %>
     <%= render 'admin/nav_item', name: 'Stamp Rally Checkpoints', path: admin_stamp_rally_check_points_path, active: controller_name == 'stamp_rally_check_points' || controller_name == 'qr_code_for_stamp_rallies' || action_name == 'show_sponsor' %>
-    <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
-    <%= render 'admin/nav_item', name: 'Edit Admin Profile', path: edit_admin_admin_profile_path(id: @admin_profile), active: action_name == 'administrators' %>
+
+    <li class="nav-header">ユーザー・運営設定</li>
+    <%= render 'admin/nav_item', name: 'Users', path: admin_users_path, active: controller_name == 'profiles' %>
+    <%= render 'admin/nav_item', name: 'Edit Admin Profile', path: edit_admin_admin_profile_path(id: @admin_profile), active: controller_name == 'admin_profiles' && action_name.in?(%w[edit update]) %>
     <%= render 'admin/nav_item', name: 'Edit Team Page', path: admin_team_path, active: controller_name == 'teams' %>
+    <%= render 'admin/nav_item', name: 'Debug', path: admin_debug_path, active: action_name == 'debug' %>
   </ul>
 </nav>

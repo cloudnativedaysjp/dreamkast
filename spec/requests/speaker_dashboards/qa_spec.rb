@@ -62,10 +62,9 @@ describe SpeakerDashboardsController, type: :request do
       expect(response.body).to include(question2.body)
     end
 
-    it 'excludes hidden questions' do
+    it 'includes hidden questions so speakers can moderate them' do
       get '/cndt2020/speaker_dashboard/questions'
-      # すべての質問が同じbodyを持つ可能性があるため、IDで判定する
-      expect(response.body).not_to include("question_#{hidden_question.id}")
+      expect(response.body).to include("question_#{hidden_question.id}")
     end
 
     context 'with unanswered filter' do
@@ -187,6 +186,72 @@ describe SpeakerDashboardsController, type: :request do
         expect(response).to redirect_to('/cndt2020/speaker_dashboard')
         follow_redirect!
         expect(response.body).to include('このセッションの登壇者ではありません')
+      end
+    end
+  end
+
+  describe 'PATCH /:event/speaker_dashboard/talks/:talk_id/session_questions/:id/toggle_hidden' do
+    let!(:question) { create(:session_question, talk:, conference:, profile:) }
+
+    context 'when toggling own talk question' do
+      it 'hides a visible question' do
+        expect {
+          patch "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/toggle_hidden",
+                headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+        }.to change { question.reload.hidden }.from(false).to(true)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to include('text/vnd.turbo-stream.html')
+      end
+
+      it 'unhides a hidden question' do
+        question.update!(hidden: true)
+
+        expect {
+          patch "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/toggle_hidden",
+                headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+        }.to change { question.reload.hidden }.from(true).to(false)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'broadcasts via ActionCable when toggling' do
+        expect(ActionCable.server).to receive(:broadcast).with(
+          "qa_talk_#{talk.id}",
+          hash_including(type: 'question_toggled', question_id: question.id, hidden: true)
+        )
+
+        patch "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/toggle_hidden",
+              headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+      end
+    end
+
+    context 'when the speaker is not associated with the talk' do
+      let!(:other_talk) { create(:talk2, conference:) }
+      let!(:other_question) { create(:session_question, talk: other_talk, conference:, profile:) }
+
+      it 'does not change hidden state and redirects' do
+        expect {
+          patch "/cndt2020/speaker_dashboard/talks/#{other_talk.id}/session_questions/#{other_question.id}/toggle_hidden"
+        }.not_to(change { other_question.reload.hidden })
+
+        expect(response).to redirect_to('/cndt2020/speaker_dashboard')
+        expect(flash[:alert]).to eq('このセッションの登壇者ではありません')
+      end
+    end
+
+    context 'when talk_id and question belong to different talks' do
+      let!(:other_talk) { create(:talk2, conference:) }
+      let!(:other_question) { create(:session_question, talk: other_talk, conference:, profile:) }
+
+      before { other_talk.speakers << speaker }
+
+      it 'does not change hidden state when question does not belong to the talk' do
+        expect {
+          patch "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{other_question.id}/toggle_hidden"
+        }.not_to(change { other_question.reload.hidden })
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

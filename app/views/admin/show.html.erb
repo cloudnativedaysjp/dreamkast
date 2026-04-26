@@ -6,6 +6,45 @@
   <% end %>
 
   <h2><%= @conference.name %></h2>
+
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h6 class="card-title">現地参加登録者数</h6>
+          <p class="card-text display-6 mb-0"><%= number_with_delimiter(@offline_registrants_count) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-info">
+        <div class="card-body">
+          <h6 class="card-title">オンライン参加登録者数</h6>
+          <p class="card-text display-6 mb-0"><%= number_with_delimiter(@online_registrants_count) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h6 class="card-title">チェックインした人数</h6>
+          <p class="card-text display-6 mb-0"><%= number_with_delimiter(@checked_in_count) %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-secondary">
+        <div class="card-body">
+          <h6 class="card-title">
+            オンライン視聴した人数
+            <span class="badge bg-warning text-dark ms-1">ダミー</span>
+          </h6>
+          <p class="card-text display-6 mb-0"><%= number_with_delimiter(@online_viewers_count) %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <table class="table table-striped">
     <thead>
     <tr>

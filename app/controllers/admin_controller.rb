@@ -3,11 +3,10 @@ class AdminController < ApplicationController
 
   def show
     @session = session
-    @conference = Conference.find_by(abbr: event_name)
-    @current = Video.on_air(@conference)
-    @offline_registrants_count = @conference.profiles.offline.count
-    @online_registrants_count = @conference.profiles.online.count
-    @checked_in_count = @conference.check_in_conferences.count
+    @current = Video.on_air(current_conference)
+    @offline_registrants_count = current_conference.profiles.offline.count
+    @online_registrants_count = current_conference.profiles.online.count
+    @checked_in_count = current_conference.check_in_conferences.count
     # TODO: 実際のオンライン視聴者数を取得できるようになったら置き換える
     @online_viewers_count = 1234
   end

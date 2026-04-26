@@ -21,11 +21,11 @@ class EventController < ApplicationController
   end
 
   def privacy
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
   end
 
   def coc
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
   end
 
   def preparation
@@ -40,7 +40,7 @@ class EventController < ApplicationController
 
   # CFP募集期間は登壇者登録の有無でリダイレクトする
   def should_redirect?
-    if set_conference.speaker_entry_enabled?
+    if current_conference.speaker_entry_enabled?
       @speaker.present?
     else
       false

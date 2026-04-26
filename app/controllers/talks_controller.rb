@@ -14,7 +14,7 @@ class TalksController < ApplicationController
   # - プロポーザルの採択結果を表示しない場合：404を返す
   # - Conferenceのstatusが `migrated` の場合：websiteにリダイレクトする
   def show
-    @conference = Conference.find_by(abbr: event_name)
+    @conference = current_conference
     @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     raise(ActiveRecord::RecordNotFound) unless @talk
@@ -38,7 +38,7 @@ class TalksController < ApplicationController
   end
 
   def create_question
-    @conference = Conference.find_by(abbr: event_name)
+    @conference = current_conference
     @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     unless @talk
@@ -78,7 +78,7 @@ class TalksController < ApplicationController
   end
 
   def destroy_question
-    @conference = Conference.find_by(abbr: event_name)
+    @conference = current_conference
     @talk = Talk.find_by(id: params[:id], conference_id: @conference.id)
 
     unless @talk
@@ -164,7 +164,7 @@ class TalksController < ApplicationController
   end
 
   def index
-    @conference = Conference.find_by(abbr: event_name)
+    @conference = current_conference
 
     @talks = @conference.talks.joins('LEFT JOIN conference_days ON talks.conference_day_id = conference_days.id')
                         .includes([:talks_speakers, :speakers, :talk_category, :track, :conference_day, :proposal, :talk_time])
@@ -258,12 +258,12 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def new_user?
-    (speaker? && set_conference.speaker_entry_enabled?) || super
+    (speaker? && current_conference.speaker_entry_enabled?) || super
   end
 
   def speaker?
     return false if current_user_model.nil?
-    @speaker.present? || Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id).present?
+    @speaker.present? || Speaker.find_by(user_id: current_user_model.id, conference_id: current_conference.id).present?
   end
 
   def talk_params
@@ -273,7 +273,7 @@ class TalksController < ApplicationController
   # CFP募集期間中は登壇者登録だけでも表示する
   # CFP期間後はProfileの登録が必要
   def should_redirect?
-    super && (!speaker? || !set_conference.speaker_entry_enabled?)
+    super && (!speaker? || !current_conference.speaker_entry_enabled?)
   end
 
   def talk_start_to_end(talk)

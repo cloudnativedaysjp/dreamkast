@@ -7,7 +7,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
     if logged_in? && @sponsor.present? && @sponsor_contact.present?
       if @sponsor.id == @sponsor_contact.sponsor_id
-        @speaker = @conference.speakers.find_by(user_id: current_user_model.id)
+        @speaker = current_conference.speakers.find_by(user_id: current_user_model.id)
         @talks = @speaker ? @speaker.talks.sponsor : []
       else
         render_404
@@ -30,9 +30,8 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
   end
 
   def set_sponsor_contact
-    @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
   end
 end

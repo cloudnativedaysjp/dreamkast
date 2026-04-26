@@ -11,15 +11,7 @@ module SecuredAdmin
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
-  end
-
-  def conference
-    @conference ||= Conference.find_by(abbr: event_name)
-  end
-
-  def event_name
-    params[:event]
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{current_conference.abbr.upcase}-Admin")
   end
 
   def is_admin?
@@ -27,10 +19,10 @@ module SecuredAdmin
   end
 
   def get_or_create_admin_profile
-    @admin_profile ||= AdminProfile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    @admin_profile ||= AdminProfile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
 
     if admin? && @admin_profile.blank?
-      @admin_profile = AdminProfile.new(conference_id: @conference.id)
+      @admin_profile = AdminProfile.new(conference_id: current_conference.id)
       @admin_profile.sub = current_user_model&.sub
       @admin_profile.email = current_user[:info][:email]
 

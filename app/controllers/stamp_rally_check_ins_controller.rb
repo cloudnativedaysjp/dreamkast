@@ -33,11 +33,11 @@ class StampRallyCheckInsController < ApplicationController
   helper_method :stamp_rally_status
 
   def stamp_rally_status
-    check_points = conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
+    check_points = current_conference.stamp_rally_check_points.where.not(type: StampRallyCheckPointFinish.name)
     check_ins = check_ins(StampRallyCheckPointBooth) + check_ins(StampRallyCheckPoint)
     finish_check_in = check_ins(StampRallyCheckPointFinish)
-    finish_threshold = if conference.stamp_rally_configure.present? && conference.stamp_rally_configure.finish_threshold >= 0
-                         conference.stamp_rally_configure.finish_threshold
+    finish_threshold = if current_conference.stamp_rally_configure.present? && current_conference.stamp_rally_configure.finish_threshold >= 0
+                         current_conference.stamp_rally_configure.finish_threshold
                        else
                          check_points.size
                        end

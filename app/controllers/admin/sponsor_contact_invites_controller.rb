@@ -8,7 +8,6 @@ class Admin::SponsorContactInvitesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @conference = Conference.find_by(abbr: params[:event])
       @sponsor_contact_invite = SponsorContactInvite.new(sponsor_contact_invite_params)
       @sponsor_contact_invite.conference_id = @conference.id
       @sponsor_contact_invite.token = SecureRandom.hex(50)

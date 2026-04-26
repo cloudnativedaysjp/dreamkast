@@ -12,14 +12,14 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   def new
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = Talk.new
-    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
+    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     @sponsor_speakers = @sponsor.speakers
   end
 
   def create
     @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = Talk.new(conference:, sponsor: @sponsor)
-    @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference:)
+    @sponsor_session = Talk.new(conference: current_conference, sponsor: @sponsor)
+    @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを登録しました'
     else
@@ -32,7 +32,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = Talk.find(params[:id])
-    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
+    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     @sponsor_session_form.load
     @sponsor_speakers = @sponsor.speakers
   end
@@ -40,7 +40,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   def update
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = Talk.find(params[:id])
-    @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference:)
+    @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを更新しました'
     else
@@ -53,7 +53,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_session = Talk.find(params[:id])
-    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference:)
+    @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session.destroy
       flash.now[:notice] = 'スポンサーセッションを削除しました'
     else
@@ -92,8 +92,8 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   def proposal_items_attributes
     attr = []
     h = {}
-    @conference.proposal_item_configs.map(&:label).uniq.each do |label|
-      conf = @conference.proposal_item_configs.find_by(label:)
+    current_conference.proposal_item_configs.map(&:label).uniq.each do |label|
+      conf = current_conference.proposal_item_configs.find_by(label:)
       if conf.instance_of?(::ProposalItemConfigCheckBox)
         h[conf.label.pluralize.to_sym] = []
       elsif conf.instance_of?(::ProposalItemConfigRadioButton)
@@ -108,9 +108,8 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   end
 
   def set_sponsor_contact
-    @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
   end
 end

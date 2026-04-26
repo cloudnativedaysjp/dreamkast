@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     # FormItemの数だけform_valuesを初期化
     FormItem.where(conference_id: @conference.id).each do |form_item|
@@ -141,7 +141,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
   end
 
   def profile_params

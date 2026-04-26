@@ -11,7 +11,7 @@ class SpeakerInvitationsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @conference = Conference.find_by(abbr: params[:event])
+      @conference = current_conference
       @invitation = SpeakerInvitation.new(speaker_invitation_params)
       @invitation.conference_id = @conference.id
       @invitation.token = SecureRandom.hex(50)

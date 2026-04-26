@@ -2,7 +2,7 @@ class SponsorDashboards::SponsorContactInvitesController < ApplicationController
   include SecuredSponsor
 
   def new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor_contact_invite = SponsorContactInvite.new
     @sponsor = Sponsor.find(params[:sponsor_id])
   end
@@ -10,7 +10,7 @@ class SponsorDashboards::SponsorContactInvitesController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @sponsor = Sponsor.find(params[:sponsor_id])
-      @conference = Conference.find_by(abbr: params[:event])
+      @conference = current_conference
       @sponsor_contact_invite = SponsorContactInvite.new(sponsor_contact_invite_params)
       @sponsor_contact_invite.conference_id = @conference.id
       @sponsor_contact_invite.token = SecureRandom.hex(50)

@@ -5,7 +5,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
     if current_user && current_user_model
@@ -20,7 +20,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
@@ -31,7 +31,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
@@ -54,7 +54,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
 
   # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def update
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
     authorize(@speaker)

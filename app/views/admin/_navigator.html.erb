@@ -26,7 +26,7 @@
     <%= render 'admin/nav_item', name: 'Session stats', path: admin_statistics_path, active: action_name == 'statistics' %>
 
     <li class="nav-header">配信・収録</li>
-    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: action_name == 'streaming' %>
+    <%= render 'admin/nav_item', name: 'Streaming AWS Resources', path: admin_streamings_path, active: controller_name == 'streamings' %>
     <%= render 'admin/nav_item', name: 'HarvestJobs', path: admin_harvest_jobs_path, active: controller_name == 'harvest_jobs' %>
 
     <li class="nav-header">スポンサー・参加者企画</li>

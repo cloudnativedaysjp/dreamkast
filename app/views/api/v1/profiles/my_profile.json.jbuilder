@@ -1,4 +1,5 @@
 json.id(@profile.id)
+json.userId(@profile.user_id)
 json.email(@profile.email)
 json.name("#{@profile.last_name} #{@profile.first_name}")
 json.isAttendOffline(@profile.attend_offline?)

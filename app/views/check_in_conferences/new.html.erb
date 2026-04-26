@@ -14,6 +14,12 @@
           &nbsp;
         </div>
         <p>チェックインが完了しました！</p>
+        <% if @profile.early_bird? %>
+          <div class="early-bird-badge text-center">
+            <span class="badge">🎫 先行申込者</span>
+            <p class="early-bird-message">先行申込ありがとうございました！</p>
+          </div>
+        <% end %>
         <p>3秒後にイベントダッシュボードにリダイレクトします</p>
       <% end %>
     </div>

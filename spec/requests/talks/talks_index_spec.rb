@@ -326,6 +326,13 @@ describe TalksController, type: :request do
     # CFP結果は公開済みだがタイムテーブルが未公開の期間に、
     # 採択済みtalk(まだ conference_day_id が割り当てられていない)が表示されること
     context 'cfp result is visible but timetable is not yet public' do
+      before do
+        TalkType.find_or_create_by!(id: 'Session') do |attr|
+          attr.display_name = '公募セッション'
+          attr.is_exclusive = false
+        end
+      end
+
       let!(:conference) {
         create(:cndt2021,
                abbr: 'cndt2023',

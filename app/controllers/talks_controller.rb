@@ -42,9 +42,13 @@ class TalksController < ApplicationController
     @talks = if ['cndt2020', 'cndo2021'].include?(@conference.abbr)
                @talks.where(show_on_timetable: true)
              elsif @conference.cfp_result_visible
-               @talks.where(show_on_timetable: true,
-                            conference_day_id: @conference.conference_days.externals.map(&:id),
-                            proposals: { status: :accepted })
+               accepted_talks = @talks.where(show_on_timetable: true, proposals: { status: :accepted })
+               # タイムテーブル公開前は conference_day_id がまだ未割当のため絞り込まない
+               if @conference.show_timetable_enabled?
+                 accepted_talks.where(conference_day_id: @conference.conference_days.externals.map(&:id))
+               else
+                 accepted_talks
+               end
              else
                # NOTE: Proposal 採択前は conference_days が nil
                @talks.where(show_on_timetable: true,

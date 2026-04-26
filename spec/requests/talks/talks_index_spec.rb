@@ -323,6 +323,42 @@ describe TalksController, type: :request do
       end
     end
 
+    # CFP結果は公開済みだがタイムテーブルが未公開の期間に、
+    # 採択済みtalk(まだ conference_day_id が割り当てられていない)が表示されること
+    context 'cfp result is visible but timetable is not yet public' do
+      let!(:conference) {
+        create(:cndt2021,
+               abbr: 'cndt2023',
+               conference_status: Conference::STATUS_REGISTERED,
+               cfp_result_visible: true,
+               show_timetable: 0)
+      }
+      let!(:talk_category) { create(:talk_category, conference:) }
+      let!(:talk_difficulty) { create(:talk_difficulty, conference:) }
+      let!(:track) { create(:track, conference_id: conference.id) }
+      let!(:accepted_talk) {
+        create(:talk,
+               type: 'Session',
+               title: 'TDD-WIP-Accepted-Talk',
+               start_time: '12:00',
+               end_time: '12:40',
+               abstract: 'abstract',
+               conference:,
+               conference_day_id: nil,
+               talk_difficulty:,
+               talk_category:,
+               track:,
+               show_on_timetable: true)
+      }
+      let!(:proposal) { create(:proposal, :accepted, conference:, talk: accepted_talk) }
+
+      it 'shows the accepted talk even when conference_day_id is nil' do
+        get '/cndt2023/talks'
+        expect(response).to(be_successful)
+        expect(response.body).to(include('TDD-WIP-Accepted-Talk'))
+      end
+    end
+
     context 'event is migrated' do
       let!(:cndt2020) { create(:cndt2020, :migrated) }
       context "user doesn't logged in" do

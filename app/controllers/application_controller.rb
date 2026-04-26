@@ -141,7 +141,11 @@ class ApplicationController < ActionController::Base
   end
 
   def event_exists?
-    if event_name && Conference.where(abbr: event_name).empty?
+    # event_name は API ルート向けに params[:eventAbbr] までフォールバックするが、
+    # event_exists? は HTML 404 (render_404) を返すため、API リクエストで
+    # JSON ではなく HTML が返ることを避けるべく params[:event] のみで判定する。
+    # eventAbbr 経由のバリデーションは各 API コントローラ側で行う想定。
+    if params[:event] && Conference.where(abbr: params[:event]).empty?
       raise(ActiveRecord::RecordNotFound)
     end
   end

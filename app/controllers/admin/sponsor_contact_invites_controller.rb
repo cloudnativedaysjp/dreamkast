@@ -16,7 +16,7 @@ class Admin::SponsorContactInvitesController < ApplicationController
         SponsorContactInviteMailer.invite(@conference, @sponsor_contact_invite).deliver_now
         flash.now[:notice] = '招待メールを送信しました'
       else
-        flash[:alert] = "#{@invite.email} への招待メール送信に失敗しました"
+        flash[:alert] = "#{@sponsor_contact_invite.email} への招待メール送信に失敗しました"
         render(:new, status: :unprocessable_entity)
       end
     end

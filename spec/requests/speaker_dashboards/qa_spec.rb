@@ -214,6 +214,16 @@ describe SpeakerDashboardsController, type: :request do
 
         expect(response).to have_http_status(:ok)
       end
+
+      it 'broadcasts via ActionCable when toggling' do
+        expect(ActionCable.server).to receive(:broadcast).with(
+          "qa_talk_#{talk.id}",
+          hash_including(type: 'question_toggled', question_id: question.id, hidden: true)
+        )
+
+        patch "/cndt2020/speaker_dashboard/talks/#{talk.id}/session_questions/#{question.id}/toggle_hidden",
+              headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
+      end
     end
 
     context 'when the speaker is not associated with the talk' do

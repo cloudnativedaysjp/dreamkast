@@ -140,6 +140,7 @@ class SpeakerDashboardsController < ApplicationController
     if @question.update(hidden: !@question.hidden)
       status = @question.hidden? ? '非表示' : '表示'
       flash.now[:notice] = "質問を#{status}にしました"
+      broadcast_question_toggled(@question)
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to speaker_dashboard_questions_path(event: @conference.abbr) }
@@ -252,6 +253,24 @@ class SpeakerDashboardsController < ApplicationController
       )
     rescue StandardError => e
       Rails.logger.error "Error broadcasting answer_deleted: #{e.class} - #{e.message}"
+      # ブロードキャストエラーは無視して処理を続行
+    end
+  end
+
+  def broadcast_question_toggled(question)
+    begin
+      talk = question.talk
+
+      ActionCable.server.broadcast(
+        "qa_talk_#{talk.id}",
+        {
+          type: 'question_toggled',
+          question_id: question.id,
+          hidden: question.hidden
+        }
+      )
+    rescue StandardError => e
+      Rails.logger.error "Error broadcasting question_toggled: #{e.class} - #{e.message}"
       # ブロードキャストエラーは無視して処理を続行
     end
   end

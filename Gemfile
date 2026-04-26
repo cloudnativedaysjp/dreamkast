@@ -135,6 +135,8 @@ gem 'ulid'
 
 gem 'acts_as_list'
 
+gem 'kaminari'
+
 # PDF tool
 gem 'ferrum'
 

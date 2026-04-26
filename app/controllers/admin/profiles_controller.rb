@@ -2,7 +2,7 @@ class Admin::ProfilesController < ApplicationController
   include SecuredAdmin
 
   def index
-    @profiles = Profile.where(conference_id: @conference.id)
+    @profiles = Profile.where(conference_id: @conference.id).page(params[:page]).per(50)
   end
 
   def export_profiles

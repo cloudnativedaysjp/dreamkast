@@ -42,6 +42,10 @@
         <% end %>
         </tbody>
       </table>
+      <div class="d-flex justify-content-between align-items-center">
+        <div><%= page_entries_info @profiles %></div>
+        <%= paginate @profiles %>
+      </div>
       </div>
     <% end %>
 <% end %>

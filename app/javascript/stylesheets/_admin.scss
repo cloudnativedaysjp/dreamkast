@@ -121,6 +121,17 @@ a:focus {
     background: #333333;
 }
 
+#sidebar ul li.nav-header {
+    padding: 16px 10px 4px;
+    margin-top: 8px;
+    font-size: 0.75em;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #d0d0d0;
+    text-transform: uppercase;
+    border-top: 1px solid #777777;
+}
+
 .admin-conference-form {
     .privacy-policy {
         width: 100%;

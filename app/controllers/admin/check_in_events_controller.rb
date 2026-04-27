@@ -2,7 +2,7 @@ class Admin::CheckInEventsController < ApplicationController
   include SecuredAdmin
 
   def create
-    @check_in = CheckInConference.new(check_in_events_params.merge(conference_id: conference.id, check_in_timestamp: DateTime.now))
+    @check_in = CheckInConference.new(check_in_events_params.merge(conference_id: current_conference.id, check_in_timestamp: DateTime.now))
     @profile = Profile.find(@check_in.profile_id)
 
     respond_to do |format|
@@ -16,7 +16,7 @@ class Admin::CheckInEventsController < ApplicationController
   end
 
   def destroy_all
-    @check_ins = CheckInConference.where(profile_id: check_in_events_params[:profile_id], conference_id: conference.id)
+    @check_ins = CheckInConference.where(profile_id: check_in_events_params[:profile_id], conference_id: current_conference.id)
     @profile = Profile.find(check_in_events_params[:profile_id])
 
     respond_to do |format|

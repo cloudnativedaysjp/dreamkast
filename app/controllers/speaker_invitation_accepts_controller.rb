@@ -6,13 +6,13 @@ class SpeakerInvitationAcceptsController < ApplicationController
 
   def invite
     return redirect_to(new_speaker_invitation_accept_path(token: params[:token])) if from_auth0?(params)
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
   end
 
   def new
     @speaker_invitation_accept = SpeakerInvitationAccept.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
     unless @speaker_invitation
@@ -35,7 +35,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        @conference = Conference.find_by(abbr: params[:event])
+        @conference = current_conference
         @speaker_invitation = SpeakerInvitation.find(params[:speaker][:speaker_invitation_id])
 
         speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])

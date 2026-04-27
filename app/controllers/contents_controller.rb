@@ -1,6 +1,6 @@
 class ContentsController < ApplicationController
   include Secured
-  before_action :set_profile, :set_speaker
+  before_action :set_conference, :set_profile, :set_speaker
 
   def logged_in_using_omniauth?
     current_user
@@ -10,50 +10,43 @@ class ContentsController < ApplicationController
   end
 
   def discussion
-    @conference = Conference.find_by(abbr: params[:event])
     render_if_template_exists(
-      "#{@conference.abbr}_discussion",
+      "#{current_conference.abbr}_discussion",
       prefixes: controller_path,
-      render_target: "#{@conference.abbr}_discussion".to_sym
+      render_target: "#{current_conference.abbr}_discussion".to_sym
     )
   end
 
   def hands_on
-    @conference = Conference.find_by(abbr: params[:event])
     render_if_template_exists(
-      "#{@conference.abbr}_hands_on",
+      "#{current_conference.abbr}_hands_on",
       prefixes: controller_path,
-      render_target: "#{@conference.abbr}_hands_on".to_sym
+      render_target: "#{current_conference.abbr}_hands_on".to_sym
     )
   end
 
   def job_board
-    @conference = Conference.find_by(abbr: params[:event])
     render_if_template_exists(
-      "#{@conference.abbr}_job_board",
+      "#{current_conference.abbr}_job_board",
       prefixes: controller_path,
-      render_target: "#{@conference.abbr}_job_board".to_sym
+      render_target: "#{current_conference.abbr}_job_board".to_sym
     )
   end
 
   def o11y
-    @conference = Conference.find_by(abbr: params[:event])
     render(:o11y)
   end
 
   def community_lt
-    @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("contents/#{@conference.abbr}/community_lt")
+    render_if_template_exists("contents/#{current_conference.abbr}/community_lt")
   end
 
   def yurucafe
-    @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("contents/#{@conference.abbr}/yurucafe")
+    render_if_template_exists("contents/#{current_conference.abbr}/yurucafe")
   end
 
   def stamprally
-    @conference = Conference.find_by(abbr: params[:event])
-    render_if_template_exists("contents/#{@conference.abbr}/stamprally")
+    render_if_template_exists("contents/#{current_conference.abbr}/stamprally")
   end
 
   private

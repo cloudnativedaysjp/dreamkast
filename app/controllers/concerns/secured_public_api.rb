@@ -41,14 +41,6 @@ module SecuredPublicApi
     @current_user
   end
 
-  def conference
-    @conference ||= Conference.find_by(abbr: params[:eventAbbr] || params[:event])
-  end
-
-  def set_conference
-    conference
-  end
-
   def current_user_model
     return nil unless @current_user
     symbolized_current_user = @current_user.deep_symbolize_keys
@@ -60,6 +52,6 @@ module SecuredPublicApi
   end
 
   def profile
-    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: conference.id)
+    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
   end
 end

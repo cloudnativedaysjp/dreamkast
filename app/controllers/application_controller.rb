@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def event_name
-    params[:event]
+    params[:event] || params[:eventAbbr]
   end
 
   def production?
@@ -141,7 +141,11 @@ class ApplicationController < ActionController::Base
   end
 
   def event_exists?
-    if event_name && Conference.where(abbr: event_name).empty?
+    # event_name は API ルート向けに params[:eventAbbr] までフォールバックするが、
+    # event_exists? は HTML 404 (render_404) を返すため、API リクエストで
+    # JSON ではなく HTML が返ることを避けるべく params[:event] のみで判定する。
+    # eventAbbr 経由のバリデーションは各 API コントローラ側で行う想定。
+    if params[:event] && Conference.where(abbr: params[:event]).empty?
       raise(ActiveRecord::RecordNotFound)
     end
   end
@@ -165,13 +169,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_conference
+  def current_conference
     @conference ||= Conference.find_by(abbr: event_name)
+  end
+  helper_method :current_conference
+
+  def set_conference
+    current_conference
   end
 
   def set_profile
-    @profile = if current_user_model && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
-                 Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    @profile = if current_user_model && (current_conference.opened? || current_conference.registered? || current_conference.closed?)
+                 Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
                else
                  GuestProfile.new
                end
@@ -179,13 +188,13 @@ class ApplicationController < ActionController::Base
 
   def set_speaker
     if current_user_model
-      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
     end
   end
 
   def set_sponsor_contact
     if current_user_model
-      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
     end
   end
 

@@ -5,13 +5,13 @@ class SponsorContactInviteAcceptsController < ApplicationController
 
   def invite
     return redirect_to(new_sponsor_contact_invite_accept_path(token: params[:token])) if from_auth0?(params)
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor_contact_invite = SponsorContactInvite.find_by(token: params[:token])
   end
 
   def new
     @sponsor_contact_invite_accept = SponsorContactInviteAccept.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     @sponsor_contact_invite = SponsorContactInvite.find_by(token: params[:token])
     unless @sponsor_contact_invite
@@ -35,7 +35,6 @@ class SponsorContactInviteAcceptsController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        @conference = Conference.find_by(abbr: params[:event])
         @sponsor_contact_invite = SponsorContactInvite.find(params[:sponsor_contact][:sponsor_contact_invite_id])
         @sponsor = @sponsor_contact_invite.sponsor
 

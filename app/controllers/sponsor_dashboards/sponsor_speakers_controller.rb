@@ -12,7 +12,6 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   def index
-    @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     @sponsor_speakers = @sponsor.speakers
     @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
@@ -32,7 +31,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
+    @speaker = Speaker.find_by(conference_id: current_conference.id, id: params[:id])
     authorize([:sponsor_dashboards, @speaker])
   end
 
@@ -41,7 +40,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker = Speaker.new(speaker_params)
-    @speaker.conference = conference
+    @speaker.conference = current_conference
     @speaker.sponsor = @sponsor
     @speaker.sub = current_user_model&.sub
     @speaker.email = current_user[:info][:email]
@@ -115,11 +114,11 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   def expected_participant_params
-    @conference.proposal_item_configs.where(label: 'expected_participant')
+    current_conference.proposal_item_configs.where(label: 'expected_participant')
   end
 
   def execution_phases_params
-    @conference.proposal_item_configs.where(label: 'execution_phase')
+    current_conference.proposal_item_configs.where(label: 'execution_phase')
   end
 
   # Only allow a list of trusted parameters through.
@@ -144,9 +143,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   def set_sponsor_contact
-    @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
   end
 end

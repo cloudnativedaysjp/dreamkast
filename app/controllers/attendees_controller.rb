@@ -8,8 +8,7 @@ class AttendeesController < ApplicationController
   end
 
   def index
-    conference = Conference.find_by(abbr: params[:event])
-    @public_profiles = conference
+    @public_profiles = current_conference
                        .profiles.includes([:public_profile])
                        .joins(:public_profile)
                        .where(public_profile: { is_public: true })

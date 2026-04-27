@@ -6,7 +6,6 @@ class SpeakerDashboardsController < ApplicationController
 
 
   def show
-    @conference = Conference.find_by(abbr: event_name)
     @talks = @speaker ? @speaker.talks.not_sponsor : []
     @speaker_announcements = @conference.speaker_announcements.find_by_speaker(@speaker.id) unless @speaker.nil?
 

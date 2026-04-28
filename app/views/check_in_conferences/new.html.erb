@@ -20,14 +20,22 @@
             <p class="early-bird-message">先行申込ありがとうございました！</p>
           </div>
         <% end %>
-        <p>3秒後にイベントダッシュボードにリダイレクトします</p>
+        <% if params[:no_redirect].present? %>
+          <div class="text-center my-4">
+            <%= link_to 'イベントダッシュボードへ', dashboard_path, class: 'btn btn-primary btn-xl' %>
+          </div>
+        <% else %>
+          <p>3秒後にイベントダッシュボードにリダイレクトします</p>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
 
+<% if params[:no_redirect].blank? %>
 <script>
 setTimeout(() => {
     location.href = "<%= dashboard_path %>";
 }, 3000);
 </script>
+<% end %>

@@ -52,6 +52,21 @@ RSpec.describe(CheckInConferencesController, type: :request) do
           expect(response.body).not_to(include('先行申込ありがとうございました！'))
         end
       end
+
+      it 'redirects automatically without no_redirect parameter' do
+        get '/cndt2020/self_check_in'
+        expect(response.body).to(include('3秒後にイベントダッシュボードにリダイレクトします'))
+        expect(response.body).to(include('setTimeout'))
+        expect(response.body).not_to(include('イベントダッシュボードへ'))
+      end
+
+      it 'does not redirect and shows a manual link with no_redirect parameter' do
+        get '/cndt2020/self_check_in', params: { no_redirect: 'true' }
+        expect(response.body).to(include('チェックインが完了しました！'))
+        expect(response.body).to(include('イベントダッシュボードへ'))
+        expect(response.body).not_to(include('3秒後にイベントダッシュボードにリダイレクトします'))
+        expect(response.body).not_to(include('setTimeout'))
+      end
     end
 
     context 'when logged in and has early bird profile' do

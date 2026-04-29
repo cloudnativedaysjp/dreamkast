@@ -9,6 +9,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
       if @sponsor.id == @sponsor_contact.sponsor_id
         @speaker = current_conference.speakers.find_by(user_id: current_user_model.id)
         @talks = @speaker ? @speaker.talks.sponsor : []
+        @unanswered_questions_count = unanswered_questions_count_for_sponsor(@sponsor)
       else
         render_404
       end
@@ -33,5 +34,18 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
     if current_user && current_user_model
       @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
+  end
+
+  def unanswered_questions_count_for_sponsor(sponsor)
+    talk_ids = sponsor.talks.pluck(:id)
+    return 0 if talk_ids.empty?
+
+    current_conference.session_questions
+                      .visible
+                      .where(talk_id: talk_ids)
+                      .left_joins(:session_question_answers)
+                      .where(session_question_answers: { id: nil })
+                      .distinct
+                      .count
   end
 end

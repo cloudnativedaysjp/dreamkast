@@ -14,6 +14,25 @@
           <%= button_to 'Log in', '/auth/auth0', {method: :post, class: "btn btn-primary btn-block btn-sm" } %>
         <% elsif @unable_found_in_sponsor_speakers %>
         <% else %>
+          <% contact_display_name = @sponsor_contact&.name.presence || @sponsor_contact&.email.presence || 'スポンサー担当者' %>
+          <div class="card notification mb-3">
+            <div class="card-header">
+              <b><%= "#{contact_display_name}様へのお知らせ" %></b>
+            </div>
+            <div class="card-body">
+              <% if @unanswered_questions_count.to_i > 0 %>
+                <div class="p-2" style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
+                  <strong>⚠ 未回答の質問: <%= @unanswered_questions_count %>件</strong>
+                  <%= link_to '質問一覧を見る',
+                      sponsor_dashboards_session_questions_path(event: current_conference.abbr, sponsor_id: @sponsor.id, unanswered: 'true'),
+                      class: 'btn btn-sm btn-primary ms-2' %>
+                </div>
+              <% else %>
+                <p class="mb-0 text-muted">未回答の質問はありません。</p>
+              <% end %>
+            </div>
+          </div>
+
           <div class="col-12 my-4">
             <h5>スポンサー名</h5>
             <%= @sponsor.name %>

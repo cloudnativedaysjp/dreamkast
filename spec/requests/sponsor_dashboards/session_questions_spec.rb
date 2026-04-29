@@ -19,11 +19,41 @@ RSpec.describe 'SponsorDashboards::SessionQuestions', type: :request do
   end
 
   describe 'GET /sponsor_dashboards/:sponsor_id/session_questions' do
-    it 'returns a successful response and lists the talk' do
+    it 'returns a successful response and lists the question' do
       get sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: sponsor.id)
       expect(response).to(be_successful)
       expect(response.body).to(include(talk.title))
       expect(response.body).to(include('これは質問です'))
+    end
+
+    context 'with unanswered=true filter' do
+      let!(:speaker) { create(:speaker_alice, conference:, sponsor:) }
+      let!(:answered_question) { create(:session_question, talk:, conference:, profile:, body: '回答済み質問') }
+      let!(:answer_for_answered) { create(:session_question_answer, session_question: answered_question, speaker:, conference:) }
+
+      it 'shows only unanswered questions' do
+        get sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: sponsor.id, unanswered: 'true')
+        expect(response).to(be_successful)
+        expect(response.body).to(include('これは質問です'))
+        expect(response.body).not_to(include('回答済み質問'))
+      end
+
+      it 'shows all questions when filter is off' do
+        get sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: sponsor.id)
+        expect(response.body).to(include('これは質問です'))
+        expect(response.body).to(include('回答済み質問'))
+      end
+    end
+
+    context 'with talk_id filter' do
+      let!(:other_talk) { create(:talk2, conference:, sponsor:) }
+      let!(:other_question) { create(:session_question, talk: other_talk, conference:, profile:, body: '別セッションの質問') }
+
+      it 'shows only questions for the requested talk' do
+        get sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: sponsor.id, talk_id: talk.id)
+        expect(response.body).to(include('これは質問です'))
+        expect(response.body).not_to(include('別セッションの質問'))
+      end
     end
 
     context 'when sponsor_contact does not belong to the sponsor' do

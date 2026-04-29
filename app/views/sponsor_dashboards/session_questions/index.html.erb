@@ -9,55 +9,85 @@
       </div>
     <% end %>
 
-    <% if @talks.empty? %>
-      <p>このスポンサーに紐づくセッションがありません。</p>
-    <% else %>
-      <% @talks.each do |talk| %>
-        <div class="card my-3">
+    <div class="row speaker-dashboard-form">
+      <div class="col-12 my-4">
+        <div class="card">
           <div class="card-header">
-            <h5 class="mb-0"><%= talk.title %></h5>
+            <h4 class="mb-0">スポンサーセッションへの質問</h4>
           </div>
           <div class="card-body">
-            <% questions = talk.session_questions.visible.order_by_time %>
-            <% if questions.empty? %>
-              <p class="text-muted mb-0">まだ質問がありません。</p>
-            <% else %>
-              <% questions.each do |question| %>
-                <div class="border rounded p-3 mb-3">
+            <div class="mb-3">
+              <%= form_with url: sponsor_dashboards_session_questions_path(event: current_conference.abbr, sponsor_id: @sponsor.id), method: :get, local: true, class: 'd-flex gap-2 align-items-end flex-wrap' do |f| %>
+                <div class="form-group">
+                  <%= label_tag :talk_id, 'セッション', class: 'form-label' %>
+                  <%= select_tag :talk_id,
+                      options_from_collection_for_select(@talks, :id, :title, params[:talk_id]),
+                      { include_blank: 'すべて', class: 'form-select' } %>
+                </div>
+
+                <div class="form-group">
+                  <%= label_tag :unanswered, '状態', class: 'form-label' %>
+                  <%= select_tag :unanswered,
+                      options_for_select([
+                        ['すべて', ''],
+                        ['未回答のみ', 'true']
+                      ], params[:unanswered]),
+                      { class: 'form-select' } %>
+                </div>
+
+                <%= submit_tag 'フィルタ', class: 'btn btn-primary' %>
+                <%= link_to 'リセット', sponsor_dashboards_session_questions_path(event: current_conference.abbr, sponsor_id: @sponsor.id), class: 'btn btn-secondary' %>
+              <% end %>
+            </div>
+
+            <hr>
+
+            <% if @all_questions.present? && @all_questions.any? %>
+              <% @all_questions.each do |question| %>
+                <div class="mb-4 p-3" style="border: 1px solid #dee2e6; border-radius: 4px;">
                   <div class="mb-2">
-                    <strong>質問:</strong>
-                    <span><%= simple_format(question.body) %></span>
-                    <small class="text-muted">投稿: <%= l(question.created_at, format: :short) %></small>
+                    <strong>セッション:</strong> <%= question.talk.title %>
                   </div>
 
-                  <% answers = question.session_question_answers.order_by_time %>
-                  <% if answers.any? %>
-                    <div class="mb-2">
-                      <strong>回答:</strong>
-                      <ul class="list-unstyled ms-3">
-                        <% answers.each do |answer| %>
-                          <li class="mb-1">
-                            <span class="text-muted">[<%= answer.answerer_display_name %>]</span>
-                            <%= simple_format(answer.body) %>
-                          </li>
-                        <% end %>
-                      </ul>
+                  <div class="mb-2">
+                    <strong>Q:</strong> <%= simple_format(h(question.body)) %>
+                    <div class="text-muted small mt-1">
+                      <span>投票数: <%= question.votes_count %></span>
+                      <span class="ms-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                      <% if question.session_question_answers.empty? %>
+                        <span class="badge bg-warning text-dark ms-2">未回答</span>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <% if question.session_question_answers.any? %>
+                    <div class="mt-2 ms-3">
+                      <% question.session_question_answers.order_by_time.each do |answer| %>
+                        <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
+                          <strong>A:</strong> <%= simple_format(h(answer.body)) %>
+                          <div class="text-muted small mt-1">
+                            回答者: <%= answer.answerer_display_name %>
+                            <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                          </div>
+                        </div>
+                      <% end %>
                     </div>
                   <% end %>
 
-                  <%= form_with url: sponsor_dashboards_session_question_session_question_answers_path(event: current_conference.abbr, sponsor_id: @sponsor.id, session_question_id: question.id), method: :post, local: true do |f| %>
+                  <%= form_with url: sponsor_dashboards_session_question_session_question_answers_path(event: current_conference.abbr, sponsor_id: @sponsor.id, session_question_id: question.id), method: :post, local: true, class: 'mt-2' do |f| %>
                     <div class="mb-2">
-                      <%= f.label :body, '回答を投稿', class: 'form-label' %>
-                      <%= f.text_area :body, class: 'form-control', rows: 3, required: true %>
+                      <%= f.text_area :body, class: 'form-control form-control-sm', rows: 2, placeholder: '回答を入力してください', required: true %>
                     </div>
                     <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
                   <% end %>
                 </div>
               <% end %>
+            <% else %>
+              <p class="text-muted">該当する質問がありません</p>
             <% end %>
           </div>
         </div>
-      <% end %>
-    <% end %>
+      </div>
+    </div>
   </div>
 </div>

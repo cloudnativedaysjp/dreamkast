@@ -5,7 +5,34 @@ class SponsorDashboards::SessionQuestionsController < ApplicationController
   before_action :authorize_sponsor_contact!
 
   def index
-    @talks = @sponsor.talks.includes(session_questions: :session_question_answers).order(:start_time)
+    @talks = @sponsor.talks.order(:start_time)
+    talk_ids = @talks.pluck(:id)
+
+    if talk_ids.empty?
+      @all_questions = []
+      return
+    end
+
+    requested_talk_id = params[:talk_id].present? ? params[:talk_id].to_i : nil
+    filtered_talk_ids = if requested_talk_id && talk_ids.include?(requested_talk_id)
+                          [requested_talk_id]
+                        else
+                          talk_ids
+                        end
+
+    @all_questions = current_conference.session_questions
+                                       .where(talk_id: filtered_talk_ids)
+                                       .includes(:talk, :profile, :session_question_answers, :session_question_votes)
+                                       .order_by_time
+
+    if params[:unanswered] == 'true'
+      @all_questions = @all_questions
+                       .left_joins(:session_question_answers)
+                       .where(session_question_answers: { id: nil })
+                       .distinct
+    end
+
+    @all_questions = @all_questions.limit(100)
   end
 
   private

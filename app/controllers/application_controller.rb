@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty,
-                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
+                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_self_check_in_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
     @sponsor_contact&.persisted?
   end
 
-  helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
+  helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_self_check_in_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
 
   private
 
@@ -212,6 +212,10 @@ class ApplicationController < ActionController::Base
 
   def display_dashboard_link?
     @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
+  end
+
+  def display_self_check_in_link?
+    @profile.is_a?(Profile) && @profile.check_in_conferences.empty?
   end
 
   def display_proposals?

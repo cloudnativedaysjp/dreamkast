@@ -25,6 +25,10 @@
             <li class="nav-item"><%= link_to "スタンプラリー", stamp_rally_check_ins_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 
+          <% if display_self_check_in_link? %>
+            <li class="nav-item"><%= link_to "セルフチェックイン", self_check_in_path, class: "nav-link js-scroll-trigger" %></li>
+          <% end %>
+
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <% if display_proposals? %>
               <li class="nav-item"><%= link_to "プロポーザル一覧", proposals_path, class: "nav-link js-scroll-trigger" %></li>

@@ -215,7 +215,7 @@ class ApplicationController < ActionController::Base
   end
 
   def display_self_check_in_link?
-    @conference&.opened? && @conference&.attendee_entry_enabled? && logged_in? && @profile.is_a?(Profile)
+    @profile.is_a?(Profile) && @profile.check_in_conferences.empty?
   end
 
   def display_proposals?

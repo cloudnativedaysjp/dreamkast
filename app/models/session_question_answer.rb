@@ -21,11 +21,19 @@ class SessionQuestionAnswer < ApplicationRecord
     if speaker_id.present?
       speaker&.name
     elsif sponsor_contact_id.present?
-      'スポンサー担当者'
+      speaker_name_for_sponsor_contact || 'スポンサー担当者'
     end
   end
 
   private
+
+  def speaker_name_for_sponsor_contact
+    user_id = sponsor_contact&.user_id
+    talk = session_question&.talk
+    return nil unless user_id && talk
+
+    talk.speakers.find_by(user_id:)&.name
+  end
 
   def exactly_one_answerer
     if speaker_id.blank? && sponsor_contact_id.blank?

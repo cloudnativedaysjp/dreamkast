@@ -99,9 +99,19 @@ RSpec.describe SessionQuestionAnswer, type: :model do
       expect(answer.answerer_display_name).to eq(speaker.name)
     end
 
-    it 'returns "スポンサー担当者" when sponsor_contact is set' do
+    it 'returns "スポンサー担当者" when sponsor_contact is set and the user is not a speaker on the talk' do
       answer = build(:session_question_answer, session_question: question, speaker: nil, sponsor_contact:, conference:)
       expect(answer.answerer_display_name).to eq('スポンサー担当者')
+    end
+
+    it 'returns the speaker name when sponsor_contact_user is also a speaker on the talk' do
+      # sponsor_contact の user を talk のスピーカーに紐付ける
+      dual_role_speaker = create(:speaker, conference:, user_id: sponsor_contact.user_id,
+                                           name: '兼任スピーカー', profile: 'p', company: 'c', job_title: 'j')
+      talk.speakers << dual_role_speaker
+
+      answer = create(:session_question_answer, session_question: question, speaker: nil, sponsor_contact:, conference:)
+      expect(answer.answerer_display_name).to eq('兼任スピーカー')
     end
   end
 

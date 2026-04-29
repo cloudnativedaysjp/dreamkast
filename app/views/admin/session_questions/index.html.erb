@@ -81,6 +81,16 @@
                   <%= link_to '詳細', admin_session_question_path(event: params[:event], id: question.id), class: 'btn btn-sm btn-primary' %>
                   <% if question.hidden? %>
                     <span class="badge bg-warning text-dark ms-1">非表示</span>
+                    <%= button_to '表示する',
+                        toggle_hidden_admin_session_question_path(event: params[:event], id: question.id),
+                        method: :patch,
+                        class: 'btn btn-sm btn-success ms-1' %>
+                  <% else %>
+                    <%= button_to '非表示にする',
+                        toggle_hidden_admin_session_question_path(event: params[:event], id: question.id),
+                        method: :patch,
+                        class: 'btn btn-sm btn-warning ms-1',
+                        data: { turbo_confirm: '本当に非表示にしますか？' } %>
                   <% end %>
                 </td>
               </tr>

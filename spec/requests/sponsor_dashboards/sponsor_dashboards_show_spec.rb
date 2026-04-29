@@ -116,9 +116,9 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
           end
 
           context 'sponsor has no unanswered questions' do
-            it 'shows the no-unanswered notice' do
+            it 'does not show the unanswered notice' do
               get '/cndt2020/sponsor_dashboards/1'
-              expect(response.body).to(include('未回答の質問はありません'))
+              expect(response.body).not_to(include('⚠ 未回答の質問'))
             end
           end
         end

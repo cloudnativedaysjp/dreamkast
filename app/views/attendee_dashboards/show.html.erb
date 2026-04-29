@@ -193,6 +193,9 @@
               <% if @conference.opened? %>
                 <%= link_to stamp_rally_check_ins_path do %><i class="bi bi-check-circle-fill"></i>スタンプラリー<% end %>
               <% end %>
+              <% if display_self_check_in_link? %>
+                <%= link_to self_check_in_path do %><i class="bi bi-qr-code"></i>セルフチェックイン<% end %>
+              <% end %>
               <% if @conference.abbr == 'cnk' %>
                 <%= link_to "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer" do %><i class="bi bi-journal-text"></i>Blog記事一覧<% end %>
               <% else %>

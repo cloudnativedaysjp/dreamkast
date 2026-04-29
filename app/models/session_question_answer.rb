@@ -32,7 +32,13 @@ class SessionQuestionAnswer < ApplicationRecord
     talk = session_question&.talk
     return nil unless user_id && talk
 
-    talk.speakers.find_by(user_id:)&.name
+    # talk.speakers が事前ロード済みならメモリ上で検索して N+1 を避ける
+    speaker = if talk.speakers.loaded?
+                talk.speakers.find { |s| s.user_id == user_id }
+              else
+                talk.speakers.find_by(user_id:)
+              end
+    speaker&.name
   end
 
   def exactly_one_answerer

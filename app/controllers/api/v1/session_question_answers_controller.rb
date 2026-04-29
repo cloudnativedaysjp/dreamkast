@@ -8,7 +8,10 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    answers = @question.session_question_answers.order_by_time
+    @talk.speakers.load # answerer_display_name の per-answer N+1 を回避するため事前ロード
+    answers = @question.session_question_answers
+                       .includes(:speaker, :sponsor_contact)
+                       .order_by_time
     render json: {
       answers: answers.map { |a| answer_json(a) }
     }

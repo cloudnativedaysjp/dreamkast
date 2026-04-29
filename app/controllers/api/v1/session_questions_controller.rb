@@ -6,9 +6,17 @@ class Api::V1::SessionQuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
+    @talk.speakers.load # answerer_display_name の per-answer N+1 を回避するため事前ロード
     questions = @talk.session_questions.visible
+                     .includes(session_question_answers: [:speaker, :sponsor_contact])
     questions = questions.order_by_votes if params[:sort] == 'votes'
     questions = questions.order_by_time if params[:sort] == 'time'
+
+    questions = questions.to_a
+    @voted_question_ids = SessionQuestionVote.where(
+      session_question_id: questions.map(&:id),
+      profile_id: @profile.id
+    ).pluck(:session_question_id).to_set
 
     render json: {
       questions: questions.map { |q| question_json(q) },
@@ -105,11 +113,17 @@ class Api::V1::SessionQuestionsController < ApplicationController
       id: question.id,
       body: question.body,
       votes_count: question.votes_count,
-      has_voted: question.session_question_votes.exists?(profile_id: @profile.id),
+      has_voted: has_voted?(question),
       created_at: question.created_at.iso8601,
       profile_id: question.profile_id,
-      answers: question.session_question_answers.order_by_time.map { |a| answer_json(a) }
+      answers: question.session_question_answers.sort_by(&:created_at).map { |a| answer_json(a) }
     }
+  end
+
+  def has_voted?(question)
+    return question.session_question_votes.exists?(profile_id: @profile.id) unless defined?(@voted_question_ids)
+
+    @voted_question_ids.include?(question.id)
   end
 
   def answer_json(answer)

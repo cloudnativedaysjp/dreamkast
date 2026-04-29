@@ -224,9 +224,9 @@ class SpeakerDashboardsController < ApplicationController
           answer: {
             id: answer.id,
             body: answer.body,
-            speaker: {
-              id: answer.speaker.id,
-              name: answer.speaker.name
+            answerer: {
+              type: answer.answerer_type,
+              name: answer.answerer_display_name
             },
             created_at: answer.created_at.iso8601
           }

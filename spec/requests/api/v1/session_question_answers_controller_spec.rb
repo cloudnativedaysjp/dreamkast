@@ -93,7 +93,7 @@ describe Api::V1::SessionQuestionAnswersController, type: :request do
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
         expect(json['body']).to eq('スポンサーからの回答')
-        expect(json['answerer']).to eq('type' => 'sponsor', 'name' => sponsor.name)
+        expect(json['answerer']).to eq('type' => 'sponsor', 'name' => 'スポンサー担当者')
 
         answer = SessionQuestionAnswer.last
         expect(answer.speaker_id).to be_nil

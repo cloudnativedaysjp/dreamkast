@@ -99,9 +99,9 @@ RSpec.describe SessionQuestionAnswer, type: :model do
       expect(answer.answerer_display_name).to eq(speaker.name)
     end
 
-    it 'returns the sponsor name when sponsor_contact is set' do
+    it 'returns "スポンサー担当者" when sponsor_contact is set' do
       answer = build(:session_question_answer, session_question: question, speaker: nil, sponsor_contact:, conference:)
-      expect(answer.answerer_display_name).to eq(sponsor.name)
+      expect(answer.answerer_display_name).to eq('スポンサー担当者')
     end
   end
 

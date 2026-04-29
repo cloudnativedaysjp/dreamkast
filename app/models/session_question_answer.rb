@@ -21,7 +21,7 @@ class SessionQuestionAnswer < ApplicationRecord
     if speaker_id.present?
       speaker&.name
     elsif sponsor_contact_id.present?
-      sponsor_contact&.sponsor&.name
+      'スポンサー担当者'
     end
   end
 

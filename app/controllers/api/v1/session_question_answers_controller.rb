@@ -2,8 +2,8 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
   include SecuredPublicApi
   before_action :set_talk
   before_action :set_question
-  before_action :set_speaker
-  before_action :verify_speaker
+  before_action :set_answerer
+  before_action :verify_answerer
 
   skip_before_action :verify_authenticity_token
 
@@ -17,12 +17,15 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
   def create
     answer = @question.session_question_answers.build(
       conference_id: @talk.conference_id,
-      speaker_id: @speaker.id,
       body: answer_params
     )
+    if @answerer.is_a?(Speaker)
+      answer.speaker = @answerer
+    else
+      answer.sponsor_contact = @answerer
+    end
 
     if answer.save
-      # ブロードキャスト
       broadcast_answer_created(answer)
       render json: answer_json(answer), status: :created
     else
@@ -44,43 +47,53 @@ class Api::V1::SessionQuestionAnswersController < ApplicationController
     @question = @talk.session_questions.find(params[:session_question_id])
   end
 
-  def set_speaker
+  def set_answerer
     return unless current_user_model
-    @speaker = Speaker.find_by(conference_id: @talk.conference_id, user_id: current_user_model.id)
+
+    speaker = Speaker.find_by(conference_id: @talk.conference_id, user_id: current_user_model.id)
+    if speaker && @talk.speakers.include?(speaker)
+      @answerer = speaker
+      return
+    end
+
+    if @talk.sponsor_id.present?
+      sponsor_contact = SponsorContact.find_by(
+        conference_id: @talk.conference_id,
+        sponsor_id: @talk.sponsor_id,
+        user_id: current_user_model.id
+      )
+      @answerer = sponsor_contact if sponsor_contact
+    end
   end
 
-  def verify_speaker
-    unless @speaker && @talk.speakers.include?(@speaker)
-      render json: { error: 'Only speakers can answer questions' }, status: :forbidden
-      nil
-    end
+  def verify_answerer
+    return if @answerer
+
+    render json: { error: 'Only speakers or sponsor contacts of this talk can answer questions' }, status: :forbidden
   end
 
   def answer_json(answer)
     {
       id: answer.id,
       body: answer.body,
-      speaker: {
-        id: answer.speaker.id,
-        name: answer.speaker.name
+      answerer: {
+        type: answer.answerer_type,
+        name: answer.answerer_display_name
       },
       created_at: answer.created_at.iso8601
     }
   end
 
   def broadcast_answer_created(answer)
-    begin
-      ActionCable.server.broadcast(
-        "qa_talk_#{@talk.id}",
-        {
-          type: 'answer_created',
-          question_id: @question.id,
-          answer: answer_json(answer)
-        }
-      )
-    rescue StandardError => e
-      Rails.logger.error "Error broadcasting answer_created: #{e.class} - #{e.message}"
-      # ブロードキャストエラーは無視して処理を続行
-    end
+    ActionCable.server.broadcast(
+      "qa_talk_#{@talk.id}",
+      {
+        type: 'answer_created',
+        question_id: @question.id,
+        answer: answer_json(answer)
+      }
+    )
+  rescue StandardError => e
+    Rails.logger.error "Error broadcasting answer_created: #{e.class} - #{e.message}"
   end
 end

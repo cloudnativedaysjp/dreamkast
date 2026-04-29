@@ -11,7 +11,8 @@ class Api::V1::SessionQuestionsController < ApplicationController
     questions = questions.order_by_time if params[:sort] == 'time'
 
     render json: {
-      questions: questions.map { |q| question_json(q) }
+      questions: questions.map { |q| question_json(q) },
+      current_user_role:
     }
   end
 
@@ -115,12 +116,30 @@ class Api::V1::SessionQuestionsController < ApplicationController
     {
       id: answer.id,
       body: answer.body,
-      speaker: {
-        id: answer.speaker.id,
-        name: answer.speaker.name
+      answerer: {
+        type: answer.answerer_type,
+        name: answer.answerer_display_name
       },
       created_at: answer.created_at.iso8601
     }
+  end
+
+  def current_user_role
+    return nil unless current_user_model
+
+    speaker = Speaker.find_by(conference_id: @talk.conference_id, user_id: current_user_model.id)
+    return 'speaker' if speaker && @talk.speakers.include?(speaker)
+
+    if @talk.sponsor_id.present?
+      sponsor_contact = SponsorContact.find_by(
+        conference_id: @talk.conference_id,
+        sponsor_id: @talk.sponsor_id,
+        user_id: current_user_model.id
+      )
+      return 'sponsor' if sponsor_contact
+    end
+
+    nil
   end
 
   def broadcast_question_created(question)

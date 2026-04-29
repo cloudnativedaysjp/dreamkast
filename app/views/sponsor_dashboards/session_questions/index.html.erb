@@ -1,0 +1,63 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'sponsor_dashboards/sponsor_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <h1 class="text-center py-3 entry">セッション Q&A (<%= @sponsor.name %>)</h1>
+
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type == 'alert' ? 'danger' : 'info' %>" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
+
+    <% if @talks.empty? %>
+      <p>このスポンサーに紐づくセッションがありません。</p>
+    <% else %>
+      <% @talks.each do |talk| %>
+        <div class="card my-3">
+          <div class="card-header">
+            <h5 class="mb-0"><%= talk.title %></h5>
+          </div>
+          <div class="card-body">
+            <% questions = talk.session_questions.visible.order_by_time %>
+            <% if questions.empty? %>
+              <p class="text-muted mb-0">まだ質問がありません。</p>
+            <% else %>
+              <% questions.each do |question| %>
+                <div class="border rounded p-3 mb-3">
+                  <div class="mb-2">
+                    <strong>質問:</strong>
+                    <span><%= simple_format(question.body) %></span>
+                    <small class="text-muted">投稿: <%= l(question.created_at, format: :short) %></small>
+                  </div>
+
+                  <% answers = question.session_question_answers.order_by_time %>
+                  <% if answers.any? %>
+                    <div class="mb-2">
+                      <strong>回答:</strong>
+                      <ul class="list-unstyled ms-3">
+                        <% answers.each do |answer| %>
+                          <li class="mb-1">
+                            <span class="text-muted">[<%= answer.answerer_display_name %>]</span>
+                            <%= simple_format(answer.body) %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+
+                  <%= form_with url: sponsor_dashboards_session_question_session_question_answers_path(event: current_conference.abbr, sponsor_id: @sponsor.id, session_question_id: question.id), method: :post, local: true do |f| %>
+                    <div class="mb-2">
+                      <%= f.label :body, '回答を投稿', class: 'form-label' %>
+                      <%= f.text_area :body, class: 'form-control', rows: 3, required: true %>
+                    </div>
+                    <%= f.submit '回答する', class: 'btn btn-primary btn-sm' %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -106,4 +106,41 @@ RSpec.describe 'SponsorDashboards::SessionQuestions', type: :request do
       end
     end
   end
+
+  describe 'PATCH /sponsor_dashboards/:sponsor_id/session_questions/:id/toggle_hidden' do
+    it 'hides a visible question' do
+      expect {
+        patch toggle_hidden_sponsor_dashboards_session_question_path(
+          event: conference.abbr, sponsor_id: sponsor.id, id: question.id
+        )
+      }.to(change { question.reload.hidden }.from(false).to(true))
+
+      expect(flash[:notice]).to(eq('質問を非表示にしました'))
+      expect(response).to(redirect_to(sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: sponsor.id)))
+    end
+
+    it 'unhides a hidden question' do
+      question.update!(hidden: true)
+      expect {
+        patch toggle_hidden_sponsor_dashboards_session_question_path(
+          event: conference.abbr, sponsor_id: sponsor.id, id: question.id
+        )
+      }.to(change { question.reload.hidden }.from(true).to(false))
+
+      expect(flash[:notice]).to(eq('質問を表示にしました'))
+    end
+
+    context 'when the question is for a different sponsor\'s talk' do
+      let!(:other_talk) { create(:talk2, conference:) }
+      let!(:other_question) { create(:session_question, talk: other_talk, conference:, profile:) }
+
+      it 'returns 404 and does not change state' do
+        patch toggle_hidden_sponsor_dashboards_session_question_path(
+          event: conference.abbr, sponsor_id: sponsor.id, id: other_question.id
+        )
+        expect(response).to(have_http_status(:not_found))
+        expect(other_question.reload.hidden).to(be(false))
+      end
+    end
+  end
 end

@@ -35,6 +35,25 @@ class SponsorDashboards::SessionQuestionsController < ApplicationController
     @all_questions = @all_questions.limit(100)
   end
 
+  def toggle_hidden
+    question = SessionQuestion.find(params[:id])
+
+    unless @sponsor.talks.exists?(id: question.talk_id)
+      render_404
+      return
+    end
+
+    if question.update(hidden: !question.hidden)
+      status = question.hidden? ? '非表示' : '表示'
+      flash[:notice] = "質問を#{status}にしました"
+      broadcast_question_toggled(question)
+    else
+      flash[:alert] = '状態の変更に失敗しました'
+    end
+
+    redirect_to sponsor_dashboards_session_questions_path(event: current_conference.abbr, sponsor_id: @sponsor.id)
+  end
+
   private
 
   def set_sponsor_contact
@@ -51,5 +70,18 @@ class SponsorDashboards::SessionQuestionsController < ApplicationController
     return if @sponsor_contact && @sponsor_contact.sponsor_id == @sponsor.id
 
     render_404
+  end
+
+  def broadcast_question_toggled(question)
+    ActionCable.server.broadcast(
+      "qa_talk_#{question.talk_id}",
+      {
+        type: 'question_toggled',
+        question_id: question.id,
+        hidden: question.hidden
+      }
+    )
+  rescue StandardError => e
+    Rails.logger.error "Error broadcasting question_toggled: #{e.class} - #{e.message}"
   end
 end

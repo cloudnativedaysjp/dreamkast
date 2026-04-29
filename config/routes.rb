@@ -163,6 +163,9 @@ Rails.application.routes.draw do
         resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
         resources :sponsor_speaker_invites, only: [:index, :new, :create, :destroy]
         resources :session_questions, only: [:index] do
+          member do
+            patch :toggle_hidden
+          end
           resources :session_question_answers, only: [:create]
         end
       end

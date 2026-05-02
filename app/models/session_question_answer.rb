@@ -22,6 +22,9 @@ class SessionQuestionAnswer < ApplicationRecord
       speaker&.name
     elsif sponsor_contact_id.present?
       speaker_name_for_sponsor_contact || 'スポンサー担当者'
+    else
+      # SponsorContact 削除に伴う nullify でいずれの ID も nil になった履歴レコード
+      'スポンサー担当者（退任）'
     end
   end
 

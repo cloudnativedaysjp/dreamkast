@@ -113,6 +113,13 @@ RSpec.describe SessionQuestionAnswer, type: :model do
       answer = create(:session_question_answer, session_question: question, speaker: nil, sponsor_contact:, conference:)
       expect(answer.answerer_display_name).to eq('兼任スピーカー')
     end
+
+    it 'returns the retired sponsor contact label when both ids are nil (after nullify)' do
+      # SponsorContact が削除されて dependent: :nullify で sponsor_contact_id が nil になったケースを再現
+      answer = create(:session_question_answer, session_question: question, speaker: nil, sponsor_contact:, conference:)
+      answer.update_columns(sponsor_contact_id: nil)
+      expect(answer.reload.answerer_display_name).to eq('スポンサー担当者（退任）')
+    end
   end
 
   describe 'scopes' do

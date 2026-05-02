@@ -116,5 +116,23 @@ describe Admin::SessionQuestionsController, type: :request do
         expect(response.body).to include('質問を表示にしました')
       end
     end
+
+    context 'when toggled from the index page' do
+      it 'redirects back to the index' do
+        patch "/cndt2020/admin/session_questions/#{question.id}/toggle_hidden",
+              headers: { 'HTTP_REFERER' => 'http://www.example.com/cndt2020/admin/session_questions' }
+
+        expect(response).to redirect_to('http://www.example.com/cndt2020/admin/session_questions')
+      end
+    end
+
+    it 'broadcasts question_toggled via ActionCable' do
+      expect(ActionCable.server).to receive(:broadcast).with(
+        "qa_talk_#{talk.id}",
+        hash_including(type: 'question_toggled', question_id: question.id, hidden: true)
+      )
+
+      patch "/cndt2020/admin/session_questions/#{question.id}/toggle_hidden"
+    end
   end
 end

@@ -58,7 +58,7 @@
                 <div class="flex-grow-1">
                   <p class="card-text"><%= simple_format(h(answer.body)) %></p>
                   <div class="text-muted">
-                    <strong>回答者:</strong> <%= answer.speaker.name %><br>
+                    <strong>回答者:</strong> <%= answer.answerer_display_name %><br>
                     <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
                   </div>
                 </div>

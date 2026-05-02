@@ -35,10 +35,32 @@ class Admin::SessionQuestionsController < ApplicationController
     if @session_question.update(hidden: !@session_question.hidden)
       status = @session_question.hidden? ? '非表示' : '表示'
       flash[:notice] = "質問を#{status}にしました"
+      broadcast_question_toggled(@session_question)
     else
       flash[:alert] = '状態の変更に失敗しました'
     end
 
-    redirect_to admin_session_question_path(@session_question, event: params[:event])
+    redirect_to redirect_target_for_toggle
+  end
+
+  private
+
+  def redirect_target_for_toggle
+    return request.referer if request.referer.present? && request.referer.include?('/admin/session_questions')
+
+    admin_session_question_path(@session_question, event: params[:event])
+  end
+
+  def broadcast_question_toggled(question)
+    ActionCable.server.broadcast(
+      "qa_talk_#{question.talk_id}",
+      {
+        type: 'question_toggled',
+        question_id: question.id,
+        hidden: question.hidden
+      }
+    )
+  rescue StandardError => e
+    Rails.logger.error "Error broadcasting question_toggled: #{e.class} - #{e.message}"
   end
 end

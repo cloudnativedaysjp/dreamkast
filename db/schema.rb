@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_17_101147) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_28_120000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -405,15 +405,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_17_101147) do
 
   create_table "session_question_answers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "session_question_id", null: false
-    t.bigint "speaker_id", null: false
+    t.bigint "speaker_id"
     t.bigint "conference_id", null: false
     t.text "body", null: false, collation: "utf8mb4_0900_ai_ci"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sponsor_contact_id"
     t.index ["conference_id"], name: "index_session_question_answers_on_conference_id"
     t.index ["created_at"], name: "index_session_question_answers_on_created_at"
     t.index ["session_question_id"], name: "index_session_question_answers_on_session_question_id"
     t.index ["speaker_id"], name: "index_session_question_answers_on_speaker_id"
+    t.index ["sponsor_contact_id"], name: "index_session_question_answers_on_sponsor_contact_id"
   end
 
   create_table "session_question_votes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -851,6 +853,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_17_101147) do
   add_foreign_key "session_question_answers", "conferences"
   add_foreign_key "session_question_answers", "session_questions"
   add_foreign_key "session_question_answers", "speakers"
+  add_foreign_key "session_question_answers", "sponsor_contacts"
   add_foreign_key "session_question_votes", "profiles"
   add_foreign_key "session_question_votes", "session_questions"
   add_foreign_key "session_questions", "conferences"

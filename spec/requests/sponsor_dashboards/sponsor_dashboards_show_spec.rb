@@ -102,6 +102,25 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
             # it_should_behave_like :response_does_not_include_proposal_title, 'スポンサー1株式会社'
             # it_should_behave_like :response_includes_proposal_title_and_entry_status, 'sponsor_session', 'エントリー済み'
           end
+
+          context 'sponsor has unanswered questions' do
+            let!(:sponsor_talk) { create(:talk1, conference: cndt2020, sponsor:) }
+            let!(:profile) { create(:bob, :on_cndt2020, conference: cndt2020) }
+            let!(:unanswered) { create(:session_question, talk: sponsor_talk, conference: cndt2020, profile:, body: '未回答質問') }
+
+            it 'shows the unanswered count notice' do
+              get '/cndt2020/sponsor_dashboards/1'
+              expect(response.body).to(include('未回答の質問'))
+              expect(response.body).to(include('1件'))
+            end
+          end
+
+          context 'sponsor has no unanswered questions' do
+            it 'does not show the unanswered notice' do
+              get '/cndt2020/sponsor_dashboards/1'
+              expect(response.body).not_to(include('⚠ 未回答の質問'))
+            end
+          end
         end
       end
     end

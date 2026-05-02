@@ -168,7 +168,7 @@
                       <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
                         <strong>A:</strong> <%= simple_format(h(answer.body)) %>
                         <div class="text-muted small mt-1">
-                          回答者: <%= answer.speaker.name %>
+                          回答者: <%= answer.answerer_display_name %>
                           <span class="ms-2"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                         </div>
                       </div>

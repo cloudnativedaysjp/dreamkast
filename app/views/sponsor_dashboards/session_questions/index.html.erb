@@ -79,7 +79,7 @@
 
                   <% if question.session_question_answers.any? %>
                     <div class="mt-2 ms-3">
-                      <% question.session_question_answers.order_by_time.each do |answer| %>
+                      <% question.session_question_answers.sort_by(&:created_at).each do |answer| %>
                         <div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px;">
                           <strong>A:</strong> <%= simple_format(h(answer.body)) %>
                           <div class="text-muted small mt-1">

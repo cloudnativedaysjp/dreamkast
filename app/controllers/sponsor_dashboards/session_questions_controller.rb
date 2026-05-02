@@ -22,7 +22,9 @@ class SponsorDashboards::SessionQuestionsController < ApplicationController
 
     @all_questions = current_conference.session_questions
                                        .where(talk_id: filtered_talk_ids)
-                                       .includes(:talk, :profile, :session_question_answers, :session_question_votes)
+                                       .includes(:profile, :session_question_votes,
+                                                 talk: :speakers,
+                                                 session_question_answers: [:speaker, :sponsor_contact])
                                        .order_by_time
 
     if params[:unanswered] == 'true'

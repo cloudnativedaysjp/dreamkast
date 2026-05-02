@@ -18,14 +18,10 @@ class SessionQuestionAnswer < ApplicationRecord
   end
 
   def answerer_display_name
-    if speaker_id.present?
-      speaker&.name
-    elsif sponsor_contact_id.present?
-      speaker_name_for_sponsor_contact || 'スポンサー担当者'
-    else
-      # SponsorContact 削除に伴う nullify でいずれの ID も nil になった履歴レコード
-      'スポンサー担当者（退任）'
-    end
+    return speaker&.name if speaker_id.present?
+
+    # sponsor_contact_id が nil の場合は SponsorContact 削除後の nullify 済み履歴レコード
+    speaker_name_for_sponsor_contact || 'スポンサー担当者'
   end
 
   private

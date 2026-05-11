@@ -16,8 +16,8 @@ default: &default
 dkui: &dkui
   adapter: mysql2
   database: 'dkui'
-  username: 'root'
-  password: 'root'
+  username: "<%= ENV['MYSQL_USER'] || 'user' %>"
+  password: "<%= ENV['MYSQL_PASSWORD'] || 'password' %>"
   host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
   encoding: utf8mb4
   pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
@@ -39,4 +39,3 @@ test:
 
 production:
   <<: *default
-  <<: *dkui

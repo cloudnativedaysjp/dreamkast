@@ -18,7 +18,7 @@ namespace :util do
 
           puts profile.id.to_s + ' ' + Time.at(params['checkInTimestamp']).to_s + ' ' + params['talkId'].to_s
           CheckInTalk.create(profile_id: profile.id, talk_id: params['talkId'], check_in_timestamp: Time.at(params['checkInTimestamp']), scanner_profile_id: 48192)
-        rescue JSON::ParserError => e
+        rescue JSON::ParserError
           puts "Failed to parse: #{json_str}"
         end
       end

@@ -843,11 +843,4 @@ if ENV['REVIEW_APP'] == 'true'
   import_dummy_data('cicd2021', %w(talks speakers talks_speakers proposals))
   #import_dummy_data('cndt2023', %w(talks speakers talks_speakers proposals proposal_items))
   import_dummy_data('cnk', %w(talks speakers talks_speakers proposals proposal_items))
-
-  Announcement.seed(
-    {id: 3, conference_id: 4, publish_time: "2021-10-11 10:00:00", publish: true, receiver: :all_attendee, body: <<'EOS'
-<a href="/cndt2021/" target="_blank">CloudNative Days Tokyo 2021</a>開催に向けて、10/18（月）19:00からプレイベントを実施します!
-EOS
-    }
-  )
 end

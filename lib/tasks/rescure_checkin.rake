@@ -18,7 +18,7 @@ namespace :util do
 
           puts profile.id.to_s + ' ' + Time.at(params['checkInTimestamp']).to_s
           CheckInConference.create(profile_id: profile.id, conference_id: 14, check_in_timestamp: Time.at(params['checkInTimestamp']), scanner_profile_id: 48192)
-        rescue JSON::ParserError => e
+        rescue JSON::ParserError
           puts "Failed to parse: #{json_str}"
         end
       end

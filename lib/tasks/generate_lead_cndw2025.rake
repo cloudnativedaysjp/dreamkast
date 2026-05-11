@@ -5,14 +5,14 @@ namespace :util do
     Rails.logger.level = Logger::DEBUG
 
     conference = Conference.find_by(abbr: 'cndw2025')
-    
+
     # Pre-load TrackViewer data
     # Store as a hash for O(1) lookup: { profile_id => { talk_id => true } }
     # Also keep a set of profile_ids for "attended" check
     track_viewer_rows = TrackViewer.connection.execute("SELECT profile_id, talk_id FROM track_viewer WHERE created_at > '2025-11-17'")
     track_viewer_data = Hash.new { |h, k| h[k] = Set.new }
     track_viewer_attended_profiles = Set.new
-    
+
     track_viewer_rows.each do |row|
       # row is likely an array or hash depending on the adapter
       # Assuming row indexes based on SELECT order: 0=profile_id, 1=talk_id
@@ -23,7 +23,7 @@ namespace :util do
         pid = row['profile_id']
         tid = row['talk_id']
       end
-      
+
       track_viewer_data[pid].add(tid)
       track_viewer_attended_profiles.add(pid)
     end
@@ -76,11 +76,11 @@ namespace :util do
       if target_sponsor_type.any?
         generated_csv = CSV.generate do |csv|
           csv << attr
-          
+
           profiles.each do |profile|
             checkin = 0
             flag = true
-            
+
             # Optimization: Use pre-loaded data
             has_track_viewer_log = track_viewer_attended_profiles.include?(profile.id)
             has_check_in = profile.check_ins.present?
@@ -106,15 +106,15 @@ namespace :util do
             if (target_sponsor_type.include?('Gold') || target_sponsor_type.include?('Platinum')) && !session_attended
               flag = false
             end
-            
+
             if flag
               # Helper for industry name lookup
               industry_name = industries[profile.industry_id]&.name || ''
-              
+
               # Helper for company name
               company_full_name = [
-                profile.company_name_prefix&.name, 
-                profile.company_name, 
+                profile.company_name_prefix&.name,
+                profile.company_name,
                 profile.company_name_suffix&.name
               ].join
 
@@ -149,9 +149,9 @@ namespace :util do
             end
           end
         end
-        
+
         # Ensure directory exists
-        FileUtils.mkdir_p("./tmp/csv")
+        FileUtils.mkdir_p('./tmp/csv')
         File.open("./tmp/csv/#{target_sponsor_type[0]}_#{s.abbr}_#{talk_id}.csv", 'w', encoding: 'UTF-8') do |file|
           file.write(generated_csv)
         end

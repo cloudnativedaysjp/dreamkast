@@ -133,10 +133,11 @@
         <h3 class="dashboard-section-title">聴講予定セッション</h3>
         <div id="registered-talk-list">
           <% @profile.talks.each do |talk| %>
+            <% next if talk.conference_day.nil? %>
             <div class="dashboard-talk-card">
               <div class="d-flex justify-content-between align-items-start mb-2">
                  <div class="dashboard-talk-meta">
-                    <%= talk.conference_day.date.strftime("%m/%d") %> <span class="mx-1">|</span> Track <%= talk.track.name %> <span class="mx-1">|</span> <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                    <%= talk.conference_day.date.strftime("%m/%d") %> <span class="mx-1">|</span> Track <%= talk.track&.name %> <span class="mx-1">|</span> <%= talk.start_time&.strftime("%H:%M") %>-<%= talk.end_time&.strftime("%H:%M") %>
                  </div>
                  <div class="d-flex">
                   <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>

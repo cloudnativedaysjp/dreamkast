@@ -1,6 +1,8 @@
 <nav id="sidebar">
   <div class="sidebar-header">
     <h3><%= @conference.abbr %></h3>
+    <% env = admin_env_label %>
+    <span class="env-label <%= env[:css_class] %>"><%= env[:name] %></span>
   </div>
 
   <ul class="list-unstyled components">

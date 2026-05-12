@@ -35,11 +35,8 @@
     <div class="col-md-3">
       <div class="card text-white bg-secondary">
         <div class="card-body">
-          <h6 class="card-title">
-            オンライン視聴した人数
-            <span class="badge bg-warning text-dark ms-1">ダミー</span>
-          </h6>
-          <p class="card-text display-6 mb-0"><%= number_with_delimiter(@online_viewers_count) %></p>
+          <h6 class="card-title">オンライン視聴した人数</h6>
+          <p class="card-text display-6 mb-0"><%= @online_viewers_count.nil? ? 'N/A' : number_with_delimiter(@online_viewers_count) %></p>
         </div>
       </div>
     </div>

@@ -92,6 +92,61 @@ a:focus {
 #sidebar .sidebar-header {
     padding: 20px;
     background: #999999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    h3 {
+        margin-bottom: 0;
+    }
+}
+
+.env-label {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.env-label-production {
+    color: #5a4500;
+    background: linear-gradient(135deg, #fff3a0 0%, #ffd700 45%, #b8860b 100%);
+    box-shadow: 0 0 4px #ffd700, 0 0 8px rgba(255, 215, 0, 0.6);
+    animation: env-label-glow-gold 2s ease-in-out infinite;
+}
+
+.env-label-staging {
+    color: #333;
+    background: linear-gradient(135deg, #f5f5f5 0%, #c0c0c0 45%, #808080 100%);
+    box-shadow: 0 0 4px #d0d0d0, 0 0 8px rgba(192, 192, 192, 0.6);
+    animation: env-label-glow-silver 2s ease-in-out infinite;
+}
+
+.env-label-dev {
+    color: #fff;
+    background: #555555;
+    border: 1px solid #777777;
+}
+
+@keyframes env-label-glow-gold {
+    0%, 100% {
+        box-shadow: 0 0 4px #ffd700, 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 8px #ffd700, 0 0 16px rgba(255, 215, 0, 0.9);
+    }
+}
+
+@keyframes env-label-glow-silver {
+    0%, 100% {
+        box-shadow: 0 0 4px #d0d0d0, 0 0 8px rgba(192, 192, 192, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 8px #ffffff, 0 0 16px rgba(220, 220, 220, 0.9);
+    }
 }
 
 #sidebar ul.components {

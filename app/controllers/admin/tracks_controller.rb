@@ -9,9 +9,10 @@ class Admin::TracksController < ApplicationController
     @track = @conference.tracks.find_by(name: @track_name)
     @talks = @conference
              .talks
-             .includes(:speakers, :media_package_harvest_jobs)
+             .includes(:speakers, :media_package_harvest_jobs, :proposal_items)
              .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
              .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
+    @proposal_item_config_cache = ProposalItemConfig.where(conference_id: @conference.id).index_by(&:id)
 
     respond_to do |format|
       format.html

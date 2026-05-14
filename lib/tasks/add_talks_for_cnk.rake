@@ -17,7 +17,7 @@ namespace :util do
       video.save!
     end
 
-    conference = Conference.find_by(abbr: 'cns')
+    conference = Conference.find_by(abbr: 'cnk')
     tracks = Hash[conference.tracks.map { |track| [track.name, track.id] }]
 
     day1_track_a_talks = [

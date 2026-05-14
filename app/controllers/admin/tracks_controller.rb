@@ -13,6 +13,7 @@ class Admin::TracksController < ApplicationController
              .where(conference_day_id: @conference.conference_days.find_by(date: @date).id, track_id: @track.id)
              .order('conference_day_id ASC, start_time ASC, track_id ASC').includes(:video, :speakers, :conference_day, :track)
     @proposal_item_config_cache = ProposalItemConfig.where(conference_id: @conference.id).index_by(&:id)
+    @has_presentation_method = @proposal_item_config_cache.values.any? { |c| c.label == 'presentation_method' }
 
     respond_to do |format|
       format.html

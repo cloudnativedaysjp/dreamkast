@@ -1,4 +1,4 @@
-<% if talk.abstract != 'intermission' && talk.live?(config_cache: @proposal_item_config_cache) %>
+<% if talk.abstract != 'intermission' && (!@has_presentation_method || talk.live?(config_cache: @proposal_item_config_cache)) %>
   <% if already_recorded?(talk) %>
     <div class="btn btn-primary">録画済み</div>
   <% else %>

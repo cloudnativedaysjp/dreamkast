@@ -21,7 +21,7 @@ class AdminController < ApplicationController
   end
 
   def statistics
-    @talks = @conference.talks.includes(:check_in_talks, registered_talks: :profile).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.includes(registered_talks: :profile).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
     @online_viewers_by_talk = OnlineViewerStats.new(@conference).viewer_counts_by_talk || {}
     @check_in_counts_by_talk = CheckInTalk.where(talk_id: @talks.map(&:id))
                                           .group(:talk_id)

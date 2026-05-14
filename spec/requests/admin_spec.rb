@@ -50,6 +50,26 @@ describe AdminController, type: :request do
             expect(response).to(be_successful)
             expect(response).to(have_http_status('200'))
           end
+
+          context 'when check_in_conferences contain duplicates and online participants' do
+            before do
+              create(:bob, :on_cndt2020, participation: 'offline')
+              conference = Conference.find_by(abbr: 'cndt2020')
+              alice = Profile.find_by(first_name: 'Alice')
+              bob = Profile.find_by(first_name: 'Bob')
+              CheckInConference.create!(profile: bob, conference:, check_in_timestamp: Time.current)
+              CheckInConference.create!(profile: bob, conference:, check_in_timestamp: Time.current)
+              CheckInConference.create!(profile: alice, conference:, check_in_timestamp: Time.current)
+            end
+
+            it 'counts unique offline profiles only' do
+              get admin_path(event: 'cndt2020')
+              expect(response).to(have_http_status('200'))
+              doc = Nokogiri::HTML.parse(response.body)
+              count_card = doc.css('.bg-success .card-text').text.strip
+              expect(count_card).to(eq('1'))
+            end
+          end
         end
 
         context 'user is not admin' do

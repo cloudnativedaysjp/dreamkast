@@ -30,6 +30,11 @@ threads threads_count, threads_count
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch('PORT', 3000)
 
+# ALB の idle timeout (デフォルト 60s) より長くしておく。
+# Puma 側が先に keep-alive コネクションを閉じると、ALB が再利用しようとした
+# 瞬間に RST となり HTTP 502 (target status code = -) が発生するため。
+persistent_timeout ENV.fetch('PUMA_PERSISTENT_TIMEOUT', 75).to_i
+
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 

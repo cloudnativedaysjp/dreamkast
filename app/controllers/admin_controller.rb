@@ -21,9 +21,24 @@ class AdminController < ApplicationController
   end
 
   def statistics
-    @talks = @conference.talks.includes(registered_talks: :profile).accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    talk_ids = @talks.pluck(:id)
+
+    participation_counts = RegisteredTalk.joins(:profile)
+                                         .where(talk_id: talk_ids)
+                                         .group(:talk_id, 'profiles.participation')
+                                         .count
+    @online_counts_by_talk  = Hash.new(0)
+    @offline_counts_by_talk = Hash.new(0)
+    participation_counts.each do |(tid, participation), count|
+      case participation
+      when Profile.participations[:online]  then @online_counts_by_talk[tid]  = count
+      when Profile.participations[:offline] then @offline_counts_by_talk[tid] = count
+      end
+    end
+
     @online_viewers_by_talk = OnlineViewerStats.new(@conference).viewer_counts_by_talk || {}
-    @check_in_counts_by_talk = CheckInTalk.where(talk_id: @talks.map(&:id))
+    @check_in_counts_by_talk = CheckInTalk.where(talk_id: talk_ids)
                                           .group(:talk_id)
                                           .distinct
                                           .count(:profile_id)

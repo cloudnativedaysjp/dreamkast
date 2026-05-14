@@ -2,7 +2,7 @@ require 'slack/incoming/webhooks'
 
 namespace :util do
   desc 'add_talks_for_cnk_intermission'
-  task add_talks_for_cndw2025_intermission: :environment do
+  task add_talks_for_cnk_intermission: :environment do
     ActiveRecord::Base.logger = Logger.new($stdout)
     Rails.logger.level = Logger::DEBUG
 

@@ -22,6 +22,35 @@ describe Talk, type: :model do
         expect(talk.live?).to(be_falsey)
       end
     end
+
+    context 'with preloaded proposal_items and config_cache' do
+      let!(:presentation_method) { create(:presentation_method, conference: cndt2020, talk:, params: proposal_item_config_1.id) }
+      let(:preloaded_talk) { Talk.includes(:proposal_items).find(talk.id) }
+      let(:config_cache) { ProposalItemConfig.where(conference_id: cndt2020.id).index_by(&:id) }
+
+      it 'returns true without issuing additional queries for proposal_items or ProposalItemConfig' do
+        preloaded_talk
+        config_cache
+        expect(preloaded_talk.proposal_items).to(be_loaded)
+
+        result = nil
+        query_count = 0
+        counter = ->(_name, _start, _finish, _id, payload) {
+          query_count += 1 unless %w[SCHEMA TRANSACTION].include?(payload[:name])
+        }
+        ActiveSupport::Notifications.subscribed(counter, 'sql.active_record') do
+          result = preloaded_talk.live?(config_cache:)
+        end
+
+        expect(result).to(be(true))
+        expect(query_count).to(eq(0))
+      end
+
+      it 'uses the supplied cache instead of querying ProposalItemConfig' do
+        expect(ProposalItemConfig).not_to(receive(:find))
+        expect(preloaded_talk.live?(config_cache:)).to(be(true))
+      end
+    end
   end
 
   describe '#export_csv' do

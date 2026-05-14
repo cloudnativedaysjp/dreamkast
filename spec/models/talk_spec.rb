@@ -35,7 +35,7 @@ describe Talk, type: :model do
 
         result = nil
         query_count = 0
-        counter = ->(_name, _start, _finish, _id, payload) {
+        counter = lambda { |_name, _start, _finish, _id, payload|
           query_count += 1 unless %w[SCHEMA TRANSACTION].include?(payload[:name])
         }
         ActiveSupport::Notifications.subscribed(counter, 'sql.active_record') do

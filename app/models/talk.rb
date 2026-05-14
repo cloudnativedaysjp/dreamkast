@@ -364,7 +364,6 @@ class Talk < ApplicationRecord
 
     config = config_cache ? config_cache[method.params.to_i] : ProposalItemConfig.find(method.params)
     return false unless config
-
     %w[オンライン登壇 現地登壇].include?(config.params)
   end
 

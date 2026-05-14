@@ -124,6 +124,7 @@ class ProfilesController < ApplicationController
   end
 
   def view_qr
+    redirect_to("/#{params[:event]}/registration") and return if @profile.nil?
   end
 
   def entry_sheet

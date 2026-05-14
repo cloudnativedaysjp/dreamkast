@@ -65,6 +65,9 @@
               <h6 class="alert-heading fw-semibold mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>オフライン参加の方へ</h6>
               <ul class="mb-0 pl-3">
                 <li>スマートフォンで受け付け用の二次元バーコードを表示する場合は <%= link_to 'こちら', profiles_view_qr_path, class: 'alert-link' %>。</li>
+                <% if display_self_check_in_link? %>
+                  <li>セルフチェックインの結果は <%= link_to 'こちら', self_check_in_path(no_redirect: true), class: 'alert-link' %>。</li>
+                <% end %>
               </ul>
             </div>
           <% end %>
@@ -195,7 +198,7 @@
                 <%= link_to stamp_rally_check_ins_path do %><i class="bi bi-check-circle-fill"></i>スタンプラリー<% end %>
               <% end %>
               <% if display_self_check_in_link? %>
-                <%= link_to self_check_in_path do %><i class="bi bi-qr-code"></i>セルフチェックイン<% end %>
+                <%= link_to self_check_in_path(no_redirect: true) do %><i class="bi bi-qr-code"></i>セルフチェックインの結果<% end %>
               <% end %>
               <% if @conference.abbr == 'cnk' %>
                 <%= link_to "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer" do %><i class="bi bi-journal-text"></i>Blog記事一覧<% end %>

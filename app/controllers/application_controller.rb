@@ -215,7 +215,7 @@ class ApplicationController < ActionController::Base
   end
 
   def display_self_check_in_link?
-    @profile.is_a?(Profile) && @profile.check_in_conferences.empty?
+    @profile.is_a?(Profile) && @profile.check_in_conferences.present?
   end
 
   def display_proposals?

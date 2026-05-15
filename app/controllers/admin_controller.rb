@@ -24,18 +24,7 @@ class AdminController < ApplicationController
     @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
     talk_ids = @talks.pluck(:id)
 
-    participation_counts = RegisteredTalk.joins(:profile)
-                                         .where(talk_id: talk_ids)
-                                         .group(:talk_id, 'profiles.participation')
-                                         .count
-    @online_counts_by_talk  = Hash.new(0)
-    @offline_counts_by_talk = Hash.new(0)
-    participation_counts.each do |(tid, participation), count|
-      case participation
-      when Profile.participations[:online]  then @online_counts_by_talk[tid]  = count
-      when Profile.participations[:offline] then @offline_counts_by_talk[tid] = count
-      end
-    end
+    @online_counts_by_talk, @offline_counts_by_talk = participation_counts_by_talk(talk_ids)
 
     @online_viewers_by_talk = OnlineViewerStats.new(@conference).viewer_counts_by_talk || {}
     @check_in_counts_by_talk = CheckInTalk.where(talk_id: talk_ids)
@@ -46,13 +35,30 @@ class AdminController < ApplicationController
 
   def export_statistics
     f = Tempfile.create('statistics.csv')
-    @conference = Conference.includes(talks: [registered_talks: :profile]).find_by(abbr: params[:event])
+    @conference = Conference.find_by(abbr: params[:event])
+    @talks = @conference.talks.accepted.order('conference_day_id ASC, start_time ASC, track_id ASC')
+    talk_ids = @talks.pluck(:id)
+
+    @online_counts_by_talk, @offline_counts_by_talk = participation_counts_by_talk(talk_ids)
+
     CSV.open(f.path, 'wb') do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
-      @conference.talks.accepted.each do |talk|
-        csv << %W[#{talk.id} #{talk.title} #{talk.online_participation_size} #{talk.offline_participation_size}]
+      @talks.each do |talk|
+        csv << %W[#{talk.id} #{talk.title} #{@online_counts_by_talk[talk.id]} #{@offline_counts_by_talk[talk.id]}]
       end
     end
     send_file(f.path, filename: "statistics-#{Time.now.strftime("%F")}.csv", length: File.stat(f.path).size)
+  end
+
+  private
+
+  def participation_counts_by_talk(talk_ids)
+    online = RegisteredTalk.joins(:profile).merge(Profile.online)
+                           .where(talk_id: talk_ids).group(:talk_id).count
+    online.default = 0
+    offline = RegisteredTalk.joins(:profile).merge(Profile.offline)
+                            .where(talk_id: talk_ids).group(:talk_id).count
+    offline.default = 0
+    [online, offline]
   end
 end

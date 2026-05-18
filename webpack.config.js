@@ -22,6 +22,8 @@ module.exports = {
       "./app/javascript/packs/application.js",
       "./app/javascript/stylesheets/application.scss",
     ],
+    // Bootstrap → Tailwind 段階移行 (issue #2572): admin 画面専用 Tailwind バンドル
+    admin_tailwind: ["./app/javascript/stylesheets/admin_tailwind.scss"],
     cnk: [
       "./app/javascript/packs/cnk.js",
       "./app/javascript/stylesheets/cnk.scss",
@@ -66,6 +68,22 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
+          {
+            // Tailwind CSS の @tailwind / @apply 等を処理するため postcss-loader を挟む。
+            // @tailwind を含まない既存 SCSS には実質ノーオペで autoprefixer のみが効く。
+            loader: "postcss-loader",
+            options: {
+              // ルートの postcss.config.js は CLI (build:css) 専用なので
+              // webpack 側では auto-discovery を無効化して inline 設定だけ使う。
+              postcssOptions: {
+                config: false,
+                plugins: [
+                  require("tailwindcss"),
+                  require("autoprefixer"),
+                ],
+              },
+            },
+          },
           {
             loader: "sass-loader",
             options: {

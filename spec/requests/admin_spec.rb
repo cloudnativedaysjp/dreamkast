@@ -66,7 +66,7 @@ describe AdminController, type: :request do
               get admin_path(event: 'cndt2020')
               expect(response).to(have_http_status('200'))
               doc = Nokogiri::HTML.parse(response.body)
-              count_card = doc.css('.bg-success .card-text').text.strip
+              count_card = doc.css('[data-testid="checked-in-count"]').text.strip
               expect(count_card).to(eq('1'))
             end
           end

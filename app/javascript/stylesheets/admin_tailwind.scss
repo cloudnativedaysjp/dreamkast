@@ -1,0 +1,6 @@
+// Admin 画面専用 Tailwind CSS エントリ
+// - preflight は tailwind.config.js で無効化済み (Bootstrap の reset を壊さないため)
+// - 全 utility は important: '#admin' により <div id="admin"> 配下のみに適用される
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

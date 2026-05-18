@@ -46,7 +46,20 @@ window.addEventListener('DOMContentLoaded', function() {
                 modal.classList.add('show');
                 document.body.classList.add('modal-open');
 
+                var players = [];
+                if (window.videojs) {
+                    modal.querySelectorAll('video.video-js').forEach(function(el) {
+                        if (!el.hasAttribute('data-vjs-player')) {
+                            players.push(window.videojs(el));
+                        }
+                    });
+                }
+
                 function closeModal() {
+                    players.forEach(function(player) {
+                        try { player.dispose(); } catch (_) {}
+                    });
+                    players = [];
                     modal.classList.remove('show');
                     modal.style.display = 'none';
                     document.body.classList.remove('modal-open');

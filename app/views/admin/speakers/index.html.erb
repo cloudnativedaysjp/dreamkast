@@ -1,49 +1,49 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>エクスポート</h2>
-    <div class="col-12 form-group d-flex">
-      <%= button_to 'エクスポート(CSV)', admin_export_speakers_path, {method: :get, class: 'me-2' } %>
+    <div class="tw-col-span-12 tw-mb-4 tw-flex">
+      <%= button_to 'エクスポート(CSV)', admin_export_speakers_path, {method: :get, class: 'tw-mr-2' } %>
       <%= button_to 'エクスポート(JSON, for Website)', admin_export_speakers_for_website_path, {method: :get } %>
     </div>
   </div>
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>Speakers</h2>
   </div>
-  <div class="row">
-    <table class="table table-striped">
-      <thead>
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <table class="tw-w-full tw-border tw-border-gray-200">
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Name</th>
-        <th scope="col">Profile</th>
-        <th scope="col">Company</th>
-        <th scope="col">Job title</th>
-        <th scope="col">X(Twitter)</th>
-        <th scope="col">GitHub</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Image</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Name</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Profile</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Company</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Job title</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">X(Twitter)</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">GitHub</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
       <% @speakers.each do |speaker| %>
-        <tr>
+        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
           <% if speaker.has_avatar? %>
-            <td class="avatar"><%= image_tag speaker.avatar_url(:medium) || speaker.avatar_url, :size => '80x80'  %></td>
+            <td class="tw-px-4 tw-py-2 avatar"><%= image_tag speaker.avatar_url(:medium) || speaker.avatar_url, :size => '80x80'  %></td>
           <% else %>
-            <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
+            <td class="tw-px-4 tw-py-2 avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
           <% end %>
-          <td><%= speaker.name %></td>
-          <td><%= speaker.profile %></td>
-          <td><%= speaker.company %></td>
-          <td><%= speaker.job_title %></td>
-          <td><%= speaker.twitter_id %></td>
-          <td><%= speaker.github_id %></td>
-          <td><%= link_to 'Edit', "speakers/#{speaker.id}/edit", data: {"turbolinks" => false} %></td>
-          <td><%= link_to 'Notice', "speaker_announcements/new?speaker_id=#{speaker.id}" %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.name %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.profile %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.company %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.job_title %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.twitter_id %></td>
+          <td class="tw-px-4 tw-py-2"><%= speaker.github_id %></td>
+          <td class="tw-px-4 tw-py-2"><%= link_to 'Edit', "speakers/#{speaker.id}/edit", data: {"turbolinks" => false} %></td>
+          <td class="tw-px-4 tw-py-2"><%= link_to 'Notice', "speaker_announcements/new?speaker_id=#{speaker.id}" %></td>
         </tr>
       <% end %>
       </tbody>

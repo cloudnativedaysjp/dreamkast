@@ -1,103 +1,103 @@
 <%= form_with(url: admin_conference_path, model: conference_form, method: :patch) do |form| %>
   <h3>Edit Conference</h3>
 
-  <table class="table table-striped">
-    <thead>
+  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200">
+    <thead class="tw-bg-gray-100">
     <tr>
-      <th scope="col">Field</th>
-      <th scope="col">Value</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Field</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Value</th>
     </tr>
     </thead>
 
-    <tbody>
-    <tr>
-      <td><%= form.label :conference_status, 'Status' %></td>
-      <td><%= form.select :conference_status, @conference_form.conference.class.conference_statuses%></td>
+    <tbody class="tw-divide-y tw-divide-gray-200">
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :conference_status, 'Status' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.select :conference_status, @conference_form.conference.class.conference_statuses%></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :speaker_entry, 'Speaker Entry Status' %></td>
-      <td><%= form.select :speaker_entry, @conference_form.conference.class.speaker_entries.map { |k, v| [k, k] }.to_h %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :speaker_entry, 'Speaker Entry Status' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.select :speaker_entry, @conference_form.conference.class.speaker_entries.map { |k, v| [k, k] }.to_h %></td>
     </tr>
 
-    <tr>
-      <td>Rehearsal Mode</td>
-      <td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2">Rehearsal Mode</td>
+      <td class="tw-px-4 tw-py-2">
         <%= form.check_box :rehearsal_mode %>
         <%= form.label :rehearsal_mode, 'On' %><br>
       </td>
     </tr>
 
-    <tr>
-      <td>Proposal Result Visible Status</td>
-      <td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2">Proposal Result Visible Status</td>
+      <td class="tw-px-4 tw-py-2">
         <%= form.check_box :cfp_result_visible %>
         <%= form.label :cfp_result_visible, 'Visible' %><br>
       </td>
     </tr>
 
-    <tr>
-      <td><%= form.label :attendee_entry, 'Attendee Entry Status' %></td>
-      <td><%= form.select :attendee_entry, @conference_form.conference.class.attendee_entries.map { |k, v| [k, k] }.to_h %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :attendee_entry, 'Attendee Entry Status' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.select :attendee_entry, @conference_form.conference.class.attendee_entries.map { |k, v| [k, k] }.to_h %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :show_timetable, 'Timetable Visible Status' %></td>
-      <td><%= form.select :show_timetable, @conference_form.conference.class.show_timetables.map { |k, v| [k, k] }.to_h %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :show_timetable, 'Timetable Visible Status' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.select :show_timetable, @conference_form.conference.class.show_timetables.map { |k, v| [k, k] }.to_h %></td>
     </tr>
 
-    <tr>
-      <td>Sponsors Visible Status</td>
-      <td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2">Sponsors Visible Status</td>
+      <td class="tw-px-4 tw-py-2">
         <%= form.check_box :show_sponsors %>
         <%= form.label :show_sponsors, 'Visible' %><br>
       </td>
     </tr>
 
-    <tr>
-      <td><%= form.label :capacity, 'Offline Capacity' %></td>
-      <td><%= form.number_field :capacity %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :capacity, 'Offline Capacity' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.number_field :capacity %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :contact_url, 'Contact Url' %></td>
-      <td><%= form.text_field :contact_url %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :contact_url, 'Contact Url' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.text_field :contact_url %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :sponsor_guideline_url, 'Sponsor Guideline Url' %></td>
-      <td><%= form.text_field :sponsor_guideline_url %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :sponsor_guideline_url, 'Sponsor Guideline Url' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.text_field :sponsor_guideline_url %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :brief, 'Conference briefs' %></td>
-      <td><%= form.text_field :brief %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :brief, 'Conference briefs' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.text_field :brief %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :privacy_policy, 'Privacy Policy (for attendees)' %></td>
-      <td><%= form.text_area :privacy_policy, {class: "privacy-policy"} %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :privacy_policy, 'Privacy Policy (for attendees)' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.text_area :privacy_policy, {class: "privacy-policy"} %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :privacy_policy_for_speaker, 'Privacy Policy (for speakers)' %></td>
-      <td><%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %></td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :privacy_policy_for_speaker, 'Privacy Policy (for speakers)' %></td>
+      <td class="tw-px-4 tw-py-2"><%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %></td>
     </tr>
 
-    <tr>
-      <td><%= form.label :links, 'Links' %></td>
-      <td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :links, 'Links' %></td>
+      <td class="tw-px-4 tw-py-2">
         <p><%= link_to "Add Link", admin_conference_add_link_path(conference_id: @conference.abbr), method: :post, data: { turbo_method: :post } %></p>
-        <table class="table table-striped">
-          <thead>
+        <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200">
+          <thead class="tw-bg-gray-100">
           <tr>
-            <th scope="col">Title</th>
-            <th scope="col">URL</th>
-            <th scope="col">Description</th>
-            <th scope="col"></th>
+            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
+            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">URL</th>
+            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Description</th>
+            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col"></th>
           </tr>
           </thead>
-          <tbody id="link_fields">
+          <tbody id="link_fields" class="tw-divide-y tw-divide-gray-200">
           <%= form.fields_for :links do |f| %>
             <%= render 'admin/conferences/link_fields', :f => f %>
           <% end %>
@@ -106,14 +106,14 @@
       </td>
     </tr>
 
-    <tr>
-      <td><%= form.label :conference_days , 'Conference Days' %></td>
-      <td>
+    <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+      <td class="tw-px-4 tw-py-2"><%= form.label :conference_days , 'Conference Days' %></td>
+      <td class="tw-px-4 tw-py-2">
         <div class="conference-day-fields">
           <%= form.fields_for :conference_days do |f| %>
             <div class="conference-day-field">
-              <div class="form-row form-group">
-                <div class="col-12 col-mb-6">
+              <div class="tw-mb-4 tw-grid tw-grid-cols-12 tw-gap-4">
+                <div class="tw-col-span-12">
                   <%= f.label :date, "Date" %>
                   <%= f.text_field :date %>
                 </div>
@@ -125,9 +125,9 @@
 
     </tbody>
   </table>
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.submit class: "btn btn-primary" %>
+  <div class="tw-mb-4 tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-12 md:tw-col-span-6">
+      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
     </div>
   </div>
 <% end %>

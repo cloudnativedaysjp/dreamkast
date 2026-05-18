@@ -1,36 +1,36 @@
 <%= render 'admin/layout' do %>
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>ビデオファイル提出状況</h2>
   </div>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <ul>
       <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
     </ul>
   </div>
 
-  <div class="row">
-    <table class="table table-striped talks_table" >
-      <thead>
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Title</th>
-        <th scope="col">Status</th>
-        <th scope="col">Statistics</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Name</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Status</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Statistics</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
         <% @talks.each do |talk| %>
-          <tr>
-            <td><%= talk.id %></td>
-            <td><%= talk.speakers.map(&:name).join(", ") %></td>
-            <td><%= talk.title %></td>
+          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+            <td class="tw-px-4 tw-py-2"><%= talk.id %></td>
+            <td class="tw-px-4 tw-py-2"><%= talk.speakers.map(&:name).join(", ") %></td>
+            <td class="tw-px-4 tw-py-2"><%= talk.title %></td>
 
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <%= talk.video_registration&.status_message %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <% if talk.video_registration.present? && talk.video_registration.statistics.present?  %>
                 <% JSON.parse(talk.video_registration&.statistics).each  do |k, v| %>
                   <%= k %>: <%= v %><br>

@@ -1,15 +1,15 @@
-<div class="col-12 col-mb-6">
+<div class="tw-col-span-12">
   <h4>スポンサーセッション</h4>
   <% if @sponsor.talks.present? %>
-    <div class="card-group">
-      <div class="card">
+    <div class="tw-flex tw-flex-col">
+      <div class="tw-rounded-md tw-border tw-border-gray-200 tw-shadow-sm">
         <% @sponsor.talks.each do |talk| %>
           <%= render "speaker_dashboard/speakers/talk", conference: @conference, talk: talk %>
         <% end %>
       </div>
     </div>
   <% else %>
-    <div class="col-12 col-mb-6">
+    <div class="tw-col-span-12">
       スポンサーセッションは未登録です。
     </div>
   <% end %>

@@ -1,33 +1,33 @@
 <%= render 'admin/layout' do %>
   <h1>Speaker Announcement</h1>
 
-  <%= link_to 'New AllSpeakersAnnouncement', new_admin_speaker_announcement_path, class: "btn btn-primary" %>
+  <%= link_to 'New AllSpeakersAnnouncement', new_admin_speaker_announcement_path, class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
 
-  <table class="table table-striped talks_table" >
-    <thead>
+  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+    <thead class="tw-bg-gray-100">
     <tr>
-      <th scope="col">Published?</th>
-      <th scope="col">To</th>
-      <th scope="col">Time</th>
-      <th scope="col">Announcement</th>
-      <th scope="col">Edit</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Published?</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">To</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Time</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Announcement</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Edit</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="tw-divide-y tw-divide-gray-200">
     <% @speaker_announcements.eager_load(:speakers).each do |announcement| %>
-      <tr>
-        <td>
+      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+        <td class="tw-px-4 tw-py-2">
           <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <%= announcement.speaker_names %>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <%= simple_format announcement.body %>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <%= link_to'Edit', edit_admin_speaker_announcement_path(id: announcement.id) %>
           <%= link_to'Delete', admin_speaker_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
         </td>

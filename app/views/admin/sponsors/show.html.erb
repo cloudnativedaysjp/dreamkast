@@ -1,16 +1,16 @@
 <%= render 'admin/layout' do %>
-  <div class="row mb-3">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mb-3">
     <%= render "sponsor", sponsor: @sponsor %>
   </div>
- 
-  <div class="row mb-3">
+
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mb-3">
     <%= render "sponsor_contacts", sponsor: @sponsor, sponsor_contacts: @sponsor_contacts, sponsor_contact_invites: @sponsor_contact_invites %>
   </div>
-  
-  <div class="row mb-3">
+
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mb-3">
     <%= render "sponsor_sessions", sponsor: @sponsor %>
   </div>
 
   <%= turbo_frame_tag "modal" %>
-  <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+  <div id="flashes" class="tw-fixed tw-bottom-0 tw-right-0" style="margin: 0.75rem"></div>
 <% end %>

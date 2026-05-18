@@ -1,26 +1,26 @@
 <%= render 'admin/layout' do %>
   <h1>HarvestJobs</h1>
 
-  <table class="table table-striped talks_table" >
-    <thead>
+  <table class="tw-w-full tw-border tw-border-gray-200 talks_table" >
+    <thead class="tw-bg-gray-100">
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Harvest Job ID</th>
-      <th scope="col">Harvest Job Status</th>
-      <th scope="col">StartTime</th>
-      <th scope="col">EndTime</th>
-      <th scope="col">Video URL</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Harvest Job ID</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Harvest Job Status</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">StartTime</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">EndTime</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Video URL</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="tw-divide-y tw-divide-gray-200">
     <% @harvest_jobs.each do |harvest_job| %>
-      <tr>
-        <td><%= harvest_job.id %></td>
-        <td><%= harvest_job.job_id %></td>
-        <td><%= harvest_job.job&.status %></td>
-        <td><%= harvest_job.start_time %></td>
-        <td><%= harvest_job.end_time %></td>
-        <td><%= harvest_job.video_url %></td>
+      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.id %></td>
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.job_id %></td>
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.job&.status %></td>
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.start_time %></td>
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.end_time %></td>
+        <td class="tw-px-4 tw-py-2"><%= harvest_job.video_url %></td>
       </tr>
     <% end %>
     </tbody>

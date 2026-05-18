@@ -15,24 +15,24 @@
 </nav>
 
 <%= turbo_frame_tag 'talks', src: @talks.nil? ? admin_talks_path : nil do %>
-  <table class="table table-striped talks_table" >
-    <thead>
+  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+    <thead class="tw-bg-gray-100">
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col" style="width: 200px;">Time</th>
-      <th scope="col">Speakers<br/>Title</th>
-      <th scope="col">On Air</th>
-      <th scope="col">Recording</th>
-      <th scope="col">Recording Status</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 200px;">Time</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers<br/>Title</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">On Air</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Recording</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Recording Status</th>
 
     </tr>
     </thead>
 
-    <tbody id="talks_table_tbody">
+    <tbody id="talks_table_tbody" class="tw-divide-y tw-divide-gray-200">
     <% @talks.each do |talk| %>
-      <tr>
-        <td><%= talk.id %></td>
-        <td>
+      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+        <td class="tw-px-4 tw-py-2"><%= talk.id %></td>
+        <td class="tw-px-4 tw-py-2">
           Planned<br/>
           <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
           <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
@@ -45,21 +45,21 @@
           <%= text_field_tag(talk.id.to_s + "_actual_start", talk.actual_start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
           <%= text_field_tag(talk.id.to_s + "_actual_end", talk.actual_end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <h5><%= talk.title %></h5>
-          <ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
+          <ul class="tw-p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul>
         </td>
-        <td >
+        <td class="tw-px-4 tw-py-2">
           <% if talk.video %>
             <%= render('admin/tracks/partial/on_air_button', talk: talk) %>
           <% end %>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <%= turbo_frame_tag "record_button_#{talk.id}" do %>
             <%= render('admin/tracks/partial/record_button', conference: conference, talk: talk) %>
           <% end %>
         </td>
-        <td>
+        <td class="tw-px-4 tw-py-2">
           <% if talk.video && talk.abstract != 'intermission' %>
             <% if already_recorded?(talk) %>
               録画済み
@@ -81,11 +81,11 @@
 ※ Track video ID は On Air 状態のセッションがUIで表示された時に使われる (ライブ)<br>
 ※ 各セッションの Video URL は Off Air 状態のセッションがUIで表示された時に使われる (アーカイブ)
 
-<div class="row">
-  <div class="col-12 mt-4">
+<div class="tw-grid tw-grid-cols-12 tw-gap-4">
+  <div class="tw-col-span-12 tw-mt-4">
     <h2>Download talks in this track</h2>
-    <div class="col-12 form-group">
-      <%= link_to 'Download CSV', admin_tracks_path(format: "csv", date: @date, track_name: @track.name), class: "btn btn-primary" %>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= link_to 'Download CSV', admin_tracks_path(format: "csv", date: @date, track_name: @track.name), class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
     </div>
   </div>
 </div>

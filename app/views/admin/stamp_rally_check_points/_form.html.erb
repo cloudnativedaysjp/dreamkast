@@ -9,20 +9,20 @@
         <% end %>
       </ul>
     <% end %>
-    <div class="row py-2 border-top" data-controller="sponsor">
-      <div class="mb-3">
-        <%= form.label :name, class: "form-label" %>
-        <%= form.text_field :name, class: "form-control" %>
+    <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2" data-controller="sponsor">
+      <div class="tw-col-span-12 tw-mb-4">
+        <%= form.label :name, class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <%= form.text_field :name, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
       </div>
-      <div class="mb-3">
-        <%= form.label :description, class: "form-label" %>
-        <%= form.text_area :description, class: "form-control" %>
+      <div class="tw-col-span-12 tw-mb-4">
+        <%= form.label :description, class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+        <%= form.text_area :description, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
       </div>
-      <div class="mb-3">
-        <%= form.label :type, class: "form-label" %>
+      <div class="tw-col-span-12 tw-mb-4">
+        <%= form.label :type, class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
         <%= form.select :type, options_for_select(type_options, selected: stamp_rally_check_point.type), {},
                         {
-                          class: "form-select",
+                          class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500",
                           id: "stamp_rally_check_point_type",
                           data: {
                             target: "sponsor.type",
@@ -31,19 +31,19 @@
                         }
         %>
       </div>
-      <div class="mb-3" data-target="sponsor.sponsorField" >
-        <%= form.label :sponsor_id, class: "form-label"  %>
+      <div class="tw-col-span-12 tw-mb-4" data-target="sponsor.sponsorField" >
+        <%= form.label :sponsor_id, class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700"  %>
         <%= form.collection_select :sponsor_id, sponsors, :id, :name, {include_blank: true},
                                    {
-                                     class: "form-select",
+                                     class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500",
                                      id: "stamp_rally_check_point_sponsor_id"
                                    }
         %>
       </div>
 
-      <div class="mb-3">
-        <div class="d-flex justify-content-end">
-          <%= form.submit class: "btn btn-primary btn-sm me-2" %>
+      <div class="tw-col-span-12 tw-mb-4">
+        <div class="tw-flex tw-justify-end">
+          <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-blue-700 tw-mr-2" %>
         </div>
       </div>
     </div>

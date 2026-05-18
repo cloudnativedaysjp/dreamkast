@@ -1,6 +1,6 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
@@ -9,7 +9,7 @@
 
   <%= form_with(model: @talk, scope: :talk, url: admin_talk_path(event: params[:event], id: @talk.id), local: true, method: :patch) do |form| %>
     <% if @talk.errors.any? %>
-      <div id="error_explanation" class="alert alert-danger">
+      <div id="error_explanation" class="tw-mb-4 tw-rounded tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-red-800">
         <h5>入力内容にエラーがあります:</h5>
         <ul>
           <% @talk.errors.full_messages.each do |message| %>
@@ -19,82 +19,82 @@
       </div>
     <% end %>
 
-    <div class="form-group mb-3">
-      <%= form.label :title, '講演タイトル', class: 'form-label' %>
-      <%= form.text_field :title, class: 'form-control', required: true %>
+    <div class="tw-mb-4">
+      <%= form.label :title, '講演タイトル', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.text_field :title, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500', required: true %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :abstract, '講演内容', class: 'form-label' %>
-      <%= form.text_area :abstract, class: 'form-control', rows: 6 %>
+    <div class="tw-mb-4">
+      <%= form.label :abstract, '講演内容', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.text_area :abstract, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500', rows: 6 %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :talk_category_id, 'カテゴリー', class: 'form-label' %>
-      <%= form.collection_select :talk_category_id, @talk_categories, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    <div class="tw-mb-4">
+      <%= form.label :talk_category_id, 'カテゴリー', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.collection_select :talk_category_id, @talk_categories, :id, :name, { prompt: '選択してください' }, { class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :talk_difficulty_id, '受講者レベル', class: 'form-label' %>
-      <%= form.collection_select :talk_difficulty_id, @talk_difficulties, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    <div class="tw-mb-4">
+      <%= form.label :talk_difficulty_id, '受講者レベル', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.collection_select :talk_difficulty_id, @talk_difficulties, :id, :name, { prompt: '選択してください' }, { class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :track_id, 'トラック', class: 'form-label' %>
-      <%= form.collection_select :track_id, @tracks, :id, :name, { prompt: '選択してください' }, { class: 'form-control' } %>
+    <div class="tw-mb-4">
+      <%= form.label :track_id, 'トラック', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.collection_select :track_id, @tracks, :id, :name, { prompt: '選択してください' }, { class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :conference_day_id, '開催日', class: 'form-label' %>
-      <%= form.collection_select :conference_day_id, @conference_days, :id, :date, { prompt: '選択してください' }, { class: 'form-control' } %>
+    <div class="tw-mb-4">
+      <%= form.label :conference_day_id, '開催日', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.collection_select :conference_day_id, @conference_days, :id, :date, { prompt: '選択してください' }, { class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group mb-3">
-          <%= form.label :start_time, '開始時間', class: 'form-label' %>
-          <%= form.time_field :start_time, class: 'form-control' %>
+    <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+      <div class="md:tw-col-span-6">
+        <div class="tw-mb-4">
+          <%= form.label :start_time, '開始時間', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+          <%= form.time_field :start_time, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="form-group mb-3">
-          <%= form.label :end_time, '終了時間', class: 'form-label' %>
-          <%= form.time_field :end_time, class: 'form-control' %>
+      <div class="md:tw-col-span-6">
+        <div class="tw-mb-4">
+          <%= form.label :end_time, '終了時間', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+          <%= form.time_field :end_time, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
         </div>
       </div>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :document_url, 'セッション資料公開URL', class: 'form-label' %>
-      <%= form.url_field :document_url, class: 'form-control' %>
+    <div class="tw-mb-4">
+      <%= form.label :document_url, 'セッション資料公開URL', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.url_field :document_url, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
     </div>
 
-    <div class="form-group mb-3">
-      <%= form.label :ogp_image_url, 'OGP画像URL', class: 'form-label' %>
-      <%= form.url_field :ogp_image_url, class: 'form-control', placeholder: 'https://example.com/og-image.png' %>
-      <small class="form-text text-muted">
+    <div class="tw-mb-4">
+      <%= form.label :ogp_image_url, 'OGP画像URL', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+      <%= form.url_field :ogp_image_url, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500', placeholder: 'https://example.com/og-image.png' %>
+      <small class="tw-mt-1 tw-block tw-text-sm tw-text-gray-500">
         SNSでシェアされた際に表示される画像のURLを指定できます。未指定の場合は登壇者のアバター画像が使用されます。
       </small>
     </div>
 
-    <div class="form-check mb-3">
-      <%= form.check_box :show_on_timetable, class: 'form-check-input' %>
-      <%= form.label :show_on_timetable, 'タイムテーブルに表示', class: 'form-check-label' %>
+    <div class="tw-mb-4 tw-flex tw-items-center">
+      <%= form.check_box :show_on_timetable, class: 'tw-mr-2' %>
+      <%= form.label :show_on_timetable, 'タイムテーブルに表示', class: 'tw-text-sm' %>
     </div>
 
-    <div class="form-check mb-3">
-      <%= form.check_box :video_published, class: 'form-check-input' %>
-      <%= form.label :video_published, '動画公開', class: 'form-check-label' %>
+    <div class="tw-mb-4 tw-flex tw-items-center">
+      <%= form.check_box :video_published, class: 'tw-mr-2' %>
+      <%= form.label :video_published, '動画公開', class: 'tw-text-sm' %>
     </div>
 
-    <div class="form-group mb-3">
-      <label class="form-label">セッションタイプ</label>
+    <div class="tw-mb-4">
+      <label class="tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700">セッションタイプ</label>
       <% @talk_types.each do |talk_type| %>
-        <div class="form-check">
-          <%= check_box_tag 'talk[talk_type_ids][]', talk_type.id, @talk.talk_types.include?(talk_type), 
-                { id: "talk_talk_type_ids_#{talk_type.id}", class: 'form-check-input' } %>
-          <%= label_tag "talk_talk_type_ids_#{talk_type.id}", talk_type.display_name, 
-                { class: 'form-check-label' } %>
+        <div class="tw-flex tw-items-center">
+          <%= check_box_tag 'talk[talk_type_ids][]', talk_type.id, @talk.talk_types.include?(talk_type),
+                { id: "talk_talk_type_ids_#{talk_type.id}", class: 'tw-mr-2' } %>
+          <%= label_tag "talk_talk_type_ids_#{talk_type.id}", talk_type.display_name,
+                { class: 'tw-text-sm' } %>
         </div>
       <% end %>
     </div>
@@ -102,47 +102,47 @@
     <!-- Proposal Items -->
     <% @conference.proposal_item_configs.map(&:item_number).uniq.each do |item_number| %>
       <% first_item = @conference.proposal_item_configs.find_by(item_number: item_number) %>
-      <div class="form-group mb-3">
+      <div class="tw-mb-4">
         <% if first_item.class.to_s == 'ProposalItemConfigCheckBox' %>
           <% existing_proposal_item = @talk.proposal_items.find_by(label: first_item.label) %>
           <% existing_items = existing_proposal_item&.params || [] %>
           <% existing_items = existing_items.is_a?(Array) ? existing_items : [existing_items].compact %>
-          
-          <label class="form-label"><%= first_item.item_name %></label>
+
+          <label class="tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700"><%= first_item.item_name %></label>
           <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
-            <div class="form-check">
+            <div class="tw-flex tw-items-center">
               <% checked = existing_items.include?(item.id.to_s) %>
-              <%= check_box_tag "talk[#{first_item.label}][]", item.id, checked, 
-                    { id: "talk_#{first_item.label}_#{item.id}", class: 'form-check-input' } %>
-              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params, 
-                    { class: 'form-check-label' } %>
+              <%= check_box_tag "talk[#{first_item.label}][]", item.id, checked,
+                    { id: "talk_#{first_item.label}_#{item.id}", class: 'tw-mr-2' } %>
+              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params,
+                    { class: 'tw-text-sm' } %>
             </div>
           <% end %>
 
         <% elsif first_item.class.to_s == 'ProposalItemConfigRadioButton' %>
           <% existing_proposal_item = @talk.proposal_items.find_by(label: first_item.label) %>
           <% existing_item = existing_proposal_item&.params %>
-          
-          <label class="form-label"><%= first_item.item_name %></label>
+
+          <label class="tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700"><%= first_item.item_name %></label>
           <% if first_item.description.present? %>
-            <p class="text-muted small"><%= first_item.description.html_safe %></p>
+            <p class="tw-text-gray-500 tw-text-sm"><%= first_item.description.html_safe %></p>
           <% end %>
           <% @conference.proposal_item_configs.where(item_number: item_number).each do |item| %>
-            <div class="form-check">
+            <div class="tw-flex tw-items-center">
               <% checked = existing_item.to_s == item.id.to_s %>
-              <%= radio_button_tag "talk[#{first_item.label}]", item.id, checked, 
-                    { id: "talk_#{first_item.label}_#{item.id}", class: 'form-check-input' } %>
-              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params, 
-                    { class: 'form-check-label' } %>
+              <%= radio_button_tag "talk[#{first_item.label}]", item.id, checked,
+                    { id: "talk_#{first_item.label}_#{item.id}", class: 'tw-mr-2' } %>
+              <%= label_tag "talk_#{first_item.label}_#{item.id}", item.params,
+                    { class: 'tw-text-sm' } %>
             </div>
           <% end %>
         <% end %>
       </div>
     <% end %>
 
-    <div class="actions mt-3">
-      <%= form.submit '更新', class: 'btn btn-primary' %>
-      <%= link_to '戻る', admin_talks_path(event: params[:event]), class: 'btn btn-secondary' %>
+    <div class="actions tw-mt-3">
+      <%= form.submit '更新', class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700' %>
+      <%= link_to '戻る', admin_talks_path(event: params[:event]), class: 'tw-inline-block tw-rounded tw-bg-gray-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-gray-600' %>
     </div>
   <% end %>
 <% end %>

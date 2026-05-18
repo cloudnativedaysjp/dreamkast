@@ -1,68 +1,68 @@
-<div class="row mb-2">
-  <div class="col-10 d-flex align-items-center">
+<div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mb-2">
+  <div class="tw-col-span-10 tw-flex tw-items-center">
     <h2>配信用AWSリソース管理</h2>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-10">
+<div class="tw-grid tw-grid-cols-12 tw-gap-4">
+  <div class="tw-col-span-10">
     <h3>Track毎の配信用リソース一覧</h3>
   </div>
 </div>
 
-<div class="row">
-  <div class="col">
-    <table class="table table-striped talks_table" >
-      <thead>
+<div class="tw-grid tw-grid-cols-12 tw-gap-4">
+  <div class="tw-col-span-12">
+    <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">Track</th>
-        <th scope="col">リソース</th>
-        <th scope="col">一括作成</th>
-        <th scope="col">MediaLive Channel Status</th>
-        <th scope="col">MediaLive Channel</th>
-        <th scope="col">一括削除</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Track</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">リソース</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">一括作成</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">MediaLive Channel Status</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">MediaLive Channel</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">一括削除</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
       <% @tracks.each do |track| %>
-        <tr>
-          <td>
+        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+          <td class="tw-px-4 tw-py-2">
             <%= track.name %>
           </td>
-          <td>
+          <td class="tw-px-4 tw-py-2">
             <% if track.streaming %>
               <%= track.streaming.status %>
             <% end %>
           </td>
-          <td>
+          <td class="tw-px-4 tw-py-2">
             <% if track.streaming && %w(deleted error).include?(track.streaming.status) %>
-              <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "btn btn-primary", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
+              <%= button_to("配信用リソースを一括作成", admin_create_aws_resources_path(id: track.streaming.id), {method: :post, class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700", data: { confirm: "トラック#{track.name}用のStreamingリソースを作成しますか？"} }) %>
             <% elsif track.streaming.nil? || track.streaming.status == 'deleted' %>
               <%= form_with(url: admin_streamings_path, model: Streaming.new, method: :post) do |form| %>
                 <%= form.hidden_field :conference_id, value: @conference.id %>
                 <%= form.hidden_field :track_id, value: track.id %>
                 <%= form.hidden_field :status, value: 'creating' %>
-                <%= form.submit "配信用リソースを一括作成", class: "btn btn-primary" %>
+                <%= form.submit "配信用リソースを一括作成", class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
               <% end %>
             <% end %>
           </td>
-          <td>
+          <td class="tw-px-4 tw-py-2">
             <% if track.streaming&.media_live_channel %>
               <%= track.streaming.media_live_channel.state %>
             <% end %>
           </td>
-          <td>
+          <td class="tw-px-4 tw-py-2">
             <% if track.streaming&.media_live_channel %>
               <% if track.streaming.media_live_channel.idle? %>
-                <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary", data: { confirm: "MediaLive Channelを起動しますか？"}}) %>
+                <%= button_to("Start Channel", admin_start_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700", data: { confirm: "MediaLive Channelを起動しますか？"}}) %>
               <% elsif track.streaming&.media_live_channel.running? %>
-                <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "btn btn-primary", data: { confirm: "MediaLive Channelを停止しますか？"}}) %>
+                <%= button_to("Stop Channel", admin_stop_media_live_channel_path(id: track.streaming.media_live_channel.id), {method: :post, class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700", data: { confirm: "MediaLive Channelを停止しますか？"}}) %>
               <% end %>
             <% end %>
           </td>
-          <td>
+          <td class="tw-px-4 tw-py-2">
             <% if track.streaming && track.streaming.status != 'deleted' && track.streaming&.media_live_channel&.idle? %>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmation-modal-<%= track.id %>">配信用リソースを一括削除</button>
+              <button type="button" class="tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" data-bs-toggle="modal" data-bs-target="#confirmation-modal-<%= track.id %>">配信用リソースを一括削除</button>
             <% end %>
 
             <div class="modal fade" id="confirmation-modal-<%= track.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -104,31 +104,31 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-10">
+<div class="tw-grid tw-grid-cols-12 tw-gap-4">
+  <div class="tw-col-span-10">
     <h3>配信用URL一覧</h3>
   </div>
 </div>
 
-<div class="row">
-  <div class="col">
-    <table class="table table-striped" >
-      <thead>
+<div class="tw-grid tw-grid-cols-12 tw-gap-4">
+  <div class="tw-col-span-12">
+    <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200">
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">Track Name (ID)</th>
-        <th scope="col">Destination URL</th>
-        <th scope="col">Playback URL</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Track Name (ID)</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Destination URL</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Playback URL</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
       <% @tracks.each do |track| %>
-        <tr>
-          <td><%= track.name %> (<%= track.id %>)</td>
-          <td class="dest_url_box" data-controller="copy">
+        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+          <td class="tw-px-4 tw-py-2"><%= track.name %> (<%= track.id %>)</td>
+          <td class="tw-px-4 tw-py-2 dest_url_box" data-controller="copy">
             <div class="dest_url" data-copy-target="url"><%= track.streaming&.destination_url %></div>
             <div class="copy_button" data-action="click->copy#copy" data-copy-target="button"><%= image_tag "icons/copy.svg" %></div>
           </td>
-          <td><%= track.streaming&.playback_url %></td>
+          <td class="tw-px-4 tw-py-2"><%= track.streaming&.playback_url %></td>
         </tr>
       <% end %>
       </tbody>
@@ -137,28 +137,28 @@
 </div>
 
 <% if @tracks.map(&:streaming).compact.any?{ |s| s.error_cause.present? } %>
-  <div class="row">
-    <div class="col-10">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-10">
       <h3>エラー一覧</h3>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <table class="table table-striped talks_table" >
-        <thead>
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-12">
+      <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+        <thead class="tw-bg-gray-100">
         <tr>
-          <th scope="col">Track</th>
-          <th scope="col">エラーメッセージ</th>
+          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Track</th>
+          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">エラーメッセージ</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="tw-divide-y tw-divide-gray-200">
         <% @tracks.each do |track| %>
-          <tr>
-            <td>
+          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+            <td class="tw-px-4 tw-py-2">
               <%= track.name %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <% if track.streaming %>
                 <%= track.streaming.error_cause %>
               <% end %>

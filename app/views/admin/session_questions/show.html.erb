@@ -1,46 +1,46 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="row">
-    <div class="col-12">
-      <%= link_to '← 一覧に戻る', admin_session_questions_path(event: params[:event]), class: 'btn btn-secondary mb-3' %>
-      
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-12">
+      <%= link_to '← 一覧に戻る', admin_session_questions_path(event: params[:event]), class: 'tw-inline-block tw-rounded tw-bg-gray-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-gray-600 tw-mb-3' %>
+
       <h2>質問詳細</h2>
-      
-      <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
+
+      <div class="tw-rounded-md tw-border tw-border-gray-200 tw-shadow-sm tw-mb-4">
+        <div class="tw-border-b tw-bg-gray-50 tw-px-4 tw-py-2 tw-font-semibold tw-flex tw-justify-between tw-items-center">
           <h4>質問 #<%= @session_question.id %></h4>
           <div>
             <% if @session_question.hidden? %>
-              <span class="badge bg-warning text-dark me-2">非表示</span>
-              <%= button_to '表示する', 
-                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]), 
-                  method: :patch, 
-                  class: 'btn btn-sm btn-success' %>
+              <span class="tw-inline-block tw-rounded-full tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-bg-yellow-500 tw-text-gray-800 tw-mr-2">非表示</span>
+              <%= button_to '表示する',
+                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]),
+                  method: :patch,
+                  class: 'tw-inline-block tw-rounded tw-bg-green-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-green-700' %>
             <% else %>
-              <%= button_to '非表示にする', 
-                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]), 
-                  method: :patch, 
-                  class: 'btn btn-sm btn-warning',
+              <%= button_to '非表示にする',
+                  toggle_hidden_admin_session_question_path(@session_question, event: params[:event]),
+                  method: :patch,
+                  class: 'tw-inline-block tw-rounded tw-bg-yellow-500 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-yellow-600',
                   data: { turbo_confirm: '本当に非表示にしますか？' } %>
             <% end %>
           </div>
         </div>
-        <div class="card-body">
-          <p class="card-text"><%= simple_format(h(@session_question.body)) %></p>
-          
-          <div class="row mt-3">
-            <div class="col-md-6">
+        <div class="tw-p-4">
+          <p><%= simple_format(h(@session_question.body)) %></p>
+
+          <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mt-3">
+            <div class="tw-col-span-12 md:tw-col-span-6">
               <strong>質問者:</strong> <%= @session_question.profile.public_name %><br>
               <strong>セッション:</strong> <%= @session_question.talk.title %><br>
               <strong>トラック:</strong> <%= @session_question.talk.track&.name || '未設定' %><br>
               <strong>作成日時:</strong> <%= @session_question.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
             </div>
-            <div class="col-md-6">
+            <div class="tw-col-span-12 md:tw-col-span-6">
               <strong>投票数:</strong> <%= @session_question.votes_count %><br>
               <strong>回答数:</strong> <%= @session_question.session_question_answers.count %><br>
               <strong>カンファレンス:</strong> <%= @session_question.conference.name %>
@@ -52,25 +52,25 @@
       <h3>回答一覧</h3>
       <% if @session_question.session_question_answers.any? %>
         <% @session_question.session_question_answers.order_by_time.each do |answer| %>
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="flex-grow-1">
-                  <p class="card-text"><%= simple_format(h(answer.body)) %></p>
-                  <div class="text-muted">
+          <div class="tw-rounded-md tw-border tw-border-gray-200 tw-shadow-sm tw-mb-3">
+            <div class="tw-p-4">
+              <div class="tw-flex tw-justify-between tw-items-start">
+                <div class="tw-grow">
+                  <p><%= simple_format(h(answer.body)) %></p>
+                  <div class="tw-text-gray-500">
                     <strong>回答者:</strong> <%= answer.answerer_display_name %><br>
                     <strong>回答日時:</strong> <%= answer.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
                   </div>
                 </div>
-                <div class="ms-2">
-                  <%= button_to '削除', 
+                <div class="tw-ml-2">
+                  <%= button_to '削除',
                       admin_session_question_session_question_answer_path(
-                        @session_question, 
-                        answer, 
+                        @session_question,
+                        answer,
                         event: params[:event]
-                      ), 
-                      method: :delete, 
-                      class: 'btn btn-sm btn-danger',
+                      ),
+                      method: :delete,
+                      class: 'tw-inline-block tw-rounded tw-bg-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-red-700',
                       data: { turbo_confirm: '本当に削除しますか？' } %>
                 </div>
               </div>
@@ -78,25 +78,25 @@
           </div>
         <% end %>
       <% else %>
-        <div class="alert alert-info">
+        <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800">
           まだ回答がありません
         </div>
       <% end %>
 
-      <h3 class="mt-4">投票者一覧</h3>
+      <h3 class="tw-mt-4">投票者一覧</h3>
       <% if @session_question.session_question_votes.any? %>
-        <ul class="list-group">
+        <ul class="tw-divide-y tw-divide-gray-200 tw-rounded tw-border">
           <% @session_question.session_question_votes.includes(:profile).each do |vote| %>
-            <li class="list-group-item">
+            <li class="tw-p-3">
               <%= vote.profile.public_name %>
-              <small class="text-muted">
+              <small class="tw-text-sm tw-text-gray-500">
                 (<%= vote.created_at.strftime('%Y/%m/%d %H:%M:%S') %>)
               </small>
             </li>
           <% end %>
         </ul>
       <% else %>
-        <div class="alert alert-info">
+        <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800">
           まだ投票がありません
         </div>
       <% end %>

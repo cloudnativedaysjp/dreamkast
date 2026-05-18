@@ -1,6 +1,6 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
@@ -8,46 +8,46 @@
   <h2>TimeTable Editor</h2>
 
 
-  <table class="table table-striped talks_table" >
-    <thead>
+  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
+    <thead class="tw-bg-gray-100">
     <tr>
-      <th scope="col">Speakers</th>
-      <th scope="col">Title</th>
-      <th scope="col" style="width: 90px">Track</th>
-      <th scope="col" style="width: 150px">Date</th>
-      <th scope="col" style="width: 90px">Start</th>
-      <th scope="col">End</th>
-      <th scope="col">Time</th>
-      <th scope="col">SponsorSession?</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 90px">Track</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 150px">Date</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 90px">Start</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">End</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Time</th>
+      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">SponsorSession?</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="tw-divide-y tw-divide-gray-200">
     <%= form_with(url: admin_timetable_path, id: "timetable", method: "put") do |f| %>
       <% @talks.each do |talk| %>
         <%= fields_for 'talks[]', talk do |ft| %>
-          <tr>
-            <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-            <td><h5><%= talk.title %></h5></td>
-            <td>
+          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+            <td class="tw-px-4 tw-py-2"><ul class="tw-p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+            <td class="tw-px-4 tw-py-2"><h5><%= talk.title %></h5></td>
+            <td class="tw-px-4 tw-py-2">
               <div class="field">
-                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, { include_blank: true, selected: talk.track_id }, class: "form-control" %>
+                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, { include_blank: true, selected: talk.track_id }, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
               </div>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <div class="field">
-                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, { include_blank: true, selected: talk.conference_day_id }, {class: "form-control"} %>
+                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, { include_blank: true, selected: talk.conference_day_id }, {class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"} %>
               </div>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <div class="field">
-                <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime("%H:%M") : '', class: "form-control", placeholder: 'HH:MM'  %>
+                <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime("%H:%M") : '', class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", placeholder: 'HH:MM'  %>
               </div>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <p><%= talk.end_time ? talk.end_time.strftime("%H:%M") : '' %></p>
             </td>
-            <td><%= talk.time  %>m</td>
-            <td>
+            <td class="tw-px-4 tw-py-2"><%= talk.time  %>m</td>
+            <td class="tw-px-4 tw-py-2">
               <%= talk.sponsor.present? ? talk.sponsor.name : '' %>
             </td>
           </tr>
@@ -58,22 +58,22 @@
   </table>
 <% end %>
 
-<div id="transit_nav" class="p-4">
-  <%= submit_tag "タイムテーブルを保存", form: "timetable",class: "btn btn-danger transit_button" %>
+<div id="transit_nav" class="tw-p-4">
+  <%= submit_tag "タイムテーブルを保存", form: "timetable", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
 
   <%= form_with(url: admin_preview_timetable_path, method: :get) do |form| %>
-    <%= form.submit "プレビュー", class: "btn btn-danger transit_button" %>
+    <%= form.submit "プレビュー", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
   <% end %>
 
   <% if @conference.show_timetable_enabled? %>
     <%= form_with(url: admin_close_timetable_path, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを非公開にする", class: "btn btn-danger transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+      <%= form.submit "タイムテーブルを非公開にする", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に非公開にしますか？' } %>
     <% end %>
   <% else %>
     <%= form_with(url: admin_publish_timetable_path, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを公開する", class: "btn btn-danger transit_button", data: { confirm: '本当に公開しますか？' }  %>
+      <%= form.submit "タイムテーブルを公開する", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に公開しますか？' }  %>
     <% end %>
   <% end %>
 </div>

@@ -11,26 +11,26 @@
 </video>
 
 <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
-  <section class="speaker-information py-3">
+  <section class="speaker-information tw-py-3">
     <%= form.hidden_field :media_package_channel_id, value: @media_package_channel.id %>
     <%= form.hidden_field :talk_id, value: @talk.id %>
 
     <div class="field">
       <%= form.label :start_time,'切り出し開始時刻' %>*<br/>
-      <%= form.text_field :start_time, value: @initial_start_time, id: 'start-time-field', class: 'form-control' %>
+      <%= form.text_field :start_time, value: @initial_start_time, id: 'start-time-field', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
     </div>
 
     <div class="field">
       <%= form.label :end_time, '切り出し終了時刻' %>*<br/>
-      <%= form.text_field :end_time, value: @initial_end_time, id: 'end-time-field', class: 'form-control' %>
+      <%= form.text_field :end_time, value: @initial_end_time, id: 'end-time-field', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
     </div>
 
     <div class="field">
-      <button type="button" id="update-start-and-end" class="btn btn-secondary">Update</button>
+      <button type="button" id="update-start-and-end" class="tw-inline-block tw-rounded tw-bg-gray-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-gray-600">Update</button>
     </div>
 
-    <div class="actions justify-content-center py-3">
-      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    <div class="actions tw-justify-center tw-py-3">
+      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-6 tw-py-3 tw-text-lg tw-font-bold tw-text-white hover:tw-bg-blue-700 tw-block tw-w-full" %>
     </div>
   </section>
 <% end %>

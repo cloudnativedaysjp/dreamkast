@@ -1,41 +1,41 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>Download Proposals to CSV</h2>
-    <div class="col-12 form-group">
-      <%= link_to 'download', admin_proposals_path(format: :csv), class: "btn btn-primary" %>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= link_to 'download', admin_proposals_path(format: :csv), class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
     </div>
   </div>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>Proposals</h2>
-    <table class="table table-striped talks_table" >
-      <thead>
+    <table class="tw-w-full tw-border tw-border-gray-200 talks_table" >
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">Speakers</th>
-        <th scope="col">Title / Abstract</th>
-        <th scope="col">Status</th>
-        <th scope="col">Type</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title / Abstract</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Status</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Type</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
       <%= form_with(url: admin_proposals_path, id: "proposal_list", method: "put") do |f| %>
         <% @proposals.each do |proposal| %>
-          <tr>
+          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
 
-            <td><ul class="p-0"><% proposal.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+            <td class="tw-px-4 tw-py-2"><ul class="tw-p-0"><% proposal.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
 
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <h5><%= proposal.talk.title %></h5>
               <p class="abstract"><%= proposal.talk.abstract[0..30] %></p>
             </td>
 
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <%= f.select "proposal[#{proposal.id}][status]", proposal.class.statuses.to_a, {selected: proposal.class.statuses[proposal.status]} %>
             </td>
 
@@ -46,18 +46,18 @@
     </table>
   </div>
 <% end %>
-<div id="transit_nav" class="p-4">
-  <%= submit_tag "保存", form: "proposal_list",class: "btn btn-danger transit_button" %>
+<div id="transit_nav" class="tw-p-4">
+  <%= submit_tag "保存", form: "proposal_list",class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
 
   <% if @conference.cfp_result_visible %>
     <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, method: :patch) do |form| %>
       <%= form.hidden_field :cfp_result_visible, value: false %>
-      <%= form.submit "採択結果を非公開にする", class: "btn btn-danger transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+      <%= form.submit "採択結果を非公開にする", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に非公開にしますか？' } %>
     <% end %>
   <% else %>
     <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, method: :patch) do |form| %>
       <%= form.hidden_field :cfp_result_visible, value: true %>
-      <%= form.submit "採択結果を公開する", class: "btn btn-danger transit_button", data: { confirm: '本当に公開しますか？' }  %>
+      <%= form.submit "採択結果を公開する", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に公開しますか？' }  %>
     <% end %>
   <% end %>
 </div>

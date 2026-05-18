@@ -1,13 +1,13 @@
 <%= render 'layout' do %>
   <h2>Current user</h2>
-  <div class="row">
-    <div class="col-6">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-6">
       <pre><%= JSON.pretty_generate(current_user) %></pre>
       <pre><%= JSON.pretty_generate(current_user[:info]) %></pre>
       <pre><%= JSON.pretty_generate(current_user[:extra][:raw_info]) %></pre>
       <div><%= JSON.pretty_generate(current_user[:extra][:raw_info]["https://cloudnativedays.jp/roles"]) %></div>
       <%= form_with url: 'admin/destroy_user', method: 'delete' do |form| %>
-        <%= form.submit "ログインユーザーを削除", class: "btn btn-primary form-control" %>
+        <%= form.submit "ログインユーザーを削除", class: "tw-inline-block tw-w-full tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
       <% end %>
     </div>
   </div>

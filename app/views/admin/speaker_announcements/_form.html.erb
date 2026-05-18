@@ -1,9 +1,9 @@
 <%= form_with(url: speaker_announcement_url, model: @speaker_announcement) do |form| %>
-  <section class="speaker-information py-3">
+  <section class="speaker-information tw-py-3">
 
     <div class="field">
       <%= form.label :publish_time, '公開日' %>*<br/>
-      <%= form.datetime_select :publish_time, class: 'form-control' %>
+      <%= form.datetime_select :publish_time, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
     </div>
 
     <% unless @speakers.blank? || @speakers.nil? %>
@@ -35,16 +35,16 @@
 
     <div class="field">
       <%= form.label :body, 'アナウンス内容' %>*
-      <%= form.text_area :body, class: "form-control", required: true %>
+      <%= form.text_area :body, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :publish, '公開・非公開' %>*<br/>
-      <%= form.select :publish, {'非公開': false, '公開': true}, class: "form-control", required: true %>
+      <%= form.select :publish, {'非公開': false, '公開': true}, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", required: true %>
     </div>
 
-    <div class="actions justify-content-center py-3">
-      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    <div class="actions tw-justify-center tw-py-3">
+      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-6 tw-py-3 tw-font-bold tw-text-white tw-text-lg tw-block tw-w-full hover:tw-bg-blue-700" %>
     </div>
   </section>
 <% end %>

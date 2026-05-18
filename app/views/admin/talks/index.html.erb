@@ -1,72 +1,72 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>エクスポート</h2>
-    <div class="col-12 form-group d-flex">
-      <%= button_to 'エクスポート(CSV)', admin_talks_path(format: :csv), {method: :get, class: 'me-2' } %>
+    <div class="tw-col-span-12 tw-mb-4 tw-flex">
+      <%= button_to 'エクスポート(CSV)', admin_talks_path(format: :csv), {method: :get, class: 'tw-mr-2' } %>
       <%= button_to 'エクスポート(JSON, for Website)', admin_export_talks_for_website_path, {method: :get } %>
     </div>
   </div>
 
-  <div class="row">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
     <h2>Talks</h2>
-    <table class="table table-striped talks_table" >
-      <thead>
+    <table class="tw-w-full tw-border tw-border-gray-200 talks_table" >
+      <thead class="tw-bg-gray-100">
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Speakers</th>
-        <th scope="col">Title / Abstract</th>
-        <th scope="col">Track</th>
-        <th scope="col">DateTime</th>
-        <th scope="col">Time</th>
-        <th scope="col">公開可否</th>
-        <th scope="col">Video File</th>
-        <th scope="col">Video URL</th>
-        <th scope="col">操作</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title / Abstract</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Track</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">DateTime</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Time</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">公開可否</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Video File</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Video URL</th>
+        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">操作</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tw-divide-y tw-divide-gray-200">
       <%= form_with(url: admin_talks_path, id: "talk_list", method: "put", data: { turbo_method: :post } ) do |f| %>
         <% @talks.each do |talk| %>
-          <tr>
-            <td><%= talk.id %></td>
-            <td><ul class="p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-            <td>
+          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+            <td class="tw-px-4 tw-py-2"><%= talk.id %></td>
+            <td class="tw-px-4 tw-py-2"><ul class="tw-p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
+            <td class="tw-px-4 tw-py-2">
               <h5><%= talk.title %></h5>
               <p class="abstract"><%= talk.abstract[0..30] %></p>
             </td>
-            <td><%= talk.track.present? ? talk.track.name : "" %></td>
-            <td>
+            <td class="tw-px-4 tw-py-2"><%= talk.track.present? ? talk.track.name : "" %></td>
+            <td class="tw-px-4 tw-py-2">
               <%= talk.conference_day&.date %>
               <% if talk.start_time.present? && talk.start_time.present? %>
                 <%= talk.start_time.strftime("%H:%M") + "-" + talk.end_time.strftime("%H:%M") %>
               <% end %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <%= talk.time %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <%= talk.proposal_item_value(VideoAndSlidePublished::LABEL)
               %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <% if talk.video&.url.present? %>
                 <%= link_to 'Download', talk.video&.url %>
               <% else %>
                 未提出
               <% end %>
             </td>
-            <td>
+            <td class="tw-px-4 tw-py-2">
               <% video_id = talk.video ? talk.video.video_id : nil %>
               <%= text_field_tag "video[#{talk.id}][video_id]", video_id,placeholder: "video url", size: "9" %>
             </td>
-            <td>
-              <%= link_to '編集', edit_admin_talk_path(event: params[:event], id: talk.id), class: 'btn btn-sm btn-primary' %>
+            <td class="tw-px-4 tw-py-2">
+              <%= link_to '編集', edit_admin_talk_path(event: params[:event], id: talk.id), class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-blue-700' %>
             </td>
           </tr>
         <% end %>
@@ -75,7 +75,7 @@
     </table>
   </div>
 <% end %>
-<div id="transit_nav" class="p-4">
-  <%= submit_tag "保存", form: "talk_list",class: "btn btn-danger transit_button" %>
-  <br/><span class="text-white"> ※視聴者にも設定が配信されます</span>
+<div id="transit_nav" class="tw-p-4">
+  <%= submit_tag "保存", form: "talk_list",class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
+  <br/><span class="tw-text-white"> ※視聴者にも設定が配信されます</span>
 </div>

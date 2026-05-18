@@ -9,47 +9,47 @@
         <% end %>
       </ul>
     <% end %>
-  <div class="row py-2" data-controller="sponsor">
-    <div class="mb-3">
-      <%= form.label :name, "スポンサー名*", class: "form-label" %>
-      <%= form.text_field :name, class: "form-control", value: @sponsor_form.name %>
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-py-2" data-controller="sponsor">
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= form.label :name, "スポンサー名*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+      <%= form.text_field :name, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.name %>
     </div>
 
-    <div class="mb-3">
-      <%= form.label :abbr, "スポンサー略称*", class: "form-label" %>
-      <%= form.text_field :abbr, class: "form-control", value: @sponsor_form.abbr %>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= form.label :abbr, "スポンサー略称*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+      <%= form.text_field :abbr, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.abbr %>
     </div>
 
-    <div class="mb-3">
-      <%= form.label :description, "スポンサー概要", class: "form-label" %>
-      <%= form.text_area :description, class: "form-control", rows: "3", value: @sponsor_form.description %>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= form.label :description, "スポンサー概要", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+      <%= form.text_area :description, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", rows: "3", value: @sponsor_form.description %>
     </div>
 
-    <div class="mb-3">
-      <%= form.label :url, "スポンサーUrl", class: "form-label" %>
-      <%= form.text_field :url, class: "form-control", value: @sponsor_form.url %>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= form.label :url, "スポンサーUrl", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+      <%= form.text_field :url, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.url %>
     </div>
 
-    <div class="mb-3">
-      <%= form.label :sponsor_types, "スポンサー種別*", class: "form-label" %><br>
+    <div class="tw-col-span-12 tw-mb-4">
+      <%= form.label :sponsor_types, "スポンサー種別*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %><br>
       <% @sponsor_types.each do |sponsor_type| %>
-        <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor_form.sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'form-check-input' %>
-        <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'form-check-label'} %><br>
+        <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor_form.sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'tw-mr-2' %>
+        <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'tw-text-sm'} %><br>
       <% end %>
     </div>
   </div>
 
-  <div class="mb-3">
+  <div class="tw-mb-4">
     <%= form.label :attachment_logo_image, "スポンサーロゴ" %><br>
     <%= form.file_field :attachment_logo_image %>
     <% if @sponsor_form.sponsor.sponsor_attachment_logo_image %>
-      <%= image_tag @sponsor_form.sponsor.sponsor_attachment_logo_image.file_url, class: "img-fluid" if @sponsor_form.sponsor.sponsor_attachment_logo_image.file.present? %>
+      <%= image_tag @sponsor_form.sponsor.sponsor_attachment_logo_image.file_url, class: "tw-max-w-full tw-h-auto" if @sponsor_form.sponsor.sponsor_attachment_logo_image.file.present? %>
     <% end %>
   </div>
 
-  <div class="mb-3">
-    <div class="d-flex justify-content-end">
-      <%= form.submit class: "btn btn-primary btn-sm me-2" %>
+  <div class="tw-mb-4">
+    <div class="tw-flex tw-justify-end">
+      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-blue-700 tw-mr-2" %>
     </div>
   </div>
   <% end %>

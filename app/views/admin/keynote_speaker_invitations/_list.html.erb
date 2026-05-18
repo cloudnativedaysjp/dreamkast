@@ -1,62 +1,62 @@
 <%= turbo_frame_tag 'invitations-list' do %>
-  <div class="card">
-    <div class="card-header">
-      <h5 class="mb-0">招待一覧</h5>
+  <div class="tw-rounded-md tw-border tw-border-gray-200 tw-shadow-sm">
+    <div class="tw-border-b tw-bg-gray-50 tw-px-4 tw-py-2 tw-font-semibold">
+      <h5 class="tw-mb-0">招待一覧</h5>
     </div>
-    <div class="card-body p-0">
+    <div class="tw-p-0">
       <% if keynote_speaker_invitations.any? %>
-        <div class="table-responsive">
-          <table class="table table-striped mb-0">
-            <thead>
+        <div class="tw-overflow-x-auto">
+          <table class="tw-mb-0 tw-w-full tw-border tw-border-gray-200">
+            <thead class="tw-bg-gray-100">
               <tr>
-                <th>メールアドレス</th>
-                <th>名前</th>
-                <th>スピーカー</th>
-                <th>セッション</th>
-                <th>招待日時</th>
-                <th>有効期限</th>
-                <th>ステータス</th>
-                <th>操作</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">メールアドレス</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">名前</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">スピーカー</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">セッション</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">招待日時</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">有効期限</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">ステータス</th>
+                <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">操作</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="tw-divide-y tw-divide-gray-200">
               <% keynote_speaker_invitations.each do |invitation| %>
-                <tr>
-                  <td><%= invitation.email %></td>
-                  <td><%= invitation.name || '-' %></td>
-                  <td>
+                <tr class="odd:tw-bg-white even:tw-bg-gray-50">
+                  <td class="tw-px-4 tw-py-2"><%= invitation.email %></td>
+                  <td class="tw-px-4 tw-py-2"><%= invitation.name || '-' %></td>
+                  <td class="tw-px-4 tw-py-2">
                     <% if invitation.speaker %>
                       <%= link_to invitation.speaker.name, edit_admin_speaker_path(event: @conference.abbr, id: invitation.speaker.id) %>
                     <% else %>
                       -
                     <% end %>
                   </td>
-                  <td>
+                  <td class="tw-px-4 tw-py-2">
                     <% if invitation.talk %>
                       <%= link_to invitation.talk.title, edit_admin_talk_path(event: @conference.abbr, id: invitation.talk.id) %>
                     <% else %>
                       -
                     <% end %>
                   </td>
-                  <td><%= l(invitation.invited_at, format: :short) if invitation.invited_at %></td>
-                  <td><%= l(invitation.expires_at, format: :short) if invitation.expires_at %></td>
-                  <td>
+                  <td class="tw-px-4 tw-py-2"><%= l(invitation.invited_at, format: :short) if invitation.invited_at %></td>
+                  <td class="tw-px-4 tw-py-2"><%= l(invitation.expires_at, format: :short) if invitation.expires_at %></td>
+                  <td class="tw-px-4 tw-py-2">
                     <% if invitation.accepted? %>
-                      <span class="badge bg-success">承諾済み</span>
+                      <span class="tw-inline-block tw-rounded-full tw-bg-green-600 tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-text-white">承諾済み</span>
                     <% elsif invitation.expired? %>
-                      <span class="badge bg-secondary">期限切れ</span>
+                      <span class="tw-inline-block tw-rounded-full tw-bg-gray-500 tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-text-white">期限切れ</span>
                     <% else %>
-                      <span class="badge bg-warning">承諾待ち</span>
+                      <span class="tw-inline-block tw-rounded-full tw-bg-yellow-500 tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-text-white">承諾待ち</span>
                     <% end %>
                   </td>
-                  <td>
+                  <td class="tw-px-4 tw-py-2">
                     <% unless invitation.accepted? %>
-                      <div class="btn-group-vertical btn-group-sm">
-                        <%= button_to '再送信', resend_admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
-                                      method: :post, class: 'btn btn-outline-primary',
+                      <div class="tw-flex tw-flex-col tw-gap-1">
+                        <%= button_to '再送信', resend_admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id),
+                                      method: :post, class: 'tw-inline-block tw-rounded tw-border-2 tw-border-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-blue-600 hover:tw-bg-blue-600 hover:tw-text-white',
                                       data: { turbo_method: :post, turbo_confirm: '招待メールを再送信しますか？' } %>
-                        <%= button_to '削除', admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id), 
-                                      method: :delete, class: 'btn btn-outline-danger',
+                        <%= button_to '削除', admin_keynote_speaker_invitation_path(event: @conference.abbr, id: invitation.id),
+                                      method: :delete, class: 'tw-inline-block tw-rounded tw-border-2 tw-border-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-red-600 hover:tw-bg-red-600 hover:tw-text-white',
                                       data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？関連するスピーカーとセッション情報も削除されます。' } %>
                       </div>
                     <% end %>
@@ -67,8 +67,8 @@
           </table>
         </div>
       <% else %>
-        <div class="p-4 text-center text-muted">
-          <p class="mb-0">まだ招待がありません。</p>
+        <div class="tw-p-4 tw-text-center tw-text-gray-500">
+          <p class="tw-mb-0">まだ招待がありません。</p>
         </div>
       <% end %>
     </div>

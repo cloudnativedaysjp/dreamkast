@@ -21,6 +21,7 @@ RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 WORKDIR /app
 COPY --link postcss.config.js .
+COPY --link tailwind.config.js .
 COPY --link bin bin
 COPY --link config config
 COPY --link Rakefile Rakefile

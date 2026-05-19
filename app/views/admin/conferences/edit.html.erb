@@ -1,12 +1,12 @@
 <%= render 'admin/layout' do %>
-  <div class="row mb-3">
-    <div class="col-10 mb-3 d-flex align-items-center">
+  <div class="tw-mb-3 tw-grid tw-grid-cols-12 tw-gap-4">
+    <div class="tw-col-span-10 tw-mb-3 tw-flex tw-items-center">
       <h2>Conference > <%= @conference.name %></h2>
     </div>
   </div>
 
-  <div class="row justify-content-md-center">
-    <div class="registration-form py-3 px-md-5 w-100 admin-conference-form">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-justify-center">
+    <div class="tw-col-span-12 tw-py-3 md:tw-px-12 tw-w-full admin-conference-form">
       <%= render 'form', conference_form: @conference_form %>
     </div>
   </div>

@@ -2,7 +2,7 @@ class Admin::HarvestJobsController < ApplicationController
   include SecuredAdmin
 
   def index
-    @harvest_jobs = @conference.media_package_harvest_jobs
+    @harvest_jobs = @conference.media_package_harvest_jobs.order(start_time: :desc)
   end
 
   def new

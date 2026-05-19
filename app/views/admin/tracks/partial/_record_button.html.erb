@@ -1,6 +1,6 @@
 <% if talk.abstract != 'intermission' && (!@has_presentation_method || talk.live?(config_cache: @proposal_item_config_cache)) %>
   <% if already_recorded?(talk) %>
-    <div class="btn btn-primary">録画済み</div>
+    <div class="tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white">録画済み</div>
   <% else %>
     <%= link_to "録画する", new_admin_harvest_job_path(event: conference.abbr, talk_id: talk.id), data: { turbo_frame: "modal" } %>
   <% end %>

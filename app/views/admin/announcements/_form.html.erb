@@ -1,37 +1,55 @@
 <%= form_with(url: announcement_url, model: @announcement) do |form| %>
-  <section class="speaker-information py-3">
-
-    <div class="field">
-      <%= form.label :publish_time, '公開日' %>*<br/>
-      <%= form.datetime_select :publish_time, class: 'form-control' %>
-    </div>
-    <br/>
-    <div class="field">
-      <%= form.radio_button :receiver, :all_attendee, required: true %>
-      <%= form.label :receiver, '全参加者に通知', value: @announcement.receiver %>
-      <br/>
-      <%= form.radio_button :receiver, :only_online, required: true %>
-      <%= form.label :receiver, 'オンライン参加者に通知', value: @announcement.receiver %>
-      <br/>
-      <%= form.radio_button :receiver, :only_offline, required: true %>
-      <%= form.label :receiver, '現地参加者に通知', value: @announcement.receiver %>
-      <br/>
-      <%= form.radio_button :receiver, :early_bird, required: true %>
-      <%= form.label :receiver, '先行申込者に通知', value: @announcement.receiver %>
+  <div class="admin-form-section">
+    <div>
+      <%= form.label :publish_time, class: 'admin-form-label' do %>
+        公開日 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.datetime_select :publish_time, {}, { class: 'tw-mr-1 tw-rounded-md tw-border tw-border-gray-300 tw-px-2 tw-py-1.5 tw-text-sm tw-shadow-sm focus:tw-border-blue-500 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500/30' } %>
     </div>
 
-    <div class="field">
-      <%= form.label :body, 'アナウンス内容' %>*
-      <%= form.text_area :body, class: "form-control", required: true %>
+    <div>
+      <span class="admin-form-label">
+        送信先 <span class="admin-form-required">*</span>
+      </span>
+      <div class="tw-space-y-2">
+        <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+          <%= form.radio_button :receiver, :all_attendee, required: true, class: 'admin-radio' %>
+          <span>全参加者に通知</span>
+        </label>
+        <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+          <%= form.radio_button :receiver, :only_online, required: true, class: 'admin-radio' %>
+          <span>オンライン参加者に通知</span>
+        </label>
+        <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+          <%= form.radio_button :receiver, :only_offline, required: true, class: 'admin-radio' %>
+          <span>現地参加者に通知</span>
+        </label>
+        <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+          <%= form.radio_button :receiver, :early_bird, required: true, class: 'admin-radio' %>
+          <span>先行申込者に通知</span>
+        </label>
+      </div>
     </div>
 
-    <div class="field">
-      <%= form.label :publish, '公開・非公開' %>*<br/>
-      <%= form.select :publish, {'非公開': 0, '公開': 1}, class: "form-control", required: true %>
+    <div>
+      <%= form.label :body, class: 'admin-form-label' do %>
+        アナウンス内容 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.text_area :body, rows: 6, class: 'admin-textarea', required: true %>
     </div>
 
-    <div class="actions justify-content-center py-3">
-      <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+    <div>
+      <%= form.label :publish, class: 'admin-form-label' do %>
+        公開・非公開 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.select :publish,
+                      { '非公開': 0, '公開': 1 },
+                      {},
+                      { class: 'admin-select', required: true } %>
     </div>
-  </section>
+
+    <div class="tw-pt-2">
+      <%= form.submit class: 'admin-btn-primary tw-w-full' %>
+    </div>
+  </div>
 <% end %>

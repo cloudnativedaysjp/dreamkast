@@ -13,6 +13,10 @@
     <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'video_player', 'data-turbolinks-track': 'reload' %>
+    <%# Bootstrap → Tailwind 段階移行 (issue #2572 / #2564): admin 系コントローラのみ Tailwind を読み込む %>
+    <% if controller_path.start_with?('admin') %>
+      <%= stylesheet_link_tag 'admin_tailwind', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <% end %>
   <meta name="turbo-cache-control" content="no-cache">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" rel="stylesheet" />

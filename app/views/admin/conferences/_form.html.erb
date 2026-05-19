@@ -1,133 +1,135 @@
 <%= form_with(url: admin_conference_path, model: conference_form, method: :patch) do |form| %>
-  <h3>Edit Conference</h3>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Edit Conference</h2>
 
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">Field</th>
-      <th scope="col">Value</th>
-    </tr>
-    </thead>
+  <div class="admin-table-card tw-mb-4">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
 
-    <tbody>
-    <tr>
-      <td><%= form.label :conference_status, 'Status' %></td>
-      <td><%= form.select :conference_status, @conference_form.conference.class.conference_statuses%></td>
-    </tr>
+      <tbody>
+        <tr>
+          <td><%= form.label :conference_status, 'Status' %></td>
+          <td><%= form.select :conference_status, @conference_form.conference.class.conference_statuses %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :speaker_entry, 'Speaker Entry Status' %></td>
-      <td><%= form.select :speaker_entry, @conference_form.conference.class.speaker_entries.map { |k, v| [k, k] }.to_h %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :speaker_entry, 'Speaker Entry Status' %></td>
+          <td><%= form.select :speaker_entry, @conference_form.conference.class.speaker_entries.map { |k, v| [k, k] }.to_h %></td>
+        </tr>
 
-    <tr>
-      <td>Rehearsal Mode</td>
-      <td>
-        <%= form.check_box :rehearsal_mode %>
-        <%= form.label :rehearsal_mode, 'On' %><br>
-      </td>
-    </tr>
+        <tr>
+          <td>Rehearsal Mode</td>
+          <td>
+            <%= form.check_box :rehearsal_mode %>
+            <%= form.label :rehearsal_mode, 'On' %><br>
+          </td>
+        </tr>
 
-    <tr>
-      <td>Proposal Result Visible Status</td>
-      <td>
-        <%= form.check_box :cfp_result_visible %>
-        <%= form.label :cfp_result_visible, 'Visible' %><br>
-      </td>
-    </tr>
+        <tr>
+          <td>Proposal Result Visible Status</td>
+          <td>
+            <%= form.check_box :cfp_result_visible %>
+            <%= form.label :cfp_result_visible, 'Visible' %><br>
+          </td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :attendee_entry, 'Attendee Entry Status' %></td>
-      <td><%= form.select :attendee_entry, @conference_form.conference.class.attendee_entries.map { |k, v| [k, k] }.to_h %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :attendee_entry, 'Attendee Entry Status' %></td>
+          <td><%= form.select :attendee_entry, @conference_form.conference.class.attendee_entries.map { |k, v| [k, k] }.to_h %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :show_timetable, 'Timetable Visible Status' %></td>
-      <td><%= form.select :show_timetable, @conference_form.conference.class.show_timetables.map { |k, v| [k, k] }.to_h %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :show_timetable, 'Timetable Visible Status' %></td>
+          <td><%= form.select :show_timetable, @conference_form.conference.class.show_timetables.map { |k, v| [k, k] }.to_h %></td>
+        </tr>
 
-    <tr>
-      <td>Sponsors Visible Status</td>
-      <td>
-        <%= form.check_box :show_sponsors %>
-        <%= form.label :show_sponsors, 'Visible' %><br>
-      </td>
-    </tr>
+        <tr>
+          <td>Sponsors Visible Status</td>
+          <td>
+            <%= form.check_box :show_sponsors %>
+            <%= form.label :show_sponsors, 'Visible' %><br>
+          </td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :capacity, 'Offline Capacity' %></td>
-      <td><%= form.number_field :capacity %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :capacity, 'Offline Capacity' %></td>
+          <td><%= form.number_field :capacity %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :contact_url, 'Contact Url' %></td>
-      <td><%= form.text_field :contact_url %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :contact_url, 'Contact Url' %></td>
+          <td><%= form.text_field :contact_url %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :sponsor_guideline_url, 'Sponsor Guideline Url' %></td>
-      <td><%= form.text_field :sponsor_guideline_url %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :sponsor_guideline_url, 'Sponsor Guideline Url' %></td>
+          <td><%= form.text_field :sponsor_guideline_url %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :brief, 'Conference briefs' %></td>
-      <td><%= form.text_field :brief %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :brief, 'Conference briefs' %></td>
+          <td><%= form.text_field :brief %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :privacy_policy, 'Privacy Policy (for attendees)' %></td>
-      <td><%= form.text_area :privacy_policy, {class: "privacy-policy"} %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :privacy_policy, 'Privacy Policy (for attendees)' %></td>
+          <td><%= form.text_area :privacy_policy, { class: "privacy-policy" } %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :privacy_policy_for_speaker, 'Privacy Policy (for speakers)' %></td>
-      <td><%= form.text_area :privacy_policy_for_speaker, {class: "privacy-policy"} %></td>
-    </tr>
+        <tr>
+          <td><%= form.label :privacy_policy_for_speaker, 'Privacy Policy (for speakers)' %></td>
+          <td><%= form.text_area :privacy_policy_for_speaker, { class: "privacy-policy" } %></td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :links, 'Links' %></td>
-      <td>
-        <p><%= link_to "Add Link", admin_conference_add_link_path(conference_id: @conference.abbr), method: :post, data: { turbo_method: :post } %></p>
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">URL</th>
-            <th scope="col">Description</th>
-            <th scope="col"></th>
-          </tr>
-          </thead>
-          <tbody id="link_fields">
-          <%= form.fields_for :links do |f| %>
-            <%= render 'admin/conferences/link_fields', :f => f %>
-          <% end %>
-          </tbody>
-        </table>
-      </td>
-    </tr>
+        <tr>
+          <td><%= form.label :links, 'Links' %></td>
+          <td>
+            <p class="tw-mb-2"><%= link_to "Add Link", admin_conference_add_link_path(conference_id: @conference.abbr), method: :post, data: { turbo_method: :post } %></p>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">URL</th>
+                  <th scope="col">Description</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="link_fields">
+                <%= form.fields_for :links do |f| %>
+                  <%= render 'admin/conferences/link_fields', :f => f %>
+                <% end %>
+              </tbody>
+            </table>
+          </td>
+        </tr>
 
-    <tr>
-      <td><%= form.label :conference_days , 'Conference Days' %></td>
-      <td>
-        <div class="conference-day-fields">
-          <%= form.fields_for :conference_days do |f| %>
-            <div class="conference-day-field">
-              <div class="form-row form-group">
-                <div class="col-12 col-mb-6">
-                  <%= f.label :date, "Date" %>
-                  <%= f.text_field :date %>
+        <tr>
+          <td><%= form.label :conference_days, 'Conference Days' %></td>
+          <td>
+            <div class="conference-day-fields">
+              <%= form.fields_for :conference_days do |f| %>
+                <div class="conference-day-field">
+                  <div class="tw-mb-4 tw-grid tw-grid-cols-12 tw-gap-4">
+                    <div class="tw-col-span-12">
+                      <%= f.label :date, "Date" %>
+                      <%= f.text_field :date %>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-    </tr>
+          </td>
+        </tr>
 
-    </tbody>
-  </table>
-  <div class="form-row form-group">
-    <div class="col-12 col-md-6">
-      <%= form.submit class: "btn btn-primary" %>
-    </div>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tw-mb-4">
+    <%= form.submit class: "tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700" %>
   </div>
 <% end %>

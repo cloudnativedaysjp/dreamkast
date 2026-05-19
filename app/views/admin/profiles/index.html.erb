@@ -1,51 +1,50 @@
 <%= render 'admin/layout' do %>
-    <div id="messages">
+  <div id="messages">
     <%= render 'admin/profiles/partial/messages' %>
   </div>
 
-  <div class="row">
-    <h2>Registered users</h2>
-  </div>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Registered users</h2>
 
-  <div class="row">
-    <h2>Export to CSV</h2>
-    <div class="col-12 form-group">
-      <%= button_to 'エクスポート', admin_export_profiles_path, {method: :get } %>
-    </div>
-  </div>
-
-  <div class="row">
-    <%= turbo_frame_tag 'profiles' do %>
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Name(Kana)</th>
-          <th scope="col">登録に用いたEmail</th>
-          <th scope="col">参加方法</th>
-          <th scope="col">二次元バーコード</th>
-          <th scope="col">チェックイン状況</th>
-          <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @profiles.each do |profile| %>
-          <tr>
-            <td><%= profile.last_name %> <%= profile.first_name %></td>
-            <td><%= profile.last_name_kana %> <%= profile.first_name_kana %></td>
-            <td><%= profile.email %></td>
-            <td><%= Profile.participations[profile.participation] %></td>
-            <td><%= link_to 'QRコードを表示する', admin_entry_sheet_path(id: profile.id) %></td>
-            <td><%= render('admin/profiles/partial/check_in_status', profile: profile) %></td>
-            <td><%= render('admin/profiles/partial/check_in_button', profile: profile) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-between align-items-center">
-        <div><%= page_entries_info @profiles %></div>
-        <%= paginate @profiles %>
-      </div>
+  <div class="tw-mb-6">
+    <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Export to CSV</h2>
+    <%= button_to admin_export_profiles_path, method: :get, class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' do %>
+      <%= render 'admin/download_icon' %>
+      <span>エクスポート</span>
     <% end %>
   </div>
+
+  <%= turbo_frame_tag 'profiles' do %>
+    <div class="admin-table-scroll">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Name(Kana)</th>
+            <th scope="col">登録に用いたEmail</th>
+            <th scope="col">参加方法</th>
+            <th scope="col">二次元バーコード</th>
+            <th scope="col">チェックイン状況</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @profiles.each do |profile| %>
+            <tr>
+              <td><%= profile.last_name %> <%= profile.first_name %></td>
+              <td><%= profile.last_name_kana %> <%= profile.first_name_kana %></td>
+              <td><%= profile.email %></td>
+              <td><%= Profile.participations[profile.participation] %></td>
+              <td><%= link_to 'QRコードを表示する', admin_entry_sheet_path(id: profile.id) %></td>
+              <td><%= render('admin/profiles/partial/check_in_status', profile: profile) %></td>
+              <td><%= render('admin/profiles/partial/check_in_button', profile: profile) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="tw-mt-4 tw-flex tw-items-center tw-justify-between">
+      <div><%= page_entries_info @profiles %></div>
+      <%= paginate @profiles %>
+    </div>
+  <% end %>
 <% end %>

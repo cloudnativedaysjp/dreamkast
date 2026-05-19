@@ -1,5 +1,5 @@
 <%= render 'admin/layout' do %>
-  <h1>Announcement Deliveries</h1>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Announcement Deliveries</h2>
 
   <p>
     <strong>To:</strong>
@@ -28,33 +28,35 @@
   </p>
 
   <p>
-    <%= link_to 'Back to Announcements', admin_announcements_path, class: 'btn btn-secondary' %>
+    <%= link_to 'Back to Announcements', admin_announcements_path, class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-gray-500 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-gray-600' %>
   </p>
 
-  <table class="table table-striped talks_table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Email</th>
-        <th scope="col">Profile</th>
-        <th scope="col">Status</th>
-        <th scope="col">Provider Message ID</th>
-        <th scope="col">Last Error</th>
-        <th scope="col">Updated At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @announcement_deliveries.each do |delivery| %>
+  <div class="admin-table-scroll">
+    <table class="admin-table talks_table">
+      <thead>
         <tr>
-          <td><%= delivery.id %></td>
-          <td><%= delivery.email %></td>
-          <td><%= delivery.profile.present? ? "#{delivery.profile.last_name} #{delivery.profile.first_name}" : '' %></td>
-          <td><%= delivery.status %></td>
-          <td><%= delivery.provider_message_id %></td>
-          <td><%= delivery.last_error %></td>
-          <td><%= delivery.updated_at&.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <th scope="col">ID</th>
+          <th scope="col">Email</th>
+          <th scope="col">Profile</th>
+          <th scope="col">Status</th>
+          <th scope="col">Provider Message ID</th>
+          <th scope="col">Last Error</th>
+          <th scope="col">Updated At</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @announcement_deliveries.each do |delivery| %>
+          <tr>
+            <td><%= delivery.id %></td>
+            <td><%= delivery.email %></td>
+            <td><%= delivery.profile.present? ? "#{delivery.profile.last_name} #{delivery.profile.first_name}" : '' %></td>
+            <td><%= delivery.status %></td>
+            <td><%= delivery.provider_message_id %></td>
+            <td><%= delivery.last_error %></td>
+            <td><%= delivery.updated_at&.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

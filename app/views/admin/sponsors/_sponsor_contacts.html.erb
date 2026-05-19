@@ -1,21 +1,21 @@
 <%= turbo_frame_tag "sponsor_contacts_and_invites" do %>
-  <div class="col-12 col-mb-6">
+  <div class="tw-col-span-12">
     <h4>スポンサー担当者</h4>
-    <div class="d-flex justify-content-end">
+    <div class="tw-flex tw-justify-end">
       <%= link_to "スポンサー担当者を招待する",
-          new_admin_sponsor_contact_invite_path(sponsor_id: @sponsor.id), 
-          class: "btn btn-sm btn-outline-primary me-2",
+          new_admin_sponsor_contact_invite_path(sponsor_id: @sponsor.id),
+          class: "tw-inline-block tw-rounded tw-border-2 tw-border-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-blue-600 hover:tw-bg-blue-600 hover:tw-text-white tw-mr-2",
           data: { turbo_frame: "modal" } %>
     </div>
   </div>
-  <div class="row py-2 border-top">
-    <div class="col-2 my-auto">担当者名</div>
-    <div class="col-2 my-auto">メールアドレス</div>
-    <div class="col-2 my-auto">ステータス</div>
-    <div class="col-1 my-auto"></div>
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2">
+    <div class="tw-col-span-2 tw-my-auto">担当者名</div>
+    <div class="tw-col-span-2 tw-my-auto">メールアドレス</div>
+    <div class="tw-col-span-2 tw-my-auto">ステータス</div>
+    <div class="tw-col-span-1 tw-my-auto"></div>
   </div>
   <% if !@sponsor_contacts.present? && !@sponsor_contact_invites.present? %>
-    <div class="col-12 col-mb-6">
+    <div class="tw-col-span-12">
       スポンサー担当者は未登録です。
     </div>
   <% else %>

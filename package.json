@@ -49,10 +49,13 @@
         "test:coverage": "jest --coverage"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.10",
         "@testing-library/jest-dom": "^6.1.5",
         "identity-obj-proxy": "^3.0.0",
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
+        "postcss-loader": "^8.1.1",
+        "tailwindcss": "^3.4.17",
         "webpack-bundle-analyzer": "^5.0.0"
     }
 }

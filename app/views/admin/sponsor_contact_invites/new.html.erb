@@ -1,15 +1,15 @@
 <%= render "layouts/modal", title: "招待" do %>
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-12 py-3 px-md-5">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-justify-center">
+    <div class="tw-col-span-12 tw-py-3 md:tw-px-12">
       <% flash.each do |key, value| %>
-        <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
+        <div class="tw-mb-4 tw-rounded tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-red-800" role="alert"><%= flash[:alert] %></div>
       <% end %>
-      <h1 class="text-center py-3 entry">スポンサー担当者に招待メールを送信する</h1>
+      <h1 class="tw-text-center tw-py-3 entry">スポンサー担当者に招待メールを送信する</h1>
 
       <%= form_with(model: [:admin, @sponsor_contact_invite], data: { action: "turbo:submit-end->modal#close" }) do |form| %>
-        <div class="field pb-3">
+        <div class="field tw-pb-3">
           <%= form.label :email %>
-          <%= form.email_field :email, class: "form-control", required: true %>
+          <%= form.email_field :email, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", required: true %>
         </div>
 
         <%= form.hidden_field :sponsor_id, value: @sponsor.id %>

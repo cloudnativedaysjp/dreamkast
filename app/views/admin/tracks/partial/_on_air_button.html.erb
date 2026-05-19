@@ -3,10 +3,10 @@
     <%= f.hidden_field "talk[id]", value: talk.id %>
     <%= f.hidden_field "talk[date]", value: talk.conference_day.date %>
     <%= f.hidden_field "talk[track_name]", value: talk.track.name %>
-    <div class="on_air_group btn-group-toggle">
+    <div class="on_air_group">
       <%= f.submit talk.video.on_air ? 'OnAir中' : 'Waiting',
                    id: "button_#{talk.id}",
-                   class: "btn btn-#{talk.video.on_air? ? 'danger' : 'secondary'} on_air_button #{talk.video.on_air ? 'active' : ''}",
+                   class: "tw-inline-block tw-rounded tw-px-4 tw-py-2 tw-font-bold tw-text-white #{talk.video.on_air? ? 'tw-bg-red-600 hover:tw-bg-red-700' : 'tw-bg-gray-500 hover:tw-bg-gray-600'} on_air_button #{talk.video.on_air ? 'active' : ''}",
                    autocomplete: "off",
                    track_name: talk.track.name,
                    talk_id: talk.id,

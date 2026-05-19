@@ -57,7 +57,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 function closeModal() {
                     players.forEach(function(player) {
-                        try { player.dispose(); } catch (_) {}
+                        if (!player || typeof player.dispose !== 'function') return;
+                        if (typeof player.isDisposed === 'function' && player.isDisposed()) return;
+                        try {
+                            player.dispose();
+                        } catch (error) {
+                            console.error('Failed to dispose video player in talk modal.', error);
+                        }
                     });
                     players = [];
                     modal.classList.remove('show');

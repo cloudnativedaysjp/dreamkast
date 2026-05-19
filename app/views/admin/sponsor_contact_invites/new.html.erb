@@ -1,8 +1,8 @@
 <%= render "layouts/modal", title: "招待" do %>
   <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-justify-center">
     <div class="tw-col-span-12 tw-py-3 md:tw-px-12">
-      <% flash.each do |key, value| %>
-        <div class="tw-mb-4 tw-rounded tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-red-800" role="alert"><%= flash[:alert] %></div>
+      <% flash.each do |_key, value| %>
+        <div class="tw-mb-4 tw-rounded tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-red-800" role="alert"><%= value %></div>
       <% end %>
       <h1 class="tw-text-center tw-py-3 entry">スポンサー担当者に招待メールを送信する</h1>
 

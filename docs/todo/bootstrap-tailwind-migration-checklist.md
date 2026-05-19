@@ -17,7 +17,7 @@
   - `safelist` でブランドカラーを常時生成（スモークテスト兼用）
 - [x] `app/javascript/stylesheets/admin_tailwind.scss` を作成（`@tailwind base/components/utilities`）
 - [x] `webpack.config.js` に `admin_tailwind` エントリと postcss-loader（inline 設定、`config: false`）を追加
-- [x] `app/views/admin/_layout.html.erb` で `stylesheet_link_tag 'admin_tailwind'` を読み込み
+- [x] `app/views/layouts/{application,cnk,no_headers}.html.erb` の `<head>` で `controller_path.start_with?('admin')` の条件付きで `stylesheet_link_tag 'admin_tailwind'` を読み込み
 - [x] `yarn build` 成功・`app/assets/builds/admin_tailwind.css` 出力確認
 - [x] 出力に `#admin .tw-bg-cndt-blue { ... }` 等が含まれることを確認
 

@@ -25,14 +25,14 @@
               <div class="tw-flex tw-items-start tw-gap-2" data-controller="copy">
                 <span class="tw-break-all" data-copy-target="url"><%= harvest_job.video_url %></span>
                 <% if harvest_job.video_url.present? %>
-                  <span class="tw-inline-flex tw-shrink-0 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-md tw-p-1 tw-text-gray-500 hover:tw-bg-gray-100 hover:tw-text-blue-600"
-                        data-action="click->copy#copy"
-                        data-copy-target="button"
-                        title="URLをコピー"
-                        role="button"
-                        tabindex="0">
-                    <%= image_tag 'icons/copy.svg', size: '16x16', alt: 'copy' %>
-                  </span>
+                  <button type="button"
+                          class="tw-inline-flex tw-shrink-0 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-md tw-p-1 tw-text-gray-500 hover:tw-bg-gray-100 hover:tw-text-blue-600"
+                          data-action="click->copy#copy"
+                          data-copy-target="button"
+                          title="URLをコピー"
+                          aria-label="URLをコピー">
+                    <%= image_tag 'icons/copy.svg', size: '16x16', alt: '' %>
+                  </button>
                 <% end %>
               </div>
             </td>

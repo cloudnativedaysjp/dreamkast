@@ -2,11 +2,9 @@
   <%= form_with(url: admin_team_path, id: "team", method: "put") do |f| %>
     <% @admin_profiles.each do |admin_profile| %>
       <div class="tw-mb-4">
-        <div class="tw-col-span-12 md:tw-col-span-6">
-          <%= hidden_field_tag "team[#{admin_profile.id}]", false %>
-          <%= check_box_tag "team[#{admin_profile.id}]", true, admin_profile.show_on_team_page %>
-          <%= f.label "team[#{admin_profile.id}]", "#{admin_profile.name} (#{admin_profile.email})" %><br>
-        </div>
+        <%= hidden_field_tag "team[#{admin_profile.id}]", false %>
+        <%= check_box_tag "team[#{admin_profile.id}]", true, admin_profile.show_on_team_page %>
+        <%= f.label "team[#{admin_profile.id}]", "#{admin_profile.name} (#{admin_profile.email})" %>
       </div>
     <% end %>
   <% end %>

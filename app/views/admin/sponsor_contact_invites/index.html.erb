@@ -1,4 +1,4 @@
-<div class="tw-mx-auto tw-w-full tw-px-4">
+<%= render 'admin/layout' do %>
   <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
     <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Sponsor Contact Invites</h2>
     <%= link_to "New Invite",
@@ -29,6 +29,6 @@
       </tbody>
     </table>
   </div>
-</div>
 
-<%= turbo_frame_tag "sponsor_contact_invite_modal" %>
+  <%= turbo_frame_tag "sponsor_contact_invite_modal" %>
+<% end %>

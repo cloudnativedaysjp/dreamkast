@@ -4,19 +4,16 @@ export default class extends Controller {
     static targets = ["button", "url"]
 
     copy(event) {
-       
         event.preventDefault();
         const url = this.urlTarget.textContent;
-        const parent = event.target.parentElement;
-        const icon = event.target;
+        const button = this.buttonTarget;
+        const originalHTML = button.innerHTML;
 
         navigator.clipboard.writeText(url)
             .then(() => {
-                console.log("Copied to clipboard successfully!");
-                parent.textContent = "Copied";
+                button.textContent = "Copied";
                 setTimeout(() => {
-                    parent.textContent = "";
-                    parent.appendChild(icon);
+                    button.innerHTML = originalHTML;
                 }, 5000);
             })
             .catch((error) => {

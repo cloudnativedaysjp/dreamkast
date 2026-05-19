@@ -8,47 +8,45 @@
     </div>
   <% end %>
 
-
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>スピーカーの会場受付状況</h2>
-  </div>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <table class="tw-w-full tw-border tw-border-gray-200">
-      <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">名前</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">所属</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">セッション種別</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">セッションタイトル</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">チェックイン状況</th>
-      </tr>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">スピーカーの会場受付状況</h2>
+  <div class="admin-table-scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">名前</th>
+          <th scope="col">所属</th>
+          <th scope="col">セッション種別</th>
+          <th scope="col">セッションタイトル</th>
+          <th scope="col">チェックイン状況</th>
+          <th scope="col"></th>
+        </tr>
       </thead>
-      <tbody class="tw-divide-y tw-divide-gray-200">
-      <% @talks.each do |talk| %>
-        <% talk.speakers.each do |speaker| %>
-          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-            <td class="tw-px-4 tw-py-2"><%= speaker.name %></td>
-            <td class="tw-px-4 tw-py-2"><%= speaker.company %></td>
-            <td class="tw-px-4 tw-py-2"><%= session_type_name(talk) %></td>
-            <td class="tw-px-4 tw-py-2"><%= talk.title %></td>
-            <td class="tw-px-4 tw-py-2"><%= speaker_check_in_status(speaker) %></td>
-            <td class="tw-px-4 tw-py-2">
-              <% if speaker.attendee_profile&.check_in_conferences.nil? || speaker.attendee_profile&.check_in_conferences&.empty? %>
-                <%= form_with(url: admin_check_in_events_path, method: "post", remote: true) do |f| %>
-                  <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile&.id %>
-                  <%= f.submit 'チェックイン', data: { confirm: "#{speaker.attendee_profile&.last_name} #{speaker.attendee_profile&.first_name} をチェックインする"} %>
+      <tbody>
+        <% @talks.each do |talk| %>
+          <% talk.speakers.each do |speaker| %>
+            <tr>
+              <td><%= speaker.name %></td>
+              <td><%= speaker.company %></td>
+              <td><%= session_type_name(talk) %></td>
+              <td><%= talk.title %></td>
+              <td><%= speaker_check_in_status(speaker) %></td>
+              <td>
+                <% if speaker.attendee_profile&.check_in_conferences.nil? || speaker.attendee_profile&.check_in_conferences&.empty? %>
+                  <%= form_with(url: admin_check_in_events_path, method: "post", remote: true) do |f| %>
+                    <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile&.id %>
+                    <%= f.submit 'チェックイン', data: { confirm: "#{speaker.attendee_profile&.last_name} #{speaker.attendee_profile&.first_name} をチェックインする" } %>
+                  <% end %>
+                <% else %>
+                  チェックイン済み
+                  <%= form_with(url: admin_check_in_events_path, method: "delete", remote: true) do |f| %>
+                    <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile.id %>
+                    <%= f.submit '(チェックインをキャンセル)', data: { confirm: "#{speaker.attendee_profile.last_name} #{speaker.attendee_profile.first_name} のイベントへのチェックインをキャンセルしますか？" } %>
+                  <% end %>
                 <% end %>
-              <% else %>
-                チェックイン済み
-                <%= form_with(url: admin_check_in_events_path, method: "delete", remote: true) do |f| %>
-                  <%= f.hidden_field "check_in_event[profile_id]", value: speaker.attendee_profile.id %>
-                  <%= f.submit '(チェックインをキャンセル)', data: { confirm: "#{speaker.attendee_profile.last_name} #{speaker.attendee_profile.first_name} のイベントへのチェックインをキャンセルしますか？"} %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
       </tbody>
     </table>
   </div>

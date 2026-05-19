@@ -1,9 +1,9 @@
-<tr class="link-field odd:tw-bg-white even:tw-bg-gray-50" data-controller="remove-link-field" data-remove-link-field-target="linkField">
-  <td class="tw-px-4 tw-py-2"><%= f.text_field :title %></td>
-  <td class="tw-px-4 tw-py-2"><%= f.text_field :url %></td>
-  <td class="tw-px-4 tw-py-2"><%= f.text_field :description %></td>
-  <td class="tw-px-4 tw-py-2">
+<tr class="link-field" data-controller="remove-link-field" data-remove-link-field-target="linkField">
+  <td><%= f.text_field :title %></td>
+  <td><%= f.text_field :url %></td>
+  <td><%= f.text_field :description %></td>
+  <td>
     <%= f.hidden_field :_destroy, data: { "remove-link-field-target": "hiddenInput" } %>
-    <button type='button' class="tw-inline-block tw-rounded tw-bg-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-red-700" data-action="click->remove-link-field#remove">Delete</button>
+    <button type='button' class="tw-inline-flex tw-items-center tw-rounded-md tw-bg-red-600 tw-px-3 tw-py-1.5 tw-text-xs tw-font-medium tw-text-white tw-shadow-sm hover:tw-bg-red-700" data-action="click->remove-link-field#remove">Delete</button>
   </td>
 </tr>

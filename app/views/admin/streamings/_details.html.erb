@@ -1,34 +1,24 @@
-<div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-mb-2">
-  <div class="tw-col-span-10 tw-flex tw-items-center">
-    <h2>配信用AWSリソース詳細</h2>
-  </div>
-</div>
+<h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">配信用AWSリソース詳細</h2>
 
 <% @tracks.each do |track| %>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <div class="tw-col-span-10">
-      <h3>Track <%= track.name %>: リソース詳細</h3>
-    </div>
-  </div>
+  <h3 class="tw-mb-2 tw-text-lg tw-font-semibold tw-text-gray-900">Track <%= track.name %>: リソース詳細</h3>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <div class="tw-col-span-12">
-      <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200">
-        <tbody class="tw-divide-y tw-divide-gray-200">
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <td class="tw-px-4 tw-py-2">Track ID</td><td class="tw-px-4 tw-py-2"><%= track.id %></td>
+  <div class="admin-table-card tw-mb-4">
+    <table class="admin-table">
+      <tbody>
+        <tr>
+          <td>Track ID</td><td><%= track.id %></td>
         </tr>
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <td class="tw-px-4 tw-py-2">MediaPackage V2 ChannelGroup</td><td class="tw-px-4 tw-py-2"><%= track.streaming&.media_package_v2_channel_group&.name %></td>
+        <tr>
+          <td>MediaPackage V2 ChannelGroup</td><td><%= track.streaming&.media_package_v2_channel_group&.name %></td>
         </tr>
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <td class="tw-px-4 tw-py-2">MediaPackage Channel</td><td class="tw-px-4 tw-py-2"><%= track.streaming&.media_package_channel&.channel_id %></td>
+        <tr>
+          <td>MediaPackage Channel</td><td><%= track.streaming&.media_package_channel&.channel_id %></td>
         </tr>
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <td class="tw-px-4 tw-py-2">MediaLive Channel</td><td class="tw-px-4 tw-py-2"><%= track.streaming&.media_live_channel&.channel_id %></td>
+        <tr>
+          <td>MediaLive Channel</td><td><%= track.streaming&.media_live_channel&.channel_id %></td>
         </tr>
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
   </div>
 <% end %>

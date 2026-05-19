@@ -4,3 +4,155 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// preflight 無効環境の安全網: チェックボックスとラジオの border-style を solid に固定。
+// @tailwindcss/forms プラグインは border-width/border-color を設定するが、
+// border-style は Tailwind preflight が設定する前提のため、preflight 無効時は
+// デフォルトの none となり枠線が見えなくなる。
+#admin input[type='checkbox'],
+#admin input[type='radio'] {
+  border-style: solid;
+}
+
+// admin 画面の共通コンポーネント (issue #2572 / #2564)
+// クラス名ベースで重複ユーティリティを抽象化。Bootstrap 撤去後 (Phase 5) に
+// prefix を外しても、これらコンポーネント名は維持する想定。
+@layer components {
+  // card 風モダンテーブル
+  // 使い方:
+  //   <div class="admin-table-card">
+  //     <table class="admin-table">
+  //       <thead><tr><th>...</th></tr></thead>
+  //       <tbody><tr><td>...</td></tr></tbody>
+  //     </table>
+  //   </div>
+  // hover で行をハイライト。zebra ストライプは使わない。
+  // 横スクロールが必要な場合は admin-table-card の代わりに admin-table-scroll を使う。
+  #admin {
+    .admin-table-card {
+      @apply tw-overflow-hidden tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+    .admin-table-scroll {
+      @apply tw-overflow-x-auto tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+
+    .admin-table {
+      @apply tw-min-w-full tw-divide-y tw-divide-gray-200;
+    }
+    .admin-table thead {
+      @apply tw-bg-gray-50;
+    }
+    .admin-table th {
+      @apply tw-px-6 tw-py-3 tw-text-left tw-text-sm tw-font-semibold tw-text-gray-600;
+    }
+    .admin-table tbody {
+      @apply tw-divide-y tw-divide-gray-200 tw-bg-white;
+    }
+    .admin-table tbody tr {
+      @apply hover:tw-bg-gray-50;
+    }
+    .admin-table td {
+      @apply tw-px-6 tw-py-4 tw-align-top tw-text-sm tw-text-gray-700;
+    }
+
+    // モダンなフォームコンポーネント
+    .admin-form-card {
+      @apply tw-max-w-3xl tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-p-6 tw-shadow-sm;
+    }
+    .admin-form-section {
+      @apply tw-space-y-5;
+    }
+    .admin-form-label {
+      @apply tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700;
+    }
+    .admin-form-hint {
+      @apply tw-mt-1 tw-text-xs tw-text-gray-500;
+    }
+    .admin-form-required {
+      @apply tw-text-red-600;
+    }
+
+    // text input / textarea / select の共通モダンスタイル
+    .admin-input,
+    .admin-textarea,
+    .admin-select {
+      @apply tw-block tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm tw-text-gray-900 tw-shadow-sm tw-transition;
+
+      &:focus {
+        @apply tw-border-blue-500 tw-outline-none tw-ring-2 tw-ring-blue-500/30;
+      }
+      &::placeholder {
+        @apply tw-text-gray-400;
+      }
+      &[readonly],
+      &[disabled] {
+        @apply tw-cursor-not-allowed tw-bg-gray-50 tw-text-gray-600;
+      }
+    }
+    .admin-select {
+      // chevron アイコンを背景画像で描画 (preflight 無効でも崩れない)
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25em 1.25em;
+      padding-right: 2.25rem;
+      appearance: none;
+    }
+
+    // ラジオボタン / チェックボックス
+    // preflight 無効環境でも視認性を担保するため appearance: none + 明示的な背景・ボーダーを定義
+    .admin-radio,
+    .admin-checkbox {
+      @apply tw-relative tw-inline-block tw-h-4 tw-w-4 tw-shrink-0 tw-cursor-pointer tw-bg-white tw-align-middle tw-transition;
+      // ボーダーは 2px ・ gray-500 で白背景上でもはっきり見えるよう強めに
+      border: 2px solid #6b7280;
+      appearance: none;
+      -webkit-appearance: none;
+
+      &:hover {
+        border-color: #2563eb;
+      }
+      &:focus {
+        @apply tw-outline-none tw-ring-2 tw-ring-blue-500/40;
+      }
+      &:checked {
+        background-color: #2563eb;
+        border-color: #2563eb;
+      }
+      &:disabled {
+        @apply tw-cursor-not-allowed tw-opacity-50;
+      }
+    }
+    .admin-radio {
+      @apply tw-rounded-full;
+
+      &:checked::after {
+        content: '';
+        @apply tw-absolute tw-left-1/2 tw-top-1/2 tw-h-1.5 tw-w-1.5 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-rounded-full tw-bg-white;
+      }
+    }
+    .admin-checkbox {
+      @apply tw-rounded;
+
+      &:checked::after {
+        content: '';
+        @apply tw-absolute tw-left-1/2 tw-top-1/2 tw-h-2.5 tw-w-2.5 -tw-translate-x-1/2 -tw-translate-y-1/2;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M3 8l3.5 3.5L13 5'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    }
+
+    // ボタンプリセット
+    .admin-btn-primary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-blue-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500/40;
+    }
+    .admin-btn-secondary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm tw-transition hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-300/60;
+    }
+    .admin-btn-danger {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-red-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-red-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-500/40;
+    }
+  }
+}

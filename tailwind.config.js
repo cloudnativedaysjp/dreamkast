@@ -19,13 +19,31 @@ module.exports = {
     './app/helpers/admin/**/*.rb',
     './app/javascript/packs/admin/**/*.js',
   ],
-  // デザインシステムのブランドカラーは利用箇所が増えるまで safelist で常に生成
-  // (Phase 1 のスモークテストも兼ねる)
+  // デザインシステムのブランドカラーと、admin_tailwind.scss の @layer components で
+  // 定義した共通コンポーネントを常に生成する
   safelist: [
     'tw-bg-cndt-blue',
     'tw-bg-cndt-green',
     'tw-text-cndt-blue',
     'tw-text-cndt-green',
+    // テーブル
+    'admin-table',
+    'admin-table-card',
+    'admin-table-scroll',
+    // フォーム
+    'admin-form-card',
+    'admin-form-section',
+    'admin-form-label',
+    'admin-form-hint',
+    'admin-form-required',
+    'admin-input',
+    'admin-textarea',
+    'admin-select',
+    'admin-radio',
+    'admin-checkbox',
+    'admin-btn-primary',
+    'admin-btn-secondary',
+    'admin-btn-danger',
   ],
   theme: {
     extend: {

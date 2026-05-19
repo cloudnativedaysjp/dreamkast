@@ -1,46 +1,51 @@
 <%= render 'admin/layout' do %>
-  <h1>Announcement</h1>
+  <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
+    <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Announcement</h2>
+    <%= link_to 'New Announcement', new_admin_announcement_path,
+                class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
+  </div>
 
-  <%= link_to 'New Announcement', new_admin_announcement_path, class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
-
-  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
-    <thead class="tw-bg-gray-100">
-    <tr>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Published?</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">To</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Time</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Announcement</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">送信状況</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">送信数</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">失敗数</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Deliveries</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Edit</th>
-    </tr>
-    </thead>
-    <tbody class="tw-divide-y tw-divide-gray-200">
-    <% @announcements.each do |announcement| %>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">
-          <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
-        <td class="tw-px-4 tw-py-2">
-          <%= announcement.profile_names %>
-        </td>
-        <td class="tw-px-4 tw-py-2">
-          <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
-        </td>
-        <td class="tw-px-4 tw-py-2">
-          <%= simple_format announcement.body %>
-        </td>
-        <td class="tw-px-4 tw-py-2"><%= announcement.send_status %></td>
-        <td class="tw-px-4 tw-py-2"><%= announcement.sent_count %></td>
-        <td class="tw-px-4 tw-py-2"><%= announcement.failed_count %></td>
-        <td class="tw-px-4 tw-py-2"><%= link_to 'View', deliveries_admin_announcement_path(id: announcement.id) %></td>
-        <td class="tw-px-4 tw-py-2">
-          <%= link_to'Edit', edit_admin_announcement_path(id: announcement.id) %>
-          <%= link_to'Delete', admin_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <div class="admin-table-scroll">
+    <table class="admin-table talks_table">
+      <thead>
+        <tr>
+          <th scope="col">Published?</th>
+          <th scope="col">To</th>
+          <th scope="col">Time</th>
+          <th scope="col">Announcement</th>
+          <th scope="col">送信状況</th>
+          <th scope="col">送信数</th>
+          <th scope="col">失敗数</th>
+          <th scope="col">Deliveries</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @announcements.each do |announcement| %>
+          <tr>
+            <td>
+              <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
+            </td>
+            <td>
+              <%= announcement.profile_names %>
+            </td>
+            <td>
+              <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+            </td>
+            <td>
+              <%= simple_format announcement.body %>
+            </td>
+            <td><%= announcement.send_status %></td>
+            <td><%= announcement.sent_count %></td>
+            <td><%= announcement.failed_count %></td>
+            <td><%= link_to 'View', deliveries_admin_announcement_path(id: announcement.id) %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_announcement_path(id: announcement.id) %>
+              <%= link_to 'Delete', admin_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

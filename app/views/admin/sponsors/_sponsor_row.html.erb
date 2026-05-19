@@ -1,10 +1,10 @@
 <%= turbo_frame_tag sponsor do %>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-px-6 tw-py-4 tw-text-sm tw-text-gray-700 hover:tw-bg-gray-50">
     <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor.abbr %>
     </div>
     <div class="tw-col-span-2 tw-my-auto">
-      <%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id), data: {turbo: false} %>
+      <%= link_to sponsor.name, admin_sponsor_path(id: sponsor.id), data: { turbo: false }, class: 'tw-text-blue-600 hover:tw-underline' %>
     </div>
     <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor.sponsor_types.map(&:name).join(', ') %>
@@ -12,13 +12,13 @@
     <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor.talks.size %>
     </div>
-    <div class="tw-col-span-2 tw-my-auto">
+    <div class="tw-col-span-2 tw-my-auto tw-break-all">
       <%= sponsor.url %>
     </div>
     <div class="tw-col-span-2 tw-my-auto">
-      <div class="tw-flex tw-justify-end">
-        <%= link_to "編集", edit_admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: "tw-inline-block tw-rounded tw-border-2 tw-border-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-blue-600 hover:tw-bg-blue-600 hover:tw-text-white tw-mr-2", data: { turbo_frame: "modal" } %>
-        <%= link_to "削除", admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: "tw-inline-block tw-rounded tw-border-2 tw-border-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-red-600 hover:tw-bg-red-600 hover:tw-text-white", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+      <div class="tw-flex tw-justify-end tw-gap-2">
+        <%= link_to '編集', edit_admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: 'tw-inline-block tw-rounded tw-border-2 tw-border-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-blue-600 hover:tw-bg-blue-600 hover:tw-text-white', data: { turbo_frame: 'modal' } %>
+        <%= link_to '削除', admin_sponsor_path(event: sponsor.conference.abbr, id: sponsor.id), class: 'tw-inline-block tw-rounded tw-border-2 tw-border-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-red-600 hover:tw-bg-red-600 hover:tw-text-white', data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
       </div>
     </div>
   </div>

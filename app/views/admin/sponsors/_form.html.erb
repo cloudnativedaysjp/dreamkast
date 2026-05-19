@@ -1,56 +1,69 @@
 <%= turbo_frame_tag @sponsor_form.sponsor do %>
   <%= form_with(model: [:admin, @sponsor_form.sponsor],
                 url: @sponsor_form.sponsor.new_record? ? admin_sponsors_path(event: params[:event]) : admin_sponsor_path(@sponsor_form.sponsor, event: params[:event]),
-                data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+                data: { action: 'turbo:submit-end->modal#close' }) do |form| %>
     <% if @sponsor_form.sponsor.errors.any? %>
-      <ul>
-        <% @sponsor_form.sponsor.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+      <div class="tw-mb-4 tw-rounded-md tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-sm tw-text-red-800">
+        <ul class="tw-list-disc tw-space-y-1 tw-pl-5">
+          <% @sponsor_form.sponsor.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="admin-form-section">
+      <div>
+        <%= form.label :name, class: 'admin-form-label' do %>
+          スポンサー名 <span class="admin-form-required">*</span>
         <% end %>
-      </ul>
-    <% end %>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-py-2" data-controller="sponsor">
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form.label :name, "スポンサー名*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
-      <%= form.text_field :name, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.name %>
-    </div>
+        <%= form.text_field :name, class: 'admin-input', value: @sponsor_form.name %>
+      </div>
 
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form.label :abbr, "スポンサー略称*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
-      <%= form.text_field :abbr, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.abbr %>
-    </div>
+      <div>
+        <%= form.label :abbr, class: 'admin-form-label' do %>
+          スポンサー略称 <span class="admin-form-required">*</span>
+        <% end %>
+        <%= form.text_field :abbr, class: 'admin-input', value: @sponsor_form.abbr %>
+      </div>
 
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form.label :description, "スポンサー概要", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
-      <%= form.text_area :description, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", rows: "3", value: @sponsor_form.description %>
-    </div>
+      <div>
+        <%= form.label :description, 'スポンサー概要', class: 'admin-form-label' %>
+        <%= form.text_area :description, class: 'admin-textarea', rows: 3, value: @sponsor_form.description %>
+      </div>
 
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form.label :url, "スポンサーUrl", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
-      <%= form.text_field :url, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", value: @sponsor_form.url %>
-    </div>
+      <div>
+        <%= form.label :url, 'スポンサーUrl', class: 'admin-form-label' %>
+        <%= form.text_field :url, class: 'admin-input', value: @sponsor_form.url %>
+      </div>
 
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form.label :sponsor_types, "スポンサー種別*", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %><br>
-      <% @sponsor_types.each do |sponsor_type| %>
-        <%= check_box_tag "sponsor[sponsor_types][]", sponsor_type.id, @sponsor_form.sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'tw-mr-2' %>
-        <%= label sponsor_type.name.to_sym, sponsor_type.name, {class: 'tw-text-sm'} %><br>
-      <% end %>
-    </div>
-  </div>
+      <div>
+        <span class="admin-form-label">
+          スポンサー種別 <span class="admin-form-required">*</span>
+        </span>
+        <div class="tw-space-y-2">
+          <% @sponsor_types.each do |sponsor_type| %>
+            <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+              <%= check_box_tag 'sponsor[sponsor_types][]', sponsor_type.id, @sponsor_form.sponsor.sponsor_types.map(&:id).include?(sponsor_type.id), class: 'admin-checkbox' %>
+              <span><%= sponsor_type.name %></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
 
-  <div class="tw-mb-4">
-    <%= form.label :attachment_logo_image, "スポンサーロゴ" %><br>
-    <%= form.file_field :attachment_logo_image %>
-    <% if @sponsor_form.sponsor.sponsor_attachment_logo_image %>
-      <%= image_tag @sponsor_form.sponsor.sponsor_attachment_logo_image.file_url, class: "tw-max-w-full tw-h-auto" if @sponsor_form.sponsor.sponsor_attachment_logo_image.file.present? %>
-    <% end %>
-  </div>
+      <div>
+        <%= form.label :attachment_logo_image, 'スポンサーロゴ', class: 'admin-form-label' %>
+        <%= form.file_field :attachment_logo_image, class: 'tw-block tw-w-full tw-text-sm tw-text-gray-700 file:tw-mr-3 file:tw-rounded-md file:tw-border-0 file:tw-bg-blue-50 file:tw-px-3 file:tw-py-2 file:tw-text-sm file:tw-font-semibold file:tw-text-blue-700 hover:file:tw-bg-blue-100' %>
+        <% if @sponsor_form.sponsor.sponsor_attachment_logo_image %>
+          <% if @sponsor_form.sponsor.sponsor_attachment_logo_image.file.present? %>
+            <%= image_tag @sponsor_form.sponsor.sponsor_attachment_logo_image.file_url, class: 'tw-mt-2 tw-max-w-full tw-h-auto' %>
+          <% end %>
+        <% end %>
+      </div>
 
-  <div class="tw-mb-4">
-    <div class="tw-flex tw-justify-end">
-      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-blue-700 tw-mr-2" %>
+      <div class="tw-flex tw-justify-end tw-pt-2">
+        <%= form.submit class: 'admin-btn-primary' %>
+      </div>
     </div>
-  </div>
   <% end %>
 <% end %>

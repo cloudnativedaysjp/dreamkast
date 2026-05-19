@@ -1,36 +1,29 @@
 <%= render 'admin/layout' do %>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>ビデオファイル提出状況</h2>
-  </div>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">ビデオファイル提出状況</h2>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <ul>
-      <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
-    </ul>
-  </div>
+  <ul class="tw-mb-6 tw-text-sm tw-text-gray-700">
+    <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
+  </ul>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
-      <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Name</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Status</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Statistics</th>
-      </tr>
+  <div class="admin-table-card">
+    <table class="admin-table talks_table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Title</th>
+          <th scope="col">Status</th>
+          <th scope="col">Statistics</th>
+        </tr>
       </thead>
-      <tbody class="tw-divide-y tw-divide-gray-200">
+      <tbody>
         <% @talks.each do |talk| %>
-          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-            <td class="tw-px-4 tw-py-2"><%= talk.id %></td>
-            <td class="tw-px-4 tw-py-2"><%= talk.speakers.map(&:name).join(", ") %></td>
-            <td class="tw-px-4 tw-py-2"><%= talk.title %></td>
-
-            <td class="tw-px-4 tw-py-2">
-              <%= talk.video_registration&.status_message %>
-            </td>
-            <td class="tw-px-4 tw-py-2">
+          <tr>
+            <td><%= talk.id %></td>
+            <td><%= talk.speakers.map(&:name).join(", ") %></td>
+            <td><%= talk.title %></td>
+            <td><%= talk.video_registration&.status_message %></td>
+            <td>
               <% if talk.video_registration.present? && talk.video_registration.statistics.present?  %>
                 <% JSON.parse(talk.video_registration&.statistics).each  do |k, v| %>
                   <%= k %>: <%= v %><br>

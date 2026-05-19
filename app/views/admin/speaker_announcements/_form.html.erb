@@ -1,50 +1,65 @@
 <%= form_with(url: speaker_announcement_url, model: @speaker_announcement) do |form| %>
-  <section class="speaker-information tw-py-3">
-
-    <div class="field">
-      <%= form.label :publish_time, '公開日' %>*<br/>
-      <%= form.datetime_select :publish_time, class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
+  <div class="admin-form-section">
+    <div>
+      <%= form.label :publish_time, class: 'admin-form-label' do %>
+        公開日 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.datetime_select :publish_time, {}, { class: 'tw-mr-1 tw-rounded-md tw-border tw-border-gray-300 tw-px-2 tw-py-1.5 tw-text-sm tw-shadow-sm focus:tw-border-blue-500 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500/30' } %>
     </div>
 
     <% unless @speakers.blank? || @speakers.nil? %>
-        <div class="field">
-          <%= form.label :speaker_id, '登壇者' %>*<br/>
-
-          <!-- @speakers.length == 1 -->
-          <% @speakers.each do |speaker| %>
-            <%= form.hidden_field :speaker_ids, multiple: true, value: speaker.id %>
-          <% end %>
-          <%= form.text_field :speaker_names, value: @speakers.length == 1 ? @speakers[0].name : "全員", readonly: true %>
-        </div>
+      <div>
+        <%= form.label :speaker_id, class: 'admin-form-label' do %>
+          登壇者 <span class="admin-form-required">*</span>
+        <% end %>
+        <% @speakers.each do |speaker| %>
+          <%= form.hidden_field :speaker_ids, multiple: true, value: speaker.id %>
+        <% end %>
+        <%= form.text_field :speaker_names,
+                            value: @speakers.length == 1 ? @speakers[0].name : '全員',
+                            readonly: true,
+                            class: 'admin-input' %>
+      </div>
     <% end %>
-    <br/>
+
     <% if is_to_all_announcements? %>
-      <div class="field">
-        <% @speaker_announcement.receiver = :all_speaker if @speaker_announcement.person? %>
-        <%= form.radio_button :receiver, :only_accepted %>
-        <%= form.label :receiver, 'CFP採択者にのみ通知', value: @speaker_announcement.receiver %>
-        <br/>
-        <%= form.radio_button :receiver, :all_speaker %>
-        <%= form.label :receiver, 'CFP採択に関わらず通知', value: @speaker_announcement.receiver %>
+      <% @speaker_announcement.receiver = :all_speaker if @speaker_announcement.person? %>
+      <div>
+        <span class="admin-form-label">送信先</span>
+        <div class="tw-space-y-2">
+          <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+            <%= form.radio_button :receiver, :only_accepted, class: 'admin-radio' %>
+            <span>CFP採択者にのみ通知</span>
+          </label>
+          <label class="tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-text-sm tw-text-gray-700">
+            <%= form.radio_button :receiver, :all_speaker, class: 'admin-radio' %>
+            <span>CFP採択に関わらず通知</span>
+          </label>
+        </div>
       </div>
     <% else %>
-    <div class="field">
-        <%= form.hidden_field :receiver, value: :person %>
-      </div>
+      <%= form.hidden_field :receiver, value: :person %>
     <% end %>
 
-    <div class="field">
-      <%= form.label :body, 'アナウンス内容' %>*
-      <%= form.text_area :body, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", required: true %>
+    <div>
+      <%= form.label :body, class: 'admin-form-label' do %>
+        アナウンス内容 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.text_area :body, rows: 6, class: 'admin-textarea', required: true %>
     </div>
 
-    <div class="field">
-      <%= form.label :publish, '公開・非公開' %>*<br/>
-      <%= form.select :publish, {'非公開': false, '公開': true}, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", required: true %>
+    <div>
+      <%= form.label :publish, class: 'admin-form-label' do %>
+        公開・非公開 <span class="admin-form-required">*</span>
+      <% end %>
+      <%= form.select :publish,
+                      { '非公開': false, '公開': true },
+                      {},
+                      { class: 'admin-select', required: true } %>
     </div>
 
-    <div class="actions tw-justify-center tw-py-3">
-      <%= form.submit class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-6 tw-py-3 tw-font-bold tw-text-white tw-text-lg tw-block tw-w-full hover:tw-bg-blue-700" %>
+    <div class="tw-pt-2">
+      <%= form.submit class: 'admin-btn-primary tw-w-full' %>
     </div>
-  </section>
+  </div>
 <% end %>

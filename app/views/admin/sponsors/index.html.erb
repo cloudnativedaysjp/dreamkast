@@ -1,35 +1,33 @@
 <% provide(:title, 'スポンサー一覧') %>
 <%= render 'admin/layout' do %>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>スポンサー</h2>
-  </div>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">スポンサー</h2>
 
-  <%= turbo_frame_tag "sponsor_list" do %>
-    <div class="tw-flex md:tw-w-1/3">
-      <%= link_to "登録",
+  <%= turbo_frame_tag 'sponsor_list' do %>
+    <div class="tw-mb-3 tw-flex tw-justify-end">
+      <%= link_to '登録',
                   new_admin_sponsor_path,
-                  class: "tw-inline-block tw-rounded tw-border-2 tw-border-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-blue-600 hover:tw-bg-blue-600 hover:tw-text-white",
-                  data: { turbo_frame: "modal" }
-      %>
+                  class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700',
+                  data: { turbo_frame: 'modal' } %>
     </div>
 
-    <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2">
-      <div class="tw-col-span-2 tw-my-auto">Abbr</div>
-      <div class="tw-col-span-2 tw-my-auto">Name</div>
-      <div class="tw-col-span-2 tw-my-auto">Type</div>
-      <div class="tw-col-span-2 tw-my-auto">登録済みセッション数</div>
-      <div class="tw-col-span-2 tw-my-auto">Url</div>
-      <div class="tw-col-span-2 tw-my-auto"></div>
-    </div>
+    <div class="tw-overflow-hidden tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm">
+      <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-bg-gray-50 tw-px-6 tw-py-3 tw-text-sm tw-font-semibold tw-text-gray-600">
+        <div class="tw-col-span-2">Abbr</div>
+        <div class="tw-col-span-2">Name</div>
+        <div class="tw-col-span-2">Type</div>
+        <div class="tw-col-span-2">登録済みセッション数</div>
+        <div class="tw-col-span-2">Url</div>
+        <div class="tw-col-span-2"></div>
+      </div>
 
-    <div id="sponsors">
-      <% @sponsors.each do |sponsor| %>
-        <%= render 'admin/sponsors/sponsor_row', sponsor: sponsor %>
-      <% end %>
+      <div id="sponsors" class="tw-divide-y tw-divide-gray-200">
+        <% @sponsors.each do |sponsor| %>
+          <%= render 'admin/sponsors/sponsor_row', sponsor: sponsor %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 
-  <%= turbo_frame_tag "modal" %>
+  <%= turbo_frame_tag 'modal' %>
   <div id="flashes" class="tw-fixed tw-bottom-0 tw-right-0" style="margin: 0.75rem"></div>
-
 <% end %>

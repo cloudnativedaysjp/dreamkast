@@ -1,79 +1,82 @@
 <%= render 'admin/layout' do %>
-  <% flash.each do |message_type, message| %>
+  <% flash.each do |_message_type, message| %>
     <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <h2>TimeTable Editor</h2>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">TimeTable Editor</h2>
 
-
-  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
-    <thead class="tw-bg-gray-100">
-    <tr>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 90px">Track</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 150px">Date</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col" style="width: 90px">Start</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">End</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Time</th>
-      <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">SponsorSession?</th>
-    </tr>
-    </thead>
-    <tbody class="tw-divide-y tw-divide-gray-200">
-    <%= form_with(url: admin_timetable_path, id: "timetable", method: "put") do |f| %>
-      <% @talks.each do |talk| %>
-        <%= fields_for 'talks[]', talk do |ft| %>
-          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-            <td class="tw-px-4 tw-py-2"><ul class="tw-p-0"><% talk.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-            <td class="tw-px-4 tw-py-2"><h5><%= talk.title %></h5></td>
-            <td class="tw-px-4 tw-py-2">
-              <div class="field">
-                <%= ft.select :track_id, @tracks.map{|track| [track.name, track.id]}.to_h, { include_blank: true, selected: talk.track_id }, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
-              </div>
-            </td>
-            <td class="tw-px-4 tw-py-2">
-              <div class="field">
-                <%= ft.select :conference_day_id, @conference.conference_days.map{|day| [day.date, day.id]}.to_h, { include_blank: true, selected: talk.conference_day_id }, {class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"} %>
-              </div>
-            </td>
-            <td class="tw-px-4 tw-py-2">
-              <div class="field">
-                <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime("%H:%M") : '', class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500", placeholder: 'HH:MM'  %>
-              </div>
-            </td>
-            <td class="tw-px-4 tw-py-2">
-              <p><%= talk.end_time ? talk.end_time.strftime("%H:%M") : '' %></p>
-            </td>
-            <td class="tw-px-4 tw-py-2"><%= talk.time  %>m</td>
-            <td class="tw-px-4 tw-py-2">
-              <%= talk.sponsor.present? ? talk.sponsor.name : '' %>
-            </td>
+  <%= form_with(url: admin_timetable_path, id: 'timetable', method: 'put') do |f| %>
+    <div class="admin-table-scroll tw-mb-4">
+      <table class="admin-table talks_table">
+        <thead>
+          <tr>
+            <th scope="col">Speakers</th>
+            <th scope="col">Title</th>
+            <th scope="col" class="tw-w-[80px]">Track</th>
+            <th scope="col" class="tw-w-[140px]">Date</th>
+            <th scope="col" class="tw-w-[80px]">Start</th>
+            <th scope="col" class="tw-w-[70px]">End</th>
+            <th scope="col" class="tw-w-[60px]">Time</th>
+            <th scope="col">Sponsor Session</th>
           </tr>
-        <% end %>
-      <% end %>
-    <% end %>
-    </tbody>
-  </table>
+        </thead>
+        <tbody class="[&_td]:tw-px-2 [&_td]:tw-py-2">
+          <% @talks.each do |talk| %>
+            <%= fields_for 'talks[]', talk do |ft| %>
+              <tr>
+                <td>
+                  <ul class="tw-list-none tw-space-y-1 tw-p-0 tw-text-sm">
+                    <% talk.speakers.each do |speaker| %>
+                      <li><%= speaker.name %></li>
+                    <% end %>
+                  </ul>
+                </td>
+                <td>
+                  <div class="tw-text-sm tw-font-medium tw-text-gray-900"><%= talk.title %></div>
+                </td>
+                <td>
+                  <%= ft.select :track_id, @tracks.map { |track| [track.name, track.id] }.to_h, { include_blank: true, selected: talk.track_id }, { class: 'admin-select tw-px-2 tw-py-1.5' } %>
+                </td>
+                <td>
+                  <%= ft.select :conference_day_id, @conference.conference_days.map { |day| [day.date, day.id] }.to_h, { include_blank: true, selected: talk.conference_day_id }, { class: 'admin-select tw-px-2 tw-py-1.5' } %>
+                </td>
+                <td>
+                  <%= ft.text_field :start_time, value: talk.start_time ? talk.start_time.strftime('%H:%M') : '', size: 5, class: 'admin-input tw-px-1 tw-py-1.5 tw-text-center', placeholder: 'HH:MM' %>
+                </td>
+                <td>
+                  <p><%= talk.end_time ? talk.end_time.strftime('%H:%M') : '' %></p>
+                </td>
+                <td><%= talk.time %>m</td>
+                <td>
+                  <%= talk.sponsor.present? ? talk.sponsor.name : '' %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 <% end %>
 
-<div id="transit_nav" class="tw-p-4">
-  <%= submit_tag "タイムテーブルを保存", form: "timetable", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
+<div id="transit_nav" class="tw-gap-3 tw-p-4">
+  <%= submit_tag 'タイムテーブルを保存', form: 'timetable', class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
 
   <%= form_with(url: admin_preview_timetable_path, method: :get) do |form| %>
-    <%= form.submit "プレビュー", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
+    <%= form.submit 'プレビュー', class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' %>
   <% end %>
 
   <% if @conference.show_timetable_enabled? %>
     <%= form_with(url: admin_close_timetable_path, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを非公開にする", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+      <%= form.submit 'タイムテーブルを非公開にする', class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-red-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-700', data: { confirm: '本当に非公開にしますか？' } %>
     <% end %>
   <% else %>
     <%= form_with(url: admin_publish_timetable_path, method: :post) do |form| %>
       <%= form.hidden_field :show_timetable, value: @conference.id %>
-      <%= form.submit "タイムテーブルを公開する", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に公開しますか？' }  %>
+      <%= form.submit 'タイムテーブルを公開する', class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700', data: { confirm: '本当に公開しますか？' } %>
     <% end %>
   <% end %>
 </div>

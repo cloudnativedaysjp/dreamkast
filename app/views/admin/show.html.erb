@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <h2><%= @conference.name %></h2>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900"><%= @conference.name %></h2>
 
   <div class="tw-mb-4 tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 lg:tw-grid-cols-4">
     <div class="tw-rounded-md tw-bg-blue-600 tw-text-white tw-shadow-sm">
@@ -34,83 +34,87 @@
     </div>
   </div>
 
-  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200">
-    <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Field</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody class="tw-divide-y tw-divide-gray-200">
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">カンファレンスステータス</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.conference_status %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">リハーサルモード</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.rehearsal_mode ? 'オン' : 'オフ' %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">CFPの結果公開</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.cfp_result_visible ? '公開' : '非公開' %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">登壇者のエントリー</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.speaker_entry %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">参加者の申し込み</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.attendee_entry %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">タイムテーブルを表示</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.show_timetable %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">現地参加定員</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.capacity %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">Contact Url</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.contact_url %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">Sponsor Guideline Url</td>
-        <td class="tw-px-4 tw-py-2"><%= link_to @conference.sponsor_guideline_url, @conference.sponsor_guideline_url, target: '_blank' %></td>
-      </tr>
-      <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-        <td class="tw-px-4 tw-py-2">スポンサーを表示</td>
-        <td class="tw-px-4 tw-py-2"><%= @conference.show_sponsors ? '表示' : '非表示' %></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="admin-table-card tw-mb-4">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>カンファレンスステータス</td>
+          <td><%= @conference.conference_status %></td>
+        </tr>
+        <tr>
+          <td>リハーサルモード</td>
+          <td><%= @conference.rehearsal_mode ? 'オン' : 'オフ' %></td>
+        </tr>
+        <tr>
+          <td>CFPの結果公開</td>
+          <td><%= @conference.cfp_result_visible ? '公開' : '非公開' %></td>
+        </tr>
+        <tr>
+          <td>登壇者のエントリー</td>
+          <td><%= @conference.speaker_entry %></td>
+        </tr>
+        <tr>
+          <td>参加者の申し込み</td>
+          <td><%= @conference.attendee_entry %></td>
+        </tr>
+        <tr>
+          <td>タイムテーブルを表示</td>
+          <td><%= @conference.show_timetable %></td>
+        </tr>
+        <tr>
+          <td>現地参加定員</td>
+          <td><%= @conference.capacity %></td>
+        </tr>
+        <tr>
+          <td>Contact Url</td>
+          <td><%= @conference.contact_url %></td>
+        </tr>
+        <tr>
+          <td>Sponsor Guideline Url</td>
+          <td><%= link_to @conference.sponsor_guideline_url, @conference.sponsor_guideline_url, target: '_blank' %></td>
+        </tr>
+        <tr>
+          <td>スポンサーを表示</td>
+          <td><%= @conference.show_sponsors ? '表示' : '非表示' %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <%= link_to 'Edit', edit_admin_conference_path(id: @conference.id),
-              class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700' %>
+              class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
 
   <hr class="tw-my-6 tw-border-gray-200">
 
-  <h3>現在放送中のセッション一覧</h3>
-  <table class="tw-mb-4 tw-w-full tw-border tw-border-gray-200 talks_table">
-    <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Track</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Start Time</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speaker</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title</th>
-      </tr>
-    </thead>
-    <tbody class="tw-divide-y tw-divide-gray-200">
-      <% @conference.tracks.each do |track| %>
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <td class="tw-px-4 tw-py-2"><%= track.name %></td>
-          <td class="tw-px-4 tw-py-2" id="td-<%= track.number %>-start-time"><%= track.name %></td>
-          <td class="tw-px-4 tw-py-2" id="td-<%= track.number %>-speakers"><%= track.name %></td>
-          <td class="tw-px-4 tw-py-2" id="td-<%= track.number %>-name"><%= track.name %></td>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">現在放送中のセッション一覧</h2>
+  <div class="admin-table-card tw-mb-4">
+    <table class="admin-table talks_table">
+      <thead>
+        <tr>
+          <th scope="col">Track</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">Speaker</th>
+          <th scope="col">Title</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @conference.tracks.each do |track| %>
+          <tr>
+            <td><%= track.name %></td>
+            <td id="td-<%= track.number %>-start-time"><%= track.name %></td>
+            <td id="td-<%= track.number %>-speakers"><%= track.name %></td>
+            <td id="td-<%= track.number %>-name"><%= track.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 
 <script>

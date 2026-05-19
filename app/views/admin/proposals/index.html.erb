@@ -1,63 +1,75 @@
 <%= render 'admin/layout' do %>
-  <% flash.each do |message_type, message| %>
-    <div class="tw-mb-4 tw-rounded tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
+  <% flash.each do |_message_type, message| %>
+    <div class="tw-mb-4 tw-rounded-md tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>Download Proposals to CSV</h2>
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= link_to 'download', admin_proposals_path(format: :csv), class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
-    </div>
+  <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
+    <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Proposals</h2>
+    <%= link_to admin_proposals_path(format: :csv),
+                class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' do %>
+      <%= render 'admin/download_icon' %>
+      <span>CSV ダウンロード</span>
+    <% end %>
   </div>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>Proposals</h2>
-    <table class="tw-w-full tw-border tw-border-gray-200 talks_table" >
-      <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Speakers</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Title / Abstract</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Status</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Type</th>
-      </tr>
-      </thead>
-      <tbody class="tw-divide-y tw-divide-gray-200">
-      <%= form_with(url: admin_proposals_path, id: "proposal_list", method: "put") do |f| %>
-        <% @proposals.each do |proposal| %>
-          <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-
-            <td class="tw-px-4 tw-py-2"><ul class="tw-p-0"><% proposal.speakers.each do |speaker| %><li class="speaker"><%= speaker.name %></li><% end %></ul></td>
-
-            <td class="tw-px-4 tw-py-2">
-              <h5><%= proposal.talk.title %></h5>
-              <p class="abstract"><%= proposal.talk.abstract[0..30] %></p>
-            </td>
-
-            <td class="tw-px-4 tw-py-2">
-              <%= f.select "proposal[#{proposal.id}][status]", proposal.class.statuses.to_a, {selected: proposal.class.statuses[proposal.status]} %>
-            </td>
-
+  <%= form_with(url: admin_proposals_path, id: 'proposal_list', method: 'put') do |f| %>
+    <div class="tw-overflow-hidden tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm">
+      <table class="tw-min-w-full tw-divide-y tw-divide-gray-200">
+        <thead class="tw-bg-gray-50">
+          <tr>
+            <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-text-xs tw-font-semibold tw-uppercase tw-tracking-wider tw-text-gray-600">Speakers</th>
+            <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-text-xs tw-font-semibold tw-uppercase tw-tracking-wider tw-text-gray-600">Title / Abstract</th>
+            <th scope="col" class="tw-px-6 tw-py-3 tw-text-left tw-text-xs tw-font-semibold tw-uppercase tw-tracking-wider tw-text-gray-600">Status</th>
           </tr>
-        <% end %>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody class="tw-divide-y tw-divide-gray-200 tw-bg-white">
+          <% @proposals.each do |proposal| %>
+            <tr class="hover:tw-bg-gray-50">
+              <td class="tw-whitespace-nowrap tw-px-6 tw-py-4 tw-align-top tw-text-sm tw-text-gray-700">
+                <ul class="tw-list-none tw-space-y-1 tw-p-0">
+                  <% proposal.speakers.each do |speaker| %>
+                    <li><%= speaker.name %></li>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="tw-px-6 tw-py-4 tw-align-top">
+                <div class="tw-text-sm tw-font-medium tw-text-gray-900"><%= proposal.talk.title %></div>
+                <div class="tw-mt-1 tw-text-sm tw-text-gray-500"><%= proposal.talk.abstract[0..30] %></div>
+              </td>
+              <td class="tw-px-6 tw-py-4 tw-align-top">
+                <%= f.select "proposal[#{proposal.id}][status]",
+                             proposal.class.statuses.to_a,
+                             { selected: proposal.class.statuses[proposal.status] },
+                             class: 'tw-block tw-w-full tw-rounded-md tw-border-gray-300 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-blue-500' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 <% end %>
-<div id="transit_nav" class="tw-p-4">
-  <%= submit_tag "保存", form: "proposal_list",class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
+
+<%# #transit_nav は _admin.scss で fixed bottom + flex center を付与済み %>
+<div id="transit_nav" class="tw-gap-3 tw-p-4">
+  <%= submit_tag '保存', form: 'proposal_list',
+                  class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
 
   <% if @conference.cfp_result_visible %>
     <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, method: :patch) do |form| %>
       <%= form.hidden_field :cfp_result_visible, value: false %>
-      <%= form.submit "採択結果を非公開にする", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に非公開にしますか？' } %>
+      <%= form.submit '採択結果を非公開にする',
+                      class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-red-600 tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-red-700',
+                      data: { confirm: '本当に非公開にしますか？' } %>
     <% end %>
   <% else %>
     <%= form_with(url: admin_conference_path(id: @conference.id), model: @conference, method: :patch) do |form| %>
       <%= form.hidden_field :cfp_result_visible, value: true %>
-      <%= form.submit "採択結果を公開する", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button", data: { confirm: '本当に公開しますか？' }  %>
+      <%= form.submit '採択結果を公開する',
+                      class: 'transit_button tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700',
+                      data: { confirm: '本当に公開しますか？' } %>
     <% end %>
   <% end %>
 </div>

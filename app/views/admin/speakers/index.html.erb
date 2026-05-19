@@ -5,47 +5,73 @@
     </div>
   <% end %>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>エクスポート</h2>
-    <div class="tw-col-span-12 tw-mb-4 tw-flex">
-      <%= button_to 'エクスポート(CSV)', admin_export_speakers_path, {method: :get, class: 'tw-mr-2' } %>
-      <%= button_to 'エクスポート(JSON, for Website)', admin_export_speakers_for_website_path, {method: :get } %>
+  <div class="tw-mb-6">
+    <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">エクスポート</h2>
+    <div class="tw-flex tw-flex-wrap tw-gap-2">
+      <%= button_to admin_export_speakers_path, method: :get, class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' do %>
+        <%= render 'admin/download_icon' %>
+        <span>エクスポート(CSV)</span>
+      <% end %>
+      <%= button_to admin_export_speakers_for_website_path, method: :get, class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' do %>
+        <%= render 'admin/download_icon' %>
+        <span>エクスポート(JSON, for Website)</span>
+      <% end %>
     </div>
   </div>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>Speakers</h2>
-  </div>
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <table class="tw-w-full tw-border tw-border-gray-200">
-      <thead class="tw-bg-gray-100">
-      <tr>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Image</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Name</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Profile</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Company</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">Job title</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">X(Twitter)</th>
-        <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">GitHub</th>
-      </tr>
-      </thead>
-      <tbody class="tw-divide-y tw-divide-gray-200">
-      <% @speakers.each do |speaker| %>
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-          <% if speaker.has_avatar? %>
-            <td class="tw-px-4 tw-py-2 avatar"><%= image_tag speaker.avatar_url(:medium) || speaker.avatar_url, :size => '80x80'  %></td>
-          <% else %>
-            <td class="tw-px-4 tw-py-2 avatar"><%= image_tag 'dummy.png', :size => '80x80'  %></td>
-          <% end %>
-          <td class="tw-px-4 tw-py-2"><%= speaker.name %></td>
-          <td class="tw-px-4 tw-py-2"><%= speaker.profile %></td>
-          <td class="tw-px-4 tw-py-2"><%= speaker.company %></td>
-          <td class="tw-px-4 tw-py-2"><%= speaker.job_title %></td>
-          <td class="tw-px-4 tw-py-2"><%= speaker.twitter_id %></td>
-          <td class="tw-px-4 tw-py-2"><%= speaker.github_id %></td>
-          <td class="tw-px-4 tw-py-2"><%= link_to 'Edit', "speakers/#{speaker.id}/edit", data: {"turbolinks" => false} %></td>
-          <td class="tw-px-4 tw-py-2"><%= link_to 'Notice', "speaker_announcements/new?speaker_id=#{speaker.id}" %></td>
+
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Speakers</h2>
+  <div class="admin-table-scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Profile</th>
+          <th scope="col">Company</th>
+          <th scope="col">Job title</th>
+          <th scope="col">X(Twitter)</th>
+          <th scope="col">GitHub</th>
+          <th scope="col" class="tw-text-center">Edit</th>
+          <th scope="col" class="tw-text-center">Announce</th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @speakers.each do |speaker| %>
+          <tr>
+            <% if speaker.has_avatar? %>
+              <td class="avatar"><%= image_tag speaker.avatar_url(:medium) || speaker.avatar_url, :size => '80x80' %></td>
+            <% else %>
+              <td class="avatar"><%= image_tag 'dummy.png', :size => '80x80' %></td>
+            <% end %>
+            <td><%= speaker.name %></td>
+            <td><%= speaker.profile %></td>
+            <td><%= speaker.company %></td>
+            <td><%= speaker.job_title %></td>
+            <td><%= speaker.twitter_id %></td>
+            <td><%= speaker.github_id %></td>
+            <td class="tw-text-center">
+              <%= link_to "speakers/#{speaker.id}/edit",
+                          data: { 'turbolinks' => false },
+                          title: '編集',
+                          class: 'tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-p-2 tw-text-gray-500 hover:tw-bg-gray-100 hover:tw-text-blue-600' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-h-5 tw-w-5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+                <span class="tw-sr-only">編集</span>
+              <% end %>
+            </td>
+            <td class="tw-text-center">
+              <%= link_to "speaker_announcements/new?speaker_id=#{speaker.id}",
+                          title: 'スピーカーへ通知',
+                          class: 'tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-p-2 tw-text-gray-500 hover:tw-bg-gray-100 hover:tw-text-blue-600' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-h-5 tw-w-5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                </svg>
+                <span class="tw-sr-only">通知</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

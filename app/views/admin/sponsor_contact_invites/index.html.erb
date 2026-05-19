@@ -1,30 +1,29 @@
 <div class="tw-mx-auto tw-w-full tw-px-4">
-  <h2>Sponsor Contact Invites</h2>
-
-  <div class="tw-mb-4">
+  <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
+    <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Sponsor Contact Invites</h2>
     <%= link_to "New Invite",
                 new_sponsor_contact_invite_path(sponsor_id: params[:sponsor_id]),
-                class: "tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700",
+                class: "tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700",
                 data: { turbo_frame: "sponsor_contact_invite_modal" } %>
   </div>
 
-  <div class="tw-overflow-x-auto">
-    <table class="tw-w-full tw-border tw-border-gray-200">
+  <div class="admin-table-scroll">
+    <table class="admin-table">
       <thead>
         <tr>
-          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">Email</th>
-          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">Sponsor</th>
-          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">Status</th>
-          <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left">Sent At</th>
+          <th scope="col">Email</th>
+          <th scope="col">Sponsor</th>
+          <th scope="col">Status</th>
+          <th scope="col">Sent At</th>
         </tr>
       </thead>
       <tbody>
         <% @invites.each do |invite| %>
           <tr>
-            <td class="tw-px-4 tw-py-2"><%= invite.email %></td>
-            <td class="tw-px-4 tw-py-2"><%= invite.sponsor.name %></td>
-            <td class="tw-px-4 tw-py-2"><%= invite.accepted? ? 'Accepted' : 'Pending' %></td>
-            <td class="tw-px-4 tw-py-2"><%= l invite.created_at, format: :long %></td>
+            <td><%= invite.email %></td>
+            <td><%= invite.sponsor.name %></td>
+            <td><%= invite.accepted? ? 'Accepted' : 'Pending' %></td>
+            <td><%= l invite.created_at, format: :long %></td>
           </tr>
         <% end %>
       </tbody>

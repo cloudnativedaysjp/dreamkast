@@ -5,103 +5,101 @@
     </div>
   <% end %>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <h2>セッション質問一覧</h2>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">セッション質問一覧</h2>
 
-    <!-- フィルタリングUI -->
-    <div class="tw-col-span-12 tw-mb-4">
-      <%= form_with url: admin_session_questions_path(event: params[:event]), method: :get, local: true, class: 'tw-flex tw-gap-2 tw-items-end' do |f| %>
-        <%= hidden_field_tag :event, params[:event] %>
+  <!-- フィルタリングUI -->
+  <div class="tw-mb-6">
+    <%= form_with url: admin_session_questions_path(event: params[:event]), method: :get, local: true, class: 'tw-flex tw-flex-wrap tw-gap-3 tw-items-end' do |f| %>
+      <%= hidden_field_tag :event, params[:event] %>
 
-        <div class="tw-mb-4">
-          <%= label_tag :talk_id, 'セッション', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
-          <%= select_tag :talk_id,
-              options_from_collection_for_select(@talks, :id, :title, params[:talk_id]),
-              { include_blank: 'すべて', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
-        </div>
+      <div>
+        <%= label_tag :talk_id, 'セッション', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+        <%= select_tag :talk_id,
+            options_from_collection_for_select(@talks, :id, :title, params[:talk_id]),
+            { include_blank: 'すべて', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
+      </div>
 
-        <div class="tw-mb-4">
-          <%= label_tag :sort, 'ソート', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
-          <%= select_tag :sort,
-              options_for_select([
-                ['時間順（新しい順）', 'time'],
-                ['投票数順', 'votes']
-              ], params[:sort]),
-              { include_blank: 'デフォルト', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
-        </div>
+      <div>
+        <%= label_tag :sort, 'ソート', class: 'tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+        <%= select_tag :sort,
+            options_for_select([
+              ['時間順（新しい順）', 'time'],
+              ['投票数順', 'votes']
+            ], params[:sort]),
+            { include_blank: 'デフォルト', class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' } %>
+      </div>
 
-        <%= submit_tag 'フィルタ', class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700' %>
-        <%= link_to 'リセット', admin_session_questions_path(event: params[:event]), class: 'tw-inline-block tw-rounded tw-bg-gray-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-gray-600' %>
-      <% end %>
-    </div>
+      <%= submit_tag 'フィルタ', class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
+      <%= link_to 'リセット', admin_session_questions_path(event: params[:event]), class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-gray-500 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-gray-600' %>
+    <% end %>
   </div>
 
-  <div class="tw-grid tw-grid-cols-12 tw-gap-4">
-    <div class="tw-col-span-12">
-      <p class="tw-text-gray-500">
-        全<%= @session_questions.count %>件の質問
-      </p>
+  <p class="tw-mb-3 tw-text-sm tw-text-gray-500">
+    全<%= @session_questions.count %>件の質問
+  </p>
 
-      <table class="tw-w-full tw-border tw-border-gray-200">
-        <thead class="tw-bg-gray-100">
-          <tr>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">ID</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">質問本文</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">セッション</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">投票数</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">回答数</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">作成日時</th>
-            <th class="tw-border-b tw-px-4 tw-py-2 tw-text-left" scope="col">操作</th>
-          </tr>
-        </thead>
-        <tbody class="tw-divide-y tw-divide-gray-200">
-          <% if @session_questions.any? %>
-            <% @session_questions.each do |question| %>
-              <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-                <td class="tw-px-4 tw-py-2"><%= question.id %></td>
-                <td class="tw-px-4 tw-py-2">
-                  <div style="max-width: 300px; word-wrap: break-word;">
-                    <%= truncate(question.body, length: 100) %>
-                  </div>
-                </td>
-                <td class="tw-px-4 tw-py-2">
-                  <%= question.talk.title %>
-                  <br>
-                  <small class="tw-text-sm tw-text-gray-500">
-                    <%= question.talk.track&.name %>
-                    <% if question.talk.conference_day&.date.present? %>
-                      - <%= question.talk.conference_day.date.strftime('%Y/%m/%d') %>
-                    <% end %>
-                  </small>
-                </td>
-                <td class="tw-px-4 tw-py-2"><%= question.votes_count %></td>
-                <td class="tw-px-4 tw-py-2"><%= question.session_question_answers.count %></td>
-                <td class="tw-px-4 tw-py-2"><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></td>
-                <td class="tw-px-4 tw-py-2">
-                  <%= link_to '詳細', admin_session_question_path(event: params[:event], id: question.id), class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-blue-700' %>
+  <div class="admin-table-scroll">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">質問本文</th>
+          <th scope="col">セッション</th>
+          <th scope="col">投票数</th>
+          <th scope="col">回答数</th>
+          <th scope="col">作成日時</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @session_questions.any? %>
+          <% @session_questions.each do |question| %>
+            <tr>
+              <td><%= question.id %></td>
+              <td>
+                <div class="tw-max-w-xs tw-break-words">
+                  <%= truncate(question.body, length: 100) %>
+                </div>
+              </td>
+              <td>
+                <%= question.talk.title %>
+                <br>
+                <small class="tw-text-sm tw-text-gray-500">
+                  <%= question.talk.track&.name %>
+                  <% if question.talk.conference_day&.date.present? %>
+                    - <%= question.talk.conference_day.date.strftime('%Y/%m/%d') %>
+                  <% end %>
+                </small>
+              </td>
+              <td><%= question.votes_count %></td>
+              <td><%= question.session_question_answers.count %></td>
+              <td><%= question.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+              <td>
+                <div class="tw-flex tw-flex-wrap tw-items-center tw-gap-1">
+                  <%= link_to '詳細', admin_session_question_path(event: params[:event], id: question.id), class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-3 tw-py-1.5 tw-text-xs tw-font-medium tw-text-white hover:tw-bg-blue-700' %>
                   <% if question.hidden? %>
-                    <span class="tw-inline-block tw-rounded-full tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-bg-yellow-500 tw-text-gray-800 tw-ml-1">非表示</span>
+                    <span class="tw-inline-flex tw-items-center tw-rounded-full tw-bg-yellow-500 tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-text-gray-800">非表示</span>
                     <%= button_to '表示する',
                         toggle_hidden_admin_session_question_path(event: params[:event], id: question.id),
                         method: :patch,
-                        class: 'tw-inline-block tw-rounded tw-bg-green-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-green-700 tw-ml-1' %>
+                        class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-green-600 tw-px-3 tw-py-1.5 tw-text-xs tw-font-medium tw-text-white hover:tw-bg-green-700' %>
                   <% else %>
                     <%= button_to '非表示にする',
                         toggle_hidden_admin_session_question_path(event: params[:event], id: question.id),
                         method: :patch,
-                        class: 'tw-inline-block tw-rounded tw-bg-yellow-500 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-white hover:tw-bg-yellow-600 tw-ml-1',
+                        class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-yellow-500 tw-px-3 tw-py-1.5 tw-text-xs tw-font-medium tw-text-white hover:tw-bg-yellow-600',
                         data: { turbo_confirm: '本当に非表示にしますか？' } %>
                   <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr class="odd:tw-bg-white even:tw-bg-gray-50">
-              <td class="tw-px-4 tw-py-2 tw-text-center" colspan="7">質問がありません</td>
+                </div>
+              </td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% else %>
+          <tr>
+            <td class="tw-text-center" colspan="7">質問がありません</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 <% end %>

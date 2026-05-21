@@ -1,4 +1,3 @@
-import  "./tracks_control.js"
 import consumer from "./consumer"
 
 consumer.subscriptions.create("TrackChannel", {

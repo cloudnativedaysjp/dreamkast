@@ -34,19 +34,6 @@ class Admin::TracksController < ApplicationController
     end
   end
 
-  def update_offset
-    params[:time][0].each do |id, value|
-      Talk.find(id).update!(
-        start_offset: value[:startOffset],
-        end_offset: value[:endOffset]
-      )
-    end
-    ActionCable.server.broadcast(
-      "on_air_#{@conference.abbr}", Video.on_air_v2(@conference.id)
-    )
-    redirect_to(admin_tracks_path, flash: { success: 'Offset updated' })
-  end
-
   private
 
   def export_talks(conference, talks, track_name, date)

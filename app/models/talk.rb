@@ -146,9 +146,7 @@ class Talk < ApplicationRecord
       'show_on_timetable',
       'video_published',
       'document_url',
-      'additional_documents',
-      'start_offset',
-      'end_offset'
+      'additional_documents'
     ]
   end
 
@@ -372,14 +370,6 @@ class Talk < ApplicationRecord
     method = proposal_items.find_by(label: 'presentation_method')
     return nil if method.blank?
     ProposalItemConfig.find(method.params).params
-  end
-
-  def actual_start_time
-    start_time + start_offset.minutes
-  end
-
-  def actual_end_time
-    end_time + end_offset.minutes
   end
 
   def calendar

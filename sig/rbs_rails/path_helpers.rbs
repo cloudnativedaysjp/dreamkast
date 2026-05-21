@@ -85,7 +85,6 @@ interface _RbsRailsPathHelpers
   def admin_start_on_air_path: (*untyped) -> String
   def admin_stop_on_air_path: (*untyped) -> String
   def admin_tracks_path: (*untyped) -> String
-  def admin_update_offset_path: (*untyped) -> String
   def admin_attachment_path: (*untyped) -> String
   def admin_team_path: (*untyped) -> String
   def admin_harvest_jobs_path: (*untyped) -> String
@@ -266,7 +265,6 @@ interface _RbsRailsPathHelpers
   def admin_start_on_air_url: (*untyped) -> String
   def admin_stop_on_air_url: (*untyped) -> String
   def admin_tracks_url: (*untyped) -> String
-  def admin_update_offset_url: (*untyped) -> String
   def admin_attachment_url: (*untyped) -> String
   def admin_team_url: (*untyped) -> String
   def admin_harvest_jobs_url: (*untyped) -> String

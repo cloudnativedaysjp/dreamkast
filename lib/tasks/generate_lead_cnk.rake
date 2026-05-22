@@ -4,7 +4,9 @@ namespace :util do
     ActiveRecord::Base.logger = Logger.new($stdout)
     Rails.logger.level = Logger::DEBUG
 
-    conference = Conference.find_by(abbr: 'cnk')
+    conference_abbr = ENV.fetch('CONFERENCE_ABBR', 'cnk')
+    conference = Conference.find_by(abbr: conference_abbr)
+    abort("Conference with abbr='#{conference_abbr}' was not found. Set CONFERENCE_ABBR to a valid event abbreviation.") unless conference
 
     # Pre-load TrackViewer data
     # Store as a hash for O(1) lookup: { profile_id => { talk_id => true } }

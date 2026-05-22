@@ -33,8 +33,7 @@
           <tr>
             <td><%= talk.id %></td>
             <td>
-              <%= text_field_tag(talk.id.to_s + "_planned_start", talk.start_time.strftime('%H:%M'), {disabled: true, size: 1}) %>-
-              <%= text_field_tag(talk.id.to_s + "_planned_end", talk.end_time.strftime('%H:%M'), {disabled: true, size: 1}) %>
+              <%= talk.start_time.strftime('%H:%M') %>-<%= talk.end_time.strftime('%H:%M') %>
             </td>
             <td>
               <div class="tw-text-sm tw-font-medium tw-text-gray-900"><%= talk.title %></div>

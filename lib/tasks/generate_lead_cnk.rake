@@ -89,97 +89,90 @@ namespace :util do
 
       booth_output = target_sponsor_type == ['Booth'] || treat_as_booth
 
-      if target_sponsor_type.any?
-        # Booth 出力の場合は「申し込み種別：現地」〜「オンラインセッション視聴フラグ」までを省略
-        header = booth_output ? attr.drop(8) : attr
+      next unless target_sponsor_type.any?
 
-        generated_csv = CSV.generate do |csv|
-          csv << header
+      # Booth 出力の場合は「申し込み種別：現地」〜「オンラインセッション視聴フラグ」までを省略
+      header = booth_output ? attr.drop(8) : attr
 
-          profiles.each do |profile|
-            checkin = 0
-            flag = true
+      generated_csv = CSV.generate do |csv|
+        csv << header
 
-            # イベント参加判定:
-            #   - オンライン視聴履歴がある（登録区分問わず）
-            #   - もしくは 現地参加登録 かつ 現地チェックイン履歴あり
-            has_track_viewer_log = track_viewer_attended_profiles.include?(profile.id)
-            has_offline_check_in = profile.offline? && profile.check_in_conferences.present?
-            attended = has_track_viewer_log || has_offline_check_in
-            checkin = profile.check_in_talks.any? { |t| t.talk_id == talk_id } ? 1 : 0
+        profiles.each do |profile|
+          # イベント参加判定:
+          #   - オンライン視聴履歴がある（登録区分問わず）
+          #   - もしくは 現地参加登録 かつ 現地チェックイン履歴あり
+          has_track_viewer_log = track_viewer_attended_profiles.include?(profile.id)
+          has_offline_check_in = profile.offline? && profile.check_in_conferences.present?
+          attended = has_track_viewer_log || has_offline_check_in
+          checkin = profile.check_in_talks.any? { |t| t.talk_id == talk_id } ? 1 : 0
 
-            booth_scanned = profile.stamp_rally_check_ins.any? { |ci| check_point_sponsor_map[ci.stamp_rally_check_point_id] == s.id }
+          booth_scanned = profile.stamp_rally_check_ins.any? { |ci| check_point_sponsor_map[ci.stamp_rally_check_point_id] == s.id }
 
-            # Filter for Gold: Must have attended the specific session (Online or Offline)
-            online_session_attended = track_viewer_data[profile.id].include?(talk_id)
-            offline_session_attended = profile.check_in_talks.any? { |t| t.talk_id == talk_id }
-            session_attended = online_session_attended || offline_session_attended
+          # Filter for Gold: Must have attended the specific session (Online or Offline)
+          online_session_attended = track_viewer_data[profile.id].include?(talk_id)
+          offline_session_attended = profile.check_in_talks.any? { |t| t.talk_id == talk_id }
+          session_attended = online_session_attended || offline_session_attended
 
-            if target_sponsor_type.include?('Gold') && !treat_as_booth && !session_attended
-              flag = false
-            end
+          # Filter for Gold: 対象セッション参加者のみ
+          next if target_sponsor_type.include?('Gold') && !treat_as_booth && !session_attended
 
-            # Filter for Booth (純粋な Booth スポンサー or Booth 扱いの Gold): ブース読み取りが必要
-            if (target_sponsor_type == ['Booth'] || treat_as_booth) && !booth_scanned
-              flag = false
-            end
+          # Filter for Booth (純粋な Booth スポンサー or Booth 扱いの Gold): ブース読み取りが必要
+          next if (target_sponsor_type == ['Booth'] || treat_as_booth) && !booth_scanned
 
-            if flag
-              # Helper for industry name lookup
-              industry_name = industries[profile.industry_id]&.name || ''
+          # Helper for industry name lookup
+          industry_name = industries[profile.industry_id]&.name || ''
 
-              # Helper for company name
-              company_full_name = [
-                profile.company_name_prefix&.name,
-                profile.company_name,
-                profile.company_name_suffix&.name
-              ].join
+          # Helper for company name
+          company_full_name = [
+            profile.company_name_prefix&.name,
+            profile.company_name,
+            profile.company_name_suffix&.name
+          ].join
 
-              flag_columns = if booth_output
-                                []
-                              else
-                                [
-                                  profile.offline? ? 1 : 0,
-                                  profile.online? ? 1 : 0,
-                                  attended ? 1 : 0,
-                                  (profile.offline? && profile.check_in_conferences.present?) ? 1 : 0,
-                                  profile.registered_talks.any? { |t| t.talk_id == talk_id } ? 1 : 0,
-                                  checkin,
-                                  booth_scanned ? 1 : 0,
-                                  (track_viewer_data[profile.id]&.include?(talk_id) ? 1 : 0)
-                                ]
-                              end
-
-              line = flag_columns + [
-                profile.last_name,
-                profile.first_name,
-                profile.last_name_kana,
-                profile.first_name_kana,
-                company_full_name,
-                profile.department,
-                profile.company_postal_code,
-                profile.company_address_level1,
-                profile.company_address_level2 + profile.company_address_line1,
-                profile.company_address_line2,
-                profile.company_tel,
-                profile.company_fax,
-                profile.company_email,
-                employees[profile.number_of_employee_id]&.name,
-                annual_sales[profile.annual_sales_id]&.name,
-                industry_name,
-                profile.department,
-                profile.position
+          flag_columns =
+            if booth_output
+              []
+            else
+              [
+                profile.offline? ? 1 : 0,
+                profile.online? ? 1 : 0,
+                attended ? 1 : 0,
+                has_offline_check_in ? 1 : 0,
+                profile.registered_talks.any? { |t| t.talk_id == talk_id } ? 1 : 0,
+                checkin,
+                booth_scanned ? 1 : 0,
+                online_session_attended ? 1 : 0
               ]
-              csv << line
             end
-          end
-        end
 
-        # Ensure directory exists
-        FileUtils.mkdir_p('./tmp/csv')
-        File.open("./tmp/csv/#{target_sponsor_type[0]}_#{s.name}_#{s.id}.csv", 'w', encoding: 'UTF-8') do |file|
-          file.write(generated_csv)
+          line = flag_columns + [
+            profile.last_name,
+            profile.first_name,
+            profile.last_name_kana,
+            profile.first_name_kana,
+            company_full_name,
+            profile.department,
+            profile.company_postal_code,
+            profile.company_address_level1,
+            profile.company_address_level2 + profile.company_address_line1,
+            profile.company_address_line2,
+            profile.company_tel,
+            profile.company_fax,
+            profile.company_email,
+            employees[profile.number_of_employee_id]&.name,
+            annual_sales[profile.annual_sales_id]&.name,
+            industry_name,
+            profile.department,
+            profile.position
+          ]
+          csv << line
         end
+      end
+
+      # Ensure directory exists
+      FileUtils.mkdir_p('./tmp/csv')
+      File.open("./tmp/csv/#{target_sponsor_type[0]}_#{s.name}_#{s.id}.csv", 'w', encoding: 'UTF-8') do |file|
+        file.write(generated_csv)
       end
     end
   end

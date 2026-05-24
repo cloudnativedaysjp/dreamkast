@@ -1,0 +1,414 @@
+// ===== Attendee Dashboard - Japanese Modern Theme =====
+// 既存テーマ変数（_speaker_dashboard.scssで!defaultで定義済み）を使用
+
+// --- Container override ---
+// .tracks の白背景を透過にしてwashi背景を復元
+.attendee-dashboard.tracks {
+    background-color: transparent;
+}
+
+// --- Greeting ---
+.dashboard-greeting {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 0;
+
+    .dashboard-greeting-title {
+        font-family: $font-family-header;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+    }
+
+    .dashboard-greeting-subtitle {
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        color: lighten($sumi, 30%);
+        letter-spacing: 0.1em;
+    }
+}
+
+// --- Speaker CTA ---
+.dashboard-speaker-cta {
+    margin-bottom: 2rem;
+
+    .btn {
+        display: block;
+        width: 100%;
+        background-color: $beni;
+        border-color: $beni;
+        color: white;
+        border-radius: 2px;
+        padding: 0.9rem 2rem;
+        font-family: $font-family-header;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+
+        &:hover, &:focus, &:active {
+            background-color: darken($beni, 10%) !important;
+            border-color: darken($beni, 10%) !important;
+            box-shadow: 0 2px 8px rgba($beni, 0.4);
+        }
+    }
+}
+
+// --- Early bird banner ---
+.dashboard-early-banner {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-left: 4px solid #D4A843;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+
+    .dashboard-early-banner-title {
+        font-family: $font-family-header;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+    }
+
+    p {
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        color: lighten($sumi, 10%);
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+    .dotted-accent {
+        border-bottom: 2px dotted rgba($sumi, 0.3);
+        padding-bottom: 1px;
+    }
+}
+
+// --- Accommodation reminder ---
+.dashboard-reminder {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-left: 4px solid $tokyo-navy;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+
+    .dashboard-reminder-title {
+        font-family: $font-family-header;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: $sumi;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+    }
+
+    p {
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        color: lighten($sumi, 10%);
+        line-height: 1.8;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    a {
+        color: $tokyo-navy;
+        text-decoration: underline;
+    }
+
+    .dotted-accent {
+        border-bottom: 2px dotted rgba($sumi, 0.3);
+        padding-bottom: 1px;
+    }
+}
+
+// --- Live card ---
+.dashboard-live-card {
+    background-color: $beni;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 4px 16px rgba($beni, 0.3);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: white;
+
+    .dashboard-live-title {
+        font-family: $font-family-header;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        background-color: white;
+        border-color: white;
+        color: $beni;
+        border-radius: 2px;
+        padding: 0.8rem 2.5rem;
+        font-family: $font-family-header;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+
+        &:hover, &:focus, &:active {
+            background-color: rgba(white, 0.9) !important;
+            border-color: rgba(white, 0.9) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            color: darken($beni, 10%);
+        }
+    }
+}
+
+// --- Section card wrapper ---
+.dashboard-section {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px $washi-shadow;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+// --- Section title ---
+.dashboard-section-title {
+    font-family: $font-family-header;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: $sumi;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+}
+
+// --- Schedule ---
+.dashboard-schedule {
+    .dashboard-schedule-day {
+        padding: 0.75rem 0;
+        border-bottom: 1px dotted rgba($sumi, 0.15);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .dashboard-schedule-date {
+        font-family: $font-family-header;
+        font-weight: 700;
+        color: $sumi;
+        margin-right: 0.75rem;
+    }
+
+    .dashboard-schedule-time {
+        font-family: $font-family-serif;
+        color: lighten($sumi, 20%);
+        font-size: 0.9rem;
+    }
+
+    .dashboard-schedule-note {
+        color: lighten($sumi, 40%);
+        font-size: 0.85rem;
+        margin-top: 0.75rem;
+    }
+}
+
+// --- Announcements ---
+.dashboard-announcements {
+    .announcement-item {
+        padding: 1rem 0;
+        border-bottom: 1px dotted rgba($sumi, 0.15);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .announcement-date {
+        font-family: $font-family-serif;
+        font-size: 0.8rem;
+        color: lighten($sumi, 40%);
+        margin-bottom: 0.25rem;
+    }
+
+    .announcement-body {
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        color: lighten($sumi, 10%);
+        line-height: 1.8;
+    }
+}
+
+// --- Talk card ---
+.dashboard-talk-card {
+    background-color: white;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    box-shadow: 0 1px 4px $washi-shadow;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: block;
+    text-decoration: none !important;
+    color: $sumi;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($sumi, 0.12);
+        color: $sumi;
+    }
+
+    .dashboard-talk-meta {
+        font-size: 0.8rem;
+        color: lighten($sumi, 30%);
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-talk-title {
+        font-family: $font-family-header;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $sumi;
+        line-height: 1.6;
+        margin-bottom: 0;
+    }
+
+    .badge {
+        border-radius: 2px;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+}
+
+// --- Sidebar links ---
+.dashboard-links {
+    a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: $sumi;
+        text-decoration: none;
+        font-family: $font-family-serif;
+        font-size: 0.9rem;
+        border-bottom: 1px dotted rgba($sumi, 0.1);
+        transition: background-color 0.2s ease;
+
+        i {
+            margin-right: 0.5rem;
+            color: lighten($sumi, 30%);
+        }
+
+        &:hover {
+            background-color: rgba($sumi, 0.04);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+// --- Participation section ---
+.dashboard-participation {
+    .dashboard-status-label {
+        font-family: $font-family-serif;
+        font-size: 0.8rem;
+        color: lighten($sumi, 40%);
+        border-bottom: 1px solid $sumi;
+        padding-bottom: 0.25rem;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-status-value {
+        font-family: $font-family-header;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $sumi;
+    }
+
+    .dashboard-status-link {
+        font-size: 0.85rem;
+        color: lighten($sumi, 30%);
+
+        a {
+            color: $sumi;
+            text-decoration: underline;
+        }
+    }
+}
+
+// --- Share box ---
+.dashboard-share {
+    background-color: $washi;
+    border: 1px solid rgba($sumi, 0.08);
+    border-radius: 2px;
+    padding: 1.5rem;
+
+    label {
+        font-family: $font-family-header;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: $sumi;
+    }
+
+    textarea {
+        border-radius: 2px;
+        border-color: rgba($sumi, 0.2);
+        font-family: $font-family-serif;
+
+        &:focus {
+            border-color: $beni;
+            box-shadow: 0 0 0 3px rgba($beni, 0.15);
+        }
+    }
+
+    .btn {
+        border-radius: 2px;
+    }
+}
+
+// --- Access card ---
+.dashboard-access {
+    .card {
+        &:hover {
+            transform: none;
+        }
+    }
+
+    .card-body {
+        p {
+            font-family: $font-family-serif;
+            font-size: 0.9rem;
+            color: lighten($sumi, 10%);
+        }
+    }
+}
+
+// --- Responsive ---
+@media (max-width: 768px) {
+    .dashboard-greeting {
+        .dashboard-greeting-title {
+            font-size: 1.35rem;
+        }
+    }
+
+    .dashboard-section {
+        padding: 1.25rem;
+    }
+
+    .dashboard-early-banner,
+    .dashboard-reminder {
+        padding: 1.25rem;
+    }
+
+    .dashboard-live-card {
+        padding: 1.5rem;
+    }
+}

@@ -3,10 +3,12 @@
 
 タイトル: <%= @talk.title %>
 概要: <%= @talk.abstract %>
-受講者レベル: <%= @talk.difficulty %>
-資料URL: <%= @talk.document_url %>
 <% @talk.selected_proposal_items.each do |k, v| %>
 <%= k %>: <%= v %>
 <% end %>
+
+提出したプロポーザルの確認・修正は登壇者ダッシュボードから行えます。
+
+<%= speaker_dashboard_url(event: @conference.abbr) %>
 
 <%= render '/layouts/footer' %>

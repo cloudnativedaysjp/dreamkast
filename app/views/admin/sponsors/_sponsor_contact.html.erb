@@ -1,19 +1,19 @@
 <%= turbo_frame_tag sponsor_contact do %>
-  <div class="row py-2 border-top">
-    <div class="col-2 my-auto">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2">
+    <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor_contact.name %>
     </div>
-    <div class="col-2 my-auto">
+    <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor_contact.email %>
     </div>
-    <div class="col-2 my-auto">
-      <span class="badge bg-success">登録済み</span>
+    <div class="tw-col-span-2 tw-my-auto">
+      <span class="tw-inline-block tw-rounded-full tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-bg-green-600 tw-text-white">登録済み</span>
     </div>
-    <div class="col-2 my-auto">
-      <div class="d-flex justify-content-end">
+    <div class="tw-col-span-2 tw-my-auto">
+      <div class="tw-flex tw-justify-end">
         <%= link_to "担当者を削除",
                               admin_sponsor_contact_path(event: sponsor_contact.conference.abbr, id: sponsor_contact.id),
-                              class: "btn btn-sm btn-outline-danger",
+                              class: "tw-inline-block tw-rounded tw-border-2 tw-border-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-red-600 hover:tw-bg-red-600 hover:tw-text-white",
                               data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }
                     %>
       </div>

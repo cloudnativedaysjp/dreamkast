@@ -5,7 +5,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
   def index
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_contact_invites = @sponsor.sponsor_contact_invites
@@ -17,7 +17,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   # GET :event/sponsor_dashboard/sponsor_contacts/new
   def new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     if logged_in?
@@ -35,7 +35,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   # GET :event/sponsor_dashboard/sponsor_contacts/:id/edit
   def edit
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, id: params[:id])
     @sponsor = @sponsor_contact.sponsor
     authorize(@sponsor_contact)
@@ -43,7 +43,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   # POST :event/sponsor_dashboard/sponsor_contacts
   def create
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor = Sponsor.find(params[:sponsor_id])
     # 既にsponsor_contactが存在しない場合のみ作成を許可
     if @sponsor.sponsor_contacts.none? { |contact| contact.user&.email == current_user[:info][:email] }
@@ -68,7 +68,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # PATCH/PUT :event/sponsor_dashboard/speakers/1
   # PATCH/PUT :event/sponsor_dashboard/speakers/1.json
   def update
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, id: params[:id])
 
     authorize(@sponsor_contact)
@@ -126,9 +126,8 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   end
 
   def set_sponsor_contact
-    @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
   end
 end

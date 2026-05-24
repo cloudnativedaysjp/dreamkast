@@ -1,7 +1,5 @@
 class KeynoteSpeakerInvitationMailer < ApplicationMailer
   include Rails.application.routes.url_helpers
-
-  default from: 'CloudNative Days 実行委員会 <noreply@mail.cloudnativedays.jp>'
   layout 'mailer'
 
   def invite(keynote_speaker_invitation)

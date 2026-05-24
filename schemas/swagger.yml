@@ -492,6 +492,9 @@ components:
       properties:
         id:
           type: number
+        userId:
+          type: number
+          description: "User ID associated with this profile. Used to identify if the logged-in user is a speaker by comparing with Talk.speakers[].userId."
         name:
           type: string
         email:
@@ -504,6 +507,7 @@ components:
             $ref: '#/components/schemas/RegisteredTalk'
       required:
         - id
+        - userId
         - name
         - email
         - isAttendOffline
@@ -644,6 +648,9 @@ components:
           type: number
         name:
           type: string
+        nameKanji:
+          type: string
+          nullable: true
         company:
           type: string
           nullable: true
@@ -708,6 +715,13 @@ components:
                 type: number
               name:
                 type: string
+              nameKanji:
+                type: string
+                nullable: true
+              userId:
+                type: number
+                nullable: true
+                description: "User ID of the speaker. Null if the speaker has been invited but has not yet accepted. Used to identify if the logged-in user is a speaker by comparing with Profile.userId."
         dayId:
           type: number
           nullable: true
@@ -734,14 +748,6 @@ components:
           type: string
           format: date
           nullable: true
-        startOffset:
-          type: number
-        endOffset:
-          type: number
-        actualStartTime:
-          type: string
-        actualEndTime:
-          type: string
         presentationMethod:
           type: string
           nullable: true
@@ -761,6 +767,9 @@ components:
               type: number
             name:
               type: string
+        ogpImageUrl:
+          type: string
+          nullable: true
       example:
         - id: 1
           trackId: 2
@@ -780,10 +789,6 @@ components:
           documentUrl: "http://documents"
           conferenceDayId: 1
           conferenceDayDate: "2021-01-23"
-          startOffset: 0
-          endOffset: 0
-          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
-          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: '現地登壇'
           slotNum: 1
           allowShowingVideo: true
@@ -805,10 +810,6 @@ components:
           documentUrl: "http://documents"
           conferenceDayId: 1
           conferenceDayDate: "2021-01-23"
-          startOffset: 0
-          endOffset: 0
-          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
-          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: 'オンライン登壇'
           slotNum: 1
           allowShowingVideo: false

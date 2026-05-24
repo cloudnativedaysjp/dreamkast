@@ -15,7 +15,7 @@ module Secured
   end
 
   def redirect_to_website
-    if set_conference.migrated?
+    if current_conference.migrated?
       case [controller_name, action_name]
       in ['talks', 'show']
         redirect_to(URI.join(WEBSITE_BASE_URL, request.fullpath).to_s, allow_other_host: true)
@@ -28,11 +28,11 @@ module Secured
   def to_preparance
     # ログイン状態
     # かつカンファレンスが一般参加応募不可状態
-    redirect_to(preparation_url) if conference.attendee_entry_disabled? && logged_in?
+    redirect_to(preparation_url) if current_conference.attendee_entry_disabled? && logged_in?
   end
 
   def should_redirect?
-    new_user? && !set_conference.archived?
+    new_user? && !current_conference.archived?
   end
 
   def redirect_to_registration
@@ -43,33 +43,25 @@ module Secured
     return false unless logged_in?
     # If current_user_model is nil (incomplete session), treat as new user
     return true unless current_user_model
-    !Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    !Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
   end
 
   def admin?
-    return false unless conference && current_user
+    return false unless current_conference && current_user
     roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
-    roles&.include?("#{conference.abbr.upcase}-Admin") || false
+    roles&.include?("#{current_conference.abbr.upcase}-Admin") || false
   end
 
   def speaker?
-    return false unless current_user && conference
+    return false unless current_user && current_conference
     roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
-    roles&.include?("#{conference.abbr.upcase}-Speaker") || false
+    roles&.include?("#{current_conference.abbr.upcase}-Speaker") || false
   end
 
   def beta_user?
-    return false unless current_user && conference
+    return false unless current_user && current_conference
     roles = current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')
-    roles&.include?("#{conference.abbr.upcase}-Beta") || false
-  end
-
-  def conference
-    @conference ||= Conference.find_by(abbr: event_name)
-  end
-
-  def event_name
-    params[:event]
+    roles&.include?("#{current_conference.abbr.upcase}-Beta") || false
   end
 
   private

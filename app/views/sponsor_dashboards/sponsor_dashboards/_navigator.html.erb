@@ -9,5 +9,6 @@
     <%= render 'admin/nav_item', name: 'スポンサー担当者', path: sponsor_dashboards_sponsor_contacts_path, active: controller_name == 'admin' &&  action_name == 'show' %>
     <%= render 'admin/nav_item', name: 'スポンサー登壇者', path: sponsor_dashboards_sponsor_speakers_path, active: controller_name == 'admin' &&  action_name == 'show' %>
     <%= render 'admin/nav_item', name: 'スポンサーセッション', path: sponsor_dashboards_sponsor_sessions_path, active: controller_name == 'admin' &&  action_name == 'show' %>
+    <%= render 'admin/nav_item', name: 'セッション Q&A', path: sponsor_dashboards_session_questions_path, active: controller_name == 'session_questions' %>
   </ul>
 </nav>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -25,12 +25,50 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.index ["user_id"], name: "fk_rails_bdfe0f01ea"
   end
 
+  create_table "announcement_deliveries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "announcement_id", null: false
+    t.bigint "profile_id"
+    t.string "email", null: false
+    t.string "status", default: "queued", null: false
+    t.string "provider_message_id"
+    t.text "last_error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["announcement_id", "status"], name: "index_announcement_deliveries_on_announcement_id_and_status"
+    t.index ["announcement_id"], name: "index_announcement_deliveries_on_announcement_id"
+    t.index ["profile_id"], name: "index_announcement_deliveries_on_profile_id"
+  end
+
   create_table "announcements", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.datetime "publish_time", precision: nil
     t.text "body", size: :medium, collation: "utf8mb4_0900_ai_ci"
     t.boolean "publish"
+    t.integer "receiver", null: false
+    t.string "send_status", default: "pending"
+    t.integer "sent_count", default: 0, null: false
+    t.integer "failed_count", default: 0, null: false
     t.index ["conference_id"], name: "index_announcements_on_conference_id"
+  end
+
+  create_table "attendee_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "attendee_announcement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_announcement_id"], name: "index_attendee_announcement_middles_on_attendee_announcement_id"
+    t.index ["profile_id"], name: "index_attendee_announcement_middles_on_profile_id"
+  end
+
+  create_table "attendee_announcements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.datetime "publish_time", precision: nil, null: false
+    t.text "body", null: false
+    t.boolean "publish", default: false, null: false
+    t.integer "receiver", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_attendee_announcements_on_conference_id"
   end
 
   create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -365,6 +403,48 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.index ["conference_id"], name: "index_rooms_on_conference_id"
   end
 
+  create_table "session_question_answers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "session_question_id", null: false
+    t.bigint "speaker_id"
+    t.bigint "conference_id", null: false
+    t.text "body", null: false, collation: "utf8mb4_0900_ai_ci"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "sponsor_contact_id"
+    t.index ["conference_id"], name: "index_session_question_answers_on_conference_id"
+    t.index ["created_at"], name: "index_session_question_answers_on_created_at"
+    t.index ["session_question_id"], name: "index_session_question_answers_on_session_question_id"
+    t.index ["speaker_id"], name: "index_session_question_answers_on_speaker_id"
+    t.index ["sponsor_contact_id"], name: "index_session_question_answers_on_sponsor_contact_id"
+  end
+
+  create_table "session_question_votes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "session_question_id", null: false
+    t.bigint "profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_session_question_votes_on_profile_id"
+    t.index ["session_question_id", "profile_id"], name: "index_session_question_votes_unique", unique: true
+    t.index ["session_question_id"], name: "index_session_question_votes_on_session_question_id"
+  end
+
+  create_table "session_questions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "talk_id", null: false
+    t.bigint "conference_id", null: false
+    t.bigint "profile_id", null: false
+    t.text "body", null: false, collation: "utf8mb4_0900_ai_ci"
+    t.integer "votes_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "hidden", default: false, null: false
+    t.index ["conference_id"], name: "index_session_questions_on_conference_id"
+    t.index ["created_at"], name: "index_session_questions_on_created_at"
+    t.index ["hidden"], name: "index_session_questions_on_hidden"
+    t.index ["profile_id"], name: "index_session_questions_on_profile_id"
+    t.index ["talk_id"], name: "index_session_questions_on_talk_id"
+    t.index ["votes_count"], name: "index_session_questions_on_votes_count"
+  end
+
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false
@@ -487,6 +567,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.bigint "speaker_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conference_id", "speaker_id"], name: "idx_spk_inv_accepts_on_conf_speaker_uniq", unique: true
     t.index ["conference_id", "sponsor_id", "speaker_id", "sponsor_contact_id"], name: "idx_spk_inv_accepts_on_conf_spsr_speaker_contact", unique: true
     t.index ["conference_id"], name: "index_sponsor_speaker_invite_accepts_on_conference_id"
     t.index ["speaker_id"], name: "index_sponsor_speaker_invite_accepts_on_speaker_id"
@@ -587,6 +668,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "conference_id"
+    t.string "sub_conference_type"
+    t.index ["conference_id", "sub_conference_type"], name: "index_talk_categories_on_conference_id_and_sub_conference_type"
     t.index ["conference_id"], name: "index_talk_categories_on_conference_id"
   end
 
@@ -646,8 +729,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
     t.json "expected_participants"
     t.json "execution_phases"
     t.integer "sponsor_id"
-    t.integer "start_offset", default: 0, null: false
-    t.integer "end_offset", default: 0, null: false
     t.integer "number_of_seats", default: 0, null: false
     t.integer "acquired_seats", default: 0, null: false
     t.string "ogp_image_url"
@@ -724,7 +805,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
 
   add_foreign_key "admin_profiles", "conferences"
   add_foreign_key "admin_profiles", "users"
+  add_foreign_key "announcement_deliveries", "announcements", on_delete: :cascade
+  add_foreign_key "announcement_deliveries", "profiles", on_delete: :nullify
   add_foreign_key "announcements", "conferences"
+  add_foreign_key "attendee_announcement_middles", "attendee_announcements"
+  add_foreign_key "attendee_announcement_middles", "profiles"
+  add_foreign_key "attendee_announcements", "conferences"
   add_foreign_key "chat_messages", "conferences"
   add_foreign_key "chat_messages", "profiles"
   add_foreign_key "chat_messages", "speakers"
@@ -762,6 +848,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_195548) do
   add_foreign_key "proposal_items", "conferences"
   add_foreign_key "public_profiles", "profiles"
   add_foreign_key "rooms", "conferences"
+  add_foreign_key "session_question_answers", "conferences"
+  add_foreign_key "session_question_answers", "session_questions"
+  add_foreign_key "session_question_answers", "speakers"
+  add_foreign_key "session_question_answers", "sponsor_contacts"
+  add_foreign_key "session_question_votes", "profiles"
+  add_foreign_key "session_question_votes", "session_questions"
+  add_foreign_key "session_questions", "conferences"
+  add_foreign_key "session_questions", "profiles"
+  add_foreign_key "session_questions", "talks"
   add_foreign_key "speaker_announcement_middles", "speaker_announcements"
   add_foreign_key "speaker_announcement_middles", "speakers"
   add_foreign_key "speaker_announcements", "conferences"

@@ -72,7 +72,7 @@ class Admin::TalksController < ApplicationController
       end
 
       ActionCable.server.broadcast(
-        "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+        "on_air_#{current_conference.abbr}", Video.on_air_v2(current_conference.id)
       )
       flash.now.notice = "OnAirに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
     end
@@ -82,16 +82,16 @@ class Admin::TalksController < ApplicationController
     @talk = Talk.find(params[:talk][:id])
     @talk.video.update!(on_air: false)
     ActionCable.server.broadcast(
-      "on_air_#{conference.abbr}", Video.on_air_v2(conference.id)
+      "on_air_#{current_conference.abbr}", Video.on_air_v2(current_conference.id)
     )
 
     flash.now.notice = "Waitingに切り替えました: #{@talk.start_to_end} #{@talk.speaker_names.join(',')} #{@talk.title}"
   end
 
   def export_talks_for_website
-    query = { show_on_timetable: true, conference_id: conference.id }
+    query = { show_on_timetable: true, conference_id: current_conference.id }
     @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
-    @talks = if %w[cndt2020 cndo2021].include?(conference.abbr)
+    @talks = if %w[cndt2020 cndo2021].include?(current_conference.abbr)
                # Exclude intermission talks for older conferences using join
                @talks.left_joins(:talk_types)
                      .where.not(talk_types: { id: 'Intermission' })
@@ -104,7 +104,7 @@ class Admin::TalksController < ApplicationController
                      .where.not(talk_types: { id: 'Intermission' })
                      .where.not(abstract: '-')
              end
-    conference_days = conference.conference_days.filter { |day| !day.internal }.map(&:id)
+    conference_days = current_conference.conference_days.filter { |day| !day.internal }.map(&:id)
     @talks = @talks.where(conference_days.map { |id| "conference_day_id = #{id}" }.join(' OR '))
     @talks = @talks.select do |talk|
       if talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?

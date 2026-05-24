@@ -7,5 +7,14 @@
     <h5 class="card-title"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></h5>
     <div class="card-text"><%= simple_format announcement.body %></div>
     <% end %>
+    
+    <% if defined?(unanswered_questions_count) && unanswered_questions_count && unanswered_questions_count > 0 %>
+      <div class="mt-3 p-2" style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
+        <strong>⚠ 未回答の質問: <%= unanswered_questions_count %>件</strong>
+        <% if defined?(event_name) && event_name %>
+          <%= link_to '質問一覧を見る', speaker_dashboard_questions_path(event: event_name), class: 'btn btn-sm btn-primary ms-2' %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

@@ -8,7 +8,6 @@ class Admin::SponsorContactInvitesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @conference = Conference.find_by(abbr: params[:event])
       @sponsor_contact_invite = SponsorContactInvite.new(sponsor_contact_invite_params)
       @sponsor_contact_invite.conference_id = @conference.id
       @sponsor_contact_invite.token = SecureRandom.hex(50)
@@ -17,7 +16,7 @@ class Admin::SponsorContactInvitesController < ApplicationController
         SponsorContactInviteMailer.invite(@conference, @sponsor_contact_invite).deliver_now
         flash.now[:notice] = '招待メールを送信しました'
       else
-        flash[:alert] = "#{@invite.email} への招待メール送信に失敗しました"
+        flash[:alert] = "#{@sponsor_contact_invite.email} への招待メール送信に失敗しました"
         render(:new, status: :unprocessable_entity)
       end
     end

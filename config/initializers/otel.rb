@@ -30,8 +30,8 @@ unless Rails.env.development? || Rails.env.test?
       exporter = OpenTelemetry::SDK::Trace::Export::NoOpSpanExporter.new
       # NoOpExporterを使用してログを無効化
     else
-      Rails.logger.warn('OTEL_ENDPOINT not set - using console exporter for OpenTelemetry')
-      exporter = OpenTelemetry::SDK::Trace::Export::ConsoleSpanExporter.new
+      Rails.logger.warn('OTEL_ENDPOINT not set - disabling OpenTelemetry exporter')
+      exporter = OpenTelemetry::SDK::Trace::Export::NoOpSpanExporter.new
     end
     c.add_span_processor(
       OpenTelemetry::SDK::Trace::Export::BatchSpanProcessor.new(exporter)

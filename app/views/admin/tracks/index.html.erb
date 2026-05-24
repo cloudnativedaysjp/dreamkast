@@ -17,7 +17,7 @@
 
   <div class="tab-content" id="nav-tabContent">
     <% @conference.conference_days.each do |day| %>
-      <div class="tab-pane fade show  <%= active_date_tab?(day) ? 'active' : '' %>" id="nav-<%= day.date %>" role="tabpanel" aria-labelledby="nav-<%= day.date %>-tab">
+      <div class="tab-pane fade show <%= active_date_tab?(day) ? 'active' : '' %>" id="nav-<%= day.date %>" role="tabpanel" aria-labelledby="nav-<%= day.date %>-tab">
         <% if  active_date_tab?(day) %>
           <%= render 'admin/tracks/tracks_nav', conference: @conference, conference_day: day %>
         <% end %>
@@ -26,14 +26,7 @@
   </div>
 <% end %>
 
-<div id="transit_nav" class="p-4">
-  <%= form_with url: admin_update_offset_path, id: 'time' do |f| %>
-    <%= f.submit("Offsetを更新", {id: "submit-offset", class: "btn transit_button" }) %>
-  <% end %>
-</div>
-
 <%= turbo_frame_tag "modal" %>
-<div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+<div id="flashes" class="tw-fixed tw-bottom-0 tw-right-0" style="margin: 0.75rem"></div>
 
 <%= javascript_include_tag 'admin/tracks/media_live.js' %>
-<%= javascript_include_tag 'admin/tracks/tracks_control.js' %>

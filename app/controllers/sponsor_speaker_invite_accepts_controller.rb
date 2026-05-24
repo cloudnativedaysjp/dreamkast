@@ -5,13 +5,13 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
 
   def invite
     return redirect_to(new_sponsor_speaker_invite_accept_path(token: params[:token])) if from_auth0?(params)
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(token: params[:token])
   end
 
   def new
     @sponsor_contact_invite_accept = SponsorContactInviteAccept.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(token: params[:token])
     unless @sponsor_speaker_invite
@@ -23,8 +23,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
     end
     @sponsor = @sponsor_speaker_invite.sponsor
     user_id = current_user_model.id
-    @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
-                         Speaker.find_by(user_id:, conference: @conference, sponsor: @sponsor)
+    @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                         Speaker.find_by(user_id:, conference: @conference)
                        else
                          Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                        end
@@ -33,7 +33,7 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        @conference = Conference.find_by(abbr: params[:event])
+        @conference = current_conference
         @sponsor_speaker_invite = SponsorSpeakerInvite.find(params[:speaker][:sponsor_speaker_invite_id])
         @sponsor = @sponsor_speaker_invite.sponsor
 
@@ -52,8 +52,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
         end
 
         user_id = current_user_model.id
-        @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
-                             Speaker.find_by(conference: @conference, user_id:, sponsor: @sponsor)
+        @sponsor_speaker = if user_id && Speaker.where(user_id:, conference: @conference).exists?
+                             Speaker.find_by(conference: @conference, user_id:)
                            else
                              Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end
@@ -73,7 +73,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
       end
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error(e)
-      render(:new, alert: e.message)
+      flash.now[:alert] = e.record.errors.full_messages.join(', ')
+      render(:new)
     end
   end
 

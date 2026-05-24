@@ -3,4 +3,6 @@
 新しいお知らせが到着しました。
 
 確認するには、イベントサイトの登壇者ダッシュボードをご確認ください。
-https://event.cloudnativedays.jp/<%= @conference.abbr %>
+<%= speaker_dashboard_url(event: @conference.abbr) %>
+
+<%= render '/layouts/footer' %>

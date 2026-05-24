@@ -1,6 +1,7 @@
 json.array!(@speakers) do |speaker|
   json.id(speaker.id)
   json.name(speaker.name)
+  json.nameKanji(speaker.name_mother_tongue)
   json.company(speaker.company)
   json.jobTitle(speaker.job_title)
   json.profile(speaker.profile)

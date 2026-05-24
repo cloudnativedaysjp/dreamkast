@@ -6,7 +6,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
 
   def invite
     return redirect_to(new_keynote_speaker_accept_path(token: params[:token])) if from_auth0?(params)
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(token: params[:token])
 
     unless @keynote_speaker_invitation
@@ -27,7 +27,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
 
   def new
     @keynote_speaker_accept = KeynoteSpeakerAccept.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(token: params[:token])
     unless @keynote_speaker_invitation
@@ -51,7 +51,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
   end
 
   def create
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
     @keynote_speaker_invitation = KeynoteSpeakerInvitation.find(params[:speaker][:keynote_speaker_invitation_id])
 
     if @keynote_speaker_invitation.expired?

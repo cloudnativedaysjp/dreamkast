@@ -1,24 +1,20 @@
 <%= render 'admin/layout' do %>
-  <div class="row">
-    <h2>ビデオファイル提出状況</h2>
-  </div>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">ビデオファイル提出状況</h2>
 
-  <div class="row">
-    <ul>
-      <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
-    </ul>
-  </div>
+  <ul class="tw-mb-6 tw-text-sm tw-text-gray-700">
+    <li>確認状況: <%= @talks.count{|talk| talk.video_registration&.confirmed? } %>/<%= @talks.size %></li>
+  </ul>
 
-  <div class="row">
-    <table class="table table-striped talks_table" >
+  <div class="admin-table-card">
+    <table class="admin-table talks_table">
       <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Title</th>
-        <th scope="col">Status</th>
-        <th scope="col">Statistics</th>
-      </tr>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Title</th>
+          <th scope="col">Status</th>
+          <th scope="col">Statistics</th>
+        </tr>
       </thead>
       <tbody>
         <% @talks.each do |talk| %>
@@ -26,10 +22,7 @@
             <td><%= talk.id %></td>
             <td><%= talk.speakers.map(&:name).join(", ") %></td>
             <td><%= talk.title %></td>
-
-            <td>
-              <%= talk.video_registration&.status_message %>
-            </td>
+            <td><%= talk.video_registration&.status_message %></td>
             <td>
               <% if talk.video_registration.present? && talk.video_registration.statistics.present?  %>
                 <% JSON.parse(talk.video_registration&.statistics).each  do |k, v| %>

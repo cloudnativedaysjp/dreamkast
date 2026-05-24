@@ -1,5 +1,4 @@
 class SpeakerMailer < ApplicationMailer
-  default from: 'CloudNative Days 実行委員会 <noreply@mail.cloudnativedays.jp>'
   layout 'mailer'
 
   def video_uploaded(speaker, talk, video_registration)
@@ -22,6 +21,9 @@ class SpeakerMailer < ApplicationMailer
     @conference = conference
     @speaker = speaker
 
-    mail(to: @speaker.email, subject: "#{@conference.abbr}運営からのお知らせ")
+    mail(
+      to: @speaker.email,
+      subject: "#{@conference.name}からのお知らせ"
+    )
   end
 end

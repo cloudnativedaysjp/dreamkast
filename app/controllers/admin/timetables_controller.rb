@@ -25,8 +25,6 @@ class Admin::TimetablesController < ApplicationController
   end
 
   def publish
-    @conference = Conference.find_by(abbr: params[:event])
-
     respond_to do |format|
       if @conference.update(show_timetable: 1)
         format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: 'Timetable has published.') }
@@ -37,8 +35,6 @@ class Admin::TimetablesController < ApplicationController
   end
 
   def close
-    @conference = Conference.find_by(abbr: params[:event])
-
     respond_to do |format|
       if @conference.update(show_timetable: 0)
         format.html { redirect_to(admin_timetables_path(event: params[:event]), notice: 'Timetable has closed.') }

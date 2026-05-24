@@ -8,7 +8,7 @@ class EntrySheetController < ApplicationController
 
     @profile = Profile.find(object['profile_id'])
     @speaker = object['speaker_id'].present? ? Speaker.find(object['speaker_id']) : nil
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     # 全てのテーブルの行数を取得
     @total_rows = @conference.conference_days.externals.sum do |conference_day|

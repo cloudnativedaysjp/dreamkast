@@ -1,0 +1,28 @@
+<div class="container speaker-dashboard-form wrapper">
+  <%= render 'speaker_dashboards/navigator' %>
+  <div class="container-fluid right-pain">
+    <h1 class="text-center py-3 entry">セッション一覧</h1>
+    <div class="row speaker-dashboard-form">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= alert_type(message_type) %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <% if @speaker.present? %>
+        <div class="col-12 my-4" id="speaker_notice">
+          <%= render 'tracks/speaker_announcements', speaker_announcements: @speaker_announcements %>
+        </div>
+
+        <div class="col-12">
+          <%= render 'speaker_dashboard/speakers/talk_list', conference: @conference, speaker: @speaker %>
+        </div>
+      <% else %>
+        <div class="col-12 my-4">
+          <%= link_to 'エントリー', speakers_entry_path %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,6 @@
   <td><%= f.text_field :description %></td>
   <td>
     <%= f.hidden_field :_destroy, data: { "remove-link-field-target": "hiddenInput" } %>
-    <button type='button' data-action="click->remove-link-field#remove">Delete</button>
+    <button type='button' class="tw-inline-flex tw-items-center tw-rounded-md tw-bg-red-600 tw-px-3 tw-py-1.5 tw-text-xs tw-font-medium tw-text-white tw-shadow-sm hover:tw-bg-red-700" data-action="click->remove-link-field#remove">Delete</button>
   </td>
 </tr>

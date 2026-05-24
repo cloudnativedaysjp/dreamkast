@@ -16,7 +16,7 @@ gem 'jsbundling-rails'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Prometheus client
-gem 'prometheus-client', '~> 4.0.0'
+gem 'prometheus-client', '~> 4.2.0'
 
 gem 'icalendar'
 gem 'rack-cors'
@@ -98,7 +98,7 @@ gem 'pundit'
 gem 'redcarpet'
 
 # processing images
-gem 'image_processing', '~> 1.12.2'
+gem 'image_processing', '~> 1.14.0'
 gem 'uppy-s3_multipart', '~> 1.0'
 
 gem 'awesome_nested_set'
@@ -123,7 +123,7 @@ gem 'aws-sdk-ssm'
 
 gem 'active_hash'
 
-gem 'turbo-rails', '2.0.5'
+gem 'turbo-rails', '2.0.23'
 
 gem 'slack-ruby-client'
 
@@ -137,6 +137,8 @@ gem 'rqrcode', '~> 3.0'
 gem 'ulid'
 
 gem 'acts_as_list'
+
+gem 'kaminari'
 
 # PDF tool
 gem 'ferrum'

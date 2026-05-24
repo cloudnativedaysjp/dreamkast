@@ -5,8 +5,7 @@ class Api::V1::ProposalsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @conference = Conference.find_by(abbr: params[:eventAbbr])
-    query = { conference_id: @conference.id }
+    query = { conference_id: current_conference.id }
     # Get all proposals and filter out special session types
     @proposals = Proposal
                  .includes(talk: :talk_types)

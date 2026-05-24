@@ -1,12 +1,12 @@
 <%= render 'admin/layout' do %>
-  <div class="row justify-content-md-center">
-    <div class="col-12 col-md-6 registration-form py-3 px-md-5">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-justify-center">
+    <div class="tw-col-span-12 md:tw-col-span-6 registration-form tw-py-3 md:tw-px-12">
 
       <h2>AdminProfile 登録情報変更</h2>
 
       <%= form_with(url: admin_admin_profile_path, model: @admin_profile, class: "needs-validation") do |form| %>
         <% if @admin_profile.errors.any? %>
-          <div id="error_explanation" class="alert alert-danger" role="alert">
+          <div id="error_explanation" class="tw-mb-4 tw-rounded tw-border tw-border-red-300 tw-bg-red-50 tw-p-4 tw-text-red-800" role="alert">
             <h5>入力内容にエラーがあります:</h5>
             <ul>
               <% @admin_profile.errors.full_messages.each do |message| %>
@@ -16,15 +16,15 @@
           </div>
         <% end %>
 
-        <div class="field pb-3" data-controller="crop-upload">
-          <%= form.label :avatar, 'Profile Image' %>
+        <div class="field tw-pb-3" data-controller="crop-upload">
+          <%= form.label :avatar, 'Profile Image', class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
 
           <!-- will be replaced by Uppy -->
           <%= form.text_field :avatar,
             type: :file,
             id: "avatar_upload",
            "data-crop-upload-target": "fileInput",
-            class: "form-control" %>
+            class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
 
           <!-- for storing uploaded file data -->
           <%= form.text_field :avatar,
@@ -35,26 +35,26 @@
         </div>
 
       <div class="image-preview">
-        <img src="<%= @admin_profile.avatar_url(:large) || @admin_profile.avatar_url %>" height="300" class="rounded" \>
+        <img src="<%= @admin_profile.avatar_url(:large) || @admin_profile.avatar_url %>" height="300" class="tw-rounded" \>
       </div>
 
-        <div class="form-row form-group">
-          <%= form.label :name, "Name" %>*
-          <%= form.text_field :name, required: true, class: "form-control" %>
+        <div class="tw-mb-4">
+          <%= form.label :name, "Name", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>*
+          <%= form.text_field :name, required: true, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
         </div>
 
-        <div class="form-row form-group">
-          <%= form.label :twitter_id, "X(Twitter) ID" %>
-          <%= form.text_field :twitter_id, class: "form-control" %>
+        <div class="tw-mb-4">
+          <%= form.label :twitter_id, "X(Twitter) ID", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+          <%= form.text_field :twitter_id, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
         </div>
 
-        <div class="form-row form-group">
-          <%= form.label :github_id, "GitHub ID" %>
-          <%= form.text_field :github_id, class: "form-control" %>
+        <div class="tw-mb-4">
+          <%= form.label :github_id, "GitHub ID", class: "tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700" %>
+          <%= form.text_field :github_id, class: "tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500" %>
         </div>
 
-        <div class="form-row form-group justify-content-md-center py-20">
-          <%= form.submit "Update", class: "btn btn-primary form-control" %>
+        <div class="tw-mb-4 tw-flex tw-justify-center tw-py-5">
+          <%= form.submit "Update", class: "tw-inline-block tw-w-full tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700" %>
         </div>
       <% end %>
 

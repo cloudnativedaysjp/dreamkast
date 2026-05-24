@@ -36,6 +36,8 @@ class Profile < ApplicationRecord
   has_many :form_items, through: :form_values, source: :form_item
   has_many :chat_messages
   has_many :check_ins
+  has_many :session_questions, dependent: :destroy
+  has_many :session_question_votes, dependent: :destroy
   has_many :check_in_conferences, dependent: :destroy
   has_many :check_in_talks
   has_many :stamp_rally_check_ins
@@ -160,6 +162,11 @@ class Profile < ApplicationRecord
     "#{company_name_prefix&.name}#{company_name}#{company_name_suffix&.name}"
   end
 
+  # 公開用のプロフィール名を取得（public_profileのnicknameのみを使用）
+  def public_name
+    public_profile&.nickname.presence || '匿名ユーザー'
+  end
+
   def way_to_attend
     participation_before_type_cast
   end
@@ -170,6 +177,10 @@ class Profile < ApplicationRecord
 
   def attend_online?
     online?
+  end
+
+  def early_bird?
+    conference.early_bird_cutoff_at && created_at < conference.early_bird_cutoff_at
   end
 
   private

@@ -1,6 +1,6 @@
-# syntax = docker/dockerfile:1.20
+# syntax = docker/dockerfile:1.21
 
-FROM node:22.21.1-slim AS node
+FROM node:22.22.0-slim AS node
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,uid=1000,target=/app/.cache/node_modules \
@@ -21,6 +21,7 @@ RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 WORKDIR /app
 COPY --link postcss.config.js .
+COPY --link tailwind.config.js .
 COPY --link bin bin
 COPY --link config config
 COPY --link Rakefile Rakefile
@@ -47,10 +48,10 @@ ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=ena
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 \
-    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt install -y ./google-chrome-stable_current_amd64.deb \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 chromium && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+ENV CHROME_BIN=/usr/bin/chromium
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
 EXPOSE 3000

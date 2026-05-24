@@ -1,34 +1,51 @@
 <%= render 'admin/layout' do %>
-  <h1>Announcement</h1>
+  <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
+    <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Announcement</h2>
+    <%= link_to 'New Announcement', new_admin_announcement_path,
+                class: 'tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
+  </div>
 
-  <%= link_to 'New Announcement', new_admin_announcement_path, class: "btn btn-primary" %>
-
-  <table class="table table-striped talks_table" >
-    <thead>
-    <tr>
-      <th scope="col">Published?</th>
-      <th scope="col">Time</th>
-      <th scope="col">Announcement</th>
-      <th scope="col">Edit</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @announcements.each do |announcement| %>
-      <tr>
-        <td>
-          <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
-        <td>
-          <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
-        </td>
-        <td>
-          <%= simple_format announcement.body %>
-        </td>
-        <td>
-          <%= link_to'Edit', edit_admin_announcement_path(id: announcement.id) %>
-          <%= link_to'Delete', admin_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <div class="admin-table-scroll">
+    <table class="admin-table talks_table">
+      <thead>
+        <tr>
+          <th scope="col">Published?</th>
+          <th scope="col">To</th>
+          <th scope="col">Time</th>
+          <th scope="col">Announcement</th>
+          <th scope="col">送信状況</th>
+          <th scope="col">送信数</th>
+          <th scope="col">失敗数</th>
+          <th scope="col">Deliveries</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @announcements.each do |announcement| %>
+          <tr>
+            <td>
+              <div class="date"><%= announcement.publish ? '公開済み': '非公開' %></div>
+            </td>
+            <td>
+              <%= announcement.profile_names %>
+            </td>
+            <td>
+              <div class="date"><%= announcement.publish_time.strftime('%Y-%m-%d %H:%M') %></div>
+            </td>
+            <td>
+              <%= simple_format announcement.body %>
+            </td>
+            <td><%= announcement.send_status %></td>
+            <td><%= announcement.sent_count %></td>
+            <td><%= announcement.failed_count %></td>
+            <td><%= link_to 'View', deliveries_admin_announcement_path(id: announcement.id) %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_announcement_path(id: announcement.id) %>
+              <%= link_to 'Delete', admin_announcement_path(id: announcement.id), method: :delete, data: { confirm: 'Are you sure?'} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

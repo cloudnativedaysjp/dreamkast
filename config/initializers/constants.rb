@@ -12,4 +12,6 @@ class SessionTime
   LABEL = 'session_time'.freeze
   TWENTY_MINUTES = 1
   FOURTY_MINUTES = 2
+  THIRTY_MINUTES = 3
+  FIFTY_MINUTES = 4
 end

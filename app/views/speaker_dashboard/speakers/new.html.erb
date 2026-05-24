@@ -1,7 +1,12 @@
-<div class="container">
-  <div class="row speaker-dashboard-form justify-content-center">
-    <div class="col-12 col-lg-8">
-      <h1 class="text-center py-3 entry">エントリーフォーム</h1>
+<div class="container speaker-dashboard-form cfp-form py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <%# ===== ヘッダー ===== %>
+      <div class="text-center mb-5">
+        <h1 class="cfp-dashboard-title mb-2">エントリーフォーム</h1>
+        <p class="text-muted">Entry Form</p>
+      </div>
+
       <%= render 'form', speaker: @speaker %>
     </div>
   </div>

@@ -1,15 +1,15 @@
 class Admin::SponsorsController < ApplicationController
   include SecuredAdmin
   def new
-    @sponsor_types = conference.sponsor_types
+    @sponsor_types = current_conference.sponsor_types
     @sponsor = Sponsor.new
     @sponsor_form = SponsorForm.new(sponsor: @sponsor)
     @sponsor_form.load
   end
 
   def index
-    @sponsor_types = conference.sponsor_types.order(order: 'ASC')
-    @sponsors = conference.sponsors
+    @sponsor_types = current_conference.sponsor_types.order(order: 'ASC')
+    @sponsors = current_conference.sponsors
   end
 
   def show
@@ -23,15 +23,15 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def edit
-    @sponsor_types = conference.sponsor_types
+    @sponsor_types = current_conference.sponsor_types
     @sponsor = Sponsor.find(params[:id])
     @sponsor_form = SponsorForm.new(sponsor: @sponsor)
     @sponsor_form.load
   end
 
   def create
-    @sponsor_types = conference.sponsor_types
-    @sponsor_form = SponsorForm.new(sponsor_params, sponsor: Sponsor.new(conference:))
+    @sponsor_types = current_conference.sponsor_types
+    @sponsor_form = SponsorForm.new(sponsor_params, sponsor: Sponsor.new(conference: current_conference))
 
     if @sponsor_form.save
       flash.now[:notice] = "スポンサー #{@sponsor_form.sponsor.name} を登録しました"
@@ -42,7 +42,7 @@ class Admin::SponsorsController < ApplicationController
 
   def update
     @sponsor = Sponsor.find(params[:id])
-    @sponsor_types = conference.sponsor_types
+    @sponsor_types = current_conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
     if @sponsor_form.save

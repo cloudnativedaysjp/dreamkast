@@ -2,7 +2,7 @@ class Admin::StampRallyConfiguresController < ApplicationController
   include SecuredAdmin
 
   def create
-    @stamp_rally_configure = StampRallyConfigure.new(stamp_rally_configure_params.merge(conference:))
+    @stamp_rally_configure = StampRallyConfigure.new(stamp_rally_configure_params.merge(conference: current_conference))
     if @stamp_rally_configure.save
       flash.now[:notice] = 'スタンプラリー設定を更新しました'
     else

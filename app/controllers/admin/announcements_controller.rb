@@ -13,15 +13,30 @@ class Admin::AnnouncementsController < ApplicationController
     @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
   end
 
-  def create
-    @announcement = Announcement.new(announcement_params.merge(conference_id: @conference.id))
+  def deliveries
+    @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
+    @announcement_deliveries = @announcement.announcement_deliveries.includes(:profile).order(id: :desc)
+  end
 
+  def create
+    params = announcement_params.merge(conference_id: @conference.id)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#create] conference=#{@conference.id} " \
+      "publish=#{params[:publish].inspect} receiver=#{params[:receiver].inspect} " \
+      "publish_time=#{params[:publish_time].inspect}"
+    )
+
+    @announcement = Announcement.create(params)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#create] announcement=#{@announcement.id.inspect} " \
+      "persisted=#{@announcement.persisted?} errors=#{@announcement.errors.full_messages.join(', ')}"
+    )
     respond_to do |format|
-      if @announcement.save
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
-        format.json { render(:show, status: :ok, location: @announcement) }
+      if @announcement.persisted?
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully created.') }
+        format.json { render(:show, status: :created, location: @announcement) }
       else
-        format.html { render(:edit) }
+        format.html { render(:new) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
       end
     end
@@ -29,12 +44,26 @@ class Admin::AnnouncementsController < ApplicationController
 
   def update
     @announcement = Announcement.find_by(conference_id: @conference.id, id: params[:id])
+    params = announcement_params.merge(conference_id: @conference.id)
+    Rails.logger.info(
+      "[Admin::AnnouncementsController#update] announcement=#{@announcement&.id.inspect} " \
+      "conference=#{@conference.id} publish=#{params[:publish].inspect} " \
+      "receiver=#{params[:receiver].inspect} publish_time=#{params[:publish_time].inspect}"
+    )
 
     respond_to do |format|
-      if @announcement.update(announcement_params)
-        format.html { redirect_to(admin_announcements_path, notice: 'Speaker was successfully updated.') }
+      if @announcement.update(params)
+        Rails.logger.info(
+          "[Admin::AnnouncementsController#update] updated announcement=#{@announcement.id} " \
+          "publish=#{@announcement.publish.inspect} send_status=#{@announcement.send_status.inspect}"
+        )
+        format.html { redirect_to(admin_announcements_path, notice: 'Announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
+        Rails.logger.warn(
+          "[Admin::AnnouncementsController#update] failed announcement=#{@announcement.id} " \
+          "errors=#{@announcement.errors.full_messages.join(', ')}"
+        )
         format.html { render(:edit) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
       end
@@ -65,6 +94,6 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   def announcement_params
-    params.require(:announcement).permit(:publish_time, :body, :publish, :conference_id)
+    params.require(:announcement).permit(:publish_time, :body, :publish, :conference_id, :receiver)
   end
 end

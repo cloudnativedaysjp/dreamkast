@@ -1,0 +1,9 @@
+<%= turbo_stream.remove "answer_#{@answer.id}" %>
+
+<% if @question.session_question_answers.empty? %>
+  <%= turbo_stream.update "answers_#{@question.id}" do %>
+    <!-- 回答がない場合は空にする -->
+  <% end %>
+<% end %>
+
+<%= turbo_stream_flash %>

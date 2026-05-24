@@ -5,8 +5,7 @@ class Api::V1::TalksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    conference = Conference.find_by(abbr: params[:eventAbbr])
-    query = { conference_id: conference.id }
+    query = { conference_id: current_conference.id }
     query[:track_id] = params[:trackId] if params[:trackId]
     @talks = Talk.includes(:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, registered_talks: :profile)
                  .accepted_and_intermission

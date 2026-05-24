@@ -1,10 +1,10 @@
 <%= render 'admin/layout' do %>
   <%= turbo_frame_tag "keynote_speaker_invites" do %>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="mb-0">キーノートスピーカー招待管理</h2>
+    <div class="tw-mb-4 tw-flex tw-items-center tw-justify-between">
+      <h2 class="tw-mb-0">キーノートスピーカー招待管理</h2>
       <%= link_to '新規招待',
                   new_admin_keynote_speaker_invitation_path(event: @conference.abbr),
-                  class: 'btn btn-primary',
+                  class: 'tw-inline-block tw-rounded tw-bg-blue-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-blue-700',
                   data: { turbo_frame: "modal" } %>
     </div>
 
@@ -14,5 +14,5 @@
     <!-- モーダル用のTurbo Frame -->
   <% end %>
   <%= turbo_frame_tag "modal" %>
-  <div id="flashes" class="position-fixed bottom-0 end-0" style="margin: 0.75rem"></div>
+  <div id="flashes" class="tw-fixed tw-bottom-0 tw-right-0" style="margin: 0.75rem"></div>
 <% end %>

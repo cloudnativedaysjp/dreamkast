@@ -1,44 +1,119 @@
-<%= form_with(model: @speaker_form, url: speaker_url, method: (action_name == 'edit' ? :patch : :post), local: true, data: { turbo: false }) do |form| %>
-  <section class="speaker-information py-3">
-    <a id="speaker"><h3 class="py-3">登壇者情報</h3></a>
+<%= form_with(model: @speaker_form, url: speaker_url, method: (action_name == 'edit' ? :patch : :post), local: true, data: { turbo: false }, class: 'cfp-form') do |form| %>
 
-    <%= render('speaker_dashboard/speakers/form_speaker', form: form) %>
+  <%# ===== ステップインジケーター ===== %>
+  <div class="cfp-progress mb-5">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="cfp-step active">
+        <div class="cfp-step-icon">
+          <span class="cfp-step-number">1</span>
+        </div>
+        <span class="cfp-step-label">登壇者情報</span>
+      </div>
+      <div class="cfp-step-connector"></div>
+      <div class="cfp-step">
+        <div class="cfp-step-icon">
+          <span class="cfp-step-number">2</span>
+        </div>
+        <span class="cfp-step-label">セッション情報</span>
+      </div>
+      <div class="cfp-step-connector"></div>
+      <div class="cfp-step">
+        <div class="cfp-step-icon">
+          <span class="cfp-step-number">3</span>
+        </div>
+        <span class="cfp-step-label">確認・送信</span>
+      </div>
+    </div>
+  </div>
 
+  <%# ===== セクション1: 登壇者情報 ===== %>
+  <section class="speaker-information mb-5" id="speaker">
+    <div class="card border-0">
+      <div class="card-header bg-primary text-white py-3">
+        <h3 class="mb-0">
+          <span class="cfp-section-number me-2">1.</span>登壇者情報
+        </h3>
+      </div>
+      <div class="card-body p-4">
+        <%= render('speaker_dashboard/speakers/form_speaker', form: form) %>
+      </div>
+    </div>
   </section>
 
-  <section class="speaker-information py-3">
-    <a id="sessions"><h3 class="py-3">セッション情報</h3></a>
-    <p class="alert alert-info">
-      <%= link_to 'CFP要項を確認する', speakers_guidance_path, {target: :_blank, style: 'text-decoration: underline'} %>
-    </p>
+  <%# ===== セクション2: セッション情報 ===== %>
+  <section class="speaker-information mb-5" id="sessions">
+    <div class="card border-0">
+      <div class="card-header bg-primary text-white py-3">
+        <h3 class="mb-0">
+          <span class="cfp-section-number me-2">2.</span>セッション情報
+        </h3>
+      </div>
+      <div class="card-body p-4">
+        <%# CFP要項リンク %>
+        <div class="alert alert-info mb-4" role="alert">
+          <%= link_to 'CFP要項を確認する', 'https://kaigi.cloudnativedays.jp/cfp/', target: :_blank, class: 'alert-link' %>
+          <span class="ms-1 small">（別タブで開きます）</span>
+        </div>
 
+        <%# 評価指標の説明 %>
+        <div class="cfp-rating-guide mb-4 p-3">
+          <p class="mb-2 fw-semibold">採択への影響度について</p>
+          <div class="d-flex flex-wrap gap-3 small">
+            <span class="badge bg-warning px-3 py-2">★★★ 非常に重要</span>
+            <span class="badge bg-secondary px-3 py-2">★★ 重要</span>
+            <span class="badge bg-light text-dark border px-3 py-2">★ 参考</span>
+          </div>
+        </div>
 
-    <div class="talk-fields">
-      <% @speaker_form.talks.each_with_index do |talk_obj, index| %>
-        <%= form.fields_for :talks_attributes, talk_obj, index: index do |talk| %>
-          <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference, :form_index => index %>
+        <%# セッションフィールド %>
+        <div class="talk-fields">
+          <% @speaker_form.talks.each_with_index do |talk_obj, index| %>
+            <%= form.fields_for :talks_attributes, talk_obj, index: index do |talk| %>
+              <%= render 'speaker_dashboard/speakers/talk_fields', :f => talk, :conference => @conference, :form_index => index %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <%# セッション追加ボタン %>
+        <% if @conference.speaker_entry_enabled? || @sponsor || admin? %>
+          <% if action_name == "new" || @speaker_form.talks.size < 3 %>
+            <div class="cfp-add-session mt-4 p-4 text-center">
+              <p class="text-muted mb-3">追加ボタンを押すとセッションを最大3件まで登録できます</p>
+              <p class="small text-muted mb-3">エントリー後にダッシュボードから更新可能です</p>
+              <%= link_to_add_talk_fields "＋ セッションを追加する", form, :talks, class: 'add-talk btn btn-outline-primary btn-lg px-4' %>
+            </div>
+          <% else %>
+            <div style="display: none;">
+              <%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-
-    <% if @conference.speaker_entry_enabled? || @sponsor || admin? %>
-      <% if action_name == "new" || @speaker_form.talks.size < 3 %>
-        <p class="alert alert-info">追加ボタンを押すとセッションを最大3件まで登録できます。またエントリー後にダッシュボードから更新可能です。</p>
-        <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary' %></p>
-      <% else %>
-        <p><%= link_to_add_talk_fields "セッションを追加する", form, :talks, class: 'add-talk btn btn-primary', style: "display: none" %></p>
-      <% end %>
-    <% end %>
-  </section>
-
-  <section class="privacy">
-    <div class="field py-3">
-      <%= form.hidden_field :conference_id, value: @conference.id %>
-      <%= markdown @conference.privacy_policy_for_speaker %>
+      </div>
     </div>
   </section>
 
-  <div class="actions justify-content-center py-3">
-    <%= form.submit class: "btn btn-primary btn-lg btn-block" %>
+  <%# ===== セクション3: プライバシーポリシー ===== %>
+  <section class="privacy mb-5">
+    <div class="card border-0">
+      <div class="card-header bg-secondary text-white py-3">
+        <h3 class="mb-0">
+          <span class="cfp-section-number me-2">3.</span>プライバシーポリシー
+        </h3>
+      </div>
+      <div class="card-body p-4">
+        <%= form.hidden_field :conference_id, value: @conference.id %>
+        <div class="privacy-content p-3" style="max-height: 300px; overflow-y: auto;">
+          <%= markdown @conference.privacy_policy_for_speaker %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ===== 送信ボタン ===== %>
+  <div class="cfp-submit text-center py-4">
+    <div class="d-grid gap-2 col-md-6 mx-auto">
+      <%= form.submit class: "btn btn-primary btn-lg py-3 fw-bold shadow" %>
+    </div>
+    <p class="text-muted small mt-3">送信後もダッシュボードから内容を編集できます</p>
   </div>
 <% end %>

@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :set_sentry_context, :event_exists?
+  layout :event_layout
 
   unless Rails.env.development?
     rescue_from Exception do |e|
@@ -61,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def event_name
-    params[:event]
+    params[:event] || params[:eventAbbr]
   end
 
   def production?
@@ -82,7 +83,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :home_controller?, :qr_code_for_stamp_rallies_controller?, :admin_controller?, :event_name, :production?, :talks_checked?, :talk_category, :talk_difficulty,
-                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
+                :display_speaker_dashboard_link?, :display_sponsor_dashboard_link?, :display_dashboard_link?, :display_self_check_in_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_contact_url?
 
   def render_403
     render(template: 'errors/error_403', status: 403, layout: 'application', content_type: 'text/html')
@@ -123,19 +124,28 @@ class ApplicationController < ActionController::Base
     @sponsor_contact&.persisted?
   end
 
-  helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
+  helper_method :sponsor_logo_class, :days, :display_sponsor_guideline_url?, :display_dashboard_link?, :display_self_check_in_link?, :display_proposals?, :display_talks?, :display_timetable?, :display_attendees?
 
   private
 
   def set_sentry_context
     Sentry.with_scope do |scope|
       scope.set_user(id: session[:current_user_id])
-      scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      begin
+        scope.set_extras(params: params.to_unsafe_h, url: request.url)
+      rescue JSON::ParserError, ActionController::BadRequest
+        # リクエストパラメータのパースに失敗した場合はスキップ
+        scope.set_extras(url: request.url)
+      end
     end
   end
 
   def event_exists?
-    if event_name && Conference.where(abbr: event_name).empty?
+    # event_name は API ルート向けに params[:eventAbbr] までフォールバックするが、
+    # event_exists? は HTML 404 (render_404) を返すため、API リクエストで
+    # JSON ではなく HTML が返ることを避けるべく params[:event] のみで判定する。
+    # eventAbbr 経由のバリデーションは各 API コントローラ側で行う想定。
+    if params[:event] && Conference.where(abbr: params[:event]).empty?
       raise(ActiveRecord::RecordNotFound)
     end
   end
@@ -159,13 +169,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_conference
+  def current_conference
     @conference ||= Conference.find_by(abbr: event_name)
+  end
+  helper_method :current_conference
+
+  def set_conference
+    current_conference
   end
 
   def set_profile
-    @profile = if current_user_model && (set_conference.opened? || set_conference.registered? || set_conference.closed?)
-                 Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    @profile = if current_user_model && (current_conference.opened? || current_conference.registered? || current_conference.closed?)
+                 Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
                else
                  GuestProfile.new
                end
@@ -173,13 +188,13 @@ class ApplicationController < ActionController::Base
 
   def set_speaker
     if current_user_model
-      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+      @speaker = Speaker.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
     end
   end
 
   def set_sponsor_contact
     if current_user_model
-      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+      @sponsor_contact = SponsorContact.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
     end
   end
 
@@ -197,6 +212,10 @@ class ApplicationController < ActionController::Base
 
   def display_dashboard_link?
     @conference && (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && logged_in? && @profile.present?
+  end
+
+  def display_self_check_in_link?
+    @profile.is_a?(Profile) && @profile.check_in_conferences.present?
   end
 
   def display_proposals?

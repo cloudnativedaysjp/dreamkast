@@ -4,8 +4,14 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
+  # ApplicationController の user_not_authorized は html テンプレートを
+  # 前提にしているため、turbo_stream 等の非 html リクエストでは
+  # ActionView::MissingTemplate となる。format 非依存で 403 を返す。
+  rescue_from Pundit::NotAuthorizedError do
+    head(:forbidden)
+  end
+
   def index
-    @conference = Conference.find_by(abbr: params[:event])
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
     @sponsor_speakers = @sponsor.speakers
     @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
@@ -25,8 +31,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    # authorize(@speaker)
+    @speaker = Speaker.find_by(conference_id: current_conference.id, id: params[:id])
+    authorize([:sponsor_dashboards, @speaker])
   end
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
@@ -34,7 +40,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     @sponsor = Sponsor.find(params[:sponsor_id])
 
     @speaker = Speaker.new(speaker_params)
-    @speaker.conference = conference
+    @speaker.conference = current_conference
     @speaker.sponsor = @sponsor
     @speaker.sub = current_user_model&.sub
     @speaker.email = current_user[:info][:email]
@@ -52,6 +58,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def update
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
+    authorize([:sponsor_dashboards, @speaker])
 
     if @speaker.update(speaker_params)
       flash.now[:notice] = 'スポンサー登壇者を更新しました'
@@ -62,23 +69,29 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   # DELETE /:event/sponsor_dashboards/:sponsor_id/speakers/:id
+  # スポンサーとのみ紐付いている Speaker（Talk を持たない = 純粋なスポンサー
+  # 登壇者招待で作られた Speaker）は本体ごと削除する。Talk を持つ Speaker
+  # （CFP 経由でプロポーザルを出している等）は本体を残し、このスポンサーとの
+  # 紐付け（sponsor_id と SponsorSpeakerInviteAccept）のみを解除する。
   def destroy
     @sponsor = Sponsor.find(params[:sponsor_id])
     @speaker = Speaker.find(params[:id])
+    authorize([:sponsor_dashboards, @speaker])
 
-    # スポンサーセッションと紐付いているかチェック
-    if @speaker.talks.present?
-      flash.now[:alert] = 'スポンサーセッションと紐付いているため削除できません'
-      return
+    ActiveRecord::Base.transaction do
+      @sponsor.sponsor_speaker_invite_accepts.where(speaker_id: @speaker.id).destroy_all
+      if @speaker.talks.empty?
+        @speaker.destroy!
+      elsif @speaker.sponsor_id == @sponsor.id
+        @speaker.update!(sponsor_id: nil)
+      end
     end
 
-    if @speaker.destroy
-      @sponsor_speakers = @sponsor.speakers
-      @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
-      flash.now[:notice] = 'スポンサー登壇者を削除しました'
-    else
-      flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
-    end
+    @sponsor_speakers = @sponsor.speakers
+    @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
+    flash.now[:notice] = 'スポンサー登壇者から外しました'
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = 'スポンサー登壇者の削除に失敗しました'
   end
 
   private
@@ -94,18 +107,18 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
     end
   end
 
+  # スポンサー管理画面の context では pundit_user として SponsorContact を返し、
+  # SponsorDashboards::SpeakerPolicy で「自スポンサー所属の Speaker か」を判定する
   def pundit_user
-    if current_user && current_user_model
-      Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
-    end
+    @sponsor_contact
   end
 
   def expected_participant_params
-    @conference.proposal_item_configs.where(label: 'expected_participant')
+    current_conference.proposal_item_configs.where(label: 'expected_participant')
   end
 
   def execution_phases_params
-    @conference.proposal_item_configs.where(label: 'execution_phase')
+    current_conference.proposal_item_configs.where(label: 'execution_phase')
   end
 
   # Only allow a list of trusted parameters through.
@@ -130,9 +143,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   def set_sponsor_contact
-    @conference ||= Conference.find_by(abbr: params[:event])
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     end
   end
 end

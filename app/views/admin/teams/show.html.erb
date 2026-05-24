@@ -1,8 +1,8 @@
 <%= render 'admin/layout' do %>
   <%= form_with(url: admin_team_path, id: "team", method: "put") do |f| %>
     <% @admin_profiles.each do |admin_profile| %>
-      <div class="form-row form-group">
-        <div class="col-12 col-md-6">
+      <div class="tw-mb-4">
+        <div class="tw-col-span-12 md:tw-col-span-6">
           <%= hidden_field_tag "team[#{admin_profile.id}]", false %>
           <%= check_box_tag "team[#{admin_profile.id}]", true, admin_profile.show_on_team_page %>
           <%= f.label "team[#{admin_profile.id}]", "#{admin_profile.name} (#{admin_profile.email})" %><br>
@@ -12,6 +12,6 @@
   <% end %>
 <% end %>
 
-<div id="transit_nav" class="p-4">
-  <%= submit_tag "保存", form: "team",class: "btn btn-danger transit_button" %>
+<div id="transit_nav" class="tw-p-4">
+  <%= submit_tag "保存", form: "team", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
 </div>

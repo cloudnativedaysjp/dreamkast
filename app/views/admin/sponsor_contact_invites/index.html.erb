@@ -1,21 +1,20 @@
-<div class="container">
-  <h2>Sponsor Contact Invites</h2>
-
-  <div class="mb-3">
-    <%= link_to "New Invite", 
-                new_sponsor_contact_invite_path(sponsor_id: params[:sponsor_id]), 
-                class: "btn btn-primary",
+<div class="tw-mx-auto tw-w-full tw-px-4">
+  <div class="tw-mb-6 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-3">
+    <h2 class="tw-text-2xl tw-font-semibold tw-text-gray-900">Sponsor Contact Invites</h2>
+    <%= link_to "New Invite",
+                new_sponsor_contact_invite_path(sponsor_id: params[:sponsor_id]),
+                class: "tw-inline-flex tw-items-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-blue-700",
                 data: { turbo_frame: "sponsor_contact_invite_modal" } %>
   </div>
 
-  <div class="table-responsive">
-    <table class="table">
+  <div class="admin-table-scroll">
+    <table class="admin-table">
       <thead>
         <tr>
-          <th>Email</th>
-          <th>Sponsor</th>
-          <th>Status</th>
-          <th>Sent At</th>
+          <th scope="col">Email</th>
+          <th scope="col">Sponsor</th>
+          <th scope="col">Status</th>
+          <th scope="col">Sent At</th>
         </tr>
       </thead>
       <tbody>

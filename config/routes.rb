@@ -15,7 +15,14 @@ Rails.application.routes.draw do
     namespace 'v1' do
       get ':event/my_profile' => 'profiles#my_profile'
       resources :conferences, only: [:index, :show], path: 'events'
-      resources :talks, only: [:index, :show, :update]
+      resources :talks, only: [:index, :show, :update] do
+        resources :session_questions, only: [:index, :create, :destroy] do
+          member do
+            post :vote
+          end
+          resources :session_question_answers, only: [:index, :create]
+        end
+      end
       resources :proposals, only: [:index]
       resources :speakers, only: [:index]
       resources :tracks, only: [:index, :show]
@@ -68,13 +75,23 @@ Rails.application.routes.draw do
       delete 'check_in_events' => 'check_in_events#destroy_all'
       resources :talks, only: [:index, :edit, :update]
       get 'export_talks_for_website' => 'talks#export_talks_for_website', defaults: { format: 'json' }
+      resources :session_questions, only: [:index, :show] do
+        member do
+          patch :toggle_hidden
+        end
+        resources :session_question_answers, only: [:destroy], path: 'answers'
+      end
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
       resources :videos, only: [:index]
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
-      resources :announcements
+      resources :announcements do
+        member do
+          get :deliveries
+        end
+      end
       resources :speaker_announcements
       resources :keynote_speaker_invitations do
         member do
@@ -101,7 +118,6 @@ Rails.application.routes.draw do
       put 'proposals' => 'proposals#update_proposals'
       resources :tracks, only: [:index]
       put 'tracks' => 'tracks#update_tracks'
-      post 'update_offset' => 'tracks#update_offset'
       resources :attachments, only: [:show]
       get 'team' => 'teams#show'
       put 'team' => 'teams#update'
@@ -114,6 +130,11 @@ Rails.application.routes.draw do
     get '/speakers/entry' => 'speaker_dashboard/speakers#new'
     get '/speakers/guidance' => 'speaker_dashboard/speakers#guidance'
     get '/speaker_dashboard' => 'speaker_dashboards#show'
+    get '/speaker_dashboard/talks' => 'speaker_dashboards#talks', as: 'speaker_dashboard_talks'
+    get '/speaker_dashboard/questions' => 'speaker_dashboards#questions', as: 'speaker_dashboard_questions'
+    post '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers' => 'speaker_dashboards#create_answer', as: 'speaker_dashboard_talk_session_question_answer'
+    delete '/speaker_dashboard/talks/:talk_id/session_questions/:session_question_id/answers/:id' => 'speaker_dashboards#destroy_answer', as: 'speaker_dashboard_talk_session_question_answer_delete'
+    patch '/speaker_dashboard/talks/:talk_id/session_questions/:id/toggle_hidden' => 'speaker_dashboards#toggle_question_hidden', as: 'speaker_dashboard_talk_session_question_toggle_hidden'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
       resources :video_registrations, only: [:new, :create, :edit, :update]
@@ -140,16 +161,26 @@ Rails.application.routes.draw do
         resources :sponsor_sessions
         resources :sponsor_contact_invites, only: [:index, :new, :create, :destroy]
         resources :sponsor_speaker_invites, only: [:index, :new, :create, :destroy]
+        resources :session_questions, only: [:index] do
+          member do
+            patch :toggle_hidden
+          end
+          resources :session_question_answers, only: [:create]
+        end
       end
     end
 
-    resources :talks, only: [:show, :index]
+    resources :talks, only: [:show, :index] do
+      member do
+        post :create_question
+        delete :destroy_question
+      end
+    end
     resources :proposals, only: [:show, :index]
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'attendee_dashboards#show'
     get 'tracks/blank' => 'tracks#blank'
-    get 'kontest' => 'contents#kontest'
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
     get 'job-board' => 'contents#job_board'

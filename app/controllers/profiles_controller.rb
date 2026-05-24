@@ -1,6 +1,5 @@
 class ProfilesController < ApplicationController
   include Secured
-  layout :event_layout
 
   before_action :set_conference
   before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin, :entry_sheet, :view_qr]
@@ -11,7 +10,7 @@ class ProfilesController < ApplicationController
 
   def new
     @profile = Profile.new
-    @conference = Conference.find_by(abbr: params[:event])
+    @conference = current_conference
 
     # FormItemの数だけform_valuesを初期化
     FormItem.where(conference_id: @conference.id).each do |form_item|
@@ -47,6 +46,7 @@ class ProfilesController < ApplicationController
       end
 
       ProfileMailer.registered(@profile, @conference).deliver_later
+
       if @profile.public_profile.present?
         redirect_to("/#{event_name}/public_profiles/#{@profile.public_profile.id}/edit")
       else
@@ -124,6 +124,7 @@ class ProfilesController < ApplicationController
   end
 
   def view_qr
+    redirect_to("/#{params[:event]}/registration") and return if @profile.nil?
   end
 
   def entry_sheet
@@ -141,7 +142,7 @@ class ProfilesController < ApplicationController
   end
 
   def set_current_profile
-    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: set_conference.id)
+    @profile = Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
   end
 
   def profile_params

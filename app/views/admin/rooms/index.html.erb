@@ -1,52 +1,52 @@
 <%= render 'admin/layout' do %>
   <% flash.each do |message_type, message| %>
-    <div class="alert alert-info" role="alert">
+    <div class="tw-mb-4 tw-rounded-md tw-border tw-border-blue-300 tw-bg-blue-50 tw-p-4 tw-text-blue-800" role="alert">
       <%= message %>
     </div>
   <% end %>
 
-  <div class="row">
-    <h2>Rooms</h2>
-    <table class="table table-striped talks_table" >
-      <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">座席数</th>
-        <th scope="col">Track</th>
-        <th scope="col">Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <%= form_with(url: admin_rooms_path, id: "room_list", method: :put) do |f| %>
-        <% @rooms.each do |room| %>
-          <%= fields_for 'rooms[]', room do |fr| %>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Rooms</h2>
 
-            <tr>
-              <td><%= room.id %></td>
-              <td><%= room.name %></td>
-              <td>
-                <% if room.track.present? %>
-                  <%= fr.text_field :number_of_seats %>
-                <% else %>
-                  <%= fr.hidden_field :number_of_seats, value: 0 %>
-                <% end %>
-              </td>
-              <td>
-                <%= room.track.present? ? room.track.name : '' %>
-              </td>
-              <td>
-                <%= fr.text_field :description %>
-              </td>
-            </tr>
+  <%= form_with(url: admin_rooms_path, id: "room_list", method: :put) do |f| %>
+    <div class="admin-table-card">
+      <table class="admin-table talks_table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">座席数</th>
+            <th scope="col">Track</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rooms.each do |room| %>
+            <%= fields_for 'rooms[]', room do |fr| %>
+              <tr>
+                <td><%= room.id %></td>
+                <td><%= room.name %></td>
+                <td>
+                  <% if room.track.present? %>
+                    <%= fr.text_field :number_of_seats %>
+                  <% else %>
+                    <%= fr.hidden_field :number_of_seats, value: 0 %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= room.track.present? ? room.track.name : '' %>
+                </td>
+                <td>
+                  <%= fr.text_field :description %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 <% end %>
-<div id="transit_nav" class="p-4">
-  <%= submit_tag "保存", form: "room_list",class: "btn btn-danger transit_button" %>
-  <br/><span class="text-white"> ※トラックに紐付く各セッションの座席数も更新されます</span>
+<div id="transit_nav" class="tw-p-4">
+  <%= submit_tag "保存", form: "room_list", class: "tw-inline-block tw-rounded tw-bg-red-600 tw-px-4 tw-py-2 tw-font-bold tw-text-white hover:tw-bg-red-700 transit_button" %>
+  <br/><span class="tw-text-white"> ※トラックに紐付く各セッションの座席数も更新されます</span>
 </div>

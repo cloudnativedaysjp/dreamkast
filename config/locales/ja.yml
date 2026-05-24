@@ -139,12 +139,31 @@ ja:
         one: "%{model}にエラーが発生しました"
         other: "%{model}に%{count}個のエラーが発生しました"
   helpers:
+    page_entries_info:
+      entry:
+        zero: 件
+        one: 件
+        other: 件
+      one_page:
+        display_entries:
+          zero: "%{entry_name}は見つかりませんでした"
+          one: "1件の%{entry_name}を表示しています"
+          other: "%{count}件の%{entry_name}を表示しています"
+      more_pages:
+        display_entries: "全%{total}件中 %{first}-%{last}件目を表示"
     select:
       prompt: 選択してください
     submit:
       create: 登録する
       submit: 保存する
       update: 更新する
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前へ"
+      next: "次へ &rsaquo;"
+      truncate: "&hellip;"
   number:
     currency:
       format:

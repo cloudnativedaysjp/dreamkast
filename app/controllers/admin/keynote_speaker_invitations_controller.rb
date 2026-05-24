@@ -1,7 +1,6 @@
 class Admin::KeynoteSpeakerInvitationsController < ApplicationController
   include SecuredAdmin
 
-  before_action :set_conference
   before_action :set_keynote_speaker_invitation, only: [:destroy, :resend]
   helper_method :turbo_stream_flash
 
@@ -60,10 +59,6 @@ class Admin::KeynoteSpeakerInvitationsController < ApplicationController
   end
 
   private
-
-  def set_conference
-    @conference = Conference.find_by(abbr: params[:event])
-  end
 
   def set_keynote_speaker_invitation
     @keynote_speaker_invitation = @conference.keynote_speaker_invitations.find(params[:id])

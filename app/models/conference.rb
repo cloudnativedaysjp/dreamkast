@@ -15,6 +15,7 @@ class Conference < ApplicationRecord
   STATUS_CLOSED = 'closed'.freeze
   STATUS_ARCHIVED = 'archived'.freeze
   STATUS_MIGRATED = 'migrated'.freeze
+  EARLY_BIRD_CUTOFF = Time.zone.parse('2026-03-01').freeze
 
   enum :conference_status, {
     registered: STATUS_REGISTERED,
@@ -47,6 +48,8 @@ class Conference < ApplicationRecord
   has_many :proposal_items
   has_many :profiles
   has_many :stats_of_registrants
+  has_many :session_questions, dependent: :destroy
+  has_many :session_question_answers, dependent: :destroy
   has_many :admin_profiles
   has_many :keynote_speaker_invitations
   has_many :media_package_harvest_jobs
@@ -76,7 +79,16 @@ class Conference < ApplicationRecord
     profiles.where(participation: 'offline').size >= capacity
   end
 
+  def twitter_hashtag
+    return 'cloudnativekaigi' if abbr == 'cnk'
+    abbr.upcase
+  end
+
   def remaining_date
     (conference_days.where(internal: false).order(:date).first.date - Date.today).floor
+  end
+
+  def early_bird_cutoff_at
+    EARLY_BIRD_CUTOFF
   end
 end

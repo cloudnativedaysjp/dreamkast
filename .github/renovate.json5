@@ -6,6 +6,18 @@
   "labels": ["dependencies"],
   "packageRules": [
     {
+      "matchUpdateTypes": ["patch"],
+      "stabilityDays": 3,
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "stabilityDays": 7,
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "stabilityDays": 14,
+    },
+    {
       "matchManagers": ["bundler"],
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "all minor, or patch dependencies on bundler",

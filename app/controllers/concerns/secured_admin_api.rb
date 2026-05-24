@@ -41,14 +41,6 @@ module SecuredAdminApi
     @current_user
   end
 
-  def conference
-    @conference ||= Conference.find_by(abbr: params[:eventAbbr] || params[:event])
-  end
-
-  def set_conference
-    conference
-  end
-
   def current_user_model
     return nil unless @current_user
     symbolized_current_user = @current_user.deep_symbolize_keys
@@ -60,7 +52,7 @@ module SecuredAdminApi
   end
 
   def profile
-    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: conference.id)
+    @profile ||= Profile.find_by(user_id: current_user_model.id, conference_id: current_conference.id)
   end
 
   def is_admin?
@@ -68,6 +60,6 @@ module SecuredAdminApi
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{conference.abbr.upcase}-Admin")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{current_conference.abbr.upcase}-Admin")
   end
 end

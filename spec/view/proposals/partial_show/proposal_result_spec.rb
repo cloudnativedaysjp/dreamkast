@@ -4,7 +4,7 @@ describe 'proposals/partial_show/proposal_result', type: :view do
   shared_examples_for :display_proposal_status do |status|
     it "display '#{status}'" do
       render partial: 'proposals/partial_show/proposal_result', locals: { talk: }
-      expect(rendered).to(include("Proposal: (#{status})"))
+      expect(rendered).to(include(status))
     end
   end
 
@@ -34,7 +34,7 @@ describe 'proposals/partial_show/proposal_result', type: :view do
 
       it 'not display proposal result' do
         render partial: 'proposals/partial_show/proposal_result', locals: { talk: }
-        expect(rendered).to_not(include('Proposal: '))
+        expect(rendered).to_not(include('proposal-status'))
       end
     end
   end
@@ -65,7 +65,7 @@ describe 'proposals/partial_show/proposal_result', type: :view do
 
       it 'not display proposal result' do
         render partial: 'proposals/partial_show/proposal_result', locals: { talk: }
-        expect(rendered).to_not(include('Proposal: '))
+        expect(rendered).to_not(include('proposal-status'))
       end
     end
   end

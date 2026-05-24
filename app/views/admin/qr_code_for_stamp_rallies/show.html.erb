@@ -3,9 +3,9 @@
 <head>
   <title>EntrySheet</title>
 </head>
-<body>
+<body id="admin">
 <div class="qr_view">
-  <button class="btn btn-secondary btn-xl" id="printButton" onclick="window.print();">印刷する</button>
+  <button class="tw-inline-block tw-rounded tw-bg-gray-500 tw-px-6 tw-py-3 tw-text-lg tw-font-bold tw-text-white hover:tw-bg-gray-600" id="printButton" onclick="window.print();">印刷する</button>
   <p class="warning">印刷プレビューでレイアウトをご確認ください</p>
   <h1><%= @qr_code_for_stamp_rally.h1_text %></h1>
   <h2><%= @qr_code_for_stamp_rally.stamp_rally_check_point.name %></h2>
@@ -14,4 +14,3 @@
 </div>
 </body>
 </html>
-

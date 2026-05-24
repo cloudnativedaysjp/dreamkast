@@ -8,19 +8,19 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   end
 
   def index
-    @stamp_rally_check_points = conference.stamp_rally_check_points.order(:position)
-    @stamp_rally_configure = conference.stamp_rally_configure || StampRallyConfigure.new
+    @stamp_rally_check_points = current_conference.stamp_rally_check_points.order(:position)
+    @stamp_rally_configure = current_conference.stamp_rally_configure || StampRallyConfigure.new
   end
 
   def new
     @stamp_rally_check_point = StampRallyCheckPoint.new
-    @sponsors = conference.sponsors
+    @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
   end
 
   def create
-    @stamp_rally_check_point = StampRallyCheckPoint.new(stamp_rally_check_point_params.merge(conference:))
-    @sponsors = conference.sponsors
+    @stamp_rally_check_point = StampRallyCheckPoint.new(stamp_rally_check_point_params.merge(conference: current_conference))
+    @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
     if @stamp_rally_check_point.save
       flash.now[:notice] = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を登録しました"
@@ -31,13 +31,13 @@ class Admin::StampRallyCheckPointsController < ApplicationController
 
   def edit
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
-    @sponsors = conference.sponsors
+    @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
   end
 
   def update
     @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
-    @sponsors = conference.sponsors
+    @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
     if @stamp_rally_check_point.update(stamp_rally_check_point_params)
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を更新しました"

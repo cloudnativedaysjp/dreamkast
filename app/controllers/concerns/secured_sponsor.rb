@@ -2,7 +2,7 @@ module SecuredSponsor
   extend ActiveSupport::Concern
 
   included do
-    before_action :logged_in_using_omniauth?, :conference
+    before_action :logged_in_using_omniauth?, :set_conference
     helper_method :admin?, :speaker?
   end
 
@@ -11,14 +11,10 @@ module SecuredSponsor
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Admin")
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{current_conference.abbr.upcase}-Admin")
   end
 
   def speaker?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{@conference.abbr.upcase}-Speaker")
-  end
-
-  def conference
-    @conference ||= Conference.find_by(abbr: event_name)
+    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{current_conference.abbr.upcase}-Speaker")
   end
 end

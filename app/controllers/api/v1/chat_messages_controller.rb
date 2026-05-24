@@ -8,8 +8,7 @@ class Api::V1::ChatMessagesController < ApplicationController
 
 
   def index
-    @conference = Conference.find_by(abbr: params[:eventAbbr])
-    query = { conference_id: @conference.id, room_type: params[:roomType] }
+    query = { conference_id: current_conference.id, room_type: params[:roomType] }
     query[:created_at] = params[:createdFrom] if params[:createdFrom]
     query[:reply_to] = params[:replyTo] if params[:replyTo]
     query[:room_id] = params[:roomId] if params[:roomId]
@@ -20,16 +19,15 @@ class Api::V1::ChatMessagesController < ApplicationController
 
   def create
     @params ||= JSON.parse(request.body.read, { symbolize_names: true })
-    conference = Conference.find_by(abbr: params[:eventAbbr])
     room_id = @params[:roomId]
     room_type = @params[:roomType]
     body = @params[:body]
     reply_to = @params[:replyTo]
     message_type = @params[:messageType]
 
-    attr = { profile_id: @profile.id, body:, conference_id: conference.id, room_id:, room_type:, message_type: }
+    attr = { profile_id: @profile.id, body:, conference_id: current_conference.id, room_id:, room_type:, message_type: }
 
-    speaker = Speaker.find_by(conference_id: conference.id, user_id: current_user_model.id)
+    speaker = Speaker.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
     attr[:speaker_id] = speaker.id if speaker.present?
 
     if reply_to
@@ -51,11 +49,7 @@ class Api::V1::ChatMessagesController < ApplicationController
     render(json: { error: 'Unauthorized' }, status: 403)
   end
 
-  def event_name
-    params[:eventAbbr]
-  end
-
   def pundit_user
-    Profile.find_by(user_id: current_user_model.id, conference_id: conference&.id)
+    Profile.find_by(user_id: current_user_model.id, conference_id: current_conference&.id)
   end
 end

@@ -135,5 +135,35 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
         expect(response).to(have_http_status('200'))
       end
     end
+
+    context '既に別スポンサーに登壇者として紐付いているユーザーが承諾する場合' do
+      let!(:existing_user) { User.find_or_create_by!(sub: 'auth0|123') { |u| u.email = 'invited@example.com' } }
+      let!(:other_sponsor) { create(:sponsor, id: 99, conference:, abbr: 'other') }
+      let!(:other_sponsor_contact) { create(:sponsor_contact, conference:, sponsor: other_sponsor, user_id: existing_user.id) }
+      let!(:existing_speaker) do
+        create(:speaker, conference:, email: 'invited@example.com', sub: 'auth0|123',
+                         user_id: existing_user.id, name: 'Existing', profile: 'p', company: 'c', job_title: 'j')
+      end
+      let!(:other_invite) { create(:sponsor_speaker_invite, conference:, sponsor: other_sponsor, email: 'invited@example.com') }
+      let!(:existing_accept) do
+        create(:sponsor_speaker_invite_accept,
+               conference:, sponsor: other_sponsor, sponsor_contact: other_sponsor_contact,
+               speaker: existing_speaker, sponsor_speaker_invite: other_invite)
+      end
+
+      it '新しい InviteAccept は作成されない' do
+        expect {
+          post(sponsor_speaker_invite_accepts_path(event: conference.abbr), params: valid_attributes)
+        }.not_to(change(SponsorSpeakerInviteAccept, :count))
+
+        expect(response).to(have_http_status('200'))
+      end
+
+      it 'フォームに「別スポンサーの登壇者として登録されています」エラーが表示される' do
+        post(sponsor_speaker_invite_accepts_path(event: conference.abbr), params: valid_attributes)
+
+        expect(response.body).to(include('別スポンサーの登壇者として登録されています'))
+      end
+    end
   end
 end

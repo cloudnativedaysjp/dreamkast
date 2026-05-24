@@ -8,9 +8,15 @@ class Sponsor < ApplicationRecord
   has_many :sponsors_sponsor_types, dependent: :delete_all
   has_many :sponsor_types, through: :sponsors_sponsor_types
   has_many :talks
-  has_many :speakers
   has_many :stamp_rally_check_point_booths
   has_many :sponsor_speaker_invites, dependent: :delete_all
+  has_many :sponsor_speaker_invite_accepts, dependent: :destroy
+
+  def speakers
+    Speaker.where(sponsor_id: id)
+           .or(Speaker.where(id: sponsor_speaker_invite_accepts.select(:speaker_id)))
+           .distinct
+  end
 
   def booth_sponsor?
     sponsor_types.each do |type|

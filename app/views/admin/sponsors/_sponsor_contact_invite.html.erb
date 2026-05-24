@@ -1,23 +1,23 @@
   <%= turbo_frame_tag sponsor_contact_invite do %>
-  <div class="row py-2 border-top">
-    <div class="col-2 my-auto">
+  <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-border-t tw-py-2">
+    <div class="tw-col-span-2 tw-my-auto">
       -
     </div>
-    <div class="col-2 my-auto">
+    <div class="tw-col-span-2 tw-my-auto">
       <%= sponsor_contact_invite.email %>
     </div>
-    <div class="col-2 my-auto">
+    <div class="tw-col-span-2 tw-my-auto">
       <% if sponsor_contact_invite.expires_at > Time.current %>
-        <span class="badge bg-warning">招待中</span>
+        <span class="tw-inline-block tw-rounded-full tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-bg-yellow-500 tw-text-white">招待中</span>
       <% else %>
-        <span class="badge bg-secondary">期限切れ</span>
+        <span class="tw-inline-block tw-rounded-full tw-px-2 tw-py-1 tw-text-xs tw-font-semibold tw-bg-gray-500 tw-text-white">期限切れ</span>
       <% end %>
     </div>
-    <div class="col-2 my-auto">
-      <div class="d-flex justify-content-end">
+    <div class="tw-col-span-2 tw-my-auto">
+      <div class="tw-flex tw-justify-end">
         <%= link_to "招待をキャンセル",
                               admin_sponsor_contact_invite_path(event: sponsor_contact_invite.conference.abbr, id: sponsor_contact_invite.id),
-                              class: "btn btn-sm btn-outline-danger",
+                              class: "tw-inline-block tw-rounded tw-border-2 tw-border-red-600 tw-px-2 tw-py-1 tw-text-sm tw-font-bold tw-text-red-600 hover:tw-bg-red-600 hover:tw-text-white",
                               data: { turbo_method: :delete, turbo_confirm: "本当に招待をキャンセルしますか？" }
                     %>
       </div>

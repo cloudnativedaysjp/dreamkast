@@ -1,9 +1,7 @@
 <%= render 'admin/layout' do %>
-  <h1>New SpeakerAnnouncement</h1>
+  <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">New SpeakerAnnouncement</h2>
 
-  <div class="row speaker-dashboard-form justify-content-center">
-    <div class="col-12 col-lg-8">
-      <%= render 'admin/speaker_announcements/form', action: "new" %>
-    </div>
+  <div class="admin-form-card">
+    <%= render 'admin/speaker_announcements/form', action: 'new' %>
   </div>
 <% end %>

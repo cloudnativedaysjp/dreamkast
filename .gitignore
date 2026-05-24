@@ -60,3 +60,10 @@ localstack
 
 .serena
 .cursor
+
+# devbox関連
+.devbox/
+.env-local.devbox
+
+# direnv（オプション）
+.envrc

@@ -183,6 +183,23 @@
     color: #ff0000;
 }
 
+.dashboard-banner-link {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+    }
+
+    img {
+        display: block;
+    }
+}
+
 .white_background {
     background: rgba(255, 255, 255, 0.95);
 }

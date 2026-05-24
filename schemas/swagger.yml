@@ -748,14 +748,6 @@ components:
           type: string
           format: date
           nullable: true
-        startOffset:
-          type: number
-        endOffset:
-          type: number
-        actualStartTime:
-          type: string
-        actualEndTime:
-          type: string
         presentationMethod:
           type: string
           nullable: true
@@ -797,10 +789,6 @@ components:
           documentUrl: "http://documents"
           conferenceDayId: 1
           conferenceDayDate: "2021-01-23"
-          startOffset: 0
-          endOffset: 0
-          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
-          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: '現地登壇'
           slotNum: 1
           allowShowingVideo: true
@@ -822,10 +810,6 @@ components:
           documentUrl: "http://documents"
           conferenceDayId: 1
           conferenceDayDate: "2021-01-23"
-          startOffset: 0
-          endOffset: 0
-          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
-          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
           presentationMethod: 'オンライン登壇'
           slotNum: 1
           allowShowingVideo: false

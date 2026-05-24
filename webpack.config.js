@@ -50,9 +50,6 @@ module.exports = {
     "admin/tracks/media_live": [
       "./app/javascript/packs/admin/tracks/media_live.js",
     ],
-    "admin/tracks/tracks_control": [
-      "./app/javascript/packs/admin/tracks/tracks_control.js",
-    ],
     "chat/index": ["./app/javascript/packs/chat/index.js"],
     "tracks/waiting_channel": [
       "./app/javascript/packs/tracks/waiting_channel.js",

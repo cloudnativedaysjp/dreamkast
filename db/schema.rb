@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_28_120000) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -729,8 +729,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_28_120000) do
     t.json "expected_participants"
     t.json "execution_phases"
     t.integer "sponsor_id"
-    t.integer "start_offset", default: 0, null: false
-    t.integer "end_offset", default: 0, null: false
     t.integer "number_of_seats", default: 0, null: false
     t.integer "acquired_seats", default: 0, null: false
     t.string "ogp_image_url"

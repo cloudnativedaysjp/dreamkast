@@ -86,7 +86,7 @@ namespace :util do
             has_check_in = profile.check_ins.present?
             attended = has_track_viewer_log || has_check_in
 
-            if s.abbr == 'グラファナラボ日本' || s.abbr == 'レッドハット'
+            if ['グラファナラボ日本', 'レッドハット'].include?(s.abbr)
               # Optimization: check_in_conferences is already loaded
               c_checkin = profile.check_in_conferences.first
               unless c_checkin.nil? || c_checkin.created_at < '2025/11/18 2:50:00'

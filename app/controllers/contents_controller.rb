@@ -13,7 +13,7 @@ class ContentsController < ApplicationController
     render_if_template_exists(
       "#{current_conference.abbr}_discussion",
       prefixes: controller_path,
-      render_target: "#{current_conference.abbr}_discussion".to_sym
+      render_target: :"#{current_conference.abbr}_discussion"
     )
   end
 
@@ -21,7 +21,7 @@ class ContentsController < ApplicationController
     render_if_template_exists(
       "#{current_conference.abbr}_hands_on",
       prefixes: controller_path,
-      render_target: "#{current_conference.abbr}_hands_on".to_sym
+      render_target: :"#{current_conference.abbr}_hands_on"
     )
   end
 
@@ -29,7 +29,7 @@ class ContentsController < ApplicationController
     render_if_template_exists(
       "#{current_conference.abbr}_job_board",
       prefixes: controller_path,
-      render_target: "#{current_conference.abbr}_job_board".to_sym
+      render_target: :"#{current_conference.abbr}_job_board"
     )
   end
 

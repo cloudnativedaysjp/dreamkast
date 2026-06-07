@@ -254,9 +254,9 @@ class MediaLiveChannel < ApplicationRecord
 
     def audio_descriptions
       [
-        audio_description_template('audio_1', 192000, 48000),
-        audio_description_template('audio_2', 192000, 48000),
-        audio_description_template('audio_3', 128000, 48000)
+        audio_description_template('audio_1', 96000, 48000),
+        audio_description_template('audio_2', 96000, 48000),
+        audio_description_template('audio_3', 64000, 48000)
       ]
     end
 
@@ -292,7 +292,7 @@ class MediaLiveChannel < ApplicationRecord
             caption_language_mappings: [],
             caption_language_setting: 'OMIT',
             client_cache: 'ENABLED',
-            codec_specification: 'RFC_4281',
+            codec_specification: 'RFC_6381',
             destination: { destination_ref_id: 'dest-mediapackage' },
             directory_structure: 'SINGLE_DIRECTORY',
             discontinuity_tags: 'INSERT',
@@ -317,15 +317,15 @@ class MediaLiveChannel < ApplicationRecord
             manifest_duration_format: 'INTEGER',
             mode: 'LIVE',
             output_selection: 'MANIFESTS_AND_SEGMENTS',
-            program_date_time: 'EXCLUDE',
-            program_date_time_period: 600,
+            program_date_time: 'INCLUDE',
+            program_date_time_period: 60,
             redundant_manifest: 'DISABLED',
-            segment_length: 1,
+            segment_length: 2,
             segmentation_mode: 'USE_SEGMENT_DURATION',
             segments_per_subdirectory: 10000,
             stream_inf_resolution: 'INCLUDE',
             timed_metadata_id_3_frame: 'PRIV',
-            timed_metadata_id_3_period: 10,
+            timed_metadata_id_3_period: 2,
             ts_file_mode: 'SEGMENTED_FILES'
           }
         },
@@ -370,13 +370,13 @@ class MediaLiveChannel < ApplicationRecord
 
     def video_descriptions
       [
-        video_description_template('video_1080p30', 1080, 1920, 5000000, 50),
-        video_description_template('video_720p30', 720, 1280, 3000000, 100),
-        video_description_template('video_480p30', 480, 854, 1500000, 100)
+        video_description_template('video_1080p30', 1080, 1920, 3500000, 50),
+        video_description_template('video_720p30', 720, 1280, 2000000, 100),
+        video_description_template('video_480p30', 480, 854, 800000, 100)
       ]
     end
 
-    def video_description_template(name, height, width, bitrate, sharpness)
+    def video_description_template(name, height, width, max_bitrate, sharpness)
       {
         name:,
         height:,
@@ -385,7 +385,6 @@ class MediaLiveChannel < ApplicationRecord
           h264_settings: {
             adaptive_quantization: 'HIGH',
             afd_signaling: 'NONE',
-            bitrate:,
             color_metadata: 'INSERT',
             entropy_encoding: 'CABAC',
             flicker_aq: 'ENABLED',
@@ -394,15 +393,17 @@ class MediaLiveChannel < ApplicationRecord
             framerate_numerator: 30,
             gop_b_reference: 'ENABLED',
             gop_closed_cadence: 1,
-            gop_num_b_frames: 1,
-            gop_size: 3,
-            gop_size_units: 'FRAMES',
+            gop_num_b_frames: 3,
+            gop_size: 2,
+            gop_size_units: 'SECONDS',
             level: 'H264_LEVEL_AUTO',
             look_ahead_rate_control: 'HIGH',
+            max_bitrate:,
             num_ref_frames: 3,
             par_control: 'INITIALIZE_FROM_SOURCE',
-            profile: 'MAIN',
-            rate_control_mode: 'CBR',
+            profile: 'HIGH',
+            qvbr_quality_level: 7,
+            rate_control_mode: 'QVBR',
             scan_type: 'PROGRESSIVE',
             scene_change_detect: 'ENABLED',
             slices: 1,
@@ -413,7 +414,7 @@ class MediaLiveChannel < ApplicationRecord
           }
         },
         respond_to_afd: 'NONE',
-        scaling_behavior: 'STRETCH_TO_OUTPUT',
+        scaling_behavior: 'DEFAULT',
         sharpness:
       }
     end
@@ -437,9 +438,9 @@ class MediaLiveChannel < ApplicationRecord
 
     def audio_descriptions
       [
-        audio_description_template('media_package_v2_audio_1', 192000, 48000),
-        audio_description_template('media_package_v2_audio_2', 192000, 48000),
-        audio_description_template('media_package_v2_audio_3', 128000, 48000)
+        audio_description_template('media_package_v2_audio_1', 96000, 48000),
+        audio_description_template('media_package_v2_audio_2', 96000, 48000),
+        audio_description_template('media_package_v2_audio_3', 64000, 48000)
       ]
     end
 
@@ -475,7 +476,7 @@ class MediaLiveChannel < ApplicationRecord
             caption_language_mappings: [],
             caption_language_setting: 'OMIT',
             client_cache: 'ENABLED',
-            codec_specification: 'RFC_4281',
+            codec_specification: 'RFC_6381',
             destination: { destination_ref_id: 'dest-mediapackagev2' },
             directory_structure: 'SINGLE_DIRECTORY',
             discontinuity_tags: 'INSERT',
@@ -500,15 +501,15 @@ class MediaLiveChannel < ApplicationRecord
             manifest_duration_format: 'INTEGER',
             mode: 'LIVE',
             output_selection: 'MANIFESTS_AND_SEGMENTS',
-            program_date_time: 'EXCLUDE',
-            program_date_time_period: 600,
+            program_date_time: 'INCLUDE',
+            program_date_time_period: 60,
             redundant_manifest: 'DISABLED',
-            segment_length: 1,
+            segment_length: 2,
             segmentation_mode: 'USE_SEGMENT_DURATION',
             segments_per_subdirectory: 10000,
             stream_inf_resolution: 'INCLUDE',
             timed_metadata_id_3_frame: 'PRIV',
-            timed_metadata_id_3_period: 10,
+            timed_metadata_id_3_period: 2,
             ts_file_mode: 'SEGMENTED_FILES'
           }
         },
@@ -553,13 +554,13 @@ class MediaLiveChannel < ApplicationRecord
 
     def video_descriptions
       [
-        video_description_template('media_package_v2_video_1080p30', 1080, 1920, 5000000, 50),
-        video_description_template('media_package_v2_video_720p30', 720, 1280, 3000000, 100),
-        video_description_template('media_package_v2_video_480p30', 480, 854, 1500000, 100)
+        video_description_template('media_package_v2_video_1080p30', 1080, 1920, 3500000, 50),
+        video_description_template('media_package_v2_video_720p30', 720, 1280, 2000000, 100),
+        video_description_template('media_package_v2_video_480p30', 480, 854, 800000, 100)
       ]
     end
 
-    def video_description_template(name, height, width, bitrate, sharpness)
+    def video_description_template(name, height, width, max_bitrate, sharpness)
       {
         name:,
         height:,
@@ -568,7 +569,6 @@ class MediaLiveChannel < ApplicationRecord
           h264_settings: {
             adaptive_quantization: 'HIGH',
             afd_signaling: 'NONE',
-            bitrate:,
             color_metadata: 'INSERT',
             entropy_encoding: 'CABAC',
             flicker_aq: 'ENABLED',
@@ -577,15 +577,17 @@ class MediaLiveChannel < ApplicationRecord
             framerate_numerator: 30,
             gop_b_reference: 'ENABLED',
             gop_closed_cadence: 1,
-            gop_num_b_frames: 1,
-            gop_size: 1,
+            gop_num_b_frames: 3,
+            gop_size: 2,
             gop_size_units: 'SECONDS',
             level: 'H264_LEVEL_AUTO',
             look_ahead_rate_control: 'HIGH',
+            max_bitrate:,
             num_ref_frames: 3,
             par_control: 'INITIALIZE_FROM_SOURCE',
-            profile: 'MAIN',
-            rate_control_mode: 'CBR',
+            profile: 'HIGH',
+            qvbr_quality_level: 7,
+            rate_control_mode: 'QVBR',
             scan_type: 'PROGRESSIVE',
             scene_change_detect: 'ENABLED',
             slices: 1,
@@ -596,7 +598,7 @@ class MediaLiveChannel < ApplicationRecord
           }
         },
         respond_to_afd: 'NONE',
-        scaling_behavior: 'STRETCH_TO_OUTPUT',
+        scaling_behavior: 'DEFAULT',
         sharpness:
       }
     end

@@ -3,7 +3,7 @@ json.userId(@profile.user_id)
 json.email(@profile.email)
 json.name("#{@profile.last_name} #{@profile.first_name}")
 json.isAttendOffline(@profile.attend_offline?)
-json.registeredTalks(@profile.registered_talks&.includes([talk: [:speakers, :conference_day, { track: :room }]])&.map do |registered_talk|
+json.registeredTalks(@profile.registered_talks&.includes([{ talk: [:speakers, :conference_day, { track: :room }] }])&.map do |registered_talk|
   {
     talkId: registered_talk.talk.id,
     talkTitle: registered_talk.talk.title,

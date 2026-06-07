@@ -28,7 +28,7 @@ class Profiles::TalksController < ApplicationController
             end
           end
         else
-          params[:talks].each do |key, _value|
+          params[:talks].each_key do |key|
             talk_id = key.to_i
             if talk = Talk.find(talk_id)
               RegisteredTalk.create!(

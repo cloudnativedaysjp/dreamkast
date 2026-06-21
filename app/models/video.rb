@@ -5,6 +5,13 @@ class Video < ApplicationRecord
 
   enum :youtube_upload_status, { not_uploaded: 0, converting: 1, uploading: 2, uploaded: 3, failed: 4 }
 
+  # 定期タスクが処理対象とする動画: アーカイブ HLS があり、未アップロードか変換中のもの。
+  # not_uploaded は変換開始、converting は MediaConvert の完了確認へ進める。
+  scope :youtube_pending, lambda {
+    where(youtube_upload_status: youtube_upload_statuses.values_at('not_uploaded', 'converting'))
+      .where.not(video_id: [nil, ''])
+  }
+
   # YouTube にアップロード済みで、埋め込み再生に使える動画があるか
   def youtube_available?
     uploaded? && youtube_video_id.present?

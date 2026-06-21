@@ -35,4 +35,17 @@ RSpec.describe(Video, type: :model) do
                                                ))
     end
   end
+
+  describe '.youtube_pending' do
+    let!(:conference) { create(:cndt2020) }
+
+    it 'includes not_uploaded and converting videos that have an archive' do
+      not_uploaded = create(:video, talk: create(:talk1), video_id: 'https://example.com/a.m3u8', youtube_upload_status: :not_uploaded)
+      converting = create(:video, talk: create(:talk2), video_id: 'https://example.com/b.m3u8', youtube_upload_status: :converting)
+      create(:video, talk: create(:talk3), video_id: 'https://example.com/c.m3u8', youtube_upload_status: :uploaded)
+      create(:video, talk: create(:talk_cm), video_id: '', youtube_upload_status: :not_uploaded)
+
+      expect(Video.youtube_pending).to(contain_exactly(not_uploaded, converting))
+    end
+  end
 end

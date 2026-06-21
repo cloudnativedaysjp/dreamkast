@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_21_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_21_000001) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -792,6 +792,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_21_000000) do
     t.integer "youtube_upload_status", default: 0, null: false
     t.datetime "youtube_uploaded_at"
     t.text "youtube_upload_error"
+    t.string "media_convert_job_id"
   end
 
   create_table "viewer_counts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

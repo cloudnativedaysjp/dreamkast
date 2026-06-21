@@ -14,6 +14,7 @@
           <th scope="col">Title</th>
           <th scope="col">Status</th>
           <th scope="col">Statistics</th>
+          <th scope="col">YouTube</th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +29,27 @@
                 <% JSON.parse(talk.video_registration&.statistics).each  do |k, v| %>
                   <%= k %>: <%= v %><br>
                 <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% video = talk.video %>
+              <% if video.present? %>
+                <div class="tw-text-sm">YouTube状態: <%= video.youtube_upload_status %></div>
+                <% if video.youtube_video_id.present? %>
+                  <div class="tw-text-sm">
+                    ID: <%= link_to video.youtube_video_id, "https://www.youtube.com/watch?v=#{video.youtube_video_id}", target: '_blank', rel: 'noopener' %>
+                  </div>
+                <% end %>
+                <% if video.failed? && video.youtube_upload_error.present? %>
+                  <div class="tw-text-sm tw-text-red-600" title="<%= video.youtube_upload_error %>">エラー</div>
+                <% end %>
+                <% if video.video_id.present? && !video.uploaded? && !video.converting? && !video.uploading? %>
+                  <%= button_to(video.failed? ? '再アップロード' : 'YouTubeへアップロード',
+                                upload_to_youtube_admin_video_path(video, event: @conference.abbr),
+                                method: :post, data: { turbo: false }) %>
+                <% end %>
+              <% else %>
+                <span class="tw-text-sm tw-text-gray-400">動画なし</span>
               <% end %>
             </td>
           </tr>

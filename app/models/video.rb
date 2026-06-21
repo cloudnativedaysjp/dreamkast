@@ -3,6 +3,13 @@ class Video < ApplicationRecord
 
   belongs_to :talk
 
+  enum :youtube_upload_status, { not_uploaded: 0, converting: 1, uploading: 2, uploaded: 3, failed: 4 }
+
+  # YouTube にアップロード済みで、埋め込み再生に使える動画があるか
+  def youtube_available?
+    uploaded? && youtube_video_id.present?
+  end
+
   def self.on_air(conference)
     current = conference.talks.accepted.map(&:video).compact.select(&:on_air)
     list = {}

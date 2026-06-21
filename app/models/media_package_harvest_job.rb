@@ -20,6 +20,11 @@ class MediaPackageHarvestJob < ApplicationRecord
     "https://#{cloudfront_domain_name(job.s3_destination.bucket_name)}/#{job.s3_destination.manifest_key}"
   end
 
+  # MediaConvert の入力に使う、アーカイブ HLS manifest の S3 URI
+  def s3_manifest_uri
+    "s3://#{job.s3_destination.bucket_name}/#{job.s3_destination.manifest_key}"
+  end
+
   private
 
   def create_params

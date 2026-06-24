@@ -8,7 +8,7 @@
     "awscli2",
     "jq",
     "yq",
-    "mysql80",
+    "mysql84",
     "redis",
     "shared-mime-info",
     "docker@latest",

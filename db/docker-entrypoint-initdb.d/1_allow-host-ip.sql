@@ -1,3 +1,3 @@
-Create USER root@'%';
+CREATE USER IF NOT EXISTS root@'%';
 GRANT ALL PRIVILEGES ON *.* TO root@'%' WITH GRANT OPTION;
 ALTER USER 'root'@'%' IDENTIFIED BY 'root';

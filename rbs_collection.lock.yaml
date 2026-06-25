@@ -381,14 +381,6 @@ gems:
     revision: 7062b1ca78ffa29275176daa236f9e1cf4018723
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
-- name: redis
-  version: '4.2'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 52f2afbc5e8a5638082cacfa6325ee6f0d9f22af
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
 - name: regexp_parser
   version: '2.8'
   source:

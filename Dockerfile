@@ -48,12 +48,16 @@ ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=ena
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get -y install wget libmariadb3 libvips42 chromium && \
+RUN apt-get update && apt-get -y install wget ca-certificates libmariadb3 libvips42 chromium && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 ENV CHROME_BIN=/usr/bin/chromium
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
+# RDS 接続の TLS 検証(verify_identity)用に、グローバル CA バンドルをビルド時に取得する
+RUN mkdir -p /app/config/certs && \
+    wget -q -O /app/config/certs/rds-global-bundle.pem \
+      https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
 EXPOSE 3000
 ENV RUBY_YJIT_ENABLE=1
 ENTRYPOINT ["./entrypoint.sh"]

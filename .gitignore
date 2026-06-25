@@ -67,3 +67,6 @@ localstack
 
 # direnv（オプション）
 .envrc
+
+# RDS CA バンドルはイメージビルド時に取得する（リポジトリには含めない）
+/config/certs/*.pem

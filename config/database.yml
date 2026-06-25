@@ -6,9 +6,6 @@ default: &default
   host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
   encoding: utf8mb4
   pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
-  # MySQL 8.4 の caching_sha2_password は TLS（またはRSA公開鍵交換）が必要。
-  # 既定は TLS 強制（証明書検証なし）。本番は production ブロックで verify_identity に上書き。
-  ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'required' %>"
 
 dkui: &dkui
   adapter: mysql2
@@ -19,7 +16,6 @@ dkui: &dkui
   encoding: utf8mb4
   pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
   database_tasks: false
-  ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'required' %>"
 
 development:
   primary:
@@ -39,7 +35,6 @@ test:
     host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
     port: "<%= ENV['DATABASE_PORT'] || 3306 %>"
     encoding: utf8mb4
-    ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'required' %>"
   dkui:
     <<: *test_primary
     database_tasks: false
@@ -48,7 +43,8 @@ test:
 production:
   primary:
     <<: *default
-    # 最も堅い: TLS 強制 + サーバ証明書の CA 検証 + ホスト名検証（RDS）
+    # TLS 強制 + サーバ証明書の CA 検証 + ホスト名検証（RDS）
+    # CA バンドル(sslca)はコンテナイメージのビルド時に取得する（Dockerfile 参照）
     ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'verify_identity' %>"
     sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"
   dkui:

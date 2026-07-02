@@ -43,5 +43,11 @@ test:
 production:
   primary:
     <<: *default
+    # TLS 強制 + サーバ証明書の CA 検証 + ホスト名検証（RDS）
+    # CA バンドル(sslca)はコンテナイメージのビルド時に取得する（Dockerfile 参照）
+    ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'verify_identity' %>"
+    sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"
   dkui:
     <<: *dkui
+    ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'verify_identity' %>"
+    sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"

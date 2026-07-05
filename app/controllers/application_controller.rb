@@ -109,6 +109,10 @@ class ApplicationController < ActionController::Base
     render(json: { message: 'bad request' }, status: 400, formats: :json)
   end
 
+  def render_404_json
+    render(json: { message: 'not found' }, status: 404, formats: :json)
+  end
+
   # カンファレンス開催前、かつCFP中
   # カンファレンス開催前、かつ自身が登壇者の場合(CFP締め切り後)
   # カンファレンス開催中、かつ自身が登壇者の場合

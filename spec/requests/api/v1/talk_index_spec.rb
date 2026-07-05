@@ -56,14 +56,14 @@ describe TalksController, type: :request do
         create(:cndt2020)
       end
 
-      it 'returns 400 when eventAbbr is missing' do
+      it 'returns 404 when eventAbbr is missing' do
         get '/api/v1/talks'
-        expect(response.status).to(eq(400))
+        expect(response.status).to(eq(404))
       end
 
-      it 'returns 400 when eventAbbr does not match any conference' do
+      it 'returns 404 when eventAbbr does not match any conference' do
         get '/api/v1/talks?eventAbbr=not_found'
-        expect(response.status).to(eq(400))
+        expect(response.status).to(eq(404))
       end
     end
 

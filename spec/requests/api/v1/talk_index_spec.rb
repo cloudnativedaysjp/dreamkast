@@ -51,6 +51,22 @@ describe TalksController, type: :request do
       end
     end
 
+    describe 'conference cannot be resolved' do
+      before do
+        create(:cndt2020)
+      end
+
+      it 'returns 400 when eventAbbr is missing' do
+        get '/api/v1/talks'
+        expect(response.status).to(eq(400))
+      end
+
+      it 'returns 400 when eventAbbr does not match any conference' do
+        get '/api/v1/talks?eventAbbr=not_found'
+        expect(response.status).to(eq(400))
+      end
+    end
+
     describe 'speakers exposes userId' do
       let!(:cndt2020) { create(:cndt2020) }
       let!(:speaker) { create(:speaker_alice, :with_talk1_accepted) }

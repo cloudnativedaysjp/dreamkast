@@ -133,9 +133,9 @@
       "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#libyaml",
       "source": "nixpkg"
     },
-    "mysql80": {
+    "mysql84": {
       "plugin_version": "0.0.4",
-      "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#mysql80",
+      "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#mysql84",
       "source": "nixpkg"
     },
     "nodejs@22": {

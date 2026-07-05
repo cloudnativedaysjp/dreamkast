@@ -1,0 +1,111 @@
+<div class="japanese-modern-theme timetable-modern">
+  <div class="container">
+    <div class="timetable-modern-header">
+      <h1 class="timetable-modern-title">タイムテーブル</h1>
+    </div>
+
+    <% @conference.conference_days.externals.each do |conference_day| %>
+      <section class="timetable-modern-day">
+        <h2 class="timetable-modern-date"><%= conference_day.date.strftime("%Y年%m月%d日") %></h2>
+
+        <div class="timetable-modern-grid" style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
+          <%
+            cnk_track_labels = if conference_day.date.day == 14
+              @conference.tracks.map { |t| "Cloud Native Track #{t.name}" }
+            else
+              ["Platform Engineering Track", "SRE Track", "初心者向けTrack"]
+            end
+          %>
+          <% cnk_track_labels.each_with_index do |label, n| %>
+            <div class="timetable-modern-track" style="--track: <%= n %>"><%= label %></div>
+          <% end %>
+
+          <% intermissions = conference_day.talks
+               .where(type: 'Intermission')
+               .where.not(start_time: nil, end_time: nil)
+               .order(:end_time)
+               .to_a %>
+
+          <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
+            <%
+              total_break = intermissions
+                .select { |i| i.end_time <= talk.start_time }
+                .sum { |i| ((i.end_time - i.start_time).to_i / 60) }
+              track_header_offset = 6
+              row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break + track_header_offset
+              row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
+            %>
+            <div class="timetable-modern-talk"
+              slot="<%= talk.slot_number %>"
+              style="--track: <%= talk.track.number - 1 %>;
+                      --row-start: <%= row_start %>;
+                      --row-end: <%= row_end %>;">
+              <% if form %>
+              <label for="<%= "talks[#{talk.id}]" %>" class="timetable-modern-label">
+              <% form_status = talk.sold_out? if @profile.attend_offline? %>
+              <%= form.check_box "talks[#{talk.id}]",
+                                  {
+                                    talk_id: talk.id,
+                                    day_slot: talk.day_slot,
+                                    talk_number: talk.talk_number,
+                                    checked: talks_checked?(talk.id),
+                                    class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}",
+                                    disabled: form_status,
+                                    "data-conference-day": conference_day.id,
+                                    "data-start-time": talk.start_time.to_i,
+                                    "data-end-time": talk.end_time.to_i
+                                  },
+                                  true,
+                                  false %>
+              <% end %>
+              <div class="timetable-modern-card
+                          <%= 'checked' if @current_user && talks_checked?(talk.id) %>
+                          <%= 'disabled' if form_status %>"
+                          talk_id="<%= talk.id %>"
+                          track_number="<%= talk.track.number %>">
+                <div class="timetable-modern-card-time">
+                  <span class="timetable-modern-track-name">Track <%= talk.track.name %>&nbsp;</span>
+                  <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
+                  <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
+                  <%= talk.seats_status if @profile.attend_offline? %>
+                </div>
+                <div class="timetable-modern-card-title">
+                  <%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %>
+                </div>
+                <div class="timetable-modern-card-speaker"><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></div>
+                <div class="timetable-modern-card-hint"><span>(タイトルクリックで詳細表示)</span></div>
+              </div>
+
+              <% if form %>
+              </label>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <% if conference_day.date.day == 14 %>
+        <div class="timetable-modern-closing">
+          <div class="timetable-modern-closing-card">
+            <div class="timetable-modern-card-time">18:40 - 20:30</div>
+            <div class="timetable-modern-card-title"><a href="https://eventregist.com/e/cnk_party" target="_blank">懇親会</a></div>
+          </div>
+        </div>
+        <% end %>
+        <% if conference_day.date.day == 15 %>
+        <div class="timetable-modern-closing">
+          <div class="timetable-modern-closing-card">
+            <div class="timetable-modern-card-time">18:20 - 18:40</div>
+            <div class="timetable-modern-card-title">クロージング</div>
+          </div>
+        </div>
+        <% end %>
+      </section>
+    <% end %>
+  </div>
+</div>
+
+<% if form %>
+  <%= render 'timetable_footer',
+      form: form,
+      information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
+<% end %>
+<%= hidden_field_tag('is_offline', @profile.attend_offline?) %>

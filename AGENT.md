@@ -33,9 +33,9 @@ export AUTH0_CLIENT_ID=...
 ```
 
 ### Startup
-1. Start backing services (DB, Redis, UI, etc.):
+1. Start backing services (DB, UI, etc.):
 ```bash
-docker compose up -d fifo-worker db redis nginx localstack ui
+docker compose up -d fifo-worker db nginx localstack ui
 ```
 
 2. Start the application (Rails + Webpack):

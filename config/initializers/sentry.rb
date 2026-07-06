@@ -1,5 +1,5 @@
 Sentry.init do |config|
-  config.breadcrumbs_logger = [:active_support_logger, :http_logger, :redis_logger]
+  config.breadcrumbs_logger = [:active_support_logger, :http_logger]
   config.dsn = ENV['SENTRY_DSN']
   config.environment = ENV['DREAMKAST_NAMESPACE']
   # NOTE: 'dreamkast-prod-dk' will be removed as soon as DREAMKAST_NAMESPACE is changed

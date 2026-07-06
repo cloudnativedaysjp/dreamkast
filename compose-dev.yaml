@@ -70,6 +70,7 @@ services:
     volumes:
     - mysql-data:/var/lib/mysql
     - ./db/docker-entrypoint-initdb.d/1_allow-host-ip.sql:/docker-entrypoint-initdb.d/1_allow-host-ip.sql
+    - ./db/docker-entrypoint-initdb.d/2_create-cable-database.sql:/docker-entrypoint-initdb.d/2_create-cable-database.sql
     ports:
     - "3306:3306"
   nginx:

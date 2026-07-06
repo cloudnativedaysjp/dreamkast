@@ -19,18 +19,21 @@ Rails 8のSolid Cache、Solid Cableを活用し、Redis依存を完全に削除�
 
 ### フェーズ1: Solid Cache・Solid Cableのインストール
 
-#### Solid Cache導入
-- [x] `bin/rails solid_cache:install`実行
-- [x] `config/cache.yml`生成確認
-- [x] `db/cache_schema.rb`生成確認
-- [x] マイグレーション実行
-- [x] `config/environments/production.rb`にキャッシュストア設定追加
+#### Solid Cache（今回は未導入）
+- [x] `solid_cache` gem は導入しない方針とし、キャッシュバックエンドはデフォルト（file_store）を継続
+- [x] `config/cache.yml` は将来採用時の設定として残す（現状は未使用である旨をコメントで明記）
+- [x] 孤立していた `solid_cache_entries` テーブルを `db/schema.rb` から削除
+- [x] `config/environments/production.rb` の `cache_store` はデフォルトのまま（変更なし）
 
-#### Solid Cable導入
-- [x] `bin/rails solid_cable:install`実行
-- [x] `config/cable.yml`をsolid_cableアダプターに更新
-- [x] `db/cable_schema.rb`生成確認
-- [x] マイグレーション実行
+#### Solid Cable導入（専用DB構成 / Rails 8 標準）
+- [x] `solid_cable` gem 追加
+- [x] `config/cable.yml`をsolid_cableアダプターに更新し、`connects_to` で `cable` DB を指定
+- [x] `config/database.yml` に `cable` DB（`<primary>_cable`、`migrations_paths: db/cable_migrate`）を追加（development / production）
+- [x] `db/cable_schema.rb`（version 2026_07_06_120000）と `db/cable_migrate/*_create_solid_cable_messages.rb` でスキーマ管理
+- [x] `solid_cable_messages` はプライマリ `db/schema.rb` から除外（cable 専用DBで管理）
+- [x] ローカル開発用に `db/docker-entrypoint-initdb.d/2_create-cable-database.sql` で `dreamkast_cable` を自動作成（compose.yaml / compose-dev.yaml でマウント）
+- [ ] **本番/レビューアプリのRDSに `<db>_cable` スキーマを作成し、アプリユーザーへ権限付与**（インフラ側対応が必要）
+- [ ] **本番デプロイで cable DB のマイグレーション（`db:migrate` が db/cable_migrate を適用）が実行されることを確認**
 
 ### フェーズ2: セッションストアの移行
 

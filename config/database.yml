@@ -17,11 +17,27 @@ dkui: &dkui
   pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
   database_tasks: false
 
+# Action Cable (solid_cable) 専用データベース。
+# 揮発性の高い solid_cable_messages を業務データ（primary）から分離するため、
+# 同一 MySQL インスタンス内の別スキーマ（<primary>_cable）として運用する。
+# スキーマは db/cable_schema.rb / db/cable_migrate で管理する。
+cable: &cable
+  adapter: mysql2
+  database: "<%= (ENV['MYSQL_DATABASE'] || 'dreamkast') + '_cable' %>"
+  username: "<%= ENV['MYSQL_USER'] || 'user' %>"
+  password: "<%= ENV['MYSQL_PASSWORD'] || 'password' %>"
+  host: "<%= ENV['MYSQL_HOST'] || '127.0.0.1' %>"
+  encoding: utf8mb4
+  pool: "<%= ENV['MYSQL_CONNECTION_POOL'] || '10' %>"
+  migrations_paths: db/cable_migrate
+
 development:
   primary:
     <<: *default
   dkui:
     <<: *dkui
+  cable:
+    <<: *cable
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -49,5 +65,9 @@ production:
     sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"
   dkui:
     <<: *dkui
+    ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'verify_identity' %>"
+    sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"
+  cable:
+    <<: *cable
     ssl_mode: "<%= ENV['MYSQL_SSL_MODE'] || 'verify_identity' %>"
     sslca: "<%= ENV['MYSQL_SSL_CA'] || Rails.root.join('config/certs/rds-global-bundle.pem') %>"

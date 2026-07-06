@@ -1,3 +1,6 @@
+# このファイルは Solid Cache 用の設定です。
+# 現在 solid_cache gem は未導入で、キャッシュバックエンドはデフォルト（file_store）を使用します。
+# 将来 Solid Cache を採用する場合に備えて設定のみ残しています（現状は未使用）。
 default: &default
   store_options:
     # Cap age of oldest cache entry to fulfill retention policies

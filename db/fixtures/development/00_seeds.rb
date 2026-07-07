@@ -371,6 +371,19 @@ EOS
     名古屋で知識を共有し、文化を体験し、共に技術の未来を描きましょう。
 EOS
   },
+  {
+    id: 16,
+    name: "CloudNative Days Winter 2026",
+    abbr: "cndw2026",
+    theme: "-",
+    copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
+    coc: File.read(File.join(Rails.root, 'db/fixtures/production/coc.md')),
+    committee_name: "CloudNative Days Committee",
+    capacity: 600,
+    about: <<'EOS'
+    CloudNative Days Winter 2026 の紹介文はテーマ確定後に更新してください。
+EOS
+  },
 )
 
 ConferenceDay.seed(
@@ -436,7 +449,11 @@ ConferenceDay.seed(
 
   # CNK
   {id: 37, date: "2026-05-14", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false},
-  {id: 38, date: "2026-05-15", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false}
+  {id: 38, date: "2026-05-15", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false},
+
+  # CNDW2026
+  {id: 39, date: "2026-11-19", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false},
+  {id: 40, date: "2026-11-20", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false}
 )
 
 FormItem.seed(
@@ -451,7 +468,8 @@ FormItem.seed(
   { id: 9, conference_id: 7, name: "Red Hatからの電話を希望する"},
   { id: 10, conference_id: 13, name: "推しのOSS名(あれば)", attr: "oss_name"},
   { id: 11, conference_id: 13, name: "推しのOSSのURL", attr: "oss_url"},
-  { id: 12, conference_id: 14, name: "推しのクラウドネイティブ技術", attr: "favorite_tech"}
+  { id: 12, conference_id: 14, name: "推しのクラウドネイティブ技術", attr: "favorite_tech"},
+  { id: 13, conference_id: 16, name: "推しのクラウドネイティブ技術", attr: "favorite_tech"}
 )
 
 
@@ -528,7 +546,13 @@ Track.seed(
   # CNK
   { id: 62, number: 1, name: "A", conference_id: 15, room_id: 35},
   { id: 63, number: 2, name: "B", conference_id: 15, room_id: 36},
-  { id: 64, number: 3, name: "C", conference_id: 15, room_id: 37}
+  { id: 64, number: 3, name: "C", conference_id: 15, room_id: 37},
+
+  # CNDW2026
+  { id: 65, number: 1, name: "A", conference_id: 16, room_id: 38},
+  { id: 66, number: 2, name: "B", conference_id: 16, room_id: 39},
+  { id: 67, number: 3, name: "C", conference_id: 16, room_id: 40},
+  { id: 68, number: 4, name: "D", conference_id: 16, room_id: 41}
 )
 
 
@@ -576,6 +600,12 @@ Room.seed(
   {id: 35, conference_id: 15, name: 'A'},
   {id: 36, conference_id: 15, name: 'B'},
   {id: 37, conference_id: 15, name: 'C'},
+
+  # CNDW2026
+  {id: 38, conference_id: 16, name: 'A-Room1'},
+  {id: 39, conference_id: 16, name: 'B-Room2'},
+  {id: 40, conference_id: 16, name: 'C-Boardroom'},
+  {id: 41, conference_id: 16, name: 'D-Room6'},
 )
 
 
@@ -773,6 +803,26 @@ TalkCategory.seed(
   { id: 180, conference_id: 14, name: "組織論"},
   { id: 181, conference_id: 14, name: "FinOps"},
   { id: 182, conference_id: 14, name: "その他"},
+
+  # CNDW2026
+  { id: 183, conference_id: 16, name: "CI / CD"},
+  { id: 184, conference_id: 16, name: "Customizing / Extending"},
+  { id: 185, conference_id: 16, name: "IoT / Edge"},
+  { id: 186, conference_id: 16, name: "Microservices / Services Mesh"},
+  { id: 187, conference_id: 16, name: "ML / HPC"},
+  { id: 188, conference_id: 16, name: "Networking"},
+  { id: 189, conference_id: 16, name: "Operation / Monitoring / Logging"},
+  { id: 190, conference_id: 16, name: "Application / Development"},
+  { id: 191, conference_id: 16, name: "Runtime"},
+  { id: 192, conference_id: 16, name: "Security"},
+  { id: 193, conference_id: 16, name: "Serverless / FaaS"},
+  { id: 194, conference_id: 16, name: "Storage / Database"},
+  { id: 195, conference_id: 16, name: "Architecture Design"},
+  { id: 196, conference_id: 16, name: "Hybrid Cloud / Multi Cloud"},
+  { id: 197, conference_id: 16, name: "NFV / Edge"},
+  { id: 198, conference_id: 16, name: "組織論"},
+  { id: 199, conference_id: 16, name: "FinOps"},
+  { id: 200, conference_id: 16, name: "その他"},
 )
 
 TalkDifficulty.seed(
@@ -832,6 +882,11 @@ TalkDifficulty.seed(
   { id: 79, conference_id: 15, name: "中級者 - Intermediate"},
   { id: 80, conference_id: 15, name: "上級者 - Expert"},
   { id: 81, conference_id: 15, name: "全て - Any"},
+
+  # CNDW2026
+  { id: 82, conference_id: 16, name: "初級者"},
+  { id: 83, conference_id: 16, name: "中級者"},
+  { id: 84, conference_id: 16, name: "上級者"},
 )
 
 TalkTime.seed(

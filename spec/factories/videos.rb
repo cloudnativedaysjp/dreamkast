@@ -14,6 +14,12 @@ FactoryBot.define do
       on_air { false }
     end
 
+    trait :youtube_uploaded do
+      youtube_video_id { 'dQw4w9WgXcw' }
+      youtube_upload_status { :uploaded }
+      youtube_uploaded_at { Time.current }
+    end
+
     trait :talk1 do
       talk_id { 1 }
     end

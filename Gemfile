@@ -116,10 +116,15 @@ gem 'psych', '< 6'
 gem 'net-imap', '>= 0.6.0'
 
 gem 'aws-sdk-cloudfront'
+gem 'aws-sdk-mediaconvert'
 gem 'aws-sdk-medialive'
 gem 'aws-sdk-mediapackage'
 gem 'aws-sdk-mediapackagev2'
 gem 'aws-sdk-ssm'
+
+# YouTube Data API へのアーカイブ動画アップロード用
+gem 'google-apis-youtube_v3'
+gem 'googleauth'
 
 gem 'active_hash'
 

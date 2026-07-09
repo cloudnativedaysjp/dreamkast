@@ -84,7 +84,11 @@ Rails.application.routes.draw do
       resources :rooms, only: [:index, :update]
       put 'rooms' => 'rooms#update'
       resources :proposals, only: [:index]
-      resources :videos, only: [:index]
+      resources :videos, only: [:index] do
+        member do
+          post :upload_to_youtube
+        end
+      end
       resources :timetables, only: [:index]
       resource :timetable, only: [:update]
       resources :announcements do

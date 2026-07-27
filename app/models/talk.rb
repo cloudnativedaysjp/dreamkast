@@ -154,16 +154,22 @@ class Talk < ApplicationRecord
     track.present? ? track.name : ''
   end
 
+  # タイムテーブル未確定の場合 start_time が nil になるため、その場合は空文字を返す
   def slot_number
+    return '' if start_time.nil?
+
     SLOT_MAP.each_with_index do |time, index|
       if time > start_time.to_time.strftime('%H%M')
         return index.to_s
       end
     end
+
+    # SLOT_MAP の最終スロットより後のセッションはスロットに対応付けられない
+    ''
   end
 
   def talk_number
-    conference_day_id.to_s + track.name + slot_number
+    conference_day_id.to_s + track_name + slot_number
   end
 
   def day_slot
@@ -171,10 +177,14 @@ class Talk < ApplicationRecord
   end
 
   def row_start
+    return nil if start_time.nil?
+
     ((start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse('2000-01-01 12:00')) / 60 / 5).to_i + 1
   end
 
   def row_end
+    return nil if start_time.nil? || end_time.nil?
+
     ((end_time - start_time).to_i / 60 / 5) + row_start
   end
 
@@ -276,6 +286,9 @@ class Talk < ApplicationRecord
   end
 
   def archived?
+    # タイムテーブル未確定のセッションは終了時刻が決まっていないため、アーカイブ済みとは扱わない
+    return false if conference_day.nil? || end_time.nil?
+
     now = Time.current
     etime = DateTime.parse("#{conference_day.date.strftime('%Y-%m-%d')} #{end_time.strftime('%H:%M')} +0900")
     (now.to_i - etime.to_i) >= 600
@@ -372,7 +385,10 @@ class Talk < ApplicationRecord
     ProposalItemConfig.find(method.params).params
   end
 
+  # タイムテーブル未確定のセッションはイベント化できないため nil を返す
   def calendar
+    return nil if conference_day.nil? || start_time.nil? || end_time.nil?
+
     event = Icalendar::Event.new
     event.dtstart = Icalendar::Values::DateTime.new(
       "#{conference_day.date.strftime('%Y%m%d')}T#{start_time.strftime('%H%M')}00"

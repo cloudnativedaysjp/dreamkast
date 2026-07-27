@@ -104,6 +104,34 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       expect(talk.calendar.dtstart.value).to(eq(DateTime.new(2020, 9, 8, 12)))
       expect(talk.calendar.dtend.value).to(eq(DateTime.new(2020, 9, 8, 12, 40)))
     end
+
+    context 'on registration term' do
+      let!(:talk) { create(:has_no_conference_days) }
+
+      it 'returns nil' do
+        expect(talk.calendar).to(be_nil)
+      end
+    end
+  end
+
+  describe '#slot_number' do
+    let!(:cndt2020) { create(:cndt2020) }
+
+    context 'talk has start_time' do
+      let!(:talk) { create(:talk1) }
+
+      it 'returns slot number' do
+        expect(talk.slot_number).to(eq('1'))
+      end
+    end
+
+    context 'on registration term' do
+      let!(:talk) { create(:has_no_conference_days) }
+
+      it 'returns empty string' do
+        expect(talk.slot_number).to(eq(''))
+      end
+    end
   end
 
   describe 'Chat message' do
@@ -143,6 +171,16 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
 
       it 'returns true' do
         expect(talk.archived?).to(be_truthy)
+      end
+    end
+
+    context 'on registration term' do
+      around { |e| travel_to(Time.zone.local(2020, 9, 8, 13, 50)) { e.run } }
+
+      let!(:talk) { create(:has_no_conference_days) }
+
+      it 'returns false' do
+        expect(talk.archived?).to(be_falsey)
       end
     end
   end

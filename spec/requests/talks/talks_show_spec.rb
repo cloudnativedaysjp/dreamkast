@@ -129,6 +129,21 @@ describe TalksController, type: :request do
       end
     end
 
+    # conference が archived の場合 display_video? は未ログインでも talk.archived? まで到達するため、
+    # タイムテーブル未確定（conference_day / end_time が nil）の talk で 500 になっていた
+    context 'talk is not assigned to a conference_day' do
+      let!(:cndt2020) { create(:cndt2020, :archived, :cfp_result_visible) }
+      let!(:talk) { create(:has_no_conference_days, video_published: true) }
+      let!(:video) { create(:video, talk:, video_id: '122234') }
+
+      it 'returns success response without video' do
+        get '/cndt2020/talks/100'
+        expect(response).to(be_successful)
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to_not(include('<video'))
+      end
+    end
+
     context 'CNDT2020 is registered' do
       before do
         create(:talk_category1, conference: cndt2020)

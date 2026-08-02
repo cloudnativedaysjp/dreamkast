@@ -143,7 +143,8 @@ class Profile < ApplicationRecord
   def export_ics
     cal = Icalendar::Calendar.new
     filename = Rails.root.join('tmp', "#{calendar_unique_code}.ics").to_s
-    talks.each { |t| cal.events << t.calendar }
+    # タイムテーブル未確定のセッションは Talk#calendar が nil を返すため除外する
+    talks.filter_map(&:calendar).each { |event| cal.events << event }
     File.open(filename, 'w') do |f|
       f.write(cal.to_ical.to_s)
     end

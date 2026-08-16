@@ -1,13 +1,13 @@
 <div id="<%= @conference.abbr %>" >
   <div class="contents">
     <section class="page-section bg-primary" id="masthead">
-      <div class="container">
+      <div class="dk-container">
         <div id="particles-js"></div>
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 col-sm-8">
-              <h1 class="font-weight-bold text-white"><%= @conference.name %></h1>
+        <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+          <div class="tw-w-full sm:tw-w-2/3">
+              <h1 class="tw-font-bold tw-text-white"><%= @conference.name %></h1>
           </div>
-          <div class="col-12 col-sm-4 align-self-end text-white">
+          <div class="tw-w-full tw-self-end tw-text-white sm:tw-w-1/3">
               <p class="remaining">
                 <% if @conference.remaining_date > 0 %>
                 開催まであと<span class="remaining-date"><%= @conference.remaining_date %></span>日!
@@ -16,7 +16,7 @@
                 <% end %>
               </p>
               <% if @conference.closed? || @conference.archived? %>
-                <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
+                <p class="tw-font-light tw-text-white/75">イベントは終了しました。ご参加いただきありがとうございました</p>
               <% end %>
           </div>
         </div>
@@ -24,9 +24,9 @@
     </section>
 
     <section class="page-section" id="entry">
-      <div class="container">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 align-self-center">
+      <div class="dk-container">
+        <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+          <div class="tw-w-full tw-self-center">
             <% if @conference.closed? || @conference.archived?%>
               <%= render 'event/partial/buttons', conference: @conference %>
             <% else %>
@@ -40,9 +40,9 @@
 
     <% if display_sponsor_guideline_url? %>
       <section class="page-section" id="entry">
-        <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-12 align-self-center">
+        <div class="dk-container">
+          <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+            <div class="tw-w-full tw-self-center">
               <%= render 'event/partial/sponsor_guideline_link', conference: @conference %>
             </div>
           </div>
@@ -52,11 +52,11 @@
 
     <% if @conference.present? && @conference.show_timetable_enabled? %>
     <section class="page-section timetable bg-secondary">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 text-center">
-            <h2 class="text-white mt-0">Sessions</h2>
-            <hr class="divider mx-auto my-4  center-block light" />
+      <div class="dk-container">
+        <div class="tw-flex tw-justify-center">
+          <div class="tw-w-full tw-text-center">
+            <h2 class="tw-mt-0 tw-text-white">Sessions</h2>
+            <hr class="divider light tw-mx-auto tw-my-4" />
           </div>
         </div>
         <% @conference.conference_days.each do |conference_day| %>

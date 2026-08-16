@@ -12,10 +12,8 @@
     <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
     <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'video_player', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%# Bootstrap → Tailwind 段階移行 (issue #2572 / #2564): admin 系コントローラのみ Tailwind を読み込む %>
-    <% if controller_path.start_with?('admin') %>
-      <%= stylesheet_link_tag 'admin_tailwind', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <% end %>
+    <%# Bootstrap → Tailwind 段階移行 (issue #2572): 全画面で Tailwind を読み込む %>
+    <%= stylesheet_link_tag 'application_tailwind', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag event_js_path, 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'video_player', 'data-turbolinks-track': 'reload' %>
   <meta name="turbo-cache-control" content="no-cache">
@@ -58,43 +56,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <%= yield %>
 
-  <% if event_name %>
-    <footer class="bg-light py-4">
-    <div class="container">
-      <% upcoming = Conference.upcoming.merge(Conference.where.not(abbr: event_name)) %>
-      <% if upcoming.size > 0 %>
-        <div class="row justify-content-center">
-          <h3 class="col-12 text-center my-4">Upcoming Events</h3>
-          <% Conference.upcoming.merge(Conference.where.not(abbr: event_name)).each do |conference| %>
-            <div class="col-12 col-md-6 footer-logo">
-              <%= link_to("/#{conference.abbr}") do %>
-                <%= image_tag "#{conference.abbr}/header_logo.png", class: "d-block mx-auto" %>
-              <% end %>
-              <p class="text-center mt-1"><%= conference.brief if conference.brief.present? %></p>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-          <ul class="justify-content-md-center">
-            <li class="text-center"><%= link_to "プライバシーポリシー", "/#{event_name}/privacy", class: "text-muted" %></li>
-            <li class="text-center"><%= link_to "行動規範", "/#{event_name}/coc", class: "text-muted" %></li>
-          </ul>
-        </div>
-
-      </div>
-      <% if @conference %>
-        <div class="row">
-          <div class="col-12">
-            <div class="small text-center text-muted"><%= @conference.copyright %></div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-  </footer>
-  <% end %>
+  <%= render partial: "layouts/footer" %>
 
   <% if current_user && @conference&.abbr == 'cndt2020'%>
     <div id="message_icon">

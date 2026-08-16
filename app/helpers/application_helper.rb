@@ -77,6 +77,17 @@ module ApplicationHelper
     end
   end
 
+  def dk_alert_class(message_type)
+    case alert_type(message_type)
+    when 'success'
+      'dk-alert-success'
+    when 'danger'
+      'dk-alert-danger'
+    else
+      'dk-alert-info'
+    end
+  end
+
   private
 
   def asset_available?(path)

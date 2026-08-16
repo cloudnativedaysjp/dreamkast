@@ -1,0 +1,252 @@
+// 全画面共通 Tailwind CSS エントリ (issue #2572)
+// - preflight は tailwind.config.js で無効化済み (Bootstrap の reset を壊さないため)
+// - 全 utility は important: '#wrapper' により <div id="wrapper"> 配下に適用される
+// - admin コンポーネントは <div id="admin"> 配下に限定
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// preflight 無効環境の安全網: チェックボックスとラジオの border-style を solid に固定。
+#wrapper input[type='checkbox'],
+#wrapper input[type='radio'] {
+  border-style: solid;
+}
+
+@layer components {
+  // ===== 公開画面の共通コンポーネント =====
+  // Bootstrap 撤去後 (Phase 5) に prefix を外しても、これらコンポーネント名は維持する想定。
+  #wrapper {
+    .dk-btn-primary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-blue-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500/40;
+    }
+    .dk-btn-secondary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm tw-transition hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-300/60;
+    }
+    .dk-btn-danger {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-red-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-red-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-500/40;
+    }
+    .dk-btn-dark {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-gray-900 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-gray-800 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-400/40;
+    }
+
+    .dk-input,
+    .dk-textarea,
+    .dk-select {
+      @apply tw-block tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm tw-text-gray-900 tw-shadow-sm tw-transition;
+
+      &:focus {
+        @apply tw-border-blue-500 tw-outline-none tw-ring-2 tw-ring-blue-500/30;
+      }
+      &::placeholder {
+        @apply tw-text-gray-400;
+      }
+      &[readonly],
+      &[disabled] {
+        @apply tw-cursor-not-allowed tw-bg-gray-50 tw-text-gray-600;
+      }
+    }
+    .dk-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25em 1.25em;
+      padding-right: 2.25rem;
+      appearance: none;
+    }
+
+    .dk-container {
+      @apply tw-mx-auto tw-w-full tw-max-w-dk-container tw-px-4;
+    }
+
+    .dk-card {
+      @apply tw-overflow-hidden tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+
+    .dk-table-card {
+      @apply tw-overflow-x-auto tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+    .dk-table {
+      @apply tw-min-w-full tw-divide-y tw-divide-gray-200;
+    }
+    .dk-table thead {
+      @apply tw-bg-gray-50;
+    }
+    .dk-table th {
+      @apply tw-px-4 tw-py-3 tw-text-left tw-text-sm tw-font-semibold tw-text-gray-600;
+    }
+    .dk-table tbody {
+      @apply tw-divide-y tw-divide-gray-200 tw-bg-white;
+    }
+    .dk-table tbody tr {
+      @apply hover:tw-bg-gray-50;
+    }
+    .dk-table td {
+      @apply tw-px-4 tw-py-3 tw-align-top tw-text-sm tw-text-gray-700;
+    }
+
+    .dk-alert {
+      @apply tw-mb-4 tw-rounded-md tw-border tw-p-4 tw-text-sm;
+    }
+    .dk-alert-info {
+      @apply tw-border-blue-300 tw-bg-blue-50 tw-text-blue-800;
+    }
+    .dk-alert-success {
+      @apply tw-border-green-300 tw-bg-green-50 tw-text-green-800;
+    }
+    .dk-alert-warning {
+      @apply tw-border-yellow-300 tw-bg-yellow-50 tw-text-yellow-800;
+    }
+    .dk-alert-danger {
+      @apply tw-border-red-300 tw-bg-red-50 tw-text-red-800;
+    }
+
+    // ヘッダー: モバイルメニュー / ユーザーメニュー
+    #mainNav .dk-nav-menu {
+      @apply tw-hidden tw-w-full tw-flex-col tw-gap-1;
+    }
+    #mainNav .dk-nav-menu.is-open {
+      @apply tw-flex;
+    }
+    #mainNav .dk-nav-dropdown {
+      @apply tw-absolute tw-right-0 tw-z-50 tw-mt-2 tw-hidden tw-min-w-[14rem] tw-rounded-md tw-border tw-border-gray-200 tw-bg-white tw-py-1 tw-shadow-lg;
+    }
+    #mainNav .dk-nav-dropdown.is-open {
+      @apply tw-block;
+    }
+    #mainNav .dk-nav-dropdown-item {
+      @apply tw-block tw-px-4 tw-py-2 tw-text-sm tw-text-gray-700 hover:tw-bg-gray-50;
+    }
+    #mainNav .dk-nav-dropdown-divider {
+      @apply tw-my-1 tw-border-t tw-border-gray-200;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #wrapper #mainNav .dk-nav-menu,
+    #wrapper #mainNav .dk-nav-menu.is-open {
+      @apply tw-flex tw-w-auto tw-flex-1 tw-flex-row tw-items-center;
+    }
+  }
+
+  // ===== admin 画面の共通コンポーネント (issue #2572 / #2564) =====
+  #admin {
+    .admin-table-card {
+      @apply tw-overflow-hidden tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+    .admin-table-scroll {
+      @apply tw-overflow-x-auto tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-shadow-sm;
+    }
+
+    .admin-table {
+      @apply tw-min-w-full tw-divide-y tw-divide-gray-200;
+    }
+    .admin-table thead {
+      @apply tw-bg-gray-50;
+    }
+    .admin-table th {
+      @apply tw-px-6 tw-py-3 tw-text-left tw-text-sm tw-font-semibold tw-text-gray-600;
+    }
+    .admin-table tbody {
+      @apply tw-divide-y tw-divide-gray-200 tw-bg-white;
+    }
+    .admin-table tbody tr {
+      @apply hover:tw-bg-gray-50;
+    }
+    .admin-table td {
+      @apply tw-px-6 tw-py-4 tw-align-top tw-text-sm tw-text-gray-700;
+    }
+
+    .admin-form-card {
+      @apply tw-max-w-3xl tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-p-6 tw-shadow-sm;
+    }
+    .admin-form-section {
+      @apply tw-space-y-5;
+    }
+    .admin-form-label {
+      @apply tw-mb-2 tw-block tw-text-sm tw-font-medium tw-text-gray-700;
+    }
+    .admin-form-hint {
+      @apply tw-mt-1 tw-text-xs tw-text-gray-500;
+    }
+    .admin-form-required {
+      @apply tw-text-red-600;
+    }
+
+    .admin-input,
+    .admin-textarea,
+    .admin-select {
+      @apply tw-block tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm tw-text-gray-900 tw-shadow-sm tw-transition;
+
+      &:focus {
+        @apply tw-border-blue-500 tw-outline-none tw-ring-2 tw-ring-blue-500/30;
+      }
+      &::placeholder {
+        @apply tw-text-gray-400;
+      }
+      &[readonly],
+      &[disabled] {
+        @apply tw-cursor-not-allowed tw-bg-gray-50 tw-text-gray-600;
+      }
+    }
+    .admin-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.25em 1.25em;
+      padding-right: 2.25rem;
+      appearance: none;
+    }
+
+    .admin-radio,
+    .admin-checkbox {
+      @apply tw-relative tw-inline-block tw-h-4 tw-w-4 tw-shrink-0 tw-cursor-pointer tw-bg-white tw-align-middle tw-transition;
+      border: 2px solid #6b7280;
+      appearance: none;
+      -webkit-appearance: none;
+
+      &:hover {
+        border-color: #2563eb;
+      }
+      &:focus {
+        @apply tw-outline-none tw-ring-2 tw-ring-blue-500/40;
+      }
+      &:checked {
+        background-color: #2563eb;
+        border-color: #2563eb;
+      }
+      &:disabled {
+        @apply tw-cursor-not-allowed tw-opacity-50;
+      }
+    }
+    .admin-radio {
+      @apply tw-rounded-full;
+
+      &:checked::after {
+        content: '';
+        @apply tw-absolute tw-left-1/2 tw-top-1/2 tw-h-1.5 tw-w-1.5 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-rounded-full tw-bg-white;
+      }
+    }
+    .admin-checkbox {
+      @apply tw-rounded;
+
+      &:checked::after {
+        content: '';
+        @apply tw-absolute tw-left-1/2 tw-top-1/2 tw-h-2.5 tw-w-2.5 -tw-translate-x-1/2 -tw-translate-y-1/2;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M3 8l3.5 3.5L13 5'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .admin-btn-primary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-blue-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-blue-500/40;
+    }
+    .admin-btn-secondary {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm tw-transition hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-300/60;
+    }
+    .admin-btn-danger {
+      @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-red-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-red-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-500/40;
+    }
+  }
+}

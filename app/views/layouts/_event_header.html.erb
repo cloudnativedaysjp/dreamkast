@@ -1,61 +1,66 @@
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-scrolled sticky-top" id="mainNav">
-  <div class="container">
+<nav class="navbar-scrolled tw-sticky tw-top-0 tw-z-40" id="mainNav" data-controller="navbar" data-action="click@window->navbar#hideDropdown">
+  <div class="tw-mx-auto tw-flex tw-max-w-dk-container tw-flex-wrap tw-items-center tw-justify-between tw-px-4 tw-py-2">
     <% if @conference %>
       <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
         <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>
-          <%= image_tag "#{@conference.abbr}/header_logo.png", class: "img-fluid header_logo" %>
+          <%= image_tag "#{@conference.abbr}/header_logo.png", class: "tw-h-10 tw-w-auto header_logo" %>
         <% else %>
           <p><%= @conference.name %></p>
         <% end %>
       <% end %>
     <% end %>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center w-100">
+    <button type="button"
+            class="tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-p-2 tw-text-gray-700 lg:tw-hidden"
+            data-action="navbar#toggleMenu"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" class="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <div id="navbarResponsive" class="dk-nav-menu" data-navbar-target="menu">
+      <ul class="tw-flex tw-w-full tw-list-none tw-flex-col tw-items-stretch tw-gap-1 tw-p-0 lg:tw-flex-row lg:tw-items-center">
         <% unless event_name.nil? %>
 
           <% if display_sponsor_guideline_url? %>
-            <li class="nav-item"><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
+            <li><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
           <% end %>
-            
-          <li class="nav-item"><%= link_to "早期申し込み特典あり！", "https://cloudnativedays.jp/posts/cndw2025-early-benefits", class: "nav-link js-scroll-trigger", target: '_blank' %></li>
+
+          <li><%= link_to "早期申し込み特典あり！", "https://cloudnativedays.jp/posts/cndw2025-early-benefits", class: "nav-link js-scroll-trigger", target: '_blank' %></li>
 
           <% if display_dashboard_link? %>
-            <li class="nav-item"><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
+            <li><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 
           <% if @conference&.opened? %>
-            <li class="nav-item"><%= link_to "スタンプラリー", stamp_rally_check_ins_path, class: "nav-link js-scroll-trigger" %></li>
+            <li><%= link_to "スタンプラリー", stamp_rally_check_ins_path, class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 
           <% if display_self_check_in_link? %>
-            <li class="nav-item"><%= link_to "セルフチェックインの結果", self_check_in_path(no_redirect: true), class: "nav-link js-scroll-trigger" %></li>
+            <li><%= link_to "セルフチェックインの結果", self_check_in_path(no_redirect: true), class: "nav-link js-scroll-trigger" %></li>
           <% end %>
 
           <% unless controller_name == "profiles" && (action_name == "new" || action_name == "create") %>
             <% if display_proposals? %>
-              <li class="nav-item"><%= link_to "プロポーザル一覧", proposals_path, class: "nav-link js-scroll-trigger" %></li>
+              <li><%= link_to "プロポーザル一覧", proposals_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
 
             <% if display_talks? %>
-              <li class="nav-item dropdown">
-                <% if display_timetable? %>
-                <li class="nav-item"><%= link_to "参加者", "/#{event_name}/attendees", class: "nav-link js-scroll-trigger" %></li>
-                <li class="nav-item"><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
-                <% end %>
-                <li class="nav-item"><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
-                <li class="nav-item"><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
-              </li>
+              <% if display_timetable? %>
+                <li><%= link_to "参加者", "/#{event_name}/attendees", class: "nav-link js-scroll-trigger" %></li>
+                <li><%= link_to "タイムテーブル", timetables_path, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false} %></li>
+              <% end %>
+              <li><%= link_to "セッション一覧", talks_path, class: "nav-link js-scroll-trigger" %></li>
+              <li><%= link_to "Grafana", o11y_path, class: "nav-link js-scroll-trigger" %></li>
             <% end %>
 
-
             <% if display_contact_url? %>
-              <li class="nav-item"><%= link_to "お問い合わせ", @conference.contact_url, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
+              <li><%= link_to "お問い合わせ", @conference.contact_url, class: "nav-link js-scroll-trigger", data: {"turbolinks" => false}, target: :_blank, rel: "noopener noreferrer" %></li>
             <% end %>
           <% end %>
         <% end %>
-        <li class="nav-item dropdown ms-lg-2 ms-lg-auto">
+        <li class="tw-relative lg:tw-ml-auto">
           <%= render(partial: "layouts/partial/login_button") %>
         </li>
       </ul>

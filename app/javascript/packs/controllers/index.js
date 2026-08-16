@@ -39,3 +39,6 @@ application.register("talk-logger", TalkLoggerController)
 
 import PostalCodeController from "./postal_code_controller.js"
 application.register("postal-code", PostalCodeController)
+
+import NavbarController from "./navbar_controller.js"
+application.register("navbar", NavbarController)

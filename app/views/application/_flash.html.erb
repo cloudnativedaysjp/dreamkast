@@ -1,19 +1,21 @@
 <% if notice %>
-  <div class="mb-2 toast hide border-primary" data-controller="toast">
-    <div class="toast-header text-primary">
-      <strong class="me-auto">成功</strong>
-      <button class="btn-close" data-bs-dismiss="toast"></button>
+  <div class="dk-alert dk-alert-success tw-mb-2" data-controller="toast" role="status">
+    <div class="tw-flex tw-items-start tw-justify-between tw-gap-3">
+      <div>
+        <strong class="tw-block">成功</strong>
+        <div><%= notice %></div>
+      </div>
     </div>
-    <div class="toast-body"><%= notice %></div>
   </div>
 <% end %>
 
 <% if alert %>
-  <div class="mb-2 toast hide border-danger" data-controller="toast">
-    <div class="toast-header text-danger">
-      <strong class="me-auto">エラー</strong>
-      <button class="btn-close" data-bs-dismiss="toast"></button>
+  <div class="dk-alert dk-alert-danger tw-mb-2" data-controller="toast" role="alert">
+    <div class="tw-flex tw-items-start tw-justify-between tw-gap-3">
+      <div>
+        <strong class="tw-block">エラー</strong>
+        <div><%= alert %></div>
+      </div>
     </div>
-    <div class="toast-body"><%= alert %></div>
   </div>
 <% end %>

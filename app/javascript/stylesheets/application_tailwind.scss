@@ -167,7 +167,7 @@
 
     // ヘッダー: モバイルメニュー / ユーザーメニュー
     #mainNav .dk-nav-menu {
-      @apply tw-hidden tw-w-full tw-flex-col tw-gap-1;
+      @apply tw-hidden tw-w-full tw-flex-col tw-items-stretch tw-gap-1;
     }
     #mainNav .dk-nav-menu.is-open {
       @apply tw-flex;
@@ -189,7 +189,7 @@
   @media (min-width: 1024px) {
     #wrapper #mainNav .dk-nav-menu,
     #wrapper #mainNav .dk-nav-menu.is-open {
-      @apply tw-flex tw-w-auto tw-flex-1 tw-flex-row tw-items-center;
+      @apply tw-flex tw-w-auto tw-flex-1 tw-flex-row tw-items-center tw-self-center;
     }
   }
 

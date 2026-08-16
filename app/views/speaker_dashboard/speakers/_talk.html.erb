@@ -16,7 +16,7 @@
       <% if talk.talk_category.present? %>
         <div class="cfp-talk-meta">
           <span class="badge bg-secondary me-2"><%= talk.talk_category.name %></span>
-          <span class="badge bg-outline-secondary border"><%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></span>
+          <span class="tw-inline-block tw-rounded tw-border tw-border-gray-300 tw-bg-gray-50 tw-px-2 tw-py-0.5 tw-text-xs tw-text-gray-700"><%= talk.proposal_item_value('session_time') || "#{talk.talk_time&.time_minutes}分" %></span>
         </div>
       <% end %>
     </div>

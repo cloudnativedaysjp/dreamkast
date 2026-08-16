@@ -15,28 +15,32 @@
 
     <div class="tw-mb-3 tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
       <div>
-        <%= form.label :last_name, "姓", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :last_name, class: "dk-label tw-font-semibold" do %>
+          姓<span class="dk-required">*</span>
+        <% end %>
         <%= form.text_field :last_name, required: true, class: "dk-input", placeholder: "雲" %>
       </div>
 
       <div>
-        <%= form.label :first_name, "名", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :first_name, class: "dk-label tw-font-semibold" do %>
+          名<span class="dk-required">*</span>
+        <% end %>
         <%= form.text_field :first_name, required: true, class: "dk-input", placeholder: "太郎" %>
       </div>
     </div>
 
     <div class="tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
       <div>
-        <%= form.label :last_name_kana, "姓(カナ)", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :last_name_kana, class: "dk-label tw-font-semibold" do %>
+          姓(カナ)<span class="dk-required">*</span>
+        <% end %>
         <%= form.text_field :last_name_kana, required: true, class: "dk-input", placeholder: "クラウド" %>
       </div>
 
       <div>
-        <%= form.label :first_name_kana, "名(カナ)", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :first_name_kana, class: "dk-label tw-font-semibold" do %>
+          名(カナ)<span class="dk-required">*</span>
+        <% end %>
         <%= form.text_field :first_name_kana, required: true, class: "dk-input", placeholder: "タロウ" %>
       </div>
     </div>
@@ -46,34 +50,35 @@
     <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">所属情報</h5>
 
     <div class="tw-mb-3">
-      <%= form.label :address_level1, "勤務先名/学校名（前株・後株などはセレクトボックスから選択ください）", class: "dk-label tw-font-semibold" %>
-      <span class="dk-required">*</span>
-      <div class="tw-grid tw-grid-cols-1 tw-gap-2 md:tw-grid-cols-12">
-        <div class="md:tw-col-span-3">
+      <%= form.label :company_name, class: "dk-label tw-font-semibold" do %>
+        勤務先名/学校名（前株・後株などはセレクトボックスから選択ください）<span class="dk-required">*</span>
+      <% end %>
+      <div class="tw-flex tw-flex-col tw-gap-2 md:tw-flex-row">
+        <div class="md:tw-w-1/4">
           <%= form.collection_select :company_name_prefix_id, ::FormModels::CompanyNamePrefix.all, :id, :name, {prompt: "法人格を選択"}, {class: "dk-select"} %>
         </div>
-
-        <div class="md:tw-col-span-6">
+        <div class="md:tw-min-w-0 md:tw-flex-1">
           <%= form.text_field :company_name, required: true, class: "dk-input", placeholder: "クラウドネイティブデイズ" %>
         </div>
-
-        <div class="md:tw-col-span-3">
+        <div class="md:tw-w-1/4">
           <%= form.collection_select :company_name_suffix_id, ::FormModels::CompanyNameSuffix.all, :id, :name, {prompt: "法人格を選択"}, {class: "dk-select"} %>
         </div>
       </div>
     </div>
 
     <div class="tw-mb-3">
-      <%= form.label :company_email, "勤務先メールアドレス", class: "dk-label tw-font-semibold" %>
-      <span class="dk-required">*</span>
+      <%= form.label :company_email, class: "dk-label tw-font-semibold" do %>
+        勤務先メールアドレス<span class="dk-required">*</span>
+      <% end %>
       <%= form.email_field :company_email, required: true, class: "dk-input", placeholder: "mail@example.com" %>
     </div>
 
     <div data-controller="postal-code">
       <div class="tw-mb-3 tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-3">
         <div>
-          <%= form.label :company_postal_code, "勤務先住所: 郵便番号", class: "dk-label tw-font-semibold" %>
-          <span class="dk-required">*</span>
+          <%= form.label :company_postal_code, class: "dk-label tw-font-semibold" do %>
+            勤務先住所: 郵便番号<span class="dk-required">*</span>
+          <% end %>
           <%= form.text_field :company_postal_code,
               required: true,
               class: "dk-input",
@@ -95,8 +100,9 @@
         </div>
 
         <div>
-          <%= form.label :company_address_level1, "都道府県", class: "dk-label tw-font-semibold" %>
-          <span class="dk-required">*</span>
+          <%= form.label :company_address_level1, class: "dk-label tw-font-semibold" do %>
+            都道府県<span class="dk-required">*</span>
+          <% end %>
           <%= form.collection_select :company_address_level1,
               CompanyAddressLevel1.all,
               :name,
@@ -111,8 +117,9 @@
         </div>
 
         <div>
-          <%= form.label :company_address_level2, "市区町村", class: "dk-label tw-font-semibold" %>
-          <span class="dk-required">*</span>
+          <%= form.label :company_address_level2, class: "dk-label tw-font-semibold" do %>
+            市区町村<span class="dk-required">*</span>
+          <% end %>
           <%= form.text_field :company_address_level2,
               required: true,
               class: "dk-input",
@@ -124,8 +131,9 @@
 
       <div class="tw-mb-3 tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
         <div>
-          <%= form.label :company_address_line1, "町名・番地", class: "dk-label tw-font-semibold"  %>
-          <span class="dk-required">*</span>
+          <%= form.label :company_address_line1, class: "dk-label tw-font-semibold" do %>
+            町名・番地<span class="dk-required">*</span>
+          <% end %>
           <%= form.text_field :company_address_line1,
               required: true,
               class: "dk-input",
@@ -145,8 +153,9 @@
 
     <div class="tw-mb-3 tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
       <div>
-        <%= form.label :company_tel, "勤務先電話番号", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :company_tel, class: "dk-label tw-font-semibold" do %>
+          勤務先電話番号<span class="dk-required">*</span>
+        <% end %>
         <%= form.text_field :company_tel, required: true, class: "dk-input", placeholder: "0300000000", pattern: "[\\d+-]*" %>
       </div>
       <div>
@@ -156,14 +165,16 @@
     </div>
 
     <div class="tw-mb-3">
-      <%= form.label :department, "勤務先部署･所属 / 学部･学科･学年", class: "dk-label tw-font-semibold" %>
-      <span class="dk-required">*</span>
+      <%= form.label :department, class: "dk-label tw-font-semibold" do %>
+        勤務先部署･所属 / 学部･学科･学年<span class="dk-required">*</span>
+      <% end %>
       <%= form.text_field :department, required: true, class: "dk-input", placeholder: "クラウド開発部門" %>
     </div>
 
     <div>
-      <%= form.label :position, "勤務先役職", class: "dk-label tw-font-semibold" %>
-      <span class="dk-required">*</span>
+      <%= form.label :position, class: "dk-label tw-font-semibold" do %>
+        勤務先役職<span class="dk-required">*</span>
+      <% end %>
       <%= form.text_field :position, required: true, class: "dk-input", placeholder: "一般 / 管理職 / CTO など" %>
     </div>
   </div>
@@ -173,8 +184,9 @@
 
     <div class="tw-mb-3 tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
       <div>
-        <%= form.label :number_of_employee_id, "従業員数", class: "dk-label tw-font-semibold" %>
-        <span class="dk-required">*</span>
+        <%= form.label :number_of_employee_id, class: "dk-label tw-font-semibold" do %>
+          従業員数<span class="dk-required">*</span>
+        <% end %>
         <%= form.collection_select :number_of_employee_id, ::FormModels::NumberOfEmployee.all, :id, :name, {prompt: ""}, {required: true, class: "dk-select", autocomplete: "number-of-employee-id"} %>
       </div>
       <div>
@@ -204,17 +216,22 @@
 
   <div class="cfp-field-group tw-mb-5" id="participation">
     <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">参加方法</h5>
-    <div class="tw-px-3">
-            <%= form.radio_button :participation, :online, { class: "dk-radio", id: "participation_online", required: true, checked: @profile.participation == 'online' || (@profile.participation.blank? && @conference.reach_capacity?) } %>
-            <%= form.label :online, "リモート参加", { for: "participation_online", class: "dk-check-label reached_capacity"} %>
-            <br>
-            <%= form.radio_button :participation, :offline, { class: "dk-radio", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: !@conference.reach_capacity? && (@profile.participation.blank? || @profile.participation == 'offline') } %>
-            <% if @conference.reach_capacity? %>
-              <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "dk-check-label reached_capacity"} %>
-              <span class="dk-required tw-mt-1 tw-block tw-text-xs">現地参加は定員に達したためお申込みいただけません</span>
-            <% else %>
-              <%= form.label :offline, "現地参加", { for: "participation_offline", class: "dk-check-label tw-font-semibold" } %>
-            <% end %>
+    <div class="tw-space-y-2 tw-px-1">
+      <div class="tw-flex tw-items-center">
+        <%= form.radio_button :participation, :online, { class: "dk-radio", id: "participation_online", required: true, checked: @profile.participation == 'online' || (@profile.participation.blank? && @conference.reach_capacity?) } %>
+        <%= form.label :online, "リモート参加", { for: "participation_online", class: "dk-check-label reached_capacity"} %>
+      </div>
+      <div class="tw-flex tw-items-center">
+        <%= form.radio_button :participation, :offline, { class: "dk-radio", id: "participation_offline" , disabled: @conference.reach_capacity?, required: true, checked: !@conference.reach_capacity? && (@profile.participation.blank? || @profile.participation == 'offline') } %>
+        <% if @conference.reach_capacity? %>
+          <%= form.label :offline, "現地参加", { for: "participation_offline" , class: "dk-check-label reached_capacity"} %>
+        <% else %>
+          <%= form.label :offline, "現地参加", { for: "participation_offline", class: "dk-check-label tw-font-semibold" } %>
+        <% end %>
+      </div>
+      <% if @conference.reach_capacity? %>
+        <span class="dk-required tw-block tw-text-xs">現地参加は定員に達したためお申込みいただけません</span>
+      <% end %>
     </div>
   </div>
 
@@ -235,7 +252,7 @@
           <%= markdown @conference.privacy_policy %>
       </div>
 
-      <div class="cfp-checkbox-card tw-mt-3 tw-border tw-border-gray-200 tw-p-3">
+      <div class="cfp-checkbox-card tw-mt-3 tw-flex tw-items-start tw-gap-2 tw-border tw-border-gray-200 tw-p-3">
         <%= form.check_box :agreement, {required: true, class: "dk-checkbox"}, true, false %>
         <label class="dk-check-label tw-font-semibold" for="agreement">個人情報の取り扱いについて同意する <span class="tw-block tw-text-xs tw-font-normal tw-text-gray-500">ご同意いただけない場合は本セミナーを受講いただくことは出来ません。</span></label>
       </div>

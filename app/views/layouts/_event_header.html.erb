@@ -1,5 +1,5 @@
 <nav class="navbar-scrolled tw-sticky tw-top-0 tw-z-40" id="mainNav" data-controller="navbar" data-action="click@window->navbar#hideDropdown">
-  <div class="tw-mx-auto tw-flex tw-max-w-dk-container tw-flex-wrap tw-items-center tw-justify-between tw-px-4 tw-py-2">
+  <div class="tw-mx-auto tw-flex tw-min-h-[4.5rem] tw-max-w-dk-container tw-flex-wrap tw-items-center tw-justify-between tw-px-4 tw-py-2 lg:tw-flex-nowrap">
     <% if @conference %>
       <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
         <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>

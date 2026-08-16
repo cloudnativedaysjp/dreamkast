@@ -275,17 +275,6 @@ $font-family-serif: "Noto Serif JP", serif !default;
     position: relative;
     padding: 1rem 0;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba($sumi, 0.2), transparent);
-    }
-
     .cfp-step {
         display: flex;
         flex-direction: column;
@@ -461,7 +450,9 @@ $font-family-serif: "Noto Serif JP", serif !default;
     background-color: white;
     border-radius: 2px !important;
     transition: all 0.2s ease;
-    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
 
     &:hover {
         background-color: rgba($beni, 0.03);
@@ -471,9 +462,9 @@ $font-family-serif: "Noto Serif JP", serif !default;
     .form-check-input,
     .dk-checkbox,
     .dk-radio {
-        border-radius: 2px;
-        position: absolute;
-        margin-top: 0.3em;
+        position: static;
+        flex-shrink: 0;
+        margin-top: 0.2em;
 
         &:checked {
             background-color: $beni;
@@ -489,8 +480,10 @@ $font-family-serif: "Noto Serif JP", serif !default;
     .dk-check-label {
         cursor: pointer;
         display: block;
-        width: 100%;
-        padding-left: 1.5em;
+        flex: 1;
+        width: auto;
+        padding-left: 0;
+        margin-left: 0;
         margin-bottom: 0;
         word-break: break-word;
     }

@@ -124,7 +124,7 @@
               <% label = item.label.pluralize.to_sym %>
               <% checked = existing_items ? existing_items.include?(item.id.to_s) : false %>
               <% checkbox_id = "#{label}_#{item.id}_#{form_index}" %>
-              <div class="cfp-checkbox-card tw-rounded tw-border tw-p-2 <%= 'tw-border-blue-500 tw-bg-blue-50' if checked %>">
+              <div class="cfp-checkbox-card tw-flex tw-items-start tw-gap-2 tw-rounded tw-border tw-p-2 <%= 'tw-border-blue-500 tw-bg-blue-50' if checked %>">
                 <%= check_box_tag "speaker[talks_attributes][#{form_index}][#{label}][]", item.id, checked, {id: checkbox_id, class: 'dk-checkbox'} %>
                 <%= label_tag checkbox_id, item.params, {class: 'dk-check-label'} %>
               </div>
@@ -147,7 +147,7 @@
               <% checked = existing_items ? existing_items.include?(item.id.to_s) : false %>
               <% classes = "radio_button_#{label} dk-radio" %>
               <% radio_id = "#{label}_#{item.id}_#{form_index}" %>
-              <div class="cfp-radio-card tw-mb-2 tw-rounded tw-border tw-p-2 <%= 'tw-border-blue-500 tw-bg-blue-50' if checked %>">
+              <div class="cfp-radio-card tw-mb-2 tw-flex tw-items-start tw-gap-2 tw-rounded tw-border tw-p-2 <%= 'tw-border-blue-500 tw-bg-blue-50' if checked %>">
                 <% case item.label %>
                 <% when 'presentation_method' %>
                   <%= render 'speaker_dashboard/speakers/presentation_method', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>

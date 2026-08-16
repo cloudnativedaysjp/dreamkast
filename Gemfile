@@ -142,3 +142,6 @@ gem 'kaminari'
 gem 'ferrum'
 
 gem 'printnode'
+
+# 構造化ログ (JSON) 出力
+gem 'lograge'

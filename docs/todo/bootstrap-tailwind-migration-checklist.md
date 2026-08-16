@@ -41,12 +41,15 @@
 - [x] スタンプラリー一覧とチェックインモーダル
 - [x] home / privacy / coc / エラーページ / 準備中ページ
 
+### 完了（フォーム）
+- [x] 参加登録フォーム本体（`profiles/_form.html.erb`）の `form-control` 置換
+- [x] 登壇者エントリーフォーム（`speaker_dashboard/speakers/_form*.html.erb` / `_talk_fields.html.erb`）
+- [x] 公開プロフィールフォーム
+- [x] 招待・受理フォーム（共同スピーカー / キーノート / スポンサー担当者 / スポンサー登壇者）
+- [x] スポンサーダッシュボードのフォーム（担当者・セッション・招待）
+
 ### 残課題
-- [ ] 参加登録フォーム本体（`profiles/_form.html.erb`）の `form-control` 置換
-- [ ] 登壇者エントリーフォーム（`speaker_dashboard/speakers/_form*.html.erb`）
-- [ ] 公開プロフィールフォーム
-- [ ] スポンサーダッシュボード一式
-- [ ] 招待受理・キーノート受理などのフォーム画面
+- [ ] スポンサーダッシュボードの一覧・ナビ・カード一式
 - [ ] タイムテーブル本体（イベント固有グリッド SCSS が残る）
 - [ ] 配信トラック画面（`tracks/index`）
 

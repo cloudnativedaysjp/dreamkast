@@ -1,7 +1,7 @@
 <%= form_with(url: public_profile_path, model: @public_profile, class: "needs-validation cfp-form") do |form| %>
   <% if @public_profile.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger" role="alert">
-      <h5 class="font-weight-bold">入力内容にエラーがあります:</h5>
+    <div id="error_explanation" class="dk-alert dk-alert-danger" role="alert">
+      <h5 class="tw-font-bold">入力内容にエラーがあります:</h5>
       <ul>
         <% @public_profile.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,67 +10,60 @@
     </div>
   <% end %>
 
-  <div class="alert alert-info mb-4" role="alert">
+  <div class="dk-alert dk-alert-info tw-mb-4" role="alert">
     公開プロフィールとは、あなたのニックネームやSNSアカウントを公開できる機能です（オプション）
   </div>
 
-  <%# ===== 基本情報 ===== %>
-  <div class="cfp-field-group mb-4">
-    <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">基本情報</h5>
+  <div class="cfp-field-group tw-mb-4">
+    <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">基本情報</h5>
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <div class="form-floating">
-          <%= form.text_field :nickname, required: true, class: "form-control", placeholder: "雲太郎", id: "public_profile_nickname" %>
-          <%= form.label :nickname, class: "form-label" do %>
-            ニックネーム<span class="text-danger">*</span>
-          <% end %>
-        </div>
-        <div class="form-text">参加者一覧に表示される名前</div>
+    <div class="tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
+      <div>
+        <%= form.label :nickname, class: "dk-label tw-font-semibold" do %>
+          ニックネーム<span class="dk-required">*</span>
+        <% end %>
+        <%= form.text_field :nickname, required: true, class: "dk-input", placeholder: "雲太郎", id: "public_profile_nickname" %>
+        <div class="dk-hint">参加者一覧に表示される名前</div>
       </div>
     </div>
   </div>
 
-  <%# ===== SNS・連絡先 ===== %>
-  <div class="cfp-field-group mb-4">
-    <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">SNS・連絡先</h5>
+  <div class="cfp-field-group tw-mb-4">
+    <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">SNS・連絡先</h5>
 
-    <div class="row g-3">
-      <%# X(Twitter) %>
-      <div class="col-md-6">
-        <label class="form-label fw-semibold">X(Twitter) ID</label>
-        <div class="input-group">
-          <span class="input-group-text">@</span>
-          <%= form.text_field :twitter_id, class: "form-control", placeholder: "cloudnativedays", id: "public_profile_twitter_id" %>
+    <div class="tw-grid tw-grid-cols-1 tw-gap-3 md:tw-grid-cols-2">
+      <div>
+        <label class="dk-label tw-font-semibold">X(Twitter) ID</label>
+        <div class="dk-input-group">
+          <span class="dk-input-prefix">@</span>
+          <%= form.text_field :twitter_id, class: "dk-input", placeholder: "cloudnativedays", id: "public_profile_twitter_id" %>
         </div>
-        <div class="form-text">@は不要です</div>
+        <div class="dk-hint">@は不要です</div>
       </div>
 
-      <%# GitHub %>
-      <div class="col-md-6">
-        <label class="form-label fw-semibold">GitHub ID</label>
-        <div class="input-group">
-          <span class="input-group-text">github.com/</span>
-          <%= form.text_field :github_id, class: "form-control", placeholder: "cloudnativedaysjp", id: "public_profile_github_id" %>
+      <div>
+        <label class="dk-label tw-font-semibold">GitHub ID</label>
+        <div class="dk-input-group">
+          <span class="dk-input-prefix">github.com/</span>
+          <%= form.text_field :github_id, class: "dk-input", placeholder: "cloudnativedaysjp", id: "public_profile_github_id" %>
         </div>
       </div>
     </div>
   </div>
 
-  <%# ===== プロフィール写真 ===== %>
-  <div class="cfp-field-group mb-4">
-    <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">プロフィール写真</h5>
+  <div class="cfp-field-group tw-mb-4">
+    <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">プロフィール写真</h5>
 
-    <div class="row g-4">
-      <div class="col-md-8">
-        <div class="cfp-upload-area p-4 text-center" data-controller="crop-upload">
-          <p class="mb-2 fw-semibold">参加者アイコンをアップロード</p>
-          <p class="small text-muted mb-3">クリックまたはドラッグ&ドロップ</p>
+    <div class="tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-12">
+      <div class="md:tw-col-span-8">
+        <div class="cfp-upload-area tw-p-4 tw-text-center" data-controller="crop-upload">
+          <p class="tw-mb-2 tw-font-semibold">参加者アイコンをアップロード</p>
+          <p class="tw-mb-3 tw-text-sm tw-text-gray-500">クリックまたはドラッグ&ドロップ</p>
           <%= form.text_field :avatar,
                               type: :file,
                               id: "avatar_upload",
                               "data-crop-upload-target": "fileInput",
-                              class: "form-control" %>
+                              class: "dk-input" %>
           <%= form.text_field :avatar,
                               type: :hidden,
                               error_handler: false,
@@ -79,48 +72,47 @@
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="cfp-image-preview text-center">
-          <div class="image-preview p-2" style="min-height: 200px;">
+      <div class="md:tw-col-span-4">
+        <div class="cfp-image-preview tw-text-center">
+          <div class="image-preview tw-p-2" style="min-height: 200px;">
             <% has_avatar = @public_profile.present? && (@public_profile.avatar.present? || @public_profile.avatar_url.present?) %>
             <% avatar_url = has_avatar ? (@public_profile.avatar_url(:large) || @public_profile.avatar_url) : nil %>
             <img src="<%= avatar_url || '' %>"
-                 class="img-fluid"
-                 style="max-height: 250px; object-fit: cover;<%= ' display: none;' unless avatar_url.present? %>"
+                 class="tw-h-auto tw-max-h-[250px] tw-max-w-full"
+                 style="object-fit: cover;<%= ' display: none;' unless avatar_url.present? %>"
                  alt="プロフィール写真プレビュー">
-            <div class="image-placeholder d-flex align-items-center justify-content-center h-100 text-muted" style="min-height: 180px;<%= ' display: none;' if avatar_url.present? %>">
-              <div class="text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="mb-2 opacity-25" viewBox="0 0 16 16">
+            <div class="image-placeholder tw-flex tw-h-full tw-items-center tw-justify-center tw-text-gray-500" style="min-height: 180px;<%= ' display: none;' if avatar_url.present? %>">
+              <div class="tw-text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="tw-mb-2 tw-opacity-25" viewBox="0 0 16 16">
                   <path d="M1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13zm13 1v8.293l-2.146-2.147a.5.5 0 0 0-.708 0L9 10.793 6.854 8.646a.5.5 0 0 0-.708 0L2.5 12.293V2h12zm-10.5 3a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z"/>
                 </svg>
-                <p class="small mb-0">未選択</p>
+                <p class="tw-mb-0 tw-text-sm">未選択</p>
               </div>
             </div>
           </div>
-          <p class="small text-muted mt-2 mb-0">プレビュー</p>
+          <p class="tw-mb-0 tw-mt-2 tw-text-sm tw-text-gray-500">プレビュー</p>
         </div>
       </div>
     </div>
   </div>
 
-  <%# ===== 公開設定 ===== %>
-  <div class="cfp-field-group mb-4">
-    <h5 class="cfp-field-group-title mb-3 pb-2 border-bottom">公開設定</h5>
+  <div class="cfp-field-group tw-mb-4">
+    <h5 class="cfp-field-group-title tw-mb-3 tw-border-b tw-border-gray-200 tw-pb-2">公開設定</h5>
 
-    <div class="cfp-checkbox-card border p-3">
-      <%= form.check_box :is_public, class: "form-check-input" %>
-      <%= form.label :is_public, class: "form-check-label" do %>
-        <%= link_to('参加者一覧ページ', "/#{@conference.abbr}/attendees", class: "text-dark text-decoration-underline") %>に上記のプロフィールを公開する
+    <div class="cfp-checkbox-card tw-border tw-border-gray-200 tw-p-3">
+      <%= form.check_box :is_public, class: "dk-checkbox" %>
+      <%= form.label :is_public, class: "dk-check-label" do %>
+        <%= link_to('参加者一覧ページ', "/#{@conference.abbr}/attendees", class: "tw-text-gray-900 tw-underline") %>に上記のプロフィールを公開する
       <% end %>
     </div>
   </div>
 
-  <div class="cfp-submit text-center py-4">
-    <div class="mb-3">
-      <%= form.submit submit_button_label, class: "btn btn-primary btn-lg shadow-sm px-5" %>
+  <div class="cfp-submit tw-py-4 tw-text-center">
+    <div class="tw-mb-3">
+      <%= form.submit submit_button_label, class: "dk-btn-primary tw-px-8 tw-py-3 tw-text-lg" %>
     </div>
     <div>
-      <%= link_to 'スキップ', dashboard_path, class: "text-muted text-decoration-underline small" %>
+      <%= link_to 'スキップ', dashboard_path, class: "tw-text-sm tw-text-gray-500 tw-underline" %>
     </div>
   </div>
 <% end %>

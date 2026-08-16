@@ -93,27 +93,27 @@ export default class extends Controller {
 
   showLoading() {
     if (this.hasLoadingTarget) {
-      this.loadingTarget.classList.remove('d-none')
+      this.loadingTarget.classList.remove('tw-hidden')
     }
   }
 
   hideLoading() {
     if (this.hasLoadingTarget) {
-      this.loadingTarget.classList.add('d-none')
+      this.loadingTarget.classList.add('tw-hidden')
     }
   }
 
   showError(message) {
     if (this.hasErrorTarget) {
       this.errorTarget.textContent = message
-      this.errorTarget.classList.remove('d-none')
+      this.errorTarget.classList.remove('tw-hidden')
     }
   }
 
   clearError() {
     if (this.hasErrorTarget) {
       this.errorTarget.textContent = ''
-      this.errorTarget.classList.add('d-none')
+      this.errorTarget.classList.add('tw-hidden')
     }
   }
 }

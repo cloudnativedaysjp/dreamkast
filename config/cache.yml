@@ -1,0 +1,18 @@
+# このファイルは Solid Cache 用の設定です。
+# 現在 solid_cache gem は未導入で、キャッシュバックエンドはデフォルト（file_store）を使用します。
+# 将来 Solid Cache を採用する場合に備えて設定のみ残しています（現状は未使用）。
+default: &default
+  store_options:
+    # Cap age of oldest cache entry to fulfill retention policies
+    # max_age: <%= 60.days.to_i %>
+    max_size: <%= 256.megabytes %>
+    namespace: <%= Rails.env %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

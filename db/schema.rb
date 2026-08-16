@@ -445,6 +445,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.index ["votes_count"], name: "index_session_questions_on_votes_count"
   end
 
+  create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
   create_table "speaker_announcement_middles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "speaker_id", null: false
     t.bigint "speaker_announcement_id", null: false

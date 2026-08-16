@@ -121,7 +121,7 @@ devbox run start
 
 このコマンドは以下を実行します:
 
-- Docker Composeサービスの起動（db, redis, localstack, nginx, ui, fifo-worker）
+- Docker Composeサービスの起動（db, localstack, nginx, ui, fifo-worker）
 - データベースマイグレーション（`rails db:migrate`）
 - シードデータ投入（`rails db:seed`）
 - Railsアプリケーションの起動

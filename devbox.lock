@@ -223,21 +223,6 @@
       "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#openssl",
       "source": "nixpkg"
     },
-    "redis": {
-      "plugin_version": "0.0.2",
-      "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#redis",
-      "source": "nixpkg",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "path": "/nix/store/b0627zb40m27pi9bfnv8fpisr37iyx7a-redis-8.2.3",
-              "default": true
-            }
-          ]
-        }
-      }
-    },
     "ruby@3.4.8": {
       "last_modified": "2025-12-19T06:18:24Z",
       "plugin_version": "0.0.2",

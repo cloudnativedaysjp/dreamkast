@@ -18,7 +18,7 @@
 - Ruby
 - Node.js
 - Yarn
-- Docker Compose（MySQLとRedis用）
+- Docker Compose（MySQL用）
 - AWS CLI
 
 バージョンは `.node-version` と `.ruby-version` ファイルで管理されています。
@@ -58,7 +58,6 @@ export MYSQL_HOST=db
 export MYSQL_USER=user
 export MYSQL_PASSWORD=password
 export MYSQL_DATABASE=dreamkast
-export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
 export SQS_FIFO_QUEUE_URL=http://localhost:4566/000000000000/fifo.fifo
 ```
@@ -74,7 +73,7 @@ aws ecr get-login-password | docker login --username AWS --password-stdin http:/
 
 ```bash
 docker compose pull ui
-docker compose up -d fifo-worker db redis nginx localstack ui
+docker compose up -d fifo-worker db nginx localstack ui
 ```
 
 ### 6. アプリケーションの起動

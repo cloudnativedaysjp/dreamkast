@@ -65,11 +65,12 @@
 ## Phase 3: Rails 8新機能の採用検討 (2-3週間)
 
 ### Solid Suite の評価
-- [ ] 現在の Redis 使用箇所を特定
-- [ ] Solid Cable（Action Cableバックエンド）評価
-- [ ] Solid Queue（Active Jobバックエンド）評価
-- [ ] Solid Cache（Railsキャッシュバックエンド）評価
-- [ ] redis-rails から Solid Suite への移行可能性を評価
+> 脱Redis 対応として完了済み。詳細は [redis-elimination-checklist.md](./redis-elimination-checklist.md) を参照。
+- [x] 現在の Redis 使用箇所を特定
+- [x] Solid Cable（Action Cableバックエンド）評価 → 採用（`config/cable.yml` で `solid_cable`）
+- [x] Solid Queue（Active Jobバックエンド）評価 → 不採用（ジョブは SQS を継続利用）
+- [x] Solid Cache（Railsキャッシュバックエンド）評価 → 不採用（デフォルトの file_store を利用）
+- [x] redis-rails から Solid Suite への移行可能性を評価 → `redis` / `redis-session-store` を削除し `solid_cable` + `activerecord-session_store` へ移行
 - [ ] パフォーマンス影響の検討
 - [ ] 移行計画の策定
 

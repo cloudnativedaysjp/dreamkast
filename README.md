@@ -80,7 +80,7 @@ devbox run setup
 
 このコマンドは以下を実行します:
 
-- `yarn install --check-files`
+- `yarn install --immutable`
 - `bundle install`
 
 #### 4. AWS認証とシークレット取得
@@ -219,7 +219,7 @@ docker compose restart db
 rm -rf node_modules
 
 # 再インストール
-yarn install --check-files
+yarn install --immutable
 ```
 
 #### bundle installエラー

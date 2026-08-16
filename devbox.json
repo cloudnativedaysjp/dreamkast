@@ -3,7 +3,7 @@
   "packages": [
     "ruby@3.4.8",
     "nodejs@22",
-    "yarn@1.22.22",
+    "yarn-berry@4.14.1",
     "docker-compose",
     "awscli2",
     "jq",

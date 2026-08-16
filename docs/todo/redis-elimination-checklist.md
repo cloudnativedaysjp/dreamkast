@@ -124,9 +124,27 @@ cable DB が存在しない状態でデプロイすると、ECS タスクの `in
    ```
    RDS のパラメータグループで文字セット系は上書きしていないため、MySQL 8.4 の
    engine default（`utf8mb4` / `utf8mb4_0900_ai_ci`）と同じ値になる。
-2. [ ] 本 PR をマージし、stg にデプロイして `initdb` が `db:migrate` を通過することを確認
-3. [ ] prod にリリース
-4. [ ] `imageTags.dreamkast_ecs` の更新を確認してから dreamkast-infra PR #5678（sessions-trim）をマージ
+2. [x] レビューアプリ（dk-2844）で実環境の動作確認を実施
+   - デプロイが steady state に到達（`rolloutState=COMPLETED`）し、HTTP 200 を返すこと
+   - cable 専用DBへのマイグレーションが適用されていること
+     ```
+     $ bundle exec rails db:migrate:status:cable
+     database: dreamkast_cable
+      Status   Migration ID    Migration Name
+     --------------------------------------------------
+        up     20260706120000  Create solid cable messages
+     ```
+   - Action Cable が solid_cable 経由で pub/sub できること（broadcast が cable DB に永続化される）
+     ```
+     $ bundle exec rails runner 'ActionCable.server.broadcast("verify", {t: Time.now.to_i}); sleep 1; puts ActionCable.server.pubsub.class; puts SolidCable::Message.count'
+     ActionCable::SubscriptionAdapter::SolidCable
+     1
+     ```
+   なお HTTP 200 だけでは確認にならない。Action Cable は購読が発生するまで cable DB に
+   接続しないため、cable が壊れていてもアプリは 200 を返す。
+3. [ ] 本 PR をマージ（main への push で stg へ自動デプロイされる）
+4. [ ] prod にリリース
+5. [ ] `imageTags.dreamkast_ecs` の更新を確認してから dreamkast-infra PR #5678（sessions-trim）をマージ
 
 #### マージ後の掃除（dreamkast-infra / terraform）
 - [ ] `ecspresso/*/const.libsonnet` から `internalEndpoints.redis` を削除

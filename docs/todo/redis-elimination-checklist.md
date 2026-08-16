@@ -32,8 +32,9 @@ Rails 8のSolid Cache、Solid Cableを活用し、Redis依存を完全に削除�
 - [x] `db/cable_schema.rb`（version 2026_07_06_120000）と `db/cable_migrate/*_create_solid_cable_messages.rb` でスキーマ管理
 - [x] `solid_cable_messages` はプライマリ `db/schema.rb` から除外（cable 専用DBで管理）
 - [x] ローカル開発用に `db/docker-entrypoint-initdb.d/2_create-cable-database.sql` で `dreamkast_cable` を自動作成（compose.yaml / compose-dev.yaml でマウント）
-- [ ] **本番/レビューアプリのRDSに `<db>_cable` スキーマを作成し、アプリユーザーへ権限付与**（インフラ側対応が必要）
-- [ ] **本番デプロイで cable DB のマイグレーション（`db:migrate` が db/cable_migrate を適用）が実行されることを確認**
+- [x] レビューアプリの MySQL に `dreamkast_cable` を作成（dreamkast-infra `ecspresso/base/mysql.libsonnet`、PR #5669 マージ済み）
+- [x] 本番 / ステージングの RDS に `dreamkast_cable` スキーマを作成（接続ユーザー `admin` は RDS マスターユーザーのため GRANT は不要）
+- [x] cable DB のマイグレーション実行経路を確認（ECS タスクの `initdb` コンテナが `rails db:migrate` を実行するため自動適用される。`db:migrate` は `migrations_paths: db/cable_migrate` を持つ `cable` も対象にする）
 
 ### フェーズ2: セッションストアの移行
 
@@ -42,6 +43,14 @@ Rails 8のSolid Cache、Solid Cableを活用し、Redis依存を完全に削除�
 - [x] `config/initializers/session_store.rb`更新
 - [x] セッションテーブル作成（`bin/rails generate active_record:session_migration`）
 - [x] マイグレーション実行
+
+#### sessions テーブルのメンテナンス
+`activerecord-session_store` は期限切れセッションを自動削除しない。`expire_after: 1.week` は
+クッキー側の有効期限であり、DB の行は残り続けるため定期的な削除が必要になる。
+
+- [x] gem 提供の `db:sessions:trim`（Railtie 経由でロードされる）を利用する方針とする。アプリ側の実装は不要
+- [x] prod / stg に日次（03:00 JST）の ECS スケジュールタスクを追加（dreamkast-infra PR #5678）
+- [x] 削除閾値は `SESSION_DAYS_TRIM_THRESHOLD=14`（`expire_after` の 1 週間に対して余裕を持たせた値。gem のデフォルトは 30 日）
 
 ### フェーズ3: Redis関連の削除
 
@@ -102,6 +111,28 @@ Rails 8のSolid Cache、Solid Cableを活用し、Redis依存を完全に削除�
 - [x] 本番環境でのテスト計画策定
 - [x] メンテナンス時間の調整
 - [x] 関係者への事前通知
+
+#### デプロイ手順（順序が重要）
+cable DB が存在しない状態でデプロイすると、ECS タスクの `initdb` コンテナが cable への接続に
+失敗してタスクが steady state に到達せず、デプロイ自体が失敗する。必ずこの順序で進める。
+
+1. [x] prod / stg の RDS に `dreamkast_cable` を作成（`.me/port_forward_to_mysql*.sh` でポートフォワードして接続）
+   ```sql
+   CREATE DATABASE IF NOT EXISTS dreamkast_cable
+     CHARACTER SET utf8mb4
+     COLLATE utf8mb4_0900_ai_ci;
+   ```
+   RDS のパラメータグループで文字セット系は上書きしていないため、MySQL 8.4 の
+   engine default（`utf8mb4` / `utf8mb4_0900_ai_ci`）と同じ値になる。
+2. [ ] 本 PR をマージし、stg にデプロイして `initdb` が `db:migrate` を通過することを確認
+3. [ ] prod にリリース
+4. [ ] `imageTags.dreamkast_ecs` の更新を確認してから dreamkast-infra PR #5678（sessions-trim）をマージ
+
+#### マージ後の掃除（dreamkast-infra / terraform）
+- [ ] `ecspresso/*/const.libsonnet` から `internalEndpoints.redis` を削除
+- [ ] 各 task-def から `REDIS_URL` を削除
+- [ ] `ecspresso/stg/redis/` を削除
+- [ ] terraform で prod の ElastiCache（`dreamkast-prod-redis`）を破棄
 
 ## リスク管理
 

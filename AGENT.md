@@ -21,7 +21,7 @@ Dreamkast is an Online Conference System built with **Ruby on Rails** (Backend) 
 ### Setup
 Install dependencies:
 ```bash
-yarn install --check-files
+yarn install --immutable
 bundle install
 ```
 

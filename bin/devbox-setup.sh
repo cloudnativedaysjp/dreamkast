@@ -14,7 +14,7 @@ echo -e "${GREEN}Dreamkast devbox セットアップを開始します...${NC}"
 
 # 1. Node.js依存のインストール
 echo "Node.js依存をインストールしています..."
-yarn install --check-files
+yarn install --immutable
 
 # 2. Ruby依存のインストール
 echo "Ruby依存をインストールしています..."

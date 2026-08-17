@@ -8,7 +8,7 @@ services:
     platform: linux/amd64
     volumes:
       - .:/app
-    entrypoint: /bin/sh -c "bundle install && docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --check-files && bundle exec rake assets:precompile && bundle exec rails db:migrate && bundle exec rails db:seed && foreman start -f Procfile.dev"
+    entrypoint: /bin/sh -c "bundle install && docker/wait-for-it.sh db:3306 --timeout=600 && yarn install --immutable && bundle exec rake assets:precompile && bundle exec rails db:migrate && bundle exec rails db:seed && foreman start -f Procfile.dev"
     environment: &dkenv
       RAILS_ENV: development
       NODE_ENV: development

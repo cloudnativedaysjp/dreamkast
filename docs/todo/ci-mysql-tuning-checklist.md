@@ -40,11 +40,29 @@ RSpec は example ごとにトランザクションとテーブルのクリー�
 - [x] `compose.ci.yaml` を新規作成し、CI 専用の mysqld オプションを定義する
 - [x] `.github/workflows/ci.yml` の `Run database` ステップで override を読ませる
 - [x] compose のマージ結果を `docker compose config` で確認する
-- [ ] CI 上で MySQL が起動し、設定が反映されていることを確認する
-- [ ] `rake ci:check_git_diff` が引き続き成功すること（`db:migrate` 後に `db/schema.rb` に差分が出ない）
-- [ ] RSpec 1083 examples が 0 failures であること
-- [ ] Simplecov のカバレッジが閾値 60 を下回らないこと
-- [ ] ベースラインと実行時間を比較し、改善幅を記録する
+- [x] CI 上で MySQL が起動し、設定が反映されていることを確認する
+- [x] `rake ci:check_git_diff` が引き続き成功すること（`db:migrate` 後に `db/schema.rb` に差分が出ない）
+- [x] RSpec 1083 examples が 0 failures であること
+- [x] Simplecov のカバレッジが閾値 60 を下回らないこと
+- [ ] ベースラインと実行時間を比較し、改善幅を記録する（**サンプル不足で判定保留**）
+
+## 計測結果（暫定）
+
+| run | Prepare tests | Run tests | rspec本体 |
+|---|---|---|---|
+| main 31980983075 | 56秒 | 76秒 | 68.56秒 |
+| main 31980965346 | 42秒 | 63秒 | 未取得 |
+| PR 32041688010（本変更） | 60秒 | 69秒 | 61.55秒 |
+
+MySQL は新しいフラグで正常に起動し、テストは 1083 examples / 0 failures、
+カバレッジも 67.94% で変化なし。**設定自体は問題なく動作する。**
+
+一方で**効果は確認できていない**。変更なしの main 同士で「Run tests」が
+63秒と76秒、13秒ぶれている。この変動幅が、本変更で観測された7秒の短縮より大きい。
+`Prepare tests` に至ってはベースラインより遅い側に出ている。
+n=1 同士の比較では、改善なのかランナー変動なのか判別できない。
+
+判定には各条件5サンプル程度が必要。それに見合う価値があるかは要検討。
 
 ## 注意点
 

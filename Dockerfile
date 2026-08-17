@@ -30,6 +30,8 @@ COPY --link bin bin
 COPY --link config config
 COPY --link Rakefile Rakefile
 COPY --link app app
+# config/environments/production.rb が lib/logging を require するため lib も必要
+COPY --link lib lib
 COPY --link Gemfile* ./
 COPY --link webpack.config.js webpack.config.js
 COPY --link package.json yarn.lock .yarnrc.yml ./

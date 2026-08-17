@@ -1,4 +1,5 @@
 require 'active_support/core_ext/integer/time'
+require_relative '../../lib/logging/json_log_formatter'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -52,13 +53,33 @@ Rails.application.configure do
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
-  # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-                                       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  # Add the following fields to every log line.
+  # Hash を返すことで JsonLogFormatter が名前付きフィールドとして展開する
+  # （ActiveJob などが積む文字列タグは `tags` 配列にまとめられる）。
+  config.log_tags = [->(request) { { request_id: request.request_id } }]
 
-  # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  # Log to STDOUT as one JSON object per line.
+  # TaggedLogging はロガー側にだけ extend する（TaggedLogging.new を使うとフォーマッタの call が
+  # 差し替えられ、タグがメッセージ文字列に前置されてしまうため）。
+  config.logger =
+    ActiveSupport::Logger.new($stdout)
+                         .tap { |logger| logger.formatter = Logging::JsonLogFormatter.new }
+                         .tap { |logger| logger.extend(ActiveSupport::TaggedLogging) }
+
+  # リクエストログは lograge で 1リクエスト = 1イベントに集約する。
+  config.lograge.enabled = true
+  # Raw フォーマッタで Hash のまま渡し、JsonLogFormatter にトップレベルのフィールドとして展開させる。
+  config.lograge.formatter = Lograge::Formatters::Raw.new
+  config.lograge.custom_options = lambda do |event|
+    exception = event.payload[:exception_object]
+    next {} unless exception
+
+    {
+      error_class: exception.class.name,
+      error_message: exception.message,
+      backtrace: exception.backtrace&.first(30)
+    }
+  end
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')

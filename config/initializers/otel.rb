@@ -9,6 +9,9 @@ if Rails.env.development? || Rails.env.test?
 end
 
 unless Rails.env.development? || Rails.env.test?
+  # OpenTelemetry自身のログもRailsロガー（production では JSON）に流す
+  OpenTelemetry.logger = Rails.logger
+
   OpenTelemetry::SDK.configure do |c|
     c.service_name = 'dreamkast'
     c.service_version = '1.0.0'

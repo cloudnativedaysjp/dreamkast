@@ -36,7 +36,7 @@ jobs:
     - name: Run database
       shell: bash
       run: |
-        docker compose up -d db
+        docker compose -f compose.yaml -f compose.ci.yaml up -d db
     # setup-node より前に有効化する。setup-node の yarn キャッシュ判定が
     # `yarn --version` の結果（1系 or berry）でキャッシュ先を切り替えるため。
     - name: Enable corepack

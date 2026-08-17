@@ -1,0 +1,18 @@
+# CI 専用の MySQL 設定。データ耐久性を犠牲にして書き込み性能を優先する。
+# RSpec は example ごとにトランザクションとクリーンアップで大量の書き込みを行うため、
+# コミットごとの fsync を省くと実行時間が縮む。
+# CI の DB は毎回使い捨てるので、クラッシュリカバリを考慮する必要がない。
+#
+# 本番・開発環境には絶対に適用しないこと。
+# 使い方: docker compose -f compose.yaml -f compose.ci.yaml up -d db
+services:
+  db:
+    # compose の command はマージではなく上書きになるため、
+    # compose.yaml 側の文字コード設定もここに書き写している。
+    command: >
+      mysqld
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_0900_ai_ci
+      --innodb-flush-log-at-trx-commit=0
+      --skip-log-bin
+      --skip-innodb-doublewrite

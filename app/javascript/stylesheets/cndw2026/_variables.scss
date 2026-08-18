@@ -17,27 +17,33 @@ $text: #001a3a;
 $primary: $tokyo-navy;
 $secondary: $new-magenta;
 //- Override font system
-$font-family-sans-serif: "din-2014",
+$font-family-sans-serif: "Zen Kaku Gothic New",
 -apple-system,
 BlinkMacSystemFont,
 "Segoe UI",
 Roboto,
 "Helvetica Neue",
 Arial,
-"Noto Sans",
+"Noto Sans JP",
+"Hiragino Sans",
+"Hiragino Kaku Gothic ProN",
+Meiryo,
 sans-serif,
 "Apple Color Emoji",
 "Segoe UI Emoji",
 "Segoe UI Symbol",
 "Noto Color Emoji";
-$font-family-serif: "din-2014",
+$font-family-serif: "Zen Kaku Gothic New",
 -apple-system,
 BlinkMacSystemFont,
 "Segoe UI",
 Roboto,
 "Helvetica Neue",
 Arial,
-"Noto Sans",
+"Noto Sans JP",
+"Hiragino Sans",
+"Hiragino Kaku Gothic ProN",
+Meiryo,
 sans-serif,
 "Apple Color Emoji",
 "Segoe UI Emoji",
@@ -45,5 +51,7 @@ sans-serif,
 "Noto Color Emoji";
 $font-family-base: $font-family-serif;
 $headings-font-family: $font-family-sans-serif;
+//- 登壇者/参加者ダッシュボードの見出し・ボタン用 (_speaker_dashboard.scss の !default を上書きする)
+$font-family-header: $font-family-sans-serif;
 //- Add custom variables
 $navbar-height: 4.5rem;

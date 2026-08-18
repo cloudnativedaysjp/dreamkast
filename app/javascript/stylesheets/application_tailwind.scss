@@ -165,13 +165,7 @@
       @apply tw-border-red-300 tw-bg-red-50 tw-text-red-800;
     }
 
-    // ヘッダー: モバイルメニュー / ユーザーメニュー
-    #mainNav .dk-nav-menu {
-      @apply tw-hidden tw-w-full tw-flex-col tw-items-stretch tw-gap-1;
-    }
-    #mainNav .dk-nav-menu.is-open {
-      @apply tw-flex;
-    }
+    // ヘッダー: ユーザーメニュー
     #mainNav .dk-nav-dropdown {
       @apply tw-absolute tw-right-0 tw-z-50 tw-mt-2 tw-hidden tw-min-w-[14rem] tw-rounded-md tw-border tw-border-gray-200 tw-bg-white tw-py-1 tw-shadow-lg;
     }
@@ -183,13 +177,6 @@
     }
     #mainNav .dk-nav-dropdown-divider {
       @apply tw-my-1 tw-border-t tw-border-gray-200;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    #wrapper #mainNav .dk-nav-menu,
-    #wrapper #mainNav .dk-nav-menu.is-open {
-      @apply tw-flex tw-w-auto tw-flex-1 tw-flex-row tw-items-center tw-self-center;
     }
   }
 
@@ -313,5 +300,123 @@
     .admin-btn-danger {
       @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-bg-red-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm tw-transition hover:tw-bg-red-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-500/40;
     }
+  }
+}
+
+// ヘッダー縦位置: @layer の外に置く (イベント CSS / utility より後から勝つ)
+// flex-wrap の align-content:stretch と Bootstrap ul margin で上寄せになるのを防ぐ
+#wrapper #mainNav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: block;
+  flex-shrink: 0;
+  line-height: 1;
+
+  > div {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    box-sizing: border-box;
+    height: 3.5rem;
+    min-height: 3.5rem;
+    max-height: 3.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    margin: 0 1rem 0 0;
+    padding: 0;
+    line-height: 0;
+  }
+
+  .header_logo {
+    display: block;
+    height: 2.5rem;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+  }
+
+  ul,
+  li,
+  form,
+  p,
+  .nav-link {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+
+  form {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  .dk-nav-menu {
+    display: none;
+  }
+
+  .dk-nav-menu.is-open {
+    display: flex;
+    position: absolute;
+    top: 3.5rem;
+    right: 0;
+    left: 0;
+    z-index: 40;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 0.5rem 1rem 1rem;
+    background-color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (min-width: 1024px) {
+  #wrapper #mainNav .nav-link {
+    padding: 0 1rem;
+  }
+
+  #wrapper #mainNav .dk-nav-menu,
+  #wrapper #mainNav .dk-nav-menu.is-open {
+    display: flex;
+    position: static;
+    top: auto;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  #wrapper #mainNav ul {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
   }
 }

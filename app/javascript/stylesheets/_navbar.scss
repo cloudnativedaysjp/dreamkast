@@ -1,4 +1,4 @@
-// Base styling for the navbar (Tailwind 構造向け)
+// Base styling for the navbar (色・フォント。レイアウトは application_tailwind.scss)
 #mainNav {
     box-shadow: $box-shadow;
     background-color: $white;
@@ -6,10 +6,6 @@
     z-index: 40;
 
     .navbar-brand {
-        display: flex;
-        align-items: center;
-        margin: 0;
-        padding: 0;
         font-family: $font-family-sans-serif;
         font-weight: $font-weight-bold;
         color: $gray-900;
@@ -17,17 +13,18 @@
         img {
             display: block;
         }
+
+        p {
+            margin: 0;
+        }
     }
 
     .nav-link {
-        display: inline-flex;
-        align-items: center;
         color: $gray-600;
         font-family: $font-family-sans-serif;
         font-weight: $font-weight-bold;
         font-size: 0.9rem;
         line-height: 1.25;
-        padding: 0.5rem 0;
         text-decoration: none;
 
         &:hover,
@@ -52,7 +49,6 @@
 
         .nav-link {
             color: fade-out($white, 0.3);
-            padding: 0 1rem;
             &:hover {
                 color: $white;
             }

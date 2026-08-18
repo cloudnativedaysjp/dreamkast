@@ -1,5 +1,6 @@
+<%= render partial: "layouts/header_nav_styles" %>
 <nav class="navbar-scrolled tw-sticky tw-top-0 tw-z-40" id="mainNav" data-controller="navbar" data-action="click@window->navbar#hideDropdown">
-  <div class="tw-mx-auto tw-flex tw-min-h-[4.5rem] tw-max-w-dk-container tw-flex-wrap tw-items-center tw-justify-between tw-px-4 tw-py-2 lg:tw-flex-nowrap">
+  <div class="tw-mx-auto tw-flex tw-h-14 tw-w-full tw-max-w-dk-container tw-flex-nowrap tw-items-center tw-justify-between tw-px-4">
     <% if @conference %>
       <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
         <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>
@@ -20,7 +21,7 @@
       </svg>
     </button>
     <div id="navbarResponsive" class="dk-nav-menu" data-navbar-target="menu">
-      <ul class="tw-flex tw-w-full tw-list-none tw-flex-col tw-items-stretch tw-gap-1 tw-p-0 lg:tw-flex-row lg:tw-items-center">
+      <ul class="tw-m-0 tw-flex tw-w-full tw-list-none tw-flex-col tw-items-center tw-gap-1 tw-p-0 lg:tw-flex-row">
         <% unless event_name.nil? %>
 
           <% if display_sponsor_guideline_url? %>

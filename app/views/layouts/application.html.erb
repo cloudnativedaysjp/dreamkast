@@ -10,6 +10,7 @@
     <%= csp_meta_tag %>
     <%= favicon_link_tag('favicon.ico') %>
     <link rel="stylesheet" href="https://use.typekit.net/ntd4lbp.css">
+    <%= render partial: "layouts/event_fonts" %>
     <%= stylesheet_link_tag event_js_path, media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'video_player', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%# Bootstrap → Tailwind 段階移行 (issue #2572): 全画面で Tailwind を読み込む %>

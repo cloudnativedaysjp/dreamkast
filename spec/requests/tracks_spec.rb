@@ -24,7 +24,7 @@ RSpec.describe(TracksController, type: :request) do
 
         it 'link to admin is displayed' do
           subject
-          expect(response.body).to(include('<a class="dropdown-item" href="/cndt2020/admin">管理画面</a>'))
+          expect(response.body).to(include('<a class="dk-nav-dropdown-item" href="/cndt2020/admin">管理画面</a>'))
         end
 
         context 'user is speaker' do
@@ -85,7 +85,7 @@ RSpec.describe(TracksController, type: :request) do
 
         it 'link to admin is not displayed' do
           subject
-          expect(response.body).to_not(include('<a class="dropdown-item" href="/admin">管理画面</a>'))
+          expect(response.body).to_not(include('<a class="dk-nav-dropdown-item" href="/cndt2020/admin">管理画面</a>'))
         end
       end
 

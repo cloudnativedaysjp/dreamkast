@@ -1,28 +1,28 @@
-<div class="container text-center home">
-  <div class="row align-items-center justify-content-center">
-    <section id="welcome" class="col-8 my-4">
-      <h2 class="mb-4">CloudNative Days</h2>
-      <p class="">CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。 </p>
+<div class="dk-container home tw-text-center">
+  <div class="tw-flex tw-flex-col tw-items-center tw-justify-center">
+    <section id="welcome" class="tw-my-4 tw-w-full md:tw-w-2/3">
+      <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold">CloudNative Days</h2>
+      <p>CloudNative Days はコミュニティ、企業、技術者が一堂に会し、クラウドネイティブムーブメントを牽引することを目的としたテックカンファレンスです。 </p>
 
-      <p class="text-left">最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。</p>
+      <p class="tw-text-left">最新の活用事例や先進的なアーキテクチャを学べるのはもちろん、ナレッジの共有やディスカッションの場を通じて登壇者と参加者、参加者同士の繋がりを深め、初心者から熟練者までが共に成長できる機会を提供します。</p>
       <p>皆様がクラウドネイティブ技術を適切に選択し、活用し、次のステップに進む手助けになることを願っています。</p>
       <p>クラウドネイティブで、未来を共に創造しましょう。</p>
     </section>
-    <section id="upcoming-events" class="col-10">
+    <section id="upcoming-events" class="tw-w-full md:tw-w-5/6">
       <h2>Upcoming events</h2>
-      <hr class="divider mx-auto my-4 center-block" />
+      <hr class="divider tw-mx-auto tw-my-4" />
       <% @upcoming.each do |event| %>
-        <div class="my-4">
+        <div class="tw-my-4">
           <%= link_to "/#{event.abbr}" do %>
             <%= image_tag("#{event.abbr}/header_logo.png", class: "logo") if asset_exists?("#{event.abbr}/header_logo.png") %>
-            <p class="font-weight-bold"><%= event.name %></p>
+            <p class="tw-font-bold"><%= event.name %></p>
           <% end %>
         </div>
       <% end %>
     </section>
-    <section id="past-events" class="col-10 my-4">
+    <section id="past-events" class="tw-my-4 tw-w-full md:tw-w-5/6">
       <h2>Past events</h2>
-      <hr class="divider mx-auto my-4 center-block" />
+      <hr class="divider tw-mx-auto tw-my-4" />
       <p>過去のイベントは、<a href="https://cloudnativedays.jp/">CloudNative Daysのウェブサイト</a>をご覧ください</p>
     </section>
   </div>

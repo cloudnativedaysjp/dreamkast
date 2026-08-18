@@ -1,12 +1,12 @@
 <div class="japanese-modern-theme">
-<div class="container">
-  <div class="row justify-content-lg-center">
-    <div class="col-12 col-lg-8 speaker-dashboard-form cfp-form py-4 my-3 px-md-5">
-      <% flash.each do |key, value| %>
-        <p id="notice" class="alert alert-success" role="alert"><%= flash[:notice] %></p>
+<div class="dk-container">
+  <div class="tw-flex tw-justify-center">
+    <div class="speaker-dashboard-form cfp-form tw-my-3 tw-w-full tw-py-4 tw-px-0 md:tw-px-8 lg:tw-w-2/3">
+      <% flash.each do |_key, _value| %>
+        <p id="notice" class="dk-alert dk-alert-success" role="alert"><%= flash[:notice] %></p>
       <% end %>
-      <h2 class="text-center cfp-dashboard-title mb-2">公開プロフィール登録</h2>
-      <p class="text-center text-muted mb-5"><%= @conference.name %></p>
+      <h2 class="cfp-dashboard-title tw-mb-2 tw-text-center">公開プロフィール登録</h2>
+      <p class="tw-mb-5 tw-text-center tw-text-gray-500"><%= @conference.name %></p>
 
       <%= render 'form', submit_button_label: "プロフィールを登録する" %>
     </div>

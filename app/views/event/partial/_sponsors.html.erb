@@ -1,13 +1,13 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 text-center">
-      <h2 class="text-black mt-0">Sponsors</h2>
-      <hr class="divider mx-auto my-4 center-block" />
+<div class="dk-container">
+  <div class="tw-flex tw-justify-center">
+    <div class="tw-w-full tw-text-center">
+      <h2 class="tw-mt-0 tw-text-black">Sponsors</h2>
+      <hr class="divider tw-mx-auto tw-my-4" />
 
       <% conference.sponsor_types.where(visible: true).each do |sponsor_type| %>
-        <h3 class="text-black mt-0"><%= sponsor_type.name %></h3>
-        <hr class="divider mx-auto my-4 center-block" />
-        <div class="row justify-content-md-center mb-5  align-items-center">
+        <h3 class="tw-mt-0 tw-text-black"><%= sponsor_type.name %></h3>
+        <hr class="divider tw-mx-auto tw-my-4" />
+        <div class="tw-mb-5 tw-flex tw-flex-wrap tw-items-center tw-justify-center">
           <% sponsor_type.sponsors.each do |sponsor| %>
             <% if sponsor.sponsor_attachment_logo_image.present? %>
               <div class="<%= sponsor_logo_class(sponsor_type) %>">
@@ -25,7 +25,7 @@
       <% end %>
     </div>
   </div>
-  <div class="d-flex justify-content-end">
+  <div class="tw-flex tw-justify-end">
     ※ロゴは申込順での掲載となります
   </div>
 </div>

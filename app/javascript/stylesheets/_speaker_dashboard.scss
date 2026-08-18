@@ -130,7 +130,10 @@ $font-family-serif: "Noto Serif JP", serif !default;
 
     // Form controls styling
     .form-control,
-    .form-select {
+    .form-select,
+    .dk-input,
+    .dk-textarea,
+    .dk-select {
         border-radius: 2px;
         border-color: rgba($sumi, 0.2);
         font-family: $font-family-serif;
@@ -142,13 +145,15 @@ $font-family-serif: "Noto Serif JP", serif !default;
         }
     }
 
-    .form-label {
+    .form-label,
+    .dk-label {
         font-family: $font-family-serif;
         color: $sumi;
     }
 
     p.form-text,
-    .form-text {
+    .form-text,
+    .dk-hint {
         font-size: 0.75rem !important;
         color: lighten($sumi, 40%);
         margin: 0.25em 0;
@@ -190,7 +195,8 @@ $font-family-serif: "Noto Serif JP", serif !default;
     }
 
     // Buttons - Hanko style
-    .btn-primary {
+    .btn-primary,
+    .dk-btn-primary {
         background-color: $beni;
         border-color: $beni;
         border-radius: 2px;
@@ -268,17 +274,6 @@ $font-family-serif: "Noto Serif JP", serif !default;
 .cfp-progress {
     position: relative;
     padding: 1rem 0;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba($sumi, 0.2), transparent);
-    }
 
     .cfp-step {
         display: flex;
@@ -455,17 +450,21 @@ $font-family-serif: "Noto Serif JP", serif !default;
     background-color: white;
     border-radius: 2px !important;
     transition: all 0.2s ease;
-    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
 
     &:hover {
         background-color: rgba($beni, 0.03);
         border-color: rgba($beni, 0.3) !important;
     }
 
-    .form-check-input {
-        border-radius: 2px;
-        position: absolute;
-        margin-top: 0.3em;
+    .form-check-input,
+    .dk-checkbox,
+    .dk-radio {
+        position: static;
+        flex-shrink: 0;
+        margin-top: 0.2em;
 
         &:checked {
             background-color: $beni;
@@ -477,17 +476,24 @@ $font-family-serif: "Noto Serif JP", serif !default;
         }
     }
 
-    .form-check-label {
+    .form-check-label,
+    .dk-check-label {
         cursor: pointer;
         display: block;
-        width: 100%;
-        padding-left: 1.5em;
+        flex: 1;
+        width: auto;
+        padding-left: 0;
+        margin-left: 0;
         margin-bottom: 0;
         word-break: break-word;
     }
 
     .form-check-input:checked ~ .form-check-label,
-    .form-check-input:checked + .form-check-label {
+    .form-check-input:checked + .form-check-label,
+    .dk-checkbox:checked ~ .dk-check-label,
+    .dk-checkbox:checked + .dk-check-label,
+    .dk-radio:checked ~ .dk-check-label,
+    .dk-radio:checked + .dk-check-label {
         font-weight: 600;
         color: $sumi;
     }
@@ -503,7 +509,9 @@ $font-family-serif: "Noto Serif JP", serif !default;
         border-color: rgba($beni, 0.4) !important;
     }
 
-    .form-check-input:checked {
+    .form-check-input:checked,
+    .dk-checkbox:checked,
+    .dk-radio:checked {
         background-color: $beni;
         border-color: $beni;
     }
@@ -528,7 +536,8 @@ $font-family-serif: "Noto Serif JP", serif !default;
 
 // Submit Section
 .cfp-submit {
-    .btn-primary {
+    .btn-primary,
+    .dk-btn-primary {
         background-color: $beni;
         border-color: $beni;
         border-radius: 2px;
@@ -593,21 +602,25 @@ $font-family-serif: "Noto Serif JP", serif !default;
 }
 
 // Input groups
-.cfp-form .input-group {
-    .input-group-text {
+.cfp-form .input-group,
+.cfp-form .dk-input-group {
+    .input-group-text,
+    .dk-input-prefix {
         border-radius: 2px 0 0 2px;
         background-color: $washi;
         border-color: rgba($sumi, 0.2);
         color: $sumi;
     }
 
-    .form-control {
+    .form-control,
+    .dk-input {
         border-radius: 0 2px 2px 0;
     }
 }
 
 // Required field indicator
-.text-danger {
+.text-danger,
+.dk-required {
     color: $beni !important;
 }
 

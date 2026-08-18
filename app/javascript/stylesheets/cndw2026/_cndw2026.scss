@@ -355,3 +355,12 @@
         font-weight: bold;
     }
 }
+// 画像アップローダ (Uppy) はライブラリ側で欧文フォントを直接指定しているため、
+// 登壇者フォームなどでイベントのフォントに揃わない。ここで上書きする。
+.uppy-Root,
+.uppy-Root button,
+.uppy-Root input,
+.uppy-Root .uppy-FileInput-btn,
+.uppy-FileInput-btn {
+    font-family: $font-family-base;
+}

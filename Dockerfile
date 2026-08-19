@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.21
 
-FROM node:22.22.0-slim AS node
+FROM node:24.19.0-slim AS node
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 WORKDIR /app

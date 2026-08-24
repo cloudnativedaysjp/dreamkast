@@ -1,61 +1,57 @@
 <% if @conference.present? && !@conference.archived? %>
   <% if current_user %>
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <img class="thumbnail img-circle" src="<%= current_user[:info][:image] %>" />
+    <a class="nav-link tw-inline-flex tw-items-center tw-gap-2" href="#" id="navbarDropdown" role="button" data-action="navbar#toggleDropdown" aria-expanded="false">
+      <img class="tw-h-8 tw-w-8 tw-rounded-full" src="<%= current_user[:info][:image] %>" alt="" />
       <%= current_user[:info][:nickname] %>
     </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <div class="dk-nav-dropdown" data-navbar-target="dropdown" aria-labelledby="navbarDropdown">
       <% if event_name && @profile.present? && @profile.id %>
-        <%= link_to '登録情報を変更する', edit_profile_path(id: @profile.id), class: "dropdown-item" %>
-        <div class="dropdown-divider"></div>
+        <%= link_to '登録情報を変更する', edit_profile_path(id: @profile.id), class: "dk-nav-dropdown-item" %>
+        <div class="dk-nav-dropdown-divider"></div>
         <% if @profile.public_profile.present? %>
-          <%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id), class: "dropdown-item" %>
-          <% else %>
-          <%= link_to '公開プロフィールを登録する', new_public_profile_path, class: "dropdown-item" %>
-          <% end %>
-        <div class="dropdown-divider"></div>
+          <%= link_to '公開プロフィールを変更する', edit_public_profile_path(id: @profile.public_profile&.id), class: "dk-nav-dropdown-item" %>
+        <% else %>
+          <%= link_to '公開プロフィールを登録する', new_public_profile_path, class: "dk-nav-dropdown-item" %>
+        <% end %>
+        <div class="dk-nav-dropdown-divider"></div>
         <% if @profile.participation.present? %>
-          <%= link_to '参加方法を変更する', edit_profile_path(id: @profile.id, anchor: "participation"), class: "dropdown-item"  %>
+          <%= link_to '参加方法を変更する', edit_profile_path(id: @profile.id, anchor: "participation"), class: "dk-nav-dropdown-item"  %>
         <% end %>
 
-        <!-- 現地参加の場合のみ有効 -->
         <% if @profile.attend_offline? %>
-
-          <div class="dropdown-divider"></div>
-          <%= link_to '受付用二次元バーコードを表示する', profiles_view_qr_path, class: "dropdown-item"  %>
+          <div class="dk-nav-dropdown-divider"></div>
+          <%= link_to '受付用二次元バーコードを表示する', profiles_view_qr_path, class: "dk-nav-dropdown-item"  %>
         <% end %>
       <% end %>
       <% if display_speaker_dashboard_link? %>
-        <div class="dropdown-divider"></div>
-        <%= link_to '登壇者ダッシュボード', speakers_entry_path, class: "dropdown-item" %>
+        <div class="dk-nav-dropdown-divider"></div>
+        <%= link_to '登壇者ダッシュボード', speakers_entry_path, class: "dk-nav-dropdown-item" %>
       <% end %>
       <% if display_sponsor_dashboard_link? %>
-        <div class="dropdown-divider"></div>
-        <%= link_to 'スポンサーダッシュボード', sponsor_dashboards_path(sponsor_id: @sponsor_contact.sponsor_id), class: "dropdown-item" %>
+        <div class="dk-nav-dropdown-divider"></div>
+        <%= link_to 'スポンサーダッシュボード', sponsor_dashboards_path(sponsor_id: @sponsor_contact.sponsor_id), class: "dk-nav-dropdown-item" %>
       <% end %>
       <% if admin? %>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="<%= admin_path %>">管理画面</a>
+        <div class="dk-nav-dropdown-divider"></div>
+        <a class="dk-nav-dropdown-item" href="<%= admin_path %>">管理画面</a>
       <% end %>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="/logout">Logout</a>
+      <div class="dk-nav-dropdown-divider"></div>
+      <a class="dk-nav-dropdown-item" href="/logout">Logout</a>
     </div>
   <% else %>
-      <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "btn btn-primary btn-block btn-sm" } %></li>
+    <%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "dk-btn-primary tw-text-sm" } %>
   <% end %>
 <% else %>
   <% if current_user %>
-    <li class="nav-item dropdown">
-      <%= link_to "Menu", '#', id: "navbarDropdown", class: 'nav-link', role: "button", 'data-toggle': "dropdown", 'aria-haspopup': "true", 'aria-expanded': "false" %>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <% if admin? %>
-          <a class="dropdown-item" href="<%= admin_path %>">管理画面</a>
-        <% end %>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/logout">Logout</a>
-      </div>
-    </li>
+    <%= link_to "Menu", '#', id: "navbarDropdown", class: 'nav-link', role: "button", data: { action: "navbar#toggleDropdown" }, 'aria-expanded': "false" %>
+    <div class="dk-nav-dropdown" data-navbar-target="dropdown" aria-labelledby="navbarDropdown">
+      <% if admin? %>
+        <a class="dk-nav-dropdown-item" href="<%= admin_path %>">管理画面</a>
+      <% end %>
+      <div class="dk-nav-dropdown-divider"></div>
+      <a class="dk-nav-dropdown-item" href="/logout">Logout</a>
+    </div>
   <% else %>
-    <li class="nav-item"><%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "btn btn-primary btn-block btn-sm", style: "background-color: gray; border-color: grey;" } %></li>
+    <%= button_to 'Log in', '/auth/auth0', {id: 'login', method: :post, class: "dk-btn-secondary tw-text-sm" } %>
   <% end %>
 <% end %>

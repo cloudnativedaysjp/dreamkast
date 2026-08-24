@@ -5,4 +5,4 @@
 <% else %>
   <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: radio_id} %>
 <% end %>
-<%= label_tag radio_id, item.params, {class: 'form-check-label'} %>
+<%= label_tag radio_id, item.params, {class: 'dk-check-label'} %>

@@ -16,7 +16,7 @@
     data-talk-logger-weaver-url-value="<%= vote_api_url %>"
   <% end %>
 >
-  <div class="container">
+  <div class="dk-container">
     <div class="proposal-content-wrap">
       <div class="proposal-card">
         <div class="proposal-card-body">
@@ -115,14 +115,14 @@
           <% end %>
 
           <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? && !(logged_in? && @profile.present?) %>
-            <div class="text-center mt-5 mb-3">
-              <%= link_to "このイベントに参加申し込み（参加無料）", registration_path, method: :get, class: "btn btn-primary btn-lg px-5" %>
+            <div class="tw-mb-3 tw-mt-5 tw-text-center">
+              <%= link_to "このイベントに参加申し込み（参加無料）", registration_path, method: :get, class: "dk-btn-primary tw-px-8 tw-py-3 tw-text-lg" %>
             </div>
           <% end %>
 
           <% if @conference.present? && @conference.show_timetable_enabled? %>
-            <div class="text-center mt-4 mb-3">
-              <%= button_to 'タイムテーブルに戻る', timetables_path, method: :get, class: "btn btn-outline-secondary px-4" %>
+            <div class="tw-mb-3 tw-mt-4 tw-text-center">
+              <%= button_to 'タイムテーブルに戻る', timetables_path, method: :get, class: "dk-btn-secondary tw-px-6" %>
             </div>
           <% end %>
 

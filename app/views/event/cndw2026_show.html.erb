@@ -1,16 +1,16 @@
 <div id="<%= @conference.abbr %>" >
   <div class="contents">
     <section class="page-section bg-primary" id="masthead">
-      <div class="container">
+      <div class="dk-container">
         <div id="particles-js"></div>
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 col-sm-8">
-              <h2 class="font-weight-bold text-white">
-                <span class="font-weight-light">Scaling Together</span>
+        <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+          <div class="tw-w-full sm:tw-w-2/3">
+              <h2 class="tw-font-bold tw-text-white">
+                <span class="tw-font-light">Scaling Together</span>
               </h2>
-              <h1 class="font-weight-bold text-white"><%= @conference.name %></h1>
+              <h1 class="tw-font-bold tw-text-white"><%= @conference.name %></h1>
           </div>
-          <div class="col-12 col-sm-4 align-self-end text-white">
+          <div class="tw-w-full tw-self-end tw-text-white sm:tw-w-1/3">
               <p class="date">
                 2026/11/19-20
               </p>
@@ -21,10 +21,10 @@
                 ただいま開催中！
                 <% end %>
               </p>
-              <p class="font-weight-bold">
+              <p class="tw-font-bold">
               ハイブリッド開催！
               </p>
-              <p class="text-white">
+              <p class="tw-text-white">
               有明セントラルタワーホール&カンファレンス<br/>
               +オンライン<br/>
               参加費無料
@@ -33,7 +33,7 @@
               #CNDW2026
               </p>
               <% if @conference.closed? || @conference.archived? %>
-                <p class="text-white-75 font-weight-light">イベントは終了しました。ご参加いただきありがとうございました</p>
+                <p class="tw-font-light tw-text-white/75">イベントは終了しました。ご参加いただきありがとうございました</p>
               <% end %>
           </div>
         </div>
@@ -41,9 +41,9 @@
     </section>
 
     <section class="page-section" id="entry">
-      <div class="container">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-12 align-self-center">
+      <div class="dk-container">
+        <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+          <div class="tw-w-full tw-self-center">
             <% if @conference.closed? || @conference.archived?%>
               <%= render 'event/partial/buttons', conference: @conference %>
             <% else %>
@@ -57,9 +57,9 @@
 
     <% if display_sponsor_guideline_url? %>
       <section class="page-section" id="entry">
-        <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center">
-            <div class="col-12 align-self-center">
+        <div class="dk-container">
+          <div class="tw-flex tw-h-full tw-flex-wrap tw-items-center tw-justify-center tw-text-center">
+            <div class="tw-w-full tw-self-center">
               <%= render 'event/partial/sponsor_guideline_link', conference: @conference %>
             </div>
           </div>
@@ -69,18 +69,18 @@
 
     <% if @conference.present? && @conference.show_timetable_enabled? %>
     <section class="page-section timetable bg-secondary">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 text-center">
-            <h2 class="text-white mt-0">Sessions</h2>
-            <hr class="divider mx-auto my-4  center-block light" />
+      <div class="dk-container">
+        <div class="tw-flex tw-justify-center">
+          <div class="tw-w-full tw-text-center">
+            <h2 class="tw-mt-0 tw-text-white">Sessions</h2>
+            <hr class="divider light tw-mx-auto tw-my-4" />
           </div>
         </div>
         <% @conference.conference_days.each do |conference_day| %>
         <% unless conference_day.internal  %>
         <div class="top-timetable">
-          <div class="col-12 text-center">
-            <h3 class="text-white mt-3"><%= conference_day.date %></h3>
+          <div class="tw-w-full tw-text-center">
+            <h3 class="tw-mt-3 tw-text-white"><%= conference_day.date %></h3>
           </div>
           <div class="grid" style="--rows: 13">
             <div class="all-track" style="">
@@ -154,17 +154,17 @@
     <!-- Speakers -->
     <% if (@conference.registered? || @conference.opened?) && @conference.attendee_entry_enabled? %>
     <section class="page-section" id="speakers">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-12 text-center">
-            <h2 class="text-black mt-0">Speakers</h2>
-            <hr class="divider mx-auto my-4 center-block" />
+      <div class="dk-container">
+        <div class="tw-flex tw-justify-center">
+          <div class="tw-w-full tw-text-center">
+            <h2 class="tw-mt-0 tw-text-black">Speakers</h2>
+            <hr class="divider tw-mx-auto tw-my-4" />
             <ul class="">
               <% @talks.each do |talk| %>
                 <% talk.speakers.each do |speaker| %>
                   <li>
                     <div style="width: min-content">
-                      <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "rounded-circle" %><br/>
+                      <%= image_tag speaker.avatar_or_dummy_url(:medium), :size => '100x100', class: "tw-rounded-full" %><br/>
                       <%= speaker&.name %>
                     </div>
                   </li>
@@ -179,13 +179,13 @@
 
     <!-- About-->
     <section class="page-section" id="about">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <h2 class="text-black mt-0">About</h2>
-            <hr class="divider mx-auto my-4  center-block" />
+      <div class="dk-container">
+        <div class="tw-flex tw-justify-center">
+          <div class="tw-w-full tw-text-center lg:tw-w-2/3">
+            <h2 class="tw-mt-0 tw-text-black">About</h2>
+            <hr class="divider tw-mx-auto tw-my-4" />
             <% @conference.about.split("\n").each do |line| %>
-              <p class="text-black-75 mb-4 text-center"><%= line.html_safe %></p>
+              <p class="tw-mb-4 tw-text-center tw-text-gray-700"><%= line.html_safe %></p>
             <% end %>
           </div>
         </div>
@@ -194,17 +194,17 @@
 
     <!-- Access -->
     <section class="page-section" id="access">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center">
-            <h2 class="text-white mt-0">Access</h2>
-            <hr class="divider mx-auto my-4 center-block light" />
+      <div class="dk-container">
+        <div class="tw-flex tw-flex-wrap tw-justify-center">
+          <div class="tw-w-full tw-text-center lg:tw-w-2/3">
+            <h2 class="tw-mt-0 tw-text-white">Access</h2>
+            <hr class="divider light tw-mx-auto tw-my-4" />
           </div>
-          <div class="col-12 col-sm-6">
+          <div class="tw-w-full sm:tw-w-1/2">
               <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12971.28918811224!2d139.7937274!3d35.6321071!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeea9641b7480ced0!2z5pyJ5piO44K744Oz44OI44Op44Or44K_44Ov44O8IOODm-ODvOODqybjgqvjg7Pjg5XjgqHjg6zjg7Pjgrk!5e0!3m2!1sja!2sjp!4v1668349214585!5m2!1sja!2sjp" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-          <div class="col-12 col-sm-6 align-self-top">
-              <p class="text-white">
+          <div class="tw-w-full tw-self-start sm:tw-w-1/2">
+              <p class="tw-text-white">
                 〒135-0063<br/>
                 有明セントラルタワー ホール＆カンファレンス 3F・4F<br/>
                 東京都江東区有明3-7-18

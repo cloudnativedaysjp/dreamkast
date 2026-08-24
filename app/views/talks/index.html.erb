@@ -1,11 +1,11 @@
 <% provide(:title, 'トーク一覧') %>
 
-<div class="container white_background">
-  <h1 class="my-3 text-center">トーク一覧</h1>
-  <div class="row">
-    <table class="table  table-striped table-bordered talks_table talks-frame" data-toggle="table">
+<div class="dk-container white_background">
+  <h1 class="tw-my-3 tw-text-center tw-text-3xl tw-font-semibold">トーク一覧</h1>
+  <div class="dk-table-card tw-mb-6">
+    <table class="dk-table talks_table talks-frame">
       <thead>
-      <tr class="tr-class-1">
+      <tr>
         <th scope="col">Speakers</th>
         <th scope="col">Title</th>
         <th scope="col">Category</th>
@@ -20,46 +20,46 @@
       <tbody>
 
       <% @talks.each_with_index do |talk, index| %>
-        <tr id="tr-id-<%= index %>" class="tr-class-<%= index %>">
-          <td id="td-id-<%= (index * 7) + 1 %>" class="td-class-<%= index + 1 %>">
-            <ul class="p-0 vertical-middle">
+        <tr id="tr-id-<%= index %>">
+          <td>
+            <ul class="tw-m-0 tw-list-none tw-p-0">
               <% talk.speakers.each do |speaker| %>
                 <li class="speaker"><%= speaker.name %></li>
               <% end %>
             </ul>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 2 %>" class="td-class-<%= index + 1 %>">
+          <td>
             <%= link_to talk.title, talk_path(id: talk.id), data: {"turbolinks" => false} %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 3 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <%= talk.talk_category.name if talk.talk_category.present? %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 5 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <%= talk.track_name %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 6 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <%= talk.conference_day ? talk.conference_day.date : '' %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 7 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <%= talk_start_to_end(talk) %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 8 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <%= talk.time %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 9 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <% if video_archived?(talk) %>
               <%= link_to 'あり', talk_path(id: talk.id), data: {"turbolinks" => false} %>
             <% end %>
           </td>
 
-          <td id="td-id-<%= (index * 7) + 10 %>" class="td-class-<%= index + 1 %> text-center">
+          <td class="tw-text-center">
             <% if document_archived?(talk) %>
               <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
             <% end %>

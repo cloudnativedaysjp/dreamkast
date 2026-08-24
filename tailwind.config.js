@@ -1,36 +1,34 @@
 /** @type {import('tailwindcss').Config} */
-// Bootstrap との共存方針 (Phase 1):
+// Bootstrap との共存方針 (Phase 2):
 //   - preflight (グローバル CSS reset) を無効化して Bootstrap のスタイルを壊さない
-//   - important セレクタ '#admin' で全 utility を admin スコープに限定する
-//     (admin/_layout.html.erb の <div id="admin"> 以下でのみ Tailwind が効く)
+//   - important セレクタ '#wrapper' で全 utility をレイアウト配下に限定する
+//     (layouts の <div id="wrapper"> 以下。admin の <div id="admin"> もその内側)
 //   - prefix 'tw-' で名前衝突を防止する
 //     例: Bootstrap の .p-4 (1.5rem) と Tailwind の .p-4 (1rem) はサイズが異なる。
 //     Bootstrap を完全撤去する Phase 5 でこの prefix は外す予定。
 module.exports = {
   prefix: 'tw-',
-  important: '#admin',
+  important: '#wrapper',
   corePlugins: {
     preflight: false,
   },
   content: [
-    './app/views/admin/**/*.html.erb',
-    './app/views/admin.html.erb',
-    './app/views/layouts/**/*.html.erb',
-    './app/helpers/admin/**/*.rb',
-    './app/javascript/packs/admin/**/*.js',
+    './app/views/**/*.{html,erb}',
+    './app/helpers/**/*.rb',
+    './app/javascript/packs/**/*.js',
   ],
-  // デザインシステムのブランドカラーと、admin_tailwind.scss の @layer components で
+  // デザインシステムのブランドカラーと、application_tailwind.scss の @layer components で
   // 定義した共通コンポーネントを常に生成する
   safelist: [
     'tw-bg-cndt-blue',
     'tw-bg-cndt-green',
     'tw-text-cndt-blue',
     'tw-text-cndt-green',
-    // テーブル
+    // admin テーブル
     'admin-table',
     'admin-table-card',
     'admin-table-scroll',
-    // フォーム
+    // admin フォーム
     'admin-form-card',
     'admin-form-section',
     'admin-form-label',
@@ -44,6 +42,31 @@ module.exports = {
     'admin-btn-primary',
     'admin-btn-secondary',
     'admin-btn-danger',
+    // 公開画面共通
+    'dk-container',
+    'dk-btn-primary',
+    'dk-btn-secondary',
+    'dk-btn-danger',
+    'dk-btn-dark',
+    'dk-input',
+    'dk-textarea',
+    'dk-select',
+    'dk-label',
+    'dk-hint',
+    'dk-required',
+    'dk-radio',
+    'dk-checkbox',
+    'dk-check-label',
+    'dk-input-prefix',
+    'dk-input-group',
+    'dk-card',
+    'dk-table',
+    'dk-table-card',
+    'dk-alert',
+    'dk-alert-info',
+    'dk-alert-success',
+    'dk-alert-warning',
+    'dk-alert-danger',
   ],
   theme: {
     extend: {
@@ -51,6 +74,8 @@ module.exports = {
         // CloudNative Days ブランドカラー
         'cndt-blue': '#1e40af',
         'cndt-green': '#059669',
+        'cndt-navy': '#216a9c',
+        'cndt-magenta': '#be4493',
         // admin 既存スタイル (#999/#333) と揃えるためのトークン
         'admin-sidebar': '#999999',
         'admin-sidebar-hover': '#ffffff',
@@ -59,6 +84,9 @@ module.exports = {
       },
       spacing: {
         sidebar: '250px',
+      },
+      maxWidth: {
+        'dk-container': '1140px',
       },
     },
   },

@@ -1,0 +1,31 @@
+<% if event_name %>
+  <footer class="tw-mt-auto tw-bg-gray-100 tw-py-4">
+    <div class="tw-mx-auto tw-max-w-dk-container tw-px-4">
+      <% upcoming = Conference.upcoming.merge(Conference.where.not(abbr: event_name)) %>
+      <% if upcoming.size > 0 %>
+        <div class="tw-mb-4">
+          <h3 class="tw-my-4 tw-text-center tw-text-xl tw-font-semibold">Upcoming Events</h3>
+          <div class="tw-flex tw-flex-wrap tw-justify-center">
+            <% upcoming.each do |conference| %>
+              <div class="footer-logo tw-w-full tw-px-3 md:tw-w-1/2">
+                <%= link_to("/#{conference.abbr}") do %>
+                  <%= image_tag "#{conference.abbr}/header_logo.png", class: "tw-mx-auto tw-block" %>
+                <% end %>
+                <p class="tw-mt-1 tw-text-center"><%= conference.brief if conference.brief.present? %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="tw-flex tw-justify-center">
+        <ul class="tw-m-0 tw-list-none tw-p-0">
+          <li class="tw-text-center"><%= link_to "プライバシーポリシー", "/#{event_name}/privacy", class: "tw-text-gray-500" %></li>
+          <li class="tw-text-center"><%= link_to "行動規範", "/#{event_name}/coc", class: "tw-text-gray-500" %></li>
+        </ul>
+      </div>
+      <% if @conference %>
+        <div class="tw-mt-3 tw-text-center tw-text-sm tw-text-gray-500"><%= @conference.copyright %></div>
+      <% end %>
+    </div>
+  </footer>
+<% end %>

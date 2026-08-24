@@ -1,10 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
-import Toast from 'bootstrap/js/dist/toast'
 
 // Connects to data-controller="toast"
 export default class extends Controller {
   connect() {
-    const toast = new Toast(this.element)
-    toast.show()
+    this.timeout = window.setTimeout(() => {
+      this.element.remove()
+    }, 5000)
+  }
+
+  disconnect() {
+    if (this.timeout) {
+      window.clearTimeout(this.timeout)
+    }
   }
 }

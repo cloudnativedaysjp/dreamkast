@@ -1,25 +1,23 @@
 <% provide(:title, 'スタンプラリーチェックイン記録') %>
-<% flash.each do |message_type, message| %>
-  <div class="modal" data-controller="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">チェックインしました🎉</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <%= message %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+<% flash.each do |_message_type, message| %>
+  <div class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black/40 tw-p-4" data-controller="modal">
+    <div class="tw-w-full tw-max-w-lg tw-rounded-lg tw-bg-white tw-shadow-lg">
+      <div class="tw-flex tw-items-center tw-justify-between tw-border-b tw-border-gray-200 tw-px-5 tw-py-3">
+        <h5 class="tw-m-0 tw-text-lg tw-font-semibold">チェックインしました🎉</h5>
+        <button type="button" class="tw-rounded tw-p-1 tw-text-gray-500 hover:tw-bg-gray-100" data-action="modal#dismiss" aria-label="Close">×</button>
+      </div>
+      <div class="tw-px-5 tw-py-4">
+        <%= message %>
+      </div>
+      <div class="tw-flex tw-justify-end tw-border-t tw-border-gray-200 tw-px-5 tw-py-3">
+        <button type="button" class="dk-btn-secondary" data-action="modal#dismiss">Close</button>
       </div>
     </div>
   </div>
 <% end %>
 
-<div class="container white_background mt-3">
-  <h1 class="my-3 text-center">スタンプラリーCP一覧</h1>
+<div class="dk-container white_background tw-mt-3">
+  <h1 class="tw-my-3 tw-text-center tw-text-3xl tw-font-semibold">スタンプラリーCP一覧</h1>
 
   <% case stamp_rally_status %>
   <% when :not %>
@@ -32,7 +30,7 @@
     <p>ゴール！！！</p>
   <% else raise "Invalid status" %>
   <% end %>
-  <div class="row row-cols-5 g-2">
+  <div class="tw-grid tw-grid-cols-2 tw-gap-2 sm:tw-grid-cols-3 md:tw-grid-cols-5">
 
     <% @stamp_rally_check_points.each_with_index do |check_point, index| %>
       <%= render "check_point", index: index, stamp_rally_check_ins: @stamp_rally_check_ins, check_point: check_point %>

@@ -1,32 +1,22 @@
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title">Invite Sponsor Contact</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-
-  <%= form_with(model: sponsor_contact_invite, local: true) do |f| %>
-    <div class="modal-body">
-      <% if sponsor_contact_invite.errors.any? %>
-        <div class="alert alert-danger">
-          <ul>
-            <% sponsor_contact_invite.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <div class="mb-3">
-        <%= f.label :email, class: "form-label" %>
-        <%= f.email_field :email, class: "form-control" %>
-      </div>
-
-      <%= f.hidden_field :sponsor_id %>
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <%= f.submit "Send Invitation", class: "btn btn-primary" %>
+<%= form_with(model: sponsor_contact_invite, local: true) do |f| %>
+  <% if sponsor_contact_invite.errors.any? %>
+    <div class="dk-alert dk-alert-danger">
+      <ul>
+        <% sponsor_contact_invite.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
-</div>
+
+  <div class="tw-mb-4">
+    <%= f.label :email, class: "dk-label" %>
+    <%= f.email_field :email, class: "dk-input" %>
+  </div>
+
+  <%= f.hidden_field :sponsor_id %>
+
+  <div class="tw-flex tw-justify-end tw-gap-2">
+    <%= f.submit "Send Invitation", class: "dk-btn-primary" %>
+  </div>
+<% end %>

@@ -305,6 +305,7 @@ EOS
   {
     id: 13,
     name: "CloudNative Days Summer 2025",
+    conference_status: "migrated",
     abbr: "cnds2025",
     theme: "Passion ~ CloudNativeに熱中する ~",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
@@ -329,6 +330,7 @@ EOS
   {
     id: 14,
     name: "CloudNative Days Winter 2025",
+    conference_status: "migrated",
     abbr: "cndw2025",
     theme: "Scaling Together",
     copyright: '© CloudNative Days (Secretariat by Impress Corporation)',
@@ -357,6 +359,7 @@ EOS
   {
     id: 15,
     name: "クラウドネイティブ会議",
+    conference_status: "migrated",
     abbr: "cnk",
     theme: "-",
     copyright: '© Cloud Native Kaigi (Secretariat by Impress Corporation)',

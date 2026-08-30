@@ -16,11 +16,7 @@
     <% else %>
       <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "dk-btn-secondary tw-px-6 tw-py-3 tw-text-lg" } %>
     <% end %>
-    <% if @conference.abbr == 'cnk' %>
-      <%= label_tag 'entry', 'エントリーにはクラウドネイティブ会議へのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
-    <% else %>
-      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
-    <% end %>
+    <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
   </div>
 
   <%= render 'speaker_dashboard/speakers/guidance_section_2' %>
@@ -31,10 +27,6 @@
     <% else %>
       <%= button_to 'エントリーする！', '/auth/auth0', {method: :post, class: "dk-btn-secondary tw-px-6 tw-py-3 tw-text-lg" } %>
     <% end %>
-    <% if @conference.abbr == 'cnk' %>
-      <%= label_tag 'entry', 'エントリーにはクラウドネイティブ会議へのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
-    <% else %>
-      <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
-    <% end %>
+    <%= label_tag 'entry', 'エントリーにはCloudNative Daysへのサインアップが必要です', class: 'dk-hint tw-mt-2 tw-block' %>
   </div>
 </div>

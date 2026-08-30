@@ -28,11 +28,17 @@ fi
 echo "Docker Composeサービスを起動しています..."
 docker compose up -d db localstack nginx fifo-worker
 
-# サービス起動待機
+# MySQLが接続を受け付けるまで待つ。
+# docker compose ps の表形式は Compose v5 で "Up N minutes" になり、
+# 旧来の "running" / "healthy" にはマッチしない。
 echo "サービスの起動を待機しています(最大60秒)..."
 timeout=60
 elapsed=0
-while ! docker compose ps | grep -q "db.*healthy\|db.*running"; do
+until mysqladmin ping \
+  -h "${MYSQL_HOST:-127.0.0.1}" \
+  -u "${MYSQL_USER:-root}" \
+  -p"${MYSQL_PASSWORD:-root}" \
+  --silent >/dev/null 2>&1; do
   if [ $elapsed -ge $timeout ]; then
     echo -e "${RED}❌ DBサービスの起動がタイムアウトしました${NC}"
     echo "docker compose logs db でログを確認してください"

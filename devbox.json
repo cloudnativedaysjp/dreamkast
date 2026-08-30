@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/main/.schema/devbox.schema.json",
   "packages": [
-    "ruby@3.4.8",
+    "ruby@4.0.5",
     "nodejs@22",
     "yarn-berry@4.14.1",
     "docker-compose",

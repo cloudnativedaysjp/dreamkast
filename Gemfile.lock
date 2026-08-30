@@ -209,16 +209,16 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
-    ffi (1.17.2)
+    ffi (1.17.4)
     fileutils (1.7.3)
     foreman (0.88.1)
     gli (2.22.2)
       ostruct
     globalid (1.4.0)
       activesupport (>= 6.1)
-    google-protobuf (4.32.1)
+    google-protobuf (4.36.0)
       bigdecimal
-      rake (>= 13)
+      rake (~> 13.3)
     googleapis-common-protos-types (1.21.0)
       google-protobuf (~> 4.26)
     hashie (5.0.0)
@@ -308,7 +308,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.18.9)
+    nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.12)
@@ -860,7 +860,7 @@ DEPENDENCIES
   lograge
   mysql2 (~> 0.5.6)
   net-imap (>= 0.6.0)
-  nokogiri (= 1.18.9)
+  nokogiri (= 1.19.4)
   omniauth-auth0 (~> 3.0)
   omniauth-rails_csrf_protection (~> 2.0)
   opentelemetry-exporter-otlp

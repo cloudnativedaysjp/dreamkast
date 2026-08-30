@@ -423,8 +423,8 @@ ConferenceDay.seed(
   {id: 38, date: "2026-05-15", start_time: "09:50", end_time: "18:00", conference_id: 15, internal: false},
 
   # CNDW2026
-  {id: 39, date: "2026-11-19", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false},
-  {id: 40, date: "2026-11-20", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false}
+  {id: 39, date: "2026-11-18", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false},
+  {id: 40, date: "2026-11-19", start_time: "09:50", end_time: "18:00", conference_id: 16, internal: false}
 )
 
 FormItem.seed(

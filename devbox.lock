@@ -134,13 +134,13 @@
       "source": "nixpkg"
     },
     "mysql84": {
-      "plugin_version": "0.0.4",
+      "plugin_version": "0.0.5",
       "resolved": "github:NixOS/nixpkgs/16c7794d0a28b5a37904d55bcca36003b9109aaa#mysql84",
       "source": "nixpkg"
     },
     "nodejs@22": {
       "last_modified": "2025-05-31T03:30:20Z",
-      "plugin_version": "0.0.2",
+      "plugin_version": "0.0.4",
       "resolved": "github:NixOS/nixpkgs/59138c7667b7970d205d6a05a8bfa2d78caa3643#nodejs_22",
       "source": "devbox-search",
       "version": "22.14.0",

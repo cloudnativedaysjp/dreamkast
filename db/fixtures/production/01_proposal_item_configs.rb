@@ -2122,12 +2122,7 @@ presentation_method(
       id: 297,
       params: '現地登壇',
       description: "プロポーザル採択後は登壇方法を変更することができません"
-    },
-    {
-      id: 298,
-      params: '事前収録',
-      description: ''
-    },
+    }
   ]
 )
 
@@ -2137,9 +2132,9 @@ session_time(
   items: [
     {
       id: 299,
-      key: SessionTime::FOURTY_MINUTES,
-      params: '_40min (full session)',
-      value: '40',
+      key: SessionTime::THIRTY_MINUTES,
+      params: '_30min (full session)',
+      value: '30',
       description: ''
     },
     {

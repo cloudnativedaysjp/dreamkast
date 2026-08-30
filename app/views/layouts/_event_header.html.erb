@@ -2,7 +2,7 @@
 <nav class="navbar-scrolled tw-sticky tw-top-0 tw-z-40" id="mainNav" data-controller="navbar" data-action="click@window->navbar#hideDropdown">
   <div class="tw-mx-auto tw-flex tw-h-14 tw-w-full tw-max-w-dk-container tw-flex-nowrap tw-items-center tw-justify-between tw-px-4">
     <% if @conference %>
-      <%= link_to "#{root_url}#{event_name}", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
+      <%= link_to "https://cloudnativedays.jp/", class: "navbar-brand js-scroll-trigger", data: {"turbolinks" => false} do %>
         <% if FileTest.exist?("#{Rails.root}/app/assets/images/#{@conference.abbr}/header_logo.png") %>
           <%= image_tag "#{@conference.abbr}/header_logo.png", class: "tw-h-10 tw-w-auto header_logo" %>
         <% else %>
@@ -27,8 +27,6 @@
           <% if display_sponsor_guideline_url? %>
             <li><%= link_to "スポンサー募集中！", @conference.sponsor_guideline_url, class: "nav-link js-scroll-trigger", target: '_blank' %></li>
           <% end %>
-
-          <li><%= link_to "早期申し込み特典あり！", "https://cloudnativedays.jp/posts/cndw2025-early-benefits", class: "nav-link js-scroll-trigger", target: '_blank' %></li>
 
           <% if display_dashboard_link? %>
             <li><%= link_to "Dashboard", dashboard_path, class: "nav-link js-scroll-trigger" %></li>

@@ -44,6 +44,7 @@ class Talk < ApplicationRecord
   # validates :start_time, presence: true
   # validates :end_time, presence: true
   validate :validate_proposal_item_configs, on: :entry_form
+  validate :validate_keynote_session_time, on: :entry_form
   validate :validate_three_conference_selection, on: :entry_form, if: -> { conference_id == 15 }
 
   SLOT_MAP = ['1000', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300']
@@ -541,6 +542,20 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
       short = ProposalItemConfig.find_by(label: e).item_name.gsub(/（★*）/, '')
       errors.add(:base, "#{short}は最低1項目選択してください")
     }
+  end
+
+  # キーノート専用のセッション時間は、キーノート招待されたTalkでのみ選択できる
+  def validate_keynote_session_time
+    return if keynote?
+
+    item = proposal_items.detect { |proposal_item| proposal_item.label == SessionTime::LABEL }
+    return if item.blank?
+
+    config = ProposalItemConfig.find_by(id: item.params.to_s)
+    return if config.blank?
+    return unless config.params.to_s.include?('for keynote')
+
+    errors.add(:base, 'セッション時間にキーノート専用の項目は選択できません')
   end
 
   THREE_CONFERENCE_VALIDATION_CONFIG = [

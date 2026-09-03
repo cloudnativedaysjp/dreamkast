@@ -207,6 +207,61 @@ SponsorType.seed(
     conference_id: 15,
     name: "Tool",
     order: 5,
+  },
+    # CNDW2026
+  {
+    id: 105,
+    conference_id: 16,
+    name: "Diamond",
+    order: 1,
+  },
+  {
+    id: 106,
+    conference_id: 16,
+    name: "Platinum",
+    order: 2,
+  },
+  {
+    id: 107,
+    conference_id: 16,
+    name: "Gold",
+    order: 3,
+  },
+  {
+    id: 108,
+    conference_id: 16,
+    name: "Booth",
+    order: 4,
+  },
+  {
+    id: 109,
+    conference_id: 16,
+    name: "Logo",
+    order: 5,
+  },
+  {
+    id: 110,
+    conference_id: 16,
+    name: "Party",
+    order: 6,
+  },
+  {
+    id: 111,
+    conference_id: 16,
+    name: "CM",
+    order: 7,
+  },
+  {
+    id: 112,
+    conference_id: 16,
+    name: "Tool",
+    order: 8,
+  },
+  {
+    id: 113,
+    conference_id: 16,
+    name: "Support",
+    order: 9,
   }
 )
 

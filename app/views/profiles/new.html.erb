@@ -14,11 +14,7 @@
       <% else %>
         <div class="tw-my-4 tw-w-full tw-text-center">
           <%= button_to 'ログイン / サインアップ', '/auth/auth0', {method: :post, class: "dk-btn-primary tw-mb-4 tw-px-8 tw-py-3 tw-text-lg" } %>
-          <% if @conference.abbr == 'cnk' %>
-            <%= label_tag 'entry', '参加登録するにはクラウドネイティブ会議へのサインアップが必要です', class: "tw-text-gray-500" %>
-          <% else %>
-            <%= label_tag 'entry', '参加登録するにはCloudNative Daysへのサインアップが必要です', class: "tw-text-gray-500" %>
-          <% end %>
+          <%= label_tag 'entry', '参加登録するにはCloudNative Daysへのサインアップが必要です', class: "tw-text-gray-500" %>
         </div>
       <% end %>
     </div>

@@ -80,7 +80,6 @@ class Conference < ApplicationRecord
   end
 
   def twitter_hashtag
-    return 'cloudnativekaigi' if abbr == 'cnk'
     abbr.upcase
   end
 

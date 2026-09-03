@@ -17,38 +17,12 @@
       </div>
       <% end %>
 
-      <div class="dashboard-reminder">
-        <div class="dashboard-reminder-title">遠隔地の方は、宿泊場所の確保を忘れずに</div>
-        <p>関東圏など遠隔地から参加される方は、<span class="dotted-accent">値段が上がってしまう前に宿泊場所の確保をお願いします</span></p>
-        <p>参考ブログ: <a href="https://kaigi.cloudnativedays.jp/blog/recommend-accomodations/" target="_blank" rel="noopener noreferrer">クラウドネイティブ会議 運営メンバーが選んだ宿泊施設</a></p>
-      </div>
-
       <% if @conference.opened? %>
         <div class="dashboard-live-card">
           <div class="dashboard-live-title"><%= @conference.abbr.upcase %> 開催中！</div>
           <%= button_to '配信はこちらから', "/#{@conference.abbr}/ui/", {method: :get, class: "dk-btn-primary tw-px-6 tw-py-3 tw-text-lg" } %>
         </div>
       <% end %>
-      <div class="dashboard-section dashboard-participation">
-        <h3 class="dashboard-section-title">企画一覧</h3>
-        <div class="tw-mb-5 tw-flex tw-flex-col tw-items-center">
-          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
-            <%= link_to "https://kaigi.cloudnativedays.jp/handson/", target: '_blank' do %>
-              <%= image_tag 'cnk/handson.png', class: "w-100" %>
-            <% end %>
-          </div>
-          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
-            <%= link_to "https://kaigi.cloudnativedays.jp/blog/gameday-3/", target: '_blank' do %>
-              <%= image_tag 'cnk/gameday.png', class: "w-100" %>
-            <% end %>
-          </div>
-          <div class="my-2 dashboard-banner-link" style="max-width: 500px; width: 100%;">
-            <%= link_to "https://eventregist.com/e/cnk_party", target: '_blank' do %>
-              <%= image_tag 'cnk/afterparty.png', class: "w-100" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
       <% if @profile.instance_of?(Profile) %>
         <div class="dashboard-section dashboard-participation">
           <h3 class="dashboard-section-title">参加方法</h3>
@@ -76,12 +50,7 @@
               <label for="tweet_content" class="dk-label tw-mb-3">X(Twitter)でシェアしよう！</label>
               <div class="mb-3">
                 <%
-                  post = ""
-                  if @conference.abbr == 'cnk'
-                    post = "#cloudnativekaigi に参加申し込みしました！ https://kaigi.cloudnativedays.jp"
-                  else
-                    post = "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}"
-                  end
+                  post = "##{@conference.abbr.upcase} に #{@profile.participation_before_type_cast} で参加申し込みしました！ https://event.cloudnativedays.jp/#{@conference.abbr}"
                 %>
                 <textarea data-share-registration-target="tweet_content" id="tweet_content" class="dk-textarea" rows="3"><%= post %></textarea>
               </div>
@@ -94,7 +63,6 @@
         </div>
       <% end %>
 
-      <% unless @conference.abbr == 'cnk' %>
       <div class="dashboard-section">
         <h3 class="dashboard-section-title">配信スケジュール</h3>
         <div class="dashboard-schedule">
@@ -109,7 +77,6 @@
             </div>
         </div>
       </div>
-      <% end %>
 
       <% if @speaker.present? && @speaker_announcements.present? %>
       <div class="mt-3">
@@ -200,11 +167,7 @@
               <% if display_self_check_in_link? %>
                 <%= link_to self_check_in_path(no_redirect: true) do %><i class="bi bi-qr-code"></i>セルフチェックインの結果<% end %>
               <% end %>
-              <% if @conference.abbr == 'cnk' %>
-                <%= link_to "https://kaigi.cloudnativedays.jp/blog", target: :_blank, rel: "noopener noreferrer" do %><i class="bi bi-journal-text"></i>Blog記事一覧<% end %>
-              <% else %>
-                <%= link_to "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" do %><i class="bi bi-journal-text"></i>Blog記事一覧<% end %>
-              <% end %>
+              <%= link_to "https://cloudnativedays.jp/posts/", target: :_blank, rel: "noopener noreferrer" do %><i class="bi bi-journal-text"></i>Blog記事一覧<% end %>
         </div>
       </div>
       <% if @speaker.present? %>

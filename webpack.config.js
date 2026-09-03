@@ -30,18 +30,6 @@ module.exports = {
       "./app/javascript/packs/cndw2026.js",
       "./app/javascript/stylesheets/cndw2026.scss",
     ],
-    cnk: [
-      "./app/javascript/packs/cnk.js",
-      "./app/javascript/stylesheets/cnk.scss",
-    ],
-    cnds2025: [
-      "./app/javascript/packs/cnds2025.js",
-      "./app/javascript/stylesheets/cnds2025.scss",
-    ],
-    cndw2025: [
-      "./app/javascript/packs/cndw2025.js",
-      "./app/javascript/stylesheets/cndw2025.scss",
-    ],
     cndo2021: [
       "./app/javascript/packs/cndo2021.js",
       "./app/javascript/stylesheets/cndo2021.scss",

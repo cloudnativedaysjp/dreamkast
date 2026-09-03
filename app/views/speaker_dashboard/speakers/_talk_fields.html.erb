@@ -135,6 +135,8 @@
           <% existing_items = f.object&.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : [] %>
           <% selected_radio_item = @conference.proposal_item_configs.where(item_number: item_number).find { |config| config.id.to_s == existing_items.to_s } %>
           <% session_time_locked = first_item.label == 'session_time' && selected_radio_item&.params.to_s.include?('for keynote') %>
+          <%# キーノート専用のセッション時間は、キーノート招待されたTalkでのみ選択できる %>
+          <% keynote_talk = f.object&.persisted? && f.object.keynote? %>
           <%= label_tag "speaker_talks_attributes_#{form_index}_#{first_item.label}[]", class: 'dk-label tw-block tw-font-semibold' do %>
             <%= first_item.item_name %><span class="dk-required">*</span>
           <% end %>
@@ -152,7 +154,7 @@
                 <% when 'presentation_method' %>
                   <%= render 'speaker_dashboard/speakers/presentation_method', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index %>
                 <% when 'session_time' %>
-                  <%= render 'speaker_dashboard/speakers/session_times', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index, session_time_locked: session_time_locked %>
+                  <%= render 'speaker_dashboard/speakers/session_times', f: f, existing_items: existing_items, first_item: first_item, item: item, classes: classes, label: label, checked: checked, form_index: form_index, session_time_locked: session_time_locked, keynote_talk: keynote_talk %>
                 <% else %>
                   <%= radio_button_tag "speaker[talks_attributes][#{form_index}][#{label}]", item.id, checked, {required: true, class: classes, params: item.params, id: radio_id} %>
                   <%= label_tag radio_id, item.params, {class: 'dk-check-label'} %>

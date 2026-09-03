@@ -53,25 +53,6 @@ if (document.readyState === 'loading') {
     initializeRemoveTalkButton()
 }
 
-
-document.addEventListener('change', (e) => {
-    if (e.target.classList.contains('talk-categories')) {
-        const radio20min = e.target.parentElement.parentElement.querySelector('._20min');
-        const radio40min = e.target.parentElement.parentElement.querySelector('._40min');
-        if (e.target.selectedOptions[0].innerHTML == 'Keynote') {
-            radio20min.disabled = false;
-            radio40min.disabled = true;
-            radio20min.checked = true;
-        } else {
-            radio20min.checked = false;
-            radio20min.disabled = true;
-            radio40min.disabled = false;
-            radio40min.checked = true;
-        }
-    }
-    return false;
-});
-
 const addDeleteButtonListener = (obj) => {
     obj.removeEventListener('click', buttonListener);
     obj.addEventListener('click', buttonListener);

@@ -563,4 +563,44 @@ https://event.cloudnativedays.jp/cndt2020/talks/1
       end
     end
   end
+
+  describe 'セッション時間のバリデーション' do
+    let!(:conference) { create(:cndt2020) }
+    let!(:talk) { create(:talk1) }
+    let!(:session_time_full) { create(:proposal_item_configs_session_time_40_min, conference:) }
+    let!(:session_time_keynote) { create(:proposal_item_configs_session_time_20_min, conference:) }
+    let(:error_message) { 'セッション時間にキーノート専用の項目は選択できません' }
+
+    context '一般応募のTalkがキーノート専用の時間を選んだ場合' do
+      before do
+        talk.create_or_update_proposal_item('session_time', session_time_keynote.id.to_s)
+      end
+
+      it 'バリデーションエラーになる' do
+        expect(talk.valid?(:entry_form)).to(be_falsey)
+        expect(talk.errors.full_messages).to(include(error_message))
+      end
+    end
+
+    context '一般応募のTalkが通常の時間を選んだ場合' do
+      before do
+        talk.create_or_update_proposal_item('session_time', session_time_full.id.to_s)
+      end
+
+      it 'バリデーションが通る' do
+        expect(talk.valid?(:entry_form)).to(be_truthy)
+      end
+    end
+
+    context 'キーノートのTalkがキーノート専用の時間を選んだ場合' do
+      before do
+        talk.talk_types << create(:talk_type, :keynote)
+        talk.create_or_update_proposal_item('session_time', session_time_keynote.id.to_s)
+      end
+
+      it 'バリデーションが通る' do
+        expect(talk.valid?(:entry_form)).to(be_truthy)
+      end
+    end
+  end
 end

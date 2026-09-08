@@ -40,148 +40,115 @@ describe DreamkastExporter, type: :request do
       end
     end
 
-    context 'CNK talk difficulties count by target conference' do
-      let!(:cnk) { create(:conference, id: 15, abbr: 'cnk', name: 'クラウドネイティブ会議') }
-      let!(:cnk_difficulty_beginner) { create(:talk_difficulty, id: 78, name: '初級者 - Beginner', conference: cnk) }
-      let!(:cnk_difficulty_intermediate) { create(:talk_difficulty, id: 79, name: '中級者 - Intermediate', conference: cnk) }
-      let!(:cnk_difficulty_expert) { create(:talk_difficulty, id: 80, name: '上級者 - Expert', conference: cnk) }
-
-      let!(:cnk_talk1) do
-        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_beginner, title: 'CND Talk 1')
-      end
-      let!(:cnk_talk2) do
-        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_beginner, title: 'CND Talk 2')
-      end
-      let!(:cnk_talk3) do
-        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_intermediate, title: 'PEK Talk 1')
-      end
-      let!(:cnk_talk4) do
-        create(:talk, conference: cnk, talk_difficulty: cnk_difficulty_expert, title: 'SREK Talk 1')
-      end
+    context 'have CFP proposals in a conference' do
+      let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
+      let!(:beginner) { create(:talk_difficulty, conference: cndw2026, name: '初級者') }
+      let!(:intermediate) { create(:talk_difficulty, conference: cndw2026, name: '中級者') }
 
       before do
-        # CND category proposal items
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'cnd_category', params: '234')
-        create(:proposal_item, talk: cnk_talk2, conference: cnk, label: 'cnd_category', params: '235')
-        # PEK category proposal item
-        create(:proposal_item, talk: cnk_talk3, conference: cnk, label: 'pek_category', params: '257')
-        # SREK category proposal item
-        create(:proposal_item, talk: cnk_talk4, conference: cnk, label: 'srek_category', params: '269')
+        session_type = TalkType.find(TalkType::SESSION_ID)
+        sponsor_session_type = create(:talk_type, id: TalkType::SPONSOR_SESSION_ID, display_name: 'スポンサーセッション')
 
-        # ProposalItemConfig(名称解決用)
-        create(:proposal_item_config, id: 251, conference: cnk, type: 'ProposalItemConfigCheckBox',
-               label: 'cnd_assumed_visitor', params: 'architect - システム設計')
-        create(:proposal_item_config, id: 252, conference: cnk, type: 'ProposalItemConfigCheckBox',
-               label: 'cnd_assumed_visitor', params: 'developer - システム開発')
-        create(:proposal_item_config, id: 263, conference: cnk, type: 'ProposalItemConfigCheckBox',
-               label: 'pek_assumed_visitor', params: 'Platform Engineer')
-        create(:proposal_item_config, id: 221, conference: cnk, type: 'ProposalItemConfigCheckBox',
-               label: 'execution_phase', params: 'Production(本番環境)')
-        create(:proposal_item_config, id: 229, conference: cnk, type: 'ProposalItemConfigRadioButton',
-               label: 'language', params: 'JA')
-        create(:proposal_item_config, id: 230, conference: cnk, type: 'ProposalItemConfigRadioButton',
-               label: 'language', params: 'EN')
-        create(:proposal_item_config, id: 227, conference: cnk, type: 'ProposalItemConfigRadioButton',
-               label: 'session_time', params: '_40min (full session)')
-        create(:proposal_item_config, id: 223, conference: cnk, type: 'ProposalItemConfigRadioButton',
-               label: 'whether_it_can_be_published', params: 'All okay - スライド・動画両方ともに公開可')
-
-        # assumed_visitor (CheckBox - 配列)
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'cnd_assumed_visitor', params: ['251', '252'])
-        create(:proposal_item, talk: cnk_talk2, conference: cnk, label: 'cnd_assumed_visitor', params: ['251'])
-        create(:proposal_item, talk: cnk_talk3, conference: cnk, label: 'pek_assumed_visitor', params: ['263'])
-
-        # execution_phase (CheckBox - 配列)
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'execution_phase', params: ['221'])
-        create(:proposal_item, talk: cnk_talk3, conference: cnk, label: 'execution_phase', params: ['221'])
-
-        # language (RadioButton - 文字列)
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'language', params: '229')
-        create(:proposal_item, talk: cnk_talk2, conference: cnk, label: 'language', params: '229')
-        create(:proposal_item, talk: cnk_talk3, conference: cnk, label: 'language', params: '230')
-
-        # session_time (RadioButton)
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'session_time', params: '227')
-
-        # whether_it_can_be_published (RadioButton)
-        create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'whether_it_can_be_published', params: '223')
-      end
-
-      it 'returns CNK talk difficulties count by target conference' do
-        get '/metrics'
-        expect(response).to(be_successful)
-        # CND: 2 talks with beginner difficulty
-        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
-        # PEK: 1 talk with intermediate difficulty
-        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
-        # SREK: 1 talk with expert difficulty
-        expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="srek_category",talk_difficulty_name="上級者 - Expert"} 1.0'))
-      end
-
-      context 'when a talk has multiple category labels' do
-        before do
-          # cnk_talk1にPEKカテゴリも追加
-          create(:proposal_item, talk: cnk_talk1, conference: cnk, label: 'pek_category', params: '258')
+        cfp_talks = [beginner, intermediate].map.with_index do |difficulty, index|
+          talk = create(:talk, conference: cndw2026, talk_difficulty: difficulty, title: "CFP Talk #{index + 1}")
+          talk.talk_types << session_type
+          create(:proposal, talk:, conference: cndw2026)
+          talk
         end
 
-        it 'counts the talk in each category' do
-          get '/metrics'
-          expect(response).to(be_successful)
-          # CND: cnk_talk1 + cnk_talk2 = 2 talks with beginner
-          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="cnd_category",talk_difficulty_name="初級者 - Beginner"} 2.0'))
-          # PEK: cnk_talk1(beginner) + cnk_talk3(intermediate) = それぞれカウント
-          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="初級者 - Beginner"} 1.0'))
-          expect(response.body).to(include('dreamkast_talk_difficulties_by_category_count{conference_id="15",target_conference="pek_category",talk_difficulty_name="中級者 - Intermediate"} 1.0'))
-        end
+        sponsor_talk = create(:talk, conference: cndw2026, talk_difficulty: beginner, title: 'Sponsor Talk')
+        sponsor_talk.talk_types << sponsor_session_type
+        create(:proposal, talk: sponsor_talk, conference: cndw2026)
+
+        create_proposal_item_configs
+        create_proposal_items(cfp_talks, sponsor_talk)
       end
 
-      it 'returns assumed visitors count by category' do
+      it 'returns only CFP proposal count for the conference' do
         get '/metrics'
+
         expect(response).to(be_successful)
-        # CND: cnk_talk1(architect+developer), cnk_talk2(architect) -> architect=2, developer=1
-        expect(response.body).to(include('dreamkast_assumed_visitors_by_category_count{conference_id="15",target_conference="cnd_category",assumed_visitor_name="architect - システム設計"} 2.0'))
-        expect(response.body).to(include('dreamkast_assumed_visitors_by_category_count{conference_id="15",target_conference="cnd_category",assumed_visitor_name="developer - システム開発"} 1.0'))
-        # PEK: cnk_talk3(Platform Engineer) -> 1
-        expect(response.body).to(include('dreamkast_assumed_visitors_by_category_count{conference_id="15",target_conference="pek_category",assumed_visitor_name="Platform Engineer"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_count{conference_id="16"} 2.0'))
       end
 
-      it 'returns execution phases count by category' do
+      it 'returns CFP proposal counts by difficulty' do
         get '/metrics'
-        expect(response).to(be_successful)
-        # CND: cnk_talk1 -> Production=1, PEK: cnk_talk3 -> Production=1
-        expect(response.body).to(include('dreamkast_execution_phases_by_category_count{conference_id="15",target_conference="cnd_category",execution_phase_name="Production(本番環境)"} 1.0'))
-        expect(response.body).to(include('dreamkast_execution_phases_by_category_count{conference_id="15",target_conference="pek_category",execution_phase_name="Production(本番環境)"} 1.0'))
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_difficulty_count{conference_id="16",talk_difficulty_name="初級者"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_difficulty_count{conference_id="16",talk_difficulty_name="中級者"} 1.0'))
       end
 
-      it 'returns languages count by category' do
+      it 'returns CFP proposal counts by assumed visitor' do
         get '/metrics'
-        expect(response).to(be_successful)
-        # CND: cnk_talk1(JA), cnk_talk2(JA) -> JA=2, PEK: cnk_talk3(EN) -> EN=1
-        expect(response.body).to(include('dreamkast_languages_by_category_count{conference_id="15",target_conference="cnd_category",language_name="JA"} 2.0'))
-        expect(response.body).to(include('dreamkast_languages_by_category_count{conference_id="15",target_conference="pek_category",language_name="EN"} 1.0'))
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_assumed_visitor_count{conference_id="16",assumed_visitor_name="architect"} 2.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_assumed_visitor_count{conference_id="16",assumed_visitor_name="developer"} 1.0'))
       end
 
-      it 'returns session times count by category' do
+      it 'returns CFP proposal counts by execution phase' do
         get '/metrics'
-        expect(response).to(be_successful)
-        # CND: cnk_talk1 -> 40min=1
-        expect(response.body).to(include('dreamkast_session_times_by_category_count{conference_id="15",target_conference="cnd_category",session_time_name="_40min (full session)"} 1.0'))
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_execution_phase_count{conference_id="16",execution_phase_name="Dev/QA"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_execution_phase_count{conference_id="16",execution_phase_name="Production"} 1.0'))
       end
 
-      it 'returns publication permissions count by category' do
+      it 'returns CFP proposal counts by publication permission' do
         get '/metrics'
-        expect(response).to(be_successful)
-        # CND: cnk_talk1 -> All okay=1
-        expect(response.body).to(include('dreamkast_publication_permissions_by_category_count{conference_id="15",target_conference="cnd_category",publication_permission_name="All okay - スライド・動画両方ともに公開可"} 1.0'))
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_publication_permission_count{conference_id="16",publication_permission_name="All okay"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_publication_permission_count{conference_id="16",publication_permission_name="Only slide"} 1.0'))
       end
 
-      it 'returns proposals count by category' do
+      it 'returns CFP proposal counts by session time' do
         get '/metrics'
-        expect(response).to(be_successful)
-        # CND: cnk_talk1 + cnk_talk2 = 2, PEK: cnk_talk3 = 1, SREK: cnk_talk4 = 1
-        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="cnd_category"} 2.0'))
-        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="pek_category"} 1.0'))
-        expect(response.body).to(include('dreamkast_proposals_by_category_count{conference_id="15",target_conference="srek_category"} 1.0'))
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_session_time_count{conference_id="16",session_time_name="30 minutes"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_session_time_count{conference_id="16",session_time_name="20 minutes"} 1.0'))
+      end
+
+      it 'returns CFP proposal counts by language' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_language_count{conference_id="16",language_name="JA"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_language_count{conference_id="16",language_name="EN"} 1.0'))
+      end
+
+      it 'returns CFP proposal counts by presentation method' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_presentation_method_count{conference_id="16",presentation_method_name="onsite"} 1.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_presentation_method_count{conference_id="16",presentation_method_name="online"} 1.0'))
+      end
+
+      def create_proposal_item_configs
+        create(:proposal_item_config, id: 283, conference: cndw2026, label: 'assumed_visitor', params: 'architect')
+        create(:proposal_item_config, id: 284, conference: cndw2026, label: 'assumed_visitor', params: 'developer')
+        create(:proposal_item_config, id: 289, conference: cndw2026, label: 'execution_phase', params: 'Dev/QA')
+        create(:proposal_item_config, id: 291, conference: cndw2026, label: 'execution_phase', params: 'Production')
+        create(:proposal_item_config, id: 293, conference: cndw2026, label: 'whether_it_can_be_published', params: 'All okay')
+        create(:proposal_item_config, id: 294, conference: cndw2026, label: 'whether_it_can_be_published', params: 'Only slide')
+        create(:proposal_item_config, id: 299, conference: cndw2026, label: 'session_time', params: '30 minutes')
+        create(:proposal_item_config, id: 300, conference: cndw2026, label: 'session_time', params: '20 minutes')
+        create(:proposal_item_config, id: 301, conference: cndw2026, label: 'language', params: 'JA')
+        create(:proposal_item_config, id: 302, conference: cndw2026, label: 'language', params: 'EN')
+        create(:proposal_item_config, id: 297, conference: cndw2026, label: 'presentation_method', params: 'onsite')
+        create(:proposal_item_config, id: 298, conference: cndw2026, label: 'presentation_method', params: 'online')
+      end
+
+      def create_proposal_items(cfp_talks, sponsor_talk)
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'assumed_visitor', params: %w[283 284])
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'assumed_visitor', params: ['283'])
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'execution_phase', params: ['289'])
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'execution_phase', params: ['291'])
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'whether_it_can_be_published', params: '293')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'whether_it_can_be_published', params: '294')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'session_time', params: '299')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'session_time', params: '300')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'language', params: '301')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'language', params: '302')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[0], label: 'presentation_method', params: '297')
+        create(:proposal_item, conference: cndw2026, talk: cfp_talks[1], label: 'presentation_method', params: '298')
+        create(:proposal_item, conference: cndw2026, talk: sponsor_talk, label: 'language', params: '301')
       end
     end
   end

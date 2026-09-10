@@ -44,6 +44,7 @@ describe DreamkastExporter, type: :request do
       let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
       let!(:beginner) { create(:talk_difficulty, conference: cndw2026, name: '初級者') }
       let!(:intermediate) { create(:talk_difficulty, conference: cndw2026, name: '中級者') }
+      let!(:advanced) { create(:talk_difficulty, conference: cndw2026, name: '上級者') }
 
       before do
         session_type = TalkType.find(TalkType::SESSION_ID)
@@ -120,6 +121,13 @@ describe DreamkastExporter, type: :request do
         expect(response.body).to(include('dreamkast_cfp_proposals_by_presentation_method_count{conference_id="16",presentation_method_name="online"} 1.0'))
       end
 
+      it 'returns zero for choices and difficulties without any proposal' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_presentation_method_count{conference_id="16",presentation_method_name="hybrid"} 0.0'))
+        expect(response.body).to(include('dreamkast_cfp_proposals_by_difficulty_count{conference_id="16",talk_difficulty_name="上級者"} 0.0'))
+      end
+
       def create_proposal_item_configs
         create(:proposal_item_config, id: 283, conference: cndw2026, label: 'assumed_visitor', params: 'architect')
         create(:proposal_item_config, id: 284, conference: cndw2026, label: 'assumed_visitor', params: 'developer')
@@ -133,6 +141,8 @@ describe DreamkastExporter, type: :request do
         create(:proposal_item_config, id: 302, conference: cndw2026, label: 'language', params: 'EN')
         create(:proposal_item_config, id: 297, conference: cndw2026, label: 'presentation_method', params: 'onsite')
         create(:proposal_item_config, id: 298, conference: cndw2026, label: 'presentation_method', params: 'online')
+        # 応募が 1 件も無い選択肢（ゼロ埋めの確認用）
+        create(:proposal_item_config, id: 303, conference: cndw2026, label: 'presentation_method', params: 'hybrid')
       end
 
       def create_proposal_items(cfp_talks, sponsor_talk)

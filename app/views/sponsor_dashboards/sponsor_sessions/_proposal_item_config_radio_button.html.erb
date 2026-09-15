@@ -1,5 +1,7 @@
 <% existing_items = f.object.persisted? ? f.object.proposal_items.find_by(label: first_item.label)&.params : []%>
-<%= label_tag "sponsor_session[proposal_items_attributes][#{first_item.label}]",  first_item.item_name, {class: 'dk-label'}%><span class="dk-required">*</span>
+<%= label_tag "sponsor_session[proposal_items_attributes][#{first_item.label}]", class: 'dk-label' do %>
+  <%= first_item.item_name %><span class="dk-required">*</span>
+<% end %>
 <p class="dk-hint tw-mb-2"><%= first_item.description&.html_safe %></p>
 <% @conference.proposal_item_configs.where(item_number: item_number).each do |item|%>
   <% label = first_item.label.pluralize.to_sym %>

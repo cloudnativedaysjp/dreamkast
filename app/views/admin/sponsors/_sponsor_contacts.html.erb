@@ -1,4 +1,5 @@
-<%= turbo_frame_tag "sponsor_contacts_and_invites" do %>
+<%# show.html.erb の 12 カラム grid の子になるため、turbo-frame 自体に全幅を指定する %>
+<%= turbo_frame_tag "sponsor_contacts_and_invites", class: "tw-col-span-12" do %>
   <div class="tw-col-span-12">
     <h4>スポンサー担当者</h4>
     <div class="tw-flex tw-justify-end">

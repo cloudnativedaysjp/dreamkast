@@ -85,6 +85,11 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
         labels: [:conference_id, :talk_difficulty_name]
       ),
       Prometheus::Client::Gauge.new(
+        :dreamkast_talk_categories_count,
+        docstring: 'Count dreamkast talk categories',
+        labels: [:conference_id, :talk_category_name]
+      ),
+      Prometheus::Client::Gauge.new(
         :dreamkast_stats_of_registrants_offline,
         docstring: 'Stats of Registrants(Offline)',
         labels: [:conference_id]
@@ -222,6 +227,20 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       metrics.set(
         talk_difficulties_count.count,
         labels: { conference_id: talk_difficulties_count.conference_id, talk_difficulty_name: talk_difficulties_count.name }
+      )
+    end
+  end
+
+  def dreamkast_talk_categories_count(metrics)
+    category_counts = Talk.joins(:talk_category)
+                          .where.not(talks: { conference_id: 15 })
+                          .group('talks.conference_id', 'talk_categories.name')
+                          .count
+
+    TalkCategory.where.not(conference_id: [nil, 15]).where.not(name: nil).pluck(:conference_id, :name).uniq.each do |conference_id, name|
+      metrics.set(
+        category_counts[[conference_id, name]] || 0,
+        labels: { conference_id:, talk_category_name: name }
       )
     end
   end

@@ -40,6 +40,31 @@ describe DreamkastExporter, type: :request do
       end
     end
 
+    context 'have talks with categories' do
+      let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
+      let!(:cnk2026) { create(:conference, id: 15, abbr: 'cnk2026', name: 'CloudNative Conference 2026') }
+
+      before do
+        existing_category = create(:talk_category, id: 1, conference: cndt2020, name: 'Existing Category')
+        current_category = create(:talk_category, conference: cndw2026, name: 'Current Category')
+        create(:talk_category, conference: cndw2026, name: 'Unused Category')
+        special_category = create(:talk_category, conference: cnk2026, name: 'Special Category')
+
+        create(:talk, conference: cndt2020, talk_category: existing_category, title: 'Existing Conference Talk')
+        create_list(:talk, 2, conference: cndw2026, talk_category: current_category, title: 'Current Conference Talk')
+        create(:talk, conference: cnk2026, talk_category: special_category, title: 'Special Conference Talk')
+      end
+
+      it 'returns talk counts by category except for conference 15' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_talk_categories_count{conference_id="1",talk_category_name="Existing Category"} 3.0'))
+        expect(response.body).to(include('dreamkast_talk_categories_count{conference_id="16",talk_category_name="Current Category"} 2.0'))
+        expect(response.body).to(include('dreamkast_talk_categories_count{conference_id="16",talk_category_name="Unused Category"} 0.0'))
+        expect(response.body).not_to(include('dreamkast_talk_categories_count{conference_id="15"'))
+      end
+    end
+
     context 'have CFP proposals in a conference' do
       let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
       let!(:beginner) { create(:talk_difficulty, conference: cndw2026, name: '初級者') }

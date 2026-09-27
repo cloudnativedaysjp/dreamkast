@@ -15,7 +15,14 @@ RSpec.describe(MediaPackageV2ArchiveOriginEndpoint, type: :model) do
   describe '#create_aws_resource' do
     before do
       client.stub_responses(:get_origin_endpoint, 'NotFoundException')
-      client.stub_responses(:create_origin_endpoint, { origin_endpoint_name: 'test_cndt2020_trackA_archive', channel_group_name: 'g', channel_name: 'c', container_type: 'TS' })
+      # SDK はスタブのレスポンスも検証するため、必須項目を埋めた値を返す
+      response = {
+        origin_endpoint_name: 'test_cndt2020_trackA_archive', channel_group_name: 'g', channel_name: 'c', container_type: 'TS',
+        arn: 'arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/g/channel/c/originEndpoint/test_cndt2020_trackA_archive',
+        segment: { segment_duration_seconds: 6 },
+        created_at: Time.current, modified_at: Time.current
+      }
+      client.stub_responses(:create_origin_endpoint, response)
     end
 
     it 'creates an HLS endpoint that can be harvested for a week' do

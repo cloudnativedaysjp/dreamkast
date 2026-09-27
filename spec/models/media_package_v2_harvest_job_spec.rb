@@ -14,6 +14,18 @@ RSpec.describe(MediaPackageV2HarvestJob, type: :model) do
     create(:media_package_v2_harvest_job, conference:, talk:, archive_origin_endpoint:, start_time:, end_time:)
   end
 
+  # SDK はスタブのレスポンスも検証するため、必須項目を埋めた値を返す
+  def harvest_job_response(status)
+    {
+      channel_group_name: 'g', channel_name: 'c', origin_endpoint_name: 'o', harvest_job_name: 'job', status:,
+      arn: 'arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/g/channel/c/originEndpoint/o/harvestJob/job',
+      created_at: Time.current, modified_at: Time.current,
+      destination: { s3_destination: { bucket_name: 'bucket', destination_path: 'path' } },
+      harvested_manifests: { hls_manifests: [{ manifest_name: 'index' }] },
+      schedule_configuration: { start_time:, end_time: }
+    }
+  end
+
   before do
     allow_any_instance_of(described_class).to(receive(:media_package_v2_client).and_return(client))
   end
@@ -28,7 +40,7 @@ RSpec.describe(MediaPackageV2HarvestJob, type: :model) do
 
   describe '#create_aws_resource' do
     before do
-      client.stub_responses(:create_harvest_job, { harvest_job_name: 'job', status: 'QUEUED', channel_group_name: 'g', channel_name: 'c', origin_endpoint_name: 'o' })
+      client.stub_responses(:create_harvest_job, harvest_job_response('QUEUED'))
     end
 
     it 'creates a harvest job from the archive origin endpoint and stores the destination' do
@@ -51,7 +63,7 @@ RSpec.describe(MediaPackageV2HarvestJob, type: :model) do
   describe '#refresh_status' do
     it 'updates status while the job is running' do
       harvest_job.update!(harvest_job_name: 'job', status: 'IN_PROGRESS')
-      client.stub_responses(:get_harvest_job, { harvest_job_name: 'job', status: 'COMPLETED', channel_group_name: 'g', channel_name: 'c', origin_endpoint_name: 'o' })
+      client.stub_responses(:get_harvest_job, harvest_job_response('COMPLETED'))
 
       harvest_job.refresh_status
       expect(harvest_job.reload.status).to(eq('COMPLETED'))

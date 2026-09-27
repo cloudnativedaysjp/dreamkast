@@ -10,6 +10,7 @@ class MediaPackageV2Channel < ApplicationRecord
   belongs_to :streaming
   belongs_to :channel_group, class_name: 'MediaPackageV2ChannelGroup', foreign_key: :media_package_v2_channel_group_id
   has_one :origin_endpoint, class_name: 'MediaPackageV2OriginEndpoint'
+  has_one :archive_origin_endpoint, class_name: 'MediaPackageV2ArchiveOriginEndpoint'
 
   def create_aws_resource
     unless exists_aws_resource?

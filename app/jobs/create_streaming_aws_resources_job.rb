@@ -48,6 +48,10 @@ class CreateStreamingAwsResourcesJob < ApplicationJob
 
     origin_endpoint.add_origin_and_behavior
     logger.info('add origin and behavior to CloudFront distribution.')
+
+    archive_origin_endpoint = MediaPackageV2ArchiveOriginEndpoint.find_or_create_by(streaming_id: @streaming.id, media_package_v2_channel_id: channel.id)
+    logger.info("archive origin endpoint: #{archive_origin_endpoint}")
+    archive_origin_endpoint.create_aws_resource
   end
 
   def create_media_package_resources

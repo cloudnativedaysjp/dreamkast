@@ -16,22 +16,34 @@ namespace :util do
       harvest_job.update!(status: resp.status)
 
       puts("Harvest Job: id: #{resp.id}, status: #{resp.status}")
-      if resp.status == 'SUCCEEDED'
-        puts("Update video id: #{harvest_job.video_url}")
-        harvest_job.talk.video.update!(video_id: harvest_job.video_url)
-
-        body = []
-        body << 'アーカイブの作成が完了しました:'
-        body << "Track :#{harvest_job.talk.track.name}"
-        body << "登壇者: #{harvest_job.talk.speaker_names.join("\n")}"
-        body << "セッション: #{harvest_job.talk.title}"
-        body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
-
-        slack.post(body.join("\n")) unless body.empty?
-      end
+      update_video_and_notify(slack, harvest_job) if resp.status == 'SUCCEEDED'
     rescue => e
       puts(e)
     end
+
+    # MediaPackage V2
+    MediaPackageV2HarvestJob.where(status: [MediaPackageV2HarvestJob::STATUS_QUEUED, MediaPackageV2HarvestJob::STATUS_IN_PROGRESS]).find_each do |harvest_job|
+      harvest_job.refresh_status
+
+      puts("Harvest Job (V2): name: #{harvest_job.harvest_job_name}, status: #{harvest_job.status}")
+      update_video_and_notify(slack, harvest_job) if harvest_job.status == MediaPackageV2HarvestJob::STATUS_COMPLETED
+    rescue => e
+      puts(e)
+    end
+  end
+
+  def update_video_and_notify(slack, harvest_job)
+    puts("Update video id: #{harvest_job.video_url}")
+    harvest_job.talk.video.update!(video_id: harvest_job.video_url)
+
+    body = []
+    body << 'アーカイブの作成が完了しました:'
+    body << "Track :#{harvest_job.talk.track.name}"
+    body << "登壇者: #{harvest_job.talk.speaker_names.join("\n")}"
+    body << "セッション: #{harvest_job.talk.title}"
+    body << "アーカイブURL: https://#{fqdn}/#{harvest_job.conference.abbr}/talks/#{harvest_job.talk.id}"
+
+    slack.post(body.join("\n"))
   end
 
   def fqdn

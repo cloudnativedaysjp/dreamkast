@@ -53,6 +53,7 @@ class Conference < ApplicationRecord
   has_many :admin_profiles
   has_many :keynote_speaker_invitations
   has_many :media_package_harvest_jobs
+  has_many :media_package_v2_harvest_jobs
   has_many :rooms
   has_many :check_in_conferences
   has_many :stamp_rally_check_point_booths

@@ -16,7 +16,7 @@
 - [x] `Admin::HarvestJobsController` とビューを V2 に切り替え
 - [x] `Talk` / `Conference` / `Streaming` の関連、トラック画面の「録画中」判定を切り替え
 - [x] spec を追加・更新
-- [ ] rubocop / rspec を通す
+- [x] rubocop / rspec を通す（CI で確認）
 
 ## インフラ（別リポジトリ）
 - [x] アーカイブ用 S3 バケット（`dreamkast-archive-{prd,stg,dev}-us-west-2`）のポリシーで `mediapackagev2.amazonaws.com` に `s3:PutObject` を許可する（`aws:SourceAccount` 条件付き）

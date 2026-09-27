@@ -2,7 +2,9 @@ class Admin::ProfilesController < ApplicationController
   include SecuredAdmin
 
   def index
+    @query = params[:q].to_s.strip
     @profiles = Profile.where(conference_id: @conference.id)
+                       .search_by_name_or_email(@query)
                        .includes(:check_in_conferences)
                        .order(:id)
                        .page(params[:page])

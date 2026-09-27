@@ -76,6 +76,25 @@ class Profile < ApplicationRecord
     offline: '現地参加'
   }
 
+  def self.search_by_name_or_email(query)
+    terms = query.to_s.split(/[[:space:]]+/)
+    return all if terms.empty?
+
+    terms.reduce(left_joins(:user)) do |profiles, term|
+      pattern = "%#{sanitize_sql_like(term)}%"
+      profiles.where(
+        <<~SQL.squish,
+          profiles.last_name LIKE :pattern OR
+          profiles.first_name LIKE :pattern OR
+          profiles.last_name_kana LIKE :pattern OR
+          profiles.first_name_kana LIKE :pattern OR
+          users.email LIKE :pattern
+        SQL
+        pattern:
+      )
+    end
+  end
+
   # userのsubとemailを委譲（userがnilの可能性がある場合はallow_nil: true）
   delegate :sub, :email, to: :user, allow_nil: true
 

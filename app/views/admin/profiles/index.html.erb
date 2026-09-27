@@ -5,6 +5,27 @@
 
   <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Registered users</h2>
 
+  <div class="tw-mb-6 tw-rounded-lg tw-border tw-border-gray-200 tw-bg-white tw-p-4 tw-shadow-sm">
+    <%= form_with url: admin_profiles_path, method: :get, class: 'tw-flex tw-flex-col tw-gap-3 sm:tw-flex-row sm:tw-items-end' do |form| %>
+      <div class="tw-w-full sm:tw-max-w-xl">
+        <%= form.label :q, '参加者を検索', class: 'tw-mb-1 tw-block tw-text-sm tw-font-medium tw-text-gray-700' %>
+        <%= form.search_field :q,
+                              value: @query,
+                              placeholder: '氏名・かな・登録メールアドレス',
+                              autofocus: true,
+                              class: 'tw-block tw-w-full tw-rounded tw-border tw-border-gray-300 tw-px-3 tw-py-2 focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500' %>
+      </div>
+      <div class="tw-flex tw-gap-2">
+        <%= form.submit '検索', class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-transparent tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-shadow-sm hover:tw-bg-blue-700' %>
+        <% if @query.present? %>
+          <%= link_to 'クリア',
+                      admin_profiles_path,
+                      class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="tw-mb-6">
     <h2 class="tw-mb-4 tw-text-2xl tw-font-semibold tw-text-gray-900">Export to CSV</h2>
     <%= button_to admin_export_profiles_path, method: :get, class: 'tw-inline-flex tw-items-center tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-shadow-sm hover:tw-bg-gray-50' do %>
@@ -44,7 +65,7 @@
     </div>
     <div class="tw-mt-4 tw-flex tw-items-center tw-justify-between">
       <div><%= page_entries_info @profiles %></div>
-      <%= paginate @profiles %>
+      <%= paginate @profiles, params: { q: @query.presence } %>
     </div>
   <% end %>
 <% end %>

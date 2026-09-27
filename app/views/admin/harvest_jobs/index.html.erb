@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <th scope="col">ID</th>
-          <th scope="col">Harvest Job ID</th>
+          <th scope="col">Harvest Job Name</th>
           <th scope="col">Harvest Job Status</th>
           <th scope="col">StartTime</th>
           <th scope="col">EndTime</th>
@@ -17,8 +17,13 @@
         <% @harvest_jobs.each do |harvest_job| %>
           <tr>
             <td><%= harvest_job.id %></td>
-            <td><%= harvest_job.job_id %></td>
-            <td><%= harvest_job.job&.status %></td>
+            <td><%= harvest_job.harvest_job_name %></td>
+            <td>
+              <%= harvest_job.status %>
+              <% if harvest_job.error_message.present? %>
+                <div class="tw-text-sm tw-text-red-600"><%= harvest_job.error_message %></div>
+              <% end %>
+            </td>
             <td><%= harvest_job.start_time %></td>
             <td><%= harvest_job.end_time %></td>
             <td>

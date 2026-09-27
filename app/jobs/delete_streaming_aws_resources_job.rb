@@ -28,6 +28,8 @@ class DeleteStreamingAwsResourcesJob < ApplicationJob
 
     @streaming.media_package_v2_origin_endpoint&.remove_origin_and_behavior
     @streaming.media_package_v2_origin_endpoint&.destroy!
+    # HarvestJob の記録はアーカイブ動画の URL を残すため削除しない（エンドポイントへの参照だけ外れる）
+    @streaming.media_package_v2_archive_origin_endpoint&.destroy!
     @streaming.media_package_v2_channel&.destroy!
     @streaming.media_package_v2_channel_group&.destroy!
 

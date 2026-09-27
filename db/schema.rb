@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_120000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -286,6 +286,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.index ["streaming_id"], name: "index_media_package_parameters_on_streaming_id"
   end
 
+  create_table "media_package_v2_archive_origin_endpoints", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "streaming_id", null: false
+    t.string "media_package_v2_channel_id"
+    t.string "name"
+    t.index ["media_package_v2_channel_id"], name: "index_archive_origin_endpoints_on_channel_id"
+    t.index ["name"], name: "index_media_package_v2_archive_origin_endpoints_on_name", unique: true
+    t.index ["streaming_id"], name: "index_media_package_v2_archive_origin_endpoints_on_streaming_id"
+  end
+
   create_table "media_package_v2_channel_groups", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "streaming_id", null: false
     t.string "name"
@@ -300,6 +309,24 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.index ["media_package_v2_channel_group_id"], name: "index_channels_on_channel_group_id"
     t.index ["name"], name: "index_media_package_v2_channels_on_name", unique: true
     t.index ["streaming_id"], name: "index_media_package_v2_channels_on_streaming_id"
+  end
+
+  create_table "media_package_v2_harvest_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "conference_id", null: false
+    t.bigint "talk_id", null: false
+    t.string "media_package_v2_archive_origin_endpoint_id"
+    t.string "harvest_job_name"
+    t.string "status"
+    t.text "error_message"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.string "bucket_name"
+    t.string "destination_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_media_package_v2_harvest_jobs_on_conference_id"
+    t.index ["media_package_v2_archive_origin_endpoint_id"], name: "index_v2_harvest_jobs_on_archive_origin_endpoint_id"
+    t.index ["talk_id"], name: "index_media_package_v2_harvest_jobs_on_talk_id"
   end
 
   create_table "media_package_v2_origin_endpoints", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -849,8 +876,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
   add_foreign_key "media_package_origin_endpoints", "streamings"
   add_foreign_key "media_package_parameters", "media_package_channels"
   add_foreign_key "media_package_parameters", "streamings"
+  add_foreign_key "media_package_v2_archive_origin_endpoints", "streamings"
   add_foreign_key "media_package_v2_channel_groups", "streamings"
   add_foreign_key "media_package_v2_channels", "streamings"
+  add_foreign_key "media_package_v2_harvest_jobs", "conferences"
+  add_foreign_key "media_package_v2_harvest_jobs", "talks"
   add_foreign_key "media_package_v2_origin_endpoints", "streamings"
   add_foreign_key "profiles", "users"
   add_foreign_key "proposal_item_configs", "conferences"

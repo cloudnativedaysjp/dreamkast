@@ -1,3 +1,6 @@
+<% if @archive_origin_endpoint.nil? || @base_url.blank? %>
+  <p class="tw-text-red-600">このトラックの配信リソースにアーカイブ用エンドポイントがありません。配信リソースを作り直してください。</p>
+<% else %>
 <div id="preview_url"><%= @preview_url %></div>
 
 <video
@@ -12,7 +15,7 @@
 
 <%= form_with(url: admin_harvest_jobs_path, model: @harvest_job, method: :post, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
   <section class="speaker-information tw-py-3">
-    <%= form.hidden_field :media_package_channel_id, value: @media_package_channel.id %>
+    <%= form.hidden_field :media_package_v2_archive_origin_endpoint_id, value: @archive_origin_endpoint.id %>
     <%= form.hidden_field :talk_id, value: @talk.id %>
 
     <div class="field">
@@ -49,3 +52,4 @@
 
   player.play();
 </script>
+<% end %>

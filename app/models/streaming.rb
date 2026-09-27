@@ -6,6 +6,7 @@ class Streaming < ApplicationRecord
   has_one :media_package_v2_channel_group
   has_one :media_package_v2_channel
   has_one :media_package_v2_origin_endpoint
+  has_one :media_package_v2_archive_origin_endpoint
   has_one :media_package_channel
   has_one :media_package_origin_endpoint
   has_one :media_package_parameter

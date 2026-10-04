@@ -21,9 +21,20 @@ namespace :util do
         CheckIn.where(profile_id: profile.id).each do |check_in|
           check_in.update!(profile_id: nil)
         end
+        CheckInConference.where(scanner_profile_id: profile.id).update_all(scanner_profile_id: nil)
+        CheckInTalk.where(scanner_profile_id: profile.id).update_all(scanner_profile_id: nil)
         CheckInConference.where(profile_id: profile.id).destroy_all
         CheckInTalk.where(profile_id: profile.id).destroy_all
         PublicProfile.where(profile_id: profile.id).destroy_all
+        StampRallyCheckIn.where(profile_id: profile.id).delete_all
+        FormValue.where(profile_id: profile.id).delete_all
+        if ActiveRecord::Base.connection.table_exists?(:attendee_announcement_middles)
+          ActiveRecord::Base.connection.exec_delete(
+            ActiveRecord::Base.sanitize_sql_array(
+              ['DELETE FROM attendee_announcement_middles WHERE profile_id = ?', profile.id]
+            )
+          )
+        end
         profile.destroy!
       end
     end

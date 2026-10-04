@@ -22,6 +22,10 @@ describe 'cleanup_profiles' do
     let!(:talk) { create(:talk1) }
     let!(:registered_talk) { create(:registered_talk, profile: alice, talk:) }
     let!(:form_item) { create(:form_item1) }
+    let!(:form_value) { create(:form_value, profile: alice, form_item:) }
+    let!(:sponsor) { create(:sponsor, conference: cndt2020) }
+    let!(:stamp_rally_check_point) { create(:stamp_rally_check_point_booth, conference: cndt2020, sponsor:) }
+    let!(:stamp_rally_check_in) { create(:stamp_rally_check_in, profile: alice, stamp_rally_check_point:, check_in_timestamp: Time.current) }
     let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id) }
     let(:task) { 'util:cleanup_profiles' }
 
@@ -39,6 +43,12 @@ describe 'cleanup_profiles' do
       @rake[task].invoke
       expect(ChatMessage.where(conference_id: cndt2020.id).size).to(eq(1))
       expect(ChatMessage.find_by(conference_id: cndt2020.id).profile).to(eq(nil))
+    end
+
+    it 'deletes stamp rally check ins and form values related of profile' do
+      @rake[task].invoke
+      expect(StampRallyCheckIn.where(profile_id: alice.id).size).to(eq(0))
+      expect(FormValue.where(profile_id: alice.id).size).to(eq(0))
     end
   end
 

@@ -15,13 +15,18 @@ window.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
 
         var url = link.getAttribute('href');
-        fetch(url, { headers: { 'Accept': 'text/html' } })
+        var modalUrl = url + (url.indexOf('?') === -1 ? '?' : '&') + 'modal=1';
+        fetch(modalUrl, { headers: { 'Accept': 'text/html' } })
             .then(function(response) { return response.text(); })
             .then(function(html) {
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(html, 'text/html');
-                var body = doc.querySelector('.proposal-card-body');
-                if (!body) return;
+                var body = doc.querySelector('[data-talk-modal-content]');
+                // 登録画面へのリダイレクトなどでモーダルの中身が返らなかったときは、詳細ページへ遷移する
+                if (!body) {
+                    window.location.href = url;
+                    return;
+                }
 
                 var modal = document.getElementById('talk-modal');
                 if (!modal) return;
@@ -38,10 +43,7 @@ window.addEventListener('DOMContentLoaded', function() {
                                 '</svg>' +
                             '</button>' +
                         '</div>' +
-                        // 中身は talks#show の .proposal-card-body をそのまま使うため、そのスタイルの親クラスを付ける
-                        '<div class="japanese-modern-theme proposal-show tw-px-5 tw-py-4">' +
-                            '<div class="proposal-card-body">' + body.innerHTML + '</div>' +
-                        '</div>' +
+                        '<div class="tw-px-5 tw-py-5">' + body.outerHTML + '</div>' +
                         '<div class="tw-flex tw-flex-wrap tw-items-center tw-gap-2 tw-border-0 tw-border-t tw-border-solid tw-border-gray-200 tw-bg-gray-50 tw-px-5 tw-py-3">' +
                             '<button type="button" data-talk-select class="tw-hidden"></button>' +
                             '<div class="tw-ml-auto tw-flex tw-gap-2">' +

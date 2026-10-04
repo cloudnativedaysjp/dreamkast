@@ -28,6 +28,12 @@ class TalksController < ApplicationController
       raise(ActiveRecord::RecordNotFound)
     end
 
+    # タイムテーブルなどの詳細モーダル用に、ページではなくモーダルの中身だけを返す
+    if params[:modal].present?
+      render(partial: 'talks/modal_content', locals: { talk: @talk })
+      return
+    end
+
     # QA一覧を取得（新しい順でソート）
     # 常に取得（質問がない場合も空配列を返す）
     # 非表示の質問は除外

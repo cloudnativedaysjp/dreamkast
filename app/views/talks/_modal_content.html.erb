@@ -1,0 +1,91 @@
+<%# セッション詳細モーダルの中身（timetable.js が talks#show?modal=1 で取得して表示する） %>
+<div data-talk-modal-content class="tw-flex tw-flex-col tw-gap-5 tw-text-gray-800">
+  <div class="tw-flex tw-flex-col tw-gap-2">
+    <% if talk.start_time.present? && talk.end_time.present? && talk.conference_day.present? %>
+      <p class="tw-m-0 tw-text-sm tw-font-semibold tw-text-gray-600">
+        Track <%= talk.track.name %>
+        <span class="tw-mx-1 tw-text-gray-300">|</span>
+        <%= l(talk.conference_day.date, format: '%-m/%-d(%a)') %>
+        <%= talk.start_time.strftime('%H:%M') %>-<%= talk.end_time.strftime('%H:%M') %>
+      </p>
+    <% end %>
+
+    <div class="tw-flex tw-flex-wrap tw-gap-1.5">
+      <% if talk.talk_difficulty.present? && talk.talk_difficulty_id != 4 && talk.talk_category_id != 18 %>
+        <span class="tw-rounded-full tw-bg-sky-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-sky-800"><%= talk.talk_difficulty.name %></span>
+      <% end %>
+      <% if talk.talk_category.present? %>
+        <span class="tw-rounded-full tw-bg-gray-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-gray-700"><%= talk.talk_category.name %></span>
+      <% end %>
+      <% if talk.sponsor_session? %>
+        <span class="tw-rounded-full tw-bg-amber-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-amber-800">スポンサーセッション</span>
+      <% end %>
+      <% if talk.talk_category&.name != 'Keynote' && talk.keynote? %>
+        <span class="tw-rounded-full tw-bg-pink-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-pink-800">Keynote</span>
+      <% end %>
+      <% if talk.conference.closed? || talk.conference.archived? %>
+        <% if video_archived?(talk) %>
+          <span class="tw-rounded-full tw-bg-emerald-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-emerald-800">アーカイブ視聴可</span>
+        <% else %>
+          <span class="tw-rounded-full tw-bg-gray-100 tw-px-2.5 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-gray-600">アーカイブ視聴不可</span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if display_video?(talk) %>
+    <% if talk.video.video_id == '' %>
+      <p class="tw-m-0 tw-rounded-md tw-bg-amber-50 tw-px-4 tw-py-3 tw-text-sm tw-text-amber-800">本セッションのアーカイブ動画は現在作成中です。</p>
+    <% else %>
+      <video class="video-js vjs-16-9 vjs-big-play-centered" data-setup='{"fluid": true}' controls preload="auto">
+        <source src="<%= talk.video.video_id %>" type="application/x-mpegURL" />
+      </video>
+    <% end %>
+  <% end %>
+
+  <% if talk.abstract.present? %>
+    <div class="tw-break-words tw-text-sm tw-leading-relaxed [&_p:last-child]:tw-mb-0 [&_p]:tw-mb-3 [&_p]:tw-mt-0">
+      <%= simple_format(talk.abstract) %>
+    </div>
+  <% end %>
+
+  <% if talk.speakers.any? %>
+    <section class="tw-flex tw-flex-col tw-gap-3">
+      <h3 class="tw-m-0 tw-text-sm tw-font-bold tw-text-gray-900">Speaker</h3>
+      <% talk.speakers.each do |speaker| %>
+        <div class="tw-flex tw-gap-4 tw-rounded-md tw-bg-slate-50 tw-p-4">
+          <%= image_tag speaker.avatar_or_dummy_url(:medium), alt: '', size: '64x64', class: 'tw-h-16 tw-w-16 tw-shrink-0 tw-rounded-full tw-object-cover' %>
+          <div class="tw-flex tw-min-w-0 tw-flex-1 tw-flex-col tw-gap-1">
+            <div class="tw-flex tw-flex-wrap tw-items-center tw-gap-x-3 tw-gap-y-1">
+              <p class="tw-m-0 tw-text-base tw-font-bold tw-text-gray-900"><%= speaker.name %></p>
+              <% if speaker.twitter_id.present? %>
+                <a href="https://twitter.com/<%= speaker.twitter_id %>" target="_blank" rel="noopener noreferrer" class="tw-text-gray-500 hover:tw-text-gray-900" aria-label="<%= speaker.name %> の X">
+                  <svg class="tw-block tw-h-4 tw-w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+              <% end %>
+              <% if speaker.github_id.present? %>
+                <a href="https://github.com/<%= speaker.github_id %>" target="_blank" rel="noopener noreferrer" class="tw-text-gray-500 hover:tw-text-gray-900" aria-label="<%= speaker.name %> の GitHub">
+                  <svg class="tw-block tw-h-4 tw-w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+              <% end %>
+            </div>
+            <% if speaker.company.present? || speaker.job_title.present? %>
+              <p class="tw-m-0 tw-text-xs tw-text-gray-600"><%= [speaker.company, speaker.job_title].compact_blank.join(' / ') %></p>
+            <% end %>
+            <% if speaker.profile.present? %>
+              <div class="tw-mt-1 tw-break-words tw-text-xs tw-leading-relaxed tw-text-gray-700 [&_p:last-child]:tw-mb-0 [&_p]:tw-mb-2 [&_p]:tw-mt-0">
+                <%= simple_format(speaker.profile) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if display_document?(talk) %>
+    <p class="tw-m-0">
+      <a href="<%= talk.document_url %>" target="_blank" rel="noopener noreferrer" class="tw-text-sm tw-font-semibold tw-text-cndt-magenta hover:tw-underline">発表資料を見る &rarr;</a>
+    </p>
+  <% end %>
+</div>

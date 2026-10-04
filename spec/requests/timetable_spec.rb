@@ -170,6 +170,11 @@ describe TimetableController, type: :request do
         expect(response.body).to_not(include('Platform Engineering Track'))
         expect(response.body).to_not(include('残席'))
         expect(response.body).to(include('id="is_offline" value="false"'))
+
+        day1, day2 = response.body.split('id="timetable-day-2"')
+        expect(day1).to(include('懇親会'))
+        expect(day1).to_not(include('クロージング'))
+        expect(day2).to(include('クロージング'))
       end
     end
 
@@ -185,6 +190,7 @@ describe TimetableController, type: :request do
         expect(response.body).to(include('<form action="/cndw2026/profiles/talks"'))
         talks.each { |talk| expect(response.body).to(include("name=\"talks[#{talk.id}]\"")) }
         expect(response.body).to(include('セッション登録'))
+        expect(response.body.scan('type="checkbox"').size).to(eq(talks.size))
       end
     end
   end

@@ -3,6 +3,11 @@
   conference_days = conference.conference_days.externals.order(:date)
   # GuestProfile は ? 付きメソッドに常に true を返すため、Profile のときだけ判定する
   attend_offline = @profile.is_a?(Profile) && @profile.attend_offline?
+  # セッション登録の対象ではない企画（Day 番号ごとの固定表示）
+  fixed_programs = {
+    1 => [{ start: '18:30', time: '18:30 - 20:30', title: '懇親会' }],
+    2 => [{ start: '18:10', time: '18:10 -', title: 'クロージング' }]
+  }
 %>
 
 <div class="tw-bg-slate-50 tw-pb-16 tw-pt-8 <%= 'tw-pb-40' if form %>">
@@ -25,7 +30,7 @@
         talks = conference_day.talks
                               .where(show_on_timetable: true)
                               .includes(:track, :talk_category, :sponsor, :speakers)
-        grid = timetable_grid(conference_day, tracks, talks)
+        grid = timetable_grid(tracks, talks)
       %>
       <section id="timetable-day-<%= day_index + 1 %>" class="tw-mb-12 tw-scroll-mt-20">
         <h2 class="tw-mb-4 tw-flex tw-items-baseline tw-gap-3 tw-border-0 tw-border-b-2 tw-border-solid tw-border-cndt-magenta tw-pb-2 tw-text-xl tw-font-bold tw-text-gray-900">
@@ -136,6 +141,19 @@
                 </div>
               <% end %>
             <% end %>
+          </div>
+        <% end %>
+
+        <% fixed_programs.fetch(day_index + 1, []).each do |program| %>
+          <div class="tw-mt-4 tw-block tw-gap-x-2 lg:tw-mt-6 lg:tw-grid" style="<%= timetable_grid_columns_style(grid) %>">
+            <div class="tw-hidden lg:tw-block lg:tw-pr-2 lg:tw-pt-3 lg:tw-text-right lg:tw-text-xs lg:tw-font-semibold lg:tw-leading-none lg:tw-text-gray-500">
+              <%= program[:start] %>
+            </div>
+            <div class="tw-rounded-md tw-border tw-border-solid tw-border-cndt-magenta/30 tw-bg-white tw-px-4 tw-py-3 tw-text-center tw-shadow-sm"
+                 style="grid-column: 2 / -1;">
+              <p class="tw-m-0 tw-text-xs tw-text-gray-500"><%= program[:time] %></p>
+              <p class="tw-m-0 tw-text-base tw-font-bold tw-text-gray-900"><%= program[:title] %></p>
+            </div>
           </div>
         <% end %>
       </section>

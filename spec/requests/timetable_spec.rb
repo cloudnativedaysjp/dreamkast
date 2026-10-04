@@ -148,4 +148,59 @@ describe TimetableController, type: :request do
       end
     end
   end
+
+  describe 'GET cndw2026#index' do
+    let!(:cndw2026) { create(:cndw2026) }
+    let(:conference_day) { cndw2026.conference_days.order(:date).first }
+    let!(:talks) do
+      cndw2026.tracks.order(:number).map do |track|
+        create(:talk, conference: cndw2026, conference_day:, track:, title: "Track #{track.name} のセッション",
+                      start_time: '10:00', end_time: '10:40', show_on_timetable: true)
+      end
+    end
+
+    describe 'not logged in' do
+      it '4トラック分の見出しとセッションをフォームなしで表示する' do
+        get '/cndw2026/timetables'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to_not(include('<form action="/cndw2026/profiles/talks"'))
+        %w[A B C D].each { |name| expect(response.body).to(include("Track #{name}")) }
+        talks.each { |talk| expect(response.body).to(include(talk.title)) }
+        expect(response.body).to(include('grid-template-columns: 4rem repeat(4, minmax(0, 1fr));'))
+        expect(response.body).to_not(include('Platform Engineering Track'))
+        expect(response.body).to_not(include('残席'))
+        expect(response.body).to(include('id="is_offline" value="false"'))
+        expect(response.body).to_not(include('＋ 参加'))
+        expect(response.body).to_not(include('data-talk-id='))
+
+        day1, day2 = response.body.split('id="timetable-day-2"')
+        expect(day1).to(include('懇親会'))
+        expect(day1).to_not(include('クロージング'))
+        expect(day2).to(include('クロージング'))
+      end
+    end
+
+    describe 'logged in' do
+      before do
+        create(:alice, conference: cndw2026)
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
+      end
+
+      it 'セッション選択用の参加ボタンを表示する' do
+        get '/cndw2026/timetables'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to(include('<form action="/cndw2026/profiles/talks"'))
+        talks.each do |talk|
+          expect(response.body).to(include("name=\"talks[#{talk.id}]\""))
+          expect(response.body).to(include("aria-label=\"「#{talk.title}」に参加する\""))
+          expect(response.body).to(include("data-talk-id=\"#{talk.id}\""))
+        end
+        expect(response.body.scan('>＋ 参加</span>').size).to(eq(talks.size))
+        expect(response.body).to(include('セッション登録'))
+        expect(response.body).to(include('id="timetable-selection-status"'))
+        expect(response.body).to(include('id="timetable-toast"'))
+        expect(response.body.scan('type="checkbox"').size).to(eq(talks.size))
+      end
+    end
+  end
 end

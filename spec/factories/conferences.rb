@@ -180,4 +180,27 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
       create(:cndt2021_day2, conference:)
     end
   end
+
+  factory :cndw2026, class: Conference do
+    name { 'CloudNative Days Winter 2026' }
+    abbr { 'cndw2026' }
+    copyright { "\u00A9 CloudNative Days" }
+    privacy_policy { 'This is Privacy Policy' }
+    privacy_policy_for_speaker { 'This is Privacy Policy for speaker' }
+    conference_status { Conference::STATUS_REGISTERED }
+    speaker_entry { 1 }
+    attendee_entry { 1 }
+    show_timetable { 1 }
+    committee_name { 'CloudNative Days Committee' }
+    coc { 'this is coc' }
+    capacity { 600 }
+
+    after(:create) do |conference|
+      create(:conference_day, conference:, date: '2026-11-19', start_time: '09:50', end_time: '18:00', internal: false)
+      create(:conference_day, conference:, date: '2026-11-20', start_time: '09:50', end_time: '18:00', internal: false)
+      %w[A B C D].each.with_index(1) do |name, number|
+        create(:track, number:, name:, conference_id: conference.id)
+      end
+    end
+  end
 end

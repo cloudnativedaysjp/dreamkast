@@ -1,6 +1,6 @@
 <% provide(:title, 'タイムテーブル') %>
 
-<div class="modal fade" id="talk-modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="talk-modal" class="tw-hidden"></div>
 
 <% if current_user %>
   <%= form_with url: profiles_talks_path(event: @conference.abbr), method: :post do |form| %>

@@ -1,102 +1,159 @@
-<div class="japanese-modern-theme timetable-modern">
-  <div class="container">
-    <div class="timetable-modern-header">
-      <h1 class="timetable-modern-title">タイムテーブル</h1>
-    </div>
+<%
+  tracks = conference.tracks.order(:number)
+  conference_days = conference.conference_days.externals.order(:date)
+  # GuestProfile は ? 付きメソッドに常に true を返すため、Profile のときだけ判定する
+  attend_offline = @profile.is_a?(Profile) && @profile.attend_offline?
+  # セッション登録の対象ではない企画（Day 番号ごとの固定表示）
+  fixed_programs = {
+    1 => [{ start: '18:30', time: '18:30 - 20:30', title: '懇親会' }],
+    2 => [{ start: '18:10', time: '18:10 -', title: 'クロージング' }]
+  }
+%>
 
-    <% @conference.conference_days.externals.each do |conference_day| %>
-      <section class="timetable-modern-day">
-        <h2 class="timetable-modern-date"><%= conference_day.date.strftime("%Y年%m月%d日") %></h2>
+<div class="tw-bg-slate-50 tw-pb-16 tw-pt-8 <%= 'tw-pb-40' if form %>">
+  <div class="tw-mx-auto tw-w-full tw-max-w-screen-2xl tw-px-4">
+    <h1 class="tw-mb-4 tw-text-center tw-text-3xl tw-font-bold tw-tracking-wide tw-text-gray-900">タイムテーブル</h1>
 
-        <div class="timetable-modern-grid" style="--rows: <%= ((conference_day.end_time - conference_day.start_time).to_i / 60) - 160 + 0 %>">
-          <%
-            cnk_track_labels = if conference_day.date.day == 14
-              @conference.tracks.map { |t| "Cloud Native Track #{t.name}" }
-            else
-              ["Platform Engineering Track", "SRE Track", "初心者向けTrack"]
-            end
-          %>
-          <% cnk_track_labels.each_with_index do |label, n| %>
-            <div class="timetable-modern-track" style="--track: <%= n %>"><%= label %></div>
-          <% end %>
+    <% if conference_days.size > 1 %>
+      <nav class="tw-mb-8 tw-flex tw-flex-wrap tw-justify-center tw-gap-2" aria-label="開催日">
+        <% conference_days.each_with_index do |conference_day, day_index| %>
+          <a href="#timetable-day-<%= day_index + 1 %>"
+             class="tw-rounded-full tw-border tw-border-solid tw-border-cndt-navy tw-bg-white tw-px-4 tw-py-1.5 tw-text-sm tw-font-semibold tw-text-cndt-navy tw-no-underline tw-transition hover:tw-bg-cndt-navy hover:tw-text-white hover:tw-no-underline">
+            Day <%= day_index + 1 %> <span class="tw-font-normal"><%= l(conference_day.date, format: '%-m/%-d(%a)') %></span>
+          </a>
+        <% end %>
+      </nav>
+    <% end %>
 
-          <% intermissions = conference_day.talks
-               .where(type: 'Intermission')
-               .where.not(start_time: nil, end_time: nil)
-               .order(:end_time)
-               .to_a %>
+    <% conference_days.each_with_index do |conference_day, day_index| %>
+      <%
+        talks = conference_day.talks
+                              .where(show_on_timetable: true)
+                              .includes(:track, :talk_category, :sponsor, :speakers)
+        grid = timetable_grid(tracks, talks)
+      %>
+      <section id="timetable-day-<%= day_index + 1 %>" class="tw-mb-12 tw-scroll-mt-20">
+        <h2 class="tw-mb-4 tw-flex tw-items-baseline tw-gap-3 tw-border-0 tw-border-b-2 tw-border-solid tw-border-cndt-magenta tw-pb-2 tw-text-xl tw-font-bold tw-text-gray-900">
+          <span class="tw-text-cndt-magenta">Day <%= day_index + 1 %></span>
+          <span><%= l(conference_day.date, format: '%Y年%-m月%-d日(%a)') %></span>
+        </h2>
 
-          <% conference_day.talks.where(show_on_timetable: true).reorder(start_time: :asc, track_id: :asc).each do |talk| %>
-            <%
-              total_break = intermissions
-                .select { |i| i.end_time <= talk.start_time }
-                .sum { |i| ((i.end_time - i.start_time).to_i / 60) }
-              track_header_offset = 6
-              row_start = ((talk.start_time.in_time_zone('Asia/Tokyo') - Time.zone.parse("2000-01-01 10:00")) / 60).to_i - total_break + track_header_offset
-              row_end = ((talk.end_time - talk.start_time).to_i / 60) + row_start
-            %>
-            <div class="timetable-modern-talk"
-              slot="<%= talk.slot_number %>"
-              style="--track: <%= talk.track.number - 1 %>;
-                      --row-start: <%= row_start %>;
-                      --row-end: <%= row_end %>;">
-              <% if form %>
-              <label for="<%= "talks[#{talk.id}]" %>" class="timetable-modern-label">
-              <% form_status = talk.sold_out? if @profile.attend_offline? %>
-              <%= form.check_box "talks[#{talk.id}]",
-                                  {
-                                    talk_id: talk.id,
-                                    day_slot: talk.day_slot,
-                                    talk_number: talk.talk_number,
-                                    checked: talks_checked?(talk.id),
-                                    class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number}",
-                                    disabled: form_status,
-                                    "data-conference-day": conference_day.id,
-                                    "data-start-time": talk.start_time.to_i,
-                                    "data-end-time": talk.end_time.to_i
-                                  },
-                                  true,
-                                  false %>
-              <% end %>
-              <div class="timetable-modern-card
-                          <%= 'checked' if @current_user && talks_checked?(talk.id) %>
-                          <%= 'disabled' if form_status %>"
-                          talk_id="<%= talk.id %>"
-                          track_number="<%= talk.track.number %>">
-                <div class="timetable-modern-card-time">
-                  <span class="timetable-modern-track-name">Track <%= talk.track.name %>&nbsp;</span>
-                  <%= talk.start_time.strftime("%H:%M") %>-<%= talk.end_time.strftime("%H:%M") %>
-                  <% if talk.talk_category_id == 54 %> (Keynote) <% end %>
-                  <%= talk.seats_status if @profile.attend_offline? %>
-                </div>
-                <div class="timetable-modern-card-title">
-                  <%= link_to talk.title, talk_path(id: talk.id), "data-talk-modal": true %>
-                </div>
-                <div class="timetable-modern-card-speaker"><%= talk.speakers.map{|speaker| speaker.name }.join("/") %></div>
-                <div class="timetable-modern-card-hint"><span>(タイトルクリックで詳細表示)</span></div>
+        <% if grid.talks.empty? %>
+          <p class="tw-py-8 tw-text-center tw-text-gray-500">セッション情報は準備中です。</p>
+        <% else %>
+          <%# トラック見出し: グリッドの外に置いてスクロールに追従させる %>
+          <div class="tw-sticky tw-top-14 tw-z-20 tw-hidden tw-gap-x-2 tw-bg-slate-50/95 tw-py-2 tw-backdrop-blur lg:tw-grid"
+               style="<%= timetable_grid_columns_style(grid) %>">
+            <div></div>
+            <% grid.tracks.each do |track| %>
+              <div class="tw-rounded-md tw-border-0 tw-border-t-4 tw-border-solid <%= grid.track_accent(track)[:header] %> tw-bg-white tw-py-2 tw-text-center tw-text-sm tw-font-bold tw-text-gray-800 tw-shadow-sm">
+                Track <%= track.name %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="tw-relative tw-block tw-gap-x-2 lg:tw-grid"
+               style="<%= timetable_grid_columns_style(grid) %> grid-template-rows: repeat(<%= grid.total_rows %>, 3px);">
+            <% grid.tracks.each do |track| %>
+              <div class="tw-hidden tw-rounded-md tw-bg-white/60 lg:tw-block"
+                   style="grid-column: <%= grid.track_column(track) %>; grid-row: 1 / -1;"></div>
+            <% end %>
+
+            <% grid.talks_by_start_time.each_with_index do |(start_time, talks_at_time), time_index| %>
+              <% row = grid.row_start(start_time) %>
+              <div class="tw-hidden tw-border-0 tw-border-t tw-border-dashed tw-border-gray-300 lg:tw-block"
+                   style="grid-column: 2 / -1; grid-row: <%= row %>;"></div>
+              <div class="tw-mb-2 <%= 'tw-mt-6' unless time_index.zero? %> tw-text-sm tw-font-bold tw-text-gray-700 lg:tw-m-0 lg:tw-pr-2 lg:tw-text-right lg:tw-text-xs lg:tw-font-semibold lg:tw-leading-none lg:tw-text-gray-500"
+                   style="grid-column: 1; grid-row: <%= row %>;">
+                <%= start_time.strftime('%H:%M') %>
               </div>
 
-              <% if form %>
-              </label>
+              <% talks_at_time.each do |talk| %>
+                <%
+                  row_start, row_end = grid.talk_rows(talk)
+                  accent = grid.talk_accent(talk)
+                  sold_out = attend_offline && talk.sold_out?
+                %>
+                <div class="tw-relative tw-mb-2 tw-min-w-0 hover:tw-z-10 lg:tw-mb-0 lg:tw-py-0.5"
+                     slot="<%= talk.slot_number %>"
+                     style="grid-column: <%= grid.talk_column(talk) %>; grid-row: <%= row_start %> / <%= row_end %>;">
+                  <%# カード全体は詳細モーダルを開くリンク、選択は右上の参加ボタンだけで行う %>
+                  <div class="tw-group tw-relative tw-flex tw-flex-col tw-gap-1 tw-overflow-hidden tw-rounded-md tw-border tw-border-l-4 tw-border-solid tw-border-gray-200 <%= accent[:card] %> tw-bg-white tw-p-2 tw-shadow-sm tw-transition hover:tw-shadow-md has-[:checked]:tw-bg-sky-50 has-[:checked]:tw-ring-2 has-[:checked]:tw-ring-cndt-navy lg:tw-h-full lg:hover:tw-h-auto lg:hover:tw-min-h-full lg:hover:tw-overflow-visible"
+                       talk_id="<%= talk.id %>"
+                       track_number="<%= talk.track.number %>">
+                    <div class="tw-flex tw-items-start tw-justify-between tw-gap-2">
+                      <p class="tw-m-0 tw-text-xs tw-leading-tight tw-text-gray-500">
+                        <span class="tw-mr-1 tw-font-bold <%= accent[:text] %> lg:tw-hidden">Track <%= talk.track.name %></span>
+                        <%= talk.start_time.strftime('%H:%M') %>-<%= talk.end_time.strftime('%H:%M') %>
+                        <% if attend_offline %>
+                          <span class="tw-ml-1 tw-font-semibold tw-text-gray-700"><%= talk.seats_status %></span>
+                        <% end %>
+                      </p>
+                      <% if form %>
+                        <%# リンクの当たり判定（::after）より前面に出す %>
+                        <label class="tw-relative tw-z-[1] tw-m-0 tw-inline-flex tw-min-h-[44px] tw-shrink-0 tw-cursor-pointer tw-select-none tw-items-center tw-rounded-full tw-border tw-border-solid tw-border-cndt-navy tw-bg-white tw-px-3 tw-text-xs tw-font-bold tw-leading-none tw-text-cndt-navy tw-transition hover:tw-bg-sky-50 has-[:checked]:tw-bg-cndt-navy has-[:checked]:tw-text-white has-[:focus-visible]:tw-outline has-[:focus-visible]:tw-outline-2 has-[:focus-visible]:tw-outline-offset-2 has-[:focus-visible]:tw-outline-blue-500 has-[:disabled]:tw-cursor-not-allowed has-[:disabled]:tw-border-gray-300 has-[:disabled]:tw-bg-gray-100 has-[:disabled]:tw-text-gray-500 lg:tw-min-h-0 lg:tw-px-2 lg:tw-py-1">
+                          <%= form.check_box "talks[#{talk.id}]",
+                                             {
+                                               talk_id: talk.id,
+                                               day_slot: talk.day_slot,
+                                               talk_number: talk.talk_number,
+                                               checked: talks_checked?(talk.id),
+                                               class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number} tw-sr-only",
+                                               disabled: sold_out,
+                                               "aria-label": "「#{talk.title}」に参加する",
+                                               "data-conference-day": conference_day.id,
+                                               "data-start-time": talk.start_time.to_i,
+                                               "data-end-time": talk.end_time.to_i,
+                                               "data-talk-title": talk.title
+                                             },
+                                             true,
+                                             false %>
+                          <span class="group-has-[:checked]:tw-hidden group-has-[:disabled]:tw-hidden">＋ 参加</span>
+                          <span class="tw-hidden group-has-[input:disabled:not(:checked)]:tw-inline">満席</span>
+                          <span class="tw-hidden group-has-[:checked]:tw-inline">✓ 参加予定</span>
+                        </label>
+                      <% end %>
+                    </div>
+
+                    <h3 class="tw-m-0 tw-break-words tw-text-sm tw-font-bold tw-leading-snug">
+                      <%= link_to talk.title, talk_path(id: talk.id),
+                                  class: "tw-text-gray-900 tw-no-underline after:tw-absolute after:tw-inset-0 after:tw-content-[''] hover:tw-text-cndt-magenta hover:tw-underline focus-visible:tw-outline-none focus-visible:after:tw-rounded-md focus-visible:after:tw-outline focus-visible:after:tw-outline-2 focus-visible:after:tw-outline-offset-2 focus-visible:after:tw-outline-blue-500",
+                                  "data-talk-modal": true,
+                                  "data-talk-id": (talk.id if form) %>
+                    </h3>
+
+                    <% if talk.speakers.present? %>
+                      <p class="tw-m-0 tw-text-xs tw-leading-tight tw-text-gray-600"><%= talk.speakers.map(&:name).join(' / ') %></p>
+                    <% end %>
+
+                    <% if talk.talk_category.present? || talk.sponsor.present? %>
+                      <div class="tw-flex tw-flex-wrap tw-gap-1">
+                        <% if talk.talk_category.present? %>
+                          <span class="tw-rounded-full tw-bg-gray-100 tw-px-2 tw-py-0.5 tw-text-[0.65rem] tw-leading-tight tw-text-gray-600"><%= talk.talk_category.name %></span>
+                        <% end %>
+                        <% if talk.sponsor.present? %>
+                          <span class="tw-rounded-full tw-bg-amber-100 tw-px-2 tw-py-0.5 tw-text-[0.65rem] tw-leading-tight tw-text-amber-800">スポンサーセッション</span>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
-            </div>
-          <% end %>
-        </div>
-        <% if conference_day.date.day == 14 %>
-        <div class="timetable-modern-closing">
-          <div class="timetable-modern-closing-card">
-            <div class="timetable-modern-card-time">18:40 - 20:30</div>
-            <div class="timetable-modern-card-title"><a href="https://eventregist.com/e/cnk_party" target="_blank">懇親会</a></div>
+            <% end %>
           </div>
-        </div>
         <% end %>
-        <% if conference_day.date.day == 15 %>
-        <div class="timetable-modern-closing">
-          <div class="timetable-modern-closing-card">
-            <div class="timetable-modern-card-time">18:20 - 18:40</div>
-            <div class="timetable-modern-card-title">クロージング</div>
+
+        <% fixed_programs.fetch(day_index + 1, []).each do |program| %>
+          <div class="tw-mt-4 tw-block tw-gap-x-2 lg:tw-mt-6 lg:tw-grid" style="<%= timetable_grid_columns_style(grid) %>">
+            <div class="tw-hidden lg:tw-block lg:tw-pr-2 lg:tw-pt-3 lg:tw-text-right lg:tw-text-xs lg:tw-font-semibold lg:tw-leading-none lg:tw-text-gray-500">
+              <%= program[:start] %>
+            </div>
+            <div class="tw-rounded-md tw-border tw-border-solid tw-border-cndt-magenta/30 tw-bg-white tw-px-4 tw-py-3 tw-text-center tw-shadow-sm"
+                 style="grid-column: 2 / -1;">
+              <p class="tw-m-0 tw-text-xs tw-text-gray-500"><%= program[:time] %></p>
+              <p class="tw-m-0 tw-text-base tw-font-bold tw-text-gray-900"><%= program[:title] %></p>
+            </div>
           </div>
-        </div>
         <% end %>
       </section>
     <% end %>
@@ -104,8 +161,23 @@
 </div>
 
 <% if form %>
-  <%= render 'timetable_footer',
-      form: form,
-      information: '視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。' %>
+  <div class="tw-fixed tw-inset-x-0 tw-bottom-0 tw-z-40 tw-border-0 tw-border-t tw-border-solid tw-border-gray-200 tw-bg-white/95 tw-shadow-[0_-4px_12px_rgba(0,0,0,0.08)] tw-backdrop-blur">
+    <div class="tw-mx-auto tw-flex tw-max-w-screen-lg tw-flex-col tw-items-center tw-gap-3 tw-px-4 tw-py-3 md:tw-flex-row md:tw-justify-between">
+      <div class="tw-text-center md:tw-text-left">
+        <p id="timetable-selection-status" class="tw-m-0 tw-text-sm tw-font-bold tw-text-gray-900">
+          <span data-selection-count>0</span>件選択中
+          <span data-selection-unsaved class="tw-ml-2 tw-hidden tw-rounded-full tw-bg-amber-100 tw-px-2 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-amber-800">まだ登録されていません</span>
+        </p>
+        <p class="tw-m-0 tw-mt-1 tw-text-xs tw-text-gray-600">
+          「＋ 参加」で選び、「セッション登録」を押すと確定します。セッションをクリックすると詳細が表示されます。
+        </p>
+      </div>
+      <%= form.submit 'セッション登録', class: 'dk-btn-primary tw-w-full tw-shrink-0 tw-px-8 tw-py-2.5 tw-text-base md:tw-w-auto' %>
+    </div>
+  </div>
+
+  <%# 時間が重なるセッションの選択を外したときの通知（timetable.js が表示する） %>
+  <div id="timetable-toast" role="status" aria-live="polite"
+       class="tw-pointer-events-none tw-fixed tw-inset-x-4 tw-bottom-36 tw-z-[1060] tw-mx-auto tw-hidden tw-max-w-md tw-rounded-md tw-bg-gray-900/90 tw-px-4 tw-py-3 tw-text-center tw-text-sm tw-text-white tw-shadow-lg md:tw-bottom-24"></div>
 <% end %>
-<%= hidden_field_tag('is_offline', @profile.attend_offline?) %>
+<%= hidden_field_tag('is_offline', attend_offline) %>

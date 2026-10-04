@@ -129,6 +129,47 @@ describe TalksController, type: :request do
       end
     end
 
+    context 'modal=1' do
+      let!(:cndt2020) { create(:cndt2020, :registered, :cfp_result_visible, :show_timetable) }
+
+      context 'proposal is accepted' do
+        let!(:talk1) { create(:talk1, :accepted) }
+
+        it 'レイアウトや Q&A を含まない、モーダル用の中身だけを返す' do
+          get '/cndt2020/talks/1?modal=1'
+          expect(response).to(have_http_status('200'))
+          expect(response.body).to(include('data-talk-modal-content'))
+          expect(response.body).to(include('あいうえおかきくけこさしすせそ'))
+          expect(response.body).to_not(include('<html'))
+          expect(response.body).to_not(include('タイムテーブルに戻る'))
+          expect(response.body).to_not(include('Q&A'))
+        end
+      end
+
+      context 'proposal is rejected' do
+        let!(:talk1) { create(:talk1, :rejected) }
+
+        it_should_behave_like :returns_not_found, '1?modal=1'
+      end
+    end
+
+    context 'modal=1 with video archive' do
+      let!(:cndt2020) { create(:cndt2020, :archived, :cfp_result_visible) }
+      let!(:talk1) { create(:talk1) }
+      let!(:proposal1) { create(:proposal, :accepted, conference: cndt2020, talk: talk1) }
+      let!(:video) { create(:video, talk: talk1, video_id: '122234') }
+
+      before do
+        allow_any_instance_of(TalksController).to(receive(:display_video?).and_return(true))
+      end
+
+      it 'アーカイブ動画を表示する' do
+        get '/cndt2020/talks/1?modal=1'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to(include('<video'))
+      end
+    end
+
     # conference が archived の場合 display_video? は未ログインでも talk.archived? まで到達するため、
     # タイムテーブル未確定（conference_day / end_time が nil）の talk で 500 になっていた
     context 'talk is not assigned to a conference_day' do

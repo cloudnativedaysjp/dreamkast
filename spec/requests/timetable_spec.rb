@@ -170,6 +170,8 @@ describe TimetableController, type: :request do
         expect(response.body).to_not(include('Platform Engineering Track'))
         expect(response.body).to_not(include('残席'))
         expect(response.body).to(include('id="is_offline" value="false"'))
+        expect(response.body).to_not(include('＋ 参加'))
+        expect(response.body).to_not(include('data-talk-id='))
 
         day1, day2 = response.body.split('id="timetable-day-2"')
         expect(day1).to(include('懇親会'))
@@ -184,12 +186,19 @@ describe TimetableController, type: :request do
         allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
       end
 
-      it 'セッション選択用のチェックボックスを表示する' do
+      it 'セッション選択用の参加ボタンを表示する' do
         get '/cndw2026/timetables'
         expect(response).to(have_http_status('200'))
         expect(response.body).to(include('<form action="/cndw2026/profiles/talks"'))
-        talks.each { |talk| expect(response.body).to(include("name=\"talks[#{talk.id}]\"")) }
+        talks.each do |talk|
+          expect(response.body).to(include("name=\"talks[#{talk.id}]\""))
+          expect(response.body).to(include("aria-label=\"「#{talk.title}」に参加する\""))
+          expect(response.body).to(include("data-talk-id=\"#{talk.id}\""))
+        end
+        expect(response.body.scan('>＋ 参加</span>').size).to(eq(talks.size))
         expect(response.body).to(include('セッション登録'))
+        expect(response.body).to(include('id="timetable-selection-status"'))
+        expect(response.body).to(include('id="timetable-toast"'))
         expect(response.body.scan('type="checkbox"').size).to(eq(talks.size))
       end
     end

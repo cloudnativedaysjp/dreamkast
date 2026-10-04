@@ -77,24 +77,8 @@
                 <div class="tw-relative tw-mb-2 tw-min-w-0 hover:tw-z-10 lg:tw-mb-0 lg:tw-py-0.5"
                      slot="<%= talk.slot_number %>"
                      style="grid-column: <%= grid.talk_column(talk) %>; grid-row: <%= row_start %> / <%= row_end %>;">
-                  <% if form %>
-                  <label class="tw-group tw-m-0 tw-block tw-cursor-pointer has-[:disabled]:tw-cursor-not-allowed lg:tw-h-full">
-                    <%= form.check_box "talks[#{talk.id}]",
-                                       {
-                                         talk_id: talk.id,
-                                         day_slot: talk.day_slot,
-                                         talk_number: talk.talk_number,
-                                         checked: talks_checked?(talk.id),
-                                         class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number} tw-sr-only",
-                                         disabled: sold_out,
-                                         "data-conference-day": conference_day.id,
-                                         "data-start-time": talk.start_time.to_i,
-                                         "data-end-time": talk.end_time.to_i
-                                       },
-                                       true,
-                                       false %>
-                  <% end %>
-                  <div class="tw-flex tw-flex-col tw-gap-1 tw-overflow-hidden tw-rounded-md tw-border tw-border-l-4 tw-border-solid tw-border-gray-200 <%= accent[:card] %> tw-bg-white tw-p-2 tw-shadow-sm tw-transition hover:tw-shadow-md group-has-[:checked]:tw-bg-sky-50 group-has-[:checked]:tw-ring-2 group-has-[:checked]:tw-ring-cndt-navy group-has-[:focus-visible]:tw-outline group-has-[:focus-visible]:tw-outline-2 group-has-[:focus-visible]:tw-outline-offset-2 group-has-[:focus-visible]:tw-outline-blue-500 group-has-[:disabled]:tw-opacity-50 lg:tw-h-full lg:hover:tw-h-auto lg:hover:tw-min-h-full lg:hover:tw-overflow-visible"
+                  <%# カード全体は詳細モーダルを開くリンク、選択は右上の参加ボタンだけで行う %>
+                  <div class="tw-group tw-relative tw-flex tw-flex-col tw-gap-1 tw-overflow-hidden tw-rounded-md tw-border tw-border-l-4 tw-border-solid tw-border-gray-200 <%= accent[:card] %> tw-bg-white tw-p-2 tw-shadow-sm tw-transition hover:tw-shadow-md has-[:checked]:tw-bg-sky-50 has-[:checked]:tw-ring-2 has-[:checked]:tw-ring-cndt-navy lg:tw-h-full lg:hover:tw-h-auto lg:hover:tw-min-h-full lg:hover:tw-overflow-visible"
                        talk_id="<%= talk.id %>"
                        track_number="<%= talk.track.number %>">
                     <div class="tw-flex tw-items-start tw-justify-between tw-gap-2">
@@ -106,18 +90,36 @@
                         <% end %>
                       </p>
                       <% if form %>
-                        <span class="tw-flex tw-h-4 tw-w-4 tw-shrink-0 tw-items-center tw-justify-center tw-rounded-full tw-border-2 tw-border-solid tw-border-gray-300 tw-bg-white tw-text-white group-has-[:checked]:tw-border-cndt-navy group-has-[:checked]:tw-bg-cndt-navy" aria-hidden="true">
-                          <svg class="tw-hidden tw-h-2.5 tw-w-2.5 group-has-[:checked]:tw-block" viewBox="0 0 16 16" fill="none">
-                            <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </span>
+                        <%# リンクの当たり判定（::after）より前面に出す %>
+                        <label class="tw-relative tw-z-[1] tw-m-0 tw-inline-flex tw-min-h-[44px] tw-shrink-0 tw-cursor-pointer tw-select-none tw-items-center tw-rounded-full tw-border tw-border-solid tw-border-cndt-navy tw-bg-white tw-px-3 tw-text-xs tw-font-bold tw-leading-none tw-text-cndt-navy tw-transition hover:tw-bg-sky-50 has-[:checked]:tw-bg-cndt-navy has-[:checked]:tw-text-white has-[:focus-visible]:tw-outline has-[:focus-visible]:tw-outline-2 has-[:focus-visible]:tw-outline-offset-2 has-[:focus-visible]:tw-outline-blue-500 has-[:disabled]:tw-cursor-not-allowed has-[:disabled]:tw-border-gray-300 has-[:disabled]:tw-bg-gray-100 has-[:disabled]:tw-text-gray-500 lg:tw-min-h-0 lg:tw-px-2 lg:tw-py-1">
+                          <%= form.check_box "talks[#{talk.id}]",
+                                             {
+                                               talk_id: talk.id,
+                                               day_slot: talk.day_slot,
+                                               talk_number: talk.talk_number,
+                                               checked: talks_checked?(talk.id),
+                                               class: "talks_checkbox slot_#{talk.day_slot} #{talk.talk_number} tw-sr-only",
+                                               disabled: sold_out,
+                                               "aria-label": "「#{talk.title}」に参加する",
+                                               "data-conference-day": conference_day.id,
+                                               "data-start-time": talk.start_time.to_i,
+                                               "data-end-time": talk.end_time.to_i,
+                                               "data-talk-title": talk.title
+                                             },
+                                             true,
+                                             false %>
+                          <span class="group-has-[:checked]:tw-hidden group-has-[:disabled]:tw-hidden">＋ 参加</span>
+                          <span class="tw-hidden group-has-[input:disabled:not(:checked)]:tw-inline">満席</span>
+                          <span class="tw-hidden group-has-[:checked]:tw-inline">✓ 参加予定</span>
+                        </label>
                       <% end %>
                     </div>
 
                     <h3 class="tw-m-0 tw-break-words tw-text-sm tw-font-bold tw-leading-snug">
                       <%= link_to talk.title, talk_path(id: talk.id),
-                                  class: 'tw-text-gray-900 tw-no-underline hover:tw-text-cndt-magenta hover:tw-underline',
-                                  "data-talk-modal": true %>
+                                  class: "tw-text-gray-900 tw-no-underline after:tw-absolute after:tw-inset-0 after:tw-content-[''] hover:tw-text-cndt-magenta hover:tw-underline focus-visible:tw-outline-none focus-visible:after:tw-rounded-md focus-visible:after:tw-outline focus-visible:after:tw-outline-2 focus-visible:after:tw-outline-offset-2 focus-visible:after:tw-outline-blue-500",
+                                  "data-talk-modal": true,
+                                  "data-talk-id": (talk.id if form) %>
                     </h3>
 
                     <% if talk.speakers.present? %>
@@ -135,9 +137,6 @@
                       </div>
                     <% end %>
                   </div>
-                  <% if form %>
-                  </label>
-                  <% end %>
                 </div>
               <% end %>
             <% end %>
@@ -164,11 +163,21 @@
 <% if form %>
   <div class="tw-fixed tw-inset-x-0 tw-bottom-0 tw-z-40 tw-border-0 tw-border-t tw-border-solid tw-border-gray-200 tw-bg-white/95 tw-shadow-[0_-4px_12px_rgba(0,0,0,0.08)] tw-backdrop-blur">
     <div class="tw-mx-auto tw-flex tw-max-w-screen-lg tw-flex-col tw-items-center tw-gap-3 tw-px-4 tw-py-3 md:tw-flex-row md:tw-justify-between">
-      <p class="tw-m-0 tw-text-center tw-text-xs tw-text-gray-600 md:tw-text-left">
-        視聴したいセッションを選択してください。セッション名をクリックすると詳細が表示されます。
-      </p>
+      <div class="tw-text-center md:tw-text-left">
+        <p id="timetable-selection-status" class="tw-m-0 tw-text-sm tw-font-bold tw-text-gray-900">
+          <span data-selection-count>0</span>件選択中
+          <span data-selection-unsaved class="tw-ml-2 tw-hidden tw-rounded-full tw-bg-amber-100 tw-px-2 tw-py-0.5 tw-text-xs tw-font-semibold tw-text-amber-800">まだ登録されていません</span>
+        </p>
+        <p class="tw-m-0 tw-mt-1 tw-text-xs tw-text-gray-600">
+          「＋ 参加」で選び、「セッション登録」を押すと確定します。セッションをクリックすると詳細が表示されます。
+        </p>
+      </div>
       <%= form.submit 'セッション登録', class: 'dk-btn-primary tw-w-full tw-shrink-0 tw-px-8 tw-py-2.5 tw-text-base md:tw-w-auto' %>
     </div>
   </div>
+
+  <%# 時間が重なるセッションの選択を外したときの通知（timetable.js が表示する） %>
+  <div id="timetable-toast" role="status" aria-live="polite"
+       class="tw-pointer-events-none tw-fixed tw-inset-x-4 tw-bottom-36 tw-z-[1060] tw-mx-auto tw-hidden tw-max-w-md tw-rounded-md tw-bg-gray-900/90 tw-px-4 tw-py-3 tw-text-center tw-text-sm tw-text-white tw-shadow-lg md:tw-bottom-24"></div>
 <% end %>
 <%= hidden_field_tag('is_offline', attend_offline) %>

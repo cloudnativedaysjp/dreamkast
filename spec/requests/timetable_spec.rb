@@ -148,4 +148,42 @@ describe TimetableController, type: :request do
       end
     end
   end
+
+  describe 'GET cndw2026#index' do
+    let!(:cndw2026) { create(:cndw2026) }
+    let(:conference_day) { cndw2026.conference_days.order(:date).first }
+    let!(:talks) do
+      cndw2026.tracks.order(:number).map do |track|
+        create(:talk, conference: cndw2026, conference_day:, track:, title: "Track #{track.name} のセッション",
+                      start_time: '10:00', end_time: '10:40', show_on_timetable: true)
+      end
+    end
+
+    describe 'not logged in' do
+      it '4トラック分の見出しとセッションをフォームなしで表示する' do
+        get '/cndw2026/timetables'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to_not(include('<form action="/cndw2026/profiles/talks"'))
+        %w[A B C D].each { |name| expect(response.body).to(include("Track #{name}")) }
+        talks.each { |talk| expect(response.body).to(include(talk.title)) }
+        expect(response.body).to(include('grid-template-columns: 4rem repeat(4, minmax(0, 1fr));'))
+        expect(response.body).to_not(include('Platform Engineering Track'))
+      end
+    end
+
+    describe 'logged in' do
+      before do
+        create(:alice, conference: cndw2026)
+        allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(alice_session[:userinfo]))
+      end
+
+      it 'セッション選択用のチェックボックスを表示する' do
+        get '/cndw2026/timetables'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to(include('<form action="/cndw2026/profiles/talks"'))
+        talks.each { |talk| expect(response.body).to(include("name=\"talks[#{talk.id}]\"")) }
+        expect(response.body).to(include('セッション登録'))
+      end
+    end
+  end
 end

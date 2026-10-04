@@ -168,6 +168,8 @@ describe TimetableController, type: :request do
         talks.each { |talk| expect(response.body).to(include(talk.title)) }
         expect(response.body).to(include('grid-template-columns: 4rem repeat(4, minmax(0, 1fr));'))
         expect(response.body).to_not(include('Platform Engineering Track'))
+        expect(response.body).to_not(include('残席'))
+        expect(response.body).to(include('id="is_offline" value="false"'))
       end
     end
 

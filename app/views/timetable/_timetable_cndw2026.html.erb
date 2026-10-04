@@ -1,7 +1,8 @@
 <%
   tracks = conference.tracks.order(:number)
   conference_days = conference.conference_days.externals.order(:date)
-  attend_offline = @profile.respond_to?(:attend_offline?) && @profile.attend_offline?
+  # GuestProfile は ? 付きメソッドに常に true を返すため、Profile のときだけ判定する
+  attend_offline = @profile.is_a?(Profile) && @profile.attend_offline?
 %>
 
 <div class="tw-bg-slate-50 tw-pb-16 tw-pt-8 <%= 'tw-pb-40' if form %>">

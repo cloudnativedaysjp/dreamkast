@@ -16,11 +16,14 @@
 - [x] 時間重複で他の選択を外したときにトーストで知らせる
 - [x] 下部バーに選択件数と未登録の変更有無を表示する
 - [x] 詳細モーダルを枠外クリック・Esc で閉じられるようにする
-- [x] 詳細モーダルの × ボタンを Bootstrap 5 の `btn-close` にして右上に表示する（`.close` / `mr-auto` は Bootstrap 4 のクラスでスタイルが当たっていなかった）
+- [x] 詳細モーダルの × ボタンを右上に表示する（`.close` / `mr-auto` は Bootstrap 4 のクラスでスタイルが当たっていなかった）
+- [x] 詳細モーダルを Bootstrap から Tailwind に書き換える（`timetable.js` は全イベント共通のため、`#talk-modal` を置く 6 ビューも `tw-hidden` に揃える）
 - [x] request spec を更新する
 - [x] rspec / rubocop を通す
 - [x] ブラウザで表示確認（PC・スマホ幅・モーダル・トースト。ログイン状態は request spec と同じモックで生成した HTML を Playwright で確認）
 
 ## メモ
+- 詳細モーダルの中身は talks#show の `.proposal-card-body` をそのまま流用しており、`proposal-show` の SCSS と一部 Bootstrap ユーティリティ（`mb-3` 等）に依存している。
+  また「このイベントに参加申し込み」「タイムテーブルに戻る」「Q&A」も含まれる。中身の Tailwind 化・取捨選択は talks#show 側の移行で扱う。
 - Tailwind の preflight を無効にしているため `--tw-content` の既定値がなく、`after:` だけでは疑似要素が描画されない。
   カード全体のリンク（stretched link）には `after:tw-content-['']` を明示している。

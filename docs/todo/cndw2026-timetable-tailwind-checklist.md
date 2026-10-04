@@ -17,6 +17,8 @@
 - [x] ヘルパーの spec と CNDW2026 タイムテーブルの request spec を追加
 - [x] rspec / rubocop を通す
 - [x] ブラウザで表示確認（デスクトップ 4 列・選択・ホバー展開・見出し追従・モバイル幅）
+- [x] 開発用ダミーデータ `db/csv/cndw2026` を cndw2024 の CSV から作り、`00_seeds.rb` で取り込む
+- [x] 未ログイン時に残席が表示される問題を修正（GuestProfile の `attend_offline?` が常に true）
 
 ## 残課題
 - [ ] CNDW2026 トップ（`event/cndw2026_show.html.erb`）の Sessions 欄は旧グリッド SCSS と CNDW2025 由来の休憩時間ハードコードのまま。

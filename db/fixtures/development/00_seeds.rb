@@ -977,3 +977,4 @@ EOS
 }
 )
 import_dummy_data('cnk', %w(talks speakers talks_speakers proposals proposal_items))
+import_dummy_data('cndw2026', %w(talks speakers talks_speakers proposals proposal_items))

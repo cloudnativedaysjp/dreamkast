@@ -13,7 +13,8 @@ class Admin::TimetablesController < ApplicationController
   def update
     @talks = []
     talks_params.each do |id, talk_param|
-      talk = Talk.find(id)
+      talk = current_conference.talks.find(id)
+      validate_conference_references!(talk_param, track_id: current_conference.tracks, conference_day_id: current_conference.conference_days)
       end_time = ''
       if talk_param[:start_time] != ''
         end_time = (Time.parse(talk_param[:start_time]) + (talk.time * 60)).to_formatted_s(:db)

@@ -1,18 +1,18 @@
 class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
-  include SecuredSponsor
+  include SecuredSponsorDashboard
 
   def new
     @conference = current_conference
     @sponsor_speaker_invite = SponsorSpeakerInvite.new
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @sponsor_talks = @sponsor.talks
   end
 
   def create
     ActiveRecord::Base.transaction do
-      @sponsor = Sponsor.find(params[:sponsor_id])
+      @sponsor = current_conference.sponsors.find(params[:sponsor_id])
       @conference = current_conference
-      @sponsor_speaker_invite = SponsorSpeakerInvite.new(sponsor_speaker_invite_params)
+      @sponsor_speaker_invite = @sponsor.sponsor_speaker_invites.new(sponsor_speaker_invite_params)
       @sponsor_speaker_invite.conference_id = @conference.id
       @sponsor_speaker_invite.token = SecureRandom.hex(50)
       @sponsor_speaker_invite.expires_at = 1.days.from_now # 有効期限を1日後に設定
@@ -29,9 +29,9 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
   end
 
   def destroy
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_speaker_invite = SponsorSpeakerInvite.find(params[:id])
-    @previous_sponsor_speaker_invites = SponsorSpeakerInvite.where(conference_id: @sponsor_speaker_invite.conference_id, email: @sponsor_speaker_invite.email)
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @sponsor_speaker_invite = @sponsor.sponsor_speaker_invites.find(params[:id])
+    @previous_sponsor_speaker_invites = @sponsor.sponsor_speaker_invites.where(conference_id: @sponsor_speaker_invite.conference_id, email: @sponsor_speaker_invite.email)
     if @sponsor_speaker_invite.destroy && @previous_sponsor_speaker_invites.destroy_all
       @sponsor_speakers = @sponsor.speakers
       @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
@@ -47,7 +47,7 @@ class SponsorDashboards::SponsorSpeakerInvitesController < ApplicationController
   private
 
   def sponsor_speaker_invite_params
-    params.require(:sponsor_speaker_invite).permit(:email, :sponsor_id)
+    params.require(:sponsor_speaker_invite).permit(:email)
   end
 
   def turbo_stream_flash

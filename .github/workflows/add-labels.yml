@@ -5,7 +5,7 @@ on: pull_request
 jobs:
   labeler:
     if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-add-labels.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-add-labels.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions: {}
     secrets:
       APP_ID: ${{ secrets.APP_ID }}

@@ -7,7 +7,7 @@ class Admin::HarvestJobsController < ApplicationController
 
   def new
     @harvest_job = MediaPackageHarvestJob.new
-    @talk = Talk.find(params[:talk_id])
+    @talk = current_conference.talks.find(params[:talk_id])
     streaming = @talk.track.streaming
     @media_package_channel = streaming.media_package_channel
 
@@ -18,7 +18,8 @@ class Admin::HarvestJobsController < ApplicationController
   end
 
   def create
-    @talk = Talk.find(harvest_job_params[:talk_id])
+    @talk = current_conference.talks.find(harvest_job_params[:talk_id])
+    MediaPackageChannel.joins(:streaming).where(streamings: { conference_id: current_conference.id }).find(harvest_job_params[:media_package_channel_id])
     @job = MediaPackageHarvestJob.new(harvest_job_params.merge(conference_id: @conference.id))
 
     if @job.save && @job.create_media_package_resources

@@ -7,7 +7,7 @@ on:
 jobs:
   tagging:
     if: ${{ contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-push-new-tag.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-push-new-tag.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions:
       pull-requests: write
     secrets:

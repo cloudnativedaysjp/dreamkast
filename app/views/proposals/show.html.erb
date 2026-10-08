@@ -30,7 +30,7 @@
 </div>
 
 <% if current_user %>
-  <script>
+  <script nonce="<%= content_security_policy_nonce %>">
       window.talk_id = "<%= @talk.id %>";
       window.talk_name = "<%= @talk.title %>";
   </script>

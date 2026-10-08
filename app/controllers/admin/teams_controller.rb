@@ -8,7 +8,7 @@ class Admin::TeamsController < ApplicationController
   def update
     ActiveRecord::Base.transaction do
       params['team'].each do |k, v|
-        admin_profile = AdminProfile.find(k)
+        admin_profile = current_conference.admin_profiles.find(k)
         if admin_profile.present?
           admin_profile.show_on_team_page = v
           admin_profile.save!

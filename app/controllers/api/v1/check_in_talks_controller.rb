@@ -8,10 +8,10 @@ class Api::V1::CheckInTalksController < ApplicationController
 
   def create
     @params = check_in_talks_params(JSON.parse(request.body.read, { symbolize_names: true }))
-    talk = Talk.find(@params[:talkId])
-    profile = Profile.find(@params[:profileId])
+    talk = current_conference.talks.find(@params[:talkId])
+    profile = current_conference.profiles.find(@params[:profileId])
     check_in_timestamp = Time.zone.at(@params[:checkInTimestamp])
-    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:, scanner_profile_id: profile.id)
+    @check_in = CheckInTalk.new(profile:, talk:, check_in_timestamp:, scanner_profile_id: @profile&.id)
 
     if @check_in.save
       render(json: @check_in, status: :created)

@@ -13,7 +13,7 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def show
-    @sponsor = Sponsor.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_contact_invites = @sponsor.sponsor_contact_invites
                                        .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
@@ -24,7 +24,7 @@ class Admin::SponsorsController < ApplicationController
 
   def edit
     @sponsor_types = current_conference.sponsor_types
-    @sponsor = Sponsor.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:id])
     @sponsor_form = SponsorForm.new(sponsor: @sponsor)
     @sponsor_form.load
   end
@@ -41,7 +41,7 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def update
-    @sponsor = Sponsor.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:id])
     @sponsor_types = current_conference.sponsor_types
     @sponsor_form = SponsorForm.new(sponsor_params, sponsor: @sponsor)
 
@@ -53,7 +53,7 @@ class Admin::SponsorsController < ApplicationController
   end
 
   def destroy
-    @sponsor = Sponsor.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:id])
 
     if @sponsor.destroy
       flash.now.notice = "スポンサー #{@sponsor.name} を削除しました"
@@ -65,12 +65,14 @@ class Admin::SponsorsController < ApplicationController
   private
 
   def sponsor_params
-    params.require(:sponsor).permit(:id,
-                                    :name,
-                                    :abbr,
-                                    :url,
-                                    :description,
-                                    :attachment_logo_image,
-                                    sponsor_types: [])
+    attributes = params.require(:sponsor).permit(
+      :name,
+      :abbr,
+      :url,
+      :description,
+      :attachment_logo_image,
+      sponsor_types: []
+    )
+    validate_conference_references!(attributes, sponsor_types: current_conference.sponsor_types)
   end
 end

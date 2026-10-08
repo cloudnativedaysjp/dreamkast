@@ -10,7 +10,7 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
                                                                  {
                                                                    info: { email: 'invited@example.com', name: 'Invited Speaker' },
-                                                                   extra: { raw_info: { sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
+                                                                   extra: { raw_info: { email_verified: true, sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
                                                                  }
                                                                ))
   end
@@ -51,6 +51,7 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
   describe 'POST /sponsor_speaker_invite_accepts' do
     let(:valid_attributes) do
       {
+        token: sponsor_speaker_invite.token,
         speaker: {
           sponsor_speaker_invite_id: sponsor_speaker_invite.id,
           sponsor_id: sponsor.id,

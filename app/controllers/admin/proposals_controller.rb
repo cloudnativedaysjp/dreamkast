@@ -19,7 +19,7 @@ class Admin::ProposalsController < ApplicationController
 
   def update_proposals
     params[:proposal].each do |proposal_id, value|
-      proposal = Proposal.find(proposal_id)
+      proposal = current_conference.proposals.find(proposal_id)
       proposal[:status] = value[:status].to_i
       proposal.save
     end

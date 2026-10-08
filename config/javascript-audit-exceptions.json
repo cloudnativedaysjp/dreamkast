@@ -1,0 +1,14 @@
+[
+  {
+    "package": "braces",
+    "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+    "expires": "2026-11-08",
+    "reason": "2026-10-08時点の最新版3.0.3にも未修正。Chokidar/Micromatch経由のビルド用glob処理で使用し、公開リクエストの入力は渡さない。修正版公開時に更新する。"
+  },
+  {
+    "package": "sprintf-js",
+    "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+    "expires": "2026-11-08",
+    "reason": "2026-10-08時点の最新版1.1.3にも未修正。Argparse経由の開発・ビルドCLIに限定し、利用者のformat文字列を処理しない。修正版公開時に更新する。"
+  }
+]

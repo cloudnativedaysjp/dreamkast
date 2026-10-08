@@ -8,7 +8,7 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def edit
-    @speaker = Speaker.find_by_id(params[:id])
+    @speaker = current_conference.speakers.find(params[:id])
     @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
     @speaker_form.load
   end
@@ -16,9 +16,10 @@ class Admin::SpeakersController < ApplicationController
   # PATCH/PUT admin/speakers/1
   # PATCH/PUT admin/speakers/1.json
   def update
-    @speaker = Speaker.find(params[:id])
+    @speaker = current_conference.speakers.find(params[:id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
+    @speaker_form.conference_id = current_conference.id
     @speaker_form.sub = @speaker.sub
     @speaker_form.email = @speaker.email
 
@@ -34,21 +35,14 @@ class Admin::SpeakersController < ApplicationController
   end
 
   def export_speakers
-    all = Speaker.export
-    filename = './tmp/speaker.csv'
-    File.open(filename, 'w') do |file|
-      file.write(all)
-    end
-    # ダウンロード
-    stat = File.stat(filename)
-    send_file(filename, filename: "speaker-#{Time.now.strftime("%F")}.csv", length: stat.size)
+    send_data(current_conference.speakers.export, filename: "speaker-#{Time.now.strftime("%F")}.csv", type: 'text/csv')
   end
 
   def export_speakers_for_website
     conference_days = @conference.conference_days.filter { |day| !day.internal }.map(&:id)
     query = { show_on_timetable: true, conference_id: @conference.id }
 
-    @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
+    @talks = current_conference.talks.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(current_conference.abbr)
                @talks.left_joins(:talk_types)
                      .where.not(talk_types: { id: 'Intermission' })
@@ -103,23 +97,27 @@ class Admin::SpeakersController < ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:name,
-                                    :name_mother_tongue,
-                                    :sub,
-                                    :email,
-                                    :profile,
-                                    :company,
-                                    :job_title,
-                                    :twitter_id,
-                                    :github_id,
-                                    :avatar,
-                                    :conference_id,
-                                    :additional_documents,
-                                    talks_attributes:)
+    attributes = params.require(:speaker).permit(:name,
+                                                 :name_mother_tongue,
+                                                 :sub,
+                                                 :email,
+                                                 :profile,
+                                                 :company,
+                                                 :job_title,
+                                                 :twitter_id,
+                                                 :github_id,
+                                                 :avatar,
+                                                 :additional_documents,
+                                                 talks_attributes:)
+    attributes[:talks_attributes]&.each_value do |talk|
+      validate_conference_references!(talk, sponsor_id: current_conference.sponsors, talk_category_id: current_conference.talk_categories,
+                                           talk_difficulty_id: current_conference.talk_difficulties)
+    end
+    attributes
   end
 
   def talks_attributes
-    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
+    attr = [:id, :title, :abstract, :document_url, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)

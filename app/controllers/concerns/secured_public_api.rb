@@ -9,6 +9,19 @@ module SecuredPublicApi
 
   private
 
+  # ユーザーは対象イベントの管理者、M2M は操作専用 scope を必須にする。
+  def authorize_event_operation!(conference, scope)
+    claims = current_user&.dig(:extra, :raw_info) || {}
+    roles = Array(claims['https://cloudnativedays.jp/roles'])
+    return true if roles.include?("#{conference.abbr.upcase}-Admin")
+    if claims['gty'] == 'client-credentials' && claims.fetch('scope', '').split.include?(scope)
+      return true
+    end
+
+    render(json: { errors: ['Not Authorized'] }, status: :forbidden)
+    false
+  end
+
   def authenticate_request!
     claim = verify_token
     set_current_user_from_claim(claim[0])

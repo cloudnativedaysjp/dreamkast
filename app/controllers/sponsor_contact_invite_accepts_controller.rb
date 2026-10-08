@@ -1,4 +1,5 @@
 class SponsorContactInviteAcceptsController < ApplicationController
+  include ValidatesInvitation
   include SecuredSponsor
 
   skip_before_action :logged_in_using_omniauth?, only: [:invite]
@@ -6,14 +7,14 @@ class SponsorContactInviteAcceptsController < ApplicationController
   def invite
     return redirect_to(new_sponsor_contact_invite_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = current_conference
-    @sponsor_contact_invite = SponsorContactInvite.find_by(token: params[:token])
+    @sponsor_contact_invite = SponsorContactInvite.find_by(conference_id: current_conference.id, token: params[:token])
   end
 
   def new
     @sponsor_contact_invite_accept = SponsorContactInviteAccept.new
     @conference = current_conference
 
-    @sponsor_contact_invite = SponsorContactInvite.find_by(token: params[:token])
+    @sponsor_contact_invite = SponsorContactInvite.find_by(conference_id: current_conference.id, token: params[:token])
     unless @sponsor_contact_invite
       raise(ActiveRecord::RecordNotFound)
     end
@@ -35,7 +36,7 @@ class SponsorContactInviteAcceptsController < ApplicationController
   def create
     begin
       ActiveRecord::Base.transaction do
-        @sponsor_contact_invite = SponsorContactInvite.find(params[:sponsor_contact][:sponsor_contact_invite_id])
+        @sponsor_contact_invite = find_valid_invitation!(SponsorContactInvite, params[:token], :sponsor_contact_invite_accepts, lock: true)
         @sponsor = @sponsor_contact_invite.sponsor
 
         speaker_param = sponsor_contact_invite_accept_params.merge(conference: @conference, email: current_user[:info][:email])
@@ -59,6 +60,7 @@ class SponsorContactInviteAcceptsController < ApplicationController
           sponsor: @sponsor
         )
         @sponsor_contact_invite_accept.save!
+        @sponsor_contact_invite.update_columns(accepted_at: Time.current)
 
         redirect_to(sponsor_dashboards_path(event: @conference.abbr, sponsor_id: @sponsor.id), notice: 'Speaker was successfully added.')
       end
@@ -71,7 +73,6 @@ class SponsorContactInviteAcceptsController < ApplicationController
   def sponsor_contact_invite_accept_params
     params.require(:sponsor_contact).permit(
       :sponsor_contact_invite_id,
-      :sponsor_id,
       :name
     )
   end

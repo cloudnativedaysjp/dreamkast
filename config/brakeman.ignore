@@ -1,0 +1,98 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "0dc233d5d3aaf105453ef6354d4ee3b39859d204234ac69a5c75874bfcc349c4",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/admin/talks_controller.rb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Talk.export_csv(@conference, @conference.talks.accepted_and_intermission.order(\"conference_day_id ASC, start_time ASC, track_id ASC\")), :filename => File.basename(Talk.export_csv(@conference, @conference.talks.accepted_and_intermission.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))), :length => File.stat(Talk.export_csv(@conference, @conference.talks.accepted_and_intermission.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))).size)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::TalksController",
+        "method": "index"
+      },
+      "user_input": "Talk.export_csv(@conference, @conference.talks.accepted_and_intermission.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "認可済みイベントのCSVをTempfile.createで生成する。DB属性やリクエストを出力先のパスには用いない。"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "4012785157bedc88beeea23562882978289bee44ead9cb1e9955ab1d4ee93103",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/admin/tracks_controller.rb",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Talk.export_csv(conference, talks, track_name, date), :filename => File.basename(Talk.export_csv(conference, talks, track_name, date)), :length => File.stat(Talk.export_csv(conference, talks, track_name, date)).size)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::TracksController",
+        "method": "export_talks"
+      },
+      "user_input": "Talk.export_csv(conference, talks, track_name, date)",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "Talk.export_csvの出力先はTempfile.createで生成し、date/track_nameをパスに埋め込まない。"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "57a5704b6e36e55a082230fbcba1179e387adc0ca9a27c0b95c84cb2863bfcd1",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/profiles_controller.rb",
+      "line": 112,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Profile.find_by(:calendar_unique_code => params[:code]).export_ics, :filename => (\"#{params[:code]}.ics\"), :length => File.stat(Profile.find_by(:calendar_unique_code => params[:code]).export_ics).size)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ProfilesController",
+        "method": "calendar"
+      },
+      "user_input": "Profile.find_by(:calendar_unique_code => params[:code]).export_ics",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "Profile.export_icsのパスはサーバー生成UUIDであるcalendar_unique_code由来。検索入力をパスとして使わず、更新パラメータにもcalendar_unique_codeを許可していない。"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "6c13e0b8715eb1198539cefd919fa4e1cd9a0eeb091969d31a24dca6411aa4b0",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/admin/proposals_controller.rb",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Talk.export_csv(@conference, @conference.talks.order(\"conference_day_id ASC, start_time ASC, track_id ASC\")), :filename => File.basename(Talk.export_csv(@conference, @conference.talks.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))), :length => File.stat(Talk.export_csv(@conference, @conference.talks.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))).size)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::ProposalsController",
+        "method": "index"
+      },
+      "user_input": "Talk.export_csv(@conference, @conference.talks.order(\"conference_day_id ASC, start_time ASC, track_id ASC\"))",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "認可済みイベントのCSVをTempfile.createで生成する。モデルの属性はファイル名に用いない。"
+    }
+  ],
+  "updated": "2026-10-08",
+  "brakeman_version": "8.1.0"
+}

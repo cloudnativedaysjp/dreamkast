@@ -34,6 +34,14 @@ module SecuredAdmin
 
   private
 
+  def validate_conference_references!(attributes, references)
+    references.each do |key, relation|
+      ids = Array(attributes[key]).reject(&:blank?)
+      relation.find(ids) if ids.any?
+    end
+    attributes
+  end
+
   def use_secured_before_action?
     true
   end

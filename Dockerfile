@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.21
 
-FROM node:22.22.0-slim AS node
+FROM node:22.23.3-slim AS node
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 WORKDIR /app
@@ -42,19 +42,17 @@ ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
 
+# 実行用には開発・テスト依存を含めない。
+FROM fetch-lib AS runtime-gems
+RUN bundle config set --local without 'development test' && bundle clean --force
+
 FROM public.ecr.aws/docker/library/ruby:4.0.5-slim
 
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-COPY --link --from=node /usr/local/bin/node /usr/local/bin/
-COPY --link --from=node /usr/local/lib/node_modules/corepack /usr/local/lib/node_modules/corepack
-COPY --link --from=node /root/.cache/node/corepack /root/.cache/node/corepack
-RUN ln -s ../lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack \
-    && corepack enable
 ARG RAILS_ENV='production'
-ENV RAILS_ENV=${RAILS_ENV}, RAILS_LOG_TO_STDOUT=ON, RAILS_SERVE_STATIC_FILES=enabled
+ENV RAILS_ENV=${RAILS_ENV} RAILS_LOG_TO_STDOUT=ON RAILS_SERVE_STATIC_FILES=enabled
 WORKDIR /app
-COPY --link --from=node /app/node_modules /app/node_modules
-COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
+COPY --link --from=runtime-gems /usr/local/bundle /usr/local/bundle
+ENV BUNDLE_WITHOUT=development:test
 RUN apt-get update && apt-get -y install wget ca-certificates libmariadb3 libvips42 chromium && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -65,6 +63,10 @@ COPY --link --from=asset-compile /app/public /app/public
 RUN mkdir -p /app/config/certs && \
     wget -q -O /app/config/certs/rds-global-bundle.pem \
       https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
+RUN groupadd --gid 1000 app && useradd --uid 1000 --gid app --create-home app && \
+    mkdir -p /app/tmp /app/log /app/storage /app/public/uploads && \
+    chown -R app:app /app/tmp /app/log /app/storage /app/public/uploads
+USER app
 EXPOSE 3000
 ENV RUBY_YJIT_ENABLE=1
 ENTRYPOINT ["./entrypoint.sh"]

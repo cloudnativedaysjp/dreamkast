@@ -24,7 +24,7 @@ class Admin::TracksController < ApplicationController
   end
 
   def update_tracks
-    track = Track.find(params[:track][:id])
+    track = current_conference.tracks.find(params[:track][:id])
     track.video_id = params[:track][:video_id]
 
     respond_to do |format|

@@ -81,8 +81,7 @@ class Talk < ApplicationRecord
     joins(:talk_types).where(talk_types: { id: TalkType::SESSION_ID })
   }
 
-  def self.export_csv(conference, talks, track_name = 'all', date = 'all')
-    filename = "#{conference.abbr}_#{date}_#{track_name}.csv"
+  def self.export_csv(conference, talks, _track_name = 'all', _date = 'all')
     columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
 
     labels = conference.proposal_item_configs.map(&:label).uniq
@@ -123,12 +122,10 @@ class Talk < ApplicationRecord
       end
     end
 
-    filepath = Rails.root.join('tmp', filename)
-    File.open(filepath, 'w', encoding: 'UTF-8') do |file|
-      file.write(csv)
-    end
-
-    filepath
+    file = Tempfile.create(['talks-', '.csv'], Rails.root.join('tmp'), encoding: 'UTF-8')
+    file.write(csv)
+    file.close
+    file.path
   end
 
   def self.updatable_attributes
@@ -194,7 +191,7 @@ class Talk < ApplicationRecord
     before = (Time.zone.parse(SLOT_MAP[slot_number_param.to_i].dup.insert(2, ':')) - 60).utc.strftime('%T')
 
     where(conference_day_id: day_id, track_id:)
-      .where("TIME(start_time) BETWEEN '#{after}' AND '#{before}'")
+      .where('TIME(start_time) BETWEEN ? AND ?', after, before)
   end
 
   def speaker_names

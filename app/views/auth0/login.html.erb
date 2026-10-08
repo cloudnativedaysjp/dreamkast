@@ -1,4 +1,4 @@
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
     document.getElementById('login').parentElement.action = document.getElementById('login').parentElement.action + location.search
     document.getElementById('login').click()
 </script>

@@ -10,7 +10,7 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
                                                                  {
                                                                    info: { email: 'invited@example.com', name: 'Invited Contact' },
-                                                                   extra: { raw_info: { sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
+                                                                   extra: { raw_info: { email_verified: true, sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
                                                                  }
                                                                ))
   end
@@ -54,6 +54,7 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
   describe 'POST /sponsor_contact_invite_accepts' do
     let(:valid_attributes) do
       {
+        token: sponsor_contact_invite.token,
         sponsor_contact: {
           sponsor_contact_invite_id: sponsor_contact_invite.id,
           sponsor_id: sponsor.id,
@@ -83,9 +84,9 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
 
         expect {
           post(sponsor_contact_invite_accepts_path(event: conference.abbr), params: valid_attributes)
-        }.to(change(SponsorContactInviteAccept, :count).by(1))
+        }.not_to(change(SponsorContactInviteAccept, :count))
 
-        expect(response).to(redirect_to(sponsor_dashboards_path(event: conference.abbr, sponsor_id: sponsor.id)))
+        expect(response).to(have_http_status(:forbidden))
       end
     end
 

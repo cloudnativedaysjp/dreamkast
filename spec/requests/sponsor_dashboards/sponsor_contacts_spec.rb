@@ -36,10 +36,9 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
                                                                    ))
       end
 
-      it 'returns a successful response' do
+      it '招待を持たない一般ユーザーを拒否する' do
         get new_sponsor_dashboards_sponsor_contact_path(event: conference.abbr, sponsor_id: sponsor.id)
-        expect(response).to(be_successful)
-        expect(response).to(have_http_status('200'))
+        expect(response).to(have_http_status(:forbidden))
       end
 
       it 'redirects to sponsor_dashboards_path if user is already a sponsor contact' do
@@ -94,13 +93,11 @@ RSpec.describe(SponsorDashboards::SponsorContactsController, type: :request) do
                                                                    ))
       end
 
-      it 'creates a new sponsor contact' do
+      it '担当者の自己登録を拒否する' do
         expect {
           post(sponsor_dashboards_sponsor_contacts_path(event: conference.abbr, sponsor_id: sponsor.id), params: valid_attributes)
-        }.to(change(SponsorContact, :count).by(1))
-
-        expect(response).to(redirect_to("/#{conference.abbr}/sponsor_dashboards/#{sponsor.id}"))
-        expect(flash[:notice]).to(eq('Speaker was successfully created.'))
+        }.not_to(change(SponsorContact, :count))
+        expect(response).to(have_http_status(:forbidden))
       end
     end
 

@@ -56,10 +56,10 @@ module SecuredAdminApi
   end
 
   def is_admin?
-    raise(Forbidden) unless admin?
+    render(json: { errors: ['Not Authorized'] }, status: :forbidden) unless admin?
   end
 
   def admin?
-    current_user[:extra][:raw_info]['https://cloudnativedays.jp/roles'].include?("#{current_conference.abbr.upcase}-Admin")
+    current_conference.present? && Array(current_user.dig(:extra, :raw_info, 'https://cloudnativedays.jp/roles')).include?("#{current_conference.abbr.upcase}-Admin")
   end
 end

@@ -1,9 +1,9 @@
 module TalksHelper
   def self.update_talks(conference, videos)
     videos.each do |talk_id, value|
-      talk = Talk.find(talk_id)
+      talk = conference.talks.find(talk_id)
       if talk.video
-        video = Talk.find(talk_id).video
+        video = talk.video
       else
         video = Video.new
         video.talk_id = talk.id

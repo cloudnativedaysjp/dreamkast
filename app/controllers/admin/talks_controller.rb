@@ -16,7 +16,7 @@ class Admin::TalksController < ApplicationController
   end
 
   def edit
-    @talk = Talk.includes(:proposal_items, :talk_types).find(params[:id])
+    @talk = current_conference.talks.includes(:proposal_items, :talk_types).find(params[:id])
     @talk_categories = TalkCategory.where(conference_id: @conference.id)
     @talk_difficulties = TalkDifficulty.where(conference_id: @conference.id)
     @tracks = Track.where(conference_id: @conference.id)
@@ -27,7 +27,9 @@ class Admin::TalksController < ApplicationController
   end
 
   def update
-    @talk = Talk.includes(:proposal_items, :talk_types).find(params[:id])
+    @talk = current_conference.talks.includes(:proposal_items, :talk_types).find(params[:id])
+    validate_conference_references!(talk_params, track_id: current_conference.tracks, conference_day_id: current_conference.conference_days,
+                                               talk_category_id: current_conference.talk_categories, talk_difficulty_id: current_conference.talk_difficulties)
 
     if update_talk_with_proposal_items
       redirect_to(admin_talks_path(event: params[:event]), notice: 'セッションを更新しました')
@@ -48,7 +50,7 @@ class Admin::TalksController < ApplicationController
   end
 
   def start_on_air
-    @talk = Talk.find(params[:talk][:id])
+    @talk = current_conference.talks.find(params[:talk][:id])
     on_air_talks_of_other_days = @talk.track.talks
                                       .includes([:conference_day, :video])
                                       .accepted_and_intermission
@@ -79,7 +81,7 @@ class Admin::TalksController < ApplicationController
   end
 
   def stop_on_air
-    @talk = Talk.find(params[:talk][:id])
+    @talk = current_conference.talks.find(params[:talk][:id])
     @talk.video.update!(on_air: false)
     ActionCable.server.broadcast(
       "on_air_#{current_conference.abbr}", Video.on_air_v2(current_conference.id)
@@ -90,7 +92,7 @@ class Admin::TalksController < ApplicationController
 
   def export_talks_for_website
     query = { show_on_timetable: true, conference_id: current_conference.id }
-    @talks = Talk.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
+    @talks = current_conference.talks.includes([:conference, :conference_day, :talk_time, :talk_difficulty, :talk_category, :talks_speakers, :video, :speakers, :proposal]).where(query)
     @talks = if %w[cndt2020 cndo2021].include?(current_conference.abbr)
                # Exclude intermission talks for older conferences using join
                @talks.left_joins(:talk_types)

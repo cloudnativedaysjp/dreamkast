@@ -11,7 +11,7 @@ class Admin::StampRallyConfiguresController < ApplicationController
   end
 
   def update
-    @stamp_rally_configure = StampRallyConfigure.find(params[:id])
+    @stamp_rally_configure = StampRallyConfigure.where(conference_id: current_conference.id).find(params[:id])
     if @stamp_rally_configure.update(stamp_rally_configure_params)
       flash.now[:notice] = 'スタンプラリー設定を更新しました'
     else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_08_150000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -311,6 +311,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.index ["streaming_id"], name: "index_media_package_v2_origin_endpoints_on_streaming_id"
   end
 
+  create_table "multipart_uploads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "upload_id", null: false
+    t.string "key", null: false
+    t.bigint "byte_size", null: false
+    t.integer "part_size", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expires_at"], name: "index_multipart_uploads_on_expires_at"
+    t.index ["upload_id"], name: "index_multipart_uploads_on_upload_id", unique: true
+    t.index ["user_id"], name: "index_multipart_uploads_on_user_id"
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "last_name", collation: "utf8mb4_0900_ai_ci"
     t.string "first_name", collation: "utf8mb4_0900_ai_ci"
@@ -496,6 +510,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.datetime "expires_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "accepted_at"
     t.index ["conference_id"], name: "index_speaker_invitations_on_conference_id"
     t.index ["talk_id"], name: "index_speaker_invitations_on_talk_id"
   end
@@ -552,6 +567,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.string "email", null: false
     t.string "token", null: false
     t.datetime "expires_at", null: false
+    t.datetime "accepted_at"
     t.index ["conference_id"], name: "index_sponsor_contact_invites_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_contact_invites_on_sponsor_id"
   end
@@ -593,6 +609,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
     t.datetime "expires_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "accepted_at"
     t.index ["conference_id"], name: "index_sponsor_speaker_invites_on_conference_id"
     t.index ["sponsor_id"], name: "index_sponsor_speaker_invites_on_sponsor_id"
   end
@@ -852,6 +869,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_21_191433) do
   add_foreign_key "media_package_v2_channel_groups", "streamings"
   add_foreign_key "media_package_v2_channels", "streamings"
   add_foreign_key "media_package_v2_origin_endpoints", "streamings"
+  add_foreign_key "multipart_uploads", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "proposal_item_configs", "conferences"
   add_foreign_key "proposal_items", "conferences"

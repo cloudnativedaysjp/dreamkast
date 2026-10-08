@@ -49,6 +49,7 @@ export default class extends Controller {
 
     let uppy = new Uppy({
       autoProceed: true,
+      restrictions: { maxFileSize: 10 * 1024 * 1024, allowedFileTypes: ["image/jpeg", "image/png", "image/webp"] },
     })
       .use(FileInput, {
         target: formGroup,
@@ -65,6 +66,7 @@ export default class extends Controller {
       })
       .use(XHRUpload, {
         endpoint: "/upload/avatar",
+        headers: () => ({ "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content }),
       });
 
     uppy.on("upload-success", function (file, response) {

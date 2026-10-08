@@ -20,23 +20,23 @@ RSpec.describe(SponsorDashboards::SponsorSpeakersController, type: :request) do
   describe '別スポンサー所属の Speaker への操作は拒否される' do
     let!(:sponsor_b_speaker) { create(:speaker, **speaker_attrs, sponsor: sponsor_b) }
 
-    it 'GET #edit は 403 を返す' do
+    it 'GET #edit は 404 を返す' do
       get edit_sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor_a.id, id: sponsor_b_speaker.id)
-      expect(response).to(have_http_status(:forbidden))
+      expect(response).to(have_http_status(:not_found))
     end
 
-    it 'PATCH #update は 403 を返し Speaker は変更されない' do
+    it 'PATCH #update は 404 を返し Speaker は変更されない' do
       original_name = sponsor_b_speaker.name
       patch sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor_a.id, id: sponsor_b_speaker.id),
             params: { speaker: { name: 'hacked' } }
-      expect(response).to(have_http_status(:forbidden))
+      expect(response).to(have_http_status(:not_found))
       expect(sponsor_b_speaker.reload.name).to(eq(original_name))
     end
 
-    it 'DELETE #destroy は 403 を返し Speaker は削除されない' do
+    it 'DELETE #destroy は 404 を返し Speaker は削除されない' do
       delete sponsor_dashboards_sponsor_speaker_path(event: conference.abbr, sponsor_id: sponsor_a.id, id: sponsor_b_speaker.id),
              headers: { 'Accept' => 'text/vnd.turbo-stream.html' }
-      expect(response).to(have_http_status(:forbidden))
+      expect(response).to(have_http_status(:not_found))
       expect(Speaker.exists?(sponsor_b_speaker.id)).to(be(true))
     end
   end

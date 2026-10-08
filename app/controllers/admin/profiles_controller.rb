@@ -23,7 +23,7 @@ class Admin::ProfilesController < ApplicationController
   end
 
   def entry_sheet
-    @profile = Profile.find(params[:id])
+    @profile = current_conference.profiles.find(params[:id])
     @speaker = current_conference.speakers.find_by(user_id: @profile.user_id)
 
     render('profiles/entry_sheet')

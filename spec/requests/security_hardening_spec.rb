@@ -200,8 +200,8 @@ RSpec.describe('セキュリティ境界', type: :request) do
     def update_talk(talk_attributes, speaker_attributes = {})
       patch speaker_dashboard_speaker_path(event: conference.abbr, id: speaker.id),
             params: { speaker: speaker.attributes.slice('name', 'profile', 'company', 'job_title')
-                               .merge('talks_attributes' => { '0' => { id: talk.id, title: talk.title }.merge(talk_attributes) })
-                               .merge(speaker_attributes) }
+                                      .merge('talks_attributes' => { '0' => { id: talk.id, title: talk.title }.merge(talk_attributes) })
+                                      .merge(speaker_attributes) }
     end
 
     it '自分のセッションを任意のスポンサーセッションにできない' do

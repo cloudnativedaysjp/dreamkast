@@ -1,12 +1,12 @@
 class SponsorDashboards::SpeakersController < ApplicationController
-  include SecuredSpeaker
+  include SecuredSponsorDashboard
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
 
     if current_user && current_user_model
       if Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
@@ -21,8 +21,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
     @conference = current_conference
-    @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @speaker = @sponsor.speakers.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker: @speaker)
@@ -32,7 +32,7 @@ class SponsorDashboards::SpeakersController < ApplicationController
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
     @speaker_form.sub = current_user_model&.sub
@@ -55,8 +55,8 @@ class SponsorDashboards::SpeakersController < ApplicationController
   # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def update
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @speaker = Speaker.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @speaker = @sponsor.speakers.find(params[:id])
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, sponsor: @sponsor, conference: @conference)

@@ -1,4 +1,5 @@
 class SponsorSpeakerInviteAcceptsController < ApplicationController
+  include ValidatesInvitation
   include SecuredSponsor
 
   skip_before_action :logged_in_using_omniauth?, only: [:invite]
@@ -6,14 +7,14 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
   def invite
     return redirect_to(new_sponsor_speaker_invite_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = current_conference
-    @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(token: params[:token])
+    @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(conference_id: current_conference.id, token: params[:token])
   end
 
   def new
     @sponsor_contact_invite_accept = SponsorContactInviteAccept.new
     @conference = current_conference
 
-    @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(token: params[:token])
+    @sponsor_speaker_invite = SponsorSpeakerInvite.find_by(conference_id: current_conference.id, token: params[:token])
     unless @sponsor_speaker_invite
       raise(ActiveRecord::RecordNotFound)
     end
@@ -34,15 +35,15 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         @conference = current_conference
-        @sponsor_speaker_invite = SponsorSpeakerInvite.find(params[:speaker][:sponsor_speaker_invite_id])
+        @sponsor_speaker_invite = find_valid_invitation!(SponsorSpeakerInvite, params[:token], :sponsor_speaker_invite_accepts, lock: true)
         @sponsor = @sponsor_speaker_invite.sponsor
 
         speaker_param = sponsor_speaker_invite_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:sponsor_speaker_invite_id)
 
         user_id = current_user_model.id
-        @sponsor_contact = if user_id && SponsorContact.where(user_id:, conference: @conference).exists?
-                             SponsorContact.find_by(conference: @conference, user_id:)
+        @sponsor_contact = if user_id && SponsorContact.where(user_id:, conference: @conference, sponsor: @sponsor).exists?
+                             SponsorContact.find_by(conference: @conference, sponsor: @sponsor, user_id:)
                            else
                              SponsorContact.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end
@@ -57,7 +58,8 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
                            else
                              Speaker.new(conference: @conference, sponsor: @sponsor, user_id:, email: current_user[:info][:email])
                            end
-        @sponsor_speaker.update!(speaker_param)
+        raise Forbidden if @sponsor_speaker.sponsor_id.present? && @sponsor_speaker.sponsor_id != @sponsor.id
+        @sponsor_speaker.update!(speaker_param.merge(sponsor: @sponsor))
         @sponsor_speaker.save!
 
         @sponsor_speaker_invite_accept = SponsorSpeakerInviteAccept.new(
@@ -68,6 +70,7 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
           sponsor: @sponsor
         )
         @sponsor_speaker_invite_accept.save!
+        @sponsor_speaker_invite.update_columns(accepted_at: Time.current)
 
         redirect_to(sponsor_dashboards_path(event: @conference.abbr, sponsor_id: @sponsor.id), notice: 'Speaker was successfully added.')
       end
@@ -82,18 +85,14 @@ class SponsorSpeakerInviteAcceptsController < ApplicationController
     params.require(:speaker).permit(
       :name,
       :name_mother_tongue,
-      :sub,
-      :email,
       :profile,
       :company,
       :job_title,
       :twitter_id,
       :github_id,
       :avatar,
-      :conference_id,
       :sponsor_speaker_invite_id,
-      :additional_documents,
-      :sponsor_id
+      :additional_documents
     )
   end
 

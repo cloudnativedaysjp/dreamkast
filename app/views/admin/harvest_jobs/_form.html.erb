@@ -35,7 +35,7 @@
   </section>
 <% end %>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
   const player = videojs('my-player');
   function inputChange(){
     const s = document.getElementById('start-time-field').value;

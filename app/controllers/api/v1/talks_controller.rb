@@ -12,7 +12,13 @@ class Api::V1::TalksController < ApplicationController
                  .accepted_and_intermission
                  .where(query)
     if params[:conferenceDayIds]
-      @talks = @talks.where(params[:conferenceDayIds].split(',').map { |id| "conference_day_id = #{id}" }.join(' OR '))
+      value = params[:conferenceDayIds]
+      unless value.is_a?(String) && value.match?(/\A[1-9]\d*(?:,[1-9]\d*)*\z/) && value.bytesize <= 2000
+        render_400 and return
+      end
+      ids = value.split(',')
+      render_400 and return if ids.size > 100
+      @talks = @talks.where(conference_day_id: ids.map(&:to_i))
     end
     render(:index, formats: :json, type: :jbuilder)
   end
@@ -25,6 +31,7 @@ class Api::V1::TalksController < ApplicationController
   def update
     @talk = Talk.find(params[:id])
     conference = @talk.conference
+    return unless authorize_event_operation!(conference, 'update:streamings')
     body = JSON.parse(request.body.read, { symbolize_names: true })
     if body[:on_air].nil?
       render_400

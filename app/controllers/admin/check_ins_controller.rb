@@ -7,7 +7,7 @@ class Admin::CheckInsController < ApplicationController
 
   def create
     @check_in = CheckIn.new(check_in_params)
-    @profile = Profile.find(@check_in.profile_id)
+    @profile = current_conference.profiles.find(@check_in.profile_id)
     if @check_in.save
       redirect_to(admin_profiles_path, notice: "#{@profile.last_name} #{@profile.first_name} がチェックインしました")
     else
@@ -16,8 +16,8 @@ class Admin::CheckInsController < ApplicationController
   end
 
   def destroy
-    @check_in = CheckIn.find_by_id(params[:id])
-    @profile = Profile.find(@check_in.profile_id)
+    @check_in = CheckIn.where(profile_id: current_conference.profiles.select(:id)).find(params[:id])
+    @profile = current_conference.profiles.find(@check_in.profile_id)
     if @check_in.destroy
       redirect_to(admin_profiles_path, notice: "#{@profile.last_name} #{@profile.first_name} のチェックインを解除しました")
     else

@@ -1,7 +1,7 @@
 FROM public.ecr.aws/docker/library/ruby:4.0.5-slim
 WORKDIR /app
 RUN apt-get update \
-    && apt-get -y install \
+    && apt-get -y install --no-install-recommends \
     build-essential \
     curl \
     default-libmysqlclient-dev \
@@ -10,5 +10,9 @@ RUN apt-get update \
     libvips42 \
     shared-mime-info \
     vim \
-    wget
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+RUN groupadd --gid 1000 app && useradd --uid 1000 --gid app --create-home app && \
+    chown -R app:app /app /usr/local/bundle
+USER app
 ENV RUBY_YJIT_ENABLE=1

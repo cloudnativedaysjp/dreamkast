@@ -1,9 +1,9 @@
 class SponsorDashboards::SponsorDashboardsController < ApplicationController
-  include SecuredSponsor
+  include SecuredSponsorDashboard
   before_action :set_sponsor_contact
 
   def show
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
 
     if logged_in? && @sponsor.present? && @sponsor_contact.present?
       if @sponsor.id == @sponsor_contact.sponsor_id
@@ -32,7 +32,7 @@ class SponsorDashboards::SponsorDashboardsController < ApplicationController
 
   def set_sponsor_contact
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, sponsor_id: params[:sponsor_id], user_id: current_user_model.id)
     end
   end
 

@@ -59,9 +59,9 @@ RSpec.describe 'SponsorDashboards::SessionQuestions', type: :request do
     context 'when sponsor_contact does not belong to the sponsor' do
       let!(:other_sponsor) { create(:sponsor, conference:, id: 2, name: '別スポンサー') }
 
-      it 'returns 404' do
+      it 'returns 403' do
         get sponsor_dashboards_session_questions_path(event: conference.abbr, sponsor_id: other_sponsor.id)
-        expect(response).to(have_http_status(:not_found))
+        expect(response).to(have_http_status(:forbidden))
       end
     end
   end

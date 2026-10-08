@@ -22,6 +22,7 @@ class Admin::StreamingsController < ApplicationController
   end
 
   def create
+    validate_conference_references!(streaming_params, track_id: current_conference.tracks)
     @streaming = Streaming.new(streaming_params.merge(conference_id: @conference.id))
 
     respond_to do |format|
@@ -36,12 +37,12 @@ class Admin::StreamingsController < ApplicationController
   end
 
   def create_aws_resources
-    @streaming ||= Streaming.find(params[:id])
+    @streaming ||= current_conference.streamings.find(params[:id])
     CreateStreamingAwsResourcesJob.perform_later(@streaming)
   end
 
   def delete_aws_resources
-    @streaming ||= Streaming.find(params[:id])
+    @streaming ||= current_conference.streamings.find(params[:id])
     DeleteStreamingAwsResourcesJob.perform_later(@streaming)
     @streaming.update!(status: 'deleting')
     respond_to do |format|
@@ -51,6 +52,6 @@ class Admin::StreamingsController < ApplicationController
   end
 
   def streaming_params
-    params.require(:streaming).permit(:id, :conference_id, :track_id, :status)
+    params.require(:streaming).permit(:track_id, :status)
   end
 end

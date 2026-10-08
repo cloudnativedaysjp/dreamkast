@@ -22,6 +22,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
         let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
         let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
         let!(:regular_talk_attribute) { create(:talk_type, :session) }
+        let(:talk_difficulty) { create(:talk_difficulties1, conference:) }
 
         it 'talk\'s session time should be 40 minutes (default value)' do
           params = {
@@ -40,7 +41,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
                 {
                   'title' => 'すごいセッション',
                   'abstract' => 'すごいぞ！',
-                  'talk_difficulty_id' => '41',
+                  'talk_difficulty_id' => talk_difficulty.id,
                   'talk_types' => ['Session'],
                   'assumed_visitors' => [assumed_visitor.id],
                   'execution_phases' => [execution_phase.id],
@@ -74,6 +75,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
         let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
         let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
         let!(:regular_talk_attribute) { create(:talk_type, :session) }
+        let(:talk_difficulty) { create(:talk_difficulties1, conference:) }
         let(:base_params) do
           {
             'name' => 'Test Speaker',
@@ -91,7 +93,7 @@ RSpec.describe(SpeakerDashboard::SpeakersController, type: :request) do
                 {
                   'title' => 'テストタイトル',
                   'abstract' => 'テスト概要',
-                  'talk_difficulty_id' => '41',
+                  'talk_difficulty_id' => talk_difficulty.id,
                   'talk_types' => ['Session'],
                   'assumed_visitors' => [assumed_visitor.id],
                   'execution_phases' => [execution_phase.id],

@@ -11,11 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled.
-  if ENV['REVIEW_APP']
-    config.consider_all_requests_local       = true
-  else
-    config.consider_all_requests_local       = false
-  end
+  config.consider_all_requests_local = false
 
   # Turn on fragment caching in view templates.
   config.action_controller.perform_caching = true
@@ -48,7 +44,12 @@ Rails.application.configure do
   config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == '/up' } } }
+  config.hosts = %w[event.cloudnativedays.jp staging.dev.cloudnativedays.jp]
+  config.hosts << /dreamkast-dk-[a-z0-9-]+\.dev\.cloudnativedays\.jp/ if ENV['REVIEW_APP'] == 'true'
+  config.hosts.concat(ENV.fetch('RAILS_ALLOWED_HOSTS', '').split(',').map(&:strip).reject(&:empty?))
+  config.host_authorization = { exclude: ->(request) { request.path == '/up' } }
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }

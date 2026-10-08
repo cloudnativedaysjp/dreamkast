@@ -6,7 +6,7 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
   end
 
   def new
-    @speakers = [Speaker.find(params[:speaker_id])] unless params[:speaker_id].nil?
+    @speakers = [current_conference.speakers.find(params[:speaker_id])] unless params[:speaker_id].nil?
     @speaker_announcement = SpeakerAnnouncement.new
     @speaker_announcement.speaker_announcement_middles.build
   end
@@ -67,7 +67,8 @@ class Admin::SpeakerAnnouncementsController < ApplicationController
 
     case params[:receiver]
     when 'person'
-      params[:speaker_ids]
+      ids = Array(params[:speaker_ids]).reject(&:blank?)
+      current_conference.speakers.find(ids).map(&:id)
     when 'all_speaker'
       @conference.speakers.pluck(:id)
     when 'only_accepted'

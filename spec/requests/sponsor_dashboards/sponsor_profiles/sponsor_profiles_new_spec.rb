@@ -32,9 +32,7 @@ describe SponsorDashboards::SponsorContactsController, type: :request do
 
           it 'returns a success response with new sponsor_contacts page' do
             get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
-            expect(response).to(be_successful)
-            expect(response).to(have_http_status('200'))
-            expect(response.body).to(include('スポンサー担当者情報フォーム(スポンサー1株式会社)'))
+            expect(response).to(have_http_status(:forbidden))
           end
         end
       end
@@ -59,9 +57,7 @@ describe SponsorDashboards::SponsorContactsController, type: :request do
 
           it 'returns a success response with new sponsor_contacts page' do
             get '/cndt2020/sponsor_dashboards/1/sponsor_contacts/new'
-            expect(response).to(be_successful)
-            expect(response).to(have_http_status('200'))
-            expect(response.body).to(include('スポンサー担当者情報フォーム(スポンサー1株式会社)'))
+            expect(response).to(have_http_status(:forbidden))
           end
         end
       end

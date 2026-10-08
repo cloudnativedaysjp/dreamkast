@@ -4,14 +4,14 @@ describe SpeakerInvitationAcceptsController, type: :request do
   let!(:conference) { create(:cndt2020, :registered) }
   let!(:speaker) { create(:speaker_alice, :with_talk1_registered, conference:) }
   let!(:talk) { speaker.talks.first }
-  let!(:speaker_invitation) { create(:speaker_invitation, conference:, talk:, email: 'invited@example.com') }
+  let!(:speaker_invitation) { create(:speaker_invitation, conference:, talk:, email: 'invited@example.com', expires_at: 1.day.from_now) }
 
   before do
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_call_original)
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
                                                                  {
                                                                    info: { email: 'invited@example.com', name: 'Invited Speaker' },
-                                                                   extra: { raw_info: { sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
+                                                                   extra: { raw_info: { email_verified: true, sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
                                                                  }
                                                                ))
   end
@@ -39,7 +39,7 @@ describe SpeakerInvitationAcceptsController, type: :request do
     end
 
     it 'sets a flash alert if invitation is expired' do
-      speaker_invitation.update(expires_at: 1.day.ago)
+      speaker_invitation.update_column(:expires_at, 1.day.ago)
       get new_speaker_invitation_accept_path(event: conference.abbr, token: speaker_invitation.token)
       expect(flash.now[:alert]).to(eq('招待メールが期限切れです。再度招待メールを送ってもらってください。'))
     end
@@ -53,6 +53,7 @@ describe SpeakerInvitationAcceptsController, type: :request do
   describe 'POST /create' do
     let(:valid_attributes) do
       {
+        token: speaker_invitation.token,
         speaker: {
           speaker_invitation_id: speaker_invitation.id,
           name: 'Invited Speaker',
@@ -81,6 +82,7 @@ describe SpeakerInvitationAcceptsController, type: :request do
     context 'with invalid parameters' do
       let(:invalid_attributes) do
         {
+          token: speaker_invitation.token,
           speaker: {
             speaker_invitation_id: speaker_invitation.id,
             name: '' # Invalid: name is required

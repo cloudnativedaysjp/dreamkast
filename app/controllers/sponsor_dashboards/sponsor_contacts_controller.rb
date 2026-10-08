@@ -1,12 +1,12 @@
 class SponsorDashboards::SponsorContactsController < ApplicationController
-  include SecuredSponsor
+  include SecuredSponsorDashboard
   before_action :set_sponsor_contact
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
 
   def index
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_contact_invites = @sponsor.sponsor_contact_invites
                                        .reject { |invite| invite.sponsor_contact_invite_accepts.present? }
@@ -18,7 +18,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # GET :event/sponsor_dashboard/sponsor_contacts/new
   def new
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
 
     if logged_in?
       # Check by email instead of user_id (consistent with create action)
@@ -36,7 +36,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # GET :event/sponsor_dashboard/sponsor_contacts/:id/edit
   def edit
     @conference = current_conference
-    @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, id: params[:id])
+    @sponsor_contact = @sponsor.sponsor_contacts.find(params[:id])
     @sponsor = @sponsor_contact.sponsor
     authorize(@sponsor_contact)
   end
@@ -44,7 +44,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # POST :event/sponsor_dashboard/sponsor_contacts
   def create
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     # 既にsponsor_contactが存在しない場合のみ作成を許可
     if @sponsor.sponsor_contacts.none? { |contact| contact.user&.email == current_user[:info][:email] }
       @sponsor_contact = SponsorContact.new(sponsor_contact_params.merge(conference_id: @conference.id))
@@ -69,7 +69,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   # PATCH/PUT :event/sponsor_dashboard/speakers/1.json
   def update
     @conference = current_conference
-    @sponsor_contact = SponsorContact.find_by(conference_id: @conference.id, id: params[:id])
+    @sponsor_contact = @sponsor.sponsor_contacts.find(params[:id])
 
     authorize(@sponsor_contact)
 
@@ -85,7 +85,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
   end
 
   def destroy
-    @sponsor_contact = SponsorContact.find(params[:id])
+    @sponsor_contact = @sponsor.sponsor_contacts.find(params[:id])
 
     if @sponsor_contact.destroy
       flash.now[:notice] = "スポンサー担当者 #{@sponsor_contact.email} を削除しました"
@@ -110,15 +110,12 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   def pundit_user
     if current_user && current_user_model
-      SponsorContact.find_by(conference_id: @conference.id, user_id: current_user_model.id)
+      SponsorContact.find_by(conference_id: @conference.id, sponsor_id: params[:sponsor_id], user_id: current_user_model.id)
     end
   end
 
   def sponsor_contact_params
-    params.require(:sponsor_contact).permit(:name,
-                                            :sub,
-                                            :email,
-                                            :conference_id)
+    params.require(:sponsor_contact).permit(:name)
   end
 
   def turbo_stream_flash
@@ -127,7 +124,7 @@ class SponsorDashboards::SponsorContactsController < ApplicationController
 
   def set_sponsor_contact
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, sponsor_id: params[:sponsor_id], user_id: current_user_model.id)
     end
   end
 end

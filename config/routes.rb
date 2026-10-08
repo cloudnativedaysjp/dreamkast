@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  unless Rails.env.development? || Rails.env.test? || ENV['AWS_ACCESS_KEY_ID']
-    mount Shrine.uppy_s3_multipart(:video_file) => '/s3/multipart'
-  end
+  post '/s3/multipart', to: 'multipart_uploads#create'
+  get '/s3/multipart/:upload_id', to: 'multipart_uploads#show'
+  get '/s3/multipart/:upload_id/batch', to: 'multipart_uploads#batch'
+  get '/s3/multipart/:upload_id/:part_number', to: 'multipart_uploads#sign'
+  post '/s3/multipart/:upload_id/complete', to: 'multipart_uploads#complete'
+  delete '/s3/multipart/:upload_id', to: 'multipart_uploads#destroy'
 
+  get '/up', to: 'rails/health#show'
   root 'home#show'
 
   # Auth
@@ -224,6 +228,6 @@ Rails.application.routes.draw do
     get 'preparation' => 'event#preparation'
   end
 
-  mount AvatarUploader.upload_endpoint(:cache) => '/upload/avatar'
+  post '/upload/avatar', to: 'uploads#avatar'
   get '*path', controller: 'application', action: 'render_404'
 end

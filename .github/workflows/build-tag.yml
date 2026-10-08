@@ -6,11 +6,11 @@ on:
 
 jobs:
   build:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-build-image.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-build-image.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions:
       contents: read
       id-token: write
     with:
       image_name: dreamkast-ecs
       aws_region: ap-northeast-1
-      run-trivy: false
+      run-trivy: true

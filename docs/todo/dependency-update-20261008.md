@@ -10,7 +10,7 @@
 
 ## 更新方針と内容
 
-Gemは `bundle update --all --patch --strict` で47件を更新した。既存Gemのメジャー・マイナー番号を維持していることもロックファイルの比較で確認した。Gemfileの制約、Rails 8.0.5.1、Ruby、Bundlerは維持する。
+Gemは `bundle update --all --patch --strict` で更新した。既存Gemのメジャー・マイナー番号を維持していることもロックファイルの比較で確認した。Gemfileの制約、Rails、Ruby、Bundlerは維持する。
 
 npmは既存の範囲指定内、完全固定されたパッケージは同一マイナー系列のパッチ版に限定して17件を更新した。公開から24時間以上経過した安定版を選び、Yarnの `npmMinimalAgeGate` と `enableScripts: false` を維持した。`@testing-library/jest-dom` 6.10.0のpeer dependencyを満たすため、開発依存に `@testing-library/dom` 10系を追加した。
 
@@ -43,6 +43,15 @@ devboxのRuby 4.0.5、Node.js 22.14.0、Yarn 4.14.1を使用した。
 - `yarn build`、`yarn build:css`: 成功。
 - `RAILS_ENV=production NODE_ENV=production SECRET_KEY_BASE=dependency-update-test DB_ADAPTER=nulldb DREAMKAST_NAMESPACE=dreamkast AWS_EC2_METADATA_DISABLED=true bundle exec rails assets:precompile`: 成功。
 - `RAILS_ENV=test MYSQL_PASSWORD='' DATABASE_PORT=13316 AWS_EC2_METADATA_DISABLED=true bundle exec rspec`: 1109件、失敗0件、既存のpending 2件。一時ディレクトリに用意したMySQL 8.4.7（127.0.0.1:13316）に `rails db:prepare` でテストDBを作成して実行した。
+
+## mainとのコンフリクト解消（2026-10-09）
+
+main側でRails 8.1への更新（#2887）と一部npmパッケージの更新が先に入ったため、以下の手順で解消した。
+
+- `Gemfile.lock` と `yarn.lock` はmainの内容を採用し、その上で `bundle update --all --patch --strict` と `yarn install` を再実行した（Rails 8.1.4を維持）。
+- `package.json` は本ブランチの範囲指定に、mainで追加された `resolutions`（`postcss-selector-parser`）を加えた。`@testing-library/jest-dom` はmainで6.9.1に固定されていたが、peer dependencyの `@testing-library/dom` を追加済みのため `^6.10.0` を採用した。
+- rubocop 1.86.2で `spec/requests/security_hardening_spec.rb` に `Layout/MultilineMethodCallIndentation` 違反が出たため自動修正した。
+- 検証: `yarn install --immutable`、`yarn test`（20件成功）、`bundle exec rubocop`（違反なし）、`yarn build`・`yarn build:css`、`bundle exec rspec`（1172件、失敗0件、pending 2件）。
 
 ## 保留した更新と警告
 

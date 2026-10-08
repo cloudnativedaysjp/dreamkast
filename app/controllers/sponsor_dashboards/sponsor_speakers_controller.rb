@@ -1,5 +1,5 @@
 class SponsorDashboards::SponsorSpeakersController < ApplicationController
-  include SecuredSponsor
+  include SecuredSponsorDashboard
   before_action :set_sponsor_contact
 
   skip_before_action :logged_in_using_omniauth?, only: [:new]
@@ -12,7 +12,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   end
 
   def index
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
     @sponsor_speakers = @sponsor.speakers
     @sponsor_speaker_invites = @sponsor.sponsor_speaker_invites
                                        .reject { |invite| invite.sponsor_speaker_invite_accepts.present? }
@@ -23,21 +23,21 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # GET /:event/speaker_dashboards/:sponsor_id/speakers/new
   def new
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @speaker = Speaker.new
   end
 
   # GET /:event/speaker_dashboard/:sponsor_id/speakers/:id/edit
   def edit
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
 
-    @speaker = Speaker.find_by(conference_id: current_conference.id, id: params[:id])
+    @speaker = @sponsor.speakers.find(params[:id])
     authorize([:sponsor_dashboards, @speaker])
   end
 
   # POST /:event/speaker_dashboard/:sponsor_id/speakers
   def create
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
 
     @speaker = Speaker.new(speaker_params)
     @speaker.conference = current_conference
@@ -56,8 +56,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   # PATCH/PUT /:event/sponsor_dashboards/:sponsor_id/speakers/:id
   def update
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @speaker = Speaker.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @speaker = @sponsor.speakers.find(params[:id])
     authorize([:sponsor_dashboards, @speaker])
 
     if @speaker.update(speaker_params)
@@ -74,8 +74,8 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   # （CFP 経由でプロポーザルを出している等）は本体を残し、このスポンサーとの
   # 紐付け（sponsor_id と SponsorSpeakerInviteAccept）のみを解除する。
   def destroy
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @speaker = Speaker.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @speaker = @sponsor.speakers.find(params[:id])
     authorize([:sponsor_dashboards, @speaker])
 
     ActiveRecord::Base.transaction do
@@ -125,16 +125,12 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
   def speaker_params
     params.require(:speaker).permit(:name,
                                     :name_mother_tongue,
-                                    :sub,
-                                    :email,
                                     :profile,
                                     :company,
                                     :job_title,
                                     :twitter_id,
                                     :github_id,
-                                    :sponsor_id,
                                     :avatar,
-                                    :conference_id,
                                     :additional_documents)
   end
 
@@ -144,7 +140,7 @@ class SponsorDashboards::SponsorSpeakersController < ApplicationController
 
   def set_sponsor_contact
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, sponsor_id: params[:sponsor_id], user_id: current_user_model.id)
     end
   end
 end

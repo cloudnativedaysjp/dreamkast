@@ -3,16 +3,18 @@ class SpeakerInvitationsController < ApplicationController
   before_action :set_speaker
   def new
     @speaker_invitation = SpeakerInvitation.new
-    @talk = Talk.find(params[:talk_id])
-    if @speaker.talks.find(@talk.id).nil?
-      render_404
-    end
+    @talk = @speaker&.talks&.find_by(id: params[:talk_id])
+    render_404 unless @talk
   end
 
   def create
+    # 自分が登壇するセッション以外へ共同登壇者を招待させない。
+    talk = @speaker&.talks&.find_by(id: speaker_invitation_params[:talk_id])
+    return render_404 unless talk
+
     ActiveRecord::Base.transaction do
       @conference = current_conference
-      @invitation = SpeakerInvitation.new(speaker_invitation_params)
+      @invitation = SpeakerInvitation.new(speaker_invitation_params.merge(talk_id: talk.id))
       @invitation.conference_id = @conference.id
       @invitation.token = SecureRandom.hex(50)
       @invitation.expires_at = 1.days.from_now # 有効期限を1日後に設定

@@ -3,7 +3,7 @@ class Admin::CheckInEventsController < ApplicationController
 
   def create
     @check_in = CheckInConference.new(check_in_events_params.merge(conference_id: current_conference.id, check_in_timestamp: DateTime.now))
-    @profile = Profile.find(@check_in.profile_id)
+    @profile = current_conference.profiles.find(@check_in.profile_id)
 
     respond_to do |format|
       if @check_in.save
@@ -17,7 +17,7 @@ class Admin::CheckInEventsController < ApplicationController
 
   def destroy_all
     @check_ins = CheckInConference.where(profile_id: check_in_events_params[:profile_id], conference_id: current_conference.id)
-    @profile = Profile.find(check_in_events_params[:profile_id])
+    @profile = current_conference.profiles.find(check_in_events_params[:profile_id])
 
     respond_to do |format|
       if @check_ins.map(&:destroy!)

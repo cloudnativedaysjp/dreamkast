@@ -40,6 +40,7 @@ class Api::V1::Talks::VideoRegistrationController < ApplicationController
   def set_talk
     begin
       @talk = Talk.find(params[:id])
+      authorize_event_operation!(@talk.conference, 'update:video_registrations')
     rescue ActiveRecord::RecordNotFound
       render(json: { message: 'Not Found' }, status: 404)
     end

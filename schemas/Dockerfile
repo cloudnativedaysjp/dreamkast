@@ -4,9 +4,10 @@ COPY ./swagger.yml ./
 WORKDIR /mock-server
 RUN java -jar /opt/swagger-codegen-cli/swagger-codegen-cli.jar generate -l nodejs-server -i /mock-seed/swagger.yml -l nodejs-server -o ./
 
-FROM node:22.22.0-alpine as mock
+FROM node:22.23.3-alpine as mock
 WORKDIR /mock-server
 COPY --from=builder /mock-server ./
 RUN npm install
+USER node
 EXPOSE 8080
 CMD ["npm", "start"]

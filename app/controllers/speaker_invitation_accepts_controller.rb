@@ -1,4 +1,5 @@
 class SpeakerInvitationAcceptsController < ApplicationController
+  include ValidatesInvitation
   include SecuredSpeaker
   before_action :set_speaker
 
@@ -7,14 +8,14 @@ class SpeakerInvitationAcceptsController < ApplicationController
   def invite
     return redirect_to(new_speaker_invitation_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = current_conference
-    @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
+    @speaker_invitation = SpeakerInvitation.find_by(conference_id: current_conference.id, token: params[:token])
   end
 
   def new
     @speaker_invitation_accept = SpeakerInvitationAccept.new
     @conference = current_conference
 
-    @speaker_invitation = SpeakerInvitation.find_by(token: params[:token])
+    @speaker_invitation = SpeakerInvitation.find_by(conference_id: current_conference.id, token: params[:token])
     unless @speaker_invitation
       raise(ActiveRecord::RecordNotFound)
     end
@@ -36,7 +37,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         @conference = current_conference
-        @speaker_invitation = SpeakerInvitation.find(params[:speaker][:speaker_invitation_id])
+        @speaker_invitation = find_valid_invitation!(SpeakerInvitation, params[:token], :speaker_invitation_accept, lock: true)
 
         speaker_param = speaker_invitation_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:speaker_invitation_id)
@@ -56,6 +57,7 @@ class SpeakerInvitationAcceptsController < ApplicationController
 
         @speaker_invitation_accept = SpeakerInvitationAccept.new(conference_id: @conference.id, speaker_invitation_id: @speaker_invitation.id, speaker_id: @speaker.id, talk_id: @talk.id)
         @speaker_invitation_accept.save!
+        @speaker_invitation.update_columns(accepted_at: Time.current)
 
 
         redirect_to(speaker_dashboard_path(event: @conference.abbr), notice: 'Speaker was successfully added.')
@@ -70,15 +72,12 @@ class SpeakerInvitationAcceptsController < ApplicationController
       :speaker_invitation_id,
       :name,
       :name_mother_tongue,
-      :sub,
-      :email,
       :profile,
       :company,
       :job_title,
       :twitter_id,
       :github_id,
       :avatar,
-      :conference_id,
       :additional_documents
     )
   end

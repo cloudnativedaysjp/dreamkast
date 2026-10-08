@@ -7,7 +7,7 @@ on:
 
 jobs:
   cleanup:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-cleanup-ecs-reviewapps.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-cleanup-ecs-reviewapps.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions:
       id-token: write
     with:

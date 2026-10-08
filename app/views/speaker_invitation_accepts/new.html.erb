@@ -17,7 +17,7 @@
       <% end %>
 
       <%= form_with(url: speaker_invitation_accepts_path, model: @speaker, method: :post) do |form| %>
-        <%= form.hidden_field :speaker_invitation_id, value: @speaker_invitation.id %>
+        <%= hidden_field_tag :token, @speaker_invitation.token %>
 
         <section class="speaker-information tw-py-3">
           <%= render('speaker_dashboard/speakers/form_speaker', form: form) %>

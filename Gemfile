@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.0'
 # Use Puma as the app server
 gem 'puma', '~> 7.0'
 # Use SCSS for stylesheets
@@ -17,6 +17,7 @@ gem 'jsbundling-rails'
 gem 'prometheus-client', '~> 4.2.0'
 
 gem 'icalendar'
+gem 'csv'
 gem 'rack-cors'
 
 # Use Active Storage variant
@@ -31,6 +32,8 @@ gem 'omniauth-rails_csrf_protection', '~> 2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'committee'
   gem 'committee-rails'

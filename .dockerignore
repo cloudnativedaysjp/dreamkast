@@ -13,3 +13,11 @@ public/assets
 public/packs-test
 public/packs
 public/uploads
+
+.env*
+.devbox
+.agents
+.codex
+.yarn
+coverage
+spec

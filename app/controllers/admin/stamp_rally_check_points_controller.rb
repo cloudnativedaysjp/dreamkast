@@ -2,7 +2,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   include SecuredAdmin
 
   def reorder
-    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point = current_conference.stamp_rally_check_points.find(params[:id])
     @stamp_rally_check_point.insert_at(params[:position].to_i)
     head(:ok)
   end
@@ -30,13 +30,13 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   end
 
   def edit
-    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point = current_conference.stamp_rally_check_points.find(params[:id])
     @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
   end
 
   def update
-    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point = current_conference.stamp_rally_check_points.find(params[:id])
     @sponsors = current_conference.sponsors
     @type_options = StampRallyCheckPoint::Type::KLASSES.map(&:name)
     if @stamp_rally_check_point.update(stamp_rally_check_point_params)
@@ -47,7 +47,7 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   end
 
   def destroy
-    @stamp_rally_check_point = StampRallyCheckPoint.find(params[:id])
+    @stamp_rally_check_point = current_conference.stamp_rally_check_points.find(params[:id])
     if @stamp_rally_check_point.stamp_rally_check_ins.destroy_all && @stamp_rally_check_point.destroy
       flash.now.notice = "スタンプラリーチェックポイント #{@stamp_rally_check_point.id} を削除しました"
     else
@@ -60,7 +60,8 @@ class Admin::StampRallyCheckPointsController < ApplicationController
   private
 
   def stamp_rally_check_point_params
-    params.require(:stamp_rally_check_point).permit(:sponsor_id, :type, :name, :description)
+    attributes = params.require(:stamp_rally_check_point).permit(:sponsor_id, :type, :name, :description)
+    validate_conference_references!(attributes, sponsor_id: current_conference.sponsors)
   end
 
   def turbo_stream_flash

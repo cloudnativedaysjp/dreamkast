@@ -24,6 +24,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
           let(:whether_it_can_be_published) { create(:proposal_item_configs_whether_it_can_be_published, :all_ok, conference:) }
           let(:presentation_method) { create(:proposal_item_configs_presentation_method, conference:) }
           let!(:sponsor_talk_attribute) { create(:talk_type, :sponsor) }
+          let(:talk_difficulty) { create(:talk_difficulties1, conference:) }
 
           it 'talk\'s session time should be 40 minutes (default value)' do
             params = {
@@ -44,7 +45,7 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
                     'title' => 'すごいセッション',
                     'abstract' => 'すごいぞ！',
                     'talk_types' => ['SponsorSession'],
-                    'talk_difficulty_id' => '41',
+                    'talk_difficulty_id' => talk_difficulty.id,
                     'assumed_visitors' => [assumed_visitor.id],
                     'execution_phases' => [execution_phase.id],
                     'presentation_methods' => presentation_method.id,
@@ -67,6 +68,8 @@ describe(SponsorDashboards::SpeakersController, type: :request) do
             talk = speaker.talks.first
             expect(talk.time).to(eq(40))
             expect(talk.talk_types.pluck(:id)).to(include('SponsorSession'))
+            # スポンサーとの紐付けはスポンサーダッシュボードで行うため、登壇者画面からの sponsor_id は無視する
+            expect(talk.sponsor_id).to(be_nil)
           end
         end
       end

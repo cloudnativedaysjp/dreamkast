@@ -1,5 +1,6 @@
 module SecuredAdmin
   extend ActiveSupport::Concern
+  include ValidatesConferenceReferences
 
   included do
     before_action :set_conference, :logged_in_using_omniauth?, :is_admin?, :get_or_create_admin_profile, if: :use_secured_before_action?
@@ -33,14 +34,6 @@ module SecuredAdmin
   end
 
   private
-
-  def validate_conference_references!(attributes, references)
-    references.each do |key, relation|
-      ids = Array(attributes[key]).reject(&:blank?)
-      relation.find(ids) if ids.any?
-    end
-    attributes
-  end
 
   def use_secured_before_action?
     true

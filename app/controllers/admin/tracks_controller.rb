@@ -37,9 +37,6 @@ class Admin::TracksController < ApplicationController
   private
 
   def export_talks(conference, talks, track_name, date)
-    head(:no_content)
-    filepath = Talk.export_csv(conference, talks, track_name, date)
-    stat = File.stat(filepath)
-    send_file(filepath, filename: File.basename(filepath), length: stat.size)
+    send_data(Talk.export_csv(conference, talks), filename: Talk.export_csv_filename(conference, track_name, date), type: 'text/csv')
   end
 end

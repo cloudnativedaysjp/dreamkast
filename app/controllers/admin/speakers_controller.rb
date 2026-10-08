@@ -111,7 +111,7 @@ class Admin::SpeakersController < ApplicationController
                                                  talks_attributes:)
     attributes[:talks_attributes]&.each_value do |talk|
       validate_conference_references!(talk, sponsor_id: current_conference.sponsors, talk_category_id: current_conference.talk_categories,
-                                           talk_difficulty_id: current_conference.talk_difficulties)
+                                           talk_difficulty_id: current_conference.talk_difficulties, talk_time_id: current_conference.talk_times)
     end
     attributes
   end

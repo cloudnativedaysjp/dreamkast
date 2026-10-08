@@ -15,6 +15,14 @@ WebSocket の接続・チャンネル実装は今回の対象外。
 - [ ] Dockerイメージのビルドと実行（WSLのDocker連携が利用できず、CIでの確認が必要）
 - [ ] ステージングでのAuth0・S3・TLS終端・非root起動の確認（未デプロイ）
 
+## レビュー指摘への対応
+
+- [x] 登壇者による編集で `conference_id` / `sponsor_id` を受け付けず、カテゴリ・難易度・時間枠をイベント内に限定
+- [x] 共同登壇者の招待を自分が登壇するセッションに限定
+- [x] CSV出力のファイル名を `<イベント>_<日付>_<トラック>.csv` に戻し、一時ファイルを作らない
+- [x] キーノート招待の期限切れ・承諾済みの案内画面を復旧
+- [x] RSpec: 1,172 examples、0 failures、既存のpending 2件。Rubocop・Brakeman（Medium以上）指摘なし
+
 ## 検証結果
 
 - RSpec: 1,166 examples、0 failures、既存のpending 2件。新設したセキュリティ境界テスト57件を含む。

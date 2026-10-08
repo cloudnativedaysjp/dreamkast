@@ -6,11 +6,7 @@ class Admin::TalksController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        head(:no_content)
-
-        filepath = Talk.export_csv(@conference, @talks)
-        stat = File.stat(filepath)
-        send_file(filepath, filename: File.basename(filepath), length: stat.size)
+        send_data(Talk.export_csv(@conference, @talks), filename: Talk.export_csv_filename(@conference), type: 'text/csv')
       end
     end
   end

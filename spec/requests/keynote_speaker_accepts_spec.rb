@@ -131,7 +131,8 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
 
       it '期限切れ画面が表示される' do
         post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
-        expect(response).to(have_http_status(:forbidden))
+        expect(response).to(have_http_status(:ok))
+        expect(response.body).to(include('有効期限が切れています'))
       end
     end
 
@@ -140,12 +141,12 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
 
       it 'speaker_dashboardにリダイレクトされる' do
         post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
-        expect(response).to(have_http_status(:forbidden))
+        expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
       end
 
       it 'エラーメッセージが表示される' do
         post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
-        expect(response).to(have_http_status(:forbidden))
+        expect(flash[:alert]).to(include('この招待は既に承諾済みです'))
       end
     end
   end

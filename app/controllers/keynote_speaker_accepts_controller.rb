@@ -53,7 +53,8 @@ class KeynoteSpeakerAcceptsController < ApplicationController
 
   def create
     @conference = current_conference
-    @keynote_speaker_invitation = find_valid_invitation!(KeynoteSpeakerInvitation, params[:token], :keynote_speaker_accept)
+    # 期限切れ・承諾済みの案内を出すため、ここではトークンでの検索のみ行い、検証はトランザクション内で行う。
+    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by!(conference_id: current_conference.id, token: params[:token].to_s)
 
     if @keynote_speaker_invitation.expired?
       render('expired')

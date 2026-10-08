@@ -67,9 +67,7 @@ describe Talk, type: :model do
 
     context 'has full attributes' do
       it 'export csv' do
-        File.open(Talk.export_csv(cndt2020, [talk]), 'r', encoding: 'UTF-8') do |file|
-          expect(file.read).to(eq(expected))
-        end
+        expect(Talk.export_csv(cndt2020, [talk])).to(eq(expected))
       end
     end
 
@@ -82,10 +80,17 @@ describe Talk, type: :model do
         EOS
       }
       it 'export csv without attributes will be decided later' do
-        File.open(Talk.export_csv(cndt2020, [talk]), 'r', encoding: 'UTF-8') do |file|
-          expect(file.read).to(eq(expected))
-        end
+        expect(Talk.export_csv(cndt2020, [talk])).to(eq(expected))
       end
+    end
+  end
+
+  describe '.export_csv_filename' do
+    let!(:cndt2020) { create(:cndt2020) }
+
+    it 'イベント・日付・トラックを含むファイル名を返す' do
+      expect(Talk.export_csv_filename(cndt2020)).to(eq('cndt2020_all_all.csv'))
+      expect(Talk.export_csv_filename(cndt2020, 'A', '2020-09-08')).to(eq('cndt2020_2020-09-08_A.csv'))
     end
   end
 

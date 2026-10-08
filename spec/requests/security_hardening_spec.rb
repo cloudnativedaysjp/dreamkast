@@ -190,6 +190,55 @@ RSpec.describe('セキュリティ境界', type: :request) do
     end
   end
 
+  describe '登壇者による編集の境界' do
+    let!(:speaker) { create(:speaker_alice, :with_talk1_registered, conference:, user:) }
+    let!(:talk) { speaker.talks.first }
+    let!(:other_conference) { create(:cndo2021) }
+
+    before { login_as(user) }
+
+    def update_talk(talk_attributes, speaker_attributes = {})
+      patch speaker_dashboard_speaker_path(event: conference.abbr, id: speaker.id),
+            params: { speaker: speaker.attributes.slice('name', 'profile', 'company', 'job_title')
+                               .merge('talks_attributes' => { '0' => { id: talk.id, title: talk.title }.merge(talk_attributes) })
+                               .merge(speaker_attributes) }
+    end
+
+    it '自分のセッションを任意のスポンサーセッションにできない' do
+      sponsor = create(:sponsor, conference:)
+      update_talk({ sponsor_id: sponsor.id })
+      expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
+      expect(talk.reload.sponsor_id).to(be_nil)
+    end
+
+    it '登壇者情報を別イベントへ付け替えられない' do
+      update_talk({}, { conference_id: other_conference.id })
+      expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
+      expect(speaker.reload.conference_id).to(eq(conference.id))
+    end
+
+    it '別イベントのカテゴリを指定できない' do
+      category = create(:talk_category, id: 999, conference: other_conference, name: '別イベント')
+      update_talk({ talk_category_id: category.id })
+      expect(response).to(have_http_status(:not_found))
+      expect(talk.reload.talk_category_id).not_to(eq(category.id))
+    end
+
+    it '自分が登壇しないセッションへ共同登壇者を招待できない' do
+      other_talk = create(:talk2, conference:)
+      expect {
+        post speaker_invitations_path(event: conference.abbr), params: { speaker_invitation: { email: 'alt@example.com', talk_id: other_talk.id } }
+      }.not_to(change(SpeakerInvitation, :count))
+      expect(response).to(have_http_status(:not_found))
+    end
+
+    it '自分のセッションへは共同登壇者を招待できる' do
+      expect {
+        post speaker_invitations_path(event: conference.abbr), params: { speaker_invitation: { email: 'co-speaker@example.com', talk_id: talk.id } }
+      }.to(change(SpeakerInvitation, :count).by(1))
+    end
+  end
+
   describe '配信管理API' do
     let!(:talk) { create(:talk1) }
     let!(:video) { create(:video, :off_air, talk:) }

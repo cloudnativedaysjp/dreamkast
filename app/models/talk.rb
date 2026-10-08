@@ -81,7 +81,7 @@ class Talk < ApplicationRecord
     joins(:talk_types).where(talk_types: { id: TalkType::SESSION_ID })
   }
 
-  def self.export_csv(conference, talks, _track_name = 'all', _date = 'all')
+  def self.export_csv(conference, talks)
     columns = %w[id title abstract speaker session_time difficulty category created_at additional_documents twitter_id company start_to_end sponsor_session]
 
     labels = conference.proposal_item_configs.map(&:label).uniq
@@ -93,7 +93,7 @@ class Talk < ApplicationRecord
     columns_added_later = %w[avatar_url date track_id]
     columns.concat(columns_added_later)
 
-    csv = CSV.generate do |csv|
+    CSV.generate do |csv|
       # カラム名を1行目として入れる
       csv << columns
 
@@ -121,11 +121,10 @@ class Talk < ApplicationRecord
         csv << row
       end
     end
+  end
 
-    file = Tempfile.create(['talks-', '.csv'], Rails.root.join('tmp'), encoding: 'UTF-8')
-    file.write(csv)
-    file.close
-    file.path
+  def self.export_csv_filename(conference, track_name = 'all', date = 'all')
+    "#{conference.abbr}_#{date}_#{track_name}.csv"
   end
 
   def self.updatable_attributes

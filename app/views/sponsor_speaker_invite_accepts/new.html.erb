@@ -17,7 +17,7 @@
       <% end %>
 
       <%= form_with(url: sponsor_speaker_invite_accepts_url, model: @sponsor_speaker, method: :post) do |form| %>
-        <%= form.hidden_field :sponsor_speaker_invite_id, value: @sponsor_speaker_invite.id %>
+        <%= hidden_field_tag :token, @sponsor_speaker_invite.token %>
 
         <%= render 'speaker_dashboard/speakers/form_speaker', form: form %>
 

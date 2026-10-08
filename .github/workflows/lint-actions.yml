@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-lint-actions.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-lint-actions.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions:
       contents: write
       pull-requests: write

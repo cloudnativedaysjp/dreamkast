@@ -1,23 +1,23 @@
 class SponsorDashboards::SponsorSessionsController < ApplicationController
-  include SecuredSponsor
+  include SecuredSponsorDashboard
   before_action :set_sponsor_contact
 
   def index
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @sponsor_contacts = @sponsor.sponsor_contacts
     @sponsor_sessions = @sponsor.talks
     @sponsor_speakers = @sponsor.speakers
   end
 
   def new
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @sponsor_session = Talk.new
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     @sponsor_speakers = @sponsor.speakers
   end
 
   def create
-    @sponsor = Sponsor.find(params[:sponsor_id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
     @sponsor_session = Talk.new(conference: current_conference, sponsor: @sponsor)
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session_form.save
@@ -30,16 +30,16 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   end
 
   def edit
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = Talk.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @sponsor_session = @sponsor.talks.where(conference_id: current_conference.id).find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     @sponsor_session_form.load
     @sponsor_speakers = @sponsor.speakers
   end
 
   def update
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = Talk.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @sponsor_session = @sponsor.talks.where(conference_id: current_conference.id).find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session_params, sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session_form.save
       flash.now[:notice] = 'スポンサーセッションを更新しました'
@@ -51,8 +51,8 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
   end
 
   def destroy
-    @sponsor = Sponsor.find(params[:sponsor_id])
-    @sponsor_session = Talk.find(params[:id])
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id])
+    @sponsor_session = @sponsor.talks.where(conference_id: current_conference.id).find(params[:id])
     @sponsor_session_form = SponsorSessionForm.new(sponsor_session: @sponsor_session, conference: current_conference)
     if @sponsor_session.destroy
       flash.now[:notice] = 'スポンサーセッションを削除しました'
@@ -69,8 +69,6 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def sponsor_session_params
     talk_params = params.require(:talk).permit(
-      :sponsor_id,
-      :conference_id,
       :title,
       :abstract,
       :talk_category_id,
@@ -86,7 +84,11 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
       merged_params[:proposal_items_attributes] = sponsor_session_params[:proposal_items_attributes]
     end
 
-    merged_params
+    if merged_params['speaker_ids']
+      ids = merged_params['speaker_ids'].reject(&:blank?)
+      raise ActiveRecord::RecordNotFound unless @sponsor.speakers.where(id: ids).count == ids.uniq.size
+    end
+    merged_params.merge('sponsor_id' => @sponsor.id, 'conference_id' => current_conference.id)
   end
 
   def proposal_items_attributes
@@ -109,7 +111,7 @@ class SponsorDashboards::SponsorSessionsController < ApplicationController
 
   def set_sponsor_contact
     if current_user && current_user_model
-      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, user_id: current_user_model.id)
+      @sponsor_contact = SponsorContact.find_by(conference_id: current_conference.id, sponsor_id: params[:sponsor_id], user_id: current_user_model.id)
     end
   end
 end

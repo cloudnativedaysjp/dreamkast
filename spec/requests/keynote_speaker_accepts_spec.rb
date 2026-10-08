@@ -12,7 +12,7 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
     allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).with(:userinfo).and_return(
                                                                  {
                                                                    info: { email: 'invited@example.com', name: 'Invited Speaker' },
-                                                                   extra: { raw_info: { sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
+                                                                   extra: { raw_info: { email_verified: true, sub: 'auth0|123', 'https://cloudnativedays.jp/roles' => [] } }
                                                                  }
                                                                ))
   end
@@ -65,6 +65,7 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
 
       let(:valid_params) do
         {
+          token: invitation.token,
           speaker: {
             keynote_speaker_invitation_id: invitation.id,
             name: 'Invited Speaker',
@@ -129,7 +130,7 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
       end
 
       it '期限切れ画面が表示される' do
-        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(response).to(have_http_status(:ok))
         expect(response.body).to(include('有効期限が切れています'))
       end
@@ -139,12 +140,12 @@ RSpec.describe('KeynoteSpeakerAccepts', type: :request) do
       let(:invitation) { create(:keynote_speaker_invitation, :accepted, conference:) }
 
       it 'speaker_dashboardにリダイレクトされる' do
-        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(response).to(redirect_to(speaker_dashboard_path(event: conference.abbr)))
       end
 
       it 'エラーメッセージが表示される' do
-        post keynote_speaker_accepts_path(event: conference.abbr), params: { speaker: { keynote_speaker_invitation_id: invitation.id } }
+        post keynote_speaker_accepts_path(event: conference.abbr), params: { token: invitation.token, speaker: { keynote_speaker_invitation_id: invitation.id } }
         expect(flash[:alert]).to(include('この招待は既に承諾済みです'))
       end
     end

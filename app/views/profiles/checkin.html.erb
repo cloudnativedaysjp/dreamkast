@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 setTimeout(() => {
     location.href = "<%= dashboard_path %>";
 }, 3000);

@@ -2,7 +2,7 @@ class Admin::SponsorContactsController < ApplicationController
   include SecuredAdmin
 
   def destroy
-    @sponsor_contact = SponsorContact.find(params[:id])
+    @sponsor_contact = current_conference.sponsor_contacts.find(params[:id])
 
     if @sponsor_contact.destroy
       flash.now.notice = "スポンサー担当者 #{@sponsor_contact.email} を削除しました"

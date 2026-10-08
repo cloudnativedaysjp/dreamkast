@@ -1,32 +1,41 @@
-name: Trivy code scan
+name: Security audit
 on:
   pull_request:
-    paths-ignore:
-      - '.github/**'
-      - '!.github/workflows/trivy.yml'
-      - '**.md'
-    branches:
-      - main
-    types: [opened, synchronize]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 2 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  build:
-    name: Build
+  audit:
     runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
-    - name: Checkout code
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      with:
-        persist-credentials: false
-
-#  vulnerability DBのダウンロードにしょっちゅう失敗するのでしばらく無効にする
-#    - name: Run Trivy vulnerability scanner in fs mode
-#      uses: aquasecurity/trivy-action@master
-#      with:
-#        scan-type: 'fs'
-#        scan-ref: '.'
-#        exit-code: '0'
-#        ignore-unfixed: true
-#        severity: 'CRITICAL,HIGH'
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - run: sudo apt-get update && sudo apt-get install -y libyaml-dev libmariadb-dev libvips42
+      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - run: bundle exec bundler-audit check --update
+      - run: bundle exec brakeman --no-pager --confidence-level 2
+      - run: corepack enable
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - run: yarn install --immutable
+      - run: node script/audit-javascript.cjs
+      - uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
+        with:
+          scan-type: fs
+          scan-ref: .
+          # インストールした依存のサンプルは除外し、依存自体は上の専用監査で検査する。
+          skip-dirs: vendor/bundle,node_modules
+          scanners: secret,misconfig
+          severity: CRITICAL,HIGH
+          exit-code: '1'

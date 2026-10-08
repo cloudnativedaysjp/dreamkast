@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "57a5704b6e36e55a082230fbcba1179e387adc0ca9a27c0b95c84cb2863bfcd1",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/profiles_controller.rb",
+      "line": 112,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Profile.find_by(:calendar_unique_code => params[:code]).export_ics, :filename => (\"#{params[:code]}.ics\"), :length => File.stat(Profile.find_by(:calendar_unique_code => params[:code]).export_ics).size)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ProfilesController",
+        "method": "calendar"
+      },
+      "user_input": "Profile.find_by(:calendar_unique_code => params[:code]).export_ics",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "Profile.export_icsのパスはサーバー生成UUIDであるcalendar_unique_code由来。検索入力をパスとして使わず、更新パラメータにもcalendar_unique_codeを許可していない。"
+    }
+  ],
+  "updated": "2026-10-08",
+  "brakeman_version": "8.1.0"
+}

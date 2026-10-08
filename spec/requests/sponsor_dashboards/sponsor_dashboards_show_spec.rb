@@ -14,6 +14,13 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
       end
     end
 
+    shared_examples_for :forbidden_without_membership do
+      it '担当者以外のアクセスを拒否する' do
+        get '/cndt2020/sponsor_dashboards/1'
+        expect(response).to(have_http_status(:forbidden))
+      end
+    end
+
     shared_examples_for :returns_successfully do
       it 'returns successfully' do
         get '/cndt2020/sponsor_dashboards/1'
@@ -49,7 +56,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         describe 'sponsor logged in' do
           before { allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo])) }
 
-          it_should_behave_like :redirect_to_login_page
+          it_should_behave_like :forbidden_without_membership
         end
       end
     end
@@ -65,7 +72,7 @@ describe SponsorDashboards::SponsorDashboardsController, type: :request do
         describe 'sponsor logged in' do
           before { allow_any_instance_of(ActionDispatch::Request::Session).to(receive(:[]).and_return(admin_userinfo[:userinfo])) }
 
-          it_should_behave_like :redirect_to_login_page
+          it_should_behave_like :forbidden_without_membership
         end
       end
 

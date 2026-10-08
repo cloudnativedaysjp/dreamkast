@@ -1,4 +1,5 @@
 class KeynoteSpeakerAcceptsController < ApplicationController
+  include ValidatesInvitation
   include SecuredSpeaker
   before_action :set_speaker
 
@@ -7,7 +8,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
   def invite
     return redirect_to(new_keynote_speaker_accept_path(token: params[:token])) if from_auth0?(params)
     @conference = current_conference
-    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(token: params[:token])
+    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(conference_id: current_conference.id, token: params[:token])
 
     unless @keynote_speaker_invitation
       render_404
@@ -29,7 +30,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
     @keynote_speaker_accept = KeynoteSpeakerAccept.new
     @conference = current_conference
 
-    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(token: params[:token])
+    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by(conference_id: current_conference.id, token: params[:token])
     unless @keynote_speaker_invitation
       raise(ActiveRecord::RecordNotFound)
     end
@@ -52,7 +53,8 @@ class KeynoteSpeakerAcceptsController < ApplicationController
 
   def create
     @conference = current_conference
-    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find(params[:speaker][:keynote_speaker_invitation_id])
+    # 期限切れ・承諾済みの案内を出すため、ここではトークンでの検索のみ行い、検証はトランザクション内で行う。
+    @keynote_speaker_invitation = KeynoteSpeakerInvitation.find_by!(conference_id: current_conference.id, token: params[:token].to_s)
 
     if @keynote_speaker_invitation.expired?
       render('expired')
@@ -66,6 +68,7 @@ class KeynoteSpeakerAcceptsController < ApplicationController
 
     begin
       ActiveRecord::Base.transaction do
+        @keynote_speaker_invitation = find_valid_invitation!(KeynoteSpeakerInvitation, params[:token], :keynote_speaker_accept, lock: true)
         speaker_param = keynote_speaker_accept_params.merge(conference: @conference, email: current_user[:info][:email])
         speaker_param.delete(:keynote_speaker_invitation_id)
 
@@ -107,15 +110,12 @@ class KeynoteSpeakerAcceptsController < ApplicationController
       :keynote_speaker_invitation_id,
       :name,
       :name_mother_tongue,
-      :sub,
-      :email,
       :profile,
       :company,
       :job_title,
       :twitter_id,
       :github_id,
       :avatar,
-      :conference_id,
       :additional_documents
     )
   end

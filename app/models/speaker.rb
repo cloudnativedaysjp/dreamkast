@@ -39,7 +39,7 @@ class Speaker < ApplicationRecord
   def self.export
     CSV.generate do |csv|
       csv << updatable_attributes
-      Speaker.all.each do |speaker|
+      all.each do |speaker|
         csv << speaker.attributes.values_at(*updatable_attributes)
       end
     end

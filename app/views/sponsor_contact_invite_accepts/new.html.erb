@@ -17,7 +17,7 @@
       <% end %>
 
       <%= form_with(url: sponsor_contact_invite_accepts_url, model: @sponsor_contact, method: :post) do |form| %>
-        <%= form.hidden_field :sponsor_contact_invite_id, value: @sponsor_contact_invite.id %>
+        <%= hidden_field_tag :token, @sponsor_contact_invite.token %>
 
         <section class="tw-py-3">
           <div class="tw-mb-4">

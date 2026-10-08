@@ -7,6 +7,6 @@ on:
 
 jobs:
   release:
-    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-release-new-version.yml@main
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-release-new-version.yml@4129ce525f77d630ba63e86ed58c1d83bb37f7c3
     permissions:
       contents: write

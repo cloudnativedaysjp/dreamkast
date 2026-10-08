@@ -1,5 +1,6 @@
 class SpeakerDashboard::SpeakersController < ApplicationController
   include SecuredSpeaker
+  include ValidatesConferenceReferences
 
   skip_before_action :logged_in_using_omniauth?, only: [:new, :guidance]
   before_action :prepare_create, only: [:new]
@@ -13,7 +14,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   # GET :event/speaker_dashboard/speakers/new
   def new
     @conference = current_conference
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
 
     if current_user && current_user_model
       if Speaker.find_by(conference_id: @conference.id, user_id: current_user_model.id)
@@ -29,7 +30,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   def edit
     @conference = current_conference
     @speaker = Speaker.find_by(conference_id: @conference.id, id: params[:id])
-    @sponsor = Sponsor.find(params[:sponsor_id]) if params[:sponsor_id]
+    @sponsor = current_conference.sponsors.find(params[:sponsor_id]) if params[:sponsor_id]
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker: @speaker, conference: @conference)
@@ -42,6 +43,7 @@ class SpeakerDashboard::SpeakersController < ApplicationController
     @conference = current_conference
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: Speaker.new, conference: @conference)
+    @speaker_form.conference_id = @conference.id
     @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
 
@@ -65,10 +67,11 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   # PATCH/PUT :event/speaker_dashboard/speakers/1.json
   def update
     @conference = current_conference
-    @speaker = Speaker.find(params[:id])
+    @speaker = current_conference.speakers.find(params[:id])
     authorize(@speaker)
 
     @speaker_form = SpeakerForm.new(speaker_params, speaker: @speaker, conference: @conference)
+    @speaker_form.conference_id = @conference.id
     @speaker_form.sub = current_user_model&.sub
     @speaker_form.email = current_user[:info][:email]
     # @speaker_form.load
@@ -120,24 +123,28 @@ class SpeakerDashboard::SpeakersController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  # イベントとスポンサーはサーバー側で決めるため、conference_id と sponsor_id は受け付けない。
+  # スポンサーセッションの変更はスポンサーダッシュボードから行う。
   def speaker_params
-    params.require(:speaker).permit(:name,
-                                    :name_mother_tongue,
-                                    :sub,
-                                    :email,
-                                    :profile,
-                                    :company,
-                                    :job_title,
-                                    :twitter_id,
-                                    :github_id,
-                                    :avatar,
-                                    :conference_id,
-                                    :additional_documents,
-                                    talks_attributes:)
+    attributes = params.require(:speaker).permit(:name,
+                                                 :name_mother_tongue,
+                                                 :profile,
+                                                 :company,
+                                                 :job_title,
+                                                 :twitter_id,
+                                                 :github_id,
+                                                 :avatar,
+                                                 :additional_documents,
+                                                 talks_attributes:)
+    attributes[:talks_attributes]&.each_value do |talk|
+      validate_conference_references!(talk, talk_category_id: current_conference.talk_categories,
+                                            talk_difficulty_id: current_conference.talk_difficulties, talk_time_id: current_conference.talk_times)
+    end
+    attributes
   end
 
   def talks_attributes
-    attr = [:id, :title, :abstract, :document_url, :conference_id, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, :sponsor_id, { talk_types: [] }]
+    attr = [:id, :title, :abstract, :document_url, :_destroy, :talk_category_id, :talk_difficulty_id, :talk_time_id, { talk_types: [] }]
     h = {}
     @conference.proposal_item_configs.map(&:label).uniq.each do |label|
       conf = @conference.proposal_item_configs.find_by(label:)

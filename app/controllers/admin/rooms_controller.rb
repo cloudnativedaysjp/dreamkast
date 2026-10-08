@@ -11,7 +11,7 @@ class Admin::RoomsController < ApplicationController
     respond_to do |format|
       ActiveRecord::Base.transaction do
         rooms_params.each do |id, room_param|
-          room = Room.find(id)
+          room = current_conference.rooms.find(id)
           r = room.update!(room_param)
           errors << r unless r
           if room.track.present?

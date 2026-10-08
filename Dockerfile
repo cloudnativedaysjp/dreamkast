@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.yarn/berry/cache \
 FROM public.ecr.aws/docker/library/ruby:4.0.5 AS fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
-RUN apt-get update && apt-get install -y shared-mime-info libmariadb3
+RUN apt-get update && apt-get install -y --no-install-recommends shared-mime-info libmariadb3
 RUN bundle install
 
 FROM public.ecr.aws/docker/library/ruby:4.0.5 AS asset-compile
@@ -37,7 +37,7 @@ COPY --link webpack.config.js webpack.config.js
 COPY --link package.json yarn.lock .yarnrc.yml ./
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
-RUN apt-get update && apt-get install -y libvips42
+RUN apt-get update && apt-get install -y --no-install-recommends libvips42
 ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
@@ -53,7 +53,7 @@ ENV RAILS_ENV=${RAILS_ENV} RAILS_LOG_TO_STDOUT=ON RAILS_SERVE_STATIC_FILES=enabl
 WORKDIR /app
 COPY --link --from=runtime-gems /usr/local/bundle /usr/local/bundle
 ENV BUNDLE_WITHOUT=development:test
-RUN apt-get update && apt-get -y install wget ca-certificates libmariadb3 libvips42 chromium && \
+RUN apt-get update && apt-get -y install --no-install-recommends wget ca-certificates libmariadb3 libvips42 chromium && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 ENV CHROME_BIN=/usr/bin/chromium

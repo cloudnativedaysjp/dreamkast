@@ -34,6 +34,8 @@ jobs:
         with:
           scan-type: fs
           scan-ref: .
+          # インストールした依存のサンプルは除外し、依存自体は上の専用監査で検査する。
+          skip-dirs: vendor/bundle,node_modules
           scanners: secret,misconfig
           severity: CRITICAL,HIGH
           exit-code: '1'

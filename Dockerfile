@@ -42,17 +42,23 @@ ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
 RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
 
-# 実行用には開発・テスト依存を含めない。
-FROM fetch-lib AS runtime-gems
-RUN bundle config set --local without 'development test' && bundle clean --force
-
+# 同じイメージを Docker Compose の開発環境（fifo-worker など）でも使うため、
+# 開発・テスト用の gem と Node.js/Yarn も含める。
 FROM public.ecr.aws/docker/library/ruby:4.0.5-slim
 
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+# 非 root ユーザーでも node ステージで取得済みの yarn を使えるよう、共有の場所に置く
+ENV COREPACK_HOME=/usr/local/share/corepack
+COPY --link --from=node /usr/local/bin/node /usr/local/bin/
+COPY --link --from=node /usr/local/lib/node_modules/corepack /usr/local/lib/node_modules/corepack
+COPY --link --from=node /root/.cache/node/corepack /usr/local/share/corepack
+RUN ln -s ../lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack \
+    && corepack enable
 ARG RAILS_ENV='production'
 ENV RAILS_ENV=${RAILS_ENV} RAILS_LOG_TO_STDOUT=ON RAILS_SERVE_STATIC_FILES=enabled
 WORKDIR /app
-COPY --link --from=runtime-gems /usr/local/bundle /usr/local/bundle
-ENV BUNDLE_WITHOUT=development:test
+COPY --link --from=node /app/node_modules /app/node_modules
+COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get -y install --no-install-recommends wget ca-certificates libmariadb3 libvips42 chromium && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -65,7 +71,7 @@ RUN mkdir -p /app/config/certs && \
       https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
 RUN groupadd --gid 1000 app && useradd --uid 1000 --gid app --create-home app && \
     mkdir -p /app/tmp /app/log /app/storage /app/public/uploads && \
-    chown -R app:app /app/tmp /app/log /app/storage /app/public/uploads
+    chown -R app:app /app/tmp /app/log /app/storage /app/public/uploads /usr/local/share/corepack
 USER app
 EXPOSE 3000
 ENV RUBY_YJIT_ENABLE=1

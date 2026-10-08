@@ -12,7 +12,7 @@ WebSocket の接続・チャンネル実装は今回の対象外。
 - [x] 修正版のある依存と Rails / Node の更新（未修正2件は期限付き例外）
 - [x] CI のセキュリティ監査
 - [x] 回帰テスト・既存テスト・lint・依存監査・JS/CSSビルド
-- [ ] Dockerイメージのビルドと実行（WSLのDocker連携が利用できず、CIでの確認が必要）
+- [x] Dockerイメージのビルドと実行（開発設定でのビルド・非rootでのRails起動・foreman起動をローカルで確認）
 - [ ] ステージングでのAuth0・S3・TLS終端・非root起動の確認（未デプロイ）
 
 ## レビュー指摘への対応
@@ -22,6 +22,7 @@ WebSocket の接続・チャンネル実装は今回の対象外。
 - [x] CSV出力のファイル名を `<イベント>_<日付>_<トラック>.csv` に戻し、一時ファイルを作らない
 - [x] キーノート招待の期限切れ・承諾済みの案内画面を復旧
 - [x] RSpec: 1,172 examples、0 failures、既存のpending 2件。Rubocop・Brakeman（Medium以上）指摘なし
+- [x] 本番イメージから開発用gem・Node.jsを外す変更を取りやめ、Docker Composeの開発環境（fifo-worker等）が起動しない問題を解消
 
 ## 検証結果
 

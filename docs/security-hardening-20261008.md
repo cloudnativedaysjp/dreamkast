@@ -12,7 +12,7 @@
 - アバターはログイン、CSRF検証、10MiB制限、JPEG/PNG/WebPの内容判定を必須にする。
 - 動画アップロードは登壇者・管理者に限定し、DBで所有者を管理する。1ファイル5GiB、同時5件、24時間の有効期限、15分のパート署名を設定する。Content-Lengthも署名に含め、完了時にS3の実パート数・サイズを再確認する。
 - 本番HTTPS、Secure/HttpOnly/SameSite Cookie、ログイン時のセッション再生成、Host制限、詳細エラーの非公開化を設定する。CSPは互換性確認のためReport-Onlyで導入する。
-- Rails 8.1.4、Node.js 22.23.3と修正版の依存へ更新する。本番イメージからNode・node_modules・開発用gemを除き、UID/GID 1000で実行する。
+- Rails 8.1.4、Node.js 22.23.3と修正版の依存へ更新する。コンテナはUID/GID 1000で実行する。同じイメージをDocker Composeの開発環境（fifo-worker等）でも使うため、Node・node_modules・開発用gemは引き続きイメージに含める。
 - CIでBundler Audit、Brakeman、JavaScript依存監査、Trivyを実行する。再利用ワークフローをコミットSHAで固定する。
 
 ## 反映時に必要な作業
@@ -23,24 +23,24 @@
 4. 動画アップロードの呼び出し元を更新する。開始時に `size`（バイト数）、`type`、任意の `partSize`（5〜64MiB、既定64MiB）を送る。セッションCookieと更新系リクエストの `X-CSRF-Token` が必要。返却された `partSize` で分割し、各PUTの実バイト数を署名対象のサイズと一致させる。Content-Lengthはブラウザーが設定する。既存のDBに記録されていないアップロードは再開できない。
 5. `RAILS_ENV=production bundle exec rails uploads:cleanup` を毎時などで定期実行する。あわせてS3の未完了multipart uploadを削除するライフサイクルを設定する。アプリの30回/分制限はプロセス単位なので、全体の流量制限・リクエストボディ上限は入口のプロキシでも設定する。
 6. ヘルスチェックを `/up` に向ける。既定以外のホスト名は `RAILS_ALLOWED_HOSTS` にカンマ区切りで指定する。リバースプロキシでTLSを終端し、コンテナの直接公開を避ける構成を前提としている。
-7. UID/GID 1000で `tmp`、`log`、`storage`、`public/uploads` に書き込めることを確認する。コンテナ内でNodeを起動する運用スクリプトがある場合はビルド側へ移す。
+7. UID/GID 1000で `tmp`、`log`、`storage`、`public/uploads` に書き込めることを確認する。Yarnは非rootでも使えるよう `COREPACK_HOME=/usr/local/share/corepack` に配置している。
 8. ステージングでAuth0ログイン、招待、実S3への分割アップロード、画像アップロード、配信APIを確認する。CSPは現時点ではブロックしない。ブラウザーの違反表示を確認し、必要な外部サービスを整理してから強制へ切り替える。
 
 Auth0・S3・プロキシ・スケジューラーの外部設定変更とデプロイは、このブランチでは実行していない。
 
 ## 残る依存の指摘
 
-次の2件は監査時点で修正版が未公開。ビルド・開発用の依存であり、本番イメージにはnode_modulesを含めない。リスクがゼロになったことを意味しない。外部から受け取ったglobやformat文字列をビルドCLIへ渡さないこと。
+次の2件は監査時点で修正版が未公開。ビルド・開発用の依存で、実行時のアプリからは読み込まない。ただしイメージにはnode_modulesが含まれるため、リスクがゼロになったことを意味しない。外部から受け取ったglobやformat文字列をビルドCLIへ渡さないこと。
 
 | パッケージ | 指摘 | 管理方法 |
 | --- | --- | --- |
 | braces | [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) | Chokidar/Micromatch経由。修正版公開時に更新 |
 | sprintf-js | [GHSA-hp3w-g68c-fv3c](https://github.com/advisories/GHSA-hp3w-g68c-fv3c) | Argparse経由。修正版公開時に更新 |
 
-例外は `config/javascript-audit-exceptions.json` に限定して記録し、2026-11-08に失効する。新しい指摘、監査エラー、期限切れはCIを失敗させる。Brakemanの除外4件は生成済みの一時ファイル等に対する誤検知として理由を `config/brakeman.ignore` に記録している。CIはHigh/Medium confidenceを対象とし、Weak confidenceの指摘は別途レビュー対象とする。
+例外は `config/javascript-audit-exceptions.json` に限定して記録し、2026-11-08に失効する。新しい指摘、監査エラー、期限切れはCIを失敗させる。Brakemanの除外1件（カレンダー出力）は誤検知として理由を `config/brakeman.ignore` に記録している。CIはHigh/Medium confidenceを対象とし、Weak confidenceの指摘は別途レビュー対象とする。
 
 ## 検証範囲
 
 RSpecは本番から独立した一時MySQLで実行し、S3・Auth0の外部呼び出しはテスト用に置き換える。パート署名は実SDKでContent-Lengthが署名対象になることも確認する。実S3との疎通試験は含まない。
 
-Docker/WSL連携がこの環境では利用できないため、Dockerイメージのビルドとコンテナ起動は未検証。反映前にCIで確認する。各コマンドの結果は `docs/todo/security-hardening-20261008.md` に記録する。
+Dockerイメージは、開発設定（compose-dev.yaml）でのビルド、非rootでのRails起動、bundle install・yarn install・アセットビルド・foreman起動をローカルで確認した。本番設定での起動はステージングで確認する。各コマンドの結果は `docs/todo/security-hardening-20261008.md` に記録する。

@@ -143,7 +143,6 @@ Style/Documentation:
 Style/GlobalStdStream:
   Exclude:
     - 'config/environments/production.rb'
-    - 'lib/tasks/migrate_talks_to_proposal_items.rake'
     - 'lib/tasks/post_number_of_registrants_to_slack.rake'
     - 'spec/rails_helper.rb'
 

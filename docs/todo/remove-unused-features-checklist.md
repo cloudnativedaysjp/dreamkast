@@ -56,8 +56,9 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 
 ## 4. 過去イベント固有の残り
 - 〔対象外〕cndt2020 / cndo2021 / cicd2021 の event show・timetable・pack・SCSS・画像・abbr 分岐（公開中のアーカイブのため）
-- [ ] 参照のない画像ディレクトリ（migrated 済みイベントの `app/javascript/images/*`、`app/assets/images/{cnds2024,cndw2024}`、`app/assets/images/sponsors` ほか）
-- [ ] 一回限りの rake（cnds2025 用の `rescure_checkin` / `rescure_session`、`migrate_talks_to_proposal_items`）
+- [x] 参照のない画像ディレクトリ（migrated 済みイベントの `app/javascript/images/*`、`app/assets/images/{cnds2024,cndw2024}`、`app/assets/images/sponsors/{cndt2021,cndt2022,cnsec2022,o11y2022}`、古いアイコン類）
+  - `sponsors/{cndt2020,cndo2021,cicd2021}` はスポンサーロゴの URL として DB から参照され、公開中のため残す
+- [x] 一回限りの rake（cnds2025 用の `rescure_checkin` / `rescure_session`、`migrate_talks_to_proposal_items`）
 
 ## 5. 依存関係・設定
 - [ ] Gem: `rails_autolink`、`activerecord-nulldb-adapter`、`byebug`、`execjs`、`rexml`、`steep`

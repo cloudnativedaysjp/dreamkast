@@ -14,7 +14,6 @@ class TalkType < ApplicationRecord
 
   # Scopes
   scope :exclusive, -> { where(is_exclusive: true) }
-  scope :non_exclusive, -> { where(is_exclusive: false) }
   scope :ordered, -> { order(:display_name) }
 
   # Class methods

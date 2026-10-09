@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
   include Secured
 
   before_action :set_conference
-  before_action :set_current_profile, only: [:edit, :update, :destroy, :checkin, :entry_sheet, :view_qr]
+  before_action :set_current_profile, only: [:edit, :update, :destroy, :entry_sheet, :view_qr]
   skip_before_action :logged_in_using_omniauth?, only: [:new]
   before_action :find_profile, only: [:destroy_id, :set_role]
   before_action :is_admin?, :find_profile, only: [:destroy_id, :set_role]

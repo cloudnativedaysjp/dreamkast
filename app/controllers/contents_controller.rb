@@ -6,9 +6,6 @@ class ContentsController < ApplicationController
     current_user
   end
 
-  def index
-  end
-
   def discussion
     render_if_template_exists(
       "#{current_conference.abbr}_discussion",
@@ -25,28 +22,8 @@ class ContentsController < ApplicationController
     )
   end
 
-  def job_board
-    render_if_template_exists(
-      "#{current_conference.abbr}_job_board",
-      prefixes: controller_path,
-      render_target: :"#{current_conference.abbr}_job_board"
-    )
-  end
-
   def o11y
     render(:o11y)
-  end
-
-  def community_lt
-    render_if_template_exists("contents/#{current_conference.abbr}/community_lt")
-  end
-
-  def yurucafe
-    render_if_template_exists("contents/#{current_conference.abbr}/yurucafe")
-  end
-
-  def stamprally
-    render_if_template_exists("contents/#{current_conference.abbr}/stamprally")
   end
 
   private

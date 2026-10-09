@@ -17,7 +17,6 @@ services:
       AUTH0_DOMAIN: ${AUTH0_DOMAIN}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      DREAMKAST_API_ADDR: "https://api.dev.cloudnativedays.jp"
       AWS_REGION: ap-northeast-1
       MYSQL_HOST: db
       MYSQL_USER: user
@@ -42,7 +41,7 @@ services:
     entrypoint: /bin/sh -c "docker/wait-for-it.sh db:3306 --timeout=600 && bundle exec aws_active_job_sqs --queue fifo"
     environment:
       <<: *dkenv
-      BROWSER_PATH: /usr/bin/google-chrome
+      BROWSER_PATH: /usr/bin/chromium
     tty: true
     stdin_open: true
     tmpfs:

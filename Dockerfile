@@ -40,7 +40,7 @@ COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get install -y --no-install-recommends libvips42
 ENV AWS_ACCESS_KEY_ID=''
 ARG RAILS_ENV='production'
-RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast DB_ADAPTER=nulldb bin/rails assets:precompile
+RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS_ENV=${RAILS_ENV} DREAMKAST_NAMESPACE=dreamkast bin/rails assets:precompile
 
 # 同じイメージを Docker Compose の開発環境（fifo-worker など）でも使うため、
 # 開発・テスト用の gem と Node.js/Yarn も含める。
@@ -55,14 +55,13 @@ COPY --link --from=node /root/.cache/node/corepack /usr/local/share/corepack
 RUN ln -s ../lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack \
     && corepack enable
 ARG RAILS_ENV='production'
-ENV RAILS_ENV=${RAILS_ENV} RAILS_LOG_TO_STDOUT=ON RAILS_SERVE_STATIC_FILES=enabled
+ENV RAILS_ENV=${RAILS_ENV} RAILS_SERVE_STATIC_FILES=enabled
 WORKDIR /app
 COPY --link --from=node /app/node_modules /app/node_modules
 COPY --link --from=fetch-lib /usr/local/bundle /usr/local/bundle
 RUN apt-get update && apt-get -y install --no-install-recommends wget ca-certificates libmariadb3 libvips42 chromium && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-ENV CHROME_BIN=/usr/bin/chromium
 COPY --link . .
 COPY --link --from=asset-compile /app/public /app/public
 # RDS 接続の TLS 検証(verify_identity)用に、グローバル CA バンドルをビルド時に取得する

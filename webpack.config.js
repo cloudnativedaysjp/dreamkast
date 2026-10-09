@@ -24,8 +24,6 @@ module.exports = {
     ],
     // Bootstrap → Tailwind 段階移行 (issue #2572): 全画面共通 Tailwind バンドル
     application_tailwind: ["./app/javascript/stylesheets/application_tailwind.scss"],
-    // 後方互換: 既存の admin_tailwind 参照も同じバンドルを指す
-    admin_tailwind: ["./app/javascript/stylesheets/application_tailwind.scss"],
     cndw2026: [
       "./app/javascript/packs/cndw2026.js",
       "./app/javascript/stylesheets/cndw2026.scss",
@@ -38,9 +36,6 @@ module.exports = {
       "./app/javascript/packs/cicd2021.js",
       "./app/javascript/stylesheets/cicd2021.scss",
     ],
-    talks: ["./app/javascript/packs/talks.js"],
-    vote_cfp: ["./app/javascript/packs/vote_cfp.js"],
-    "admin/tracks": ["./app/javascript/packs/admin/tracks/index.js"],
     "admin/tracks/media_live": [
       "./app/javascript/packs/admin/tracks/media_live.js",
     ],

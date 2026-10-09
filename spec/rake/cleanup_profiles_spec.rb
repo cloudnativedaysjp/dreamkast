@@ -26,7 +26,14 @@ describe 'cleanup_profiles' do
     let!(:sponsor) { create(:sponsor, conference: cndt2020) }
     let!(:stamp_rally_check_point) { create(:stamp_rally_check_point_booth, conference: cndt2020, sponsor:) }
     let!(:stamp_rally_check_in) { create(:stamp_rally_check_in, profile: alice, stamp_rally_check_point:, check_in_timestamp: Time.current) }
-    let!(:chat_message) { create(:message_from_alice, conference_id: cndt2020.id, profile: alice, room_id: talk.id) }
+    let(:connection) { ActiveRecord::Base.connection }
+    before do
+      connection.exec_insert(
+        ActiveRecord::Base.sanitize_sql_array(
+          ['INSERT INTO chat_messages (conference_id, profile_id, lft, rgt, created_at, updated_at) VALUES (?, ?, 1, 2, NOW(), NOW())', cndt2020.id, alice.id]
+        )
+      )
+    end
     let(:task) { 'util:cleanup_profiles' }
 
     it 'delete profiles related of conference' do
@@ -41,8 +48,10 @@ describe 'cleanup_profiles' do
 
     it 'doesn\'t delete chat messages related of profile' do
       @rake[task].invoke
-      expect(ChatMessage.where(conference_id: cndt2020.id).size).to(eq(1))
-      expect(ChatMessage.find_by(conference_id: cndt2020.id).profile).to(eq(nil))
+      profile_ids = connection.select_values(
+        ActiveRecord::Base.sanitize_sql_array(['SELECT profile_id FROM chat_messages WHERE conference_id = ?', cndt2020.id])
+      )
+      expect(profile_ids).to(eq([nil]))
     end
 
     it 'deletes stamp rally check ins and form values related of profile' do

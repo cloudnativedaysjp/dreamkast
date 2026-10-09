@@ -36,7 +36,6 @@ SENTRY_DSN=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_REGION=ap-northeast-1
-DREAMKAST_API_ADDR="http://localhost:8080"
 S3_BUCKET=dreamkast-test-bucket
 S3_REGION=
 MYSQL_HOST=db

@@ -283,10 +283,6 @@ class Talk < ApplicationRecord
     proposal_item_value('assumed_visitor')
   end
 
-  def execution_phase_params
-    proposal_item_value('execution_phase')
-  end
-
   def archived?
     # タイムテーブル未確定のセッションは終了時刻が決まっていないため、アーカイブ済みとは扱わない
     return false if conference_day.nil? || end_time.nil?
@@ -307,10 +303,6 @@ class Talk < ApplicationRecord
 
   def intermission?
     talk_types.exists?(id: TalkType::INTERMISSION_ID) || abstract == 'intermission'
-  end
-
-  def sponsor_keynote?
-    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) && talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
   end
 
   # Talk type management methods
@@ -431,14 +423,6 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
 
   def sold_out?
     remaining_seats <= 0
-  end
-
-  def chat_messages
-    ChatMessage.where(room_id: id, room_type: 'talk')
-  end
-
-  def qa_messages
-    ChatMessage.where(room_id: id, room_type: 'talk', message_type: 'qa')
   end
 
   def allowed_showing_video?

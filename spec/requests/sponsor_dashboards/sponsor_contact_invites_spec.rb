@@ -67,7 +67,7 @@ RSpec.describe(SponsorDashboards::SponsorContactInvitesController, type: :reques
         expect(invite.sponsor_id).to(eq(sponsor.id))
         expect(invite.conference_id).to(eq(conference.id))
         expect(invite.token).not_to(be_nil)
-        expect(invite.expires_at).to(be_within(1.minute).of(1.days.from_now))
+        expect(invite.expires_at).to(be_within(1.minute).of(7.days.from_now))
       end
 
       it 'sends an invitation email' do

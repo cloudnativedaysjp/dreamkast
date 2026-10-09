@@ -17,7 +17,7 @@ class SpeakerInvitationsController < ApplicationController
       @invitation = SpeakerInvitation.new(speaker_invitation_params.merge(talk_id: talk.id))
       @invitation.conference_id = @conference.id
       @invitation.token = SecureRandom.hex(50)
-      @invitation.expires_at = 1.days.from_now # 有効期限を1日後に設定
+      @invitation.expires_at = 7.days.from_now # 有効期限を7日後に設定
       if @invitation.save
         SpeakerInvitationMailer.invite(@conference, @speaker, @invitation.talk, @invitation).deliver_now
         flash[:notice] = 'Invitation sent!'

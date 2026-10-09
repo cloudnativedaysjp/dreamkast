@@ -39,7 +39,15 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
     it 'sets a flash alert if invitation is expired' do
       sponsor_speaker_invite.update(expires_at: 1.day.ago)
       get new_sponsor_speaker_invite_accept_path(event: conference.abbr, token: sponsor_speaker_invite.token)
-      expect(flash.now[:alert]).to(eq('招待メールが期限切れです。再度招待メールを送ってもらってください。'))
+      expect(flash.now[:alert]).to(eq('招待の有効期限が切れています。再招待を依頼してください。'))
+    end
+
+    it '招待先と異なるアカウントでログインしている場合はメッセージを表示する' do
+      sponsor_speaker_invite.update!(email: 'other@example.com')
+      get new_sponsor_speaker_invite_accept_path(event: conference.abbr, token: sponsor_speaker_invite.token)
+      expect(response).to(have_http_status(:ok))
+      expect(response.body).to(include('招待先と異なるアカウントでログインしています'))
+      expect(response.body).not_to(include('登録する」ボタンをクリックしてください'))
     end
 
     it 'returns a 404 response for invalid token' do
@@ -134,6 +142,30 @@ RSpec.describe(SponsorSpeakerInviteAcceptsController, type: :request) do
         }.not_to(change(Speaker, :count))
 
         expect(response).to(have_http_status('200'))
+      end
+    end
+
+    context '招待が承諾できない場合' do
+      it '期限切れなら再招待を促すメッセージを表示する' do
+        sponsor_speaker_invite.update!(expires_at: 1.minute.ago)
+
+        expect {
+          post(sponsor_speaker_invite_accepts_path(event: conference.abbr), params: valid_attributes)
+        }.not_to(change(SponsorSpeakerInviteAccept, :count))
+
+        expect(response).to(have_http_status(:forbidden))
+        expect(response.body).to(include('招待の有効期限が切れています。再招待を依頼してください。'))
+      end
+
+      it '招待先と異なるアカウントならその旨のメッセージを表示する' do
+        sponsor_speaker_invite.update!(email: 'other@example.com')
+
+        expect {
+          post(sponsor_speaker_invite_accepts_path(event: conference.abbr), params: valid_attributes)
+        }.not_to(change(SponsorSpeakerInviteAccept, :count))
+
+        expect(response).to(have_http_status(:forbidden))
+        expect(response.body).to(include('招待先と異なるアカウントでログインしています'))
       end
     end
 

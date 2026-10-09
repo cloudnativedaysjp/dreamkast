@@ -19,9 +19,8 @@ class SponsorContactInviteAcceptsController < ApplicationController
       raise(ActiveRecord::RecordNotFound)
     end
 
-    if Time.zone.now > @sponsor_contact_invite.expires_at
-      flash.now[:alert] = '招待メールが期限切れです。再度招待メールを送ってもらってください。'
-    end
+    reason = invalid_invitation_reason(@sponsor_contact_invite, :sponsor_contact_invite_accepts)
+    flash.now[:alert] = InvalidInvitation::MESSAGES[reason] if reason
     @sponsor = @sponsor_contact_invite.sponsor
     user_id = current_user_model.id
     # Check by user_id to avoid N+1 queries and ensure consistency with database uniqueness constraint
@@ -64,6 +63,10 @@ class SponsorContactInviteAcceptsController < ApplicationController
 
         redirect_to(sponsor_dashboards_path(event: @conference.abbr, sponsor_id: @sponsor.id), notice: 'Speaker was successfully added.')
       end
+    rescue InvalidInvitation => e
+      # ステータスは 403 のまま、理由を案内する画面を表示する
+      flash.now[:alert] = e.message
+      render(:new, status: :forbidden)
     rescue ActiveRecord::RecordInvalid => e
       p(e)
       render(:new, alert: e.message)

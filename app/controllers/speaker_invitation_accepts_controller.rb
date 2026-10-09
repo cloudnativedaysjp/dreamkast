@@ -20,9 +20,8 @@ class SpeakerInvitationAcceptsController < ApplicationController
       raise(ActiveRecord::RecordNotFound)
     end
 
-    if Time.zone.now > @speaker_invitation.expires_at
-      flash.now[:alert] = '招待メールが期限切れです。再度招待メールを送ってもらってください。'
-    end
+    reason = invalid_invitation_reason(@speaker_invitation, :speaker_invitation_accept)
+    flash.now[:alert] = InvalidInvitation::MESSAGES[reason] if reason
     @talk = @speaker_invitation.talk
     @proposal = @talk.proposal
     user_id = current_user_model.id
@@ -62,6 +61,10 @@ class SpeakerInvitationAcceptsController < ApplicationController
 
         redirect_to(speaker_dashboard_path(event: @conference.abbr), notice: 'Speaker was successfully added.')
       end
+    rescue InvalidInvitation => e
+      # ステータスは 403 のまま、理由を案内する画面を表示する
+      flash.now[:alert] = e.message
+      render(:new, status: :forbidden)
     rescue ActiveRecord::RecordInvalid => e
       render(:new, alert: e.message)
     end

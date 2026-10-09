@@ -37,7 +37,7 @@ class Speaker < ApplicationRecord
   end
 
   def self.export
-    CSV.generate do |csv|
+    CSV.generate(**CsvFormulaEscaper.options) do |csv|
       csv << updatable_attributes
       all.each do |speaker|
         csv << speaker.attributes.values_at(*updatable_attributes)

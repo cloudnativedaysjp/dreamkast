@@ -85,8 +85,8 @@
         セッション資料公開URL
       </h6>
       <div class="cfp-detail-content">
-        <% if talk.document_url.present? %>
-          <%= link_to talk.document_url, talk.document_url, target: "_blank", class: "text-break" %>
+        <% if talk.safe_document_url.present? %>
+          <%= link_to talk.safe_document_url, talk.safe_document_url, target: "_blank", class: "text-break" %>
         <% else %>
           <span class="text-muted small">まだ追加されていません</span>
         <% end %>

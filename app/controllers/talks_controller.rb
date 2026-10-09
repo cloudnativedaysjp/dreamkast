@@ -216,7 +216,7 @@ class TalksController < ApplicationController
   end
 
   def document_archived?(talk)
-    if talk.document_url.present? && talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
+    if talk.safe_document_url.present? && talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
       if talk.proposal_items.empty?
         false
       else
@@ -246,7 +246,7 @@ class TalksController < ApplicationController
 
   def display_document?(talk)
     if (talk.conference.closed? && logged_in?) || (talk.conference.opened? && logged_in?) || talk.conference.archived?
-      if talk.document_url.present? && talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
+      if talk.safe_document_url.present? && talk.proposal_items.find_by(label: VideoAndSlidePublished::LABEL).present?
         if talk.proposal_items.empty?
           false
         else

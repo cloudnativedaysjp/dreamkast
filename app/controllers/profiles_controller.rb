@@ -147,8 +147,6 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :sub,
-      :email,
       :last_name,
       :first_name,
       :last_name_kana,
@@ -168,8 +166,6 @@ class ProfilesController < ApplicationController
       :department,
       :position,
       :participation,
-      :roles,
-      :conference_id,
       :number_of_employee_id,
       :annual_sales_id,
       :company_fax,

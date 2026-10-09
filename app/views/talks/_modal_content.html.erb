@@ -85,7 +85,7 @@
 
   <% if display_document?(talk) %>
     <p class="tw-m-0">
-      <a href="<%= talk.document_url %>" target="_blank" rel="noopener noreferrer" class="tw-text-sm tw-font-semibold tw-text-cndt-magenta hover:tw-underline">発表資料を見る &rarr;</a>
+      <a href="<%= talk.safe_document_url %>" target="_blank" rel="noopener noreferrer" class="tw-text-sm tw-font-semibold tw-text-cndt-magenta hover:tw-underline">発表資料を見る &rarr;</a>
     </p>
   <% end %>
 </div>

@@ -96,7 +96,7 @@ namespace :util do
       # Booth 出力の場合は「申し込み種別：現地」〜「オンラインセッション視聴フラグ」までを省略
       header = booth_output ? attr.drop(8) : attr
 
-      generated_csv = CSV.generate do |csv|
+      generated_csv = CSV.generate(**CsvFormulaEscaper.options) do |csv|
         csv << header
 
         profiles.each do |profile|

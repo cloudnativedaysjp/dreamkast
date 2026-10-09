@@ -12,7 +12,8 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 
 ### チャット（ADR-003 で廃止済み。dreamkast-ui 側の Chat コンポーネントも未使用）
 - [x] `admin/chat` ルート / `app/views/admin/chat.html.erb` / `Admin::ChatsController`
-- [x] `api/v1/chat_messages` ルート / コントローラ / jbuilder / swagger 定義
+- [x] `api/v1/chat_messages` ルート / コントローラ / jbuilder
+  - `schemas/swagger.yml` の定義は、dreamkast-ui の未使用 `Chat.tsx` が生成コードを import しているため、UI 側の削除後に外す
 - [x] `ChatMessagePolicy` / `ChatMessage` / `ChatChannel` / `ChatMessageBroadcastJob`
 - [x] `app/javascript/packs/chat/*` と webpack エントリー
 - [x] exporter の `ChatMessage.counts` 系メトリクス、`Talk#chat_messages` 等の関連
@@ -61,16 +62,19 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] 一回限りの rake（cnds2025 用の `rescure_checkin` / `rescure_session`、`migrate_talks_to_proposal_items`）
 
 ## 5. 依存関係・設定
-- [ ] Gem: `rails_autolink`、`activerecord-nulldb-adapter`、`byebug`、`execjs`、`rexml`、`steep`
-- [ ] npm: `popper.js`、`@rails/activestorage`、`file-loader`、`webpack-bundle-analyzer`、`@testing-library/*`
-- [ ] 中身が全部コメントの initializer、`new_framework_defaults_7_*.rb`
-- [ ] `config/amazon-rds-ca-cert.pem`、`Dockerfile.dev`、ルート直下の不要ファイル
-- [ ] Dockerfile / compose / docs の未使用環境変数（`DB_ADAPTER`、`RAILS_LOG_TO_STDOUT`、`CHROME_BIN`、`DREAMKAST_API_ADDR`）
+- [x] Gem: `rails_autolink`、`activerecord-nulldb-adapter`、`byebug`、`execjs`、`steep`、チャット削除で不要になった `awesome_nested_set`
+  - `rexml` はテスト時に AWS SDK の XML パーサとして使われうるため残す
+- [x] npm: `popper.js`、`@rails/activestorage`、`@uppy/aws-s3-multipart`、`@uppy/dashboard`、`file-loader`、`webpack-bundle-analyzer`、`@testing-library/*`
+- [x] 中身が全部コメントの initializer、`new_framework_defaults_7_*.rb`（`load_defaults 8.0` に含まれる値のみ）
+- [x] `config/amazon-rds-ca-cert.pem`、`Dockerfile.dev`、ルート直下の不要ファイル（`read_proposals.rb` / `get_json_for_website.sh` / `chat_message.json` / 空の `.gitmodules`）
+- [x] 未使用の環境変数（`DB_ADAPTER`、`RAILS_LOG_TO_STDOUT`、`CHROME_BIN`、`DREAMKAST_API_ADDR`、`SQS_MAIL_QUEUE_URL`）
+- [x] compose の fifo-worker の `BROWSER_PATH` を実際のパス（`/usr/bin/chromium`）に修正
 
 ## 6. 検証
-- [ ] `bundle exec rubocop --autocorrect-all`
-- [ ] `bundle exec rspec`
-- [ ] `yarn build`
+- [x] `bundle exec rubocop --autocorrect-all`（違反なし）
+- [x] `bundle exec rspec`（1152 examples, 0 failures）
+- [x] `yarn build` / `npx jest`
+- [x] DB なしでの `RAILS_ENV=production bin/rails assets:precompile`（nulldb 削除後も Docker ビルドと同条件で成功）
 
 ## 今回は対象外（別途要判断）
 - DB テーブル・列の削除（`chat_messages`、`viewer_counts`、`check_ins`、`attendee_announcements*`、`talks.expected_participants/execution_phases`、`videos.video_file_data` など）。
@@ -79,4 +83,7 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - 動画アップロード経路（`/s3/multipart`、`MultipartUpload`、`VideoFileUploader`、`@uppy/*`）。
 - `tracks#index`（開催中は `/ui/` へのリダイレクト入口として使われている可能性）。
 - `event#show` / `cndw2026_show`、`links`、`/team`、`contents#o11y`、`api/v1/debug`、録画・PrintNode 印刷・CSS ビルドパイプライン。
+- cndt2020 / cndo2021 / cicd2021 のアーカイブ自体を migrated にして関連コードを消すか。
+- `schemas/swagger.yml` のチャット API 定義（dreamkast-ui の `Chat.tsx` 削除とセットで行う）。
+- PEK / SREK 用のスピーカーフォーム処理（`speaker_form.js` のトグル、`_talk_fields` の該当ブロック、`Talk#pek_*` / `#srek_*`）。
 - リポジトリ外（infra の cron 等）から呼ばれている可能性のある rake タスク。

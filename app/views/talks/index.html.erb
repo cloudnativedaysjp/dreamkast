@@ -61,7 +61,7 @@
 
           <td class="tw-text-center">
             <% if document_archived?(talk) %>
-              <%= link_to 'あり', talk.document_url, data: {"turbolinks" => false} %>
+              <%= link_to 'あり', talk.safe_document_url, data: {"turbolinks" => false} %>
             <% end %>
           </td>
 

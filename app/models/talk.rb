@@ -32,6 +32,8 @@ class Talk < ApplicationRecord
   validates :title, presence: true
   validate :validate_title_length
   validate :validate_abstract_length
+  # 既存データの保存を妨げないよう、変更された時のみ検証する
+  validates :document_url, http_url: true, if: :will_save_change_to_document_url?
 
   # エントリー時、セッション概要は空白でもいいのでバリデーションしなくていい
   # validates :abstract, presence: true
@@ -93,7 +95,7 @@ class Talk < ApplicationRecord
     columns_added_later = %w[avatar_url date track_id]
     columns.concat(columns_added_later)
 
-    CSV.generate do |csv|
+    CSV.generate(**CsvFormulaEscaper.options) do |csv|
       # カラム名を1行目として入れる
       csv << columns
 
@@ -192,6 +194,9 @@ class Talk < ApplicationRecord
     where(conference_day_id: day_id, track_id:)
       .where('TIME(start_time) BETWEEN ? AND ?', after, before)
   end
+
+  # 表示用の資料URL。http/https 以外のURLは出力しない
+  def safe_document_url = (document_url if HttpUrlValidator.valid_url?(document_url))
 
   def speaker_names
     speakers.map(&:name)

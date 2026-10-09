@@ -50,7 +50,7 @@ class Video < ApplicationRecord
           talkDifficulty: talk.difficulty,
           talkCategory: talk.category,
           onAir: talk.on_air?,
-          documentUrl: talk.document_url || '',
+          documentUrl: talk.safe_document_url || '',
         }
       end
     end

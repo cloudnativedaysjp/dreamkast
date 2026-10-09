@@ -117,7 +117,3 @@
   </div>
 <% end %>
 
-<script nonce="<%= content_security_policy_nonce %>">
-    window.track_list=<%= @current["current"].to_json.html_safe %>;
-</script>
-<%= javascript_include_tag 'admin/tracks.js' %>

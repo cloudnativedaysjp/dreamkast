@@ -17,7 +17,6 @@ import "./controllers/index.js"
 import '../stylesheets/application'
 import './bootstrap_custom.js'
 import './timetable.js'
-import './talks.js'
 import './speaker_form.js'
 
 //require.context('images/cndo201', true, /\.(png|jpg|jpeg|svg)$/)

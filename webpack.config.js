@@ -38,13 +38,10 @@ module.exports = {
       "./app/javascript/packs/cicd2021.js",
       "./app/javascript/stylesheets/cicd2021.scss",
     ],
-    talks: ["./app/javascript/packs/talks.js"],
     vote_cfp: ["./app/javascript/packs/vote_cfp.js"],
-    "admin/tracks": ["./app/javascript/packs/admin/tracks/index.js"],
     "admin/tracks/media_live": [
       "./app/javascript/packs/admin/tracks/media_live.js",
     ],
-    "chat/index": ["./app/javascript/packs/chat/index.js"],
     "tracks/waiting_channel": [
       "./app/javascript/packs/tracks/waiting_channel.js",
     ],

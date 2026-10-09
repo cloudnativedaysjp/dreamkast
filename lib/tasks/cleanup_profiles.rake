@@ -15,11 +15,15 @@ namespace :util do
       end
       conference.profiles.each do |profile|
         RegisteredTalk.where(profile_id: profile.id).each(&:destroy!)
-        ChatMessage.where(profile_id: profile.id).each do |chat_message|
-          chat_message.update!(profile_id: nil)
-        end
-        CheckIn.where(profile_id: profile.id).each do |check_in|
-          check_in.update!(profile_id: nil)
+        # モデルを削除済みの旧テーブル。テーブルを削除するまではプロフィールとの紐付けだけ外す
+        %w[chat_messages check_ins].each do |table|
+          next unless ActiveRecord::Base.connection.table_exists?(table)
+
+          ActiveRecord::Base.connection.exec_update(
+            ActiveRecord::Base.sanitize_sql_array(
+              ["UPDATE #{table} SET profile_id = NULL WHERE profile_id = ?", profile.id]
+            )
+          )
         end
         CheckInConference.where(scanner_profile_id: profile.id).update_all(scanner_profile_id: nil)
         CheckInTalk.where(scanner_profile_id: profile.id).update_all(scanner_profile_id: nil)

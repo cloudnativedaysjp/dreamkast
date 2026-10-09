@@ -428,14 +428,6 @@ https://event.cloudnativedays.jp/#{conference.abbr}/talks/#{id}
     remaining_seats <= 0
   end
 
-  def chat_messages
-    ChatMessage.where(room_id: id, room_type: 'talk')
-  end
-
-  def qa_messages
-    ChatMessage.where(room_id: id, room_type: 'talk', message_type: 'qa')
-  end
-
   def allowed_showing_video?
     proposal_item = proposal_items.find_by(label: VideoAndSlidePublished::LABEL)
     return false if proposal_item.blank?

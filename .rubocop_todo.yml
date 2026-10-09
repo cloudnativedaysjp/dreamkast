@@ -350,7 +350,6 @@ Style/SoleNestedConditional:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiteralsInInterpolation:
   Exclude:
-    - 'app/channels/chat_channel.rb'
     - 'app/channels/on_air_channel.rb'
     - 'app/controllers/admin/profiles_controller.rb'
     - 'app/controllers/admin/speakers_controller.rb'

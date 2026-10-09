@@ -9,7 +9,7 @@ module ValidatesInvitation
 
     invitation = model.where(conference_id: current_conference.id).lock(lock).find_by!(token: token)
     reason = invalid_invitation_reason(invitation, acceptance)
-    raise InvalidInvitation.new(reason) if reason
+    raise(InvalidInvitation, reason) if reason
 
     invitation
   end

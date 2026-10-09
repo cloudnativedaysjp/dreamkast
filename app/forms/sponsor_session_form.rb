@@ -16,6 +16,7 @@ class SponsorSessionForm
 
   delegate :persisted?, to: :sponsor_session
 
+  validates :document_url, http_url: true
   validate :validate_three_conference_selection, if: -> { conference_id == 15 }
 
   concerning :ProposalItemsBuilder do

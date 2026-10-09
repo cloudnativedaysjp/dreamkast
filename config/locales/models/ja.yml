@@ -37,3 +37,9 @@ ja:
       profile:
         company_tel: 勤務先電話番号
         industry_id: 業種
+      talk:
+        document_url: 資料URL
+  activemodel:
+    attributes:
+      sponsor_session_form:
+        document_url: セッション資料公開URL

@@ -40,7 +40,7 @@ class AdminController < ApplicationController
 
     @online_counts_by_talk, @offline_counts_by_talk = participation_counts_by_talk(talk_ids)
 
-    CSV.open(f.path, 'wb') do |csv|
+    CSV.open(f.path, 'wb', **CsvFormulaEscaper.options) do |csv|
       csv << %w[id item online_participation_size offline_participation_size]
       @talks.each do |talk|
         csv << %W[#{talk.id} #{talk.title} #{@online_counts_by_talk[talk.id]} #{@offline_counts_by_talk[talk.id]}]

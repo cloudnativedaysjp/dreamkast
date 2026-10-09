@@ -124,7 +124,7 @@ class Profile < ApplicationRecord
 
   def self.export(event_id)
     attr = %w[id email 姓 名 セイ メイ 業種 職種 勤務先名/所属団体 郵便番号 都道府県 勤務先住所1（都道府県以下） 勤務先住所2（ビル名） 電話番号 メールアドレス 参加方法]
-    CSV.generate do |csv|
+    CSV.generate(**CsvFormulaEscaper.options) do |csv|
       csv << attr
       Profile.where(conference_id: event_id).each do |profile|
         csv << [

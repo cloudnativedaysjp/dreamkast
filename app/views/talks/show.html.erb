@@ -110,7 +110,7 @@
           <% if display_document?(@talk) %>
             <div class="mt-4 pt-3" style="border-top: 1px solid rgba(26,26,26,0.08)">
               <h2 class="proposal-section-heading">資料</h2>
-              <p><a href="<%= @talk.document_url %>" target="_blank" style="color: #B93A32;">発表資料を見る &rarr;</a></p>
+              <p><a href="<%= @talk.safe_document_url %>" target="_blank" style="color: #B93A32;">発表資料を見る &rarr;</a></p>
             </div>
           <% end %>
 

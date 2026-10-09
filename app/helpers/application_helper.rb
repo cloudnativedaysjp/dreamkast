@@ -28,8 +28,12 @@ module ApplicationHelper
     end
   end
 
+  # Markdownの表をサニタイズ後も残すため、標準の許可タグに表関連タグを加える
+  MARKDOWN_ALLOWED_TAGS = (Rails::HTML::SafeListSanitizer.allowed_tags.to_a + %w[table thead tbody tr th td]).freeze
+
   def markdown(text)
-    html_render = Redcarpet::Render::HTML
+    # 入力は管理者が編集する文章だが、全イベントが同一オリジンのためスクリプトを含むHTMLは除去する
+    html_render = Redcarpet::Render::HTML.new(safe_links_only: true)
     options = {
       autolink: true,
       space_after_headers: true,
@@ -42,7 +46,7 @@ module ApplicationHelper
       strikethrough: true
     }
     markdown = Redcarpet::Markdown.new(html_render, options)
-    markdown.render(text.to_s).html_safe
+    sanitize(markdown.render(text.to_s), tags: MARKDOWN_ALLOWED_TAGS)
   end
 
   def event_js_path

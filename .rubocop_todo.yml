@@ -12,15 +12,12 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'app/controllers/profiles/talks_controller.rb'
     - 'app/controllers/speaker_dashboard/speakers_controller.rb'
-    - 'app/controllers/sponsor_dashboards/speakers_controller.rb'
 
 # Offense count: 4
 # Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches.
 Lint/DuplicateBranch:
   Exclude:
     - 'app/helpers/sponsor_helper.rb'
-    - 'app/models/live_stream_ivs.rb'
-    - 'app/models/live_stream_media_live.rb'
 
 # Offense count: 3
 Lint/DuplicateMethods:
@@ -43,13 +40,6 @@ Lint/RaiseException:
   Exclude:
     - 'app/models/track.rb'
 
-# Offense count: 1
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: present?, blank?, presence, try, try!, in?
-Lint/SafeNavigationChain:
-  Exclude:
-    - 'app/models/live_stream_media_live.rb'
-
 # Offense count: 2
 Lint/ShadowingOuterLocalVariable:
   Exclude:
@@ -59,7 +49,6 @@ Lint/ShadowingOuterLocalVariable:
 # Offense count: 6
 Lint/UselessAssignment:
   Exclude:
-    - 'app/controllers/admin/video_registrations_controller.rb'
     - 'app/controllers/profiles/talks_controller.rb'
     - 'spec/factories/speakers.rb'
 
@@ -98,15 +87,6 @@ Metrics/PerceivedComplexity:
 Naming/AccessorMethodName:
   Exclude:
     - 'app/controllers/concerns/secured_admin.rb'
-    - 'app/models/live_stream_ivs.rb'
-    - 'app/models/live_stream_media_live.rb'
-
-# Offense count: 1
-# Configuration parameters: ExpectMatchingDefinition, CheckDefinitionPathHierarchy, Regex, IgnoreExecutableScripts, AllowedAcronyms.
-# AllowedAcronyms: CLI, DSL, ACL, API, ASCII, CPU, CSS, DNS, EOF, GUID, HTML, HTTP, HTTPS, ID, IP, JSON, LHS, QPS, RAM, RHS, RPC, SLA, SMTP, SQL, SSH, TCP, TLS, TTL, UDP, UI, UID, UUID, URI, URL, UTF8, VM, XML, XMPP, XSRF, XSS
-Naming/FileName:
-  Exclude:
-    - 'config/initializers/seed-fu.rb'
 
 # Offense count: 6
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
@@ -130,7 +110,6 @@ Style/AndOr:
 Style/CaseLikeIf:
   Exclude:
     - 'app/controllers/speaker_dashboard/speakers_controller.rb'
-    - 'app/controllers/sponsor_dashboards/speakers_controller.rb'
 
 # Offense count: 32
 # Cop supports --auto-correct.
@@ -153,7 +132,6 @@ Style/ConditionalAssignment:
     - 'app/helpers/talks_helper.rb'
     - 'config/environments/production.rb'
     - 'config/initializers/shrine.rb'
-    - 'lib/tasks/get_and_save_current_attendees.rake'
 
 # Offense count: 99
 # Configuration parameters: AllowedConstants.
@@ -165,15 +143,8 @@ Style/Documentation:
 Style/GlobalStdStream:
   Exclude:
     - 'config/environments/production.rb'
-    - 'lib/tasks/add_non_scheduled_session_to_cndo2021.rake'
-    - 'lib/tasks/create_proposals_of_cicd2021.rake'
-    - 'lib/tasks/fix_proposal_items_for_cicd2021.rake'
-    - 'lib/tasks/get_and_save_current_attendees.rake'
     - 'lib/tasks/migrate_talks_to_proposal_items.rake'
-    - 'lib/tasks/post_left_idea_issues_to_slack.rake'
     - 'lib/tasks/post_number_of_registrants_to_slack.rake'
-    - 'lib/tasks/relate_profile_to_cndt2020_if_conference_id_is_nil.rake'
-    - 'lib/tasks/relate_speaker_to_cndt2020_if_conference_id_is_nil.rake'
     - 'spec/rails_helper.rb'
 
 # Offense count: 32
@@ -195,25 +166,11 @@ Style/IdenticalConditionalBranches:
     - 'app/controllers/admin/talks_controller.rb'
     - 'app/forms/speaker_form.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'app/controllers/concerns/talks_table.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/InfiniteLoop:
   Exclude:
     - 'app/helpers/media_live_helper.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'lib/tasks/fix_proposal_items_for_cicd2021.rake'
 
 # Offense count: 11
 # Cop supports --auto-correct.
@@ -237,7 +194,6 @@ Style/MixinUsage:
 # SupportedStyles: literals, strict
 Style/MutableConstant:
   Exclude:
-    - 'app/models/live_stream_media_live.rb'
     - 'app/models/talk.rb'
 
 # Offense count: 1
@@ -252,8 +208,6 @@ Style/NegatedIfElseCondition:
 # SupportedStyles: skip_modifier_ifs, always
 Style/Next:
   Exclude:
-    - 'app/controllers/admin/live_stream_ivs_controller.rb'
-    - 'app/controllers/admin/video_registrations_controller.rb'
     - 'app/controllers/profiles/talks_controller.rb'
     - 'app/models/video.rb'
 
@@ -277,10 +231,8 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'app/controllers/admin/live_stream_ivs_controller.rb'
     - 'app/models/talk.rb'
     - 'app/models/track.rb'
-    - 'lib/tasks/get_and_save_current_attendees.rake'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -317,7 +269,6 @@ Style/SafeNavigation:
   Exclude:
     - 'app/controllers/admin/talks_controller.rb'
     - 'app/controllers/admin/tracks_controller.rb'
-    - 'app/controllers/sponsor_dashboards/sponsor_profiles_controller.rb'
     - 'app/forms/speaker_form.rb'
     - 'app/models/track.rb'
 
@@ -328,21 +279,13 @@ Style/Semicolon:
   Exclude:
     - 'app/controllers/tracks_controller.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SingleArgumentDig:
-  Exclude:
-    - 'app/views/admin/live_stream_ivs/index.json.jbuilder'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: AllowModifier.
 Style/SoleNestedConditional:
   Exclude:
-    - 'app/controllers/admin/video_registrations_controller.rb'
     - 'app/controllers/concerns/secured.rb'
     - 'app/controllers/speaker_dashboard/speakers_controller.rb'
-    - 'app/controllers/sponsor_dashboards/speakers_controller.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.
@@ -367,21 +310,12 @@ Style/SymbolProc:
     - 'app/models/video.rb'
     - 'app/views/api/v1/sponsors/index.json.jbuilder'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Exclude:
-    - 'lib/tasks/add_non_scheduled_session_to_cndo2021.rake'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline.
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInHashLiteral:
   Exclude:
-    - 'app/models/live_stream_media_live.rb'
     - 'app/models/video.rb'
     - 'config/initializers/shrine.rb'
     - 'spec/rails_helper.rb'
@@ -392,7 +326,6 @@ Style/TrailingCommaInHashLiteral:
 Style/UnlessElse:
   Exclude:
     - 'app/controllers/sponsor_dashboards/sponsor_dashboards_controller.rb'
-    - 'app/controllers/sponsor_dashboards/sponsor_profiles_controller.rb'
 
 # Offense count: 7
 # Cop supports --auto-correct.
@@ -411,7 +344,6 @@ Style/WordArray:
 # Cop supports --auto-correct.
 Style/ZeroLengthPredicate:
   Exclude:
-    - 'app/controllers/admin/live_stream_ivs_controller.rb'
     - 'app/models/track.rb'
 
 # Offense count: 68
@@ -424,5 +356,4 @@ Layout/LineLength:
 
 Style/ClassEqualityComparison:
   Exclude:
-    - 'app/controllers/sponsor_dashboards/speakers_controller.rb'
     - 'app/controllers/speaker_dashboard/speakers_controller.rb'

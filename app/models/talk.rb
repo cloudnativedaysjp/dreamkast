@@ -185,14 +185,6 @@ class Talk < ApplicationRecord
     ((end_time - start_time).to_i / 60 / 5) + row_start
   end
 
-  def self.find_by_params(day_id, slot_number_param, track_id)
-    after = Time.zone.parse(SLOT_MAP[slot_number_param.to_i - 1].dup.insert(2, ':')).utc.strftime('%T')
-    before = (Time.zone.parse(SLOT_MAP[slot_number_param.to_i].dup.insert(2, ':')) - 60).utc.strftime('%T')
-
-    where(conference_day_id: day_id, track_id:)
-      .where('TIME(start_time) BETWEEN ? AND ?', after, before)
-  end
-
   def speaker_names
     speakers.map(&:name)
   end
@@ -278,10 +270,6 @@ class Talk < ApplicationRecord
     proposal_item_value('assumed_visitor')
   end
 
-  def execution_phase_params
-    proposal_item_value('execution_phase')
-  end
-
   def archived?
     # タイムテーブル未確定のセッションは終了時刻が決まっていないため、アーカイブ済みとは扱わない
     return false if conference_day.nil? || end_time.nil?
@@ -302,10 +290,6 @@ class Talk < ApplicationRecord
 
   def intermission?
     talk_types.exists?(id: TalkType::INTERMISSION_ID) || abstract == 'intermission'
-  end
-
-  def sponsor_keynote?
-    talk_types.exists?(id: TalkType::SPONSOR_SESSION_ID) && talk_types.exists?(id: TalkType::KEYNOTE_SESSION_ID)
   end
 
   # Talk type management methods

@@ -10,19 +10,6 @@ module MediaPackageHelper
     end
   end
 
-  def get_media_package_channels_from_aws(channel_ids = [])
-    channels = []
-    next_token = ''
-    loop do
-      resp = media_package_client.list_channels(next_token:)
-      channels.concat(resp.channels)
-      break unless resp.next_token
-      next_token = resp.next_token
-    end
-
-    channels.select { |channel| channel_ids.include?(channel.id) }
-  end
-
   def resource_name
     conference = streaming.conference
     track = streaming.track

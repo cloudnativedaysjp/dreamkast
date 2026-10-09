@@ -1,9 +1,4 @@
 module ApplicationHelper
-  def authenticate
-    return if logged_in?
-    redirect_to(root_path, alert: 'ログインしてください')
-  end
-
   def site_name
     if event_name && Conference.find_by(abbr: event_name).present?
       Conference.find_by(abbr: event_name).name

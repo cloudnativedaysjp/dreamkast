@@ -149,10 +149,6 @@ class Profile < ApplicationRecord
     end
   end
 
-  def gen_calendar_unique_code
-    update!(calendar_unique_code: SecureRandom.uuid)
-  end
-
   def qrcode_image
     Base64.strict_encode64(RQRCode::QRCode.new([{ data: JSON.dump({ profile_id: id }), mode: :byte_8bit }]).as_png.to_s)
   end

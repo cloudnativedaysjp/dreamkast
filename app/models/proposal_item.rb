@@ -12,9 +12,4 @@ class ProposalItem < ApplicationRecord
       params.map { |param| ProposalItemConfig.find(param.to_i) }
     end
   end
-
-  def self.select_proposal_items
-    ProposalItem.joins(:talk)
-                .select(:talks.id(AS(talk_id)), :label, :params, :conference_id)
-  end
 end

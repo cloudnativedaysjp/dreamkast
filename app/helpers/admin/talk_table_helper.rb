@@ -23,17 +23,6 @@ module Admin::TalkTableHelper
     end
   end
 
-  def alert_type(message_type)
-    case message_type
-    when 'notice'
-      'success'
-    when 'danger', 'alert'
-      'danger'
-    else
-      'primary'
-    end
-  end
-
   def already_recorded?(talk)
     talk&.video&.video_id.present?
   end

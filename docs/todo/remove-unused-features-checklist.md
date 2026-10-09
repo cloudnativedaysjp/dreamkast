@@ -44,13 +44,13 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] `speaker_dashboard/video_registrations` ルート（コントローラなし）
 
 ## 3. どこからも呼ばれていないコード
-- [ ] コントローラ: `SponsorController` / `Admin::LinksController` / `SponsorDashboards::SpeakersController` / `Profiles::TalksController#new,#edit`
-- [ ] ビュー: `talks/partial_show/*` の未使用 partial、`proposals/partial_show/_col_sub_pane`、`profiles/sponsors/_microsoft`、`profiles/checkin`、`keynote_speaker_accepts/show`、`sponsor_dashboards/sponsor_dashboards/login`、トップレベルの `sponsor_contact_invites/*`、`layouts/_karte`、`event/_privacy`、`profiles/talks/show`
-- [ ] policy / concern / helper: `TalkPolicy`、`SecuredBeta`、`BetaHelper#partial_beta_view`、`ApplicationHelper#authenticate`、空の `contents_helper` / `dashboard_helper`、`Admin::TalkTableHelper#alert_type`、AWS ヘルパーの `get_*_from_aws`
-- [ ] モデル: `Talk::Type`、`TalkCategory.for_cnd/for_pek/for_srek`、`Sponsor#booth_sponsor?`、`Talk#sponsor_keynote?` / `#execution_phase_params`、`TalkType.non_exclusive`、`Profile#gen_calendar_unique_code`、`ProposalItem.select_proposal_items`、`MediaLiveChannel::OutputGroupIvs`
-- [ ] JS: `app/javascript/channels/`、webpack の `admin_tailwind` エントリー
-- [ ] `SpeakerMailer#video_uploaded` とビュー
-- [ ] `bin/test-args.sh`、`bin/spring`、`config/spring.rb`
+- [x] コントローラ: `SponsorController` / `Admin::LinksController` / `SponsorDashboards::SpeakersController` / `Profiles::TalksController#new,#edit`
+- [x] ビュー: `talks/partial_show/*` の未使用 partial、`proposals/partial_show/_col_sub_pane`、`profiles/sponsors/_microsoft`、`profiles/checkin`、`keynote_speaker_accepts/show`、`sponsor_dashboards/sponsor_dashboards/login`、トップレベルの `sponsor_contact_invites/*`、`layouts/_karte`、`event/_privacy`、`profiles/talks/show`
+- [x] policy / concern / helper: `TalkPolicy`、`SecuredBeta`、`BetaHelper#partial_beta_view`、`ApplicationHelper#authenticate`、空の `contents_helper` / `dashboard_helper`、`Admin::TalkTableHelper#alert_type`、AWS ヘルパーの `get_*_from_aws`
+- [x] モデル: `Talk::Type`、`TalkCategory.for_cnd/for_pek/for_srek`、`Sponsor#booth_sponsor?`、`Talk#sponsor_keynote?` / `#execution_phase_params`、`TalkType.non_exclusive`、`Profile#gen_calendar_unique_code`、`ProposalItem.select_proposal_items`、`MediaLiveChannel::OutputGroupIvs`
+- [x] JS: `app/javascript/channels/`、webpack の `admin_tailwind` エントリー
+- [x] `SpeakerMailer#video_uploaded` とビュー
+- [x] `bin/test-args.sh`、`bin/spring`、`config/spring.rb`
 
 ## 4. 過去イベント固有の残り
 - [ ] cndt2020 / cndo2021 / cicd2021 の event show ビュー、`event/partial/_about`

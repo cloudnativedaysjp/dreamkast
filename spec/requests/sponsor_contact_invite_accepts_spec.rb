@@ -42,7 +42,15 @@ RSpec.describe(SponsorContactInviteAcceptsController, type: :request) do
 
 
       get new_sponsor_contact_invite_accept_path(event: conference.abbr, token: sponsor_contact_invite.token)
-      expect(flash.now[:alert]).to(eq('招待メールが期限切れです。再度招待メールを送ってもらってください。'))
+      expect(flash.now[:alert]).to(eq('招待の有効期限が切れています。再招待を依頼してください。'))
+    end
+
+    it '招待先と異なるアカウントでログインしている場合はメッセージを表示する' do
+      sponsor_contact_invite.update!(email: 'other@example.com')
+      get new_sponsor_contact_invite_accept_path(event: conference.abbr, token: sponsor_contact_invite.token)
+      expect(response).to(have_http_status(:ok))
+      expect(response.body).to(include('招待先と異なるアカウントでログインしています'))
+      expect(response.body).not_to(include('登録する」ボタンをクリックしてください'))
     end
 
     it 'returns a 404 response for invalid token' do

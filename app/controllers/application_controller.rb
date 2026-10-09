@@ -1,5 +1,22 @@
 class Forbidden < ActionController::ActionControllerError; end
 
+# 招待が承諾できない理由を保持する。個別に rescue しなければ Forbidden として 403 になる。
+class InvalidInvitation < Forbidden
+  MESSAGES = {
+    email_unverified: 'メールアドレスの確認が完了していません。確認メールのリンクからメールアドレスを確認した後、再度ログインしてください。',
+    email_mismatch: '招待先と異なるアカウントでログインしています。招待メールを受け取ったメールアドレスのアカウントでログインし直してください。',
+    used: 'この招待は既に使用されています。',
+    expired: '招待の有効期限が切れています。再招待を依頼してください。'
+  }.freeze
+
+  attr_reader :reason
+
+  def initialize(reason)
+    @reason = reason
+    super(MESSAGES.fetch(reason))
+  end
+end
+
 class NotFound < ActionController::ActionControllerError; end
 
 class ApplicationController < ActionController::Base

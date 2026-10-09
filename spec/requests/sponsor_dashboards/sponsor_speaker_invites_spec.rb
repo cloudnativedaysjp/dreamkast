@@ -54,6 +54,7 @@ RSpec.describe(SponsorDashboards::SponsorSpeakerInvitesController, type: :reques
         expect(new_invite.email).to(eq('new_speaker@example.com'))
         expect(new_invite.sponsor_id).to(eq(sponsor.id))
         expect(new_invite.conference_id).to(eq(conference.id))
+        expect(new_invite.expires_at).to(be_within(1.minute).of(7.days.from_now))
 
         # Verify the email was sent
         expect(SponsorSpeakerInviteMailer).to(have_received(:invite))

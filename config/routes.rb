@@ -178,6 +178,8 @@ Rails.application.routes.draw do
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'attendee_dashboards#show'
+    get 'discussion' => 'contents#discussion'
+    get 'hands-on' => 'contents#hands_on'
     get 'o11y' => 'contents#o11y'
     get 'attendees' => 'attendees#index'
 

@@ -3,8 +3,10 @@
 grep による参照確認と git 履歴をもとに「すでに使われていない」と判断したコードを削除する。
 前回の `cleanup-migrated-2025-events-checklist.md` の続き。
 
-前提: cndw2026 以外のイベントは `migrated` であり、`Secured#redirect_to_website` により
-全ページが外部サイトへリダイレクトされるため、過去イベント固有の分岐は到達不能。
+前提: `migrated` のイベントは `Secured#redirect_to_website` により全ページが外部サイトへ
+リダイレクトされるため、そのイベント固有の分岐は到達不能。
+ただし本番で確認したところ、cndt2020 / cndo2021 / cicd2021 は migrated ではなく
+アーカイブとして `event.cloudnativedays.jp` 上で公開中（2026-10-09 時点）。この3イベント向けのコードは残す。
 
 ## 1. 機能単位の削除
 
@@ -30,8 +32,8 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] `TracksController#reload` / `#blank` / `tracks/blank.html.erb` / `tracks/blank` ルート
 
 ### イベント固有の contents ページ
-- [x] `discussion` / `hands-on` / `job-board` / `community_lt` / `yurucafe` / `stamprally` のルートとアクション
-- [x] `contents/cicd2021_*` / `contents/cndt2020_discussion` ビュー、`ContentsController#index`
+- [x] どのイベントにもテンプレートがない `job-board` / `community_lt` / `yurucafe` / `stamprally` のルートとアクション、`ContentsController#index`
+- 〔訂正〕`discussion` / `hands-on` と `contents/cicd2021_*` / `contents/cndt2020_discussion` は公開中のアーカイブから到達できるため残す
 
 ## 2. 壊れていて動いていないコードの削除
 - [x] `packs/talks.js` の未定義 `tracker` を呼ぶタイマー、未使用の `tableFilterStripHtml`
@@ -44,7 +46,7 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] `speaker_dashboard/video_registrations` ルート（コントローラなし）
 
 ## 3. どこからも呼ばれていないコード
-- [x] コントローラ: `SponsorController` / `Admin::LinksController` / `SponsorDashboards::SpeakersController` / `Profiles::TalksController#new,#edit`
+- [x] コントローラ: `SponsorController` / `Admin::LinksController` / `SponsorDashboards::SpeakersController` / `Profiles::TalksController#new,#edit,#update,#destroy`
 - [x] ビュー: `talks/partial_show/*` の未使用 partial、`proposals/partial_show/_col_sub_pane`、`profiles/sponsors/_microsoft`、`profiles/checkin`、`keynote_speaker_accepts/show`、`sponsor_dashboards/sponsor_dashboards/login`、トップレベルの `sponsor_contact_invites/*`、`layouts/_karte`、`event/_privacy`、`profiles/talks/show`
 - [x] policy / concern / helper: `TalkPolicy`、`SecuredBeta`、`BetaHelper#partial_beta_view`、`ApplicationHelper#authenticate`、空の `contents_helper` / `dashboard_helper`、`Admin::TalkTableHelper#alert_type`、AWS ヘルパーの `get_*_from_aws`
 - [x] モデル: `Talk::Type`、`TalkCategory.for_cnd/for_pek/for_srek`、`Sponsor#booth_sponsor?`、`Talk#sponsor_keynote?` / `#execution_phase_params`、`TalkType.non_exclusive`、`Profile#gen_calendar_unique_code`、`ProposalItem.select_proposal_items`、`MediaLiveChannel::OutputGroupIvs`
@@ -53,12 +55,9 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] `bin/test-args.sh`、`bin/spring`、`config/spring.rb`
 
 ## 4. 過去イベント固有の残り
-- [ ] cndt2020 / cndo2021 / cicd2021 の event show ビュー、`event/partial/_about`
-- [ ] 同 timetable partial（`_timetable` / `_timetable_cicd2021` / `_timetable_cndo2021` / `_timetable_footer` / `_talk`）と admin プレビューの分岐
-- [ ] 同 pack / SCSS / 画像 / webpack エントリー
-- [ ] コントローラ・ヘルパー・ビュー内の `cndt2020` / `cndo2021` / `cicd2021` 分岐
-- [ ] 参照のない画像ディレクトリ（`app/javascript/images/*`、`app/assets/images/{cnds2024,cndw2024,sponsors}` ほか）
-- [ ] 一回限りの rake（`rescure_checkin` / `rescure_session` / `migrate_talks_to_proposal_items`）
+- 〔対象外〕cndt2020 / cndo2021 / cicd2021 の event show・timetable・pack・SCSS・画像・abbr 分岐（公開中のアーカイブのため）
+- [ ] 参照のない画像ディレクトリ（migrated 済みイベントの `app/javascript/images/*`、`app/assets/images/{cnds2024,cndw2024}`、`app/assets/images/sponsors` ほか）
+- [ ] 一回限りの rake（cnds2025 用の `rescure_checkin` / `rescure_session`、`migrate_talks_to_proposal_items`）
 
 ## 5. 依存関係・設定
 - [ ] Gem: `rails_autolink`、`activerecord-nulldb-adapter`、`byebug`、`execjs`、`rexml`、`steep`

@@ -36,7 +36,6 @@ module.exports = {
       "./app/javascript/packs/cicd2021.js",
       "./app/javascript/stylesheets/cicd2021.scss",
     ],
-    vote_cfp: ["./app/javascript/packs/vote_cfp.js"],
     "admin/tracks/media_live": [
       "./app/javascript/packs/admin/tracks/media_live.js",
     ],

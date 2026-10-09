@@ -76,6 +76,30 @@ grep による参照確認と git 履歴をもとに「すでに使われてい�
 - [x] `yarn build` / `npx jest`
 - [x] DB なしでの `RAILS_ENV=production bin/rails assets:precompile`（nulldb 削除後も Docker ビルドと同条件で成功）
 
+## 7. dreamkast-weaver の機能棚卸し（本体への取り込み準備）
+
+weaver（`dkw.cloudnativedays.jp`）を廃止して dreamkast 本体に取り込むため、GraphQL の各操作の呼び出し元を
+dreamkast / dreamkast-ui で確認した（2026-10-09 時点）。スタンプラリーと CFP 投票は運用上すでに使っていない。
+
+| 操作 | 種別 | 呼び出し元 | 判定 |
+|---|---|---|---|
+| `viewTrack` | mutation | UI `useViewerCount.ts`（30秒ごと）、Rails `talk_logger_controller.js`（60秒ごと、`trackName: "-"`） | 現役。Rails に移す |
+| `viewerCount` | query | UI `useViewerCount.ts`（60秒ポーリング、`TalkInfo` の LIVE 人数表示） | 現役。Rails に移す |
+| `vote` / `voteCounts` | mutation / query | Rails `vote_cfp.js` のみ（集計は weaver 側 `tools/cfp-vote-counter`） | 未使用。投票機能ごと廃止（ビューのボタンは削除済みだった） |
+| `stampOnline` / `stampOnSite` / `stampChallenges` | mutation / query | なし（UI の `stampChallenges` は Rails API の `DkUiData` で weaver ではない） | 未使用。削除 |
+| `createViewEvent` / `viewingSlots` | mutation / query | なし | 未使用。削除 |
+
+テーブル（`dkui` DB）: 現役は `track_viewer` のみ（Rails の `TrackViewer` が既に読んでいる）。
+`view_events` / `trailmap_stamps` / `cfp_votes` は過去データとして残すか、取り込み完了後に別途判断する。
+
+- [x] CFP 投票機能を dreamkast から削除: `vote_cfp.js` と webpack エントリー、`proposals/show` / `talks/show` の読み込み、開発用 nginx の `/api/v1/talks/*/vote`（SAM 転送）
+  - ビューに `id="vote"` の要素がもう無く、読み込むと `getElementById('vote')` が null で例外になっていた
+  - dreamkast-ui の `schemas/swagger.yml` に残る `/api/v1/talks/{talkId}/vote` は UI 側で別途削除
+- [x] `ApplicationHelper#vote_api_url` を `weaver_query_url` に改名（`talk_logger` の視聴記録が使用。Rails への取り込み時に置き換える）
+- [ ] `viewTrack` / `viewerCount` 相当の API を Rails に実装する（書き込みは認証済みユーザーから Profile を解決し、入力の `profileID` を信用しない）
+- [ ] dreamkast-ui の `useViewerCount.ts` と Rails の `talk_logger_controller.js` の接続先を切り替える
+- [ ] 1イベント並行稼働させた後、weaver の ECS / terraform / ECR / `DREAMKAST_WEAVER_ADDR` / `NEXT_PUBLIC_WEAVER_URL` を撤去
+
 ## 今回は対象外（別途要判断）
 - DB テーブル・列の削除（`chat_messages`、`viewer_counts`、`check_ins`、`attendee_announcements*`、`talks.expected_participants/execution_phases`、`videos.video_file_data` など）。
   コード削除のリリース後にマイグレーションを別 PR で行う。

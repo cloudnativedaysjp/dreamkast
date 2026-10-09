@@ -55,7 +55,7 @@ module ApplicationHelper
     'application'
   end
 
-  def vote_api_url
+  def weaver_query_url
     [
       ENV['DREAMKAST_WEAVER_ADDR'], 'query'
     ].join('/')

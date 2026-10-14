@@ -40,6 +40,21 @@ describe DreamkastExporter, type: :request do
       end
     end
 
+    context 'have online and offline registrants' do
+      let!(:cndo2021) { create(:cndo2021, :registered) }
+      let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020, participation: :online) }
+      let!(:bob) { create(:bob, :on_cndt2020, conference: cndt2020, participation: :offline) }
+
+      it 'returns live online and offline registrant counts for each conference' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_stats_of_registrants_online{conference_id="1"} 1.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_offline{conference_id="1"} 1.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_online{conference_id="2"} 0.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_offline{conference_id="2"} 0.0'))
+      end
+    end
+
     context 'have talks with categories' do
       let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
       let!(:cnk2026) { create(:conference, id: 15, abbr: 'cnk2026', name: 'CloudNative Conference 2026') }

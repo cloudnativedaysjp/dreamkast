@@ -91,12 +91,12 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
       ),
       Prometheus::Client::Gauge.new(
         :dreamkast_stats_of_registrants_offline,
-        docstring: 'Stats of Registrants(Offline)',
+        docstring: 'Count of offline registrants',
         labels: [:conference_id]
       ),
       Prometheus::Client::Gauge.new(
         :dreamkast_stats_of_registrants_online,
-        docstring: 'Stats of Registrants(Online)',
+        docstring: 'Count of online registrants',
         labels: [:conference_id]
       )
     ]
@@ -246,19 +246,21 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_stats_of_registrants_offline(metrics)
-    StatsOfRegistrant.all.each do |stats|
-      metrics.set(
-        stats.offline_attendees.to_i,
-        labels: { conference_id: stats.conference_id }
-      )
-    end
+    set_live_registrants_count(metrics, :offline)
   end
 
   def dreamkast_stats_of_registrants_online(metrics)
-    StatsOfRegistrant.all.each do |stats|
+    set_live_registrants_count(metrics, :online)
+  end
+
+  # Admin 画面と同じく、現時点の Profile 参加形態を conference ごとに集計する。
+  # 日次スナップショット（StatsOfRegistrant）には依存しない。
+  def set_live_registrants_count(metrics, participation)
+    counts = Profile.public_send(participation).group(:conference_id).count
+    Conference.all.each do |conference|
       metrics.set(
-        stats.online_attendees.to_i,
-        labels: { conference_id: stats.conference_id }
+        counts[conference.id] || 0,
+        labels: { conference_id: conference.id }
       )
     end
   end

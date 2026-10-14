@@ -40,6 +40,39 @@ describe DreamkastExporter, type: :request do
       end
     end
 
+    context 'have online and offline registrants' do
+      let!(:cndo2021) { create(:cndo2021, :registered) }
+      let!(:alice) { create(:alice, :on_cndt2020, conference: cndt2020, participation: :online) }
+      let!(:bob) { create(:bob, :on_cndt2020, conference: cndt2020, participation: :offline) }
+
+      it 'returns live online and offline registrant counts for each conference' do
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_stats_of_registrants_online{conference_id="1"} 1.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_offline{conference_id="1"} 1.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_online{conference_id="2"} 0.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_offline{conference_id="2"} 0.0'))
+      end
+
+      it 'includes profiles without participation in the total count only' do
+        alice.update_column(:participation, nil)
+
+        get '/metrics'
+
+        expect(response.body).to(include('dreamkast_registrants_count{conference_id="1"} 2.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_online{conference_id="1"} 0.0'))
+        expect(response.body).to(include('dreamkast_stats_of_registrants_offline{conference_id="1"} 1.0'))
+      end
+
+      it 'aggregates profiles once per scrape' do
+        allow(Profile).to receive(:group).and_call_original
+
+        get '/metrics'
+
+        expect(Profile).to have_received(:group).with(:conference_id, :participation).once
+      end
+    end
+
     context 'have talks with categories' do
       let!(:cndw2026) { create(:conference, id: 16, abbr: 'cndw2026', name: 'CloudNative Days Winter 2026') }
       let!(:cnk2026) { create(:conference, id: 15, abbr: 'cnk2026', name: 'CloudNative Conference 2026') }

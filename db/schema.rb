@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_08_150000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_050000) do
   create_table "admin_profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "conference_id", null: false
     t.string "name"
@@ -356,6 +356,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_08_150000) do
     t.integer "occupation_id", default: 34
     t.string "participation"
     t.bigint "user_id", null: false
+    t.index ["conference_id", "participation"], name: "index_profiles_on_conference_id_and_participation"
     t.index ["user_id", "conference_id"], name: "index_profiles_on_user_id_and_conference_id", unique: true
   end
 

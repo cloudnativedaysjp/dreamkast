@@ -110,7 +110,7 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def respond_with(format)
-    reset_cfp_caches
+    reset_scrape_caches
     @registry.metrics.each do |metrics|
       send(metrics.name, metrics)
     end
@@ -120,13 +120,16 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   private
 
   # スクレイプ毎に集計結果をリセットする（プロセス内で使い回さない）
-  def reset_cfp_caches
+  def reset_scrape_caches
     @cfp_proposal_counts_by_conference = nil
     @cfp_proposal_counts_by_difficulty = nil
     @cfp_proposal_item_counts = nil
     @cfp_proposal_item_configs = nil
     @cfp_proposal_item_config_names = nil
     @cfp_proposal_item_config_names_by_label = nil
+    @registrant_counts_by_conference_and_participation = nil
+    @registrant_totals_by_conference = nil
+    @conference_ids = nil
   end
 
   def dreamkast_track_viewer_count(metrics)
@@ -157,11 +160,11 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_registrants_count(metrics)
-    profile_counts = Profile.group(:conference_id).count
-    Conference.all.each do |conf|
+    totals = registrant_totals_by_conference
+    conference_ids.each do |conference_id|
       metrics.set(
-        profile_counts[conf.id] || 0,
-        labels: { conference_id: conf.id }
+        totals[conference_id],
+        labels: { conference_id: }
       )
     end
   end
@@ -246,23 +249,50 @@ class DreamkastExporter < Prometheus::Middleware::Exporter
   end
 
   def dreamkast_stats_of_registrants_offline(metrics)
-    set_live_registrants_count(metrics, :offline)
+    set_live_registrants_count(metrics, 'offline')
   end
 
   def dreamkast_stats_of_registrants_online(metrics)
-    set_live_registrants_count(metrics, :online)
+    set_live_registrants_count(metrics, 'online')
   end
 
   # Admin 画面と同じく、現時点の Profile 参加形態を conference ごとに集計する。
   # 日次スナップショット（StatsOfRegistrant）には依存しない。
   def set_live_registrants_count(metrics, participation)
-    counts = Profile.public_send(participation).group(:conference_id).count
-    Conference.all.each do |conference|
+    counts = registrant_counts_by_conference_and_participation
+    conference_ids.each do |conference_id|
       metrics.set(
-        counts[conference.id] || 0,
-        labels: { conference_id: conference.id }
+        counts[[conference_id, participation]] || 0,
+        labels: { conference_id: }
       )
     end
+  end
+
+  # スクレイプ内で Profile 集計を 1 回だけ実行し、オンライン・オフライン・総数で共有する。
+  # 総数は participation が nil の過去データも含める。
+  def registrant_counts_by_conference_and_participation
+    @registrant_counts_by_conference_and_participation ||=
+      Profile.group(:conference_id, :participation).count.transform_keys do |(conference_id, participation)|
+        [conference_id, normalize_participation(participation)]
+      end
+  end
+
+  def registrant_totals_by_conference
+    @registrant_totals_by_conference ||= Hash.new(0).tap do |totals|
+      registrant_counts_by_conference_and_participation.each do |(conference_id, _), count|
+        totals[conference_id] += count
+      end
+    end
+  end
+
+  def conference_ids
+    @conference_ids ||= Conference.pluck(:id)
+  end
+
+  def normalize_participation(participation)
+    return if participation.nil?
+
+    Profile.participations.key(participation) || participation.to_s
   end
 
   # CFP（一般公募セッション）のプロポーザル数を conference ごとに集計する

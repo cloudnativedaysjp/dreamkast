@@ -13,7 +13,7 @@
     data-talk-logger-talk-id-value="<%= @talk.id %>"
     data-talk-logger-talk-name-value="<%= @talk.title %>"
     data-talk-logger-profile-id-value="<%= @profile.id %>"
-    data-talk-logger-weaver-url-value="<%= vote_api_url %>"
+    data-talk-logger-weaver-url-value="<%= weaver_query_url %>"
   <% end %>
 >
   <div class="dk-container">
@@ -156,5 +156,3 @@
     </div>
   </div>
 </div>
-
-<%= javascript_include_tag 'vote_cfp.js' %>

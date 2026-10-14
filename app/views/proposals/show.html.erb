@@ -28,12 +28,3 @@
     </div>
   </div>
 </div>
-
-<% if current_user %>
-  <script nonce="<%= content_security_policy_nonce %>">
-      window.talk_id = "<%= @talk.id %>";
-      window.talk_name = "<%= @talk.title %>";
-  </script>
-  <%= javascript_include_tag 'talks.js' %>
-<% end %>
-<%= javascript_include_tag 'vote_cfp.js' %>

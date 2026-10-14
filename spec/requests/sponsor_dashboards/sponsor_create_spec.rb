@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe(SponsorDashboards::SpeakersController, type: :request) do
+describe(SpeakerDashboard::SpeakersController, type: :request) do
   admin_userinfo = { userinfo: { info: { email: 'alice@example.com' }, extra: { raw_info: { sub: 'google-oauth2|alice', 'https://cloudnativedays.jp/roles' => ['CNDT2020-Admin'] } } } }
   context 'POST /cndt2020/speaker_dashboard/speakers' do
     context 'user already logged in' do

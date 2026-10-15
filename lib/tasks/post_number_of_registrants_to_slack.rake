@@ -11,9 +11,15 @@ namespace :util do
     end
 
     client = Slack::Web::Client.new
+
+    # SLACK_CHANNEL（チャンネル名 "#foo" またはチャンネル ID）が指定されていれば全カンファレンスの速報をそのチャンネルに投稿する。
+    # 未指定の場合はカンファレンスの abbr と同名のチャンネルが存在するときのみ投稿する。
+    specified_channel = ENV['SLACK_CHANNEL'].to_s.strip.presence
     channels = []
-    client.conversations_list(exclude_archived: true) do |resp|
-      channels.concat(resp.channels)
+    unless specified_channel
+      client.conversations_list(exclude_archived: true) do |resp|
+        channels.concat(resp.channels)
+      end
     end
     conferences = Conference.unarchived
 
@@ -41,9 +47,10 @@ namespace :util do
         end
       end
 
-      if channels.any? { |c| c.name == conference.abbr }
-        puts "channel: #{conference.abbr} username: #{conference.abbr.upcase} 参加者速報 text: #{body.join("\n")}"
-        client.chat_postMessage(channel: "##{conference.abbr}", text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
+      channel = specified_channel || ("##{conference.abbr}" if channels.any? { |c| c.name == conference.abbr })
+      if channel
+        puts "channel: #{channel} username: #{conference.abbr.upcase} 参加者速報 text: #{body.join("\n")}"
+        client.chat_postMessage(channel:, text: body.join("\n"), username: "#{conference.abbr.upcase} 参加者速報")
       end
     end
   end

@@ -31,10 +31,8 @@ gem 'omniauth-auth0', '~> 3.0'
 gem 'omniauth-rails_csrf_protection', '~> 2.0'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'committee'
   gem 'committee-rails'
   gem 'debug', require: false
@@ -49,7 +47,6 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'bullet'
-  gem 'execjs', require: false
   gem 'foreman'
   gem 'listen', '~> 3.2'
   gem 'pre-commit', require: false
@@ -59,7 +56,6 @@ group :development do
   gem 'ruby-lsp'
   gem 'ruby-lsp-rails'
   gem 'ruby-lsp-rspec'
-  gem 'steep', require: false
   gem 'web-console', '>= 3.3.0'
 end
 
@@ -90,7 +86,6 @@ gem 'aws-sdk-s3', '~> 1.14'
 
 gem 'seed-fu'
 
-gem 'rails_autolink'
 
 gem 'rack-timeout'
 
@@ -102,12 +97,9 @@ gem 'redcarpet'
 gem 'image_processing', '~> 1.14.0'
 gem 'uppy-s3_multipart', '~> 1.0'
 
-gem 'awesome_nested_set'
 gem 'aws-actionmailer-ses', '~> 1.0'
 gem 'aws-activejob-sqs'
 gem 'aws-sdk-rails'
-
-gem 'activerecord-nulldb-adapter'
 
 gem 'slack-incoming-webhooks'
 

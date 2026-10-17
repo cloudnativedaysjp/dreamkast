@@ -15,14 +15,4 @@ class TracksController < ApplicationController
     @talk_categories = @conference.talk_categories
     @talk_difficulties = @conference.talk_difficulties
   end
-
-  def reload
-    ActionCable.server.broadcast('waiting_channel', 'aaa');
-    render(plain: 'OK')
-  end
-
-  def blank
-    @msg = params.key?(:msg) ? params[:msg] : 'No content'
-    render(layout: false)
-  end
 end

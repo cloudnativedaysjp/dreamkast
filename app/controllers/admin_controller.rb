@@ -3,7 +3,6 @@ class AdminController < ApplicationController
 
   def show
     @session = session
-    @current = Video.on_air(current_conference)
     @offline_registrants_count = current_conference.profiles.offline.count
     @online_registrants_count = current_conference.profiles.online.count
     @checked_in_count = current_conference.check_in_conferences

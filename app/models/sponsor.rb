@@ -18,15 +18,6 @@ class Sponsor < ApplicationRecord
            .distinct
   end
 
-  def booth_sponsor?
-    sponsor_types.each do |type|
-      if type.name == 'Booth'
-        return true
-      end
-    end
-    false
-  end
-
   def logo_url
     if sponsor_attachment_logo_image&.file_data&.present?
       sponsor_attachment_logo_image&.file_url

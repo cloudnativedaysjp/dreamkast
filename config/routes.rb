@@ -32,8 +32,6 @@ Rails.application.routes.draw do
       resources :tracks, only: [:index, :show]
       resources :streamings, only: [:index]
       resources :sponsors, only: [:index]
-      resources :speakers, only: [:index, :show]
-      resources :chat_messages, only: [:index, :create, :update]
       resources :debug, only: [:index]
       resources :check_in_conferences, only: [:create], path: 'check_in_events'
       resources :check_in_talks, only: [:create]
@@ -61,7 +59,6 @@ Rails.application.routes.draw do
       get 'users' => 'profiles#index'
       resources :profiles
       get 'entry_sheet' => 'profiles#entry_sheet'
-      resources :check_ins, only: [:index, :create, :destroy]
       resources :admin_profiles, only: [:edit, :update]
       resources :sponsors, only: [:index, :new, :create, :show, :edit, :update, :destroy]
       resources :sponsor_contacts, only: [:destroy]
@@ -140,7 +137,6 @@ Rails.application.routes.draw do
     patch '/speaker_dashboard/talks/:talk_id/session_questions/:id/toggle_hidden' => 'speaker_dashboards#toggle_question_hidden', as: 'speaker_dashboard_talk_session_question_toggle_hidden'
     namespace :speaker_dashboard do
       resources :speakers, only: [:new, :edit, :create, :update]
-      resources :video_registrations, only: [:new, :create, :edit, :update]
     end
     resources :speaker_invitations, only: [:index, :new, :create]
     resources :speaker_invitation_accepts, only: [:index, :new, :create]
@@ -150,7 +146,6 @@ Rails.application.routes.draw do
     get '/keynote_speaker_accepts/invite' => 'keynote_speaker_accepts#invite'
     resources :stamp_rally_check_ins, only: [:index, :new, :create]
 
-    # resources :sponsor_contact_invites, only: [:index, :new, :create]
     resources :sponsor_contact_invite_accepts, only: [:index, :new, :create]
     get '/sponsor_contact_invite_accepts/invite' => 'sponsor_contact_invite_accepts#invite'
     resources :sponsor_speaker_invite_accepts, only: [:index, :new, :create]
@@ -183,15 +178,10 @@ Rails.application.routes.draw do
     get 'timetables' => 'timetable#index'
     get 'timetables/:date' => 'timetable#index'
     get 'dashboard' => 'attendee_dashboards#show'
-    get 'tracks/blank' => 'tracks#blank'
     get 'discussion' => 'contents#discussion'
     get 'hands-on' => 'contents#hands_on'
-    get 'job-board' => 'contents#job_board'
     get 'o11y' => 'contents#o11y'
     get 'attendees' => 'attendees#index'
-    get 'community_lt' => 'contents#community_lt'
-    get 'yurucafe' => 'contents#yurucafe'
-    get 'stamprally' => 'contents#stamprally'
 
     resources :tracks, only: [:index, :show]
     get 'registration' => 'profiles#new'
@@ -216,7 +206,6 @@ Rails.application.routes.draw do
     get 'profiles/edit', to: 'profiles#edit'
     get 'profiles/entry_sheet' => 'profiles#entry_sheet'
     get 'profiles/view_qr' => 'profiles#view_qr'
-    get 'profiles/entry_sheet' => 'profiles#entry_sheet'
     resources :public_profiles
 
 

@@ -6,27 +6,71 @@
         CNDW2026 Hands-on
       </h2>
       <h4 class="tw-mb-4 tw-text-center">
-        開催日時：2026/11/17 (火) 10:00 - 16:30 （途中お昼休憩あり）
+        開催日：2026/11/16 (月) - 11/17 (火)
       </h4>
       <p>
-        CloudNative Days Winter 2026では、これまでのCloudNative Daysで好評だった Co-located ハンズオンを開催します。
+        CloudNative Days Winter 2026では、これまでのCloudNative Daysで好評だった Co-located イベントを開催します。
       </p>
       <p>
         Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDW2026で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
       </p>
       <h3 class="tw-mt-6">申込方法・参加方法</h3>
       <p>
-        申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+        申込みはページ下部にある各イベントの申し込みページまでお願いします。<b>イベントごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
       </p>
       <p>
-        ハンズオンはオフライン（現地会場）のみで実施します。オンラインでの参加はできませんのでご注意ください。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+        開催形式（現地のみ / ハイブリッド）はイベントごとに異なります。また、事前課題や環境のセットアップなどの事前準備が必要な場合もあるため、各イベント主催者の指示に従ってください。
       </p>
 
-      <h3 class="tw-mt-6">開催予定ハンズオン</h3>
-      <%# ハンズオンを追加するときは、この一覧と下の .handson-session の両方に追記する %>
+      <h3 class="tw-mt-6">開催予定イベント</h3>
+      <%# イベントを追加するときは、この一覧と下の .handson-session の両方に追記する %>
+      <div class="session">
+        <h5 class="time">2026/11/16 (月) 19:00 - 21:00</h5>
+        <h4 class="title"><a href="#hc2">『Cloud Native Woman Gathering Meetup in Japan at CNDW2026』by Cloud Native Community Japan</a></h4>
+      </div>
       <div class="session">
         <h5 class="time">2026/11/17 (火) 10:00 - 16:30 （途中お昼休憩あり）</h5>
         <h4 class="title"><a href="#hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Winter 2026 実行委員会</a></h4>
+      </div>
+      <div class="session">
+        <h5 class="time">2026/11/17 (火) 17:00 - 21:00 （16:45 開場、19:00 から懇親会）</h5>
+        <h4 class="title"><a href="#hc3">『Kubernetes Upstream Training in Japan at CNDW2026』by Cloud Native Community Japan</a></h4>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc2">『Cloud Native Woman Gathering Meetup in Japan at CNDW2026』by Cloud Native Community Japan</h3>
+        <ul>
+          <li>
+            <% if current_user %>
+              申し込みURL：<a href="https://ocgroups.dev/cncf/group/bqd97by/event/xh4bjp5">https://ocgroups.dev/cncf/group/bqd97by/event/xh4bjp5</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDW2026 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2026/11/16 (月) 19:00 - 21:00
+          </li>
+        </ul>
+        <p>
+          Cloud Native Woman Gathering Meetup は、CNDW2026 の前夜祭イベントであり、Cloud Native Community Japan (CNCJ) で新たに設立された Woman Gathering SIG の第1回ミートアップです。<br>
+          Cloud Native 分野に関わる女性・ジェンダーマイノリティが安心してつながり、経験や知識、課題を共有しながら、これからの Cloud Native Community への関わり方を一緒に考える場を目指しています。<br>
+          第1回は、参加者のみなさんの興味や経験、疑問をもとにその場で話したいテーマを決めていく対話型のイベントです。経験年数や Cloud Native Community への参加歴は問いません。<br>
+          CNCF コミュニティ行動規範、および CloudNative Days の行動規範に準拠します。申し込みページからご一読ください。
+        </p>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：50名（現地参加のみ）</li>
+          <li>会場：銀座松竹スクエア 5F（会場提供：株式会社LayerX）</li>
+        </ul>
+        <h5>【ホスト】</h5>
+        <ul>
+          <li>Aoi Takahashi</li>
+          <li>Aya Igarashi</li>
+          <li>Sunyanan Choochotkaew</li>
+          <li>XIE ZIYI</li>
+        </ul>
       </div>
 
       <div class="handson-session">
@@ -75,6 +119,49 @@
         <h5>【講師プロフィール】</h5>
         <ul>
           <li>CloudNative Days Winter 2026 実行委員会有志</li>
+        </ul>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc3">『Kubernetes Upstream Training in Japan at CNDW2026』by Cloud Native Community Japan</h3>
+        <ul>
+          <li>
+            <% if current_user %>
+              申し込みURL：<a href="https://ocgroups.dev/cncf/group/bqd97by/event/gdw2ngn">https://ocgroups.dev/cncf/group/bqd97by/event/gdw2ngn</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDW2026 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2026/11/17 (火) 17:00 - 21:00 （16:45 開場、19:00 から懇親会）
+          </li>
+        </ul>
+        <p>
+          Kubernetes Upstream Training in Japan は Kubernetes コミュニティでコントリビューションを始めたい方のためのコミュニティ参加入門講座です。Kubernetes コミュニティの説明、参加のための心構え、様々なコントリビューション方法、Kubernetes コミュニティ公式の Slack や練習用リポジトリを用いたコントリビューションの練習を日本語で紹介しています。<br>
+          講師陣は、現役のメンテナーやコントリビューターが担当しています。お気軽にご参加ください！<br>
+          Kubernetes Upstream Training in Japan は、Cloud Native Community Japan (CNCJ) の SIG の一つである Kubernetes Upstream Training Japan (KUTJ) が、Kubernetes コミュニティと連携しながら運営しています。<br>
+          今回は懇親会もあります。具体的なコントリビューション相談やネットワーキングにご活用ください。<br>
+          参加応募締切は、11/13(金)13:00 です。現地参加とリモート参加でそれぞれ枠に限りがございます。<br>
+          簡単な事前課題があります。実施の上、ご参加ください。<br>
+          また、CNCF コミュニティ行動規範、およびCloudNative Days の行動規範に準拠します。申し込みページからご一読ください。
+        </p>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：オフライン30名、オンライン50名</li>
+          <li>オフライン会場：株式会社スリーシェイク（〒104-0061 東京都中央区銀座8丁目21番1号 住友不動産汐留浜離宮ビル 7F）</li>
+          <li>オンライン会場：Zoom（URLは別途メールにてご連絡します）</li>
+          <li>懇親会（19:00 - 21:00）は現地参加のみ</li>
+        </ul>
+        <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>武藤 周（日本電気株式会社）</li>
+          <li>早川 大貴（株式会社スリーシェイク）</li>
+          <li>解 紫圯（日本電気株式会社）</li>
+          <li>翁 華宏（株式会社クラフトマンソフトウェア）</li>
+          <li>望月 敬太（株式会社NTTデータ）</li>
+          <li>稲生 章人（日本電気株式会社）</li>
         </ul>
       </div>
     </div>

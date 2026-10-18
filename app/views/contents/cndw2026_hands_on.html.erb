@@ -1,0 +1,82 @@
+<div class="dk-container">
+  <div class="md:tw-p-6" id="contents">
+    <div class="tw-w-full tw-py-4" id="handson">
+      <%= image_tag 'cndw2026/hands-on-full.png', class: 'tw-w-full', alt: 'CloudNative Days Winter 2026 Co-located Events Hands-on' %>
+      <h2 class="tw-mt-6 tw-text-center">
+        CNDW2026 Hands-on
+      </h2>
+      <h4 class="tw-mb-4 tw-text-center">
+        開催日時：2026/11/17 (火) 10:00 - 16:30 （途中お昼休憩あり）
+      </h4>
+      <p>
+        CloudNative Days Winter 2026では、これまでのCloudNative Daysで好評だった Co-located ハンズオンを開催します。
+      </p>
+      <p>
+        Co-located ハンズオンでは、しっかりと手を動かして技術を試すことを目的にしています。Co-located イベントに参加した後は、本編のCNDW2026で技術や活用ノウハウを知り、イベント参加後に実際に技術を取り入れるという流れを是非作ってください。
+      </p>
+      <h3 class="tw-mt-6">申込方法・参加方法</h3>
+      <p>
+        申込みはページ下部にある各ハンズオンの申し込みページまでお願いします。<b>ハンズオンごとに申し込み定員が制限</b>されているため、お早めのお申込みをお願いいたします。
+      </p>
+      <p>
+        ハンズオンはオフライン（現地会場）のみで実施します。オンラインでの参加はできませんのでご注意ください。また、環境のセットアップなどの事前準備が必要な場合もあるため、各ハンズオン主催者の指示に従ってください。
+      </p>
+
+      <h3 class="tw-mt-6">開催予定ハンズオン</h3>
+      <%# ハンズオンを追加するときは、この一覧と下の .handson-session の両方に追記する %>
+      <div class="session">
+        <h5 class="time">2026/11/17 (火) 10:00 - 16:30 （途中お昼休憩あり）</h5>
+        <h4 class="title"><a href="#hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Winter 2026 実行委員会</a></h4>
+      </div>
+
+      <div class="handson-session">
+        <h3 id="hc1">『一日で学ぶクラウドネイティブ技術実践ハンズオン』by CloudNative Days Winter 2026 実行委員会</h3>
+        <ul>
+          <li>
+            <% if current_user %>
+              申し込みURL：<a href="https://forms.gle/MAkdgdEJmAXzgzW1A">https://forms.gle/MAkdgdEJmAXzgzW1A</a>
+            <% else %>
+              <strong class="alert-url">申し込みURLを表示するには CNDW2026 サイトにログインしてください。</strong>
+            <% end %>
+          </li>
+          <li>
+            開催日時：2026/11/17 (火) 10:00 - 16:30 （途中お昼休憩あり）
+          </li>
+        </ul>
+        <p>
+          このハンズオンは、Kubernetesやクラウドネイティブ技術に精通したメンバーが、2026年現在でデファクトとなっている（デファクトになりそうな）新しい技術について一気に学べるように設計したハンズオンです。
+          様々なトピックを、手を動かしながら1日で学ぶことができます。
+        </p>
+
+        <h5>【学べるOSS】</h5>
+        <ul>
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>Prometheus</li>
+          <li>Grafana</li>
+          <li>Pyroscope</li>
+          <li>Loki</li>
+          <li>Tempo</li>
+          <li>Open Telemetry</li>
+          <li>Cilium</li>
+          <li>Argo CD</li>
+          <li>Argo Rollouts</li>
+          <li>Istio</li>
+          <li>Hubble</li>
+          <li>KubeVirt</li>
+        </ul>
+
+        <h5>【参加情報】</h5>
+        <ul>
+          <li>参加：無料</li>
+          <li>定員：オフライン25名（先着）（お早めの申込みをお願いいたします。）</li>
+          <li>オフライン会場：株式会社スリーシェイク（〒104-0061 東京都中央区銀座8丁目21番1号 住友不動産汐留浜離宮ビル 7F）</li>
+        </ul>
+        <h5>【講師プロフィール】</h5>
+        <ul>
+          <li>CloudNative Days Winter 2026 実行委員会有志</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

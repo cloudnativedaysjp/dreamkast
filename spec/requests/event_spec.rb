@@ -107,4 +107,17 @@ describe EventController, type: :request do
       end
     end
   end
+
+  describe 'GET event#show for CNDW2026' do
+    before do
+      create(:cndw2026)
+    end
+
+    it 'shows the project list with a link to the hands-on page' do
+      get '/cndw2026'
+      expect(response).to(be_successful)
+      expect(response.body).to(include('企画一覧'))
+      expect(response.body).to(include('href="/cndw2026/hands-on"'))
+    end
+  end
 end

@@ -70,6 +70,11 @@ RSpec.describe('Attendee dashboard announcements', type: :request) do
         expect(response.body).to(include('announcement all', 'announcement online'))
         expect(response.body).not_to(include('announcement offline', 'announcement early'))
       end
+
+      it 'does not show the project list for a conference without projects partial' do
+        get '/cndt2020/dashboard'
+        expect(response.body).not_to(include('企画一覧'))
+      end
     end
 
     context 'offline attendee with early-bird' do

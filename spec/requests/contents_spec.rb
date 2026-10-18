@@ -48,6 +48,21 @@ describe ContentsController, type: :request do
     end
   end
 
+  describe 'GET #hands_on' do
+    describe 'not logged in' do
+      before do
+        create(:cndw2026)
+      end
+
+      it 'returns a success response with hands-on page' do
+        get '/cndw2026/hands-on'
+        expect(response).to(have_http_status('200'))
+        expect(response.body).to(include('CNDW2026 Hands-on'))
+        expect(response.body).to(include('申し込みURLを表示するには CNDW2026 サイトにログインしてください。'))
+      end
+    end
+  end
+
   describe 'GET missing content pages' do
     before do
       create(:cndt2020)

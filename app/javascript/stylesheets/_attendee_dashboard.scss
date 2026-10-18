@@ -189,6 +189,24 @@
     letter-spacing: 0.05em;
 }
 
+// --- Projects (企画一覧バナー) ---
+.dashboard-projects {
+    .project {
+        width: 100%;
+        max-width: 500px;
+        margin: 0.5rem 0;
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        a:hover img {
+            box-shadow: 0px 0px 5px #CCC;
+        }
+    }
+}
+
 // --- Schedule ---
 .dashboard-schedule {
     .dashboard-schedule-day {

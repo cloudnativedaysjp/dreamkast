@@ -180,17 +180,13 @@
     <!-- About-->
     <section class="page-section" id="about">
       <div class="dk-container">
-        <div class="tw-flex tw-flex-wrap tw-justify-center">
+        <div class="tw-flex tw-justify-center">
           <div class="tw-w-full tw-text-center lg:tw-w-2/3">
             <h2 class="tw-mt-0 tw-text-black">About</h2>
             <hr class="divider tw-mx-auto tw-my-4" />
             <% @conference.about.split("\n").each do |line| %>
               <p class="tw-mb-4 tw-text-center tw-text-gray-700"><%= line.html_safe %></p>
             <% end %>
-          </div>
-          <div class="projects tw-mt-6 tw-w-full tw-text-center" id="project-list">
-            <h2 class="tw-mt-0 tw-text-black">企画一覧</h2>
-            <%= render(partial: "contents/cndw2026/projects") %>
           </div>
         </div>
       </div>

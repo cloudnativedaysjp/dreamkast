@@ -55,7 +55,8 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1.310.0
       with:
-        ruby-version: '.ruby-version'
+        # setup-ruby が Ruby 4.0.8 に未対応のため一時的に 4.0.5 を使う。対応後に '.ruby-version' に戻すこと
+        ruby-version: '4.0.5'
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run rubocop
       run: |

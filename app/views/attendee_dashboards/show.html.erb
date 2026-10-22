@@ -23,6 +23,14 @@
           <%= button_to '配信はこちらから', "/#{@conference.abbr}/ui/", {method: :get, class: "dk-btn-primary tw-px-6 tw-py-3 tw-text-lg" } %>
         </div>
       <% end %>
+      <% if lookup_context.exists?('projects', ["contents/#{@conference.abbr}"], true) %>
+        <div class="dashboard-section dashboard-participation">
+          <h3 class="dashboard-section-title">企画一覧</h3>
+          <div class="dashboard-projects tw-mb-5 tw-flex tw-flex-col tw-items-center">
+            <%= render(partial: "contents/#{@conference.abbr}/projects") %>
+          </div>
+        </div>
+      <% end %>
       <% if @profile.instance_of?(Profile) %>
         <div class="dashboard-section dashboard-participation">
           <h3 class="dashboard-section-title">参加方法</h3>

@@ -9,13 +9,96 @@ COPY --link package.json yarn.lock .yarnrc.yml ./
 RUN --mount=type=cache,target=/root/.yarn/berry/cache \
     yarn install --immutable
 
-FROM public.ecr.aws/docker/library/ruby:4.0.5 AS fetch-lib
+# Ruby 4.0.8 の公式イメージ（docker-library/ruby）がまだ公開されていないため、
+# 公式イメージの Dockerfile（4.0/trixie・4.0/slim-trixie）にならって Ruby を自前でビルドする。
+# 公式イメージが公開されたら、以下の ruby-build / ruby / ruby-slim ステージを削除し、
+# public.ecr.aws/docker/library/ruby:<version>(-slim) を直接使う形に戻すこと。
+FROM public.ecr.aws/docker/library/buildpack-deps:trixie AS ruby-build
+ENV RUBY_VERSION=4.0.8
+ENV RUBY_DOWNLOAD_URL=https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.8.tar.xz
+ENV RUBY_DOWNLOAD_SHA256=3bd35abc39dce9c682d62cf333fbd8b8f34816dd651f8228b3b59353157b84a4
+# YJIT / ZJIT のビルドに Rust が必要
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends dpkg-dev libgdbm-dev ruby; \
+    \
+    rustArch=; \
+    dpkgArch="$(dpkg --print-architecture)"; \
+    case "$dpkgArch" in \
+        'amd64') rustArch='x86_64-unknown-linux-gnu'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.28.2/x86_64-unknown-linux-gnu/rustup-init'; rustupSha256='20a06e644b0d9bd2fbdbfd52d42540bdde820ea7df86e92e533c073da0cdd43c' ;; \
+        'arm64') rustArch='aarch64-unknown-linux-gnu'; rustupUrl='https://static.rust-lang.org/rustup/archive/1.28.2/aarch64-unknown-linux-gnu/rustup-init'; rustupSha256='e3853c5a252fca15252d07cb23a1bdd9377a8c6f3efa01531109281ae47f841c' ;; \
+    esac; \
+    if [ -n "$rustArch" ]; then \
+        mkdir -p /tmp/rust; \
+        wget -O /tmp/rust/rustup-init "$rustupUrl"; \
+        echo "$rustupSha256 */tmp/rust/rustup-init" | sha256sum --check --strict; \
+        chmod +x /tmp/rust/rustup-init; \
+        export RUSTUP_HOME='/tmp/rust/rustup' CARGO_HOME='/tmp/rust/cargo'; \
+        export PATH="$CARGO_HOME/bin:$PATH"; \
+        /tmp/rust/rustup-init -y --no-modify-path --profile minimal --default-toolchain '1.91.1' --default-host "$rustArch"; \
+    fi; \
+    \
+    wget -O ruby.tar.xz "$RUBY_DOWNLOAD_URL"; \
+    echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum --check --strict; \
+    mkdir -p /usr/src/ruby; \
+    tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1; \
+    cd /usr/src/ruby; \
+    autoconf; \
+    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
+    export LDFLAGS='-Wl,-z,relro -Wl,-z,now'; \
+    ./configure \
+        --build="$gnuArch" \
+        --disable-install-doc \
+        --enable-shared \
+        ${rustArch:+--enable-yjit} \
+        ${rustArch:+--enable-zjit} \
+    ; \
+    make -j "$(nproc)"; \
+    make install DESTDIR=/ruby; \
+    mkdir -p /ruby/usr/local/etc; \
+    echo 'gem: --no-document' >> /ruby/usr/local/etc/gemrc
+
+# 公式イメージ ruby:<version> 相当（ネイティブ拡張の gem をビルドするステージ用）
+FROM public.ecr.aws/docker/library/buildpack-deps:trixie AS ruby
+ENV LANG=C.UTF-8
+ENV RUBY_VERSION=4.0.8
+# ruby-build ステージで DESTDIR=/ruby にインストールした /usr/local 以下だけをコピーする
+COPY --link --from=ruby-build /ruby/usr/local /usr/local
+ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
+    BUNDLE_APP_CONFIG="$GEM_HOME"
+ENV PATH=$GEM_HOME/bin:$PATH
+# コピーした libruby.so をローダーのキャッシュに登録する
+RUN ldconfig && mkdir -p "$GEM_HOME" && chmod 1777 "$GEM_HOME" && ruby --version
+
+# 公式イメージ ruby:<version>-slim 相当
+FROM public.ecr.aws/docker/library/debian:trixie-slim AS ruby-slim
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates libffi8 libgmp10 libssl3t64 libyaml-0-2 zlib1g && \
+    apt-get dist-clean
+ENV LANG=C.UTF-8
+ENV RUBY_VERSION=4.0.8
+COPY --link --from=ruby-build /ruby/usr/local /usr/local
+ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
+    BUNDLE_APP_CONFIG="$GEM_HOME"
+ENV PATH=$GEM_HOME/bin:$PATH
+# 実行時ライブラリが不足していればビルドを失敗させる
+RUN set -eux; \
+    ldconfig; \
+    if find /usr/local -type f -name '*.so*' -exec ldd '{}' + | grep 'not found'; then exit 1; fi; \
+    mkdir -p "$GEM_HOME"; \
+    chmod 1777 "$GEM_HOME"; \
+    ruby --version; \
+    ruby -ropenssl -ryaml -rzlib -rfiddle -e 'puts OpenSSL::OPENSSL_LIBRARY_VERSION'
+
+FROM ruby AS fetch-lib
 WORKDIR /app
 COPY --link Gemfile* ./
 RUN apt-get update && apt-get install -y --no-install-recommends shared-mime-info libmariadb3
 RUN bundle install
 
-FROM public.ecr.aws/docker/library/ruby:4.0.5 AS asset-compile
+FROM ruby AS asset-compile
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 COPY --link --from=node /usr/local/bin/node /usr/local/bin/
 COPY --link --from=node /usr/local/lib/node_modules/corepack /usr/local/lib/node_modules/corepack
@@ -44,7 +127,7 @@ RUN --mount=type=cache,uid=1000,target=/app/tmp/cache SECRET_KEY_BASE=hoge RAILS
 
 # 同じイメージを Docker Compose の開発環境（fifo-worker など）でも使うため、
 # 開発・テスト用の gem と Node.js/Yarn も含める。
-FROM public.ecr.aws/docker/library/ruby:4.0.5-slim
+FROM ruby-slim
 
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 # 非 root ユーザーでも node ステージで取得済みの yarn を使えるよう、共有の場所に置く
